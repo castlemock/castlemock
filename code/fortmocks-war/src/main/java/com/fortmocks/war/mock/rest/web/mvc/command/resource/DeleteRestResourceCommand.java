@@ -14,19 +14,28 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.rest.web.mvc.controller;
+package com.fortmocks.war.mock.rest.web.mvc.command.resource;
 
-import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
+
+import java.util.List;
 
 /**
- * The class operates as a shared base for all the view related to the REST module
+ * The DeleteRestResourceCommand is a command class and is used to carry information on
+ * which resource should be deleted from the database
  * @author Karl Dahlgren
  * @since 1.0
- * @see AbstractViewController
  */
-public class AbstractRestViewController extends AbstractViewController {
+public class DeleteRestResourceCommand {
 
-    protected static final String REST_PROJECT = "restProject";
-    protected static final String REST_PROJECT_ID = "restProjectId";
+    private List<RestResourceDto> restResourceDtos;
 
+    public List<RestResourceDto> getRestResourceDtos() {
+        return restResourceDtos;
+    }
+
+    public void setRestResourceDtos(List<RestResourceDto> restResourceDtos) {
+        this.restResourceDtos = restResourceDtos;
+    }
 }
+

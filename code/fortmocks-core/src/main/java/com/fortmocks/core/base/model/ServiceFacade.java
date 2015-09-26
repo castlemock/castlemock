@@ -96,4 +96,13 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
      */
     List<String> getTypes();
 
+    /**
+     * Returns the type URL for a specific type
+     * @param type The type that will be used to retrieve the type URL
+     * @return The matching type URL
+     * @throws java.lang.IllegalArgumentException A IllegalArgumentException will be thrown
+     * If no service matches the provided type
+     */
+    String getTypeUrl(String type);
+
 }

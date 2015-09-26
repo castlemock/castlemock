@@ -28,5 +28,11 @@ import com.fortmocks.war.base.model.project.service.ProjectService;
  */
 public interface RestProjectService extends ProjectService<RestProject, RestProjectDto> {
 
+    /**
+     * Finds a project by a given name
+     * @param name The name of the project that should be retrieved
+     * @return Returns a project with the provided name
+     */
+    RestProjectDto findRestProject(String name);
 
 }

@@ -37,6 +37,44 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
 
     private static final RestTypeIdentifier REST_TYPE_IDENTIFIER = new RestTypeIdentifier();
 
+    /**
+     * Finds a project by a given name
+     * @param name The name of the project that should be retrieved
+     * @return Returns a project with the provided name
+     */
+    @Override
+    public RestProjectDto findRestProject(final String name) {
+        Preconditions.checkNotNull(name, "Project name cannot be null");
+        Preconditions.checkArgument(!name.isEmpty(), "Project name cannot be empty");
+        for(RestProject restProject : findAllTypes()){
+            if(restProject.getName().equalsIgnoreCase(name)) {
+                return toDto(restProject);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Updates a project with new information
+     * @param restProjectId The id of the project that will be updated
+     * @param updatedProject The updated version of the project
+     * @return The updated version project
+     */
+    @Override
+    public RestProjectDto update(final Long restProjectId, final RestProjectDto updatedProject){
+        Preconditions.checkNotNull(restProjectId, "Project id be null");
+        Preconditions.checkArgument(restProjectId >= 0, "Project id cannot be negative");
+        Preconditions.checkNotNull(updatedProject, "Project cannot be null");
+        Preconditions.checkArgument(!updatedProject.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
+        final RestProjectDto projectWithNameDto = findRestProject(updatedProject.getName());
+        Preconditions.checkArgument(projectWithNameDto == null || projectWithNameDto.getId().equals(restProjectId), "Project name is already taken");
+        final RestProjectDto project = findOne(restProjectId);
+        project.setName(updatedProject.getName());
+        project.setDescription(updatedProject.getDescription());
+        return super.save(project);
+    }
+
+
 
     /**
      * Returns the REST type identifier.

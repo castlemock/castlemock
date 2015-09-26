@@ -24,7 +24,7 @@
                 <td class="column1"><form:checkbox path="generateResponse" title="Generate response"></form:checkbox></td>
             </tr>
         </table>
-        <button class="button button-success pure-button" type="submit" name="type" value="link"><i class="fa fa-upload"></i> <span>Link WSDL</span></button>
+        <button class="button button-success pure-button" type="submit" name="type" value="link"><i class="fa fa-upload"></i> <span><spring:message code="soap.soapaddwsdl.button.linkwsdl"/></span></button>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>
 </div>

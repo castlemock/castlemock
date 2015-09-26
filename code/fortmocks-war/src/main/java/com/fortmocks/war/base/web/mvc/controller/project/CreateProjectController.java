@@ -43,7 +43,7 @@ public class CreateProjectController extends AbstractViewController {
     @Autowired
     protected DozerBeanMapper mapper;
     @Autowired
-    private ProjectServiceFacadeImpl projectServiceComponent;
+    private ProjectServiceFacadeImpl projectServiceFacade;
 
     private static final String PAGE = "core/project/createProject";
 
@@ -57,7 +57,7 @@ public class CreateProjectController extends AbstractViewController {
     public ModelAndView defaultPage() {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(DOMAIN_NAME_STRATEGIES, DomainNameStrategy.values());
-        model.addObject(PROJECT_TYPES, projectServiceComponent.getTypes());
+        model.addObject(PROJECT_TYPES, projectServiceFacade.getTypes());
         model.addObject(COMMAND, new CreateProjectCommand());
         return model;
     }
@@ -71,8 +71,9 @@ public class CreateProjectController extends AbstractViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView createProject(@ModelAttribute final CreateProjectCommand createProjectCommand) {
-        final ProjectDto createdProject = projectServiceComponent.save(createProjectCommand.getProjectType(), createProjectCommand.getProject());
-        return redirect("/soap/project/" + createdProject.getId());
+        final ProjectDto createdProject = projectServiceFacade.save(createProjectCommand.getProjectType(), createProjectCommand.getProject());
+        final String typeUrl = projectServiceFacade.getTypeUrl(createProjectCommand.getProjectType());
+        return redirect("/" + typeUrl + "/project/" + createdProject.getId());
     }
 
 }
