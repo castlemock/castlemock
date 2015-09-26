@@ -85,4 +85,16 @@ public class FileManager {
         }
     }
 
+    /**
+     * The method takes a filename for a file that has been uploaded to the server and deletes them
+     * @param filename The filename of the file that will be deleted
+     */
+    public void deleteUploadedFile(final String filename){
+        Preconditions.checkNotNull(filename, "The filename cannot be null");
+        final File file = new File(filename);
+        if(file.exists() && file.isFile()) {
+            file.delete();
+        }
+    }
+
 }

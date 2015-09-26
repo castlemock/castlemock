@@ -17,6 +17,7 @@
 package com.fortmocks.war.base.web.mvc.controller.project;
 
 import com.fortmocks.core.base.model.project.dto.ProjectDto;
+import com.fortmocks.war.base.manager.FileManager;
 import com.fortmocks.war.base.model.project.service.ProjectServiceFacadeImpl;
 import com.fortmocks.war.base.web.mvc.command.project.DeleteProjectsCommand;
 import com.fortmocks.war.base.web.mvc.command.project.ProjectModifierCommand;
@@ -24,6 +25,7 @@ import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -63,6 +65,12 @@ public class ProjectsOverviewController extends AbstractViewController {
     @Autowired
     private ProjectServiceFacadeImpl projectServiceFacade;
 
+    @Autowired
+    private FileManager fileManager;
+
+    @Value(value = "${temp.file.directory}")
+    private String tempFilesFolder;
+
     /**
      * The method provides a view displaying all the projects.
      * @return View with all the projects.
@@ -96,7 +104,7 @@ public class ProjectsOverviewController extends AbstractViewController {
 
             ZipOutputStream zipOutputStream = null;
             InputStream inputStream = null;
-            final String outputFilename = "exported-projects-" + new Date() + " .zip";
+            final String outputFilename = tempFilesFolder + "/" + "exported-projects-" + new Date() + " .zip";
             try {
                 zipOutputStream = new ZipOutputStream(new FileOutputStream(outputFilename));
                 for(String project : projectModifierCommand.getProjects()) {
@@ -139,6 +147,7 @@ public class ProjectsOverviewController extends AbstractViewController {
                         LOGGER.error("Unable to close the input stream", exception);
                     }
                 }
+                fileManager.deleteUploadedFile(outputFilename);
             }
         } else if(DELETE_PROJECTS.equalsIgnoreCase(action)) {
             List<ProjectDto> projects = new LinkedList<ProjectDto>();
