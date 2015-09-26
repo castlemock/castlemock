@@ -278,9 +278,65 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     public void saveSoapPorts(final Long soapProjectId, final List<SoapPortDto> soapPorts) {
         final SoapProject soapProject = findOneType(soapProjectId);
         final List<SoapPort> soapPortTypes = toDtoList(soapPorts, SoapPort.class);
-        generateId(soapPortTypes);
-        soapProject.getSoapPorts().addAll(soapPortTypes);
-        save(soapProjectId);
+
+        for(SoapPort newSoapPort : soapPortTypes){
+            SoapPort existingSoapPort = findSoapPortWithName(soapProject, newSoapPort.getName());
+
+            if(existingSoapPort == null){
+                generateId(newSoapPort);
+                soapProject.getSoapPorts().add(newSoapPort);
+                continue;
+            }
+
+            final LinkedList<SoapOperation> soapOperations = new LinkedList<SoapOperation>();
+            for(SoapOperation newSoapOperation : newSoapPort.getSoapOperations()){
+                SoapOperation existingSoapOperation = findSoapOperationWithName(existingSoapPort, newSoapOperation.getName());
+
+                if(existingSoapOperation != null){
+                    existingSoapOperation.setOriginalEndpoint(newSoapOperation.getOriginalEndpoint());
+                    existingSoapOperation.setSoapOperationType(newSoapOperation.getSoapOperationType());
+                    soapOperations.add(existingSoapOperation);
+                } else {
+                    generateId(newSoapOperation);
+                    soapOperations.add(newSoapOperation);
+                }
+            }
+            existingSoapPort.setSoapOperations(soapOperations);
+        }
+
+        save(soapProject);
+    }
+
+    /**
+     * The method provides the functionality to find a SOAP port with a specific name
+     * @param soapProject The SOAP project that will be searched for the SOAP port
+     * @param soapPortName The name of the SOAP port that should be retrieved
+     * @return A SOAP port that matches the search criteria. If no SOAP ports matches the provided
+     * name then null will be returned.
+     */
+    private SoapPort findSoapPortWithName(final SoapProject soapProject, final String soapPortName){
+        for(SoapPort soapPort : soapProject.getSoapPorts()){
+            if(soapPort.getName().equals(soapPortName)){
+                return soapPort;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * The method provides the functionality to find a SOAP operation with a specific name
+     * @param soapPort The SOAP port that will be searched for the SOAP operation
+     * @param soapOperationName The name of the SOAP operation that should be retrieved
+     * @return A SOAP operation that matches the search criteria. If no SOAP operation matches the provided
+     * name then null will be returned.
+     */
+    private SoapOperation findSoapOperationWithName(final SoapPort soapPort, final String soapOperationName){
+        for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+            if(soapOperation.getName().equals(soapOperationName)){
+                return soapOperation;
+            }
+        }
+        return null;
     }
 
     /**
@@ -470,7 +526,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
         }
 
         if(foundSoapMockResponse == null){
-            // throw exception
+            throw new IllegalArgumentException("Unable to find a soap mock response with id " + soapMockResponseId);
         }
 
         soapOperation.getSoapMockResponses().remove(foundSoapMockResponse);
@@ -785,8 +841,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
         for(SoapProject soapProject : findAllTypes()){
             for(SoapPort soapPort : soapProject.getSoapPorts()){
                 if(soapPort.getId() >= nextSoapPortId){
-                    nextSoapPortId = soapPort.getId();
-                    nextSoapPortId++;
+                    nextSoapPortId = soapPort.getId() + 1;
                 }
             }
         }
@@ -805,8 +860,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
             for(SoapPort soapPort : soapProject.getSoapPorts()){
                 for(SoapOperation soapOperation : soapPort.getSoapOperations()){
                     if(soapOperation.getId() >= nextSoapOperationId){
-                        nextSoapOperationId = soapPort.getId();
-                        nextSoapOperationId++;
+                        nextSoapOperationId = soapOperation.getId() + 1;
                     }
                 }
             }
@@ -827,8 +881,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
                 for(SoapOperation soapOperation : soapPort.getSoapOperations()){
                     for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
                         if(soapMockResponse.getId() >= nextSoapMockResponseId){
-                            nextSoapMockResponseId = soapPort.getId();
-                            nextSoapMockResponseId++;
+                            nextSoapMockResponseId = soapMockResponse.getId() + 1;
                         }
                     }
                 }
@@ -838,29 +891,47 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     }
 
     /**
-     * The method provides the functionality to generate new identifiers for a whole list of SOAP ports
-     * @param soapPorts The list of SOAP ports that will receive new identifiers
+     * The method provides the functionality to generate new identifiers for a of SOAP port
+     * @param soapPort The SOAP port that will receive new identifiers
      */
-    private void generateId(final List<SoapPort> soapPorts){
+    private void generateId(final SoapPort soapPort){
         Long nextSoapPortId = getNextSoapPortId();
         Long nextSoapOperationId = getNexSoapOperationId();
         Long nextSoapMockResponseId = getNextSoapMockResponseId();
 
-        for(SoapPort soapPort : soapPorts){
-            if(soapPort.getId() == null){
-                soapPort.setId(nextSoapPortId++);
+
+        if(soapPort.getId() == null){
+            soapPort.setId(nextSoapPortId++);
+        }
+
+        for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+            if(soapOperation.getId() == null){
+                soapOperation.setId(nextSoapOperationId++);
             }
 
-            for(SoapOperation soapOperation : soapPort.getSoapOperations()){
-                if(soapOperation.getId() == null){
-                    soapOperation.setId(nextSoapOperationId++);
+            for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
+                if(soapMockResponse.getId() == null){
+                    soapMockResponse.setId(nextSoapMockResponseId++);
                 }
+            }
+        }
+    }
 
-                for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
-                    if(soapMockResponse.getId() == null){
-                        soapMockResponse.setId(nextSoapMockResponseId++);
-                    }
-                }
+    /**
+     * The method provides the functionality to generate new identifiers for a SOAP operation
+     * @param soapOperation The SOAP port that will receive new identifiers
+     */
+    private void generateId(final SoapOperation soapOperation){
+        Long nextSoapOperationId = getNexSoapOperationId();
+        Long nextSoapMockResponseId = getNextSoapMockResponseId();
+
+        if(soapOperation.getId() == null){
+            soapOperation.setId(nextSoapOperationId++);
+        }
+
+        for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
+            if(soapMockResponse.getId() == null){
+                soapMockResponse.setId(nextSoapMockResponseId++);
             }
         }
     }
