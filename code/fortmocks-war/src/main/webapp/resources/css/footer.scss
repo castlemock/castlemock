@@ -1,0 +1,33 @@
+footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  font-size: 12px;
+  height: 30px;
+  text-align: center;
+  background-color: #F0F0F0;
+  border-top: 1px solid #8b8f86;
+
+    .push {
+      height: 4em;
+    }
+
+  .languages {
+    position: absolute;
+    text-align: center;
+    padding-left:20px;
+    padding-top: 7px;
+  }
+
+  .info {
+    text-align: right;
+    padding-right:20px;
+    padding-top: 7px;
+
+    a {
+      text-decoration: underline;
+      font-size: 10px;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  font-size: 12px;
+  height: 50px;
+  text-align: center;
+  padding: 10px; }
+  footer a {
+    color: #000; }
+    footer a i {
+      color: #aaa;
+      padding: 6px 6px 2px 6px; }
+      footer a i:hover {
+        color: #3e444d; }

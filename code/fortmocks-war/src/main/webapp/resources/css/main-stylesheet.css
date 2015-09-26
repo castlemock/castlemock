@@ -1,0 +1,372 @@
+footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  font-size: 12px;
+  height: 30px;
+  text-align: center;
+  background-color: #F0F0F0;
+  border-top: 1px solid #8b8f86; }
+  footer .push {
+    height: 4em; }
+  footer .languages {
+    position: absolute;
+    text-align: center;
+    padding-left: 20px;
+    padding-top: 7px; }
+  footer .info {
+    text-align: right;
+    padding-right: 20px;
+    padding-top: 7px; }
+    footer .info a {
+      text-decoration: underline;
+      font-size: 10px; }
+
+a {
+  text-decoration: none; }
+  a:hover {
+    text-decoration: underline; }
+
+.button-success {
+  background: #1cb841;
+  /* this is a green */ }
+
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin: 0 3px;
+  padding: 9px 11px;
+  vertical-align: bottom; }
+  .button-success i,
+  .button-error i,
+  .button-warning i,
+  .button-secondary i {
+    font-size: 15px;
+    margin-right: 5px; }
+
+.button-success {
+  background: #1cb841;
+  /* this is a green */ }
+
+.button-error {
+  background: #ca3c3c;
+  /* this is a maroon */ }
+
+.button-warning {
+  background: #df7514;
+  /* this is an orange */ }
+
+.button-secondary {
+  background: #42b8dd;
+  /* this is a light blue */ }
+
+.pure-button:hover {
+  text-decoration: none !important; }
+
+@media screen and (max-width: 900px) {
+  .container {
+    width: 100%; }
+    .container section {
+      width: auto;
+      margin: 0 10px; } }
+@media screen and (max-width: 720px) {
+  .main-header .meta {
+    float: none;
+    margin-right: 0px;
+    text-align: center; } }
+@media screen and (max-width: 480px) {
+  .main-header {
+    height: auto;
+    border-bottom: none;
+    padding-bottom: 12px; }
+    .main-header .meta {
+      float: none;
+      margin-right: 0px;
+      text-align: center;
+      display: block; }
+      .main-header .meta a {
+        float: right; }
+        .main-header .meta a i {
+          margin: 3px 10px; }
+    .main-header .logo {
+      float: left; }
+    .main-header input[type=text] {
+      display: block;
+      text-align: center;
+      width: 100% !important;
+      margin: 11px 0 0 0;
+      border-radius: 0px !important;
+      left: 0;
+      float: none !important; }
+
+  .header-nav {
+    position: relative;
+    top: 0;
+    background: #f0f0f0;
+    text-align: center; }
+
+  .pure-button i {
+    font-size: 1.3em;
+    padding: 2px 3px; }
+  .pure-button span {
+    display: none; }
+
+  #login-box {
+    width: 100%; } }
+@font-face {
+  font-family: robotoThinFont;
+  src: url("../font/Roboto-Thin.ttf"); }
+@font-face {
+  font-family: robotoBoldFont;
+  src: url("../font/Roboto-Bold.ttf"); }
+@font-face {
+  font-family: robotoItalicFont;
+  src: url("../font/Roboto-YhinItalic.ttf"); }
+body {
+  margin: 0px;
+  font-family: robotoThinFont; }
+
+.main-header {
+  width: 100%;
+  height: 41px;
+  background: #3E444D;
+  color: #fff;
+  border: 0px solid #000;
+  top: 0px;
+  font-size: 13px;
+  border-bottom: 35px solid #f0f0f0; }
+  .main-header a {
+    color: #fff; }
+  .main-header .logo {
+    float: left;
+    margin-top: 5px;
+    margin-left: 50px; }
+  .main-header #header-logo {
+    height: 27px; }
+  .main-header .meta {
+    float: right;
+    margin-top: 10px;
+    margin-right: 40px; }
+    .main-header .meta input[type=text] {
+      width: 200px;
+      padding: 5px;
+      outline: none;
+      border: 2px solid #9EA1A6;
+      background-color: #9EA1A6;
+      font-size: 12px;
+      border-radius: 5px;
+      float: left;
+      position: relative;
+      top: -4px;
+      color: #fff; }
+      .main-header .meta input[type=text]::-webkit-input-placeholder {
+        color: #fff; }
+    .main-header .meta a {
+      text-decoration: none; }
+      .main-header .meta a i {
+        margin: 0 10px; }
+    .main-header .meta .fa-2x {
+      font-size: 1.6em; }
+    .main-header .meta i:hover {
+      color: #ddd; }
+
+.container {
+  width: 85%;
+  margin: 0 auto; }
+
+.header-nav {
+  font-size: 13px;
+  text-decoration: none;
+  color: #343434;
+  position: absolute;
+  width: 500px;
+  height: 35px;
+  top: 42px; }
+  .header-nav ul {
+    position: absolute;
+    margin: 0;
+    margin-top: 2;
+    padding: 0; }
+    .header-nav ul li {
+      list-style-type: none;
+      display: inline; }
+    .header-nav ul a {
+      padding: 9px 20px 10px 20px;
+      color: #343434;
+      text-decoration: none;
+      font-size: 12px; }
+      .header-nav ul a:hover {
+        color: #343434;
+        background: rgba(255, 255, 255, 0.7); }
+    .header-nav ul .fa-home {
+      position: relative;
+      top: 3px; }
+
+aside {
+  position: relative;
+  width: 14%;
+  float: left;
+  font-size: 14px; }
+  aside .content .content-title {
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: bold; }
+  aside .content .content-divider {
+    width: 150px;
+    border-bottom: 1px solid #ddd !important; }
+  aside .content .content-item {
+    margin-left: 15px;
+    margin-top: 5px; }
+    aside .content .content-item a {
+      color: #000; }
+
+section {
+  width: 80%;
+  position: relative;
+  font-size: 12px;
+  min-height: 100%;
+  margin-bottom: 50px;
+  float: right; }
+  section input[type='file'] {
+    color: transparent;
+    width: 95px; }
+  section .upload-information {
+    width: 100%;
+    border-bottom: 1px solid #ddd !important;
+    padding-down: 10px; }
+    section .upload-information p {
+      display: inline-block;
+      width: 90%; }
+    section .upload-information i {
+      display: inline-block;
+      width: 50px; }
+  section .table-frame {
+    border-radius: 4px;
+    border: 1px solid #f0f0f0;
+    margin: 10px 0 30px 0; }
+  section .upload-link {
+    width: 100%;
+    border-bottom: 1px solid #ddd !important; }
+    section .upload-link table {
+      margin: 0; }
+  section .upload-link {
+    width: 100%; }
+  section .content-summary {
+    width: 100%;
+    border-bottom: 1px solid #ddd !important; }
+  section .editor {
+    width: 100%;
+    margin: 10px 0 30px 0; }
+    section .editor textarea {
+      resize: both;
+      width: 100%;
+      height: 50%;
+      max-width: 100%;
+      max-height: 100%; }
+  section .eventMessage {
+    width: 100%;
+    margin: 10px 0 30px 0; }
+    section .eventMessage textarea {
+      resize: both;
+      width: 100%;
+      height: 20%;
+      max-width: 100%;
+      max-height: 100%; }
+  section .updateTable {
+    width: 100%; }
+  section .formTable {
+    margin: 10px 0 30px 0;
+    border-color: black; }
+  section .formTable td {
+    padding: 10px; }
+  section .formTable .column1 {
+    text-align: left;
+    font-family: robotoBoldFont; }
+  section .formTable .column2 * {
+    width: 100%; }
+  section .entityTable {
+    width: 100%;
+    align: left;
+    border: 1px solid #f0f0f0; }
+  section .button {
+    margin: 10px 3px; }
+  section a {
+    color: #000; }
+  section table {
+    border-collapse: collapse;
+    position: relative; }
+    section table tr {
+      height: 35px; }
+  section th:first-child, section td:first-child {
+    padding: 0 0 0 10px; }
+  section td {
+    font-size: 12px;
+    padding: 3px 7px 2px 7px; }
+  section th {
+    font-weight: bold;
+    font-size: 12px;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #f0f0f0;
+    border-collapse: collapse;
+    color: #000000; }
+  section .even {
+    color: #000000;
+    background-color: #fff; }
+  section .odd {
+    color: #000000;
+    background-color: #fbfbfb; }
+
+.decorated span {
+  font-size: 18px;
+  position: relative;
+  display: block; }
+
+.question {
+  cursor: pointer;
+  border-top: 1px solid #ddd;
+  padding-top: 10px; }
+  .question:first-child {
+    border-top: none; }
+
+fieldset {
+  border: 1px solid #ddd; }
+
+textarea {
+  border: 1px solid #ddd; }
+
+select {
+  background: #f5f5f5;
+  border: 1px solid #999;
+  height: 32px; }
+
+.content-top {
+  border-bottom: 1px solid #ddd !important;
+  display: block;
+  margin: 20px 0 20px 0;
+  padding: 0 0 20px 0; }
+  .content-top h1, .content-top div {
+    display: inline; }
+  .content-top div {
+    float: right; }
+
+#filedrag {
+  display: none;
+  font-weight: bold;
+  text-align: center;
+  padding: 1em 0;
+  margin: 1em 0;
+  color: #555;
+  border: 2px dashed #555;
+  border-radius: 7px;
+  cursor: default; }
+
+#filedrag.hover {
+  color: #1CB841;
+  border: 2px dashed #1CB841; }
