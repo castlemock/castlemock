@@ -104,7 +104,7 @@ public class ProjectsOverviewController extends AbstractViewController {
 
             ZipOutputStream zipOutputStream = null;
             InputStream inputStream = null;
-            final String outputFilename = tempFilesFolder + "/" + "exported-projects-" + new Date() + " .zip";
+            final String outputFilename = tempFilesFolder + SLASH + "exported-projects-" + new Date().getTime() + ".zip";
             try {
                 zipOutputStream = new ZipOutputStream(new FileOutputStream(outputFilename));
                 for(String project : projectModifierCommand.getProjects()) {
