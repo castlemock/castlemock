@@ -34,7 +34,7 @@
                 </table>
             </div>
             <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
-                <button class="button-secondary pure-button" type="submit" name="action" value="export" disabled="disabled"><i class="fa fa-cloud-download"></i> <span><spring:message code="general.projectoverview.button.exportprojects"/></span></button>
+                <button class="button-secondary pure-button" type="submit" name="action" value="export"><i class="fa fa-cloud-download"></i> <span><spring:message code="general.projectoverview.button.exportprojects"/></span></button>
                 <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="general.projectoverview.button.deleteprojects"/></span></button>
             </sec:authorize>
         </form:form>

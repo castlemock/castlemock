@@ -22,6 +22,7 @@ import com.fortmocks.war.base.web.mvc.command.project.DeleteProjectsCommand;
 import com.fortmocks.war.base.web.mvc.command.project.ProjectModifierCommand;
 import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
 import org.apache.log4j.Logger;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,8 +33,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * The ProjectsOverviewController controller provides functionalities that involves
@@ -55,7 +61,7 @@ public class ProjectsOverviewController extends AbstractViewController {
     private static final Logger LOGGER = Logger.getLogger(ProjectsOverviewController.class);
 
     @Autowired
-    private ProjectServiceFacadeImpl projectServiceComponent;
+    private ProjectServiceFacadeImpl projectServiceFacade;
 
     /**
      * The method provides a view displaying all the projects.
@@ -65,7 +71,7 @@ public class ProjectsOverviewController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final List<ProjectDto> projects = new LinkedList<ProjectDto>();
-        projects.addAll(projectServiceComponent.findAll());
+        projects.addAll(projectServiceFacade.findAll());
         ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(PROJECTS, projects);
         model.addObject(PROJECT_MODIFIER_COMMAND, new ProjectModifierCommand());
@@ -81,10 +87,59 @@ public class ProjectsOverviewController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView projectFunctionality(@RequestParam String action, @ModelAttribute ProjectModifierCommand projectModifierCommand) {
+    public ModelAndView projectFunctionality(@RequestParam String action, @ModelAttribute ProjectModifierCommand projectModifierCommand, HttpServletResponse response) {
         LOGGER.debug("Project action requested: " + action);
         if(EXPORT_PROJECTS.equalsIgnoreCase(action)) {
-            throw new UnsupportedOperationException();
+            if(projectModifierCommand.getProjects().length == 0){
+                return redirect();
+            }
+
+            ZipOutputStream zipOutputStream = null;
+            InputStream inputStream = null;
+            final String outputFilename = "exported-projects-" + new Date() + " .zip";
+            try {
+                zipOutputStream = new ZipOutputStream(new FileOutputStream(outputFilename));
+                for(String project : projectModifierCommand.getProjects()) {
+                    final String[] projectData = project.split(SLASH);
+                    if(projectData.length != 2){
+                        continue;
+                    }
+
+                    final String projectTypeUrl = projectData[0];
+                    final Long projectId = Long.parseLong(projectData[1]);
+                    final String exportedProject = projectServiceFacade.exportProject(projectTypeUrl, projectId);
+                    final byte[] data = exportedProject.getBytes();
+                    final String filename = "exported-project-" + projectTypeUrl + "-" + projectId + ".xml";
+                    zipOutputStream.putNextEntry(new ZipEntry(filename));
+                    zipOutputStream.write(data, 0, data.length);
+                    zipOutputStream.closeEntry();
+                }
+                zipOutputStream.close();
+
+                inputStream = new FileInputStream(outputFilename);
+                IOUtils.copy(inputStream, response.getOutputStream());
+
+                response.setContentType("application/zip");
+                response.flushBuffer();
+                return null;
+            } catch (IOException exception) {
+                LOGGER.error("Unable to export multiple projects and zip them", exception);
+            } finally {
+                if(zipOutputStream != null){
+                    try {
+                        zipOutputStream.close();
+                    } catch (IOException exception) {
+                        LOGGER.error("Unable to close the zip output stream", exception);
+                    }
+                }
+                if(inputStream != null){
+                    try {
+                        inputStream.close();
+                    } catch (IOException exception) {
+                        LOGGER.error("Unable to close the input stream", exception);
+                    }
+                }
+            }
         } else if(DELETE_PROJECTS.equalsIgnoreCase(action)) {
             List<ProjectDto> projects = new LinkedList<ProjectDto>();
             for(String project : projectModifierCommand.getProjects()){
@@ -96,7 +151,7 @@ public class ProjectsOverviewController extends AbstractViewController {
 
                 final String projectTypeUrl = projectData[0];
                 final Long projectId = Long.parseLong(projectData[1]);
-                final ProjectDto projectDto = projectServiceComponent.findOne(projectTypeUrl, projectId);
+                final ProjectDto projectDto = projectServiceFacade.findOne(projectTypeUrl, projectId);
                 projects.add(projectDto);
             }
             ModelAndView model = createPartialModelAndView(DELETE_PROJECTS_PAGE);
