@@ -8,21 +8,8 @@
       <link rel="stylesheet" href="<c:url value="/resources/css/main-stylesheet.css"/>">
       <link rel="stylesheet" href="<c:url value="/resources/css/flags/flags.css"/>">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" charset="UTF-8"></script>
+      <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/jquery/jquery-2.1.4.min.js"/>"></script>
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/main-script.js"/>"></script>
-        <style type="text/css" media="screen">
-            .ace_editor {
-                position: relative !important;
-                border: 1px solid lightgray;
-                margin: auto;
-                height: 200px;
-                width: 100%;
-            }
-            .scrollmargin {
-                height: 100px;
-                text-align: center;
-            }
-        </style>
   </head>
     <body>
         <jsp:include page="header.jsp" />
