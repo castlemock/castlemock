@@ -29,4 +29,7 @@ public class AbstractRestViewController extends AbstractViewController {
     protected static final String REST_PROJECT = "restProject";
     protected static final String REST_PROJECT_ID = "restProjectId";
 
+    protected static final String REST_APPLICATION = "restApplication";
+    protected static final String REST_APPLICATIONS = "restApplications";
+
 }

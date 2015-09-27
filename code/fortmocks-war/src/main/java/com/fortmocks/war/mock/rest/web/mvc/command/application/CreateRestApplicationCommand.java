@@ -14,27 +14,23 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.mock.rest.model.project.dto;
+package com.fortmocks.war.mock.rest.web.mvc.command.application;
 
-import com.fortmocks.core.mock.rest.model.project.RestResourceMethodType;
-import org.dozer.Mapping;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
+public class CreateRestApplicationCommand {
 
-public class RestResourceMethodDto {
+    private RestApplicationDto restApplication = new RestApplicationDto();
 
-    @Mapping("restResourceMethodType")
-    private RestResourceMethodType restResourceMethodType;
-
-    public RestResourceMethodType getRestResourceMethodType() {
-        return restResourceMethodType;
+    public RestApplicationDto getRestApplication() {
+        return restApplication;
     }
 
-    public void setRestResourceMethodType(RestResourceMethodType restResourceMethodType) {
-        this.restResourceMethodType = restResourceMethodType;
+    public void setRestApplication(RestApplicationDto restApplication) {
+        this.restApplication = restApplication;
     }
-
 }

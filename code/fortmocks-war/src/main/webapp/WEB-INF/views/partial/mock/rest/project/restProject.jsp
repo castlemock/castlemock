@@ -22,6 +22,7 @@
     <div align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
         <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restproject.button.update"/></span></a>
+            <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/create/application"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restproject.button.createapplication"/></span></a>
         <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/add/wadl"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restproject.button.upload" arguments="wadl"/></span></a>
         <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="rest.restproject.button.export"/></span></a>
         <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.delete"/></span></a>
@@ -55,21 +56,22 @@
         <form:form action="${rest_resource_update_url}/" method="POST"  commandName="restApplicationModifierCommand">
             <div class="table-frame">
                 <table class="entityTable">
+                    <col width="10%">
+                    <col width="90%">
                     <tr>
                         <th><spring:message code="rest.restproject.column.selected"/></th>
                         <th><spring:message code="rest.restproject.column.application"/></th>
                     </tr>
                     <c:forEach items="${restProject.restApplications}" var="restApplication" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
-                            <td><form:checkbox path="restPortIds" name="${restApplication.id}" value="${restApplication.id}"/></td>
-                            <td><a href="<c:url value="/web/rest/project/${restApplication.id}/resource/${restApplication.id}"/>">${restApplication.name}</a></td>
+                            <td><form:checkbox path="restApplicationIds" name="${restApplication.id}" value="${restApplication.id}"/></td>
+                            <td><a href="<c:url value="/web/rest/project/${restApplication.id}/application/${restApplication.id}"/>">${restApplication.name}</a></td>
                         </tr>
                     </c:forEach>
                 </table>
             </div>
             <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
-                <button class="button-secondary pure-button" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="rest.restproject.button.updateendpoint"/></span></button>
-                <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.deleteport"/></span></button>
+                <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.deleteapplication"/></span></button>
             </sec:authorize>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form:form>

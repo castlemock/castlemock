@@ -16,9 +16,13 @@
 
 package com.fortmocks.war.mock.rest.model.project.service;
 
+import com.fortmocks.core.mock.rest.model.project.RestApplication;
 import com.fortmocks.core.mock.rest.model.project.RestProject;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.war.base.model.project.service.ProjectService;
+
+import java.util.List;
 
 /**
  * The class is the project operation layer class responsible for communicating
@@ -35,4 +39,22 @@ public interface RestProjectService extends ProjectService<RestProject, RestProj
      */
     RestProjectDto findRestProject(String name);
 
+    RestApplicationDto findRestApplication(Long restProjectId, Long restApplicationId);
+
+    RestApplicationDto saveRestApplication(Long restProjectId, RestApplicationDto restApplication);
+
+    /**
+     * Deletes an application from a specific REST project. Both the project and the application are identified with provided
+     * identifiers.
+     * @param restProjectId The identifier of the REST project that the port belongs to
+     * @param restApplicationId The identifier of the application that will be removed
+     */
+    void deleteRestApplication(Long restProjectId, Long restApplicationId);
+
+    /**
+     * Takes a list of applications and delete them from a project
+     * @param restProjectId The id of the project that the application belong to
+     * @param restApplications The list of applications that will be deleted
+     */
+    void deleteRestApplications(Long restProjectId, List<RestApplicationDto> restApplications);
 }

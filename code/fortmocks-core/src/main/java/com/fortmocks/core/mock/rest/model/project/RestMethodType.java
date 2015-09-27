@@ -25,6 +25,6 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType
 @XmlEnum(String.class)
-public enum RestResourceMethodType {
+public enum RestMethodType {
     GET, POST, PUT, HEAD, DELETE, OPTIONS, PATCH, TRACE
 }

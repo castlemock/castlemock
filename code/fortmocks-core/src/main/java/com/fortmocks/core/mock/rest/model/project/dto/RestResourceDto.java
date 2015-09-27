@@ -16,11 +16,12 @@
 
 package com.fortmocks.core.mock.rest.model.project.dto;
 
-import com.fortmocks.core.mock.rest.model.project.RestResourceMethod;
+import com.fortmocks.core.mock.rest.model.project.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.RestResourceStatus;
 import com.fortmocks.core.mock.rest.model.project.RestResponseStrategy;
 import org.dozer.Mapping;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public class RestResourceDto {
     private RestResponseStrategy restResponseStrategy;
 
     @Mapping("restResourceMethods")
-    private List<RestResourceMethod> restResourceMethods;
+    private List<RestMethodDto> restMethods = new LinkedList<RestMethodDto>();
 
     public Long getId() {
         return id;
@@ -98,11 +99,11 @@ public class RestResourceDto {
         this.restResponseStrategy = restResponseStrategy;
     }
 
-    public List<RestResourceMethod> getRestResourceMethods() {
-        return restResourceMethods;
+    public List<RestMethodDto> getRestMethods() {
+        return restMethods;
     }
 
-    public void setRestResourceMethods(List<RestResourceMethod> restResourceMethods) {
-        this.restResourceMethods = restResourceMethods;
+    public void setRestMethods(List<RestMethodDto> restMethods) {
+        this.restMethods = restMethods;
     }
 }

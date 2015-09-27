@@ -14,27 +14,23 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.mock.rest.model.project;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+package com.fortmocks.war.mock.rest.web.mvc.command.application;
 
 /**
+ * The RestResourceModifierCommand is used when the user want to set the same status
+ * to multiple REST resources
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class RestResourceMethod {
+public class RestResourceModifierCommand {
 
-    private RestResourceMethodType restResourceMethodType;
+    private Long[] restResourceIds;
 
-    @XmlElement
-    public RestResourceMethodType getRestResourceMethodType() {
-        return restResourceMethodType;
+    public Long[] getRestResourceIds() {
+        return restResourceIds;
     }
 
-    public void setRestResourceMethodType(RestResourceMethodType restResourceMethodType) {
-        this.restResourceMethodType = restResourceMethodType;
+    public void setRestResourceIds(Long[] restResourceIds) {
+        this.restResourceIds = restResourceIds;
     }
-
 }

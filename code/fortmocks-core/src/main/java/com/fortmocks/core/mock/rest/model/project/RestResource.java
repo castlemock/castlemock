@@ -33,7 +33,7 @@ public class RestResource implements Saveable<Long> {
     private String name;
     private String uri;
     private String forwardedEndpoint;
-    private List<RestResourceMethod> restResourceMethods;
+    private List<RestMethod> restMethods;
     private RestResourceStatus restResourceStatus;
     private RestResponseStrategy restResponseStrategy;
 
@@ -93,11 +93,11 @@ public class RestResource implements Saveable<Long> {
         this.restResponseStrategy = restResponseStrategy;
     }
 
-    public List<RestResourceMethod> getRestResourceMethods() {
-        return restResourceMethods;
+    public List<RestMethod> getRestMethods() {
+        return restMethods;
     }
 
-    public void setRestResourceMethods(List<RestResourceMethod> restResourceMethods) {
-        this.restResourceMethods = restResourceMethods;
+    public void setRestMethods(List<RestMethod> restMethods) {
+        this.restMethods = restMethods;
     }
 }

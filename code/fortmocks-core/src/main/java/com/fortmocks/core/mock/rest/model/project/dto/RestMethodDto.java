@@ -16,6 +16,7 @@
 
 package com.fortmocks.core.mock.rest.model.project.dto;
 
+import com.fortmocks.core.mock.rest.model.project.RestMethodType;
 import org.dozer.Mapping;
 
 import java.util.LinkedList;
@@ -25,16 +26,17 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class RestApplicationDto {
+
+public class RestMethodDto {
 
     @Mapping("id")
     private Long id;
 
-    @Mapping("name")
-    private String name;
+    @Mapping("restResourceMethodType")
+    private RestMethodType restMethodType;
 
-    @Mapping("restResources")
-    private List<RestResourceDto> restResources = new LinkedList<RestResourceDto>();
+    @Mapping("restMockResponses")
+    private List<RestMockResponseDto> restMockResponses = new LinkedList<RestMockResponseDto>();
 
     public Long getId() {
         return id;
@@ -44,19 +46,19 @@ public class RestApplicationDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public RestMethodType getRestMethodType() {
+        return restMethodType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRestMethodType(RestMethodType restMethodType) {
+        this.restMethodType = restMethodType;
     }
 
-    public List<RestResourceDto> getRestResources() {
-        return restResources;
+    public List<RestMockResponseDto> getRestMockResponses() {
+        return restMockResponses;
     }
 
-    public void setRestResources(List<RestResourceDto> restResources) {
-        this.restResources = restResources;
+    public void setRestMockResponses(List<RestMockResponseDto> restMockResponses) {
+        this.restMockResponses = restMockResponses;
     }
 }

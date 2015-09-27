@@ -14,37 +14,22 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.mock.rest.model.project.dto;
+package com.fortmocks.war.mock.rest.web.mvc.command.application;
 
-import com.fortmocks.core.base.model.project.dto.ProjectDto;
-import org.dozer.Mapping;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * The DeleteRestApplicationsCommand is a command class and is used to carry information on
+ * which applications should be deleted from the database
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class RestProjectDto extends ProjectDto {
+public class DeleteRestApplicationsCommand {
 
-    @Mapping("restApplications")
-    private List<RestApplicationDto> restApplications = new LinkedList<RestApplicationDto>();
-
-    /**
-     * The default REST project constructor
-     */
-    public RestProjectDto() {
-    }
-
-    /**
-     * The constructor will create a new REST project DTO based on the provided projectDto
-     * @param projectDto The new REST project DTO will be based on the provided project DTO and contain
-     *                   the same information as the provided project DTO
-     */
-    public RestProjectDto(final ProjectDto projectDto){
-        super(projectDto);
-    }
+    private List<RestApplicationDto> restApplications;
 
     public List<RestApplicationDto> getRestApplications() {
         return restApplications;
@@ -54,3 +39,4 @@ public class RestProjectDto extends ProjectDto {
         this.restApplications = restApplications;
     }
 }
+

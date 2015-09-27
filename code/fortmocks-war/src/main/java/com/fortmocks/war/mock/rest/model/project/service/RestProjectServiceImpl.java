@@ -19,11 +19,14 @@ package com.fortmocks.war.mock.rest.model.project.service;
 import com.fortmocks.core.base.model.TypeIdentifier;
 import com.fortmocks.core.base.model.project.dto.ProjectDto;
 import com.fortmocks.core.mock.rest.model.RestTypeIdentifier;
-import com.fortmocks.core.mock.rest.model.project.RestProject;
+import com.fortmocks.core.mock.rest.model.project.*;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.war.base.model.project.service.ProjectServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -52,6 +55,24 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
             }
         }
         return null;
+    }
+
+    @Override
+    public RestApplicationDto findRestApplication(final Long restProjectId, final Long restApplicationId) {
+        final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
+        return restApplication != null ? mapper.map(restApplication, RestApplicationDto.class) : null;
+    }
+
+    @Override
+    public RestApplicationDto saveRestApplication(final Long restProjectId, final RestApplicationDto restApplicationDto) {
+        final RestProject restProject = findOneType(restProjectId);
+        final Long restApplicationId = getNextRestApplicationId();
+        restApplicationDto.setId(restApplicationId);
+
+        final RestApplication restApplication = mapper.map(restApplicationDto, RestApplication.class);
+        restProject.getRestApplications().add(restApplication);
+        save(restProjectId);
+        return restApplicationDto;
     }
 
     /**
@@ -99,5 +120,176 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
     public RestProjectDto convertType(ProjectDto projectDto) {
         Preconditions.checkNotNull(projectDto, "Project cannot be null");
         return new RestProjectDto(projectDto);
+    }
+
+    /**
+     * Deletes an application from a specific REST project. Both the project and the application are identified with provided
+     * identifiers.
+     * @param restProjectId The identifier of the REST project that the port belongs to
+     * @param restApplicationId The identifier of the application that will be removed
+     */
+    @Override
+    public void deleteRestApplication(final Long restProjectId, final Long restApplicationId) {
+        final RestProject restProject = findOneType(restProjectId);
+        final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
+        restProject.getRestApplications().remove(restApplication);
+        save(restProjectId);
+    }
+
+    /**
+     * Takes a list of applications and delete them from a project
+     * @param restProjectId The id of the project that the application belong to
+     * @param restApplications The list of applications that will be deleted
+     */
+    @Override
+    public void deleteRestApplications(final Long restProjectId, List<RestApplicationDto> restApplications) {
+        for(final RestApplicationDto restApplication : restApplications){
+            deleteRestApplication(restProjectId, restApplication.getId());
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * The method calculates the next REST application id
+     * @return The new generated REST application id
+     */
+    private Long getNextRestApplicationId(){
+        Long nextRestApplicationId = 0L;
+        for(RestProject restProject : findAllTypes()){
+            for(RestApplication restApplication : restProject.getRestApplications()){
+                if(restApplication.getId() >= nextRestApplicationId){
+                    nextRestApplicationId = restApplication.getId() + 1;
+                }
+            }
+        }
+        return nextRestApplicationId;
+    }
+
+    /**
+     * The method calculates the next REST resource id
+     * @return The new generated REST resource id
+     */
+    private Long getNextRestResourceId(){
+        Long nextRestResourceId = 0L;
+        for(RestProject restProject : findAllTypes()){
+            for(RestApplication restApplication : restProject.getRestApplications()){
+                for(RestResource restResource : restApplication.getRestResources()){
+                    if(restResource.getId() >= nextRestResourceId){
+                        nextRestResourceId = restResource.getId() + 1;
+                    }
+                }
+            }
+        }
+        return nextRestResourceId;
+    }
+
+    /**
+     * The method calculates the next REST method id
+     * @return The new generated REST method id
+     */
+    private Long getNextRestMethodId(){
+        Long nextRestMethodId = 0L;
+        for(RestProject restProject : findAllTypes()){
+            for(RestApplication restApplication : restProject.getRestApplications()){
+                for(RestResource restResource : restApplication.getRestResources()){
+                    for(RestMethod restMethod : restResource.getRestMethods()){
+                        if(restMethod.getId() >= nextRestMethodId){
+                            nextRestMethodId = restMethod.getId() + 1;
+                        }
+                    }
+                }
+            }
+        }
+        return nextRestMethodId;
+    }
+
+    /**
+     * The method calculates the next REST mock response id
+     * @return The new generated REST mock response id
+     */
+    private Long getNextRestMockResponseId(){
+        Long nextRestMockResponseId = 0L;
+        for(RestProject restProject : findAllTypes()){
+            for(RestApplication restApplication : restProject.getRestApplications()){
+                for(RestResource restResource : restApplication.getRestResources()){
+                    for(RestMethod restMethod : restResource.getRestMethods()){
+                        for(RestMockResponse restMockResponse : restMethod.getRestMockResponses()) {
+                            if (restMockResponse.getId() >= nextRestMockResponseId) {
+                                nextRestMockResponseId = restMockResponse.getId() + 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return nextRestMockResponseId;
+    }
+
+
+
+
+    private RestApplication findRestApplicationByRestProjectIdAndRestApplicationId(final Long restProjectId, final Long restApplicationId) {
+        Preconditions.checkNotNull(restProjectId, "Project id cannot be null");
+        Preconditions.checkNotNull(restApplicationId, "Application id cannot be null");
+        final RestProject soapProject = findOneType(restProjectId);
+        for(RestApplication restApplication : soapProject.getRestApplications()){
+            if(restApplication.getId().equals(restApplicationId)){
+                return restApplication;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a REST application with id " + restApplicationId);
+    }
+
+    private RestResource findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceId(final Long restProjectId, final Long restApplicationId, final Long restResourceId){
+        Preconditions.checkNotNull(restResourceId, "Resource id cannot be null");
+        final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
+        for(RestResource restResource : restApplication.getRestResources()){
+            if(restResource.getId().equals(restResourceId)){
+                return restResource;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a REST resource with id " + restResourceId);
+    }
+
+    private RestMethod findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodId(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId){
+        Preconditions.checkNotNull(restMethodId, "Method id cannot be null");
+        final RestResource restResource = findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceId(restProjectId, restApplicationId, restResourceId);
+        for(RestMethod restMethod : restResource.getRestMethods()){
+            if(restMethod.getId().equals(restMethodId)){
+                return restMethod;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a REST method with id " + restMethodId);
+    }
+
+    private RestMethod findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodIdAndMockResponseId(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId, final Long mockResponseId){
+        Preconditions.checkNotNull(mockResponseId, "Mock response id cannot be null");
+        final RestMethod restMethod = findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodId(restProjectId, restApplicationId, restResourceId, restMethodId);
+        for(RestMockResponse restMockResponse : restMethod.getRestMockResponses()) {
+            if(restMockResponse.getId().equals(mockResponseId)){
+                return restMethod;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a REST mock response with id " + mockResponseId);
     }
 }

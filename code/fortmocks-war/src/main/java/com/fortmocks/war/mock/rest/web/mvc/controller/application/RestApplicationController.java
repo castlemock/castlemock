@@ -16,8 +16,10 @@
 
 package com.fortmocks.war.mock.rest.web.mvc.controller.application;
 
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
+import com.fortmocks.war.mock.rest.web.mvc.command.application.RestResourceModifierCommand;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,19 +40,22 @@ public class RestApplicationController extends AbstractRestViewController {
 
     @Autowired
     private RestProjectService restProjectService;
-    private static final String PAGE = "mock/rest/project/restProject";
+    private static final String PAGE = "mock/rest/application/restApplication";
+    private static final String REST_RESOURCE_MODIFIER_COMMAND = "restResourceModifierCommand";
     /**
      * Retrieves a specific project with a project id
-     * @param projectId The id of the project that will be retrieved
+     * @param restProjectId The id of the project that will be retrieved
      * @return Project that matches the provided project id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/application/{applicationId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId) {
-        final RestProjectDto project = restProjectService.findOne(projectId);
+    @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}", method = RequestMethod.GET)
+    public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId) {
+        final RestApplicationDto restApplication = restProjectService.findRestApplication(restProjectId, restApplicationId);
 
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(REST_PROJECT, project);
+        model.addObject(REST_PROJECT_ID, restProjectId);
+        model.addObject(REST_APPLICATION, restApplication);
+        model.addObject(REST_RESOURCE_MODIFIER_COMMAND, new RestResourceModifierCommand());
         return model;
     }
 
