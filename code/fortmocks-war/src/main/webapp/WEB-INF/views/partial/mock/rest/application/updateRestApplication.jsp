@@ -28,6 +28,6 @@
     </table>
     
     <button class="button-success pure-button" type="submit" name="submit"><spring:message code="rest.updaterestapplication.button.updateapplication"/></button>
-    <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}"/>" class="button-error pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.updaterestapplication.button.cancel"/></a>
+    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}"/>" class="button-error pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.updaterestapplication.button.cancel"/></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>

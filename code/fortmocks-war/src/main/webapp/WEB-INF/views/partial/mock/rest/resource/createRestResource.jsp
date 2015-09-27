@@ -23,7 +23,7 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label><spring:message code="rest.restresource.label.name"/></label></td>
-            <td class="column2"><form:input path="restApplication.name" />
+            <td class="column2"><form:input path="restResource.name" />
         </tr>
     </table>
  

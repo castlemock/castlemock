@@ -21,11 +21,11 @@
     <h1><spring:message code="rest.restproject.header.project" arguments="${restProject.name}"/></h1>
     <div align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
-        <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restproject.button.update"/></span></a>
+         <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restproject.button.update"/></span></a>
             <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/create/application"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restproject.button.createapplication"/></span></a>
-        <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/add/wadl"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restproject.button.upload" arguments="wadl"/></span></a>
-        <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="rest.restproject.button.export"/></span></a>
-        <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.delete"/></span></a>
+            <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/add/wadl"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restproject.button.upload" arguments="wadl"/></span></a>
+            <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="rest.restproject.button.export"/></span></a>
+            <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.delete"/></span></a>
         </sec:authorize>
     </div>
 </div>

@@ -48,7 +48,7 @@ public class RestResourceDto {
     @Mapping("restResponseStrategy")
     private RestResponseStrategy restResponseStrategy;
 
-    @Mapping("restResourceMethods")
+    @Mapping("restMethods")
     private List<RestMethodDto> restMethods = new LinkedList<RestMethodDto>();
 
     public Long getId() {

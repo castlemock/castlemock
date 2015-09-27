@@ -16,10 +16,12 @@
 
 package com.fortmocks.war.mock.rest.model.project.service;
 
-import com.fortmocks.core.mock.rest.model.project.RestApplication;
+import com.fortmocks.core.mock.rest.model.project.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.RestProject;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.war.base.model.project.service.ProjectService;
 
 import java.util.List;
@@ -40,6 +42,10 @@ public interface RestProjectService extends ProjectService<RestProject, RestProj
     RestProjectDto findRestProject(String name);
 
     RestApplicationDto findRestApplication(Long restProjectId, Long restApplicationId);
+
+    RestResourceDto findRestResource(Long restProjectId, Long restApplicationId, Long restResourceId);
+
+    RestMethodDto findRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId);
 
     RestApplicationDto saveRestApplication(Long restProjectId, RestApplicationDto restApplication);
 
@@ -65,4 +71,20 @@ public interface RestProjectService extends ProjectService<RestProject, RestProj
      * @param restApplicationDto The new application values
      */
     void updateRestApplication(Long restProjectId, Long restApplicationId, RestApplicationDto restApplicationDto);
+
+    RestResourceDto saveRestResource(Long restProjectId, Long restApplicationId, RestResourceDto restResourceDto);
+
+    void deleteRestResource(Long restProjectId, Long restApplicationId, Long restResourceId);
+
+    void deleteRestResources(Long restProjectId, Long restApplicationId, List<RestResourceDto> restResources);
+
+    void updateRestResource(Long restProjectId, Long restApplicationId, Long restResourceId, RestResourceDto restResourceDto);
+
+    RestMethodDto saveRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, RestMethodDto restMethodDto);
+
+    void deleteRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId);
+
+    void deleteRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, List<RestMethodDto> restMethods);
+
+    void updateRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, RestMethodDto restMethodDto);
 }

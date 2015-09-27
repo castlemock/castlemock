@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.rest.web.mvc.command.resource;
+package com.fortmocks.war.mock.rest.web.mvc.command.application;
 
 /**
  * The RestApplicationModifierCommand is used when the user want to set the same status

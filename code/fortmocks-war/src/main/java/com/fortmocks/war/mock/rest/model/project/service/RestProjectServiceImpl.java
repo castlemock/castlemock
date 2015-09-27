@@ -21,7 +21,9 @@ import com.fortmocks.core.base.model.project.dto.ProjectDto;
 import com.fortmocks.core.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.core.mock.rest.model.project.*;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.war.base.model.project.service.ProjectServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
@@ -61,6 +63,18 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
     public RestApplicationDto findRestApplication(final Long restProjectId, final Long restApplicationId) {
         final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
         return restApplication != null ? mapper.map(restApplication, RestApplicationDto.class) : null;
+    }
+
+    @Override
+    public RestResourceDto findRestResource(Long restProjectId, Long restApplicationId, Long restResourceId) {
+        final RestResource restResource = findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceId(restProjectId, restApplicationId, restResourceId);
+        return restResource != null ? mapper.map(restResource, RestResourceDto.class) : null;
+    }
+
+    @Override
+    public RestMethodDto findRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId) {
+        final RestMethod restMethod = findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodId(restProjectId, restApplicationId, restResourceId, restMethodId);
+        return restMethod != null ? mapper.map(restMethod, RestMethodDto.class) : null;
     }
 
     @Override
@@ -160,6 +174,64 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
         restApplication.setName(restApplicationDto.getName());
         save(restProjectId);
+    }
+
+    @Override
+    public RestResourceDto saveRestResource(final Long restProjectId, final Long restApplicationId, final RestResourceDto restResourceDto) {
+        Preconditions.checkNotNull(restResourceDto, "REST resource cannot be null");
+        final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
+        final Long restResourceIdId = getNextRestResourceId();
+        restResourceDto.setId(restResourceIdId);
+        final RestResource restResource = mapper.map(restResourceDto, RestResource.class);
+        restApplication.getRestResources().add(restResource);
+        save(restProjectId);
+        return restResourceDto;
+    }
+
+    @Override
+    public void deleteRestResource(final Long restProjectId, final Long restApplicationId, final Long restResourceId) {
+        final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
+        final RestResource restResource = findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceId(restProjectId, restApplicationId, restResourceId);
+        restApplication.getRestResources().remove(restResource);
+        save(restProjectId);
+    }
+
+    @Override
+    public void deleteRestResources(Long restProjectId, Long restApplicationId, List<RestResourceDto> restResources) {
+        for(final RestResourceDto restResource : restResources){
+            deleteRestResource(restProjectId, restApplicationId, restResource.getId());
+        }
+    }
+
+    @Override
+    public void updateRestResource(Long restProjectId, Long restApplicationId, Long restResourceId, RestResourceDto restResourceDto) {
+    }
+
+    @Override
+    public RestMethodDto saveRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, RestMethodDto restMethodDto) {
+        Preconditions.checkNotNull(restMethodDto, "REST method cannot be null");
+        final RestResource restResource = findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceId(restProjectId, restApplicationId, restResourceId);
+        final Long restMethodId = getNextRestMethodId();
+        restMethodDto.setId(restMethodId);
+        final RestMethod restMethod = mapper.map(restMethodDto, RestMethod.class);
+        restResource.getRestMethods().add(restMethod);
+        save(restProjectId);
+        return restMethodDto;
+    }
+
+    @Override
+    public void deleteRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId) {
+
+    }
+
+    @Override
+    public void deleteRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, List<RestMethodDto> restMethods) {
+
+    }
+
+    @Override
+    public void updateRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, RestMethodDto restMethodDto) {
+
     }
 
 

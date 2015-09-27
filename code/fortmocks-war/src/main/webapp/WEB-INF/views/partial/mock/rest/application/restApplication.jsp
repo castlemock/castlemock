@@ -16,13 +16,14 @@
   ~ limitations under the License.
   --%>
 
-<c:url var="rest_resource_update_url"  value="/web/rest/project/${restProjectId}" />
+<c:url var="rest_resource_update_url"  value="/web/rest/project/${restProjectId}/application/${restApplication.id}" />
 <div class="content-top">
     <h1><spring:message code="rest.restapplication.header.application" arguments="${restApplication.name}"/></h1>
     <div align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
-        <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restapplication.button.update"/></span></a>
-        <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restapplication.button.delete"/></span></a>
+            <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/create/resource"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restapplication.button.createresource"/></span></a>
+            <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restapplication.button.update"/></span></a>
+          <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restapplication.button.delete"/></span></a>
         </sec:authorize>
     </div>
 </div>
@@ -37,7 +38,7 @@
 
 <h2 class="decorated"><span><spring:message code="rest.restapplication.header.resources"/></span></h2>
 <c:choose>
-    <c:when test="${restProject.restApplications.size() > 0}">
+    <c:when test="${restApplication.restResources.size() > 0}">
         <form:form action="${rest_resource_update_url}/" method="POST"  commandName="restResourceModifierCommand">
             <div class="table-frame">
                 <table class="entityTable">
@@ -50,14 +51,13 @@
                     <c:forEach items="${restApplication.restResources}" var="restResource" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><form:checkbox path="restResourceIds" name="${restResource.id}" value="${restResource.id}"/></td>
-                            <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/resource/${restResource.id}"/>">${restApplication.name}</a></td>
+                            <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/resource/${restResource.id}"/>">${restResource.name}</a></td>
                         </tr>
                     </c:forEach>
                 </table>
             </div>
             <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
-                <button class="button-secondary pure-button" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="rest.restapplication.button.updateendpoint"/></span></button>
-                <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restapplication.button.deleteresource"/></span></button>
+                <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restapplication.button.deleteresources"/></span></button>
             </sec:authorize>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form:form>

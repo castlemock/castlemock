@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.rest.web.mvc.command.application;
+package com.fortmocks.war.mock.rest.web.mvc.command.method;
+
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 
 /**
- * The RestResourceModifierCommand is used when the user want to set the same status
- * to multiple REST resources
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class RestResourceModifierCommand {
+public class CreateRestMethodCommand {
 
-    private Long[] restResourceIds;
+    private RestMethodDto restMethod = new RestMethodDto();
 
-    public Long[] getRestResourceIds() {
-        return restResourceIds;
+    public RestMethodDto getRestMethod() {
+        return restMethod;
     }
 
-    public void setRestResourceIds(Long[] restResourceIds) {
-        this.restResourceIds = restResourceIds;
+    public void setRestMethod(RestMethodDto restMethod) {
+        this.restMethod = restMethod;
     }
 }

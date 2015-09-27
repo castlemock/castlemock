@@ -14,28 +14,23 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.rest.web.mvc.command.resource;
-
-import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
-
-import java.util.List;
+package com.fortmocks.war.mock.rest.web.mvc.command.method;
 
 /**
- * The DeleteRestResourceCommand is a command class and is used to carry information on
- * which resource should be deleted from the database
+ * The RestMethodModifierCommand is used when the user want to set the same status
+ * to multiple REST methods
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteRestResourceCommand {
+public class RestMethodModifierCommand {
 
-    private List<RestResourceDto> restResources;
+    private Long[] restMethodIds;
 
-    public List<RestResourceDto> getRestResources() {
-        return restResources;
+    public Long[] getRestMethodIds() {
+        return restMethodIds;
     }
 
-    public void setRestResources(List<RestResourceDto> restResources) {
-        this.restResources = restResources;
+    public void setRestMethodIds(Long[] restMethodIds) {
+        this.restMethodIds = restMethodIds;
     }
 }
-

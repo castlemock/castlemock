@@ -17,17 +17,20 @@
 package com.fortmocks.war.mock.rest.web.mvc.controller.application;
 
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
-import com.fortmocks.war.mock.rest.web.mvc.command.application.RestResourceModifierCommand;
+import com.fortmocks.war.mock.rest.web.mvc.command.resource.DeleteRestResourceCommand;
+import com.fortmocks.war.mock.rest.web.mvc.command.resource.RestResourceModifierCommand;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The project controller provides functionality to retrieve a specific project
@@ -42,6 +45,11 @@ public class RestApplicationController extends AbstractRestViewController {
     private RestProjectService restProjectService;
     private static final String PAGE = "mock/rest/application/restApplication";
     private static final String REST_RESOURCE_MODIFIER_COMMAND = "restResourceModifierCommand";
+    private static final Logger LOGGER = Logger.getLogger(RestApplicationController.class);
+    private static final String DELETE_REST_RESOURCES = "delete";
+    private static final String DELETE_REST_RESOURCES_COMMAND = "deleteRestResourcesCommand";
+    private static final String DELETE_REST_RESOURCES_PAGE = "mock/rest/resource/deleteRestResources";
+
     /**
      * Retrieves a specific project with a project id
      * @param restProjectId The id of the project that will be retrieved
@@ -59,6 +67,24 @@ public class RestApplicationController extends AbstractRestViewController {
         return model;
     }
 
-
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}", method = RequestMethod.POST)
+    public ModelAndView projectFunctionality(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @RequestParam final String action, @ModelAttribute final RestResourceModifierCommand restResourceModifierCommand) {
+        LOGGER.debug("Requested REST project action requested: " + action);
+        if(DELETE_REST_RESOURCES.equalsIgnoreCase(action)) {
+            final List<RestResourceDto> restResources = new ArrayList<RestResourceDto>();
+            for(Long restResourceId : restResourceModifierCommand.getRestResourceIds()){
+                final RestResourceDto restResourceDto = restProjectService.findRestResource(restProjectId, restApplicationId, restResourceId);
+                restResources.add(restResourceDto);
+            }
+            final ModelAndView model = createPartialModelAndView(DELETE_REST_RESOURCES_PAGE);
+            model.addObject(REST_PROJECT_ID, restProjectId);
+            model.addObject(REST_APPLICATION_ID, restApplicationId);
+            model.addObject(REST_RESOURCES, restResources);
+            model.addObject(DELETE_REST_RESOURCES_COMMAND, new DeleteRestResourceCommand());
+            return model;
+        }
+        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);
+    }
 }
 

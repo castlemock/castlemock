@@ -20,7 +20,7 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
 import com.fortmocks.war.mock.rest.web.mvc.command.application.DeleteRestApplicationsCommand;
-import com.fortmocks.war.mock.rest.web.mvc.command.resource.RestApplicationModifierCommand;
+import com.fortmocks.war.mock.rest.web.mvc.command.application.RestApplicationModifierCommand;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
