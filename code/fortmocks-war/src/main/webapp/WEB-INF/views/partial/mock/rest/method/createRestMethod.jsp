@@ -23,7 +23,17 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label><spring:message code="rest.restresource.label.name"/></label></td>
-            <td class="column2"><form:input path="restApplication.name" />
+            <td class="column2"><form:input path="restMethod.name" />
+        </tr>
+        <tr>
+            <td class="column1"><spring:message code="rest.createmethod.label.methodtype"/></td>
+            <td>
+                <form:select path="restMethod.restMethodType">
+                    <c:forEach items="${methodTypes}" var="methodType">
+                        <option value="${methodType}">${methodType}</option>
+                    </c:forEach>
+                </form:select>
+            </td>
         </tr>
     </table>
  

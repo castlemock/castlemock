@@ -19,7 +19,7 @@ package com.fortmocks.war.mock.rest.web.mvc.controller.application;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
-import com.fortmocks.war.mock.rest.web.mvc.command.resource.DeleteRestResourceCommand;
+import com.fortmocks.war.mock.rest.web.mvc.command.resource.DeleteRestResourcesCommand;
 import com.fortmocks.war.mock.rest.web.mvc.command.resource.RestResourceModifierCommand;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.apache.log4j.Logger;
@@ -81,7 +81,7 @@ public class RestApplicationController extends AbstractRestViewController {
             model.addObject(REST_PROJECT_ID, restProjectId);
             model.addObject(REST_APPLICATION_ID, restApplicationId);
             model.addObject(REST_RESOURCES, restResources);
-            model.addObject(DELETE_REST_RESOURCES_COMMAND, new DeleteRestResourceCommand());
+            model.addObject(DELETE_REST_RESOURCES_COMMAND, new DeleteRestResourcesCommand());
             return model;
         }
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);

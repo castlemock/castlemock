@@ -16,10 +16,9 @@
 
 package com.fortmocks.war.mock.rest.web.mvc.controller.resource;
 
-import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
-import com.fortmocks.war.mock.rest.web.mvc.command.resource.DeleteRestResourceCommand;
+import com.fortmocks.war.mock.rest.web.mvc.command.resource.DeleteRestResourcesCommand;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,7 +40,7 @@ public class DeleteRestResourceController extends AbstractRestViewController {
 
     @Autowired
     private RestProjectService restProjectService;
-    private static final String PAGE = "mock/rest/project/restProject";
+    private static final String PAGE = "mock/rest/resource/deleteRestResource";
     /**
      * Retrieves a specific project with a project id
      * @param restProjectId The id of the project that will be retrieved
@@ -60,16 +59,16 @@ public class DeleteRestResourceController extends AbstractRestViewController {
     }
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{restResourceId}/delete/confirm", method = RequestMethod.GET)
+    @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/delete/confirm", method = RequestMethod.GET)
     public ModelAndView confirm(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId) {
         restProjectService.deleteRestResource(restProjectId, restApplicationId, restResourceId);
-        return redirect("/rest/project/" + restProjectId);
+        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);
     }
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/delete/confirm", method = RequestMethod.POST)
-    public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @ModelAttribute final DeleteRestResourceCommand deleteRestResourceCommand) {
-        restProjectService.deleteRestResources(restProjectId, restApplicationId, deleteRestResourceCommand.getRestResources());
+    public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @ModelAttribute final DeleteRestResourcesCommand deleteRestResourcesCommand) {
+        restProjectService.deleteRestResources(restProjectId, restApplicationId, deleteRestResourcesCommand.getRestResources());
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);
     }
 

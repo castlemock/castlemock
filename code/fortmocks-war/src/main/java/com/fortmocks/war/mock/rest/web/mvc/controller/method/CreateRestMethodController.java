@@ -16,6 +16,7 @@
 
 package com.fortmocks.war.mock.rest.web.mvc.controller.method;
 
+import com.fortmocks.core.mock.rest.model.project.RestMethodType;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
@@ -45,6 +46,7 @@ public class CreateRestMethodController extends AbstractRestViewController {
     @Autowired
     private RestProjectService restProjectService;
     private static final String PAGE = "mock/rest/method/createRestMethod";
+    private static final String REST_METHOD_TYPES = "methodTypes";
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}/create/method", method = RequestMethod.GET)
@@ -54,6 +56,7 @@ public class CreateRestMethodController extends AbstractRestViewController {
         model.addObject(REST_APPLICATION_ID, applicationId);
         model.addObject(REST_RESOURCE_ID, resourceId);
         model.addObject(COMMAND, new CreateRestMethodCommand());
+        model.addObject(REST_METHOD_TYPES, RestMethodType.values());
         return model;
     }
 
@@ -62,7 +65,7 @@ public class CreateRestMethodController extends AbstractRestViewController {
     @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}/create/method", method = RequestMethod.POST)
     public ModelAndView createResource(@PathVariable final Long projectId, @PathVariable final Long applicationId, @PathVariable final Long resourceId, @ModelAttribute final CreateRestMethodCommand createRestMethodCommand) {
         final RestMethodDto restMethodDto = restProjectService.saveRestMethod(projectId, applicationId, resourceId, createRestMethodCommand.getRestMethod());
-        return redirect("/rest/project/" + projectId + "/application/" + applicationId + "resource/" + resourceId + "/method/" + restMethodDto.getId());
+        return redirect("/rest/project/" + projectId + "/application/" + applicationId + "/resource/" + resourceId + "/method/" + restMethodDto.getId());
     }
 
 

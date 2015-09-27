@@ -15,11 +15,11 @@
   ~ limitations under the License.
   --%>
 
-<c:url var="update_rest_application_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/update" />
+<c:url var="update_rest_resource_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/update" />
 <div class="content-top">
     <h1><spring:message code="rest.updateresource.header.updateresource" arguments="${restResource.name}"/></h1>
 </div>
-<form:form action="${update_rest_application_url}" method="POST" commandName="restApplication">
+<form:form action="${update_rest_resource_url}" method="POST" commandName="restResource">
     <table class="formTable">
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.updateresource.label.name"/></label></td>

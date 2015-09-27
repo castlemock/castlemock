@@ -16,8 +16,10 @@
 
 package com.fortmocks.war.mock.rest.web.mvc.controller.method;
 
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
+import com.fortmocks.war.mock.rest.web.mvc.command.response.RestResponseModifierCommand;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,7 +40,8 @@ public class RestMethodController extends AbstractRestViewController {
 
     @Autowired
     private RestProjectService restProjectService;
-    private static final String PAGE = "mock/rest/project/restProject";
+    private static final String PAGE = "mock/rest/method/restMethod";
+    private static final String REST_METHOD_MODIFIER_COMMAND = "restResponseModifierCommand";
     /**
      * Retrieves a specific project with a project id
      * @param projectId The id of the project that will be retrieved
@@ -47,13 +50,15 @@ public class RestMethodController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId, @PathVariable final Long resourceId, @PathVariable final Long methodId) {
-        final RestProjectDto project = restProjectService.findOne(projectId);
+        final RestMethodDto restMethod = restProjectService.findRestMethod(projectId, applicationId, resourceId, methodId);
 
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(REST_PROJECT, project);
+        model.addObject(REST_PROJECT_ID, projectId);
+        model.addObject(REST_APPLICATION_ID, applicationId);
+        model.addObject(REST_RESOURCE_ID, resourceId);
+        model.addObject(REST_METHOD, restMethod);
+        model.addObject(REST_METHOD_MODIFIER_COMMAND, new RestResponseModifierCommand());
         return model;
     }
-
-
 }
 

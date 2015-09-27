@@ -204,7 +204,11 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
     }
 
     @Override
-    public void updateRestResource(Long restProjectId, Long restApplicationId, Long restResourceId, RestResourceDto restResourceDto) {
+    public void updateRestResource(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final RestResourceDto restResourceDto) {
+        Preconditions.checkNotNull(restResourceDto, "REST resource cannot be null");
+        final RestResource restResource = findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceId(restProjectId, restApplicationId, restResourceId);
+        restResource.setName(restResourceDto.getName());
+        save(restProjectId);
     }
 
     @Override
@@ -221,17 +225,26 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
 
     @Override
     public void deleteRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId) {
-
+        final RestResource restResource = findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceId(restProjectId, restApplicationId, restResourceId);
+        final RestMethod restMethod = findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodId(restProjectId, restApplicationId, restResourceId, restMethodId);
+        restResource.getRestMethods().remove(restMethod);
+        save(restProjectId);
     }
 
     @Override
-    public void deleteRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, List<RestMethodDto> restMethods) {
-
+    public void deleteRestMethods(Long restProjectId, Long restApplicationId, Long restResourceId, List<RestMethodDto> restMethods) {
+        for(final RestMethodDto restMethod : restMethods){
+            deleteRestMethod(restProjectId, restApplicationId, restResourceId, restMethod.getId());
+        }
     }
 
     @Override
     public void updateRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, RestMethodDto restMethodDto) {
-
+        Preconditions.checkNotNull(restMethodDto, "REST method cannot be null");
+        final RestMethod restMethod = findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodId(restProjectId, restApplicationId, restResourceId, restMethodId);
+        restMethod.setName(restMethodDto.getName());
+        restMethod.setRestMethodType(restMethodDto.getRestMethodType());
+        save(restProjectId);
     }
 
 

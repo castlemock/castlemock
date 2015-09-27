@@ -16,17 +16,21 @@
 
 package com.fortmocks.war.mock.rest.web.mvc.controller.resource;
 
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
+import com.fortmocks.war.mock.rest.web.mvc.command.method.DeleteRestMethodsCommand;
 import com.fortmocks.war.mock.rest.web.mvc.command.method.RestMethodModifierCommand;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The project controller provides functionality to retrieve a specific project
@@ -41,6 +45,10 @@ public class RestResourceController extends AbstractRestViewController {
     private RestProjectService restProjectService;
     private static final String PAGE = "mock/rest/resource/restResource";
     private static final String REST_METHOD_MODIFIER_COMMAND = "restMethodModifierCommand";
+    private static final Logger LOGGER = Logger.getLogger(RestResourceController.class);
+    private static final String DELETE_REST_METHODS = "delete";
+    private static final String DELETE_REST_METHODS_PAGE = "mock/rest/method/deleteRestMethods";
+    private static final String DELETE_REST_METHODS_COMMAND = "deleteRestMethodsCommand";
     /**
      * Retrieves a specific project with a project id
      * @param projectId The id of the project that will be retrieved
@@ -50,7 +58,6 @@ public class RestResourceController extends AbstractRestViewController {
     @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId, @PathVariable final Long resourceId) {
         final RestResourceDto restResource = restProjectService.findRestResource(projectId, applicationId, resourceId);
-
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
         model.addObject(REST_APPLICATION_ID, applicationId);
@@ -59,6 +66,26 @@ public class RestResourceController extends AbstractRestViewController {
         return model;
     }
 
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}", method = RequestMethod.POST)
+    public ModelAndView projectFunctionality(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @RequestParam final String action, @ModelAttribute final RestMethodModifierCommand restMethodModifierCommand) {
+        LOGGER.debug("Requested REST project action requested: " + action);
+        if(DELETE_REST_METHODS.equalsIgnoreCase(action)) {
+            final List<RestMethodDto> restMethods = new ArrayList<RestMethodDto>();
+            for(Long restMethodId : restMethodModifierCommand.getRestMethodIds()){
+                final RestMethodDto restResourceDto = restProjectService.findRestMethod(restProjectId, restApplicationId, restResourceId, restMethodId);
+                restMethods.add(restResourceDto);
+            }
+            final ModelAndView model = createPartialModelAndView(DELETE_REST_METHODS_PAGE);
+            model.addObject(REST_PROJECT_ID, restProjectId);
+            model.addObject(REST_APPLICATION_ID, restApplicationId);
+            model.addObject(REST_RESOURCE_ID, restResourceId);
+            model.addObject(REST_METHODS, restMethods);
+            model.addObject(DELETE_REST_METHODS_COMMAND, new DeleteRestMethodsCommand());
+            return model;
+        }
+        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId);
+    }
 
 }
 

@@ -15,7 +15,7 @@
   ~ limitations under the License.
   --%>
 
-<c:url var="delete_methods_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/method/delete/confirm" />
+<c:url var="delete_methods_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/delete/confirm" />
 <div class="content-top">
     <h1><spring:message code="rest.deletemethods.header.deletemethods"/></h1>
 </div>

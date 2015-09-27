@@ -32,7 +32,10 @@ public class RestMethodDto {
     @Mapping("id")
     private Long id;
 
-    @Mapping("restResourceMethodType")
+    @Mapping("name")
+    private String name;
+
+    @Mapping("restMethodType")
     private RestMethodType restMethodType;
 
     @Mapping("restMockResponses")
@@ -44,6 +47,14 @@ public class RestMethodDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public RestMethodType getRestMethodType() {

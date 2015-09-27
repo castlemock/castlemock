@@ -31,6 +31,7 @@ import java.util.List;
 public class RestMethod implements Saveable<Long> {
 
     private Long id;
+    private String name;
     private RestMethodType restMethodType;
     private List<RestMockResponse> restMockResponses;
 
@@ -43,6 +44,14 @@ public class RestMethod implements Saveable<Long> {
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @XmlElement

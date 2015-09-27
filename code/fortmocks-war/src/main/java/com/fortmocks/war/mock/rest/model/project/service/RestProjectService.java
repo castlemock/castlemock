@@ -84,7 +84,7 @@ public interface RestProjectService extends ProjectService<RestProject, RestProj
 
     void deleteRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId);
 
-    void deleteRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, List<RestMethodDto> restMethods);
+    void deleteRestMethods(Long restProjectId, Long restApplicationId, Long restResourceId, List<RestMethodDto> restMethods);
 
     void updateRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, RestMethodDto restMethodDto);
 }

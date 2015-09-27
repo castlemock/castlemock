@@ -37,7 +37,7 @@
 
 <h2 class="decorated"><span><spring:message code="rest.restmethod.header.responses"/></span></h2>
 <c:choose>
-    <c:when test="${restMethod.restResponses.size() > 0}">
+    <c:when test="${restMethod.restMockResponses.size() > 0}">
         <form:form action="${rest_response_update_url}/" method="POST"  commandName="restResponseModifierCommand">
             <div class="table-frame">
                 <table class="entityTable">
@@ -47,10 +47,10 @@
                         <th><spring:message code="rest.restmethod.column.selected"/></th>
                         <th><spring:message code="rest.restmethod.column.response"/></th>
                     </tr>
-                    <c:forEach items="${restMethod.restResponses}" var="restResponse" varStatus="loopStatus">
+                    <c:forEach items="${restMethod.restMockResponses}" var="restMockResponse" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><form:checkbox path="restResponseIds" name="${restResponse.id}" value="${restResponse.id}"/></td>
-                            <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restResponse.id}"/>">${restResponse.name}</a></td>
+                            <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
                         </tr>
                     </c:forEach>
                 </table>
