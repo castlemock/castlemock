@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.mock.rest.model.project;
+package com.fortmocks.core.mock.rest.model.project.dto;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.fortmocks.core.mock.rest.model.project.RestResourceMethodType;
+import org.dozer.Mapping;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class RestResourceMethod {
 
+public class RestResourceMethodDto {
+
+    @Mapping("restResourceMethodType")
     private RestResourceMethodType restResourceMethodType;
 
-    @XmlElement
     public RestResourceMethodType getRestResourceMethodType() {
         return restResourceMethodType;
     }

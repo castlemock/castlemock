@@ -21,6 +21,8 @@ import com.fortmocks.core.mock.rest.model.project.RestResourceStatus;
 import com.fortmocks.core.mock.rest.model.project.RestResponseStrategy;
 import org.dozer.Mapping;
 
+import java.util.List;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -39,14 +41,14 @@ public class RestResourceDto {
     @Mapping("forwardedEndpoint")
     private String forwardedEndpoint;
 
-    @Mapping("restResourceMethod")
-    private RestResourceMethod restResourceMethod;
-
     @Mapping("restResourceStatus")
     private RestResourceStatus restResourceStatus;
 
     @Mapping("restResponseStrategy")
     private RestResponseStrategy restResponseStrategy;
+
+    @Mapping("restResourceMethods")
+    private List<RestResourceMethod> restResourceMethods;
 
     public Long getId() {
         return id;
@@ -80,14 +82,6 @@ public class RestResourceDto {
         this.forwardedEndpoint = forwardedEndpoint;
     }
 
-    public RestResourceMethod getRestResourceMethod() {
-        return restResourceMethod;
-    }
-
-    public void setRestResourceMethod(RestResourceMethod restResourceMethod) {
-        this.restResourceMethod = restResourceMethod;
-    }
-
     public RestResourceStatus getRestResourceStatus() {
         return restResourceStatus;
     }
@@ -102,5 +96,13 @@ public class RestResourceDto {
 
     public void setRestResponseStrategy(RestResponseStrategy restResponseStrategy) {
         this.restResponseStrategy = restResponseStrategy;
+    }
+
+    public List<RestResourceMethod> getRestResourceMethods() {
+        return restResourceMethods;
+    }
+
+    public void setRestResourceMethods(List<RestResourceMethod> restResourceMethods) {
+        this.restResourceMethods = restResourceMethods;
     }
 }

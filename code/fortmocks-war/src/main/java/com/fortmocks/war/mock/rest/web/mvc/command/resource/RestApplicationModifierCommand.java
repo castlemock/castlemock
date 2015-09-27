@@ -17,29 +17,20 @@
 package com.fortmocks.war.mock.rest.web.mvc.command.resource;
 
 /**
- * The RestResourceModifierCommand is used when the user want to set the same status
- * to multiple resources
+ * The RestApplicationModifierCommand is used when the user want to set the same status
+ * to multiple REST applications
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class RestResourceModifierCommand {
+public class RestApplicationModifierCommand {
 
-    private Long[] restResourceIds;
-    private String restResourceStatus;
+    private Long[] restApplicationIds;
 
-    public Long[] getRestResourceIds() {
-        return restResourceIds;
+    public Long[] getRestApplicationIds() {
+        return restApplicationIds;
     }
 
-    public void setRestResourceIds(Long[] restResourceIds) {
-        this.restResourceIds = restResourceIds;
-    }
-
-    public String getRestResourceStatus() {
-        return restResourceStatus;
-    }
-
-    public void setRestResourceStatus(String restResourceStatus) {
-        this.restResourceStatus = restResourceStatus;
+    public void setRestApplicationIds(Long[] restApplicationIds) {
+        this.restApplicationIds = restApplicationIds;
     }
 }

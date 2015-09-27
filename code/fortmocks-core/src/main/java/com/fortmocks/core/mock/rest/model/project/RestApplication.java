@@ -16,30 +16,49 @@
 
 package com.fortmocks.core.mock.rest.model.project;
 
-import com.fortmocks.core.base.model.project.Project;
+import com.fortmocks.core.base.model.Saveable;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class RestProject extends Project {
+public class RestApplication implements Saveable<Long> {
 
-    private List<RestApplication> restApplications;
+    private Long id;
+    private String name;
+    private List<RestResource> restResources;
 
-    @XmlElementWrapper(name = "restApplications")
-    @XmlElement(name = "restApplication")
-
-    public List<RestApplication> getRestApplications() {
-        return restApplications;
+    @Override
+    @XmlElement
+    public Long getId() {
+        return id;
     }
 
-    public void setRestApplications(List<RestApplication> restApplications) {
-        this.restApplications = restApplications;
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @XmlElement
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlElementWrapper(name = "restResources")
+    @XmlElement(name = "restResource")
+    public List<RestResource> getRestResources() {
+        return restResources;
+    }
+
+    public void setRestResources(List<RestResource> restResources) {
+        this.restResources = restResources;
     }
 }

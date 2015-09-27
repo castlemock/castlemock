@@ -49,20 +49,20 @@
     </table>
 </div>
 
-<h2 class="decorated"><span><spring:message code="rest.restproject.header.ports"/></span></h2>
+<h2 class="decorated"><span><spring:message code="rest.restproject.header.applications"/></span></h2>
 <c:choose>
-    <c:when test="${restProject.restResources.size() > 0}">
-        <form:form action="${rest_resource_update_url}/" method="POST"  commandName="restResourceModifierCommand">
+    <c:when test="${restProject.restApplications.size() > 0}">
+        <form:form action="${rest_resource_update_url}/" method="POST"  commandName="restApplicationModifierCommand">
             <div class="table-frame">
                 <table class="entityTable">
                     <tr>
                         <th><spring:message code="rest.restproject.column.selected"/></th>
-                        <th><spring:message code="rest.restproject.column.port"/></th>
+                        <th><spring:message code="rest.restproject.column.application"/></th>
                     </tr>
-                    <c:forEach items="${restProject.restResources}" var="restResource" varStatus="loopStatus">
+                    <c:forEach items="${restProject.restApplications}" var="restApplication" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
-                            <td><form:checkbox path="restPortIds" name="${restResource.id}" value="${restResource.id}"/></td>
-                            <td><a href="<c:url value="/web/rest/project/${restProject.id}/resource/${restResource.id}"/>">${restResource.name}</a></td>
+                            <td><form:checkbox path="restPortIds" name="${restApplication.id}" value="${restApplication.id}"/></td>
+                            <td><a href="<c:url value="/web/rest/project/${restApplication.id}/resource/${restApplication.id}"/>">${restApplication.name}</a></td>
                         </tr>
                     </c:forEach>
                 </table>
@@ -76,6 +76,6 @@
 
     </c:when>
     <c:otherwise>
-        <spring:message code="rest.restproject.label.noports" arguments="wadl"/>
+        <spring:message code="rest.restproject.label.noapplication" arguments="wadl"/>
     </c:otherwise>
 </c:choose>

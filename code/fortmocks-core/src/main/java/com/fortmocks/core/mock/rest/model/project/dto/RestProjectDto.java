@@ -17,7 +17,6 @@
 package com.fortmocks.core.mock.rest.model.project.dto;
 
 import com.fortmocks.core.base.model.project.dto.ProjectDto;
-import com.fortmocks.core.mock.rest.model.project.RestResource;
 import org.dozer.Mapping;
 
 import java.util.List;
@@ -28,8 +27,8 @@ import java.util.List;
  */
 public class RestProjectDto extends ProjectDto {
 
-    @Mapping("restResources")
-    private List<RestResource> restResources;
+    @Mapping("restApplications")
+    private List<RestApplicationDto> restApplications;
 
 
     /**
@@ -47,11 +46,11 @@ public class RestProjectDto extends ProjectDto {
         super(projectDto);
     }
 
-    public List<RestResource> getRestResources() {
-        return restResources;
+    public List<RestApplicationDto> getRestApplications() {
+        return restApplications;
     }
 
-    public void setRestResources(List<RestResource> restResources) {
-        this.restResources = restResources;
+    public void setRestApplications(List<RestApplicationDto> restApplications) {
+        this.restApplications = restApplications;
     }
 }

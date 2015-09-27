@@ -20,6 +20,7 @@ import com.fortmocks.core.base.model.Saveable;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -32,7 +33,7 @@ public class RestResource implements Saveable<Long> {
     private String name;
     private String uri;
     private String forwardedEndpoint;
-    private RestResourceMethod restResourceMethod;
+    private List<RestResourceMethod> restResourceMethods;
     private RestResourceStatus restResourceStatus;
     private RestResponseStrategy restResponseStrategy;
 
@@ -75,15 +76,6 @@ public class RestResource implements Saveable<Long> {
     }
 
     @XmlElement
-    public RestResourceMethod getRestResourceMethod() {
-        return restResourceMethod;
-    }
-
-    public void setRestResourceMethod(RestResourceMethod restResourceMethod) {
-        this.restResourceMethod = restResourceMethod;
-    }
-
-    @XmlElement
     public RestResourceStatus getRestResourceStatus() {
         return restResourceStatus;
     }
@@ -99,5 +91,13 @@ public class RestResource implements Saveable<Long> {
 
     public void setRestResponseStrategy(RestResponseStrategy restResponseStrategy) {
         this.restResponseStrategy = restResponseStrategy;
+    }
+
+    public List<RestResourceMethod> getRestResourceMethods() {
+        return restResourceMethods;
+    }
+
+    public void setRestResourceMethods(List<RestResourceMethod> restResourceMethods) {
+        this.restResourceMethods = restResourceMethods;
     }
 }

@@ -16,25 +16,15 @@
 
 package com.fortmocks.core.mock.rest.model.project;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class RestResourceMethod {
-
-    private RestResourceMethodType restResourceMethodType;
-
-    @XmlElement
-    public RestResourceMethodType getRestResourceMethodType() {
-        return restResourceMethodType;
-    }
-
-    public void setRestResourceMethodType(RestResourceMethodType restResourceMethodType) {
-        this.restResourceMethodType = restResourceMethodType;
-    }
-
+@XmlType
+@XmlEnum(String.class)
+public enum RestResourceMethodType {
+    GET, POST, PUT, HEAD, DELETE, OPTIONS, PATCH, TRACE
 }
