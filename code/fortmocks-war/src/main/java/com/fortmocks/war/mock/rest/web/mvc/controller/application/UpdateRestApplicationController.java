@@ -16,12 +16,17 @@
 
 package com.fortmocks.war.mock.rest.web.mvc.controller.application;
 
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
+import com.fortmocks.core.mock.soap.model.project.SoapOperationStatus;
+import com.fortmocks.core.mock.soap.model.project.SoapResponseStrategy;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,22 +43,25 @@ public class UpdateRestApplicationController extends AbstractRestViewController 
 
     @Autowired
     private RestProjectService restProjectService;
-    private static final String PAGE = "mock/rest/project/restProject";
-    /**
-     * Retrieves a specific project with a project id
-     * @param projectId The id of the project that will be retrieved
-     * @return Project that matches the provided project id
-     */
-    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    private static final String PAGE = "mock/rest/application/updateRestApplication";
+
+
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId) {
-        final RestProjectDto project = restProjectService.findOne(projectId);
-
+        final RestApplicationDto restApplicationDto = restProjectService.findRestApplication(projectId, applicationId);
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(REST_PROJECT, project);
+        model.addObject(REST_APPLICATION, restApplicationDto);
+        model.addObject(REST_PROJECT_ID, projectId);
         return model;
     }
 
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @RequestMapping(value = "/{projectId}/application/{applicationId}/update", method = RequestMethod.POST)
+    public ModelAndView update(@PathVariable final Long projectId, @PathVariable final Long applicationId,  @ModelAttribute final RestApplicationDto restApplicationDto) {
+        restProjectService.updateRestApplication(projectId, applicationId, restApplicationDto);
+        return redirect("/rest/project/" + projectId + "/application/" + applicationId);
+    }
 
 }
 

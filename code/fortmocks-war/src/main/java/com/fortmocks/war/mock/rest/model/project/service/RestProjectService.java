@@ -57,4 +57,12 @@ public interface RestProjectService extends ProjectService<RestProject, RestProj
      * @param restApplications The list of applications that will be deleted
      */
     void deleteRestApplications(Long restProjectId, List<RestApplicationDto> restApplications);
+
+    /**
+     * The method provides the functionality to update an existing application
+     * @param restProjectId The id of the project that the application belongs to
+     * @param restApplicationId The id of the application that will be updated
+     * @param restApplicationDto The new application values
+     */
+    void updateRestApplication(Long restProjectId, Long restApplicationId, RestApplicationDto restApplicationDto);
 }

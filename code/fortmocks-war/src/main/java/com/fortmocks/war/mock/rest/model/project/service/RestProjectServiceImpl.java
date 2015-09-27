@@ -148,25 +148,19 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * The method provides the functionality to update an existing application
+     * @param restProjectId The id of the project that the application belongs to
+     * @param restApplicationId The id of the application that will be updated
+     * @param restApplicationDto The new application values
+     */
+    @Override
+    public void updateRestApplication(final Long restProjectId, final Long restApplicationId, final RestApplicationDto restApplicationDto) {
+        Preconditions.checkNotNull(restApplicationDto, "REST application cannot be null");
+        final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
+        restApplication.setName(restApplicationDto.getName());
+        save(restProjectId);
+    }
 
 
     /**
