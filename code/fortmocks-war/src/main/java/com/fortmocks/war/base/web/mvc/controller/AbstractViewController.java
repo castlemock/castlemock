@@ -43,7 +43,7 @@ public abstract class AbstractViewController extends AbstractController {
     protected MessageSource messageSource;
     @Value("${app.version}")
     private String version;
-    private String APPLICATION_VERSION = "appVersion";
+    private static final String APPLICATION_VERSION = "appVersion";
     private static final String PARTIAL_DIRECTORY = "partial/";
     private static final String JSP = ".jsp";
     private static final String INDEX = "index";

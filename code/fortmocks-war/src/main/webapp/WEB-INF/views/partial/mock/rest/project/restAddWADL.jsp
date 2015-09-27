@@ -17,7 +17,7 @@
 
 <c:url var="add_wadl_url"  value="/web/rest/project/${projectId}/add/wadl" />
 <div class="content-top">
-    <h1><spring:message code="rest.restaddwadl.header.uploadfile" arguments="WSDL"/></h1>
+    <h1><spring:message code="rest.restaddwadl.header.uploadfile" arguments="WADL"/></h1>
 </div>
 
 <div class="upload-information">
@@ -45,10 +45,10 @@
     </form:form>
 </div>
 
-<h2 class="decorated"><span><spring:message code="rest.restaddwadl.header.upload" arguments="WSDL"/></span></h2>
+<h2 class="decorated"><span><spring:message code="rest.restaddwadl.header.upload" arguments="WADL"/></span></h2>
 
 <div class="upload-file">
-    <form:form method="POST" enctype="multipart/form-data" action="${add_wsdl_url}" modelAttribute="uploadForm">
+    <form:form method="POST" enctype="multipart/form-data" action="${add_wadl_url}" modelAttribute="uploadForm">
         <div>
             <div id="filedrag">
                 <i class="fa fa-cloud-upload fa-5x"></i><br/>
