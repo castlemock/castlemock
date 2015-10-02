@@ -18,12 +18,10 @@ package com.fortmocks.war.mock.rest.web.mvc.controller.resource;
 
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
-import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
 import com.fortmocks.war.mock.rest.web.mvc.command.method.DeleteRestMethodsCommand;
 import com.fortmocks.war.mock.rest.web.mvc.command.method.RestMethodModifierCommand;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

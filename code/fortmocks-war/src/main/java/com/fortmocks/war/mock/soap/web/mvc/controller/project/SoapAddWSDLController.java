@@ -18,7 +18,6 @@ package com.fortmocks.war.mock.soap.web.mvc.controller.project;
 
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.war.mock.soap.manager.WSDLComponent;
-import com.fortmocks.war.mock.soap.model.project.service.SoapProjectService;
 import com.fortmocks.war.mock.soap.web.mvc.command.project.WSDLFileUploadForm;
 import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.beans.factory.annotation.Autowired;

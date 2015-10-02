@@ -17,10 +17,8 @@
 package com.fortmocks.war.mock.soap.web.mvc.controller.port;
 
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.war.mock.soap.model.project.service.SoapProjectService;
 import com.fortmocks.war.mock.soap.web.mvc.command.port.DeleteSoapPortsCommand;
 import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

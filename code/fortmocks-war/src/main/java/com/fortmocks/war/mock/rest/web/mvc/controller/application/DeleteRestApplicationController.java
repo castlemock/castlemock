@@ -17,10 +17,8 @@
 package com.fortmocks.war.mock.rest.web.mvc.controller.application;
 
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
 import com.fortmocks.war.mock.rest.web.mvc.command.application.DeleteRestApplicationsCommand;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;

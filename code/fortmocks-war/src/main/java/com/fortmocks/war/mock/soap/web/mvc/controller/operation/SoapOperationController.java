@@ -21,7 +21,6 @@ import com.fortmocks.core.mock.soap.model.project.SoapMockResponseStatus;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.war.mock.soap.model.event.service.SoapEventService;
-import com.fortmocks.war.mock.soap.model.project.service.SoapProjectService;
 import com.fortmocks.war.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.fortmocks.war.mock.soap.web.mvc.command.mockresponse.SoapMockResponseModifierCommand;
 import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;

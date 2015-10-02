@@ -19,7 +19,6 @@ package com.fortmocks.war.mock.rest.web.mvc.controller.event;
 import com.fortmocks.core.base.model.event.dto.EventDto;
 import com.fortmocks.war.mock.rest.model.event.service.RestEventService;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
-import com.fortmocks.war.mock.soap.model.event.service.SoapEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
