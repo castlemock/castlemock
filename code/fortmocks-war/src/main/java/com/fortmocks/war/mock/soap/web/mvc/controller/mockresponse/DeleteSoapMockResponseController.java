@@ -43,9 +43,6 @@ public class DeleteSoapMockResponseController extends AbstractSoapViewController
 
     private static final String PAGE = "mock/soap/mockresponse/deleteSoapMockResponse";
 
-    @Autowired
-    private SoapProjectService soapProjectService;
-
     /**
      * Retrieves the mocked response that should be deleted and return the matching response
      * and displays it on the delete confirmation page.

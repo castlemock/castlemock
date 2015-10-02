@@ -17,6 +17,8 @@
 package com.fortmocks.war.mock.soap.web.mvc.controller;
 
 import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
+import com.fortmocks.war.mock.soap.model.project.service.SoapProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * The class operates as a shared base for all the view related to the SOAP module
@@ -40,5 +42,8 @@ public class AbstractSoapViewController extends AbstractViewController {
     protected static final String SOAP_MOCK_RESPONSES = "soapMockResponses";
     protected static final String SOAP_MOCK_RESPONSE_STATUSES = "soapMockResponseStatuses";
     protected static final String SOAP_MOCK_RESPONSE_STRATEGIES = "soapMockResponseStrategies";
+
+    @Autowired
+    protected SoapProjectService soapProjectService;
 
 }

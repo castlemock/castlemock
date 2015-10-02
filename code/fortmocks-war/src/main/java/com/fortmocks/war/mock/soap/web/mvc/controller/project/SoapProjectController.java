@@ -55,9 +55,6 @@ public class SoapProjectController extends AbstractSoapViewController {
     private static final String UPDATE_SOAP_PORTS_ENDPOINT_COMMAND = "updateSoapPortsEndpointCommand";
     private static final Logger LOGGER = Logger.getLogger(SoapProjectController.class);
 
-    @Autowired
-    private SoapProjectService soapProjectService;
-
     /**
      * Retrieves a specific project with a project id
      * @param projectId The id of the project that will be retrieved

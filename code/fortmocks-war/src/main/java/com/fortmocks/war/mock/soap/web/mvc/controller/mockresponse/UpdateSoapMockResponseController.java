@@ -39,9 +39,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/web/soap/project")
 public class UpdateSoapMockResponseController extends AbstractSoapViewController {
 
-    @Autowired
-    private SoapProjectService soapProjectService;
-
     /**
      * The method provides the functionality to mock a specific mocked response
      * @param soapProjectId The id of the project which the operation belongs to

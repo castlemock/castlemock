@@ -42,9 +42,6 @@ public class DeleteSoapPortController extends AbstractSoapViewController {
 
     private static final String PAGE = "mock/soap/port/deleteSoapPort";
 
-    @Autowired
-    private SoapProjectService soapProjectService;
-
     /**
      * Returns the port that should be deleted and display it on a confirmation page
      * @param soapProjectId The id of the project which the port belongs to

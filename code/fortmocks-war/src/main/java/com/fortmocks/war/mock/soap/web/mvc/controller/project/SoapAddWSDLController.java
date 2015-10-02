@@ -44,9 +44,6 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
     private static final String TYPE_FILE = "file";
 
     @Autowired
-    private SoapProjectService soapProjectService;
-
-    @Autowired
     private WSDLComponent wsdlComponent;
 
     /**

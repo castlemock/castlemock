@@ -53,9 +53,6 @@ public class SoapPortController extends AbstractSoapViewController {
     private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_PAGE = "mock/soap/operation/updateSoapOperationsEndpoint";
     private static final Logger LOGGER = Logger.getLogger(SoapPortController.class);
 
-    @Autowired
-    private SoapProjectService soapProjectService;
-
     /**
      * Returns an port that matches the incoming parameters (soapProjectId and soapPortId)
      * @param soapPortId The id of the project which the port belongs to

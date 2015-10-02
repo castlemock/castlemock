@@ -40,9 +40,6 @@ public class SoapMockResponseController extends AbstractSoapViewController {
 
     private static final String PAGE = "mock/soap/mockresponse/soapMockResponse";
 
-    @Autowired
-    private SoapProjectService soapProjectService;
-
     /**
      * The method is responsible for retrieving a specific mocked response with a provided id
      * @param soapProjectId The id of the project which the operation belongs to

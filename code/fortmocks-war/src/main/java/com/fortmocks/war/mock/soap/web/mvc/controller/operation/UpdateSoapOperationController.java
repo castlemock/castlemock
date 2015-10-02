@@ -45,9 +45,6 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
 
     private static final String PAGE = "mock/soap/operation/updateSoapOperation";
 
-    @Autowired
-    private SoapProjectService soapProjectService;
-
     /**
      * The method retrieves a specific operation and returns a view that displays the retrieved operation.
      * @param soapProjectId The id of the project that the operation belongs to

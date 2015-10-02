@@ -64,9 +64,6 @@ public class SoapOperationController extends AbstractSoapViewController {
     private static final Logger LOGGER = Logger.getLogger(SoapOperationController.class);
 
     @Autowired
-    private SoapProjectService soapProjectService;
-
-    @Autowired
     private SoapEventService soapEventService;
 
     /**

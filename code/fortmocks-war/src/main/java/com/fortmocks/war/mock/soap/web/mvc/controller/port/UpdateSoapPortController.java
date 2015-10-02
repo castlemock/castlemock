@@ -41,9 +41,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/web/soap/project")
 public class UpdateSoapPortController extends AbstractSoapViewController {
 
-    @Autowired
-    private SoapProjectService soapProjectService;
-
     /**
      * The method provides the functionality to update the endpoint address for multiple
      * ports at once

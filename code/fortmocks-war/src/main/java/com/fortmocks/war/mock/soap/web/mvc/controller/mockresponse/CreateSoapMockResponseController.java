@@ -45,9 +45,6 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
 
     private static final String PAGE = "mock/soap/mockresponse/createSoapMockResponse";
 
-    @Autowired
-    private SoapProjectService soapProjectService;
-
     /**
      * The method returns a view used for creating a new mocked response
      * @param soapProject The id of the project which the operation belongs to
