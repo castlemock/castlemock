@@ -37,8 +37,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/web/rest/project")
 public class UpdateRestApplicationController extends AbstractRestViewController {
 
-    @Autowired
-    private RestProjectService restProjectService;
     private static final String PAGE = "mock/rest/application/updateRestApplication";
 
 

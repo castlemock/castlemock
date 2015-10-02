@@ -43,10 +43,6 @@ public class DeleteRestMockResponseController extends AbstractRestViewController
 
     private static final String PAGE = "mock/rest/mockresponse/deleteRestMockResponse";
 
-    @Autowired
-    private RestProjectService restProjectService;
-
-
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/{restMockResponseId}/delete", method = RequestMethod.GET)
     public ModelAndView showConfirmationPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @PathVariable final Long restMockResponseId) {

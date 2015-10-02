@@ -38,8 +38,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/web/rest/project")
 public class DeleteRestResourceController extends AbstractRestViewController {
 
-    @Autowired
-    private RestProjectService restProjectService;
     private static final String PAGE = "mock/rest/resource/deleteRestResource";
     /**
      * Retrieves a specific project with a project id

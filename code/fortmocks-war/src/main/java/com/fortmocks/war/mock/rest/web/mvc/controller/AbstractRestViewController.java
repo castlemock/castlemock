@@ -17,6 +17,8 @@
 package com.fortmocks.war.mock.rest.web.mvc.controller;
 
 import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
+import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * The class operates as a shared base for all the view related to the REST module
@@ -43,6 +45,9 @@ public class AbstractRestViewController extends AbstractViewController {
 
     protected static final String REST_MOCK_RESPONSE = "restMockResponse";
     protected static final String REST_MOCK_RESPONSES = "restMockResponses";
+
+    @Autowired
+    protected RestProjectService restProjectService;
 
 
 }

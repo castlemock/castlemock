@@ -42,8 +42,6 @@ import java.util.List;
 @RequestMapping("/web/rest/project")
 public class RestMethodController extends AbstractRestViewController {
 
-    @Autowired
-    private RestProjectService restProjectService;
     private static final String PAGE = "mock/rest/method/restMethod";
     private static final Logger LOGGER = Logger.getLogger(RestMethodController.class);
     private static final String UPDATE_STATUS = "update";

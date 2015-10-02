@@ -44,10 +44,7 @@ public class RestAddWADLController extends AbstractRestViewController {
     private static final String TYPE_FILE = "file";
 
     @Autowired
-    private RestProjectService restProjectService;
-    @Autowired
     private WADLComponent wadlComponent;
-
 
     /**
      * The method returns a view which is used to upload a WADL file for a specific project
