@@ -43,15 +43,18 @@
             <div class="table-frame">
                 <table class="entityTable">
                     <col width="10%">
-                    <col width="90%">
+                    <col width="30%">
+                    <col width="60%">
                     <tr>
                         <th><spring:message code="rest.restapplication.column.selected"/></th>
                         <th><spring:message code="rest.restapplication.column.resource"/></th>
+                        <th><spring:message code="rest.restapplication.column.uri"/></th>
                     </tr>
                     <c:forEach items="${restApplication.restResources}" var="restResource" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><form:checkbox path="restResourceIds" name="${restResource.id}" value="${restResource.id}"/></td>
                             <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/resource/${restResource.id}"/>">${restResource.name}</a></td>
+                            <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/resource/${restResource.id}"/>">${restResource.uri}</a></td>
                         </tr>
                     </c:forEach>
                 </table>

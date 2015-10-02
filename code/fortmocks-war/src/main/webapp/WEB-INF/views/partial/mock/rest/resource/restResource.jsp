@@ -47,15 +47,24 @@
             <div class="table-frame">
                 <table class="entityTable">
                     <col width="10%">
-                    <col width="90%">
+                    <col width="30%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="40%">
                     <tr>
                         <th><spring:message code="rest.restresource.column.selected"/></th>
-                        <th><spring:message code="rest.restresource.column.method"/></th>
+                        <th><spring:message code="rest.restresource.column.methodname"/></th>
+                        <th><spring:message code="rest.restresource.column.methodmethodtype"/></th>
+                        <th><spring:message code="rest.restresource.column.methodmethodstatus"/></th>
+                        <th><spring:message code="rest.restresource.column.methodforwardedendpoint"/></th>
                     </tr>
                     <c:forEach items="${restResource.restMethods}" var="restMethod" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><form:checkbox path="restMethodIds" name="${restMethod.id}" value="${restMethod.id}"/></td>
                             <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.name}</a></td>
+                            <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.restMethodType}</a></td>
+                            <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.restMethodStatus}</a></td>
+                            <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.forwardedEndpoint}</a></td>
                         </tr>
                     </c:forEach>
                 </table>

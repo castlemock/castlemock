@@ -22,8 +22,12 @@
 <form:form action="${create_rest_resource_url}" method="POST">
     <table class="formTable">
         <tr>
-            <td class="column1"><label><spring:message code="rest.restresource.label.name"/></label></td>
+            <td class="column1"><label><spring:message code="rest.createresource.label.name"/></label></td>
             <td class="column2"><form:input path="restResource.name" />
+        </tr>
+        <tr>
+            <td class="column1"><label><spring:message code="rest.createresource.label.uri"/></label></td>
+            <td class="column2"><form:input path="restResource.uri" />
         </tr>
     </table>
  
