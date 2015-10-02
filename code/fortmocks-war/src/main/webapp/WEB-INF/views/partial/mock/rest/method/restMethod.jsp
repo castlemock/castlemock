@@ -16,7 +16,7 @@
   ~ limitations under the License.
   --%>
 
-<c:url var="rest_response_update_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restMethodId}/method/${restMethod.id}" />
+<c:url var="rest_mock_response_update_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restMethodId}/method/${restMethod.id}" />
 <div class="content-top">
     <h1><spring:message code="rest.restmethod.header.method" arguments="${restMethod.name}"/></h1>
     <div align="right">
@@ -36,34 +36,74 @@
     </table>
 </div>
 
-<h2 class="decorated"><span><spring:message code="rest.restmethod.header.responses"/></span></h2>
-<c:choose>
-    <c:when test="${restMethod.restMockResponses.size() > 0}">
-        <form:form action="${rest_response_update_url}/" method="POST"  commandName="restMockResponseModifierCommand">
+<div>
+    <h2 class="decorated"><span><spring:message code="rest.restmethod.header.mockresponses"/></span></h2>
+    <c:choose>
+
+        <c:when test="${restMethod.restMockResponses.size() > 0}">
+            <form:form action="${rest_mock_response_update_url}" method="POST"  commandName="restMockResponseModifierCommand">
+                <div class="table-frame">
+                    <table class="entityTable">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="80%">
+                        <tr>
+                            <th><spring:message code="rest.restmethod.column.selected"/></th>
+                            <th><spring:message code="rest.restmethod.column.status"/></th>
+                            <th><spring:message code="rest.restmethod.column.responsename"/></th>
+                        </tr>
+                        <c:forEach items="${restMethod.restMockResponses}" var="restMockResponse" varStatus="loopStatus">
+                            <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                                <td><form:checkbox path="restMockResponseIds" name="${restMockResponse.id}" value="${restMockResponse.id}"/></td>
+                                <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.restMockResponseStatus}"/></td>
+                                <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+                <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+                    <form:select path="restMockResponseStatus">
+                        <c:forEach items="${restMockResponseStatuses}" var="restMockResponseStatus">
+                            <form:option value="${restMockResponseStatus}"><spring:message code="rest.type.restmockresponsestatus.${restMockResponseStatus}"/></form:option>
+                        </c:forEach>
+                    </form:select>
+                    <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restmethod.button.update"/></span></button>
+                    <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.deleteMockResponses"/></span></button>
+                </sec:authorize>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form:form>
+        </c:when>
+        <c:otherwise>
+            <spring:message code="rest.restmethod.label.noresponses"/>
+        </c:otherwise>
+    </c:choose>
+</div>
+
+<div>
+    <h2 class="decorated"><span><spring:message code="rest.restmethod.header.events"/></span></h2>
+    <c:choose>
+        <c:when test="${restMethod.events.size() > 0}">
             <div class="table-frame">
-                <table class="entityTable">
-                    <col width="10%">
-                    <col width="90%">
+                <table width="100%">
                     <tr>
-                        <th><spring:message code="rest.restmethod.column.selected"/></th>
-                        <th><spring:message code="rest.restmethod.column.response"/></th>
+                        <th><spring:message code="rest.restmethod.column.id"/></th>
+                        <th><spring:message code="rest.restmethod.column.startdate"/></th>
+                        <th><spring:message code="rest.restmethod.column.enddate"/></th>
+                        <th><spring:message code="rest.restmethod.column.mockedresponse"/></th>
                     </tr>
-                    <c:forEach items="${restMethod.restMockResponses}" var="restMockResponse" varStatus="loopStatus">
+                    <c:forEach items="${restMethod.events}" var="event" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
-                            <td><form:checkbox path="restMockResponseIds" name="${restResponse.id}" value="${restMockResponse.id}"/></td>
-                            <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
+                            <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.id}</a></td>
+                            <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.startDate}</a></td>
+                            <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.endDate}</a></td>
+                            <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.restResponse.mockResponseName}</a></td>
                         </tr>
                     </c:forEach>
                 </table>
             </div>
-            <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
-                <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.deleteresponses"/></span></button>
-            </sec:authorize>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form:form>
-
-    </c:when>
-    <c:otherwise>
-        <spring:message code="rest.restmethod.label.noresponses"/>
-    </c:otherwise>
-</c:choose>
+        </c:when>
+        <c:otherwise>
+            <spring:message code="rest.restmethod.label.noevent"/>
+        </c:otherwise>
+    </c:choose>
+</div>

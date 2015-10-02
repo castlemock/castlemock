@@ -17,11 +17,13 @@
 package com.fortmocks.core.mock.rest.model.project;
 
 import com.fortmocks.core.base.model.Saveable;
+import com.fortmocks.core.base.model.event.Event;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren
@@ -35,6 +37,7 @@ public class RestMethod implements Saveable<Long> {
     private String defaultBody;
     private RestMethodType restMethodType;
     private List<RestMockResponse> restMockResponses;
+    private Set<Event> events;
 
     @Override
     @XmlElement
@@ -81,5 +84,15 @@ public class RestMethod implements Saveable<Long> {
 
     public void setRestMockResponses(List<RestMockResponse> restMockResponses) {
         this.restMockResponses = restMockResponses;
+    }
+
+    @XmlElementWrapper(name = "events")
+    @XmlElement(name = "event")
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
     }
 }

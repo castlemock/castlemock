@@ -16,11 +16,13 @@
 
 package com.fortmocks.core.mock.rest.model.project.dto;
 
+import com.fortmocks.core.base.model.event.Event;
 import com.fortmocks.core.mock.rest.model.project.RestMethodType;
 import org.dozer.Mapping;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren
@@ -43,6 +45,9 @@ public class RestMethodDto {
 
     @Mapping("restMockResponses")
     private List<RestMockResponseDto> restMockResponses = new LinkedList<RestMockResponseDto>();
+
+    @Mapping("events")
+    private Set<Event> events;
 
     public Long getId() {
         return id;
@@ -82,5 +87,13 @@ public class RestMethodDto {
 
     public void setRestMockResponses(List<RestMockResponseDto> restMockResponses) {
         this.restMockResponses = restMockResponses;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
     }
 }

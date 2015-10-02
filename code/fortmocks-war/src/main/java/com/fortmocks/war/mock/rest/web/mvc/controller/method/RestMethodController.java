@@ -48,6 +48,7 @@ public class RestMethodController extends AbstractRestViewController {
     private static final String DELETE_REST_MOCK_RESPONSES_COMMAND = "deleteRestMockResponsesCommand";
     private static final String REST_MOCK_RESPONSE_MODIFIER_COMMAND = "restMockResponseModifierCommand";
     private static final String DELETE_MOCK_RESPONSES_PAGE = "mock/rest/mockresponse/deleteRestMockResponses";
+    protected static final String REST_MOCK_RESPONSE_STATUSES = "restMockResponseStatuses";
 
     /**
      * Retrieves a specific project with a project id
@@ -64,6 +65,7 @@ public class RestMethodController extends AbstractRestViewController {
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD, restMethod);
+        model.addObject(REST_MOCK_RESPONSE_STATUSES, RestMockResponseStatus.values());
         model.addObject(REST_MOCK_RESPONSE_MODIFIER_COMMAND, new RestMockResponseModifierCommand());
         return model;
     }
