@@ -16,6 +16,9 @@
 
 package com.fortmocks.war.mock.rest.web.mvc.controller.method;
 
+import com.fortmocks.core.mock.rest.model.project.RestMethodStatus;
+import com.fortmocks.core.mock.rest.model.project.RestMethodType;
+import com.fortmocks.core.mock.rest.model.project.RestResponseStrategy;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,6 +51,9 @@ public class UpdateRestMethodController extends AbstractRestViewController {
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restResourceId);
+        model.addObject(REST_METHOD_TYPES, RestMethodType.values());
+        model.addObject(REST_METHOD_STATUSES, RestMethodStatus.values());
+        model.addObject(REST_RESPONSE_STRATEGIES, RestResponseStrategy.values());
         return model;
     }
 

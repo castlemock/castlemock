@@ -46,6 +46,10 @@ public class AbstractRestViewController extends AbstractViewController {
     protected static final String REST_MOCK_RESPONSE = "restMockResponse";
     protected static final String REST_MOCK_RESPONSES = "restMockResponses";
 
+    protected static final String REST_METHOD_TYPES = "restMethodTypes";
+    protected static final String REST_METHOD_STATUSES = "restMethodStatuses";
+    protected static final String REST_RESPONSE_STRATEGIES = "restResponsestrategies";
+
     @Autowired
     protected RestProjectService restProjectService;
 

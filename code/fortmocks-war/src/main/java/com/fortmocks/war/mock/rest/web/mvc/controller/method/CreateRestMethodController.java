@@ -38,7 +38,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class CreateRestMethodController extends AbstractRestViewController {
 
     private static final String PAGE = "mock/rest/method/createRestMethod";
-    private static final String REST_METHOD_TYPES = "methodTypes";
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}/create/method", method = RequestMethod.GET)

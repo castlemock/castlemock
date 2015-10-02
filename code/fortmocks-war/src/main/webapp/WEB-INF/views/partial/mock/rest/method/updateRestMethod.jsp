@@ -25,6 +25,40 @@
             <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.name"/></label></td>
             <td class="column2"><form:input path="name" value="${restMethod.name}"/></td>
         </tr>
+        <tr>
+            <td class="column1"><spring:message code="rest.updatemethod.label.methodtype"/></td>
+            <td>
+                <form:select path="restMethodType">
+                    <c:forEach items="${restMethodTypes}" var="restMethodType">
+                        <option value="${restMethodType}">${restMethodType}</option>
+                    </c:forEach>
+                </form:select>
+            </td>
+        </tr>
+        <tr>
+            <td class="column1"><spring:message code="rest.updatemethod.label.methodstatus"/></td>
+            <td>
+                <form:select path="restMethodStatus">
+                    <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
+                        <option value="${restMethodStatus}">${restMethodStatus}</option>
+                    </c:forEach>
+                </form:select>
+            </td>
+        </tr>
+        <tr>
+            <td class="column1"><spring:message code="rest.updatemethod.label.responsestrategy"/></td>
+            <td>
+                <form:select path="restResponseStrategy">
+                    <c:forEach items="${restResponsestrategies}" var="restResponseStrategy">
+                        <option value="${restResponseStrategy}">${restResponseStrategy}</option>
+                    </c:forEach>
+                </form:select>
+            </td>
+        </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.forwardedendpoint"/></label></td>
+            <td class="column2"><form:input path="forwardedEndpoint" value="${restMethod.forwardedEndpoint}"/></td>
+        </tr>
     </table>
     
     <button class="button-success pure-button" type="submit" name="submit"><spring:message code="rest.updatemethod.button.updatemethod"/></button>

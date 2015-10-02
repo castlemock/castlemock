@@ -205,6 +205,7 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         Preconditions.checkNotNull(restResourceDto, "REST resource cannot be null");
         final RestResource restResource = findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceId(restProjectId, restApplicationId, restResourceId);
         restResource.setName(restResourceDto.getName());
+        restResource.setUri(restResourceDto.getUri());
         save(restProjectId);
     }
 
@@ -249,6 +250,9 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         final RestMethod restMethod = findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodId(restProjectId, restApplicationId, restResourceId, restMethodId);
         restMethod.setName(restMethodDto.getName());
         restMethod.setRestMethodType(restMethodDto.getRestMethodType());
+        restMethod.setRestResponseStrategy(restMethodDto.getRestResponseStrategy());
+        restMethod.setRestMethodStatus(restMethodDto.getRestMethodStatus());
+        restMethod.setForwardedEndpoint(restMethodDto.getForwardedEndpoint());
         save(restProjectId);
     }
 

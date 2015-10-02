@@ -29,8 +29,8 @@
             <td class="column1"><spring:message code="rest.createmethod.label.methodtype"/></td>
             <td>
                 <form:select path="restMethod.restMethodType">
-                    <c:forEach items="${methodTypes}" var="methodType">
-                        <option value="${methodType}">${methodType}</option>
+                    <c:forEach items="${restMethodTypes}" var="restMethodType">
+                        <option value="${restMethodType}">${restMethodType}</option>
                     </c:forEach>
                 </form:select>
             </td>
