@@ -17,9 +17,7 @@
 package com.fortmocks.war.mock.rest.web.mvc.controller.mockresponse;
 
 import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
-import com.fortmocks.war.mock.soap.model.project.service.SoapProjectService;
 import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

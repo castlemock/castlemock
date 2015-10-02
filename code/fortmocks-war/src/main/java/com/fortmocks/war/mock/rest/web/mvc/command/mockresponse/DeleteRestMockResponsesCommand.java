@@ -14,23 +14,29 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.rest.web.mvc.command.response;
+package com.fortmocks.war.mock.rest.web.mvc.command.mockresponse;
+
+
+import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
+
+import java.util.List;
 
 /**
- * The RestResponseModifierCommand is used when the user want to set the same status
- * to multiple REST responses
+ * The DeleteRestMockResponsesCommand is a command class and is used to identify which mock responses
+ * will be deleted from the server.
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class RestResponseModifierCommand {
+public class DeleteRestMockResponsesCommand {
 
-    private Long[] restResponseIds;
+    private List<RestMockResponseDto> restMockResponses;
 
-    public Long[] getRestResponseIds() {
-        return restResponseIds;
+    public List<RestMockResponseDto> getRestMockResponses() {
+        return restMockResponses;
     }
 
-    public void setRestResponseIds(Long[] restResponseIds) {
-        this.restResponseIds = restResponseIds;
+    public void setRestMockResponses(List<RestMockResponseDto> restMockResponses) {
+        this.restMockResponses = restMockResponses;
     }
 }
+

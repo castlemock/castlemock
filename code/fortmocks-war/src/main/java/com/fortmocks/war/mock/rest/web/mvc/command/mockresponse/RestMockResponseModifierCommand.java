@@ -14,28 +14,30 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.rest.web.mvc.command.method;
-
-import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
-
-import java.util.List;
+package com.fortmocks.war.mock.rest.web.mvc.command.mockresponse;
 
 /**
- * The DeleteRestMethodCommand is a command class and is used to carry information on
- * which resource should be deleted from the database
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteRestMethodsCommand {
+public class RestMockResponseModifierCommand {
 
-    private List<RestMethodDto> restMethods;
+    private Long[] restMockResponseIds;
+    private String restMockResponseStatus;
 
-    public List<RestMethodDto> getRestMethods() {
-        return restMethods;
+    public Long[] getRestMockResponseIds() {
+        return restMockResponseIds;
     }
 
-    public void setRestMethods(List<RestMethodDto> restMethods) {
-        this.restMethods = restMethods;
+    public void setRestMockResponseIds(Long[] restMockResponseIds) {
+        this.restMockResponseIds = restMockResponseIds;
+    }
+
+    public String getRestMockResponseStatus() {
+        return restMockResponseStatus;
+    }
+
+    public void setRestMockResponseStatus(String restMockResponseStatus) {
+        this.restMockResponseStatus = restMockResponseStatus;
     }
 }
-

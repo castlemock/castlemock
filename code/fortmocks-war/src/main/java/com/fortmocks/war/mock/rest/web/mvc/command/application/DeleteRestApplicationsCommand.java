@@ -17,7 +17,6 @@
 package com.fortmocks.war.mock.rest.web.mvc.command.application;
 
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 
 import java.util.List;
 

@@ -269,6 +269,28 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         save(restProjectId);
     }
 
+    @Override
+    public void deleteRestMockResponse(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponseId) {
+        final RestMockResponse restMockResponse = findRestMockResponseByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodIdAndRestMockResponseId(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        final RestMethod restMethod = findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodId(restProjectId, restApplicationId, restResourceId, restMethodId);
+        restMethod.getRestMockResponses().remove(restMockResponse);
+        save(restProjectId);
+    }
+
+    @Override
+    public void deleteRestMockResponses(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, List<RestMockResponseDto> restMockResponses) {
+        for(final RestMockResponseDto restMockResponse : restMockResponses){
+            deleteRestMockResponse(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponse.getId());
+        }
+    }
+
+    @Override
+    public void updateStatus(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId, final Long restMockResponseId, final RestMockResponseStatus status) {
+        final RestMockResponse restMockResponse = findRestMockResponseByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodIdAndRestMockResponseId(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        restMockResponse.setRestMockResponseStatus(status);
+        save(restProjectId);
+    }
+
     /**
      * The method calculates the next REST application id
      * @return The new generated REST application id

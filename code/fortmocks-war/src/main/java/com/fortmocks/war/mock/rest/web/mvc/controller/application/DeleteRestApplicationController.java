@@ -17,7 +17,6 @@
 package com.fortmocks.war.mock.rest.web.mvc.controller.application;
 
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
 import com.fortmocks.war.mock.rest.web.mvc.command.application.DeleteRestApplicationsCommand;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;

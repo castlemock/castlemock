@@ -17,7 +17,6 @@
 package com.fortmocks.war.mock.rest.web.mvc.controller.method;
 
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
-import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.beans.factory.annotation.Autowired;

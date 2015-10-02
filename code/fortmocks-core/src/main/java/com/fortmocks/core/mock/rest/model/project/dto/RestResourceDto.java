@@ -16,7 +16,6 @@
 
 package com.fortmocks.core.mock.rest.model.project.dto;
 
-import com.fortmocks.core.mock.rest.model.project.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.RestResourceStatus;
 import com.fortmocks.core.mock.rest.model.project.RestResponseStrategy;
 import org.dozer.Mapping;

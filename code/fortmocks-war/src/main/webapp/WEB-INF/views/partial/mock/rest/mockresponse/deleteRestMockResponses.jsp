@@ -31,13 +31,13 @@
             </ul>
 
             <button class="button-error pure-button" type="submit"><i class="fa fa-trash"></i> <span><spring:message code="rest.deleterestmockresponses.button.deleteresponses"/></span></button>
-            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.deleterestmockresponses.button.cancel"/></a>
+            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.deleterestmockresponses.button.cancel"/></a>
         </form:form>
     </c:when>
     <c:otherwise>
         <spring:message code="rest.deleterestmockresponses.label.nomockedresponses"/>
         <p>
-        <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.deleterestmockresponses.button.cancel"/></a>
+        <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.deleterestmockresponses.button.cancel"/></a>
         </p>
     </c:otherwise>
 </c:choose>

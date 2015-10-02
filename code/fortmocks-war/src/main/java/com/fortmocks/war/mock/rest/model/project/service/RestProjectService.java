@@ -16,11 +16,9 @@
 
 package com.fortmocks.war.mock.rest.model.project.service;
 
-import com.fortmocks.core.mock.rest.model.project.RestMethod;
+import com.fortmocks.core.mock.rest.model.project.RestMockResponseStatus;
 import com.fortmocks.core.mock.rest.model.project.RestProject;
 import com.fortmocks.core.mock.rest.model.project.dto.*;
-import com.fortmocks.core.mock.soap.model.project.SoapMockResponseStatus;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.war.base.model.project.service.ProjectService;
 
 import java.util.List;
@@ -92,5 +90,11 @@ public interface RestProjectService extends ProjectService<RestProject, RestProj
     RestMockResponseDto findRestMockResponse(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponseId);
 
     void updateRestMockResponse(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponseId, RestMockResponseDto updatedRestMockResponseDto);
+
+    void deleteRestMockResponse(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponseId);
+
+    void deleteRestMockResponses(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, List<RestMockResponseDto> restMockResponses);
+
+    void updateStatus(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponseId, RestMockResponseStatus status);
 
 }
