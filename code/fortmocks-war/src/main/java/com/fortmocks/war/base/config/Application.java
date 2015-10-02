@@ -19,6 +19,7 @@ package com.fortmocks.war.base.config;
 import com.fortmocks.core.base.model.Repository;
 import com.fortmocks.core.base.model.ServiceFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -43,6 +44,8 @@ import java.util.Map;
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class Application extends SpringBootServletInitializer {
 
+    @Value("${app.version}")
+    private String version;
     @Autowired
     private ApplicationContext applicationContext;
 
@@ -75,8 +78,23 @@ public class Application extends SpringBootServletInitializer {
      */
     @PostConstruct
     protected void initiate(){
+        printLogo();
         initiateRepository();
         initiateServiceFacade();
+    }
+
+    protected void printLogo(){
+        final StringBuilder logo = new StringBuilder();
+        logo.append("  ______         _     __  __            _        \n");
+        logo.append(" |  ____|       | |   |  \\/  |          | |       \n");
+        logo.append(" | |__ ___  _ __| |_  | \\  / | ___   ___| | _____ \n");
+        logo.append(" |  __/ _ \\| '__| __| | |\\/| |/ _ \\ / __| |/ / __|\n");
+        logo.append(" | | | (_) | |  | |_  | |  | | (_) | (__|   <\\__ \\\n");
+        logo.append(" |_|  \\___/|_|   \\__| |_|  |_|\\___/ \\___|_|\\_\\___/\n");
+        logo.append("===================================================\n");
+        logo.append("Fort Mocks (v" + version + ")");
+        logo.append("\n");
+        System.out.println(logo);
     }
 
     /**
