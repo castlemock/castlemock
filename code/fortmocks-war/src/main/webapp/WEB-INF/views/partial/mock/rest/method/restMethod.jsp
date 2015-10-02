@@ -21,8 +21,9 @@
     <h1><spring:message code="rest.restmethod.header.method" arguments="${restMethod.name}"/></h1>
     <div align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
-        <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
-        <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.delete"/></span></a>
+            <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
+            <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.delete"/></span></a>
+            <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/create/response"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.createresponse"/></span></a>
         </sec:authorize>
     </div>
 </div>
@@ -49,7 +50,7 @@
                     </tr>
                     <c:forEach items="${restMethod.restMockResponses}" var="restMockResponse" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
-                            <td><form:checkbox path="restResponseIds" name="${restResponse.id}" value="${restResponse.id}"/></td>
+                            <td><form:checkbox path="restResponseIds" name="${restResponse.id}" value="${restMockResponse.id}"/></td>
                             <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
                         </tr>
                     </c:forEach>

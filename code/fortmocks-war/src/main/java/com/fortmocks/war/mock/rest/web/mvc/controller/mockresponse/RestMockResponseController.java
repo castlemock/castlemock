@@ -16,6 +16,7 @@
 
 package com.fortmocks.war.mock.rest.web.mvc.controller.mockresponse;
 
+import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.war.mock.rest.model.project.service.RestProjectService;
 import com.fortmocks.war.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -38,19 +39,20 @@ public class RestMockResponseController extends AbstractRestViewController {
 
     @Autowired
     private RestProjectService restProjectService;
-    private static final String PAGE = "mock/rest/project/restProject";
-    /**
-     * Retrieves a specific project with a project id
-     * @param projectId The id of the project that will be retrieved
-     * @return Project that matches the provided project id
-     */
+    private static final String PAGE = "mock/rest/mockresponse/restMockResponse";
+
+
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/response/{responseId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId, @PathVariable final Long resourceId, @PathVariable final Long methodId, @PathVariable final Long responseId) {
-        final RestProjectDto project = restProjectService.findOne(projectId);
+    @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/{restMockResponseId}", method = RequestMethod.GET)
+    public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @PathVariable final Long restMockResponseId) {
+        final RestMockResponseDto restMockResponseDto = restProjectService.findRestMockResponse(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
 
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(REST_PROJECT, project);
+        model.addObject(REST_PROJECT_ID, restProjectId);
+        model.addObject(REST_APPLICATION_ID, restApplicationId);
+        model.addObject(REST_RESOURCE_ID, restResourceId);
+        model.addObject(REST_METHOD_ID, restMethodId);
+        model.addObject(REST_MOCK_RESPONSE, restMockResponseDto);
         return model;
     }
 

@@ -20,10 +20,7 @@ import com.fortmocks.core.base.model.TypeIdentifier;
 import com.fortmocks.core.base.model.project.dto.ProjectDto;
 import com.fortmocks.core.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.core.mock.rest.model.project.*;
-import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
-import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
-import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
+import com.fortmocks.core.mock.rest.model.project.dto.*;
 import com.fortmocks.war.base.model.project.service.ProjectServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
@@ -247,6 +244,30 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         save(restProjectId);
     }
 
+    @Override
+    public void saveRestMockResponse(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, RestMockResponseDto restMockResponseDto) {
+        Preconditions.checkNotNull(restMockResponseDto, "Mock response cannot be null");
+        final RestMethod restMethod = findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodId(restProjectId, restApplicationId, restResourceId, restMethodId);
+        final RestMockResponse restMockResponse = mapper.map(restMockResponseDto, RestMockResponse.class);
+        final Long restMockResponseId = getNextRestMockResponseId();
+        restMockResponse.setId(restMockResponseId);
+        restMethod.getRestMockResponses().add(restMockResponse);
+        save(restProjectId);
+    }
+
+    @Override
+    public RestMockResponseDto findRestMockResponse(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId, final Long restMockResponseId) {
+        final RestMockResponse restMockResponse = findRestMockResponseByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodIdAndRestMockResponseId(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        return restMockResponse != null ? mapper.map(restMockResponse, RestMockResponseDto.class) : null;
+    }
+
+    @Override
+    public void updateRestMockResponse(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponseId, RestMockResponseDto updatedRestMockResponseDto) {
+        Preconditions.checkNotNull(updatedRestMockResponseDto, "REST mock response cannot be null");
+        final RestMockResponse restMockResponse = findRestMockResponseByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodIdAndRestMockResponseId(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        restMockResponse.setBody(updatedRestMockResponseDto.getBody());
+        save(restProjectId);
+    }
 
     /**
      * The method calculates the next REST application id
@@ -361,14 +382,14 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         throw new IllegalArgumentException("Unable to find a REST method with id " + restMethodId);
     }
 
-    private RestMethod findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodIdAndMockResponseId(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId, final Long mockResponseId){
-        Preconditions.checkNotNull(mockResponseId, "Mock response id cannot be null");
+    private RestMockResponse findRestMockResponseByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodIdAndRestMockResponseId(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId, final Long restMockResponseId){
+        Preconditions.checkNotNull(restMockResponseId, "Mock response id cannot be null");
         final RestMethod restMethod = findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodId(restProjectId, restApplicationId, restResourceId, restMethodId);
         for(RestMockResponse restMockResponse : restMethod.getRestMockResponses()) {
-            if(restMockResponse.getId().equals(mockResponseId)){
-                return restMethod;
+            if(restMockResponse.getId().equals(restMockResponseId)){
+                return restMockResponse;
             }
         }
-        throw new IllegalArgumentException("Unable to find a REST mock response with id " + mockResponseId);
+        throw new IllegalArgumentException("Unable to find a REST mock response with id " + restMockResponseId);
     }
 }

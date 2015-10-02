@@ -32,6 +32,7 @@ public class RestMethod implements Saveable<Long> {
 
     private Long id;
     private String name;
+    private String defaultBody;
     private RestMethodType restMethodType;
     private List<RestMockResponse> restMockResponses;
 
@@ -52,6 +53,15 @@ public class RestMethod implements Saveable<Long> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @XmlElement
+    public String getDefaultBody() {
+        return defaultBody;
+    }
+
+    public void setDefaultBody(String defaultBody) {
+        this.defaultBody = defaultBody;
     }
 
     @XmlElement

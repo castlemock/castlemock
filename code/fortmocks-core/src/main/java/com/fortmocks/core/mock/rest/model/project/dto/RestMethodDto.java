@@ -35,6 +35,9 @@ public class RestMethodDto {
     @Mapping("name")
     private String name;
 
+    @Mapping("defaultBody")
+    private String defaultBody;
+
     @Mapping("restMethodType")
     private RestMethodType restMethodType;
 
@@ -55,6 +58,14 @@ public class RestMethodDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDefaultBody() {
+        return defaultBody;
+    }
+
+    public void setDefaultBody(String defaultBody) {
+        this.defaultBody = defaultBody;
     }
 
     public RestMethodType getRestMethodType() {

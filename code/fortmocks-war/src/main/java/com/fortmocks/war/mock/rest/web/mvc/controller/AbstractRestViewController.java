@@ -41,5 +41,7 @@ public class AbstractRestViewController extends AbstractViewController {
     protected static final String REST_METHODS = "restMethods";
     protected static final String REST_METHOD_ID = "restMethodId";
 
+    protected static final String REST_MOCK_RESPONSE = "restMockResponse";
+
 
 }
