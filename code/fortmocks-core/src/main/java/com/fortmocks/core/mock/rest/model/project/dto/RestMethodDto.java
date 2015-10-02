@@ -17,7 +17,9 @@
 package com.fortmocks.core.mock.rest.model.project.dto;
 
 import com.fortmocks.core.base.model.event.Event;
+import com.fortmocks.core.mock.rest.model.project.RestMethodStatus;
 import com.fortmocks.core.mock.rest.model.project.RestMethodType;
+import com.fortmocks.core.mock.rest.model.project.RestResponseStrategy;
 import org.dozer.Mapping;
 
 import java.util.LinkedList;
@@ -42,6 +44,15 @@ public class RestMethodDto {
 
     @Mapping("restMethodType")
     private RestMethodType restMethodType;
+
+    @Mapping("forwardedEndpoint")
+    private String forwardedEndpoint;
+
+    @Mapping("restMethodStatus")
+    private RestMethodStatus restMethodStatus;
+
+    @Mapping("restResponseStrategy")
+    private RestResponseStrategy restResponseStrategy;
 
     @Mapping("restMockResponses")
     private List<RestMockResponseDto> restMockResponses = new LinkedList<RestMockResponseDto>();
@@ -87,6 +98,30 @@ public class RestMethodDto {
 
     public void setRestMockResponses(List<RestMockResponseDto> restMockResponses) {
         this.restMockResponses = restMockResponses;
+    }
+
+    public String getForwardedEndpoint() {
+        return forwardedEndpoint;
+    }
+
+    public void setForwardedEndpoint(String forwardedEndpoint) {
+        this.forwardedEndpoint = forwardedEndpoint;
+    }
+
+    public RestMethodStatus getRestMethodStatus() {
+        return restMethodStatus;
+    }
+
+    public void setRestMethodStatus(RestMethodStatus restMethodStatus) {
+        this.restMethodStatus = restMethodStatus;
+    }
+
+    public RestResponseStrategy getRestResponseStrategy() {
+        return restResponseStrategy;
+    }
+
+    public void setRestResponseStrategy(RestResponseStrategy restResponseStrategy) {
+        this.restResponseStrategy = restResponseStrategy;
     }
 
     public Set<Event> getEvents() {

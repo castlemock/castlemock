@@ -16,8 +16,6 @@
 
 package com.fortmocks.core.mock.rest.model.project.dto;
 
-import com.fortmocks.core.mock.rest.model.project.RestResourceStatus;
-import com.fortmocks.core.mock.rest.model.project.RestResponseStrategy;
 import org.dozer.Mapping;
 
 import java.util.LinkedList;
@@ -37,15 +35,6 @@ public class RestResourceDto {
 
     @Mapping("uri")
     private String uri;
-
-    @Mapping("forwardedEndpoint")
-    private String forwardedEndpoint;
-
-    @Mapping("restResourceStatus")
-    private RestResourceStatus restResourceStatus;
-
-    @Mapping("restResponseStrategy")
-    private RestResponseStrategy restResponseStrategy;
 
     @Mapping("restMethods")
     private List<RestMethodDto> restMethods = new LinkedList<RestMethodDto>();
@@ -72,30 +61,6 @@ public class RestResourceDto {
 
     public void setUri(String uri) {
         this.uri = uri;
-    }
-
-    public String getForwardedEndpoint() {
-        return forwardedEndpoint;
-    }
-
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
-
-    public RestResourceStatus getRestResourceStatus() {
-        return restResourceStatus;
-    }
-
-    public void setRestResourceStatus(RestResourceStatus restResourceStatus) {
-        this.restResourceStatus = restResourceStatus;
-    }
-
-    public RestResponseStrategy getRestResponseStrategy() {
-        return restResponseStrategy;
-    }
-
-    public void setRestResponseStrategy(RestResponseStrategy restResponseStrategy) {
-        this.restResponseStrategy = restResponseStrategy;
     }
 
     public List<RestMethodDto> getRestMethods() {

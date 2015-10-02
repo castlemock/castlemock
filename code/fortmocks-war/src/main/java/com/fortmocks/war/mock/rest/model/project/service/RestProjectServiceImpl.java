@@ -209,8 +209,16 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
     }
 
     @Override
-    public RestMethodDto saveRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, RestMethodDto restMethodDto) {
+    public RestMethodDto saveRestMethod(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final RestMethodDto restMethodDto) {
         Preconditions.checkNotNull(restMethodDto, "REST method cannot be null");
+
+        if(restMethodDto.getRestMethodStatus() == null){
+            restMethodDto.setRestMethodStatus(RestMethodStatus.MOCKED);
+        }
+        if(restMethodDto.getRestResponseStrategy() == null){
+            restMethodDto.setRestResponseStrategy(RestResponseStrategy.RANDOM);
+        }
+
         final RestResource restResource = findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceId(restProjectId, restApplicationId, restResourceId);
         final Long restMethodId = getNextRestMethodId();
         restMethodDto.setId(restMethodId);

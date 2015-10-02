@@ -36,6 +36,9 @@ public class RestMethod implements Saveable<Long> {
     private String name;
     private String defaultBody;
     private RestMethodType restMethodType;
+    private String forwardedEndpoint;
+    private RestMethodStatus restMethodStatus;
+    private RestResponseStrategy restResponseStrategy;
     private List<RestMockResponse> restMockResponses;
     private Set<Event> events;
 
@@ -94,5 +97,32 @@ public class RestMethod implements Saveable<Long> {
 
     public void setEvents(Set<Event> events) {
         this.events = events;
+    }
+
+    @XmlElement
+    public String getForwardedEndpoint() {
+        return forwardedEndpoint;
+    }
+
+    public void setForwardedEndpoint(String forwardedEndpoint) {
+        this.forwardedEndpoint = forwardedEndpoint;
+    }
+
+    @XmlElement
+    public RestMethodStatus getRestMethodStatus() {
+        return restMethodStatus;
+    }
+
+    public void setRestMethodStatus(RestMethodStatus restMethodStatus) {
+        this.restMethodStatus = restMethodStatus;
+    }
+
+    @XmlElement
+    public RestResponseStrategy getRestResponseStrategy() {
+        return restResponseStrategy;
+    }
+
+    public void setRestResponseStrategy(RestResponseStrategy restResponseStrategy) {
+        this.restResponseStrategy = restResponseStrategy;
     }
 }

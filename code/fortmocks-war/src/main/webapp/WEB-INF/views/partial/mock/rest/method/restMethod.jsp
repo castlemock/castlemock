@@ -33,6 +33,22 @@
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.name"/></label></td>
             <td class="column2"><label path="name">${restMethod.name}</label></td>
         </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.methodtype"/></label></td>
+            <td class="column2"><label path="name">${restMethod.restMethodType}</label></td>
+        </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.methodstatus"/></label></td>
+            <td class="column2"><label path="name">${restMethod.restMethodStatus}</label></td>
+        </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.restResponsestrategy"/></label></td>
+            <td class="column2"><label path="name">${restMethod.restResponseStrategy}</label></td>
+        </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.forwardedendpoint"/></label></td>
+            <td class="column2"><label path="name">${restMethod.forwardedEndpoint}</label></td>
+        </tr>
     </table>
 </div>
 

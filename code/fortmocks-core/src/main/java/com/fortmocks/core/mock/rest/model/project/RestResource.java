@@ -32,10 +32,8 @@ public class RestResource implements Saveable<Long> {
     private Long id;
     private String name;
     private String uri;
-    private String forwardedEndpoint;
     private List<RestMethod> restMethods;
-    private RestResourceStatus restResourceStatus;
-    private RestResponseStrategy restResponseStrategy;
+
 
     @Override
     @XmlElement
@@ -64,33 +62,6 @@ public class RestResource implements Saveable<Long> {
 
     public void setUri(String uri) {
         this.uri = uri;
-    }
-
-    @XmlElement
-    public String getForwardedEndpoint() {
-        return forwardedEndpoint;
-    }
-
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
-
-    @XmlElement
-    public RestResourceStatus getRestResourceStatus() {
-        return restResourceStatus;
-    }
-
-    public void setRestResourceStatus(RestResourceStatus restResourceStatus) {
-        this.restResourceStatus = restResourceStatus;
-    }
-
-    @XmlElement
-    public RestResponseStrategy getRestResponseStrategy() {
-        return restResponseStrategy;
-    }
-
-    public void setRestResponseStrategy(RestResponseStrategy restResponseStrategy) {
-        this.restResponseStrategy = restResponseStrategy;
     }
 
     public List<RestMethod> getRestMethods() {

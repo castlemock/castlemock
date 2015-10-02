@@ -33,6 +33,10 @@
             <td class="column1"><label path="name"><spring:message code="rest.restresource.label.name"/></label></td>
             <td class="column2"><label path="name">${restResource.name}</label></td>
         </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.restresource.label.uri"/></label></td>
+            <td class="column2"><label path="name">${restResource.uri}</label></td>
+        </tr>
     </table>
 </div>
 
