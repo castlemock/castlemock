@@ -16,7 +16,7 @@
 
 package com.fortmocks.war.base.web.mvc.controller.configuration;
 
-import com.fortmocks.war.base.model.configuration.service.ConfigurationGroupService;
+import com.fortmocks.core.base.model.configuration.service.ConfigurationGroupService;
 import com.fortmocks.war.base.web.mvc.command.configuration.ConfigurationUpdateCommand;
 import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;

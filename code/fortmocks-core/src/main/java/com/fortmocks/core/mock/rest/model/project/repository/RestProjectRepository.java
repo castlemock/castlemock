@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.base.model.event.service;
+package com.fortmocks.core.mock.rest.model.project.repository;
 
-import com.fortmocks.core.base.model.ServiceFacade;
-import com.fortmocks.core.base.model.event.dto.EventDto;
+
+import com.fortmocks.core.base.model.Repository;
+import com.fortmocks.core.mock.rest.model.project.RestProject;
 
 /**
- * The Event service facade is used to assembly all the events service layers and interact with them
- * in order to retrieve a unified answer independent of the event type.
+ * The REST project file repository provides the functionality to interact with the file system.
+ * The repository is responsible for loading and REST project to the file system. Each
+ * REST project is stored as a separate file.
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.core.base.model.event.Event
- * @see com.fortmocks.core.base.model.event.dto.EventDto
+ * @see RestProject
+ * @see Repository
  */
-public interface EventServiceFacade extends ServiceFacade<EventDto, Long> {
+public interface RestProjectRepository extends Repository<RestProject, Long> {
 }

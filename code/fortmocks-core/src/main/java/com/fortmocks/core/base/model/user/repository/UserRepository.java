@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.soap.model.project.repository;
+package com.fortmocks.core.base.model.user.repository;
 
 
 import com.fortmocks.core.base.model.Repository;
-import com.fortmocks.core.mock.soap.model.project.SoapProject;
+import com.fortmocks.core.base.model.user.User;
 
 /**
- * The soap project file repository provides the functionality to interact with the file system.
- * The repository is responsible for loading and soap project to the file system. Each
- * soap project is stored as a separate file.
+ * The user file repository provides the functionality to interact with the file system.
+ * The repository is responsible for loading and saving users to the file system. Each
+ * user is stored as a separate file.
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.core.mock.soap.model.project.SoapProject
+ * @see com.fortmocks.core.base.model.user.User
  * @see com.fortmocks.core.base.model.Repository
- * @see com.fortmocks.war.mock.soap.model.project.repository.SoapProjectRepositoryImpl
+ * @see com.fortmocks.war.base.model.user.repository.UserRepositoryImpl
  */
-public interface SoapProjectRepository extends Repository<SoapProject, Long> {
+public interface UserRepository extends Repository<User, Long> {
 }

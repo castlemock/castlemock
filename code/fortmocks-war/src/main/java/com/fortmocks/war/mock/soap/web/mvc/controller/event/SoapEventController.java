@@ -17,7 +17,7 @@
 package com.fortmocks.war.mock.soap.web.mvc.controller.event;
 
 import com.fortmocks.core.base.model.event.dto.EventDto;
-import com.fortmocks.war.mock.soap.model.event.service.SoapEventService;
+import com.fortmocks.core.mock.soap.model.event.service.SoapEventService;
 import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

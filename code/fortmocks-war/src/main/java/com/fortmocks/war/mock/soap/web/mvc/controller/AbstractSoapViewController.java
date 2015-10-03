@@ -17,7 +17,7 @@
 package com.fortmocks.war.mock.soap.web.mvc.controller;
 
 import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
-import com.fortmocks.war.mock.soap.model.project.service.SoapProjectService;
+import com.fortmocks.core.mock.soap.model.project.service.SoapProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

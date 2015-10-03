@@ -19,7 +19,7 @@ package com.fortmocks.war.base.web.mvc.controller.user;
 import com.fortmocks.core.base.model.user.dto.UserDto;
 import com.fortmocks.war.base.config.Application;
 import com.fortmocks.war.base.model.user.dto.UserDtoGenerator;
-import com.fortmocks.war.base.model.user.service.UserService;
+import com.fortmocks.core.base.model.user.service.UserService;
 import com.fortmocks.war.base.web.mvc.controller.AbstractController;
 import com.fortmocks.war.base.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;

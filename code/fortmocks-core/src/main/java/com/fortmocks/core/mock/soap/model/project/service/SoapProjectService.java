@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.soap.model.project.service;
+package com.fortmocks.core.mock.soap.model.project.service;
 
 import com.fortmocks.core.mock.soap.model.project.*;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.war.base.model.project.service.ProjectService;
+import com.fortmocks.core.base.model.project.service.ProjectService;
 
 import java.util.List;
 import java.util.Map;

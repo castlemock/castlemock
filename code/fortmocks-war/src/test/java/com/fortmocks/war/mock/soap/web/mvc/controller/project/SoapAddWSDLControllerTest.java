@@ -23,7 +23,7 @@ import com.fortmocks.war.base.web.mvc.controller.AbstractController;
 import com.fortmocks.war.mock.soap.manager.WSDLComponent;
 import com.fortmocks.war.mock.soap.model.project.dto.SoapPortDtoGenerator;
 import com.fortmocks.war.mock.soap.model.project.dto.SoapProjectDtoGenerator;
-import com.fortmocks.war.mock.soap.model.project.service.SoapProjectService;
+import com.fortmocks.core.mock.soap.model.project.service.SoapProjectService;
 import com.fortmocks.war.mock.soap.web.mvc.command.project.WSDLFileUploadForm;
 import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;

@@ -20,6 +20,7 @@ import com.fortmocks.core.base.model.user.Role;
 import com.fortmocks.core.base.model.user.Status;
 import com.fortmocks.core.base.model.user.User;
 import com.fortmocks.core.base.model.user.dto.UserDto;
+import com.fortmocks.core.base.model.user.service.UserService;
 import com.fortmocks.war.base.model.ServiceImpl;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
@@ -39,7 +40,7 @@ import java.util.List;
  * @since 1.0
  * @see com.fortmocks.core.base.model.user.User
  * @see com.fortmocks.core.base.model.user.dto.UserDto
- * @see com.fortmocks.war.base.model.user.service.UserService
+ * @see UserService
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<User, UserDto, Long> implements UserService {

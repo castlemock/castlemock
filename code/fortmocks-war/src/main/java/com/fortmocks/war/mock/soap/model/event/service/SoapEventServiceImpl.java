@@ -18,8 +18,10 @@ package com.fortmocks.war.mock.soap.model.event.service;
 
 import com.fortmocks.core.base.model.TypeIdentifier;
 import com.fortmocks.core.base.model.event.dto.EventDto;
+import com.fortmocks.core.base.model.event.service.EventServiceFacade;
 import com.fortmocks.core.mock.soap.model.event.SoapEvent;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
+import com.fortmocks.core.mock.soap.model.event.service.SoapEventService;
 import com.fortmocks.war.base.model.event.service.EventServiceImpl;
 import com.fortmocks.war.mock.soap.model.SoapTypeIdentifier;
 import com.google.common.base.Preconditions;
@@ -71,7 +73,7 @@ public class SoapEventServiceImpl extends EventServiceImpl<SoapEvent, SoapEventD
      * @param eventDto The event dto instance that will be converted into a event dto subclass
      * @return The converted event dto subclass
      * @throws java.lang.NullPointerException Throws NullPointerException in case if the provided event dto instance is null.
-     * @see com.fortmocks.war.base.model.event.service.EventServiceFacade
+     * @see EventServiceFacade
      */
     @Override
     public SoapEventDto convertType(EventDto eventDto) {

@@ -21,6 +21,7 @@ import com.fortmocks.core.base.model.TypeIdentifiable;
 import com.fortmocks.core.base.model.TypeIdentifier;
 import com.fortmocks.core.base.model.project.Project;
 import com.fortmocks.core.base.model.project.dto.ProjectDto;
+import com.fortmocks.core.base.model.project.service.ProjectService;
 import com.fortmocks.war.base.model.ServiceImpl;
 import org.apache.log4j.Logger;
 
@@ -40,7 +41,7 @@ import java.io.StringWriter;
  * @param <D> The dto project type
  * @see com.fortmocks.core.base.model.project.Project
  * @see com.fortmocks.core.base.model.project.dto.ProjectDto
- * @see com.fortmocks.war.base.model.project.service.ProjectService
+ * @see ProjectService
  */
 public abstract class ProjectServiceImpl<T extends Project, D extends ProjectDto> extends ServiceImpl<T, D, Long> implements ProjectService<T, D>, TypeIdentifiable, TypeConverter<ProjectDto, D> {
 

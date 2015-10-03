@@ -16,7 +16,7 @@
 
 package com.fortmocks.war.base.web.mvc.controller.project;
 
-import com.fortmocks.war.base.model.project.service.ProjectServiceFacade;
+import com.fortmocks.core.base.model.project.service.ProjectServiceFacade;
 import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

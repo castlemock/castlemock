@@ -18,7 +18,7 @@ package com.fortmocks.war.base.web.mvc.controller.user;
 
 import com.fortmocks.core.base.model.user.dto.UserDto;
 import com.fortmocks.war.base.model.user.service.UserDetailSecurityService;
-import com.fortmocks.war.base.model.user.service.UserService;
+import com.fortmocks.core.base.model.user.service.UserService;
 import com.fortmocks.war.base.web.mvc.command.user.UpdateCurrentUserCommand;
 import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
 import com.google.common.base.Preconditions;

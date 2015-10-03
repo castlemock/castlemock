@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.soap.model.event.service;
+package com.fortmocks.core.base.model.event.service;
 
-import com.fortmocks.core.mock.soap.model.event.SoapEvent;
-import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
-import com.fortmocks.war.base.model.event.service.EventService;
-
-import java.util.List;
+import com.fortmocks.core.base.model.ServiceFacade;
+import com.fortmocks.core.base.model.event.dto.EventDto;
 
 /**
+ * The Event service facade is used to assembly all the events service layers and interact with them
+ * in order to retrieve a unified answer independent of the event type.
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.base.model.event.Event
+ * @see com.fortmocks.core.base.model.event.dto.EventDto
  */
-public interface SoapEventService extends EventService<SoapEvent, SoapEventDto> {
-    /**
-     * The events for a specific operation id
-     * @param soapOperationId The id of the operation that the event belongs to
-     * @return Returns a list of events
-     */
-    public List<SoapEventDto> findEventsByOperationId(final Long soapOperationId);
-
+public interface EventServiceFacade extends ServiceFacade<EventDto, Long> {
 }

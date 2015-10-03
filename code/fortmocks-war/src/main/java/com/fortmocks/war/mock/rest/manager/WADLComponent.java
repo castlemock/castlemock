@@ -32,10 +32,10 @@ public class WADLComponent {
 
     /**
      * The method provides the functionality to download a WADL file from a specific URL, download it and generate
-     * new REST ports.
+     * new REST applications.
      * @param wadlUrl The URL from where the WADL file can be downloaded
-     * @param generateResponse Boolean value for if a default response should be generated for each new operation. The
-     *                         value true will cause the method to generate a default response for each new service. No
+     * @param generateResponse Boolean value for if a default response should be generated for each new method. The
+     *                         value true will cause the method to generate a default response for each new method. No
      *                         default responses will be created if the variable is set to false.
      * @return  The extracted ports from the downloaded WADL file.
      */
@@ -46,8 +46,8 @@ public class WADLComponent {
     /**
      * Parse an WADL file and creates new ports based on the WADL file
      * @param files The list of WADL files
-     * @param generateResponse Boolean value for if a default response should be generated for each new operation. The
-     *                         value true will cause the method to generate a default response for each new service. No
+     * @param generateResponse Boolean value for if a default response should be generated for each new method. The
+     *                         value true will cause the method to generate a default response for each new method. No
      *                         default responses will be created if the variable is set to false.
      * @return The extracted ports from the WADL file.
      */

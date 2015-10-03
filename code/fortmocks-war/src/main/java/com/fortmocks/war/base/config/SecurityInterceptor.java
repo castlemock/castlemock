@@ -20,7 +20,7 @@ import com.fortmocks.core.base.model.user.Role;
 import com.fortmocks.core.base.model.user.Status;
 import com.fortmocks.core.base.model.user.dto.UserDto;
 import com.fortmocks.war.base.model.user.service.UserDetailSecurityService;
-import com.fortmocks.war.base.model.user.service.UserService;
+import com.fortmocks.core.base.model.user.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

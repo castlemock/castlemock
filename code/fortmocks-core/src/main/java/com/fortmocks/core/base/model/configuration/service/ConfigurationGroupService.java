@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.base.model.configuration.service;
+package com.fortmocks.core.base.model.configuration.service;
 
 import com.fortmocks.core.base.model.Service;
 import com.fortmocks.core.base.model.configuration.ConfigurationGroup;
@@ -28,7 +28,6 @@ import java.util.List;
  * @since 1.0
  * @see com.fortmocks.core.base.model.configuration.ConfigurationGroup
  * @see com.fortmocks.core.base.model.configuration.dto.ConfigurationGroupDto
- * @see com.fortmocks.war.base.model.configuration.service.ConfigurationGroupServiceImpl
  */
 public interface ConfigurationGroupService extends Service<ConfigurationGroup, ConfigurationGroupDto, Long> {
 

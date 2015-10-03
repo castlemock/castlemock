@@ -17,13 +17,14 @@
 package com.fortmocks.war.mock.rest.model.event.repository;
 
 import com.fortmocks.core.mock.rest.model.event.RestEvent;
+import com.fortmocks.core.mock.rest.model.event.repository.RestEventRepository;
 import com.fortmocks.war.base.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 /**
- * The class is an implementation of the file repository and provides the functionality to interact with the file system.
+ * The class is an implementation of the REST event repository and provides the functionality to interact with the file system.
  * The repository is responsible for loading and saving rest events from the file system. Each rest event is stored as
  * a separate file. The class also contains the directory and the filename extension for the rest event.
  * @author Karl Dahlgren

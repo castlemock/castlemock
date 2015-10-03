@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.rest.model.project.service;
+package com.fortmocks.core.mock.rest.model.project.service;
 
 import com.fortmocks.core.mock.rest.model.project.RestMockResponseStatus;
 import com.fortmocks.core.mock.rest.model.project.RestProject;
 import com.fortmocks.core.mock.rest.model.project.dto.*;
-import com.fortmocks.war.base.model.project.service.ProjectService;
+import com.fortmocks.core.base.model.project.service.ProjectService;
 
 import java.util.List;
 

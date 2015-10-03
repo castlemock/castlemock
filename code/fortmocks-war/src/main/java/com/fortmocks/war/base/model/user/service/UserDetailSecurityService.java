@@ -18,6 +18,7 @@ package com.fortmocks.war.base.model.user.service;
 
 import com.fortmocks.core.base.model.user.Role;
 import com.fortmocks.core.base.model.user.dto.UserDto;
+import com.fortmocks.core.base.model.user.service.UserService;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -97,7 +98,7 @@ public class UserDetailSecurityService implements UserDetailsService {
      * @param username The new name of the user that will be logged in
      * @see org.springframework.security.core.userdetails.User
      * @see com.fortmocks.war.base.web.mvc.controller.user.UpdateCurrentUserController
-     * @see com.fortmocks.war.base.model.user.service.UserService
+     * @see UserService
      */
     public void updateCurrentLoggedInUser(final String username){
         final UserDetails userDetails = loadUserByUsername(username);

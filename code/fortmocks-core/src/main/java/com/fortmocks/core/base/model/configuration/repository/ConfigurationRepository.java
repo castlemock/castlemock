@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.base.model.configuration.repository;
+package com.fortmocks.core.base.model.configuration.repository;
 
 import com.fortmocks.core.base.model.Repository;
 import com.fortmocks.core.base.model.configuration.ConfigurationGroup;
@@ -27,7 +27,6 @@ import com.fortmocks.core.base.model.configuration.ConfigurationGroup;
  * @since 1.0
  * @see com.fortmocks.core.base.model.configuration.ConfigurationGroup
  * @see com.fortmocks.core.base.model.Repository
- * @see com.fortmocks.war.base.model.configuration.repository.ConfigurationRepositoryImpl
  */
 public interface ConfigurationRepository extends Repository<ConfigurationGroup, Long> {
 }

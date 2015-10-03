@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.base.model.project.service;
+package com.fortmocks.core.base.model.project.service;
 
 import com.fortmocks.core.base.model.Service;
 import com.fortmocks.core.base.model.project.Project;
@@ -29,7 +29,6 @@ import com.fortmocks.core.base.model.project.dto.ProjectDto;
  * @param <D> The dto project type
  * @see com.fortmocks.core.base.model.project.Project
  * @see com.fortmocks.core.base.model.project.dto.ProjectDto
- * @see com.fortmocks.war.base.model.project.service.ProjectServiceImpl
  */
 public interface ProjectService<T extends Project, D extends ProjectDto> extends Service<T, D, Long> {
 

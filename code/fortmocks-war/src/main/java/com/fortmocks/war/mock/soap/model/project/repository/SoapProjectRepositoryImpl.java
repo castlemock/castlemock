@@ -17,6 +17,7 @@
 package com.fortmocks.war.mock.soap.model.project.repository;
 
 import com.fortmocks.core.mock.soap.model.project.SoapProject;
+import com.fortmocks.core.mock.soap.model.project.repository.SoapProjectRepository;
 import com.fortmocks.war.base.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

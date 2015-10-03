@@ -17,6 +17,7 @@
 package com.fortmocks.war.mock.rest.model.project.repository;
 
 import com.fortmocks.core.mock.rest.model.project.RestProject;
+import com.fortmocks.core.mock.rest.model.project.repository.RestProjectRepository;
 import com.fortmocks.war.base.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

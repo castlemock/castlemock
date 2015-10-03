@@ -18,9 +18,11 @@ package com.fortmocks.war.mock.rest.model.event.service;
 
 import com.fortmocks.core.base.model.TypeIdentifier;
 import com.fortmocks.core.base.model.event.dto.EventDto;
+import com.fortmocks.core.base.model.event.service.EventServiceFacade;
 import com.fortmocks.core.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.core.mock.rest.model.event.RestEvent;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
+import com.fortmocks.core.mock.rest.model.event.service.RestEventService;
 import com.fortmocks.war.base.model.event.service.EventServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
@@ -52,7 +54,7 @@ public class RestEventServiceImpl extends EventServiceImpl<RestEvent, RestEventD
      * @param eventDto The event dto instance that will be converted into a event dto subclass
      * @return The converted event dto subclass
      * @throws NullPointerException Throws NullPointerException in case if the provided event dto instance is null.
-     * @see com.fortmocks.war.base.model.event.service.EventServiceFacade
+     * @see EventServiceFacade
      */
     @Override
     public RestEventDto convertType(EventDto eventDto) {

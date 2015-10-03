@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.base.model.event.service;
+package com.fortmocks.core.mock.soap.model.project.repository;
 
-import com.fortmocks.core.base.model.Service;
-import com.fortmocks.core.base.model.event.Event;
-import com.fortmocks.core.base.model.event.dto.EventDto;
+
+import com.fortmocks.core.base.model.Repository;
+import com.fortmocks.core.mock.soap.model.project.SoapProject;
 
 /**
- * The event service is responsible for providing the basic functionality for all the
- * event services.
+ * The soap project file repository provides the functionality to interact with the file system.
+ * The repository is responsible for loading and soap project to the file system. Each
+ * soap project is stored as a separate file.
  * @author Karl Dahlgren
  * @since 1.0
- * @param <T> The event type
- * @param <D> The dto event type
- * @see com.fortmocks.core.base.model.event.Event
- * @see com.fortmocks.core.base.model.event.dto.EventDto
+ * @see com.fortmocks.core.mock.soap.model.project.SoapProject
+ * @see com.fortmocks.core.base.model.Repository
  */
-public interface EventService<T extends Event, D extends EventDto> extends Service<T, D, Long> {
-
+public interface SoapProjectRepository extends Repository<SoapProject, Long> {
 }

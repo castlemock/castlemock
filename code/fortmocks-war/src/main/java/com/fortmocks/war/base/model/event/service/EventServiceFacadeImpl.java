@@ -18,6 +18,7 @@ package com.fortmocks.war.base.model.event.service;
 
 import com.fortmocks.core.base.model.event.Event;
 import com.fortmocks.core.base.model.event.dto.EventDto;
+import com.fortmocks.core.base.model.event.service.EventServiceFacade;
 import com.fortmocks.war.base.model.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
 

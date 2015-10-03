@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.soap.model.event.repository;
+package com.fortmocks.core.mock.soap.model.event.repository;
 
 
 import com.fortmocks.core.base.model.Repository;
@@ -28,7 +28,6 @@ import com.fortmocks.core.mock.soap.model.event.SoapEvent;
  * @since 1.0
  * @see com.fortmocks.core.mock.soap.model.event.SoapEvent
  * @see com.fortmocks.core.base.model.Repository
- * @see com.fortmocks.war.mock.soap.model.event.repository.SoapEventRepositoryImpl
  */
 public interface SoapEventRepository extends Repository<SoapEvent, Long> {
 }

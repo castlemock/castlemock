@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.rest.model.event.repository;
+package com.fortmocks.core.mock.rest.model.event.service;
 
-import com.fortmocks.core.base.model.Repository;
 import com.fortmocks.core.mock.rest.model.event.RestEvent;
-
+import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
+import com.fortmocks.core.base.model.event.service.EventService;
 
 /**
- * The rest event file repository provides the functionality to interact with the file system.
- * The repository is responsible for loading and rest events to the file system. Each
- * rest event is stored as a separate file.
+ * The REST event service provides all the functionality available for REST events.
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.core.mock.rest.model.event.RestEvent
- * @see Repository
- * @see RestEventRepositoryImpl
  */
-public interface RestEventRepository extends Repository<RestEvent, Long> {
+public interface RestEventService extends EventService<RestEvent, RestEventDto> {
+
 }

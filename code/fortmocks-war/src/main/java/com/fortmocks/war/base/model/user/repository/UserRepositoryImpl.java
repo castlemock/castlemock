@@ -19,6 +19,7 @@ package com.fortmocks.war.base.model.user.repository;
 import com.fortmocks.core.base.model.user.Role;
 import com.fortmocks.core.base.model.user.Status;
 import com.fortmocks.core.base.model.user.User;
+import com.fortmocks.core.base.model.user.repository.UserRepository;
 import com.fortmocks.war.base.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;

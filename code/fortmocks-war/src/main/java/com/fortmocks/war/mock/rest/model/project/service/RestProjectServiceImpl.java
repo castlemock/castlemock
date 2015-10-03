@@ -18,9 +18,11 @@ package com.fortmocks.war.mock.rest.model.project.service;
 
 import com.fortmocks.core.base.model.TypeIdentifier;
 import com.fortmocks.core.base.model.project.dto.ProjectDto;
+import com.fortmocks.core.base.model.project.service.ProjectServiceFacade;
 import com.fortmocks.core.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.core.mock.rest.model.project.*;
 import com.fortmocks.core.mock.rest.model.project.dto.*;
+import com.fortmocks.core.mock.rest.model.project.service.RestProjectService;
 import com.fortmocks.war.base.model.project.service.ProjectServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
@@ -125,7 +127,7 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
      * @param projectDto The project dto instance that will be converted into a project dto subclass
      * @return The converted project dto subclass
      * @throws NullPointerException Throws NullPointerException in case if the provided project dto instance is null.
-     * @see com.fortmocks.war.base.model.project.service.ProjectServiceFacade
+     * @see ProjectServiceFacade
      */
     @Override
     public RestProjectDto convertType(ProjectDto projectDto) {
@@ -385,8 +387,8 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
     private RestApplication findRestApplicationByRestProjectIdAndRestApplicationId(final Long restProjectId, final Long restApplicationId) {
         Preconditions.checkNotNull(restProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(restApplicationId, "Application id cannot be null");
-        final RestProject soapProject = findOneType(restProjectId);
-        for(RestApplication restApplication : soapProject.getRestApplications()){
+        final RestProject restProject = findOneType(restProjectId);
+        for(RestApplication restApplication : restProject.getRestApplications()){
             if(restApplication.getId().equals(restApplicationId)){
                 return restApplication;
             }

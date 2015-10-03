@@ -18,11 +18,13 @@ package com.fortmocks.war.mock.soap.model.project.service;
 
 import com.fortmocks.core.base.model.TypeIdentifier;
 import com.fortmocks.core.base.model.project.dto.ProjectDto;
+import com.fortmocks.core.base.model.project.service.ProjectServiceFacade;
 import com.fortmocks.core.mock.soap.model.project.*;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.fortmocks.core.mock.soap.model.project.service.SoapProjectService;
 import com.fortmocks.war.base.model.project.service.ProjectServiceImpl;
 import com.fortmocks.war.mock.soap.model.SoapTypeIdentifier;
 import com.google.common.base.Preconditions;
@@ -953,7 +955,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      * @param projectDto The project dto instance that will be converted into a project dto subclass
      * @return The converted project dto subclass
      * @throws java.lang.NullPointerException Throws NullPointerException in case if the provided project dto instance is null.
-     * @see com.fortmocks.war.base.model.project.service.ProjectServiceFacade
+     * @see ProjectServiceFacade
      */
     @Override
     public SoapProjectDto convertType(ProjectDto projectDto) {

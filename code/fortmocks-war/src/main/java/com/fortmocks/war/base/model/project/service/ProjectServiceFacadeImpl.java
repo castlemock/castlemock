@@ -18,6 +18,7 @@ package com.fortmocks.war.base.model.project.service;
 
 import com.fortmocks.core.base.model.project.Project;
 import com.fortmocks.core.base.model.project.dto.ProjectDto;
+import com.fortmocks.core.base.model.project.service.ProjectServiceFacade;
 import com.fortmocks.war.base.manager.FileManager;
 import com.fortmocks.war.base.model.ServiceFacadeImpl;
 import org.apache.log4j.Logger;
@@ -44,10 +45,6 @@ import java.util.List;
  */
 @Service
 public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, ProjectDto, Long, ProjectServiceImpl<Project, ProjectDto>> implements ProjectServiceFacade {
-
-    @Autowired
-    private FileManager fileManager;
-    private static final Logger LOGGER = Logger.getLogger(ProjectServiceFacadeImpl.class);
 
     /**
      * The initiate method is responsible for for locating all the service instances for a specific module
@@ -76,32 +73,12 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, Project
     /**
      * The method provides the functionality to import a project as a String
      * @param type The type value for the specific type that the instance belongs to
-     * @param multipartFiles The imported project files
+     * @param rawProject The imported project file
      */
     @Override
-    public void importProject(final String type, final List<MultipartFile> multipartFiles) {
+    public void importProject(String type, String rawProject) {
         final ProjectServiceImpl<Project, ProjectDto> service = findByType(type);
-        List<File> files = new ArrayList<File>();
-        try {
-            files = fileManager.uploadFiles(multipartFiles);
-
-            for(File file : files){
-                final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-                final StringBuilder stringBuilder = new StringBuilder();
-
-                String line;
-                while ((line = bufferedReader.readLine()) != null)
-                {
-                    stringBuilder.append(line + "\n");
-                }
-
-                service.importProject(stringBuilder.toString());
-            }
-        } catch (IOException e) {
-            LOGGER.error("Unable to import projects", e);
-        } finally {
-            fileManager.deleteUploadedFiles(files);
-        }
-
+        service.importProject(rawProject);
     }
+
 }

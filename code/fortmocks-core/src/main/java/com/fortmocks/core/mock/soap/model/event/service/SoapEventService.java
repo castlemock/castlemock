@@ -14,16 +14,24 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.rest.model.event.service;
+package com.fortmocks.core.mock.soap.model.event.service;
 
-import com.fortmocks.core.mock.rest.model.event.RestEvent;
-import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
-import com.fortmocks.war.base.model.event.service.EventService;
+import com.fortmocks.core.mock.soap.model.event.SoapEvent;
+import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
+import com.fortmocks.core.base.model.event.service.EventService;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public interface RestEventService extends EventService<RestEvent, RestEventDto> {
+public interface SoapEventService extends EventService<SoapEvent, SoapEventDto> {
+    /**
+     * The events for a specific operation id
+     * @param soapOperationId The id of the operation that the event belongs to
+     * @return Returns a list of events
+     */
+    public List<SoapEventDto> findEventsByOperationId(final Long soapOperationId);
 
 }

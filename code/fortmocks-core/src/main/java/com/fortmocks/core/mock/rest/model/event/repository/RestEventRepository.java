@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.base.model.user.repository;
-
+package com.fortmocks.core.mock.rest.model.event.repository;
 
 import com.fortmocks.core.base.model.Repository;
-import com.fortmocks.core.base.model.user.User;
+import com.fortmocks.core.mock.rest.model.event.RestEvent;
+
 
 /**
- * The user file repository provides the functionality to interact with the file system.
- * The repository is responsible for loading and saving users to the file system. Each
- * user is stored as a separate file.
+ * The rest event repository provides the functionality to interact with the file system.
+ * The repository is responsible for loading and rest events to the file system. Each
+ * rest event is stored as a separate file.
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.core.base.model.user.User
- * @see com.fortmocks.core.base.model.Repository
- * @see com.fortmocks.war.base.model.user.repository.UserRepositoryImpl
+ * @see com.fortmocks.core.mock.rest.model.event.RestEvent
+ * @see Repository
  */
-public interface UserRepository extends Repository<User, Long> {
+public interface RestEventRepository extends Repository<RestEvent, Long> {
 }

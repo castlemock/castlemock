@@ -18,6 +18,8 @@ package com.fortmocks.war.base.model.configuration.repository;
 
 import com.fortmocks.core.base.model.configuration.Configuration;
 import com.fortmocks.core.base.model.configuration.ConfigurationGroup;
+import com.fortmocks.core.base.model.configuration.repository.ConfigurationRepository;
+import com.fortmocks.core.base.model.user.repository.UserRepository;
 import com.fortmocks.war.base.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +32,7 @@ import org.springframework.stereotype.Repository;
  * configuration group.
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.war.base.model.user.repository.UserRepository
+ * @see UserRepository
  * @see com.fortmocks.war.base.model.RepositoryImpl
  * @see com.fortmocks.core.base.model.configuration.ConfigurationGroup
  */

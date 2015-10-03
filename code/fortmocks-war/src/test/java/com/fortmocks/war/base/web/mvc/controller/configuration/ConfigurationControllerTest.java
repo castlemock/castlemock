@@ -19,7 +19,7 @@ package com.fortmocks.war.base.web.mvc.controller.configuration;
 import com.fortmocks.core.base.model.configuration.dto.ConfigurationGroupDto;
 import com.fortmocks.war.base.config.Application;
 import com.fortmocks.war.base.model.configuration.dto.ConfigurationGroupDtoGenerator;
-import com.fortmocks.war.base.model.configuration.service.ConfigurationGroupService;
+import com.fortmocks.core.base.model.configuration.service.ConfigurationGroupService;
 import com.fortmocks.war.base.web.mvc.controller.AbstractController;
 import com.fortmocks.war.base.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;

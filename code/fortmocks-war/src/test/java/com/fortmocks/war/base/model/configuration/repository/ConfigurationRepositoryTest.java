@@ -16,6 +16,7 @@
 
 package com.fortmocks.war.base.model.configuration.repository;
 
+import com.fortmocks.core.base.model.configuration.repository.ConfigurationRepository;
 import com.fortmocks.war.base.config.Application;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,7 +32,7 @@ import org.springframework.test.web.servlet.MockMvc;
 /**
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.war.base.model.configuration.repository.ConfigurationRepository
+ * @see ConfigurationRepository
  * @see com.fortmocks.war.base.model.configuration.repository.ConfigurationRepositoryImpl
  */
 @RunWith(SpringJUnit4ClassRunner.class)

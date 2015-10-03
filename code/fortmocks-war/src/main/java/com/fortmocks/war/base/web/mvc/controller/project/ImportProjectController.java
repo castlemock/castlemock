@@ -16,9 +16,14 @@
 
 package com.fortmocks.war.base.web.mvc.controller.project;
 
-import com.fortmocks.war.base.model.project.service.ProjectServiceFacade;
+import com.fortmocks.core.base.model.project.Project;
+import com.fortmocks.core.base.model.project.dto.ProjectDto;
+import com.fortmocks.core.base.model.project.service.ProjectServiceFacade;
+import com.fortmocks.war.base.manager.FileManager;
+import com.fortmocks.war.base.model.project.service.ProjectServiceImpl;
 import com.fortmocks.war.base.web.mvc.command.ProjectFileUploadForm;
 import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +31,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The ImportProjectController controller provides the functionality to import
@@ -41,7 +54,10 @@ public class ImportProjectController extends AbstractViewController {
 
     @Autowired
     private ProjectServiceFacade projectServiceFacade;
+    @Autowired
+    private FileManager fileManager;
     private static final String PAGE = "core/project/importProject";
+    private static final Logger LOGGER = Logger.getLogger(ImportProjectController.class);
 
     /**
      * Creates and return a view that provides the required functionality
@@ -67,8 +83,40 @@ public class ImportProjectController extends AbstractViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(method=RequestMethod.POST)
     public ModelAndView importProject(@ModelAttribute("uploadForm") final ProjectFileUploadForm uploadForm){
-        projectServiceFacade.importProject(uploadForm.getProjectType(), uploadForm.getFiles());
+        importProject(uploadForm.getProjectType(), uploadForm.getFiles());
         return redirect();
+    }
+
+
+    /**
+     * The method provides the functionality to import a project as a String
+     * @param type The type value for the specific type that the instance belongs to
+     * @param multipartFiles The imported project files
+     */
+    private void importProject(final String type, final List<MultipartFile> multipartFiles) {
+
+        List<File> files = new ArrayList<File>();
+        try {
+            files = fileManager.uploadFiles(multipartFiles);
+
+            for(File file : files){
+                final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+                final StringBuilder stringBuilder = new StringBuilder();
+
+                String line;
+                while ((line = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(line + "\n");
+                }
+
+                projectServiceFacade.importProject(type, stringBuilder.toString());
+            }
+        } catch (IOException e) {
+            LOGGER.error("Unable to import projects", e);
+        } finally {
+            fileManager.deleteUploadedFiles(files);
+        }
+
     }
 
 }

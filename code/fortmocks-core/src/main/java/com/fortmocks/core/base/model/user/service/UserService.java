@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.base.model.user.service;
+package com.fortmocks.core.base.model.user.service;
 
 import com.fortmocks.core.base.model.Service;
 import com.fortmocks.core.base.model.user.Role;
@@ -29,7 +29,6 @@ import java.util.List;
  * @since 1.0
  * @see com.fortmocks.core.base.model.user.User
  * @see com.fortmocks.core.base.model.user.dto.UserDto
- * @see com.fortmocks.war.base.model.user.service.UserServiceImpl
  */
 public interface UserService extends Service<User, UserDto, Long> {
 

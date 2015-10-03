@@ -17,6 +17,7 @@
 package com.fortmocks.war.mock.soap.model.event.repository;
 
 import com.fortmocks.core.mock.soap.model.event.SoapEvent;
+import com.fortmocks.core.mock.soap.model.event.repository.SoapEventRepository;
 import com.fortmocks.war.base.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;

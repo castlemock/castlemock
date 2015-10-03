@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package com.fortmocks.war.mock.rest.model.project.repository;
+package com.fortmocks.core.base.model.event.service;
 
-
-import com.fortmocks.core.base.model.Repository;
-import com.fortmocks.core.mock.rest.model.project.RestProject;
+import com.fortmocks.core.base.model.Service;
+import com.fortmocks.core.base.model.event.Event;
+import com.fortmocks.core.base.model.event.dto.EventDto;
 
 /**
- * The REST project file repository provides the functionality to interact with the file system.
- * The repository is responsible for loading and REST project to the file system. Each
- * REST project is stored as a separate file.
+ * The event service is responsible for providing the basic functionality for all the
+ * event services.
  * @author Karl Dahlgren
  * @since 1.0
- * @see RestProject
- * @see Repository
- * @see RestProjectRepositoryImpl
+ * @param <T> The event type
+ * @param <D> The dto event type
+ * @see com.fortmocks.core.base.model.event.Event
+ * @see com.fortmocks.core.base.model.event.dto.EventDto
  */
-public interface RestProjectRepository extends Repository<RestProject, Long> {
+public interface EventService<T extends Event, D extends EventDto> extends Service<T, D, Long> {
+
 }

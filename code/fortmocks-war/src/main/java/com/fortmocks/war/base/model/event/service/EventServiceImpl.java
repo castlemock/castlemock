@@ -21,6 +21,7 @@ import com.fortmocks.core.base.model.TypeIdentifiable;
 import com.fortmocks.core.base.model.TypeIdentifier;
 import com.fortmocks.core.base.model.event.Event;
 import com.fortmocks.core.base.model.event.dto.EventDto;
+import com.fortmocks.core.base.model.event.service.EventService;
 import com.fortmocks.war.base.model.ServiceImpl;
 
 /**
