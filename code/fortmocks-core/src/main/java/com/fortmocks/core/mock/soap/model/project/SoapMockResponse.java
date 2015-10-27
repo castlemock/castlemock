@@ -33,6 +33,7 @@ public class SoapMockResponse implements Saveable<Long> {
     private Long id;
     private String name;
     private String body;
+    private Integer httpResponseCode;
     private SoapMockResponseStatus soapMockResponseStatus;
 
     @XmlElement
@@ -71,6 +72,15 @@ public class SoapMockResponse implements Saveable<Long> {
 
     public void setSoapMockResponseStatus(SoapMockResponseStatus soapMockResponseStatus) {
         this.soapMockResponseStatus = soapMockResponseStatus;
+    }
+
+    @XmlElement
+    public Integer getHttpResponseCode() {
+        return httpResponseCode;
+    }
+
+    public void setHttpResponseCode(Integer httpResponseCode) {
+        this.httpResponseCode = httpResponseCode;
     }
 
     @Override

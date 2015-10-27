@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * The SoapServiceController handles all the incoming SOAP request.
@@ -47,9 +48,8 @@ public class SoapServiceController extends AbstractSoapServiceController {
      * @see com.fortmocks.core.mock.soap.model.project.SoapMockResponse
      */
     @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public String postMethod(@PathVariable final Long projectId, final HttpServletRequest request) {
-        return process(projectId, request);
+    public String postMethod(@PathVariable final Long projectId, final HttpServletRequest request, final HttpServletResponse response) {
+        return process(projectId, request, response);
     }
 }

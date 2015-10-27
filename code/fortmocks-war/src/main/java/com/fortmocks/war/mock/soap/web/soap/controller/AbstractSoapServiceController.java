@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -78,12 +79,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletRequest The incoming request
      * @return Returns the response as an String
      */
-    protected String process(final Long projectId, final HttpServletRequest httpServletRequest){
+    protected String process(final Long projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(projectId, "THe project id cannot be null");
         Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
         final SoapRequestDto request = prepareRequest(projectId, httpServletRequest);
         final SoapOperationDto operation = soapProjectService.findSoapOperation(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType());
-        return process(operation, request);
+        return process(operation, request, httpServletResponse);
     }
 
     /**
@@ -121,7 +122,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param request The incoming request
      * @return Returns the response as an String
      */
-    protected String process(final SoapOperationDto soapOperationDto, final SoapRequestDto request){
+    protected String process(final SoapOperationDto soapOperationDto, final SoapRequestDto request, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(request, "Request cannot be null");
         if(soapOperationDto == null){
             throw new SoapException("Soap operation could not be found");
@@ -137,7 +138,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             } else if (SoapOperationStatus.RECORDING.equals(soapOperationDto.getSoapOperationStatus())) {
                 response = forwardRequestAndRecordResponse(request, soapOperationDto);
             } else { // Status.MOCKED
-                response = mockResponse(soapOperationDto);
+                response = mockResponse(soapOperationDto, httpServletResponse);
             }
             return response.getBody();
         } finally{
@@ -154,7 +155,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      *                         the provided SOAP operation.
      * @return A mocked response based on the provided SOAP operation
      */
-    private SoapResponseDto mockResponse(final SoapOperationDto soapOperationDto){
+    private SoapResponseDto mockResponse(final SoapOperationDto soapOperationDto, final HttpServletResponse httpServletResponse){
         final List<SoapMockResponseDto> mockResponses = new ArrayList<SoapMockResponseDto>();
         for(SoapMockResponseDto mockResponse : soapOperationDto.getSoapMockResponses()){
             if(mockResponse.getSoapMockResponseStatus().equals(SoapMockResponseStatus.ENABLED)){
@@ -185,6 +186,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         final SoapResponseDto response = new SoapResponseDto();
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
+        httpServletResponse.setStatus(mockResponse.getHttpResponseCode());
         return response;
 
     }

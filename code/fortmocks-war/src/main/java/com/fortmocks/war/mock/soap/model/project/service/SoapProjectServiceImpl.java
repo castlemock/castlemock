@@ -580,7 +580,9 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     public void updateSoapMockResponse(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final Long soapMockResponseId, final SoapMockResponseDto soapMockResponseDto) {
         Preconditions.checkNotNull(soapMockResponseDto, "Mock response cannot be null");
         final SoapMockResponse soapMockResponse = findSoapMockResponseBySoapProjectIdAndSoapPortIdAndSoapOperationIdAndSoapMockResponseId(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
+        soapMockResponse.setName(soapMockResponseDto.getName());
         soapMockResponse.setBody(soapMockResponseDto.getBody());
+        soapMockResponse.setHttpResponseCode(soapMockResponseDto.getHttpResponseCode());
         save(soapProjectId);
     }
 

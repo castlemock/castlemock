@@ -58,16 +58,19 @@
                     <table class="entityTable">
                         <col width="10%">
                         <col width="10%">
-                        <col width="80%">
+                        <col width="20%">
+                        <col width="60%">
                         <tr>
                             <th><spring:message code="soap.soapoperation.column.selected"/></th>
                             <th><spring:message code="soap.soapoperation.column.status"/></th>
+                            <th><spring:message code="soap.soapoperation.column.httpresponsecode"/></th>
                             <th><spring:message code="soap.soapoperation.column.responsename"/></th>
                         </tr>
                         <c:forEach items="${soapOperation.soapMockResponses}" var="soapMockResponse" varStatus="loopStatus">
                             <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                                 <td><form:checkbox path="soapMockResponseIds" name="${soapMockResponse.id}" value="${soapMockResponse.id}"/></td>
                                 <td><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponse.soapMockResponseStatus}"/></td>
+                                <td>${soapMockResponse.httpResponseCode}</td>
                                 <td><a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/response/${soapMockResponse.id}"/>">${soapMockResponse.name}</a></td>
                             </tr>
                         </c:forEach>
