@@ -17,7 +17,8 @@
 package com.fortmocks.core.mock.rest.model.event;
 
 import com.fortmocks.core.base.model.event.Event;
-
+import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
+import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,4 +28,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class RestEvent extends Event {
+
+    private RestRequestDto restRequest;
+    private RestResponseDto restResponse;
+    private Long restMethodId;
+
+    public RestRequestDto getRestRequest() {
+        return restRequest;
+    }
+
+    public void setRestRequest(RestRequestDto restRequest) {
+        this.restRequest = restRequest;
+    }
+
+    public RestResponseDto getRestResponse() {
+        return restResponse;
+    }
+
+    public void setRestResponse(RestResponseDto restResponse) {
+        this.restResponse = restResponse;
+    }
+
+    public Long getRestMethodId() {
+        return restMethodId;
+    }
+
+    public void setRestMethodId(Long restMethodId) {
+        this.restMethodId = restMethodId;
+    }
 }

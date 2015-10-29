@@ -60,6 +60,9 @@ public class RestMethodDto {
     @Mapping("events")
     private Set<Event> events;
 
+    @Mapping("currentResponseSequenceIndex")
+    private Integer currentResponseSequenceIndex;
+
     public Long getId() {
         return id;
     }
@@ -130,5 +133,13 @@ public class RestMethodDto {
 
     public void setEvents(Set<Event> events) {
         this.events = events;
+    }
+
+    public Integer getCurrentResponseSequenceIndex() {
+        return currentResponseSequenceIndex;
+    }
+
+    public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
+        this.currentResponseSequenceIndex = currentResponseSequenceIndex;
     }
 }

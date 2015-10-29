@@ -71,9 +71,36 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
     }
 
     @Override
+    public RestResourceDto findRestResource(final Long restProjectId, final Long restApplicationId, final String restResourceUri) {
+        Preconditions.checkNotNull(restResourceUri, "The REST resource URI cannot be null");
+        final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
+        for(RestResource restResource : restApplication.getRestResources()){
+            if(restResourceUri.equalsIgnoreCase(restResource.getUri())){
+                return mapper.map(restResource, RestResourceDto.class);
+            }
+        }
+        return null;
+    }
+
+    @Override
     public RestMethodDto findRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId) {
         final RestMethod restMethod = findRestMethodByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodId(restProjectId, restApplicationId, restResourceId, restMethodId);
         return restMethod != null ? mapper.map(restMethod, RestMethodDto.class) : null;
+    }
+
+    @Override
+    public RestMethodDto findRestMethod(final Long restProjectId, final Long restApplicationId, final String restResourceUri, final RestMethodType restMethodType) {
+        Preconditions.checkNotNull(restResourceUri, "The REST resource URI cannot be null");
+        final RestResourceDto restApplication = findRestResource(restProjectId, restApplicationId, restResourceUri);
+        if(restApplication != null){
+            for(RestMethodDto restMethod : restApplication.getRestMethods()){
+                if(restMethodType.equals(restMethod.getRestMethodType())) {
+                    return restMethod;
+                }
+            }
+        }
+        return null;
+
     }
 
     @Override

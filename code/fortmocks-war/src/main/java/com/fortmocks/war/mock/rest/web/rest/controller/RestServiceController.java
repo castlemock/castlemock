@@ -16,12 +16,14 @@
 
 package com.fortmocks.war.mock.rest.web.rest.controller;
 
+import com.fortmocks.core.mock.rest.model.project.RestMethodType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * The RestServiceController handles all the incoming REST request.
@@ -33,14 +35,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/mock/rest/project")
-public class RestServiceController  {
+public class RestServiceController extends AbstractRestServiceController  {
 
 
     /**
      * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
      * and a response will be generated and returned to the service consumer.
      * @param projectId The id of the project that the request belongs to
-     * @param request The incoming request that will be processed
+     * @param httpServletRequest The incoming request that will be processed
+     * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
      * @see com.fortmocks.core.mock.rest.model.project.RestProject
      * @see com.fortmocks.core.mock.rest.model.project.RestResource
@@ -48,8 +51,63 @@ public class RestServiceController  {
      */
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public String postMethod(@PathVariable final Long projectId, final HttpServletRequest request) {
-        return null;
+    @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String getMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+        return process(projectId, applicationId, RestMethodType.GET, httpServletRequest, httpServletResponse);
     }
+
+    /**
+     * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
+     * and a response will be generated and returned to the service consumer.
+     * @param projectId The id of the project that the request belongs to
+     * @param httpServletRequest The incoming request that will be processed
+     * @param httpServletResponse The outgoing response
+     * @return Returns a mocked response
+     * @see com.fortmocks.core.mock.rest.model.project.RestProject
+     * @see com.fortmocks.core.mock.rest.model.project.RestResource
+     * @see com.fortmocks.core.mock.rest.model.project.RestMockResponse
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String postMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+        return process(projectId, applicationId, RestMethodType.POST, httpServletRequest, httpServletResponse);
+    }
+
+    /**
+     * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
+     * and a response will be generated and returned to the service consumer.
+     * @param projectId The id of the project that the request belongs to
+     * @param httpServletRequest The incoming request that will be processed
+     * @param httpServletResponse The outgoing response
+     * @return Returns a mocked response
+     * @see com.fortmocks.core.mock.rest.model.project.RestProject
+     * @see com.fortmocks.core.mock.rest.model.project.RestResource
+     * @see com.fortmocks.core.mock.rest.model.project.RestMockResponse
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.PUT, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String putMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+        return process(projectId, applicationId, RestMethodType.PUT, httpServletRequest, httpServletResponse);
+    }
+
+    /**
+     * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
+     * and a response will be generated and returned to the service consumer.
+     * @param projectId The id of the project that the request belongs to
+     * @param httpServletRequest The incoming request that will be processed
+     * @param httpServletResponse The outgoing response
+     * @return Returns a mocked response
+     * @see com.fortmocks.core.mock.rest.model.project.RestProject
+     * @see com.fortmocks.core.mock.rest.model.project.RestResource
+     * @see com.fortmocks.core.mock.rest.model.project.RestMockResponse
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String deleteMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+        return process(projectId, applicationId, RestMethodType.DELETE, httpServletRequest, httpServletResponse);
+    }
+
 }

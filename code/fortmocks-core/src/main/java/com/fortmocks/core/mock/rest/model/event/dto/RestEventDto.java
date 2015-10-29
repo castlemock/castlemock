@@ -17,6 +17,9 @@
 package com.fortmocks.core.mock.rest.model.event.dto;
 
 import com.fortmocks.core.base.model.event.dto.EventDto;
+import org.dozer.Mapping;
+
+import java.util.Date;
 
 /**
  * @author Karl Dahlgren
@@ -24,6 +27,14 @@ import com.fortmocks.core.base.model.event.dto.EventDto;
  */
 public class RestEventDto extends EventDto {
 
+    @Mapping("restRequest")
+    private RestRequestDto restRequest;
+
+    @Mapping("restResponse")
+    private RestResponseDto restResponse;
+
+    @Mapping("restMethodId")
+    private Long restMethodId;
 
     /**
      * Default constructor for the REST event DTO
@@ -38,4 +49,49 @@ public class RestEventDto extends EventDto {
         super(eventDto);
     }
 
+    /**
+     * Constructor for the SOAP event DTO
+     * @param restRequest The SOAP request that the event is representing
+     * @param restMethodId The id of the SOAP operation that is affected by the provided SOAP request
+     * @see com.fortmocks.core.mock.soap.model.project.SoapOperation
+     */
+    public RestEventDto(final RestRequestDto restRequest, final Long restMethodId) {
+        this.restRequest = restRequest;
+        this.restMethodId = restMethodId;
+        setStartDate(new Date());
+    }
+
+    /**
+     * The finish method is used to sent the response that was sent back, but was also
+     * to set the date/time for when the event ended.
+     * @param restResponse
+     */
+    public void finish(final RestResponseDto restResponse) {
+        this.restResponse = restResponse;
+        setEndDate(new Date());
+    }
+
+    public RestRequestDto getRestRequest() {
+        return restRequest;
+    }
+
+    public void setRestRequest(RestRequestDto restRequest) {
+        this.restRequest = restRequest;
+    }
+
+    public RestResponseDto getRestResponse() {
+        return restResponse;
+    }
+
+    public void setRestResponse(RestResponseDto restResponse) {
+        this.restResponse = restResponse;
+    }
+
+    public Long getRestMethodId() {
+        return restMethodId;
+    }
+
+    public void setRestMethodId(Long restMethodId) {
+        this.restMethodId = restMethodId;
+    }
 }

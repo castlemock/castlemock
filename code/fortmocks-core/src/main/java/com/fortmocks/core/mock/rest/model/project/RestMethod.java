@@ -41,6 +41,7 @@ public class RestMethod implements Saveable<Long> {
     private RestResponseStrategy restResponseStrategy;
     private List<RestMockResponse> restMockResponses;
     private Set<Event> events;
+    private Integer currentResponseSequenceIndex;
 
     @Override
     @XmlElement
@@ -124,5 +125,14 @@ public class RestMethod implements Saveable<Long> {
 
     public void setRestResponseStrategy(RestResponseStrategy restResponseStrategy) {
         this.restResponseStrategy = restResponseStrategy;
+    }
+
+    @XmlElement
+    public Integer getCurrentResponseSequenceIndex() {
+        return currentResponseSequenceIndex;
+    }
+
+    public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
+        this.currentResponseSequenceIndex = currentResponseSequenceIndex;
     }
 }

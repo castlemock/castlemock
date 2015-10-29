@@ -16,6 +16,7 @@
 
 package com.fortmocks.core.mock.rest.model.project.service;
 
+import com.fortmocks.core.mock.rest.model.project.RestMethodType;
 import com.fortmocks.core.mock.rest.model.project.RestMockResponseStatus;
 import com.fortmocks.core.mock.rest.model.project.RestProject;
 import com.fortmocks.core.mock.rest.model.project.dto.*;
@@ -42,7 +43,11 @@ public interface RestProjectService extends ProjectService<RestProject, RestProj
 
     RestResourceDto findRestResource(Long restProjectId, Long restApplicationId, Long restResourceId);
 
+    RestResourceDto findRestResource(Long restProjectId, Long restApplicationId, String restResourceUri);
+
     RestMethodDto findRestMethod(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId);
+
+    RestMethodDto findRestMethod(Long restProjectId, Long restApplicationId, String restResourceUri, RestMethodType restMethodType);
 
     RestApplicationDto saveRestApplication(Long restProjectId, RestApplicationDto restApplication);
 
