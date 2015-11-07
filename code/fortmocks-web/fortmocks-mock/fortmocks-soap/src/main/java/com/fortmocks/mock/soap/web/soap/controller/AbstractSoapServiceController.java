@@ -164,7 +164,6 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
 
         SoapMockResponseDto mockResponse = null;
-        soapProjectService.findSoapMockResponses(soapOperationDto.getId(), SoapMockResponseStatus.ENABLED);
         if(mockResponses.isEmpty()){
             throw new SoapException("No mocked response created for operation " + soapOperationDto.getName());
         } else if(soapOperationDto.getSoapResponseStrategy().equals(SoapResponseStrategy.RANDOM)){

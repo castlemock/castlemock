@@ -121,9 +121,9 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
     @Override
     public void updateCurrentResponseSequenceIndex(final Long restMethodId, final Integer currentResponseSequenceIndex){
         final RestMethod restMethod = findRestMethodByRestMethodId(restMethodId);
-        final Long soapProjectId = findRestProjectIdForRestMethod(restMethodId);
+        final Long restProjectId = findRestProjectIdForRestMethod(restMethodId);
         restMethod.setCurrentResponseSequenceIndex(currentResponseSequenceIndex);
-        save(soapProjectId);
+        save(restProjectId);
     }
 
     @Override

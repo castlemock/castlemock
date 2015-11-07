@@ -50,9 +50,9 @@ public class RestEventDto extends EventDto {
     }
 
     /**
-     * Constructor for the SOAP event DTO
-     * @param restRequest The SOAP request that the event is representing
-     * @param restMethodId The id of the SOAP operation that is affected by the provided SOAP request
+     * Constructor for the REST event DTO
+     * @param restRequest The REST request that the event is representing
+     * @param restMethodId The id of the REST operation that is affected by the provided REST request
      */
     public RestEventDto(final RestRequestDto restRequest, final Long restMethodId) {
         this.restRequest = restRequest;

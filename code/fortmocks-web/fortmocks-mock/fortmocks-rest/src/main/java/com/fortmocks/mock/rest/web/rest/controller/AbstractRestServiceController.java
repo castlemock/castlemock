@@ -87,7 +87,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         try {
             event = new RestEventDto(restRequest, restMethod.getId());
             if (RestMethodStatus.DISABLED.equals(restMethod.getRestMethodStatus())) {
-                throw new RestException("The requested soap operation, " + restMethod.getName() + ", is disabled");
+                throw new RestException("The requested REST method, " + restMethod.getName() + ", is disabled");
             } else if (RestMethodStatus.FORWARDED.equals(restMethod.getRestMethodStatus())) {
                 response = forwardRequest(restRequest, restMethod);
             } else if (RestMethodStatus.RECORDING.equals(restMethod.getRestMethodStatus())) {
@@ -122,7 +122,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
         }
 
         RestMockResponseDto mockResponse = null;
-        //restProjectService.findRestMockResponse(restMethod.getId(), SoapMockResponseStatus.ENABLED);
         if(mockResponses.isEmpty()){
             throw new RestException("No mocked response created for operation " + restMethod.getName());
         } else if(restMethod.getRestResponseStrategy().equals(RestResponseStrategy.RANDOM)){
