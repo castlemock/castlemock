@@ -21,7 +21,8 @@ import com.fortmocks.core.model.project.dto.ProjectDto;
 import com.fortmocks.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.mock.rest.model.project.*;
 import com.fortmocks.mock.rest.model.project.dto.*;
-import com.fortmocks.web.model.project.service.ProjectServiceImpl;
+import com.fortmocks.web.core.model.project.service.ProjectServiceFacadeImpl;
+import com.fortmocks.web.core.model.project.service.ProjectServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
 
@@ -146,7 +147,7 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
 
     /**
      * The method is responsible for converting a project dto instance into a project dto subclass.
-     * This is used when the {@link com.fortmocks.web.model.project.service.ProjectServiceFacadeImpl} needs
+     * This is used when the {@link ProjectServiceFacadeImpl} needs
      * to manage base project class, but wants to be able to convert it into a specific subclass, for example when
      * creating or updating a project instance.
      * @param projectDto The project dto instance that will be converted into a project dto subclass

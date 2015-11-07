@@ -16,6 +16,7 @@
 
 package com.fortmocks.war.config;
 
+import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import org.apache.log4j.Logger;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Karl Dahlgren
  * @since 1.0
  * @see MvcConfig
- * @see com.fortmocks.web.web.mvc.controller.AbstractController
+ * @see AbstractController
  */
 public class LoggingInterceptor extends HandlerInterceptorAdapter {
 
@@ -47,7 +48,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
      * @param handler The handler contains information about the method and controller that will process the incoming request
      * @return Always returns true
      * @throws Exception
-     * @see com.fortmocks.web.web.mvc.controller.AbstractController
+     * @see AbstractController
      */
     @Override
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
@@ -74,7 +75,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
      * @param handler The handler contains information about the method and controller that has processed the incoming request
      * @param exception Outgoing exception
      * @throws Exception
-     * @see com.fortmocks.web.web.mvc.controller.AbstractController
+     * @see AbstractController
      */
     @Override
     public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response, final Object handler, final Exception exception) throws Exception {

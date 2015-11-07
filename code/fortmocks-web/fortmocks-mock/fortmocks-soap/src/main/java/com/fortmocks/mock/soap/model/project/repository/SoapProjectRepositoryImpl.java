@@ -17,7 +17,7 @@
 package com.fortmocks.mock.soap.model.project.repository;
 
 import com.fortmocks.mock.soap.model.project.SoapProject;
-import com.fortmocks.web.model.RepositoryImpl;
+import com.fortmocks.web.core.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
  * @author Karl Dahlgren
  * @since 1.0
  * @see SoapProjectRepository
- * @see com.fortmocks.web.model.RepositoryImpl
+ * @see RepositoryImpl
  * @see com.fortmocks.mock.soap.model.project.SoapProject
  */
 @Repository

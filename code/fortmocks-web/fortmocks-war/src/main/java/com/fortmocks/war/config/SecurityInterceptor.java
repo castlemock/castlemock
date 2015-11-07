@@ -20,7 +20,8 @@ import com.fortmocks.core.model.user.Role;
 import com.fortmocks.core.model.user.Status;
 import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.user.service.UserService;
-import com.fortmocks.web.model.user.service.UserDetailSecurityService;
+import com.fortmocks.web.core.model.user.service.UserDetailSecurityService;
+import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,7 +42,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Karl Dahlgren
  * @since 1.0
  * @see MvcConfig
- * @see com.fortmocks.web.web.mvc.controller.AbstractController
+ * @see AbstractController
  *
  */
 @Component

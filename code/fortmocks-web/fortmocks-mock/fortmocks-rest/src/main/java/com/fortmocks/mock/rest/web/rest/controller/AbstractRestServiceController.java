@@ -12,7 +12,7 @@ import com.fortmocks.mock.rest.model.project.RestResponseStrategy;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
 import com.fortmocks.mock.rest.model.project.service.RestProjectService;
-import com.fortmocks.web.web.mvc.controller.AbstractController;
+import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 

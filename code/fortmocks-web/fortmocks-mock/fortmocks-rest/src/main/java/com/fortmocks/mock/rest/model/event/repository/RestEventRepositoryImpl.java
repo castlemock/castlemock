@@ -17,7 +17,7 @@
 package com.fortmocks.mock.rest.model.event.repository;
 
 import com.fortmocks.mock.rest.model.event.RestEvent;
-import com.fortmocks.web.model.RepositoryImpl;
+import com.fortmocks.web.core.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Repository;
  * @author Karl Dahlgren
  * @since 1.0
  * @see RestEventRepositoryImpl
- * @see com.fortmocks.web.model.RepositoryImpl
+ * @see RepositoryImpl
  * @see RestEvent
  */
 @Repository

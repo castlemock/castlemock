@@ -17,7 +17,7 @@
 package com.fortmocks.mock.rest.web.mvc.controller;
 
 import com.fortmocks.mock.rest.model.project.service.RestProjectService;
-import com.fortmocks.web.web.mvc.controller.AbstractViewController;
+import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

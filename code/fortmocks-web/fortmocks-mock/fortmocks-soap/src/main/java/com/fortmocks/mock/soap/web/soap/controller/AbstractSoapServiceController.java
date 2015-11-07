@@ -24,7 +24,7 @@ import com.fortmocks.mock.soap.model.project.*;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.model.project.service.SoapProjectService;
-import com.fortmocks.web.web.mvc.controller.AbstractController;
+import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.fortmocks.mock.soap.model.SoapException;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;

@@ -18,7 +18,7 @@ package com.fortmocks.mock.rest.web.rest.controller;
 
 import com.fortmocks.mock.rest.model.RestErrorMessage;
 import com.fortmocks.mock.rest.model.RestException;
-import com.fortmocks.web.web.mvc.controller.AbstractViewController;
+import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

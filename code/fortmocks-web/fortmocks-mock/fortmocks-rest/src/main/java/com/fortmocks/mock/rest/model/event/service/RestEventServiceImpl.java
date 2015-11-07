@@ -21,7 +21,8 @@ import com.fortmocks.core.model.event.dto.EventDto;
 import com.fortmocks.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.mock.rest.model.event.RestEvent;
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
-import com.fortmocks.web.model.event.service.EventServiceImpl;
+import com.fortmocks.web.core.model.project.service.ProjectServiceFacadeImpl;
+import com.fortmocks.web.core.model.event.service.EventServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class RestEventServiceImpl extends EventServiceImpl<RestEvent, RestEventD
 
     /**
      * The method is responsible for converting an event dto instance into a event dto subclass.
-     * This is used when the {@link com.fortmocks.web.model.project.service.ProjectServiceFacadeImpl} needs
+     * This is used when the {@link ProjectServiceFacadeImpl} needs
      * to manage base event class, but wants to be able to convert it into a specific subclass, for example when
      * creating or updating a event instance.
      * @param eventDto The event dto instance that will be converted into a event dto subclass

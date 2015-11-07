@@ -17,6 +17,8 @@
 package com.fortmocks.mock.rest.model;
 
 
+import com.fortmocks.web.core.web.mvc.controller.ViewControllerAdvice;
+
 /**
  * The RestException is the main exception for the all REST related issues. All REST related exceptions
  * should inherit from the class. It is important that all REST exceptions are inheriting
@@ -24,12 +26,12 @@ package com.fortmocks.mock.rest.model;
  * only handle exceptions that is either an instance of the RestException class or an instance from a class that
  * is inherit from the RestException class. The {@link com.fortmocks.mock.rest.web.rest.controller.RestControllerAdvice}
  * will transform the exception message into a REST response message. If an exception is thrown from the
- * {@link com.fortmocks.mock.rest.web.rest.controller.RestServiceController}, the {@link com.fortmocks.web.web.mvc.controller.ViewControllerAdvice}
+ * {@link com.fortmocks.mock.rest.web.rest.controller.RestServiceController}, the {@link ViewControllerAdvice}
  * will process the exception instead and a view will be sent as a response instead.
  * @author Karl Dahlgren
  * @since 1.0
  * @see com.fortmocks.mock.rest.web.rest.controller.RestControllerAdvice
- * @see com.fortmocks.web.web.mvc.controller.ViewControllerAdvice
+ * @see ViewControllerAdvice
  */
 
 public class RestException extends RuntimeException {
