@@ -38,6 +38,9 @@ import java.util.List;
 @Service
 public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, RestProjectDto> implements RestProjectService {
 
+    private static final String SLASH = "/";
+    private static final String START_BRACKET = "{";
+    private static final String END_BRACKET = "}";
     private static final RestTypeIdentifier REST_TYPE_IDENTIFIER = new RestTypeIdentifier();
 
     /**
@@ -90,11 +93,15 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
     @Override
     public RestMethodDto findRestMethod(final Long restProjectId, final Long restApplicationId, final String restResourceUri, final RestMethodType restMethodType) {
         Preconditions.checkNotNull(restResourceUri, "The REST resource URI cannot be null");
-        final RestResourceDto restApplication = findRestResource(restProjectId, restApplicationId, restResourceUri);
-        if(restApplication != null){
-            for(RestMethodDto restMethod : restApplication.getRestMethods()){
+
+        final String[] restResourceUriParts = restResourceUri.split(SLASH);
+
+
+        final RestResource restResource = findRestMockResponseByRestProjectIdAndRestApplicationIdAndRestResourceUriParts(restProjectId, restApplicationId, restResourceUriParts);
+        if(restResource != null){
+            for(RestMethod restMethod : restResource.getRestMethods()){
                 if(restMethodType.equals(restMethod.getRestMethodType())) {
-                    return restMethod;
+                    return mapper.map(restMethod, RestMethodDto.class);
                 }
             }
         }
@@ -453,5 +460,46 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
             }
         }
         throw new IllegalArgumentException("Unable to find a REST mock response with id " + restMockResponseId);
+    }
+
+
+    private RestResource findRestMockResponseByRestProjectIdAndRestApplicationIdAndRestResourceUriParts(final Long restProjectId, final Long restApplicationId, final String[] otherRestResourceUriParts) {
+        final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
+
+        for(RestResource restResource : restApplication.getRestResources()){
+            final String[] restResourceUriParts = restResource.getUri().split(SLASH);
+
+            if(compareRestResourceUri(restResourceUriParts, otherRestResourceUriParts)){
+                return restResource;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * The method provides the functionality to compare two sets of REST resource URI parts.
+     * @param restResourceUriParts THe first set of resource URI parts
+     * @param otherRestResourceUriParts The second set of resource URI parts
+     * @return True if the provided URIs are matching. False otherwise
+     */
+    private boolean compareRestResourceUri(final String[] restResourceUriParts, final String[] otherRestResourceUriParts){
+        if(restResourceUriParts.length != otherRestResourceUriParts.length){
+            return false;
+        }
+
+        for(int index = 0; index < restResourceUriParts.length; index++){
+            final String restResourceUriPart = restResourceUriParts[index];
+            final String otherRestResourceUriPart = otherRestResourceUriParts[index];
+
+            if(restResourceUriPart.startsWith(START_BRACKET) && restResourceUriPart.endsWith(END_BRACKET)){
+                continue;
+            }
+
+            if(!restResourceUriPart.equalsIgnoreCase(otherRestResourceUriPart)){
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -52,14 +52,11 @@ import java.util.List;
 public class SoapOperationController extends AbstractSoapViewController {
 
     private static final String PAGE = "mock/soap/operation/soapOperation";
-    private static final String HTTP = "http://";
-    private static final String HTTPS = "https://";
     private static final String DELETE_SOAP_MOCK_RESPONSES_COMMAND = "deleteSoapMockResponsesCommand";
     private static final String SOAP_MOCK_RESPONSE_MODIFIER_COMMAND = "soapMockResponseModifierCommand";
     private static final String DELETE_MOCK_RESPONSES_PAGE = "mock/soap/mockresponse/deleteSoapMockResponses";
     private static final String UPDATE_STATUS = "update";
     private static final String DELETE_MOCK_RESPONSES = "delete";
-    private static final String LOCAL_ADDRESS = "127.0.0.1";
     private static final Logger LOGGER = Logger.getLogger(SoapOperationController.class);
 
     @Autowired
@@ -137,31 +134,4 @@ public class SoapOperationController extends AbstractSoapViewController {
 
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
-
-    /**
-     * The method returns the local address (Not link local address, not loopback address) which the server is deployed on.
-     * If the method does not find any INet4Address that is neither link local address and loopback address, the method
-     * will return the the address 127.0.0.1
-     * @return Returns the local address or 127.0.0.1 if no address was found
-     * @throws SocketException
-     */
-    public String getHostAddress() throws SocketException {
-
-        final Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-        while (networkInterfaces.hasMoreElements())
-        {
-            final NetworkInterface networkInterface = networkInterfaces.nextElement();
-            final Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
-            while (addresses.hasMoreElements())
-            {
-                final InetAddress address = addresses.nextElement();
-                if (!address.isLinkLocalAddress() && !address.isLoopbackAddress() && address instanceof Inet4Address){
-                    return address.getHostAddress();
-                }
-            }
-        }
-
-        return LOCAL_ADDRESS;
-    }
-
 }

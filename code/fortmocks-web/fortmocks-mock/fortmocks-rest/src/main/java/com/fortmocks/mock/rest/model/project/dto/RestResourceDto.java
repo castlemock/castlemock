@@ -39,6 +39,8 @@ public class RestResourceDto {
     @Mapping("restMethods")
     private List<RestMethodDto> restMethods = new LinkedList<RestMethodDto>();
 
+    private String invokeAddress;
+
     public Long getId() {
         return id;
     }
@@ -69,5 +71,13 @@ public class RestResourceDto {
 
     public void setRestMethods(List<RestMethodDto> restMethods) {
         this.restMethods = restMethods;
+    }
+
+    public String getInvokeAddress() {
+        return invokeAddress;
+    }
+
+    public void setInvokeAddress(String invokeAddress) {
+        this.invokeAddress = invokeAddress;
     }
 }

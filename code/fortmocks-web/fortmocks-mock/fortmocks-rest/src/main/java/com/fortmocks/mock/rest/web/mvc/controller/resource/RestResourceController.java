@@ -28,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +54,24 @@ public class RestResourceController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId, @PathVariable final Long resourceId) {
+    public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId, @PathVariable final Long resourceId, final ServletRequest request) {
         final RestResourceDto restResource = restProjectService.findRestResource(projectId, applicationId, resourceId);
+
+        String requestProtocol = HTTP;
+        if(request.isSecure()){
+            requestProtocol = HTTPS;
+        }
+
+        try {
+            final String hostAddress = getHostAddress();
+            restResource.setInvokeAddress(requestProtocol + hostAddress + ":" + request.getServerPort() + getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + restResource.getUri());
+        } catch (Exception exception) {
+            LOGGER.error("Unable to generate invoke URL", exception);
+            throw new IllegalStateException("Unable to generate invoke URL for " + restResource.getName());
+        }
+
+
+
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
         model.addObject(REST_APPLICATION_ID, applicationId);

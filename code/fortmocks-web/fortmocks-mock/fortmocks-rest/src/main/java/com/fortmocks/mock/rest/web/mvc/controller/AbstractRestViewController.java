@@ -28,6 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class AbstractRestViewController extends AbstractViewController {
 
+    protected static final String REST = "rest";
+    protected static final String APPLICATION = "application";
+
     protected static final String REST_PROJECT = "restProject";
     protected static final String REST_PROJECT_ID = "restProjectId";
 
