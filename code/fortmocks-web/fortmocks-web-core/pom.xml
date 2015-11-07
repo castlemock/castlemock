@@ -17,12 +17,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fortmocks</groupId>
-	<artifactId>fortmocks-war</artifactId>
-	<packaging>war</packaging>
+	<artifactId>fortmocks-web-core</artifactId>
+	<packaging>jar</packaging>
 	<version>0.2-SNAPSHOT</version>
-    <name>Fort mocks war</name>
+    <name>Fort mocks web core</name>
 	<url>http://www.fortmocks.com</url>
-	<description>The module that constitutes the main Fort Mocks war</description>
+	<description>The module that constitutes the main Fort Mocks web core</description>
 
 	<developers>
 		<developer>
@@ -33,74 +33,19 @@
 
 	<parent>
 		<groupId>com.fortmocks</groupId>
-		<artifactId>fortmocks-parent</artifactId>
+		<artifactId>fortmocks-web</artifactId>
 		<version>0.2-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-parent</artifactId>
-				<version>1.2.6.RELEASE</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<!-- Fort Mocks -->
-			<dependency>
-				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-plugin</artifactId>
-				<version>${project.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-rest</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-soap</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-		</dependencies>
-	</dependencyManagement>
 
 
 	<dependencies>
 
 		<dependency>
 			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-rest</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-soap</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fortmocks</groupId>
 			<artifactId>fortmocks-core</artifactId>
 		</dependency>
-
 
 		<!-- Spring framework -->
 		<dependency>
@@ -144,8 +89,6 @@
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
-			<version>${javax.servlet.jsp}</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -154,12 +97,10 @@
 		</dependency>
 
 		<!-- test -->
-
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 		</dependency>
-
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -185,22 +126,16 @@
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
-
     </dependencies>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -213,19 +148,9 @@
 					<showDeprecation>true</showDeprecation>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
         </plugins>
 		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
+
 		</resources>
 	</build>
 

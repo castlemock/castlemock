@@ -52,12 +52,9 @@
 	</issueManagement>
 
 	<modules>
-		<module>fortmocks-war</module>
 		<module>fortmocks-plugin</module>
 		<module>fortmocks-core</module>
 		<module>fortmocks-web</module>
-		<module>fortmocks-mock/fortmocks-soap</module>
-		<module>fortmocks-mock/fortmocks-rest</module>
 	</modules>
 
 	<properties>
@@ -72,14 +69,6 @@
 		<cobertura-version>2.7</cobertura-version>
 		<javadoc-version>2.10.3</javadoc-version>
 		<release-plugin-version>2.5.1</release-plugin-version>
-		<jackson.version>1.9.13</jackson.version>
-		<org.springframework-version>4.0.1.RELEASE</org.springframework-version>
-		<org.springframework-boot-version>1.2.6.RELEASE</org.springframework-boot-version>
-		<spring.security.version>3.2.5.RELEASE</spring.security.version>
-		<wsdl4j.version>1.6.3</wsdl4j.version>
-		<jstl.version>1.2</jstl.version>
-		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
-		<javax.servlet.jsp>2.2</javax.servlet.jsp>
 	</properties>
 
 	<dependencyManagement>

@@ -18,7 +18,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks-mock</artifactId>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<version>0.2-SNAPSHOT</version>
     <name>Fort mocks mock</name>
 	<url>http://www.fortmocks.com</url>
@@ -31,12 +31,16 @@
 		</developer>
 	</developers>
 
+	<modules>
+		<module>fortmocks-soap</module>
+		<module>fortmocks-rest</module>
+	</modules>
+
 	<parent>
 		<groupId>com.fortmocks</groupId>
-		<artifactId>fortmocks-parent</artifactId>
+		<artifactId>fortmocks-web</artifactId>
 		<version>0.2-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
-
 
 </project>
