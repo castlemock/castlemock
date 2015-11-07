@@ -31,6 +31,16 @@
 		</developer>
 	</developers>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.fortmocks</groupId>
+				<artifactId>fortmocks-web-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<modules>
 		<module>fortmocks-soap</module>
 		<module>fortmocks-rest</module>
