@@ -16,8 +16,8 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.port;
 
-import com.fortmocks.war.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
-import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;
+import com.fortmocks.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
+import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import com.google.common.base.Preconditions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;

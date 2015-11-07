@@ -69,6 +69,11 @@
 				<artifactId>fortmocks-rest</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.fortmocks</groupId>
+				<artifactId>fortmocks-soap</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -84,6 +89,11 @@
 		<dependency>
 			<groupId>com.fortmocks</groupId>
 			<artifactId>fortmocks-rest</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fortmocks</groupId>
+			<artifactId>fortmocks-soap</artifactId>
 		</dependency>
 
 		<dependency>

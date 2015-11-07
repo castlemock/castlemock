@@ -24,17 +24,6 @@
 	<url>http://www.fortmocks.com</url>
 	<description>The module that constitutes the main Fort Mocks soap</description>
 
-	<properties>
-		<jackson.version>1.9.13</jackson.version>
-		<org.springframework-version>4.0.1.RELEASE</org.springframework-version>
-		<org.springframework-boot-version>1.2.6.RELEASE</org.springframework-boot-version>
-        <spring.security.version>3.2.5.RELEASE</spring.security.version>
-		<wsdl4j.version>1.6.3</wsdl4j.version>
-		<jstl.version>1.2</jstl.version>
-		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
-		<javax.servlet.jsp>2.2</javax.servlet.jsp>
-	</properties>
-
 	<developers>
 		<developer>
 			<name>Karl Dahlgren</name>
@@ -44,9 +33,9 @@
 
 	<parent>
 		<groupId>com.fortmocks</groupId>
-		<artifactId>fortmocks-mock</artifactId>
+		<artifactId>fortmocks-parent</artifactId>
 		<version>0.2-SNAPSHOT</version>
-		<relativePath>../</relativePath>
+		<relativePath>../../</relativePath>
 	</parent>
 
 	<dependencyManagement>
@@ -67,7 +56,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-web-core</artifactId>
+				<artifactId>fortmocks-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -88,16 +77,10 @@
 
 		<dependency>
 			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-web-core</artifactId>
+			<artifactId>fortmocks-web</artifactId>
 		</dependency>
 
 		<!-- Spring framework -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -188,19 +171,15 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
 
     </dependencies>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -211,13 +190,6 @@
 					<compilerArgument>-Xlint:all</compilerArgument>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
         </plugins>

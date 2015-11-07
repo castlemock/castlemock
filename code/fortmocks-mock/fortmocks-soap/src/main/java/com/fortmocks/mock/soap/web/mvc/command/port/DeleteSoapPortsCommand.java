@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.web.mvc.command.port;
 
-import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
 
 import java.util.List;
 

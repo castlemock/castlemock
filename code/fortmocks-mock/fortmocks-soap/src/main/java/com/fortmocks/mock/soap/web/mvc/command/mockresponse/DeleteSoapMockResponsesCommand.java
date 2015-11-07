@@ -17,7 +17,7 @@
 package com.fortmocks.mock.soap.web.mvc.command.mockresponse;
 
 
-import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 
 import java.util.List;
 

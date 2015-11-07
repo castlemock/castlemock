@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.web.mvc.command.operation;
 
-import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 
 import java.util.List;
 

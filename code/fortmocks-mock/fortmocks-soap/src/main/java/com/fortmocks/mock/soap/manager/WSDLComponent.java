@@ -16,14 +16,19 @@
 
 package com.fortmocks.mock.soap.manager;
 
+import com.fortmocks.mock.soap.model.project.*;
+import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.war.base.manager.FileManager;
+
+import com.fortmocks.web.manager.FileManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
+import javax.wsdl.*;
 import javax.wsdl.extensions.soap.SOAPAddress;
 import javax.wsdl.extensions.soap12.SOAP12Address;
 import javax.wsdl.factory.WSDLFactory;

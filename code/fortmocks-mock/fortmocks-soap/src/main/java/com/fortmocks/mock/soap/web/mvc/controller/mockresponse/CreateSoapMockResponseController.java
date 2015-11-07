@@ -17,10 +17,10 @@
 package com.fortmocks.mock.soap.web.mvc.controller.mockresponse;
 
 
-import com.fortmocks.core.mock.soap.model.project.SoapMockResponseStatus;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;
+import com.fortmocks.mock.soap.model.project.SoapMockResponseStatus;
+import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

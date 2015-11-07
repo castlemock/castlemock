@@ -16,19 +16,20 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.operation;
 
-import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
-import com.fortmocks.core.mock.soap.model.event.service.SoapEventService;
-import com.fortmocks.core.mock.soap.model.project.SoapMockResponseStatus;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.war.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
-import com.fortmocks.war.mock.soap.web.mvc.command.mockresponse.SoapMockResponseModifierCommand;
-import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;
+import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
+import com.fortmocks.mock.soap.model.event.service.SoapEventService;
+import com.fortmocks.mock.soap.model.project.SoapMockResponseStatus;
+import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
+import com.fortmocks.mock.soap.web.mvc.command.mockresponse.SoapMockResponseModifierCommand;
+import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;

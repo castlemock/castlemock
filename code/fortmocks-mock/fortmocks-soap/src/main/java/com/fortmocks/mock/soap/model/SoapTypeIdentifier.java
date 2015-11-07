@@ -17,7 +17,7 @@
 package com.fortmocks.mock.soap.model;
 
 
-import com.fortmocks.core.base.model.TypeIdentifier;
+import com.fortmocks.core.model.TypeIdentifier;
 
 /**
  * @author Karl Dahlgren

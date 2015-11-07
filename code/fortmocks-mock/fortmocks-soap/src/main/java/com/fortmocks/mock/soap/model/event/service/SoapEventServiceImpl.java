@@ -16,14 +16,13 @@
 
 package com.fortmocks.mock.soap.model.event.service;
 
-import com.fortmocks.core.base.model.TypeIdentifier;
-import com.fortmocks.core.base.model.event.dto.EventDto;
-import com.fortmocks.core.base.model.event.service.EventServiceFacade;
-import com.fortmocks.core.mock.soap.model.event.SoapEvent;
-import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
-import com.fortmocks.core.mock.soap.model.event.service.SoapEventService;
-import com.fortmocks.war.base.model.event.service.EventServiceImpl;
-import com.fortmocks.war.mock.soap.model.SoapTypeIdentifier;
+
+import com.fortmocks.core.model.TypeIdentifier;
+import com.fortmocks.core.model.event.dto.EventDto;
+import com.fortmocks.mock.soap.model.SoapTypeIdentifier;
+import com.fortmocks.mock.soap.model.event.SoapEvent;
+import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
+import com.fortmocks.web.model.event.service.EventServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
 
@@ -67,13 +66,13 @@ public class SoapEventServiceImpl extends EventServiceImpl<SoapEvent, SoapEventD
 
     /**
      * The method is responsible for converting an event dto instance into a event dto subclass.
-     * This is used when the {@link com.fortmocks.war.base.model.project.service.ProjectServiceFacadeImpl} needs
+     * This is used when the {@link com.fortmocks.web.model.project.service.ProjectServiceFacadeImpl} needs
      * to manage base event class, but wants to be able to convert it into a specific subclass, for example when
      * creating or updating a event instance.
      * @param eventDto The event dto instance that will be converted into a event dto subclass
      * @return The converted event dto subclass
      * @throws NullPointerException Throws NullPointerException in case if the provided event dto instance is null.
-     * @see EventServiceFacade
+     * @see com.fortmocks.core.model.event.service.EventServiceFacade
      */
     @Override
     public SoapEventDto convertType(EventDto eventDto) {

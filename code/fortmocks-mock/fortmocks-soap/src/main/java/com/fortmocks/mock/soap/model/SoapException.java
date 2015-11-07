@@ -20,17 +20,17 @@ package com.fortmocks.mock.soap.model;
 /**
  * The SoapException is the main exception for the all SOAP related issues. All SOAP related exceptions
  * should inherit from the class. It is important that all SOAP exceptions are inheriting
- * from this class because the {@link com.fortmocks.war.mock.soap.web.soap.controller.SoapControllerAdvice} will
+ * from this class because the {@link com.fortmocks.mock.soap.web.soap.controller.SoapControllerAdvice} will
  * only handle exceptions that is either an instance of the SoapException class or an instance from a class that
- * is inherit from the SoapException class. The {@link com.fortmocks.war.mock.soap.web.soap.controller.SoapControllerAdvice}
+ * is inherit from the SoapException class. The {@link com.fortmocks.mock.soap.web.soap.controller.SoapControllerAdvice}
  * will transform the exception message into a SOAP response message. If an exception is thrown from the
- * {@link com.fortmocks.war.mock.soap.web.soap.controller.SoapServiceController}, the {@link com.fortmocks.war.base.web.mvc.controller.ViewControllerAdvice}
+ * {@link com.fortmocks.mock.soap.web.soap.controller.SoapServiceController}, the {@link com.fortmocks.web.web.mvc.controller.ViewControllerAdvice}
  * will process the exception instead and a view will be sent as a response instead.
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.war.mock.soap.web.soap.controller.SoapControllerAdvice
- * @see com.fortmocks.war.base.web.mvc.controller.ViewControllerAdvice
- * @see com.fortmocks.war.mock.soap.web.soap.controller.SoapServiceController
+ * @see com.fortmocks.mock.soap.web.soap.controller.SoapControllerAdvice
+ * @see com.fortmocks.web.web.mvc.controller.ViewControllerAdvice
+ * @see com.fortmocks.mock.soap.web.soap.controller.SoapServiceController
  */
 
 public class SoapException extends RuntimeException {

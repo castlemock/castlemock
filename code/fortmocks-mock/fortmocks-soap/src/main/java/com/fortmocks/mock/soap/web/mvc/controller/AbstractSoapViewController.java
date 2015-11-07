@@ -16,15 +16,15 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller;
 
-import com.fortmocks.core.mock.soap.model.project.service.SoapProjectService;
-import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
+import com.fortmocks.mock.soap.model.project.service.SoapProjectService;
+import com.fortmocks.web.web.mvc.controller.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * The class operates as a shared base for all the view related to the SOAP module
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.war.base.web.mvc.controller.AbstractViewController
+ * @see AbstractViewController
  */
 public class AbstractSoapViewController extends AbstractViewController {
 

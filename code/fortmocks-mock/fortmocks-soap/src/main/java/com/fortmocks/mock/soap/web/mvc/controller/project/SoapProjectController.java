@@ -16,16 +16,17 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.project;
 
-import com.fortmocks.core.mock.soap.model.project.SoapOperationStatus;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.war.mock.soap.web.mvc.command.port.DeleteSoapPortsCommand;
-import com.fortmocks.war.mock.soap.web.mvc.command.port.SoapPortModifierCommand;
-import com.fortmocks.war.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
-import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;
+import com.fortmocks.mock.soap.model.project.SoapOperationStatus;
+import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
+import com.fortmocks.mock.soap.web.mvc.command.port.DeleteSoapPortsCommand;
+import com.fortmocks.mock.soap.web.mvc.command.port.SoapPortModifierCommand;
+import com.fortmocks.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
+import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;

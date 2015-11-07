@@ -16,9 +16,9 @@
 
 package com.fortmocks.mock.soap.web.soap.controller;
 
-import com.fortmocks.war.base.web.mvc.controller.AbstractViewController;
-import com.fortmocks.war.mock.soap.model.SoapErrorMessage;
-import com.fortmocks.war.mock.soap.model.SoapException;
+import com.fortmocks.web.web.mvc.controller.AbstractViewController;
+import com.fortmocks.mock.soap.model.SoapErrorMessage;
+import com.fortmocks.mock.soap.model.SoapException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

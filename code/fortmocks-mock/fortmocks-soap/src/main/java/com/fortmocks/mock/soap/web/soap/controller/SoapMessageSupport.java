@@ -1,6 +1,6 @@
 package com.fortmocks.mock.soap.web.soap.controller;
 
-import com.fortmocks.war.mock.soap.model.SoapException;
+import com.fortmocks.mock.soap.model.SoapException;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

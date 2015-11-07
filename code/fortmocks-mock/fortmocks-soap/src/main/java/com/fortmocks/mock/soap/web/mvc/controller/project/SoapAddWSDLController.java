@@ -16,13 +16,14 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.project;
 
-import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.war.mock.soap.manager.WSDLComponent;
-import com.fortmocks.war.mock.soap.web.mvc.command.project.WSDLFileUploadForm;
-import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;
+import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.mock.soap.manager.WSDLComponent;
+import com.fortmocks.mock.soap.web.mvc.command.project.WSDLFileUploadForm;
+import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;

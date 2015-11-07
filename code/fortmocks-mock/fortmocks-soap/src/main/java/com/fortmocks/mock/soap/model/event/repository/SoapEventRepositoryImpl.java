@@ -16,9 +16,8 @@
 
 package com.fortmocks.mock.soap.model.event.repository;
 
-import com.fortmocks.core.mock.soap.model.event.SoapEvent;
-import com.fortmocks.core.mock.soap.model.event.repository.SoapEventRepository;
-import com.fortmocks.war.base.model.RepositoryImpl;
+import com.fortmocks.mock.soap.model.event.SoapEvent;
+import com.fortmocks.web.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -29,9 +28,9 @@ import org.springframework.stereotype.Repository;
  * a separate file. The class also contains the directory and the filename extension for the soap event.
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.war.mock.soap.model.event.repository.SoapEventRepositoryImpl
- * @see com.fortmocks.war.base.model.RepositoryImpl
- * @see com.fortmocks.core.mock.soap.model.event.SoapEvent
+ * @see SoapEventRepositoryImpl
+ * @see RepositoryImpl
+ * @see SoapEvent
  */
 @Repository
 public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, Long> implements SoapEventRepository {
@@ -69,7 +68,7 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, Long> imp
      * @param soapEvent The instance of the type that will be checked and controlled before it is allowed to be saved on
      *             the file system.
      * @see #save
-     * @see com.fortmocks.core.mock.soap.model.event.SoapEvent
+     * @see SoapEvent
      */
     @Override
     protected void checkType(final SoapEvent soapEvent) {

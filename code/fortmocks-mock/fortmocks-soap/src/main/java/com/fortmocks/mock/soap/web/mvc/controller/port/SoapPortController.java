@@ -16,16 +16,17 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.port;
 
-import com.fortmocks.core.mock.soap.model.project.SoapOperationStatus;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.war.mock.soap.web.mvc.command.operation.SoapOperationModifierCommand;
-import com.fortmocks.war.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
-import com.fortmocks.war.mock.soap.web.mvc.controller.AbstractSoapViewController;
+import com.fortmocks.mock.soap.model.project.SoapOperationStatus;
+import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.mock.soap.web.mvc.command.operation.SoapOperationModifierCommand;
+import com.fortmocks.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
+import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;

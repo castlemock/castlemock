@@ -16,9 +16,9 @@
 
 package com.fortmocks.mock.soap.model.event.service;
 
-import com.fortmocks.core.base.model.event.service.EventService;
-import com.fortmocks.core.mock.soap.model.event.SoapEvent;
-import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
+import com.fortmocks.core.model.event.service.EventService;
+import com.fortmocks.mock.soap.model.event.SoapEvent;
+import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
 
 import java.util.List;
 

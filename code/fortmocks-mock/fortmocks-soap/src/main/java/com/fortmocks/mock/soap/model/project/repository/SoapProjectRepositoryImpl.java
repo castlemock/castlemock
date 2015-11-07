@@ -16,9 +16,8 @@
 
 package com.fortmocks.mock.soap.model.project.repository;
 
-import com.fortmocks.core.mock.soap.model.project.SoapProject;
-import com.fortmocks.core.mock.soap.model.project.repository.SoapProjectRepository;
-import com.fortmocks.war.base.model.RepositoryImpl;
+import com.fortmocks.mock.soap.model.project.SoapProject;
+import com.fortmocks.web.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -29,8 +28,8 @@ import org.springframework.stereotype.Repository;
  * @author Karl Dahlgren
  * @since 1.0
  * @see SoapProjectRepository
- * @see com.fortmocks.war.base.model.RepositoryImpl
- * @see com.fortmocks.core.mock.soap.model.project.SoapProject
+ * @see com.fortmocks.web.model.RepositoryImpl
+ * @see com.fortmocks.mock.soap.model.project.SoapProject
  */
 @Repository
 public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Long> implements SoapProjectRepository {
@@ -68,7 +67,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Long>
      * @param soapProject The instance of the type that will be checked and controlled before it is allowed to be saved on
      *             the file system.
      * @see #save
-     * @see com.fortmocks.core.mock.soap.model.project.SoapProject
+     * @see SoapProject
      */
     @Override
     protected void checkType(SoapProject soapProject) {

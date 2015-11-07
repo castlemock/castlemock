@@ -16,7 +16,8 @@
 
 package com.fortmocks.mock.soap.model.event;
 
-import com.fortmocks.core.base.model.event.Event;
+
+import com.fortmocks.core.model.event.Event;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

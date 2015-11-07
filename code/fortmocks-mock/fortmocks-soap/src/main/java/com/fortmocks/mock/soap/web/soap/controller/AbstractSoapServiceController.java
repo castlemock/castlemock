@@ -16,15 +16,16 @@
 
 package com.fortmocks.mock.soap.web.soap.controller;
 
-import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
-import com.fortmocks.core.mock.soap.model.event.dto.SoapRequestDto;
-import com.fortmocks.core.mock.soap.model.event.dto.SoapResponseDto;
-import com.fortmocks.core.mock.soap.model.event.service.SoapEventService;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.core.mock.soap.model.project.service.SoapProjectService;
-import com.fortmocks.war.base.web.mvc.controller.AbstractController;
-import com.fortmocks.war.mock.soap.model.SoapException;
+import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
+import com.fortmocks.mock.soap.model.event.dto.SoapRequestDto;
+import com.fortmocks.mock.soap.model.event.dto.SoapResponseDto;
+import com.fortmocks.mock.soap.model.event.service.SoapEventService;
+import com.fortmocks.mock.soap.model.project.*;
+import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.mock.soap.model.project.service.SoapProjectService;
+import com.fortmocks.web.web.mvc.controller.AbstractController;
+import com.fortmocks.mock.soap.model.SoapException;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
