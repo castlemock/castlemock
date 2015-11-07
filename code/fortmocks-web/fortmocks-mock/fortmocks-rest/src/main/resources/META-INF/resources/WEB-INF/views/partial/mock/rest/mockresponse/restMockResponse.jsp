@@ -25,6 +25,16 @@
     </div>
 </div>
 <form:form action="${update_response_url}" method="POST" commandName="restMockResponse">
+    <table class="formTable">
+        <tr>
+            <td class="column1"><form:label path="name"><spring:message code="rest.restmockresponse.label.name"/></form:label></td>
+            <td class="column2"><form:input path="name" />
+        </tr>
+        <tr>
+            <td class="column1"><form:label path="httpResponseCode"><spring:message code="rest.restmockresponse.label.httpresponsecode"/></form:label></td>
+            <td class="column2"><form:input path="httpResponseCode" />
+        </tr>
+    </table>
     <div class="editor">
         <form:textarea id="body" path="body"/>
     </div>

@@ -17,6 +17,7 @@
 package com.fortmocks.mock.rest.model.project.service;
 
 import com.fortmocks.core.model.project.service.ProjectService;
+import com.fortmocks.mock.rest.model.project.RestMethod;
 import com.fortmocks.mock.rest.model.project.RestMethodType;
 import com.fortmocks.mock.rest.model.project.RestMockResponseStatus;
 import com.fortmocks.mock.rest.model.project.RestProject;
@@ -101,5 +102,15 @@ public interface RestProjectService extends ProjectService<RestProject, RestProj
     void deleteRestMockResponses(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, List<RestMockResponseDto> restMockResponses);
 
     void updateStatus(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponseId, RestMockResponseStatus status);
+
+    /**
+     * The method is responsible for updating the current response sequence index for
+     * a specific method
+     * @param restMethodId The id of the method that will be updated
+     * @param currentResponseSequenceIndex The new current response sequence index
+     * @see RestMethod
+     * @see RestMethodDto
+     */
+    void updateCurrentResponseSequenceIndex(Long restMethodId, Integer currentResponseSequenceIndex);
 
 }

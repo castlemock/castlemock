@@ -61,7 +61,7 @@ public class RestMethodDto {
     private Set<Event> events;
 
     @Mapping("currentResponseSequenceIndex")
-    private Integer currentResponseSequenceIndex;
+    private Integer currentResponseSequenceIndex = 0;
 
     public Long getId() {
         return id;

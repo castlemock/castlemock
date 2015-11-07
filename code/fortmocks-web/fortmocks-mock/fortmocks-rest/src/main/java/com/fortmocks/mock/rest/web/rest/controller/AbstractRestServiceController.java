@@ -59,7 +59,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             throw new RestException("Unable to locate the REST method");
         }
 
-        return process(restRequest, restMethod);
+        return process(restRequest, restMethod, httpServletResponse);
     }
 
     /**
@@ -80,7 +80,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
     }
 
 
-    protected String process(final RestRequestDto restRequest, final RestMethodDto restMethod){
+    protected String process(final RestRequestDto restRequest, final RestMethodDto restMethod, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(restRequest, "Rest request cannot be null");
         RestEventDto event = null;
         RestResponseDto response = null;
@@ -93,7 +93,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             } else if (RestMethodStatus.RECORDING.equals(restMethod.getRestMethodStatus())) {
                 response = forwardRequestAndRecordResponse(restRequest, restMethod);
             } else { // Status.MOCKED
-                response = mockResponse(restMethod);
+                response = mockResponse(restMethod, httpServletResponse);
             }
             return response.getBody();
         } finally{
@@ -113,7 +113,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
     }
 
 
-    protected RestResponseDto mockResponse(final RestMethodDto restMethod){
+    protected RestResponseDto mockResponse(final RestMethodDto restMethod, final HttpServletResponse httpServletResponse){
         final List<RestMockResponseDto> mockResponses = new ArrayList<RestMockResponseDto>();
         for(RestMockResponseDto mockResponse : restMethod.getRestMockResponses()){
             if(mockResponse.getRestMockResponseStatus().equals(RestMockResponseStatus.ENABLED)){
@@ -134,7 +134,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 currentSequenceNumber = 0;
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
-            //restProjectService.updateCurrentResponseSequenceIndex(restMethod.getId(), currentSequenceNumber + 1);
+            restProjectService.updateCurrentResponseSequenceIndex(restMethod.getId(), currentSequenceNumber + 1);
         }
 
         if(mockResponse == null){
@@ -144,7 +144,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final RestResponseDto response = new RestResponseDto();
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
-        //httpServletResponse.setStatus(mockResponse.getHttpResponseCode());
+        httpServletResponse.setStatus(mockResponse.getHttpResponseCode());
         return response;
     }
 }

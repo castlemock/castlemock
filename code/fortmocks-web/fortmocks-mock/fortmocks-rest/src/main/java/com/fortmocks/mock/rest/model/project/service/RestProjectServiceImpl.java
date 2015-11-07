@@ -25,6 +25,7 @@ import com.fortmocks.web.core.model.project.service.ProjectServiceFacadeImpl;
 import com.fortmocks.web.core.model.project.service.ProjectServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestOperations;
 
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         final String[] restResourceUriParts = restResourceUri.split(SLASH);
 
 
-        final RestResource restResource = findRestMockResponseByRestProjectIdAndRestApplicationIdAndRestResourceUriParts(restProjectId, restApplicationId, restResourceUriParts);
+        final RestResource restResource = findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceUriParts(restProjectId, restApplicationId, restResourceUriParts);
         if(restResource != null){
             for(RestMethod restMethod : restResource.getRestMethods()){
                 if(restMethodType.equals(restMethod.getRestMethodType())) {
@@ -107,6 +108,22 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         }
         return null;
 
+    }
+
+    /**
+     * The method is responsible for updating the current response sequence index for
+     * a specific method
+     * @param restMethodId The id of the method that will be updated
+     * @param currentResponseSequenceIndex The new current response sequence index
+     * @see RestMethod
+     * @see RestMethodDto
+     */
+    @Override
+    public void updateCurrentResponseSequenceIndex(final Long restMethodId, final Integer currentResponseSequenceIndex){
+        final RestMethod restMethod = findRestMethodByRestMethodId(restMethodId);
+        final Long soapProjectId = findRestProjectIdForRestMethod(restMethodId);
+        restMethod.setCurrentResponseSequenceIndex(currentResponseSequenceIndex);
+        save(soapProjectId);
     }
 
     @Override
@@ -312,7 +329,9 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
     public void updateRestMockResponse(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponseId, RestMockResponseDto updatedRestMockResponseDto) {
         Preconditions.checkNotNull(updatedRestMockResponseDto, "REST mock response cannot be null");
         final RestMockResponse restMockResponse = findRestMockResponseByRestProjectIdAndRestApplicationIdAndRestResourceIdAndRestMethodIdAndRestMockResponseId(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        restMockResponse.setName(updatedRestMockResponseDto.getName());
         restMockResponse.setBody(updatedRestMockResponseDto.getBody());
+        restMockResponse.setHttpResponseCode(updatedRestMockResponseDto.getHttpResponseCode());
         save(restProjectId);
     }
 
@@ -463,7 +482,14 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
     }
 
 
-    private RestResource findRestMockResponseByRestProjectIdAndRestApplicationIdAndRestResourceUriParts(final Long restProjectId, final Long restApplicationId, final String[] otherRestResourceUriParts) {
+    /**
+     * Find a REST resource with a project id, application id and a set of resource parts
+     * @param restProjectId The id of the project that the resource belongs to
+     * @param restApplicationId The id of the application that the resource belongs to
+     * @param otherRestResourceUriParts The set of resources that will be used to identify the REST resource
+     * @return A REST resource that matches the search criteria. Null otherwise
+     */
+    private RestResource findRestResourceByRestProjectIdAndRestApplicationIdAndRestResourceUriParts(final Long restProjectId, final Long restApplicationId, final String[] otherRestResourceUriParts) {
         final RestApplication restApplication = findRestApplicationByRestProjectIdAndRestApplicationId(restProjectId, restApplicationId);
 
         for(RestResource restResource : restApplication.getRestResources()){
@@ -501,5 +527,51 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
             }
         }
         return true;
+    }
+
+    /**
+     * Finds a method with the provided method id
+     * @param restMethodId The id of the method that should be retrieved
+     * @return A method with the provided id. Null will be returned if no method has the matching value
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching REST method was found
+     * @see RestMethod
+     * @see RestMethodDto
+     */
+    private RestMethod findRestMethodByRestMethodId(final Long restMethodId) {
+        Preconditions.checkNotNull(restMethodId, "REST method id cannot be null");
+        for(RestProject restProject : findAllTypes()){
+            for(RestApplication restApplication : restProject.getRestApplications()){
+                for(RestResource restResource : restApplication.getRestResources()){
+                    for(RestMethod restMethod : restResource.getRestMethods())
+                    if(restMethod.getId().equals(restMethodId)){
+                        return restMethod;
+                    }
+                }
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a REST method with id " + restMethodId);
+    }
+
+    /**
+     * The method provides the functionality to find a REST method with a specific id
+     * @param restMethodId The identifier for the REST method
+     * @return A REST method with a matching identifier
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching REST method was found
+     * @see RestMethod
+     * @see RestMethodDto
+     */
+    private Long findRestProjectIdForRestMethod(final Long restMethodId) {
+        Preconditions.checkNotNull(restMethodId, "Method id cannot be null");
+        for(RestProject restProject : findAllTypes()){
+            for(RestApplication restApplication : restProject.getRestApplications()){
+                for(RestResource restResource : restApplication.getRestResources()){
+                    for(RestMethod restMethod : restResource.getRestMethods())
+                        if(restMethod.getId().equals(restMethodId)){
+                            return restProject.getId();
+                        }
+                }
+            }
+        }
+        throw new IllegalArgumentException("Unable to find an method with id " + restMethodId);
     }
 }

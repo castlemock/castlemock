@@ -41,10 +41,12 @@ public class CreateRestResourceController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/create/resource", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId) {
+        CreateRestResourceCommand createRestResourceCommand = new CreateRestResourceCommand();
+        createRestResourceCommand.getRestResource().setUri(SLASH);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
         model.addObject(REST_APPLICATION_ID, applicationId);
-        model.addObject(COMMAND, new CreateRestResourceCommand());
+        model.addObject(COMMAND, createRestResourceCommand);
         return model;
     }
 
