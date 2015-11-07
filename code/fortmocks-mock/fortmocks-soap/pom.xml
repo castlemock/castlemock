@@ -17,12 +17,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fortmocks</groupId>
-	<artifactId>fortmocks-war</artifactId>
-	<packaging>war</packaging>
+	<artifactId>fortmocks-soap</artifactId>
+	<packaging>jar</packaging>
 	<version>0.2-SNAPSHOT</version>
-    <name>Fort mocks war</name>
+    <name>Fort mocks soap</name>
 	<url>http://www.fortmocks.com</url>
-	<description>The module that constitutes the main Fort Mocks war</description>
+	<description>The module that constitutes the main Fort Mocks soap</description>
+
+	<properties>
+		<jackson.version>1.9.13</jackson.version>
+		<org.springframework-version>4.0.1.RELEASE</org.springframework-version>
+		<org.springframework-boot-version>1.2.6.RELEASE</org.springframework-boot-version>
+        <spring.security.version>3.2.5.RELEASE</spring.security.version>
+		<wsdl4j.version>1.6.3</wsdl4j.version>
+		<jstl.version>1.2</jstl.version>
+		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
+		<javax.servlet.jsp>2.2</javax.servlet.jsp>
+	</properties>
 
 	<developers>
 		<developer>
@@ -33,7 +44,7 @@
 
 	<parent>
 		<groupId>com.fortmocks</groupId>
-		<artifactId>fortmocks-parent</artifactId>
+		<artifactId>fortmocks-mock</artifactId>
 		<version>0.2-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
@@ -56,20 +67,14 @@
 			</dependency>
 			<dependency>
 				<groupId>com.fortmocks</groupId>
+				<artifactId>fortmocks-web-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fortmocks</groupId>
 				<artifactId>fortmocks-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-rest</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 
@@ -78,29 +83,30 @@
 
 		<dependency>
 			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-rest</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fortmocks</groupId>
 			<artifactId>fortmocks-core</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.fortmocks</groupId>
+			<artifactId>fortmocks-web-core</artifactId>
+		</dependency>
 
 		<!-- Spring framework -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -111,6 +117,7 @@
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Spring Security -->
@@ -129,6 +136,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.api.version}</version>
 		</dependency>
 
 		<dependency>
@@ -141,6 +149,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
 		</dependency>
 
 		<!-- test -->
@@ -170,6 +179,7 @@
 		<dependency>
 			<groupId>wsdl4j</groupId>
 			<artifactId>wsdl4j</artifactId>
+			<version>${wsdl4j.version}</version>
 		</dependency>
 
 		<dependency>

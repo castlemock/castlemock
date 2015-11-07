@@ -17,12 +17,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fortmocks</groupId>
-	<artifactId>fortmocks-war</artifactId>
-	<packaging>war</packaging>
+	<artifactId>fortmocks-rest</artifactId>
+	<packaging>jar</packaging>
 	<version>0.2-SNAPSHOT</version>
-    <name>Fort mocks war</name>
+    <name>Fort mocks rest</name>
 	<url>http://www.fortmocks.com</url>
-	<description>The module that constitutes the main Fort Mocks war</description>
+	<description>The module that constitutes the main Fort Mocks rest</description>
 
 	<developers>
 		<developer>
@@ -35,7 +35,7 @@
 		<groupId>com.fortmocks</groupId>
 		<artifactId>fortmocks-parent</artifactId>
 		<version>0.2-SNAPSHOT</version>
-		<relativePath>../</relativePath>
+		<relativePath>../../</relativePath>
 	</parent>
 
 	<dependencyManagement>
@@ -50,12 +50,6 @@
 			<!-- Fort Mocks -->
 			<dependency>
 				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-plugin</artifactId>
-				<version>${project.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.fortmocks</groupId>
 				<artifactId>fortmocks-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -64,12 +58,6 @@
 				<artifactId>fortmocks-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-rest</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 
@@ -78,29 +66,24 @@
 
 		<dependency>
 			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-rest</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fortmocks</groupId>
 			<artifactId>fortmocks-core</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.fortmocks</groupId>
+			<artifactId>fortmocks-web</artifactId>
+		</dependency>
 
 		<!-- Spring framework -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -111,6 +94,7 @@
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Spring Security -->
@@ -129,6 +113,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.api.version}</version>
 		</dependency>
 
 		<dependency>
@@ -141,6 +126,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
 		</dependency>
 
 		<!-- test -->
@@ -170,6 +156,7 @@
 		<dependency>
 			<groupId>wsdl4j</groupId>
 			<artifactId>wsdl4j</artifactId>
+			<version>${wsdl4j.version}</version>
 		</dependency>
 
 		<dependency>
@@ -188,10 +175,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven.compiler.plugin.version}</version>
@@ -203,17 +186,14 @@
 					<showDeprecation>true</showDeprecation>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
         </plugins>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>
