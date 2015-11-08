@@ -17,10 +17,7 @@
 package com.fortmocks.mock.rest.model.project.service;
 
 import com.fortmocks.core.model.project.service.ProjectService;
-import com.fortmocks.mock.rest.model.project.RestMethod;
-import com.fortmocks.mock.rest.model.project.RestMethodType;
-import com.fortmocks.mock.rest.model.project.RestMockResponseStatus;
-import com.fortmocks.mock.rest.model.project.RestProject;
+import com.fortmocks.mock.rest.model.project.*;
 import com.fortmocks.mock.rest.model.project.dto.*;
 
 import java.util.List;
@@ -112,5 +109,7 @@ public interface RestProjectService extends ProjectService<RestProject, RestProj
      * @see RestMethodDto
      */
     void updateCurrentResponseSequenceIndex(Long restMethodId, Integer currentResponseSequenceIndex);
+
+    void saveRestApplications(Long projectId, List<RestApplicationDto> restApplicationDtos);
 
 }

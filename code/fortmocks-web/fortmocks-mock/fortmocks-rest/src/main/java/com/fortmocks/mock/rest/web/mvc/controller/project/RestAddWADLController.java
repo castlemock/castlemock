@@ -17,6 +17,7 @@
 package com.fortmocks.mock.rest.web.mvc.controller.project;
 
 import com.fortmocks.mock.rest.manager.WADLComponent;
+import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.mock.rest.web.mvc.command.project.WADLFileUploadForm;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -69,15 +70,15 @@ public class RestAddWADLController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value="/{projectId}/add/wadl", method=RequestMethod.POST)
     public ModelAndView uploadWADL(@PathVariable final Long projectId, @RequestParam final String type, @ModelAttribute("uploadForm") final WADLFileUploadForm uploadForm){
-        List<RestResourceDto> restResourceDtos = null;
+        List<RestApplicationDto> restApplicationDtos = null;
 
         if(TYPE_FILE.equals(type)){
-            restResourceDtos = wadlComponent.createRestResources(uploadForm.getFiles(), uploadForm.isGenerateResponse());
+            restApplicationDtos = wadlComponent.createApplication(uploadForm.getFiles(), uploadForm.isGenerateResponse());
         } else if(TYPE_LINK.equals(type)){
-            restResourceDtos = wadlComponent.createRestResources(uploadForm.getLink(), uploadForm.isGenerateResponse());
+            restApplicationDtos = wadlComponent.createApplication(uploadForm.getLink(), uploadForm.isGenerateResponse());
         }
 
-        // restProjectService.add()
+        restProjectService.saveRestApplications(projectId, restApplicationDtos);
         return redirect("/rest/project/" + projectId);
     }
 }

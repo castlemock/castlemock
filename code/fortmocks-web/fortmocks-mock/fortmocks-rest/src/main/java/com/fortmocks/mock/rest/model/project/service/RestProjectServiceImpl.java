@@ -358,6 +358,30 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         save(restProjectId);
     }
 
+    @Override
+    public void saveRestApplications(Long projectId, List<RestApplicationDto> restApplicationDtos){
+        Preconditions.checkNotNull(restApplicationDtos, "Rest applications cannot be null");
+        Preconditions.checkNotNull(projectId, "Rest project id cannot be null");
+        final RestProject restProject = findOneType(projectId);
+
+        for(RestApplicationDto restApplicationDto : restApplicationDtos){
+            final Long restApplicationId = getNextRestApplicationId();
+            restApplicationDto.setId(restApplicationId);
+
+            for(RestResourceDto restResourceDto : restApplicationDto.getRestResources()){
+                final Long restResourceId = getNextRestResourceId();
+                restResourceDto.setId(restResourceId);
+
+                for(RestMethodDto restMethodDto : restResourceDto.getRestMethods()){
+                    final Long restMethodId = getNextRestMethodId();
+                    restMethodDto.setId(restMethodId);
+                }
+            }
+            RestApplication restApplication = mapper.map(restApplicationDto, RestApplication.class);
+            restProject.getRestApplications().add(restApplication);
+        }
+    }
+
     /**
      * The method calculates the next REST application id
      * @return The new generated REST application id
