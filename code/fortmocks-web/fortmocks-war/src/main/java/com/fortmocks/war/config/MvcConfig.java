@@ -54,7 +54,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        registry.addResourceHandler("/favicon.ico").addResourceLocations("/src/main/META-INF/resources/images/favicon.ico");
+        registry.addResourceHandler("/favicon.ico").addResourceLocations("/resources/images/favicon.ico");
     }
 
     /**
