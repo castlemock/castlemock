@@ -53,6 +53,8 @@ public class AbstractRestViewController extends AbstractViewController {
     protected static final String REST_METHOD_STATUSES = "restMethodStatuses";
     protected static final String REST_RESPONSE_STRATEGIES = "restResponsestrategies";
 
+    protected static final String REST_CONTENT_TYPES = "restContentTypes";
+
     @Autowired
     protected RestProjectService restProjectService;
 

@@ -29,6 +29,16 @@
             <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.createrestmockresponse.label.httpstatuscode"/></form:label></td>
             <td class="column2"><form:input path="httpStatusCode" />
         </tr>
+        <tr>
+            <td class="column1"><spring:message code="rest.createrestmockresponse.label.restcontenttype"/></td>
+            <td>
+                <form:select path="restContentType">
+                    <c:forEach items="${restContentTypes}" var="restContentType">
+                        <option value="${restContentType}">${restContentType.contentType}</option>
+                    </c:forEach>
+                </form:select>
+            </td>
+        </tr>
     </table>
     <div class="editor">
         <form:textarea id="body" path="body"/>

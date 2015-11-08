@@ -21,11 +21,18 @@ import com.fortmocks.core.model.event.service.EventService;
 import com.fortmocks.mock.rest.model.event.RestEvent;
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
 
+import java.util.List;
+
 /**
  * The REST event service provides all the functionality available for REST events.
  * @author Karl Dahlgren
  * @since 1.0
  */
 public interface RestEventService extends EventService<RestEvent, RestEventDto> {
-
+    /**
+     * The events for a specific method id
+     * @param restMethodId The id of the method that the event belongs to
+     * @return Returns a list of events
+     */
+    public List<RestEventDto> findEventsByMethodId(final Long restMethodId);
 }

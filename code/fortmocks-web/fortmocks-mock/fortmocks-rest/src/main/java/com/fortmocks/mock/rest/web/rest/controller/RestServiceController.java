@@ -50,7 +50,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/application/{applicationId}/**")
     public String getMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.GET, httpServletRequest, httpServletResponse);
     }
@@ -67,7 +67,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/application/{applicationId}/**")
     public String postMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.POST, httpServletRequest, httpServletResponse);
     }
@@ -84,7 +84,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.PUT, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.PUT, value = "/{projectId}/application/{applicationId}/**")
     public String putMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.PUT, httpServletRequest, httpServletResponse);
     }
@@ -101,7 +101,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{projectId}/application/{applicationId}/**")
     public String deleteMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.DELETE, httpServletRequest, httpServletResponse);
     }
@@ -118,7 +118,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.PATCH, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.PATCH, value = "/{projectId}/application/{applicationId}/**")
     public String patchMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.PATCH, httpServletRequest, httpServletResponse);
     }
@@ -135,7 +135,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.HEAD, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.HEAD, value = "/{projectId}/application/{applicationId}/**")
     public String headMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.HEAD, httpServletRequest, httpServletResponse);
     }
@@ -152,7 +152,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.OPTIONS, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.OPTIONS, value = "/{projectId}/application/{applicationId}/**")
     public String optionsMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.OPTIONS, httpServletRequest, httpServletResponse);
     }
@@ -169,7 +169,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.TRACE, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.TRACE, value = "/{projectId}/application/{applicationId}/**")
     public String traceMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.TRACE, httpServletRequest, httpServletResponse);
     }

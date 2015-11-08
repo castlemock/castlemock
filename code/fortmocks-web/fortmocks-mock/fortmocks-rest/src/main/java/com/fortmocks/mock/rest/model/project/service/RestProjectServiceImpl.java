@@ -332,6 +332,7 @@ public class RestProjectServiceImpl extends ProjectServiceImpl<RestProject, Rest
         restMockResponse.setName(updatedRestMockResponseDto.getName());
         restMockResponse.setBody(updatedRestMockResponseDto.getBody());
         restMockResponse.setHttpStatusCode(updatedRestMockResponseDto.getHttpStatusCode());
+        restMockResponse.setRestContentType(updatedRestMockResponseDto.getRestContentType());
         save(restProjectId);
     }
 

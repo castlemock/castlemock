@@ -26,6 +26,9 @@ import com.fortmocks.web.core.model.event.service.EventServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The REST event service is responsible for all the functionality related to the REST events.
  * @author Karl Dahlgren
@@ -59,6 +62,17 @@ public class RestEventServiceImpl extends EventServiceImpl<RestEvent, RestEventD
     public RestEventDto convertType(EventDto eventDto) {
         Preconditions.checkNotNull("Event DTO cannot be null", eventDto);
         return new RestEventDto(eventDto);
+    }
+
+    @Override
+    public List<RestEventDto> findEventsByMethodId(Long restMethodId) {
+        final List<RestEvent> events = new ArrayList<RestEvent>();
+        for(RestEvent event : findAllTypes()){
+            if(event.getRestMethodId().equals(restMethodId)){
+                events.add(event);
+            }
+        }
+        return toDtoList(events);
     }
 }
 

@@ -33,6 +33,7 @@ public class RestMockResponse implements Saveable<Long> {
     private String body;
     private Integer httpStatusCode;
     private RestMockResponseStatus restMockResponseStatus;
+    private RestContentType restContentType;
 
     @Override
     @XmlElement
@@ -79,5 +80,13 @@ public class RestMockResponse implements Saveable<Long> {
 
     public void setHttpStatusCode(Integer httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
+    }
+
+    public RestContentType getRestContentType() {
+        return restContentType;
+    }
+
+    public void setRestContentType(RestContentType restContentType) {
+        this.restContentType = restContentType;
     }
 }

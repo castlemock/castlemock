@@ -16,6 +16,7 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.mockresponse;
 
+import com.fortmocks.mock.rest.model.project.RestContentType;
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,6 +49,7 @@ public class RestMockResponseController extends AbstractRestViewController {
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restMethodId);
         model.addObject(REST_MOCK_RESPONSE, restMockResponseDto);
+        model.addObject(REST_CONTENT_TYPES, RestContentType.values());
         return model;
     }
 

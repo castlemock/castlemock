@@ -17,6 +17,8 @@
 package com.fortmocks.mock.rest.model.project.dto;
 
 import com.fortmocks.core.model.event.Event;
+import com.fortmocks.core.model.event.dto.EventDto;
+import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.mock.rest.model.project.RestMethodStatus;
 import com.fortmocks.mock.rest.model.project.RestMethodType;
 import com.fortmocks.mock.rest.model.project.RestResponseStrategy;
@@ -58,7 +60,7 @@ public class RestMethodDto {
     private List<RestMockResponseDto> restMockResponses = new LinkedList<RestMockResponseDto>();
 
     @Mapping("events")
-    private Set<Event> events;
+    private List<RestEventDto> events;
 
     @Mapping("currentResponseSequenceIndex")
     private Integer currentResponseSequenceIndex = 0;
@@ -127,11 +129,11 @@ public class RestMethodDto {
         this.restResponseStrategy = restResponseStrategy;
     }
 
-    public Set<Event> getEvents() {
+    public List<RestEventDto> getEvents() {
         return events;
     }
 
-    public void setEvents(Set<Event> events) {
+    public void setEvents(List<RestEventDto> events) {
         this.events = events;
     }
 

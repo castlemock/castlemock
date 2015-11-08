@@ -80,6 +80,15 @@ public abstract class AbstractRestServiceController extends AbstractController {
     }
 
 
+    /**
+     * The process method provides the functionality to process an incoming request. The request will be identified
+     * and a corresponding action will be applied for the request. The following actions are support:
+     * Forward, record, mock or disable.
+     * @param restRequest The incoming request
+     * @param restMethod The REST method which the incoming request belongs to
+     * @param httpServletResponse The HTTP servlet response
+     * @return A response in String format
+     */
     protected String process(final RestRequestDto restRequest, final RestMethodDto restMethod, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(restRequest, "Rest request cannot be null");
         RestEventDto event = null;
@@ -104,15 +113,34 @@ public abstract class AbstractRestServiceController extends AbstractController {
         }
     }
 
+    /**
+     * The method provides the functionality to forward a request to another endpoint
+     * @param restRequest The incoming request
+     * @param restMethod The REST method which the incoming request belongs to
+     * @return The response received from the external endpoint
+     */
     protected RestResponseDto forwardRequest(final RestRequestDto restRequest, final RestMethodDto restMethod){
         return null;
     }
 
+    /**
+     * The method provides the functionality to forward a request to another endpoint. The response
+     * will be recorded and can later be used as a mocked response
+     * @param restRequest The incoming request
+     * @param restMethod The REST method which the incoming request belongs to
+     * @return The response received from the external endpoint
+     */
     protected RestResponseDto forwardRequestAndRecordResponse(final RestRequestDto restRequest, final RestMethodDto restMethod){
         return null;
     }
 
-
+    /**
+     * The method is responsible for mocking a REST service. The method will identify which mocked response
+     * will be returned.
+     * @param restMethod The REST method which the incoming request belongs to
+     * @param httpServletResponse The HTTP servlet response
+     * @return Returns a selected mocked response which will be returned to the service consumer
+     */
     protected RestResponseDto mockResponse(final RestMethodDto restMethod, final HttpServletResponse httpServletResponse){
         final List<RestMockResponseDto> mockResponses = new ArrayList<RestMockResponseDto>();
         for(RestMockResponseDto mockResponse : restMethod.getRestMockResponses()){
@@ -144,6 +172,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
         httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
+        httpServletResponse.setContentType(mockResponse.getRestContentType().getContentType());
+        httpServletResponse.setHeader("Content-type", mockResponse.getRestContentType().getContentType());
         return response;
     }
 }
