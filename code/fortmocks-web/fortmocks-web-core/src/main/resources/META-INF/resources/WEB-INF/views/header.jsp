@@ -2,7 +2,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <header class="main-header">
     <div class="logo">
-        <a href="${context}/web"><img src="${context}/images/logo-landscape-white.png" id="header-logo"/></a>
+        <a href="${context}/web"><img src="${context}/resources/images/logo-landscape-white.png" id="header-logo"/></a>
     </div>
 
     <div class="meta">

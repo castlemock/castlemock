@@ -58,4 +58,4 @@
     </form:form>
 </div>
 
-<script src=<c:url value="/js/WSDLFileUpload.js"/>></script>
+<script src=<c:url value="/resources/js/WSDLFileUpload.js"/>></script>

@@ -4,17 +4,17 @@
     <head>
         <title><spring:message code="general.login.title.title"/></title>
         <link rel="icon" href="<c:url value="/favicon.ico"/>" type="image/x-icon" />
-        <link rel="stylesheet" href="<c:url value="/css/pure/pure-min.css"/>">
-        <link rel="stylesheet" href="<c:url value="/css/font-awesome/css/font-awesome.css"/>">
-        <link rel="stylesheet" href="<c:url value="/css/login-stylesheet.css"/>">
-        <link rel="stylesheet" href="<c:url value="/css/flags/flags.css"/>">
+        <link rel="stylesheet" href="<c:url value="/resources/css/pure/pure-min.css"/>">
+        <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome/css/font-awesome.css"/>">
+        <link rel="stylesheet" href="<c:url value="/resources/css/login-stylesheet.css"/>">
+        <link rel="stylesheet" href="<c:url value="/resources/css/flags/flags.css"/>">
     </head>
     <body onload='document.loginForm.username.focus();'>
 
 
         <section id="login-box">
 
-            <img src="<c:url value="/images/fm-logo.png"/>" id="logo"/>
+            <img src="<c:url value="/resources/images/fm-logo.png"/>" id="logo"/>
 
             <c:if test="${not empty error}">
                 <div class="error">${error}</div>
