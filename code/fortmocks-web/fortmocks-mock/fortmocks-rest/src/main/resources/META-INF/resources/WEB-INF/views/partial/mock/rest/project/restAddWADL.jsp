@@ -74,4 +74,4 @@
     </form:form>
 </div>
 
-<script src=<c:url value="/resources/js/FileUpload.js"/>></script>
+<script src=<c:url value="/js/WADLFileUpload.js"/>></script>
