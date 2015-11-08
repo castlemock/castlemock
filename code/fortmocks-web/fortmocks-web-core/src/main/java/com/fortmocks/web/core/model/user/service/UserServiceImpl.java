@@ -140,6 +140,9 @@ public class UserServiceImpl extends ServiceImpl<User, UserDto, Long> implements
         if(administrators.size() == 1 && userId.equals(administrators.get(0).getId()) && !updatedUser.getRole().equals(Role.ADMIN)){
             throw new IllegalArgumentException("Invalid user update. The last admin cannot be deleted");
         }
+        if(administrators.size() == 1 && userId.equals(administrators.get(0).getId()) && !updatedUser.getStatus().equals(Status.ACTIVE)){
+            throw new IllegalArgumentException("Invalid user update. The last admin cannot be inactivated or locked");
+        }
 
         final UserDto user = findOne(userId);
         final Date updatedTimestamp = new Date();
