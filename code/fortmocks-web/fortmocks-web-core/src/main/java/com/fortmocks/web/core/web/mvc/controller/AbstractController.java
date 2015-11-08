@@ -90,7 +90,7 @@ public abstract class AbstractController {
      * @return Returns the local address or 127.0.0.1 if no address was found
      * @throws SocketException
      */
-    protected String getHostAddress() throws SocketException {
+    public String getHostAddress() throws SocketException {
 
         final Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
         while (networkInterfaces.hasMoreElements())
