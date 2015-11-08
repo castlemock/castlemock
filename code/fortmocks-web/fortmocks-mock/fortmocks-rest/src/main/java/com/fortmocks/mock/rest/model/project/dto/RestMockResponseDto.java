@@ -34,8 +34,8 @@ public class RestMockResponseDto {
     @Mapping("body")
     private String body;
 
-    @Mapping("httpResponseCode")
-    private Integer httpResponseCode;
+    @Mapping("httpStatusCode")
+    private Integer httpStatusCode;
 
     @Mapping("restMockResponseStatus")
     private RestMockResponseStatus restMockResponseStatus;
@@ -72,11 +72,11 @@ public class RestMockResponseDto {
         this.restMockResponseStatus = restMockResponseStatus;
     }
 
-    public Integer getHttpResponseCode() {
-        return httpResponseCode;
+    public Integer getHttpStatusCode() {
+        return httpStatusCode;
     }
 
-    public void setHttpResponseCode(Integer httpResponseCode) {
-        this.httpResponseCode = httpResponseCode;
+    public void setHttpStatusCode(Integer httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
     }
 }

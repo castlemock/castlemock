@@ -67,14 +67,14 @@
                         <tr>
                             <th><spring:message code="rest.restmethod.column.selected"/></th>
                             <th><spring:message code="rest.restmethod.column.status"/></th>
-                            <th><spring:message code="rest.restmethod.column.httpresponsecode"/></th>
+                            <th><spring:message code="rest.restmethod.column.httpstatuscode"/></th>
                             <th><spring:message code="rest.restmethod.column.responsename"/></th>
                         </tr>
                         <c:forEach items="${restMethod.restMockResponses}" var="restMockResponse" varStatus="loopStatus">
                             <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                                 <td><form:checkbox path="restMockResponseIds" name="${restMockResponse.id}" value="${restMockResponse.id}"/></td>
                                 <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.restMockResponseStatus}"/></td>
-                                <td>${restMockResponse.httpResponseCode}</td>
+                                <td>${restMockResponse.httpStatusCode}</td>
                                 <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
                             </tr>
                         </c:forEach>

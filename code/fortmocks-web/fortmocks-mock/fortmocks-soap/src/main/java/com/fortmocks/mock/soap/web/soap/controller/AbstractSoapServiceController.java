@@ -185,7 +185,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         final SoapResponseDto response = new SoapResponseDto();
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
-        httpServletResponse.setStatus(mockResponse.getHttpResponseCode());
+        httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
         return response;
 
     }

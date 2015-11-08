@@ -143,7 +143,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final RestResponseDto response = new RestResponseDto();
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
-        httpServletResponse.setStatus(mockResponse.getHttpResponseCode());
+        httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
         return response;
     }
 }

@@ -15,8 +15,8 @@
             <td class="column2"><form:input path="name" />
         </tr>
         <tr>
-            <td class="column1"><form:label path="httpResponseCode"><spring:message code="soap.soapmockresponse.label.httpresponsecode"/></form:label></td>
-            <td class="column2"><form:input path="httpResponseCode" />
+            <td class="column1"><form:label path="httpStatusCode"><spring:message code="soap.soapmockresponse.label.httpstatuscode"/></form:label></td>
+            <td class="column2"><form:input path="httpStatusCode" />
         </tr>
     </table>
     <div class="editor">

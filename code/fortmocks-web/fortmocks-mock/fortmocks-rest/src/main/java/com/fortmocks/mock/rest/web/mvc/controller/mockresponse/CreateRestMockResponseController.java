@@ -38,7 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class CreateRestMockResponseController extends AbstractRestViewController {
 
     private static final String PAGE = "mock/rest/mockresponse/createRestMockResponse";
-    private static final Integer DEFAULT_HTTP_RESPONSE_CODE = 200;
+    private static final Integer DEFAULT_HTTP_STATUS_CODE = 200;
 
 
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
@@ -48,7 +48,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
 
         final RestMockResponseDto mockResponse = new RestMockResponseDto();
         mockResponse.setBody(restMethodDto.getDefaultBody());
-        mockResponse.setHttpResponseCode(DEFAULT_HTTP_RESPONSE_CODE);
+        mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);

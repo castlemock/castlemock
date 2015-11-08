@@ -37,8 +37,8 @@ public class SoapMockResponseDto {
     @Mapping("soapMockResponseStatus")
     private SoapMockResponseStatus soapMockResponseStatus;
 
-    @Mapping("httpResponseCode")
-    private Integer httpResponseCode;
+    @Mapping("httpStatusCode")
+    private Integer httpStatusCode;
 
     public Long getId() {
         return id;
@@ -72,11 +72,11 @@ public class SoapMockResponseDto {
         this.soapMockResponseStatus = soapMockResponseStatus;
     }
 
-    public Integer getHttpResponseCode() {
-        return httpResponseCode;
+    public Integer getHttpStatusCode() {
+        return httpStatusCode;
     }
 
-    public void setHttpResponseCode(Integer httpResponseCode) {
-        this.httpResponseCode = httpResponseCode;
+    public void setHttpStatusCode(Integer httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
     }
 }

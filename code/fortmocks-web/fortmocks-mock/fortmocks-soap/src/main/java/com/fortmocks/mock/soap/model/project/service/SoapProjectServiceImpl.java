@@ -582,7 +582,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
         final SoapMockResponse soapMockResponse = findSoapMockResponseBySoapProjectIdAndSoapPortIdAndSoapOperationIdAndSoapMockResponseId(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
         soapMockResponse.setName(soapMockResponseDto.getName());
         soapMockResponse.setBody(soapMockResponseDto.getBody());
-        soapMockResponse.setHttpResponseCode(soapMockResponseDto.getHttpResponseCode());
+        soapMockResponse.setHttpStatusCode(soapMockResponseDto.getHttpStatusCode());
         save(soapProjectId);
     }
 

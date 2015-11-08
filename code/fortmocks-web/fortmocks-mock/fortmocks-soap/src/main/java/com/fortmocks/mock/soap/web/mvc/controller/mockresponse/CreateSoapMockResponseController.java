@@ -42,7 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class CreateSoapMockResponseController extends AbstractSoapViewController {
 
     private static final String PAGE = "mock/soap/mockresponse/createSoapMockResponse";
-    private static final Integer DEFAULT_HTTP_RESPONSE_CODE = 200;
+    private static final Integer DEFAULT_HTTP_STATUS_CODE = 200;
 
     /**
      * The method returns a view used for creating a new mocked response
@@ -57,7 +57,7 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
         final SoapOperationDto soapOperationDto = soapProjectService.findSoapOperation(soapProject, soapPortId, soapOperationId);
         final SoapMockResponseDto mockResponse = new SoapMockResponseDto();
         mockResponse.setBody(soapOperationDto.getDefaultBody());
-        mockResponse.setHttpResponseCode(DEFAULT_HTTP_RESPONSE_CODE);
+        mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_OPERATION, soapOperationDto);
         model.addObject(SOAP_PROJECT_ID, soapProject);
