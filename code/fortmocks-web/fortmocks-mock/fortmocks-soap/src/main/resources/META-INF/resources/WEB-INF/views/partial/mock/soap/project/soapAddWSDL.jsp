@@ -1,5 +1,5 @@
 <%@ include file="../../../../includes.jspf"%>
-<c:url var="add_wsdl_url"  value="/web/soap/project/${projectId}/add/wsdl" />
+<c:url var="add_wsdl_url"  value="/web/soap/project/${soapProjectId}/add/wsdl" />
 <div class="content-top">
     <h1><spring:message code="soap.soapaddwsdl.header.uploadfile" arguments="WSDL"/></h1>
 </div>
