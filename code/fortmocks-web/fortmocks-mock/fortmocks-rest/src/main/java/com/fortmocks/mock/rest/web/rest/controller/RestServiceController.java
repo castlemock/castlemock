@@ -50,7 +50,6 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public String getMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.GET, httpServletRequest, httpServletResponse);
@@ -68,7 +67,6 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public String postMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.POST, httpServletRequest, httpServletResponse);
@@ -86,7 +84,6 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.PUT, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public String putMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.PUT, httpServletRequest, httpServletResponse);
@@ -104,7 +101,6 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see com.fortmocks.mock.rest.model.project.RestMockResponse
      */
     @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE, value = "/{projectId}/application/{applicationId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public String deleteMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, RestMethodType.DELETE, httpServletRequest, httpServletResponse);
