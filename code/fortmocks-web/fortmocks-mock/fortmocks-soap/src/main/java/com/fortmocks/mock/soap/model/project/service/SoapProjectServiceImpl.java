@@ -74,7 +74,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public SoapPortDto findSoapPort(final Long soapProjectId, final Long soapPortId) {
-        final SoapPort soapPort = findSoapPortBySoapProjectIdAndSoapPortId(soapProjectId, soapPortId);
+        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         return soapPort != null ? mapper.map(soapPort, SoapPortDto.class) : null;
     }
 
@@ -91,7 +91,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public SoapOperationDto findSoapOperation(final Long soapProjectId, final Long soapPortId, final Long soapOperationId) {
-        final SoapOperation soapOperation = findSoapOperationBySoapProjectIdAndSoapPortIdAndSoapOperationId(soapProjectId, soapPortId, soapOperationId);
+        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         return soapOperation != null ? mapper.map(soapOperation, SoapOperationDto.class) : null;
     }
 
@@ -114,7 +114,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public SoapMockResponseDto findSoapMockResponse(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final Long soapMockResponseId) {
-        final SoapMockResponse soapMockResponse = findSoapMockResponseBySoapProjectIdAndSoapPortIdAndSoapOperationIdAndSoapMockResponseId(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
+        final SoapMockResponse soapMockResponse = findSoapMockResponseType(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
         return soapMockResponse != null ? mapper.map(soapMockResponse, SoapMockResponseDto.class) : null;
     }
 
@@ -131,7 +131,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     @Override
     public List<SoapMockResponseDto> findSoapMockResponses(final Long soapOperationId, final SoapMockResponseStatus status) {
         Preconditions.checkNotNull(status, "The mock response status cannot be null");
-        final SoapOperation soapOperation = findSoapOperationBySoapOperationId(soapOperationId);
+        final SoapOperation soapOperation = findSoapOperationType(soapOperationId);
 
         if(soapOperation == null){
             throw new IllegalArgumentException("Unable to find a soap operation with id " + soapOperationId);
@@ -161,7 +161,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public SoapOperationDto findSoapOperation(final Long soapProjectId, final String name, final String uri, final SoapOperationMethod soapOperationMethod, final SoapOperationType type) {
-        final List<SoapOperation> soapOperations = findSoapOperationsBySoapProjectId(soapProjectId);
+        final List<SoapOperation> soapOperations = findSoapOperationTypeWithSoapProjectId(soapProjectId);
         for(SoapOperation soapOperation : soapOperations){
             if(soapOperation.getUri().equals(uri) && soapOperation.getSoapOperationMethod().equals(soapOperationMethod) && soapOperation.getSoapOperationType().equals(type) && soapOperation.getName().equalsIgnoreCase(name)){
                 return mapper.map(soapOperation, SoapOperationDto.class);
@@ -184,7 +184,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public Map<SoapOperationStatus, Integer> getOperationStatusCount(final Long soapProjectId, final Long soapPortId){
-        final SoapPort soapPort = findSoapPortBySoapProjectIdAndSoapPortId(soapProjectId, soapPortId);
+        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         return getSoapOperationStatusCount(soapPort.getSoapOperations());
     }
 
@@ -261,7 +261,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public void updateStatus(final Long soapProjectId, final Long soapPortId, final SoapOperationStatus soapOperationStatus) {
-        final List<SoapOperation> soapOperations = findSoapOperationsBySoapProjectIdAndSoapPortId(soapProjectId, soapPortId);
+        final List<SoapOperation> soapOperations = findSoapOperationType(soapProjectId, soapPortId);
         for(SoapOperation soapOperation : soapOperations){
             soapOperation.setSoapOperationStatus(soapOperationStatus);
         }
@@ -356,7 +356,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public void updateStatus(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final SoapOperationStatus soapOperationStatus) {
-        final SoapOperation soapOperation = findSoapOperationBySoapProjectIdAndSoapPortIdAndSoapOperationId(soapProjectId, soapPortId, soapOperationId);
+        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         soapOperation.setSoapOperationStatus(soapOperationStatus);
         save(soapProjectId);
     }
@@ -374,7 +374,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     @Override
     public void deleteSoapPort(final Long soapProjectId, final Long soapPortId) {
         final SoapProject soapProject = findOneType(soapProjectId);
-        final SoapPort soapPort = findSoapPortBySoapProjectIdAndSoapPortId(soapProjectId, soapPortId);
+        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         soapProject.getSoapPorts().remove(soapPort);
         save(soapProjectId);
     }
@@ -411,7 +411,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public void updateStatus(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final Long soapMockResponseId, final SoapMockResponseStatus soapMockResponseStatus) {
-        final SoapMockResponse soapMockResponse = findSoapMockResponseBySoapProjectIdAndSoapPortIdAndSoapOperationIdAndSoapMockResponseId(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
+        final SoapMockResponse soapMockResponse = findSoapMockResponseType(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
         soapMockResponse.setSoapMockResponseStatus(soapMockResponseStatus);
         save(soapProjectId);
     }
@@ -431,7 +431,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public void updateOperation(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final SoapOperationDto updatedSoapOperation) {
-        final SoapOperation soapOperation = findSoapOperationBySoapProjectIdAndSoapPortIdAndSoapOperationId(soapProjectId, soapPortId, soapOperationId);
+        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         soapOperation.setSoapOperationStatus(updatedSoapOperation.getSoapOperationStatus());
         soapOperation.setForwardedEndpoint(updatedSoapOperation.getForwardedEndpoint());
         soapOperation.setSoapResponseStrategy(updatedSoapOperation.getSoapResponseStrategy());
@@ -452,7 +452,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     @Override
     public void updateForwardedEndpoint(final Long soapProjectId, final Long soapPortId, final List<SoapOperationDto> soapOperations, final String forwardedEndpoint) {
         for(SoapOperationDto soapOperationDto : soapOperations){
-            SoapOperation soapOperation = findSoapOperationBySoapProjectIdAndSoapPortIdAndSoapOperationId(soapProjectId, soapPortId, soapOperationDto.getId());
+            SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationDto.getId());
             soapOperation.setForwardedEndpoint(forwardedEndpoint);
         }
         save(soapProjectId);
@@ -475,7 +475,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     @Override
     public void saveSoapMockResponse(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final SoapMockResponseDto soapMockResponseDto) {
         Preconditions.checkNotNull(soapMockResponseDto, "Mock response cannot be null");
-        final SoapOperation soapOperation = findSoapOperationBySoapProjectIdAndSoapPortIdAndSoapOperationId(soapProjectId, soapPortId, soapOperationId);
+        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         final SoapMockResponse soapMockResponse = mapper.map(soapMockResponseDto, SoapMockResponse.class);
         final Long soapMockResponseId = getNextSoapMockResponseId();
         soapMockResponse.setId(soapMockResponseId);
@@ -493,8 +493,8 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public void saveSoapMockResponse(final Long soapOperationId, final SoapMockResponseDto soapMockResponseDto) {
-        final SoapOperation soapOperation = findSoapOperationBySoapOperationId(soapOperationId);
-        final Long soapProjectId = findSoapProjectIdForSoapOperation(soapOperationId);
+        final SoapOperation soapOperation = findSoapOperationType(soapOperationId);
+        final Long soapProjectId = findSoapProjectType(soapOperationId);
         final SoapMockResponse soapMockResponse = mapper.map(soapMockResponseDto, SoapMockResponse.class);
         soapOperation.getSoapMockResponses().add(soapMockResponse);
         save(soapProjectId);
@@ -518,7 +518,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     @Override
     public void deleteSoapMockResponse(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final Long soapMockResponseId) {
         Preconditions.checkNotNull(soapMockResponseId, "Mock response cannot be null");
-        final SoapOperation soapOperation = findSoapOperationBySoapProjectIdAndSoapPortIdAndSoapOperationId(soapProjectId, soapPortId, soapOperationId);
+        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         SoapMockResponse foundSoapMockResponse = null;
         for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
             if(soapMockResponse.getId().equals(soapMockResponseId)){
@@ -551,7 +551,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     @Override
     public void deleteSoapMockResponses(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final List<SoapMockResponseDto> mockResponses) {
         Preconditions.checkNotNull(mockResponses, "Mock responses cannot be null");
-        final SoapOperation soapOperation = findSoapOperationBySoapProjectIdAndSoapPortIdAndSoapOperationId(soapProjectId, soapPortId, soapOperationId);
+        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         for(SoapMockResponseDto soapMockResponseDto : mockResponses){
             final SoapMockResponse soapMockResponse = new SoapMockResponse();
             soapMockResponse.setId(soapMockResponseDto.getId());
@@ -579,7 +579,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     @Override
     public void updateSoapMockResponse(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final Long soapMockResponseId, final SoapMockResponseDto soapMockResponseDto) {
         Preconditions.checkNotNull(soapMockResponseDto, "Mock response cannot be null");
-        final SoapMockResponse soapMockResponse = findSoapMockResponseBySoapProjectIdAndSoapPortIdAndSoapOperationIdAndSoapMockResponseId(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
+        final SoapMockResponse soapMockResponse = findSoapMockResponseType(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
         soapMockResponse.setName(soapMockResponseDto.getName());
         soapMockResponse.setBody(soapMockResponseDto.getBody());
         soapMockResponse.setHttpStatusCode(soapMockResponseDto.getHttpStatusCode());
@@ -598,7 +598,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
     @Override
     public void updateForwardedEndpoint(final Long soapProjectId, final List<SoapPortDto> soapPorts, final String forwardedEndpoint){
         for(SoapPortDto soapPortDto : soapPorts){
-            SoapPort soapPort = findSoapPortBySoapProjectIdAndSoapPortId(soapProjectId, soapPortDto.getId());
+            SoapPort soapPort = findSoapPortType(soapProjectId, soapPortDto.getId());
             for(SoapOperation soapOperation : soapPort.getSoapOperations()){
                 soapOperation.setForwardedEndpoint(forwardedEndpoint);
             }
@@ -617,8 +617,8 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      */
     @Override
     public void updateCurrentResponseSequenceIndex(final Long soapOperationId, final Integer currentResponseSequenceIndex){
-        final SoapOperation soapOperation = findSoapOperationBySoapOperationId(soapOperationId);
-        final Long soapProjectId = findSoapProjectIdForSoapOperation(soapOperationId);
+        final SoapOperation soapOperation = findSoapOperationType(soapOperationId);
+        final Long soapProjectId = findSoapProjectType(soapOperationId);
         soapOperation.setCurrentResponseSequenceIndex(currentResponseSequenceIndex);
         save(soapProjectId);
     }
@@ -689,7 +689,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      * @see com.fortmocks.mock.soap.model.project.SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
      */
-    private SoapPort findSoapPortBySoapProjectIdAndSoapPortId(final Long soapProjectId, final Long soapPortId) {
+    private SoapPort findSoapPortType(final Long soapProjectId, final Long soapPortId) {
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(soapPortId, "Port id cannot be null");
         final SoapProject soapProject = findOneType(soapProjectId);
@@ -715,9 +715,9 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      * @see com.fortmocks.mock.soap.model.project.SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
-    private SoapOperation findSoapOperationBySoapProjectIdAndSoapPortIdAndSoapOperationId(final Long soapProjectId, final Long soapPortId, final Long soapOperationId){
+    private SoapOperation findSoapOperationType(final Long soapProjectId, final Long soapPortId, final Long soapOperationId){
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
-        final SoapPort soapPort = findSoapPortBySoapProjectIdAndSoapPortId(soapProjectId, soapPortId);
+        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         for(SoapOperation soapOperation : soapPort.getSoapOperations()){
             if(soapOperation.getId().equals(soapOperationId)){
                 return soapOperation;
@@ -736,8 +736,8 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      * @see com.fortmocks.mock.soap.model.project.SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
      */
-    private List<SoapOperation> findSoapOperationsBySoapProjectIdAndSoapPortId(final Long soapProjectId, final Long soapPortId) {
-        final SoapPort soapPort = findSoapPortBySoapProjectIdAndSoapPortId(soapProjectId, soapPortId);
+    private List<SoapOperation> findSoapOperationType(final Long soapProjectId, final Long soapPortId) {
+        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         return soapPort != null ? soapPort.getSoapOperations() : null;
     }
 
@@ -749,7 +749,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      * @see com.fortmocks.mock.soap.model.project.SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
-    private SoapOperation findSoapOperationBySoapOperationId(final Long soapOperationId) {
+    private SoapOperation findSoapOperationType(final Long soapOperationId) {
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         for(SoapProject soapProject : findAllTypes()){
             for(SoapPort soapPort : soapProject.getSoapPorts()){
@@ -771,7 +771,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      * @see com.fortmocks.mock.soap.model.project.SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
-    private Long findSoapProjectIdForSoapOperation(final Long soapOperationId) {
+    private Long findSoapProjectType(final Long soapOperationId) {
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         for(SoapProject soapProject : findAllTypes()){
             for(SoapPort soapPort : soapProject.getSoapPorts()){
@@ -792,7 +792,7 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      * @see com.fortmocks.mock.soap.model.project.SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
      */
-    private List<SoapOperation> findSoapOperationsBySoapProjectId(final Long soapProjectId) {
+    private List<SoapOperation> findSoapOperationTypeWithSoapProjectId(final Long soapProjectId) {
         final SoapProject soapProject = findOneType(soapProjectId);
 
         if(soapProject == null){
@@ -824,8 +824,8 @@ public class SoapProjectServiceImpl extends ProjectServiceImpl<SoapProject, Soap
      * @see com.fortmocks.mock.soap.model.project.SoapMockResponse
      * @see com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto
      */
-    private SoapMockResponse findSoapMockResponseBySoapProjectIdAndSoapPortIdAndSoapOperationIdAndSoapMockResponseId(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final Long soapMockResponseId) {
-        final SoapOperation soapOperation = findSoapOperationBySoapProjectIdAndSoapPortIdAndSoapOperationId(soapProjectId, soapPortId, soapOperationId);
+    private SoapMockResponse findSoapMockResponseType(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final Long soapMockResponseId) {
+        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
             if(soapMockResponse.getId().equals(soapMockResponseId)){
                 return soapMockResponse;
