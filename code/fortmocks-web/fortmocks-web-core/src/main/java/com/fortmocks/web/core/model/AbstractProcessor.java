@@ -4,6 +4,7 @@ import com.fortmocks.core.model.*;
 import com.google.common.base.Preconditions;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.GenericTypeResolver;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -15,7 +16,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class AbstractProcessor<T extends Saveable<I>, D, I extends Serializable> {
+public abstract class AbstractProcessor<T extends Saveable<I>, D, I extends Serializable> {
 
     @Autowired
     private Repository<T, I> repository;
@@ -30,9 +31,9 @@ public class AbstractProcessor<T extends Saveable<I>, D, I extends Serializable>
      * It will create an instance of the entity class and the dto class
      */
     public AbstractProcessor() {
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-        this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-        this.dtoClass = (Class<D>) genericSuperclass.getActualTypeArguments()[1];
+        Class<?>[] genericClasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractProcessor.class);
+        this.entityClass = (Class<T>) genericClasses[0];
+        this.dtoClass = (Class<D>) genericClasses[1];
     }
 
 

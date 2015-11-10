@@ -19,6 +19,7 @@ package com.fortmocks.web.core.model.user.service;
 import com.fortmocks.core.model.user.Role;
 import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.user.message.FindUserByUsernameInput;
+import com.fortmocks.core.model.user.message.FindUserByUsernameOutput;
 import com.fortmocks.web.core.processor.ProcessorMainframe;
 import com.fortmocks.web.core.web.mvc.controller.user.UpdateCurrentUserController;
 import com.google.common.base.Preconditions;
@@ -63,7 +64,8 @@ public class UserDetailSecurityService implements UserDetailsService {
         Preconditions.checkArgument(!username.isEmpty(), "Username cannot be empty");
         final FindUserByUsernameInput findUserByUsernameInput = new FindUserByUsernameInput();
         findUserByUsernameInput.setUsername(username);
-        final UserDto user = processorMainframe.process(findUserByUsernameInput);
+        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(findUserByUsernameInput);
+        final UserDto user = findUserByUsernameOutput.getUser();
         Preconditions.checkNotNull(user, "Unable to find user");
         final List<GrantedAuthority> authorities = buildUserAuthority(user.getRole());
         return buildUserForAuthentication(user, authorities);
