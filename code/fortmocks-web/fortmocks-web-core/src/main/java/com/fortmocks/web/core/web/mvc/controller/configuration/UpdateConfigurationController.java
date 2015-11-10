@@ -18,10 +18,9 @@ package com.fortmocks.web.core.web.mvc.controller.configuration;
 
 import com.fortmocks.core.model.configuration.ConfigurationGroup;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.service.ConfigurationGroupService;
+import com.fortmocks.core.model.configuration.message.UpdateAllConfigurationGroupsInput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
 import com.fortmocks.web.core.web.mvc.command.configuration.ConfigurationUpdateCommand;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -43,9 +42,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/web/configuration")
 public class UpdateConfigurationController extends AbstractViewController {
 
-    @Autowired
-    private ConfigurationGroupService configurationGroupService;
-
     /**
      * The method updates all the configurations with new value that has been set by the user.
      * @param configurationUpdateCommand The configuration command contains all configurations and their new value (Or old if they haven't been changed)
@@ -54,7 +50,9 @@ public class UpdateConfigurationController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView updateConfiguration(@ModelAttribute final ConfigurationUpdateCommand configurationUpdateCommand) {
-        configurationGroupService.updateAll(configurationUpdateCommand.getConfigurationGroups());
+        final UpdateAllConfigurationGroupsInput input = new UpdateAllConfigurationGroupsInput();
+        input.setConfigurationGroups(configurationUpdateCommand.getConfigurationGroups());
+        processorMainframe.process(input);
         return redirect();
     }
 

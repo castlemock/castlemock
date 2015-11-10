@@ -17,9 +17,11 @@
 package com.fortmocks.web.core.web.mvc.controller.configuration;
 
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
+import com.fortmocks.core.model.configuration.message.FindAllConfigurationGroupsInput;
+import com.fortmocks.core.model.configuration.message.FindAllConfigurationGroupsOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.configuration.dto.ConfigurationGroupDtoGenerator;
-import com.fortmocks.core.model.configuration.service.ConfigurationGroupService;
+import com.fortmocks.web.core.processor.ProcessorMainframe;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
@@ -37,6 +39,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Matchers.any;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -53,7 +57,7 @@ public class ConfigurationControllerTest extends AbstractControllerTest {
     private ConfigurationController configurationController;
 
     @Mock
-    private ConfigurationGroupService configurationGroupService;
+    private ProcessorMainframe processorMainframe;
 
     @Override
     protected AbstractController getController() {
@@ -66,7 +70,10 @@ public class ConfigurationControllerTest extends AbstractControllerTest {
         final ConfigurationGroupDto configurationGroupDto = ConfigurationGroupDtoGenerator.generateConfigurationGroup();
         configurationGroups.add(configurationGroupDto);
 
-        Mockito.when(configurationGroupService.findAll()).thenReturn(configurationGroups);
+        final FindAllConfigurationGroupsOutput findAllConfigurationGroupsOutput = new FindAllConfigurationGroupsOutput();
+        findAllConfigurationGroupsOutput.setConfigurationGroups(configurationGroups);
+
+        Mockito.when(processorMainframe.process(any(FindAllConfigurationGroupsInput.class))).thenReturn(findAllConfigurationGroupsOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())

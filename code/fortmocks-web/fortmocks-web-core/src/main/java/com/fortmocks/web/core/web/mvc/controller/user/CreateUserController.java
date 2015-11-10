@@ -17,9 +17,8 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.UserService;
+import com.fortmocks.core.model.user.message.SaveUserInput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -38,9 +37,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/web/user")
 public class CreateUserController extends AbstractViewController {
 
-    @Autowired
-    private UserService userService;
-
     /**
      * The method takes a new user and stores it in the database. When the user is created,
      * the user will redirected to the user specific page
@@ -50,7 +46,9 @@ public class CreateUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView defaultPage(@ModelAttribute final UserDto userDto) {
-        userService.save(userDto);
+        final SaveUserInput saveUserInput = new SaveUserInput();
+        saveUserInput.setUser(userDto);
+        processorMainframe.process(saveUserInput);
         return redirect("/user/");
     }
 

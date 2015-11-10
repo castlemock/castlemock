@@ -17,9 +17,10 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.UserService;
+import com.fortmocks.core.model.user.message.DeleteUserInput;
+import com.fortmocks.core.model.user.message.FindUserInput;
+import com.fortmocks.core.model.user.message.FindUserOutput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -41,9 +42,6 @@ public class DeleteUserController extends AbstractViewController {
 
     private static final String PAGE = "core/user/deleteUser";
 
-    @Autowired
-    private UserService userService;
-
     /**
      * The method retrieves a user from the database and creates a view to display the
      * retrieved user.
@@ -53,7 +51,10 @@ public class DeleteUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/delete", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long userId) {
-        final UserDto userDto = userService.findOne(userId);
+        final FindUserInput findUserInput = new FindUserInput();
+        findUserInput.setUserId(userId);
+        final FindUserOutput findUserOutput = processorMainframe.process(findUserInput);
+        final UserDto userDto = findUserOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USER, userDto);
         return model;
@@ -67,7 +68,9 @@ public class DeleteUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/delete/confirm", method = RequestMethod.GET)
     public ModelAndView delete(@PathVariable final Long userId) {
-        userService.delete(userId);
+        final DeleteUserInput deleteUserInput = new DeleteUserInput();
+        deleteUserInput.setUserId(userId);
+        processorMainframe.process(deleteUserInput);
         return redirect("/user");
     }
 

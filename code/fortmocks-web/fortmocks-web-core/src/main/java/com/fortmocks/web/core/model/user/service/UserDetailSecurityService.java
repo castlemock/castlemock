@@ -18,7 +18,8 @@ package com.fortmocks.web.core.model.user.service;
 
 import com.fortmocks.core.model.user.Role;
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.UserService;
+import com.fortmocks.core.model.user.message.FindUserByUsernameInput;
+import com.fortmocks.web.core.processor.ProcessorMainframe;
 import com.fortmocks.web.core.web.mvc.controller.user.UpdateCurrentUserController;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ import java.util.List;
 public class UserDetailSecurityService implements UserDetailsService {
 
     @Autowired
-    private UserService userService;
+    private ProcessorMainframe processorMainframe;
 
     /**
      * Loads a user by the username
@@ -60,7 +61,9 @@ public class UserDetailSecurityService implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) {
         Preconditions.checkNotNull(username, "Username cannot be null");
         Preconditions.checkArgument(!username.isEmpty(), "Username cannot be empty");
-        final UserDto user = userService.findByUsername(username);
+        final FindUserByUsernameInput findUserByUsernameInput = new FindUserByUsernameInput();
+        findUserByUsernameInput.setUsername(username);
+        final UserDto user = processorMainframe.process(findUserByUsernameInput);
         Preconditions.checkNotNull(user, "Unable to find user");
         final List<GrantedAuthority> authorities = buildUserAuthority(user.getRole());
         return buildUserForAuthentication(user, authorities);
@@ -99,7 +102,6 @@ public class UserDetailSecurityService implements UserDetailsService {
      * @param username The new name of the user that will be logged in
      * @see org.springframework.security.core.userdetails.User
      * @see UpdateCurrentUserController
-     * @see UserService
      */
     public void updateCurrentLoggedInUser(final String username){
         final UserDetails userDetails = loadUserByUsername(username);

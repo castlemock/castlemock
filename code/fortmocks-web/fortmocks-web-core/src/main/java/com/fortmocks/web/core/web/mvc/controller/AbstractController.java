@@ -17,6 +17,7 @@
 package com.fortmocks.web.core.web.mvc.controller;
 
 import com.fortmocks.core.model.user.User;
+import com.fortmocks.web.core.processor.ProcessorMainframe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,6 +38,8 @@ public abstract class AbstractController {
 
     @Autowired
     private ServletContext servletContext;
+    @Autowired
+    protected ProcessorMainframe processorMainframe;
 
     protected static final String CONTENT_TYPE = "Content-Type";
     protected static final String COMMAND = "command";

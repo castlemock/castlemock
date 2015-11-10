@@ -18,9 +18,11 @@ package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.Role;
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.UserService;
+import com.fortmocks.core.model.user.message.FindAllUsersInput;
+import com.fortmocks.core.model.user.message.FindAllUsersOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.user.dto.UserDtoGenerator;
+import com.fortmocks.web.core.processor.ProcessorMainframe;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
@@ -37,6 +39,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -60,7 +63,7 @@ public class UserOverviewControllerTest extends AbstractControllerTest {
     private UserOverviewController userOverviewController;
 
     @Mock
-    private UserService userService;
+    private ProcessorMainframe processorMainframe;
 
     @Override
     protected AbstractController getController() {
@@ -73,8 +76,9 @@ public class UserOverviewControllerTest extends AbstractControllerTest {
         for(int index = 0; index < USER_COUNT; index++){
             userDtos.add(UserDtoGenerator.generateUserDto());
         }
-
-        when(userService.findAll()).thenReturn(userDtos);
+        final FindAllUsersOutput findAllUsersOutput = new FindAllUsersOutput();
+        findAllUsersOutput.setUsers(userDtos);
+        when(processorMainframe.process(any(FindAllUsersInput.class))).thenReturn(findAllUsersOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())

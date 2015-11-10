@@ -18,6 +18,7 @@ package com.fortmocks.war.config;
 
 import com.fortmocks.core.model.Repository;
 import com.fortmocks.core.model.ServiceFacade;
+import com.fortmocks.web.core.processor.ProcessorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -48,6 +49,8 @@ public class Application extends SpringBootServletInitializer {
     private String version;
     @Autowired
     private ApplicationContext applicationContext;
+    @Autowired
+    private ProcessorRegistry processorRegistry;
 
     /**
      * The configure method for Fort Mocks. The method is responsible for mark all the configuration classes
@@ -79,6 +82,7 @@ public class Application extends SpringBootServletInitializer {
     @PostConstruct
     protected void initiate(){
         printLogo();
+        initiateProcessRegistry();
         initiateRepository();
         initiateServiceFacade();
     }
@@ -127,5 +131,13 @@ public class Application extends SpringBootServletInitializer {
                 serviceFacade.initiate();
             }
         }
+    }
+
+    /**
+     * The method provides the functionality to retrieve all the repositories and initiate them
+     * @see com.fortmocks.core.model.Repository
+     */
+    protected void initiateProcessRegistry(){
+        processorRegistry.initializeProcessorRegistry();;
     }
 }

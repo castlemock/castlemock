@@ -17,9 +17,11 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
+import com.fortmocks.core.model.user.message.FindUserInput;
+import com.fortmocks.core.model.user.message.FindUserOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.user.dto.UserDtoGenerator;
-import com.fortmocks.core.model.user.service.UserService;
+import com.fortmocks.web.core.processor.ProcessorMainframe;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
@@ -33,6 +35,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -54,7 +57,7 @@ public class DeleteUserControllerTest extends AbstractControllerTest {
     private DeleteUserController deleteUserController;
 
     @Mock
-    private UserService userService;
+    private ProcessorMainframe processorMainframe;
 
     @Override
     protected AbstractController getController() {
@@ -63,8 +66,10 @@ public class DeleteUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteUserWithValidId() throws Exception {
+        final FindUserOutput findUserOutput = new FindUserOutput();
         final UserDto userDto = UserDtoGenerator.generateUserDto();
-        when(userService.findOne(anyLong())).thenReturn(userDto);
+        findUserOutput.setUser(userDto);
+        when(processorMainframe.process(any(FindUserInput.class))).thenReturn(findUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + userDto.getId() + DELETE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())

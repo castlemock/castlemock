@@ -19,7 +19,7 @@ package com.fortmocks.web.core.web.mvc.controller.user;
 import com.fortmocks.core.model.user.Role;
 import com.fortmocks.core.model.user.Status;
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.UserService;
+import com.fortmocks.core.model.user.message.*;
 import com.fortmocks.web.core.model.user.service.UserDetailSecurityService;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +46,6 @@ public class UpdateUserController extends AbstractViewController {
     private static final String PAGE = "core/user/updateUser";
 
     @Autowired
-    private UserService userService;
-    @Autowired
     private UserDetailSecurityService userDetailSecurityService;
     /**
      * The method retrieves a user from the database and creates a view to display the
@@ -58,7 +56,10 @@ public class UpdateUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long userId) {
-        final UserDto userDto = userService.findOne(userId);
+        final FindUserInput findUserInput = new FindUserInput();
+        findUserInput.setUserId(userId);
+        final FindUserOutput findUserOutput = processorMainframe.process(findUserInput);
+        final UserDto userDto = findUserOutput.getUser();
         userDto.setPassword(EMPTY);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(ROLES, Role.values());
@@ -77,8 +78,17 @@ public class UpdateUserController extends AbstractViewController {
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable final Long userId, @ModelAttribute final UserDto updatedUser) {
         final String loggedInUsername = getLoggedInUsername();
-        final UserDto loggedInUser = userService.findByUsername(loggedInUsername);
-        final UserDto savedUser = userService.update(userId, updatedUser);
+        final FindUserByUsernameInput findUserByUsernameInput = new FindUserByUsernameInput();
+        findUserByUsernameInput.setUsername(loggedInUsername);
+        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(findUserByUsernameInput);
+        final UserDto loggedInUser = findUserByUsernameOutput.getUser();
+
+        final UpdateUserInput updateUserInput = new UpdateUserInput();
+        updateUserInput.setUserId(userId);
+        updateUserInput.setUser(updatedUser);
+
+        final UpdateUserOutput updateUserOutput = processorMainframe.process(updateUserInput);
+        final UserDto savedUser = updateUserOutput.getUpdatedUser();
 
         // Update the current logged in user if the username has been updated
         if(loggedInUser.getId().equals(userId) && !savedUser.getUsername().equals(loggedInUsername)){

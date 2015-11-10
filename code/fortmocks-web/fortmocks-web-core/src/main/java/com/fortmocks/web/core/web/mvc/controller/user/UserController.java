@@ -17,9 +17,9 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.UserService;
+import com.fortmocks.core.model.user.message.FindUserInput;
+import com.fortmocks.core.model.user.message.FindUserOutput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -40,9 +40,6 @@ public class UserController extends AbstractViewController {
 
     private static final String PAGE = "core/user/user";
 
-    @Autowired
-    private UserService userService;
-
     /**
      * The method retrieves a specific user with the provided user id. The retrieved
      * user will be returned with a view and displayed for the Fort Mocks' user.
@@ -52,7 +49,10 @@ public class UserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}",method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long userId) {
-        final UserDto userDto = userService.findOne(userId);
+        final FindUserInput findUserInput = new FindUserInput();
+        findUserInput.setUserId(userId);
+        final FindUserOutput findUserOutput = processorMainframe.process(findUserInput);
+        final UserDto userDto = findUserOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USER, userDto);
         return model;

@@ -17,7 +17,10 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.UserService;
+import com.fortmocks.core.model.user.message.FindUserByUsernameInput;
+import com.fortmocks.core.model.user.message.FindUserByUsernameOutput;
+import com.fortmocks.core.model.user.message.UpdateCurrentUserInput;
+import com.fortmocks.core.model.user.message.UpdateCurrentUserOutput;
 import com.fortmocks.web.core.model.user.service.UserDetailSecurityService;
 import com.fortmocks.web.core.web.mvc.command.user.UpdateCurrentUserCommand;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
@@ -45,10 +48,7 @@ public class UpdateCurrentUserController extends AbstractViewController {
     private static final String PAGE = "core/user/updateCurrentUser";
 
     @Autowired
-    private UserService userService;
-    @Autowired
     private UserDetailSecurityService userDetailSecurityService;
-
 
     /**
      * The method returns a view that displays the editable information about the current user
@@ -58,7 +58,10 @@ public class UpdateCurrentUserController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final String loggedInUsername = getLoggedInUsername();
-        final UserDto userDto = userService.findByUsername(loggedInUsername);
+        final FindUserByUsernameInput findUserByUsernameInput = new FindUserByUsernameInput();
+        findUserByUsernameInput.setUsername(loggedInUsername);
+        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(findUserByUsernameInput);
+        final UserDto userDto = findUserByUsernameOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         final UpdateCurrentUserCommand updateCurrentUserCommand = new UpdateCurrentUserCommand();
         updateCurrentUserCommand.setUser(userDto);
@@ -80,7 +83,10 @@ public class UpdateCurrentUserController extends AbstractViewController {
         if(userPassword != null){
             Preconditions.checkArgument(userPassword.equals(updateCurrentUserCommand.getVerifiedPassword()), "The password and the verified password does not match");
         }
-        final UserDto savedUser = userService.updateCurrentUser(updatedUser);
+        final UpdateCurrentUserInput updateCurrentUserInput = new UpdateCurrentUserInput();
+        updateCurrentUserCommand.setUser(updatedUser);
+        final UpdateCurrentUserOutput updateCurrentUserOutput = processorMainframe.process(updateCurrentUserInput);
+        final UserDto savedUser = updateCurrentUserOutput.getUpdatedUser();
 
         // Updates the logged in username if the updated user received a new username
         if(!savedUser.getUsername().equals(loggedInUser)){

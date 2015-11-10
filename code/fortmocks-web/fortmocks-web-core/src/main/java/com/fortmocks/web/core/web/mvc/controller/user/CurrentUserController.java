@@ -17,9 +17,9 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.UserService;
+import com.fortmocks.core.model.user.message.FindUserByUsernameInput;
+import com.fortmocks.core.model.user.message.FindUserByUsernameOutput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -39,9 +39,6 @@ public class CurrentUserController extends AbstractViewController {
 
     private static final String PAGE = "core/user/currentUser";
 
-    @Autowired
-    private UserService userService;
-
     /**
      * The service provides the functionality to retrieve information about the user that is currently logged in.
      * The user will be able to both view their information, but also update their information through the page.
@@ -51,7 +48,10 @@ public class CurrentUserController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final String loggedInUsername = getLoggedInUsername();
-        final UserDto userDto = userService.findByUsername(loggedInUsername);
+        final FindUserByUsernameInput findUserByUsernameInput = new FindUserByUsernameInput();
+        findUserByUsernameInput.setUsername(loggedInUsername);
+        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(findUserByUsernameInput);
+        final UserDto userDto = findUserByUsernameOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USER, userDto);
         return model;

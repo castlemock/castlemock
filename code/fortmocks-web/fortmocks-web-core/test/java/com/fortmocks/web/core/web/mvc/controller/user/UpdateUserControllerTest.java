@@ -19,10 +19,11 @@ package com.fortmocks.web.core.web.mvc.controller.user;
 import com.fortmocks.core.model.user.Role;
 import com.fortmocks.core.model.user.Status;
 import com.fortmocks.core.model.user.dto.UserDto;
+import com.fortmocks.core.model.user.message.*;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.user.dto.UserDtoGenerator;
 import com.fortmocks.web.core.model.user.service.UserDetailSecurityService;
-import com.fortmocks.core.model.user.service.UserService;
+import com.fortmocks.web.core.processor.ProcessorMainframe;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
@@ -37,6 +38,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
@@ -61,7 +63,7 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
     private UpdateUserController updateUserController;
 
     @Mock
-    private UserService userService;
+    private ProcessorMainframe processorMainframe;
 
     @Mock
     private UserDetailSecurityService userDetailSecurityService;
@@ -73,8 +75,10 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateUserWithValidId() throws Exception {
+        final FindUserOutput findUserOutput = new FindUserOutput();
         final UserDto userDto = UserDtoGenerator.generateUserDto();
-        when(userService.findOne(anyLong())).thenReturn(userDto);
+        findUserOutput.setUser(userDto);
+        when(processorMainframe.process(any(FindUserInput.class))).thenReturn(findUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + userDto.getId() + UPDATE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -88,10 +92,13 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateUserConfirmWithValidId() throws Exception {
+        final FindUserByUsernameOutput findUserByUsernameOutput = new FindUserByUsernameOutput();
         final UserDto userDto = UserDtoGenerator.generateUserDto();
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + userDto.getId() + UPDATE);
-        when(userService.findByUsername(anyString())).thenReturn(userDto);
-        when(userService.update(anyLong(),Mockito.any(UserDto.class))).thenReturn(userDto);
+        findUserByUsernameOutput.setUser(userDto);
+
+        when(processorMainframe.process(any(FindUserByUsernameInput.class))).thenReturn(findUserByUsernameOutput);
+        when(processorMainframe.process(any(UpdateUserInput.class))).thenReturn(findUserByUsernameOutput);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

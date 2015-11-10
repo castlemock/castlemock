@@ -18,10 +18,10 @@ package com.fortmocks.web.core.web.mvc.controller.configuration;
 
 import com.fortmocks.core.model.configuration.ConfigurationGroup;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.service.ConfigurationGroupService;
+import com.fortmocks.core.model.configuration.message.FindAllConfigurationGroupsInput;
+import com.fortmocks.core.model.configuration.message.FindAllConfigurationGroupsOutput;
 import com.fortmocks.web.core.web.mvc.command.configuration.ConfigurationUpdateCommand;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -47,9 +47,6 @@ public class ConfigurationController extends AbstractViewController {
     private static final String PAGE = "core/configuration/configuration";
     private static final String CONFIGURATION_UPDATE_COMMAND = "configurationUpdateCommand";
 
-    @Autowired
-    private ConfigurationGroupService configurationGroupService;
-
     /**
      * Retrieves all configurations and configurations groups and display them to the user
      * @return A view that displays all the configurations groups and their corresponding configurations
@@ -57,7 +54,8 @@ public class ConfigurationController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
-        final List<ConfigurationGroupDto> configurationGroupDtos = configurationGroupService.findAll();
+        final FindAllConfigurationGroupsOutput output = processorMainframe.process(new FindAllConfigurationGroupsInput());
+        final List<ConfigurationGroupDto> configurationGroupDtos = output.getConfigurationGroups();
         final ConfigurationUpdateCommand configurationUpdateCommand = new ConfigurationUpdateCommand();
         configurationUpdateCommand.setConfigurationGroups(configurationGroupDtos);
         final ModelAndView model = createPartialModelAndView(PAGE);
