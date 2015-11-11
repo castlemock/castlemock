@@ -13,6 +13,13 @@ public class FindUsersByRoleInput implements Input {
     @NotNull
     private Role role;
 
+    public FindUsersByRoleInput() {
+    }
+
+    public FindUsersByRoleInput(Role role) {
+        this.role = role;
+    }
+
     public Role getRole() {
         return role;
     }

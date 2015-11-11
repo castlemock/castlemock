@@ -12,6 +12,13 @@ public class DeleteUserInput implements Input{
     @NotNull
     private Long userId;
 
+    public DeleteUserInput() {
+    }
+
+    public DeleteUserInput(Long userId) {
+        this.userId = userId;
+    }
+
     public Long getUserId() {
         return userId;
     }

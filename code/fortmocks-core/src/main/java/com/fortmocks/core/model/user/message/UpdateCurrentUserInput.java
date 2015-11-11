@@ -13,6 +13,13 @@ public class UpdateCurrentUserInput implements Input {
     @NotNull
     private UserDto user;
 
+    public UpdateCurrentUserInput() {
+    }
+
+    public UpdateCurrentUserInput(UserDto user) {
+        this.user = user;
+    }
+
     public UserDto getUser() {
         return user;
     }

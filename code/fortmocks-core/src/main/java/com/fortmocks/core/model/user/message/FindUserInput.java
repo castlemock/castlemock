@@ -12,6 +12,13 @@ public class FindUserInput implements Input {
     @NotNull
     private Long userId;
 
+    public FindUserInput() {
+    }
+
+    public FindUserInput(Long userId) {
+        this.userId = userId;
+    }
+
     public Long getUserId() {
         return userId;
     }

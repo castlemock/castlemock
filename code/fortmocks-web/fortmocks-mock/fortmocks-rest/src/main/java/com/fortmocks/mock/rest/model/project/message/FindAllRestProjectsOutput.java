@@ -2,6 +2,7 @@ package com.fortmocks.mock.rest.model.project.message;
 
 import com.fortmocks.core.model.Output;
 import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
+import com.sun.istack.internal.NotNull;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public class FindAllRestProjectsOutput implements Output {
 
+    @NotNull
     private List<RestProjectDto> restProjects;
 
     public List<RestProjectDto> getRestProjects() {

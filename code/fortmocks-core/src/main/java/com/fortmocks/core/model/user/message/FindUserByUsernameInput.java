@@ -12,6 +12,13 @@ public class FindUserByUsernameInput implements Input {
     @NotNull
     private String username;
 
+    public FindUserByUsernameInput() {
+    }
+
+    public FindUserByUsernameInput(String username) {
+        this.username = username;
+    }
+
     public String getUsername() {
         return username;
     }

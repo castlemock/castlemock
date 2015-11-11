@@ -51,9 +51,7 @@ public class DeleteUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/delete", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long userId) {
-        final FindUserInput findUserInput = new FindUserInput();
-        findUserInput.setUserId(userId);
-        final FindUserOutput findUserOutput = processorMainframe.process(findUserInput);
+        final FindUserOutput findUserOutput = processorMainframe.process(new FindUserInput(userId));
         final UserDto userDto = findUserOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USER, userDto);
@@ -68,9 +66,7 @@ public class DeleteUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/delete/confirm", method = RequestMethod.GET)
     public ModelAndView delete(@PathVariable final Long userId) {
-        final DeleteUserInput deleteUserInput = new DeleteUserInput();
-        deleteUserInput.setUserId(userId);
-        processorMainframe.process(deleteUserInput);
+        processorMainframe.process(new DeleteUserInput(userId));
         return redirect("/user");
     }
 

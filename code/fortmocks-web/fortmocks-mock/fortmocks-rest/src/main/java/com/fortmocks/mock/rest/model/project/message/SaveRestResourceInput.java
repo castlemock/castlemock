@@ -1,22 +1,21 @@
 package com.fortmocks.mock.rest.model.project.message;
 
 import com.fortmocks.core.model.Input;
+import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 import com.sun.istack.internal.NotNull;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class FindRestMethodInput implements Input {
+public class SaveRestResourceInput implements Input {
 
     @NotNull
     private Long restProjectId;
     @NotNull
     private Long restApplicationId;
     @NotNull
-    private Long restResourceId;
-    @NotNull
-    private Long restMethodId;
+    private RestApplicationDto restApplication;
 
     public Long getRestProjectId() {
         return restProjectId;
@@ -34,19 +33,11 @@ public class FindRestMethodInput implements Input {
         this.restApplicationId = restApplicationId;
     }
 
-    public Long getRestResourceId() {
-        return restResourceId;
+    public RestApplicationDto getRestApplication() {
+        return restApplication;
     }
 
-    public void setRestResourceId(Long restResourceId) {
-        this.restResourceId = restResourceId;
-    }
-
-    public Long getRestMethodId() {
-        return restMethodId;
-    }
-
-    public void setRestMethodId(Long restMethodId) {
-        this.restMethodId = restMethodId;
+    public void setRestApplication(RestApplicationDto restApplication) {
+        this.restApplication = restApplication;
     }
 }

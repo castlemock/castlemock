@@ -2,6 +2,7 @@ package com.fortmocks.mock.rest.model.project.message;
 
 import com.fortmocks.core.model.Input;
 import com.fortmocks.mock.rest.model.project.RestMethodType;
+import com.sun.istack.internal.NotNull;
 
 /**
  * @author Karl Dahlgren
@@ -9,9 +10,13 @@ import com.fortmocks.mock.rest.model.project.RestMethodType;
  */
 public class FindRestMethodWithMethodTypeInput implements Input {
 
+    @NotNull
     private Long restProjectId;
+    @NotNull
     private Long restApplicationId;
+    @NotNull
     private String restResourceUri;
+    @NotNull
     private RestMethodType restMethodType;
 
     public Long getRestProjectId() {

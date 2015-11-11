@@ -48,9 +48,7 @@ public class CurrentUserController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final String loggedInUsername = getLoggedInUsername();
-        final FindUserByUsernameInput findUserByUsernameInput = new FindUserByUsernameInput();
-        findUserByUsernameInput.setUsername(loggedInUsername);
-        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(findUserByUsernameInput);
+        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(new FindUserByUsernameInput(loggedInUsername));
         final UserDto userDto = findUserByUsernameOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USER, userDto);

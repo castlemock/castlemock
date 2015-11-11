@@ -56,9 +56,7 @@ public class UpdateUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long userId) {
-        final FindUserInput findUserInput = new FindUserInput();
-        findUserInput.setUserId(userId);
-        final FindUserOutput findUserOutput = processorMainframe.process(findUserInput);
+        final FindUserOutput findUserOutput = processorMainframe.process(new FindUserInput(userId));
         final UserDto userDto = findUserOutput.getUser();
         userDto.setPassword(EMPTY);
         final ModelAndView model = createPartialModelAndView(PAGE);
@@ -78,16 +76,9 @@ public class UpdateUserController extends AbstractViewController {
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable final Long userId, @ModelAttribute final UserDto updatedUser) {
         final String loggedInUsername = getLoggedInUsername();
-        final FindUserByUsernameInput findUserByUsernameInput = new FindUserByUsernameInput();
-        findUserByUsernameInput.setUsername(loggedInUsername);
-        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(findUserByUsernameInput);
+        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(new FindUserByUsernameInput(loggedInUsername));
         final UserDto loggedInUser = findUserByUsernameOutput.getUser();
-
-        final UpdateUserInput updateUserInput = new UpdateUserInput();
-        updateUserInput.setUserId(userId);
-        updateUserInput.setUser(updatedUser);
-
-        final UpdateUserOutput updateUserOutput = processorMainframe.process(updateUserInput);
+        final UpdateUserOutput updateUserOutput = processorMainframe.process(new UpdateUserInput(userId, updatedUser));
         final UserDto savedUser = updateUserOutput.getUpdatedUser();
 
         // Update the current logged in user if the username has been updated

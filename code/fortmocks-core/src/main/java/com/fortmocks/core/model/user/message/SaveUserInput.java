@@ -13,6 +13,13 @@ public class SaveUserInput implements Input {
     @NotNull
     private UserDto user;
 
+    public SaveUserInput() {
+    }
+
+    public SaveUserInput(UserDto user) {
+        this.user = user;
+    }
+
     public UserDto getUser() {
         return user;
     }

@@ -58,9 +58,7 @@ public class UpdateCurrentUserController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final String loggedInUsername = getLoggedInUsername();
-        final FindUserByUsernameInput findUserByUsernameInput = new FindUserByUsernameInput();
-        findUserByUsernameInput.setUsername(loggedInUsername);
-        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(findUserByUsernameInput);
+        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(new FindUserByUsernameInput(loggedInUsername));
         final UserDto userDto = findUserByUsernameOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         final UpdateCurrentUserCommand updateCurrentUserCommand = new UpdateCurrentUserCommand();
@@ -83,9 +81,7 @@ public class UpdateCurrentUserController extends AbstractViewController {
         if(userPassword != null){
             Preconditions.checkArgument(userPassword.equals(updateCurrentUserCommand.getVerifiedPassword()), "The password and the verified password does not match");
         }
-        final UpdateCurrentUserInput updateCurrentUserInput = new UpdateCurrentUserInput();
-        updateCurrentUserCommand.setUser(updatedUser);
-        final UpdateCurrentUserOutput updateCurrentUserOutput = processorMainframe.process(updateCurrentUserInput);
+        final UpdateCurrentUserOutput updateCurrentUserOutput = processorMainframe.process(new UpdateCurrentUserInput(updatedUser));
         final UserDto savedUser = updateCurrentUserOutput.getUpdatedUser();
 
         // Updates the logged in username if the updated user received a new username

@@ -13,6 +13,8 @@ public class FindUserByUsernameOutput implements Output{
     @NotNull
     private UserDto user;
 
+
+
     public UserDto getUser() {
         return user;
     }

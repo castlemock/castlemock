@@ -15,6 +15,14 @@ public class UpdateUserInput implements Input {
     @NotNull
     private UserDto user;
 
+    public UpdateUserInput() {
+    }
+
+    public UpdateUserInput(Long userId, UserDto user) {
+        this.userId = userId;
+        this.user = user;
+    }
+
     public Long getUserId() {
         return userId;
     }

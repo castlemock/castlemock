@@ -1,6 +1,7 @@
 package com.fortmocks.mock.rest.model.project.message;
 
 import com.fortmocks.core.model.Input;
+import com.sun.istack.internal.NotNull;
 
 /**
  * @author Karl Dahlgren
@@ -8,7 +9,10 @@ import com.fortmocks.core.model.Input;
  */
 public class UpdateCurrentRestMockResponseSequenceIndexInput implements Input {
 
-    private Long restMethodId; private Integer currentRestMockResponseSequenceIndex;
+    @NotNull
+    private Long restMethodId;
+    @NotNull
+    private Integer currentRestMockResponseSequenceIndex;
 
     public Long getRestMethodId() {
         return restMethodId;
