@@ -2,6 +2,7 @@ package com.fortmocks.core.model.configuration.message;
 
 import com.fortmocks.core.model.Input;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
+import com.fortmocks.core.model.validation.NotNull;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public class UpdateAllConfigurationGroupsInput implements Input{
 
+    @NotNull
     private List<ConfigurationGroupDto> configurationGroups;
 
     public List<ConfigurationGroupDto> getConfigurationGroups() {

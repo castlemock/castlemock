@@ -29,37 +29,38 @@ public class ProcessorMainframe {
 
 
     public <I extends Input, O extends Output> O process(final I input){
-        validateInput(input);
+        validateMessage(input);
         final Processor<I,O> processor = processorRegistry.getProcessor(input);
         final Task<I> task = new Task<I>();
         task.setInput(input);
         task.setExecuter(getLoggedInUsername());
         LOGGER.debug(getLoggedInUsername() + " is requesting " + processor.getClass().getSimpleName() + " to process the following input message: " + input.getClass().getSimpleName());
         final Result<O> result = processor.process(task);
+        validateMessage(result.getOutput());
         return result.getOutput();
     }
 
-    protected <I extends Input> void validateInput(final I input){
-        if(input == null){
-            throw new NullPointerException("The input message cannot be null");
+    protected <M extends Message> void validateMessage(final M message){
+        if(message == null){
+            throw new NullPointerException("The message cannot be null");
         }
 
-        final Class<?> inputClass = input.getClass();
-        for(Field field : inputClass.getDeclaredFields()){
+        final Class<?> messageClass = message.getClass();
+        for(Field field : messageClass.getDeclaredFields()){
             if(field.isAnnotationPresent(NotNull.class)){
-                validateNotNull(input, field.getName());
+                validateNotNull(message, field.getName());
             }
         }
     }
 
-    protected  <I extends Input> void validateNotNull(final I input, final String field){
+    protected  <M extends Message> void validateNotNull(final M message, final String field){
         try {
-            final Object object = FieldUtils.readField(input, field, true);
+            final Object object = FieldUtils.readField(message, field, true);
             if(object == null){
-                throw new NullPointerException("The following value cannot be null in the input " + input.getClass().getSimpleName() + ": " + field);
+                throw new NullPointerException("The following value cannot be null in the message " + message.getClass().getSimpleName() + ": " + field);
             }
         } catch (IllegalAccessException e) {
-            LOGGER.error("Unable to read the following value in the input " + input.getClass().getSimpleName() + ": " + field);
+            LOGGER.error("Unable to read the following value in the message " + message.getClass().getSimpleName() + ": " + field);
         }
     }
 
@@ -71,7 +72,7 @@ public class ProcessorMainframe {
     protected String getLoggedInUsername(){
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
-            return UNKNOWN_USER; // Should never happened except during unit tests
+            return UNKNOWN_USER;
         }
         return authentication.getName();
     }

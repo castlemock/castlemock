@@ -3,6 +3,7 @@ package com.fortmocks.core.model.user.message;
 import com.fortmocks.core.model.Output;
 import com.fortmocks.core.model.user.User;
 import com.fortmocks.core.model.user.dto.UserDto;
+import com.fortmocks.core.model.validation.NotNull;
 
 /**
  * @author Karl Dahlgren
@@ -10,6 +11,7 @@ import com.fortmocks.core.model.user.dto.UserDto;
  */
 public class UpdateUserOutput implements Output {
 
+    @NotNull
     private UserDto updatedUser;
 
     public UserDto getUpdatedUser() {

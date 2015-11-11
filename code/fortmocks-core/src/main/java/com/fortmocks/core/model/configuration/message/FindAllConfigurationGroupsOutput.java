@@ -4,6 +4,7 @@ import com.fortmocks.core.model.Output;
 import com.fortmocks.core.model.configuration.ConfigurationGroup;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
 import com.fortmocks.core.model.user.dto.UserDto;
+import com.fortmocks.core.model.validation.NotNull;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  */
 public class FindAllConfigurationGroupsOutput implements Output {
 
+    @NotNull
     private List<ConfigurationGroupDto> configurationGroups;
 
     public List<ConfigurationGroupDto> getConfigurationGroups() {

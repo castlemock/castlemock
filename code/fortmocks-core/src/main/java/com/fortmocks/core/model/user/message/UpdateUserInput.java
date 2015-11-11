@@ -2,6 +2,7 @@ package com.fortmocks.core.model.user.message;
 
 import com.fortmocks.core.model.Input;
 import com.fortmocks.core.model.user.dto.UserDto;
+import com.fortmocks.core.model.validation.NotNull;
 
 /**
  * @author Karl Dahlgren
@@ -9,7 +10,9 @@ import com.fortmocks.core.model.user.dto.UserDto;
  */
 public class UpdateUserInput implements Input {
 
+    @NotNull
     private Long userId;
+    @NotNull
     private UserDto user;
 
     public Long getUserId() {

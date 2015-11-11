@@ -2,6 +2,7 @@ package com.fortmocks.core.model.user.message;
 
 import com.fortmocks.core.model.Output;
 import com.fortmocks.core.model.user.dto.UserDto;
+import com.fortmocks.core.model.validation.NotNull;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public class FindUsersByRoleOutput implements Output{
 
+    @NotNull
     private List<UserDto> users;
 
     public List<UserDto> getUsers() {

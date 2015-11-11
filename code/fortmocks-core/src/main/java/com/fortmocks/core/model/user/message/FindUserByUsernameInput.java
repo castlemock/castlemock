@@ -1,6 +1,7 @@
 package com.fortmocks.core.model.user.message;
 
 import com.fortmocks.core.model.Input;
+import com.fortmocks.core.model.validation.NotNull;
 
 /**
  * @author Karl Dahlgren
@@ -8,6 +9,7 @@ import com.fortmocks.core.model.Input;
  */
 public class FindUserByUsernameInput implements Input {
 
+    @NotNull
     private String username;
 
     public String getUsername() {

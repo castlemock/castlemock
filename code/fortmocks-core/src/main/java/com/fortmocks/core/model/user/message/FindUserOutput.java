@@ -2,6 +2,7 @@ package com.fortmocks.core.model.user.message;
 
 import com.fortmocks.core.model.Output;
 import com.fortmocks.core.model.user.dto.UserDto;
+import com.fortmocks.core.model.validation.NotNull;
 
 /**
  * @author Karl Dahlgren
@@ -9,6 +10,7 @@ import com.fortmocks.core.model.user.dto.UserDto;
  */
 public class FindUserOutput implements Output{
 
+    @NotNull
     private UserDto user;
 
     public UserDto getUser() {
