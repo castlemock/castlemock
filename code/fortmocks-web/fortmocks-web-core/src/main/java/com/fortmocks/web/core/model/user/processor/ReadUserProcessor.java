@@ -4,8 +4,8 @@ import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.UpdateUserInput;
-import com.fortmocks.core.model.user.message.UpdateUserOutput;
+import com.fortmocks.core.model.user.message.ReadUserInput;
+import com.fortmocks.core.model.user.message.ReadUserOutput;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @since 1.0
  */
 @Service
-public class UpdateUserProcessor extends AbstractUserProcessor implements Processor<UpdateUserInput, UpdateUserOutput> {
+public class ReadUserProcessor extends AbstractUserProcessor implements Processor<ReadUserInput, ReadUserOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate
@@ -24,11 +24,11 @@ public class UpdateUserProcessor extends AbstractUserProcessor implements Proces
      * @see Result
      */
     @Override
-    public Result<UpdateUserOutput> process(final Task<UpdateUserInput> task) {
-        final UpdateUserInput input = task.getInput();
-        final Long userId = input.getUserId();
-        final UserDto user = input.getUser();
-        update(userId, user);
-        return createResult(new UpdateUserOutput());
+    public Result<ReadUserOutput> process(final Task<ReadUserInput> task) {
+        final ReadUserInput input = task.getInput();
+        final UserDto user = find(input.getUserId());
+        final ReadUserOutput output = new ReadUserOutput();
+        output.setUser(user);
+        return createResult(output);
     }
 }

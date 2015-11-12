@@ -19,8 +19,8 @@ package com.fortmocks.war.config;
 import com.fortmocks.core.model.user.domain.Role;
 import com.fortmocks.core.model.user.domain.Status;
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.FindUserByUsernameInput;
-import com.fortmocks.core.model.user.message.FindUserByUsernameOutput;
+import com.fortmocks.core.model.user.message.ReadUserByUsernameInput;
+import com.fortmocks.core.model.user.message.ReadUserByUsernameOutput;
 import com.fortmocks.web.core.model.user.service.UserDetailSecurityService;
 import com.fortmocks.web.core.processor.ProcessorMainframe;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
@@ -76,10 +76,10 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        final FindUserByUsernameInput findUserByUsernameInput = new FindUserByUsernameInput();
-        findUserByUsernameInput.setUsername(loggedInUsername);
-        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(findUserByUsernameInput);
-        final UserDto loggedInUser = findUserByUsernameOutput.getUser();
+        final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput();
+        readUserByUsernameInput.setUsername(loggedInUsername);
+        final ReadUserByUsernameOutput readUserByUsernameOutput = processorMainframe.process(readUserByUsernameInput);
+        final UserDto loggedInUser = readUserByUsernameOutput.getUser();
         if(loggedInUser == null){
             LOGGER.info("The following logged in user is not valid anymore: " + loggedInUsername);
             request.logout();

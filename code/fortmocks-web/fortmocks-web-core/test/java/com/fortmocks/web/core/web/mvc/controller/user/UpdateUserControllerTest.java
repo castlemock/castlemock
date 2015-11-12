@@ -72,10 +72,10 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateUserWithValidId() throws Exception {
-        final FindUserOutput findUserOutput = new FindUserOutput();
+        final ReadUserOutput readUserOutput = new ReadUserOutput();
         final UserDto userDto = UserDtoGenerator.generateUserDto();
-        findUserOutput.setUser(userDto);
-        when(processorMainframe.process(any(FindUserInput.class))).thenReturn(findUserOutput);
+        readUserOutput.setUser(userDto);
+        when(processorMainframe.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + userDto.getId() + UPDATE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -89,13 +89,13 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateUserConfirmWithValidId() throws Exception {
-        final FindUserByUsernameOutput findUserByUsernameOutput = new FindUserByUsernameOutput();
+        final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput();
         final UserDto userDto = UserDtoGenerator.generateUserDto();
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + userDto.getId() + UPDATE);
-        findUserByUsernameOutput.setUser(userDto);
+        readUserByUsernameOutput.setUser(userDto);
 
-        when(processorMainframe.process(any(FindUserByUsernameInput.class))).thenReturn(findUserByUsernameOutput);
-        when(processorMainframe.process(any(UpdateUserInput.class))).thenReturn(findUserByUsernameOutput);
+        when(processorMainframe.process(any(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);
+        when(processorMainframe.process(any(UpdateUserInput.class))).thenReturn(readUserByUsernameOutput);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

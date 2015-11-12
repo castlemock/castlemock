@@ -56,8 +56,8 @@ public class UpdateUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long userId) {
-        final FindUserOutput findUserOutput = processorMainframe.process(new FindUserInput(userId));
-        final UserDto userDto = findUserOutput.getUser();
+        final ReadUserOutput readUserOutput = processorMainframe.process(new ReadUserInput(userId));
+        final UserDto userDto = readUserOutput.getUser();
         userDto.setPassword(EMPTY);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(ROLES, Role.values());
@@ -76,8 +76,8 @@ public class UpdateUserController extends AbstractViewController {
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable final Long userId, @ModelAttribute final UserDto updatedUser) {
         final String loggedInUsername = getLoggedInUsername();
-        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(new FindUserByUsernameInput(loggedInUsername));
-        final UserDto loggedInUser = findUserByUsernameOutput.getUser();
+        final ReadUserByUsernameOutput readUserByUsernameOutput = processorMainframe.process(new ReadUserByUsernameInput(loggedInUsername));
+        final UserDto loggedInUser = readUserByUsernameOutput.getUser();
         final UpdateUserOutput updateUserOutput = processorMainframe.process(new UpdateUserInput(userId, updatedUser));
         final UserDto savedUser = updateUserOutput.getUpdatedUser();
 

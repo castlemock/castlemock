@@ -18,8 +18,8 @@ package com.fortmocks.web.core.web.mvc.controller.configuration;
 
 import com.fortmocks.core.model.configuration.domain.ConfigurationGroup;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.message.FindAllConfigurationGroupsInput;
-import com.fortmocks.core.model.configuration.message.FindAllConfigurationGroupsOutput;
+import com.fortmocks.core.model.configuration.message.ReadAllConfigurationGroupsInput;
+import com.fortmocks.core.model.configuration.message.ReadAllConfigurationGroupsOutput;
 import com.fortmocks.web.core.web.mvc.command.configuration.ConfigurationUpdateCommand;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
 import org.springframework.context.annotation.Scope;
@@ -54,7 +54,7 @@ public class ConfigurationController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
-        final FindAllConfigurationGroupsOutput output = processorMainframe.process(new FindAllConfigurationGroupsInput());
+        final ReadAllConfigurationGroupsOutput output = processorMainframe.process(new ReadAllConfigurationGroupsInput());
         final List<ConfigurationGroupDto> configurationGroupDtos = output.getConfigurationGroups();
         final ConfigurationUpdateCommand configurationUpdateCommand = new ConfigurationUpdateCommand();
         configurationUpdateCommand.setConfigurationGroups(configurationGroupDtos);

@@ -17,8 +17,8 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.FindUserInput;
-import com.fortmocks.core.model.user.message.FindUserOutput;
+import com.fortmocks.core.model.user.message.ReadUserInput;
+import com.fortmocks.core.model.user.message.ReadUserOutput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,8 +49,8 @@ public class UserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}",method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long userId) {
-        final FindUserOutput findUserOutput = processorMainframe.process(new FindUserInput(userId));
-        final UserDto userDto = findUserOutput.getUser();
+        final ReadUserOutput readUserOutput = processorMainframe.process(new ReadUserInput(userId));
+        final UserDto userDto = readUserOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USER, userDto);
         return model;

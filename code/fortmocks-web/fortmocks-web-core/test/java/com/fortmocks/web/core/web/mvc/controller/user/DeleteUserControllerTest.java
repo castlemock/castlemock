@@ -17,8 +17,8 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.FindUserInput;
-import com.fortmocks.core.model.user.message.FindUserOutput;
+import com.fortmocks.core.model.user.message.ReadUserInput;
+import com.fortmocks.core.model.user.message.ReadUserOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.user.dto.UserDtoGenerator;
 import com.fortmocks.web.core.processor.ProcessorMainframe;
@@ -36,7 +36,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 
 /**
@@ -66,10 +65,10 @@ public class DeleteUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteUserWithValidId() throws Exception {
-        final FindUserOutput findUserOutput = new FindUserOutput();
+        final ReadUserOutput readUserOutput = new ReadUserOutput();
         final UserDto userDto = UserDtoGenerator.generateUserDto();
-        findUserOutput.setUser(userDto);
-        when(processorMainframe.process(any(FindUserInput.class))).thenReturn(findUserOutput);
+        readUserOutput.setUser(userDto);
+        when(processorMainframe.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + userDto.getId() + DELETE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())

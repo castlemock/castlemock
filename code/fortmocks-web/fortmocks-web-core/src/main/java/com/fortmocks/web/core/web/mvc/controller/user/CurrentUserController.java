@@ -17,8 +17,8 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.FindUserByUsernameInput;
-import com.fortmocks.core.model.user.message.FindUserByUsernameOutput;
+import com.fortmocks.core.model.user.message.ReadUserByUsernameInput;
+import com.fortmocks.core.model.user.message.ReadUserByUsernameOutput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,8 +48,8 @@ public class CurrentUserController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final String loggedInUsername = getLoggedInUsername();
-        final FindUserByUsernameOutput findUserByUsernameOutput = processorMainframe.process(new FindUserByUsernameInput(loggedInUsername));
-        final UserDto userDto = findUserByUsernameOutput.getUser();
+        final ReadUserByUsernameOutput readUserByUsernameOutput = processorMainframe.process(new ReadUserByUsernameInput(loggedInUsername));
+        final UserDto userDto = readUserByUsernameOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USER, userDto);
         return model;

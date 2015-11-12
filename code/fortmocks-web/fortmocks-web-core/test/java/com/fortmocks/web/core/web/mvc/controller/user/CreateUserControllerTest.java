@@ -17,8 +17,8 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.SaveUserInput;
-import com.fortmocks.core.model.user.message.SaveUserOutput;
+import com.fortmocks.core.model.user.message.CreateUserInput;
+import com.fortmocks.core.model.user.message.CreateUserOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.user.dto.UserDtoGenerator;
 import com.fortmocks.web.core.processor.ProcessorMainframe;
@@ -65,10 +65,10 @@ public class CreateUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        final SaveUserOutput saveUserOutput = new SaveUserOutput();
+        final CreateUserOutput createUserOutput = new CreateUserOutput();
         final UserDto userDto = UserDtoGenerator.generateUserDto();
-        saveUserOutput.setSavedUser(userDto);
-        when(processorMainframe.process(any(SaveUserInput.class))).thenReturn(saveUserOutput);
+        createUserOutput.setSavedUser(userDto);
+        when(processorMainframe.process(any(CreateUserInput.class))).thenReturn(createUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())

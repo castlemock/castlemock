@@ -17,7 +17,7 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.SaveUserInput;
+import com.fortmocks.core.model.user.message.CreateUserInput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +46,7 @@ public class CreateUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView defaultPage(@ModelAttribute final UserDto userDto) {
-        processorMainframe.process(new SaveUserInput(userDto));
+        processorMainframe.process(new CreateUserInput(userDto));
         return redirect("/user/");
     }
 

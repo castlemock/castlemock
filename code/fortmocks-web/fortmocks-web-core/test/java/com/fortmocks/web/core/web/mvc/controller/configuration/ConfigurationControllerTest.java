@@ -17,8 +17,8 @@
 package com.fortmocks.web.core.web.mvc.controller.configuration;
 
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.message.FindAllConfigurationGroupsInput;
-import com.fortmocks.core.model.configuration.message.FindAllConfigurationGroupsOutput;
+import com.fortmocks.core.model.configuration.message.ReadAllConfigurationGroupsInput;
+import com.fortmocks.core.model.configuration.message.ReadAllConfigurationGroupsOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.configuration.dto.ConfigurationGroupDtoGenerator;
 import com.fortmocks.web.core.processor.ProcessorMainframe;
@@ -70,10 +70,10 @@ public class ConfigurationControllerTest extends AbstractControllerTest {
         final ConfigurationGroupDto configurationGroupDto = ConfigurationGroupDtoGenerator.generateConfigurationGroup();
         configurationGroups.add(configurationGroupDto);
 
-        final FindAllConfigurationGroupsOutput findAllConfigurationGroupsOutput = new FindAllConfigurationGroupsOutput();
-        findAllConfigurationGroupsOutput.setConfigurationGroups(configurationGroups);
+        final ReadAllConfigurationGroupsOutput readAllConfigurationGroupsOutput = new ReadAllConfigurationGroupsOutput();
+        readAllConfigurationGroupsOutput.setConfigurationGroups(configurationGroups);
 
-        Mockito.when(processorMainframe.process(any(FindAllConfigurationGroupsInput.class))).thenReturn(findAllConfigurationGroupsOutput);
+        Mockito.when(processorMainframe.process(any(ReadAllConfigurationGroupsInput.class))).thenReturn(readAllConfigurationGroupsOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
