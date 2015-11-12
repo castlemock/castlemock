@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.core.model.user.service;
 
-import com.fortmocks.core.model.user.Role;
+import com.fortmocks.core.model.user.domain.Role;
 import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.user.message.FindUserByUsernameInput;
 import com.fortmocks.core.model.user.message.FindUserByUsernameOutput;

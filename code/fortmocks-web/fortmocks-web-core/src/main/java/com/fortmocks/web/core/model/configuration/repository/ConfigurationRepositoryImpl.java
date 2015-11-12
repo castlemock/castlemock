@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.core.model.configuration.repository;
 
-import com.fortmocks.core.model.configuration.Configuration;
-import com.fortmocks.core.model.configuration.ConfigurationGroup;
+import com.fortmocks.core.model.configuration.domain.Configuration;
+import com.fortmocks.core.model.configuration.domain.ConfigurationGroup;
 import com.fortmocks.core.model.configuration.repository.ConfigurationRepository;
 import com.fortmocks.core.model.user.repository.UserRepository;
 import com.fortmocks.web.core.model.RepositoryImpl;

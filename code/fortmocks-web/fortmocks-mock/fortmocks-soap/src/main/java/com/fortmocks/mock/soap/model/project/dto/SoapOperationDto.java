@@ -17,10 +17,10 @@
 package com.fortmocks.mock.soap.model.project.dto;
 
 import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
-import com.fortmocks.mock.soap.model.project.SoapOperationMethod;
-import com.fortmocks.mock.soap.model.project.SoapOperationStatus;
-import com.fortmocks.mock.soap.model.project.SoapOperationType;
-import com.fortmocks.mock.soap.model.project.SoapResponseStrategy;
+import com.fortmocks.mock.soap.model.project.domain.SoapOperationMethod;
+import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
+import com.fortmocks.mock.soap.model.project.domain.SoapOperationType;
+import com.fortmocks.mock.soap.model.project.domain.SoapResponseStrategy;
 import org.dozer.Mapping;
 
 import java.util.LinkedList;

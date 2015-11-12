@@ -20,7 +20,7 @@ package com.fortmocks.mock.soap.model.event.service;
 import com.fortmocks.core.model.TypeIdentifier;
 import com.fortmocks.core.model.event.dto.EventDto;
 import com.fortmocks.mock.soap.model.SoapTypeIdentifier;
-import com.fortmocks.mock.soap.model.event.SoapEvent;
+import com.fortmocks.mock.soap.model.event.domain.SoapEvent;
 import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.web.core.model.project.service.ProjectServiceFacadeImpl;
 import com.fortmocks.web.core.model.event.service.EventServiceImpl;

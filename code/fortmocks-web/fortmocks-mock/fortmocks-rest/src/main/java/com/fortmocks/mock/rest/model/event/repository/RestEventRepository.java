@@ -18,7 +18,7 @@ package com.fortmocks.mock.rest.model.event.repository;
 
 
 import com.fortmocks.core.model.Repository;
-import com.fortmocks.mock.rest.model.event.RestEvent;
+import com.fortmocks.mock.rest.model.event.domain.RestEvent;
 
 /**
  * The rest event repository provides the functionality to interact with the file system.

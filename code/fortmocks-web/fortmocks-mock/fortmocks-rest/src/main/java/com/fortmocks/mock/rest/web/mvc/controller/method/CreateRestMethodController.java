@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.method;
 
-import com.fortmocks.mock.rest.model.project.RestMethodType;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.web.mvc.command.method.CreateRestMethodCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;

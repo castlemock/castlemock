@@ -16,8 +16,8 @@
 
 package com.fortmocks.core.model.configuration.dto;
 
-import com.fortmocks.core.model.configuration.ConfigurationType;
-import com.fortmocks.core.model.configuration.Configuration;
+import com.fortmocks.core.model.configuration.domain.ConfigurationType;
+import com.fortmocks.core.model.configuration.domain.Configuration;
 import org.dozer.Mapping;
 
 /**

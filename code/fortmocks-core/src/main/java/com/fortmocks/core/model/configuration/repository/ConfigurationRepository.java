@@ -17,7 +17,7 @@
 package com.fortmocks.core.model.configuration.repository;
 
 import com.fortmocks.core.model.Repository;
-import com.fortmocks.core.model.configuration.ConfigurationGroup;
+import com.fortmocks.core.model.configuration.domain.ConfigurationGroup;
 
 /**
  * The configuration file repository provides the functionality to interact with the file system.

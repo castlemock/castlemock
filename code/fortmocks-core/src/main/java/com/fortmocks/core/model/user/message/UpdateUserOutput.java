@@ -1,7 +1,6 @@
 package com.fortmocks.core.model.user.message;
 
 import com.fortmocks.core.model.Output;
-import com.fortmocks.core.model.user.User;
 import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.validation.NotNull;
 

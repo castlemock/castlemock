@@ -16,7 +16,7 @@
 
 package com.fortmocks.core.model.configuration.dto;
 
-import com.fortmocks.core.model.configuration.ConfigurationGroup;
+import com.fortmocks.core.model.configuration.domain.ConfigurationGroup;
 import org.dozer.Mapping;
 
 import java.util.List;

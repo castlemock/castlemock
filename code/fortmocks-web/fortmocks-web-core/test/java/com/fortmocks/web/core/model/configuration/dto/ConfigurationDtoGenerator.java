@@ -17,13 +17,14 @@
 package com.fortmocks.web.core.model.configuration.dto;
 
 
-import com.fortmocks.core.model.configuration.ConfigurationType;
+import com.fortmocks.core.model.configuration.domain.ConfigurationType;
 import com.fortmocks.core.model.configuration.dto.ConfigurationDto;
+import com.fortmocks.core.model.event.domain.Event;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.core.model.event.Event
+ * @see Event
  * @see ConfigurationDtoGenerator
  */
 public class ConfigurationDtoGenerator {

@@ -19,7 +19,7 @@ package com.fortmocks.web.core.model.project.service;
 import com.fortmocks.core.model.TypeConverter;
 import com.fortmocks.core.model.TypeIdentifiable;
 import com.fortmocks.core.model.TypeIdentifier;
-import com.fortmocks.core.model.project.Project;
+import com.fortmocks.core.model.project.domain.Project;
 import com.fortmocks.core.model.project.dto.ProjectDto;
 import com.fortmocks.core.model.project.service.ProjectService;
 

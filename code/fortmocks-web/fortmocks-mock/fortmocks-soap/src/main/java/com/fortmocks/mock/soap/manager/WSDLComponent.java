@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.manager;
 
-import com.fortmocks.mock.soap.model.project.*;
+import com.fortmocks.mock.soap.model.project.domain.*;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;

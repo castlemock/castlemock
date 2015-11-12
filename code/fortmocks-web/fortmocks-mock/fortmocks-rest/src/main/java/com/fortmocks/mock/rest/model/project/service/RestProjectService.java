@@ -17,7 +17,10 @@
 package com.fortmocks.mock.rest.model.project.service;
 
 import com.fortmocks.core.model.project.service.ProjectService;
-import com.fortmocks.mock.rest.model.project.*;
+import com.fortmocks.mock.rest.model.project.domain.RestMethod;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;
+import com.fortmocks.mock.rest.model.project.domain.RestProject;
 import com.fortmocks.mock.rest.model.project.dto.*;
 
 import java.util.List;

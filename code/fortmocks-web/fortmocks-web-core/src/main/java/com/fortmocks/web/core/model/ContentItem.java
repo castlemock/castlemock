@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.core.model;
 
-import com.fortmocks.core.model.user.Role;
+import com.fortmocks.core.model.user.domain.Role;
 
 /**
  * The content item class is responsible for representing a side menu item.

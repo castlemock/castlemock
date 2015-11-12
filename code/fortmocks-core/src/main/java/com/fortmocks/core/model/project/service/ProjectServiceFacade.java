@@ -18,7 +18,7 @@ package com.fortmocks.core.model.project.service;
 
 import com.fortmocks.core.model.ServiceFacade;
 import com.fortmocks.core.model.project.dto.ProjectDto;
-import com.fortmocks.core.model.project.Project;
+import com.fortmocks.core.model.project.domain.Project;
 
 
 /**

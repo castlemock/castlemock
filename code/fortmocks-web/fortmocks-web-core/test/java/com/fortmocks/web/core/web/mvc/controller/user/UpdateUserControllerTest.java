@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.core.web.mvc.controller.user;
 
-import com.fortmocks.core.model.user.Role;
-import com.fortmocks.core.model.user.Status;
+import com.fortmocks.core.model.user.domain.Role;
+import com.fortmocks.core.model.user.domain.Status;
 import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.user.message.*;
 import com.fortmocks.web.core.config.TestApplication;
@@ -30,7 +30,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -39,8 +38,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**

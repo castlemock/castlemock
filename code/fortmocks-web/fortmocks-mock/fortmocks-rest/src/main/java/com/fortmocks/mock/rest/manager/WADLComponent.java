@@ -16,10 +16,9 @@
 
 package com.fortmocks.mock.rest.manager;
 
-import com.fortmocks.mock.rest.model.event.dto.RestRequestDto;
-import com.fortmocks.mock.rest.model.project.RestMethodStatus;
-import com.fortmocks.mock.rest.model.project.RestMethodType;
-import com.fortmocks.mock.rest.model.project.RestResponseStrategy;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodStatus;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.mock.rest.model.project.domain.RestResponseStrategy;
 import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
@@ -40,7 +39,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

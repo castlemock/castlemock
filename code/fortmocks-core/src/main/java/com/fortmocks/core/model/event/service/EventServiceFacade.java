@@ -18,7 +18,7 @@ package com.fortmocks.core.model.event.service;
 
 import com.fortmocks.core.model.ServiceFacade;
 import com.fortmocks.core.model.event.dto.EventDto;
-import com.fortmocks.core.model.event.Event;
+import com.fortmocks.core.model.event.domain.Event;
 
 /**
  * The Event service facade is used to assembly all the events service layers and interact with them

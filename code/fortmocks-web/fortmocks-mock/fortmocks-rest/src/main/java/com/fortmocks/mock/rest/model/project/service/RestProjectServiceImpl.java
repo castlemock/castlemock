@@ -19,7 +19,7 @@ package com.fortmocks.mock.rest.model.project.service;
 import com.fortmocks.core.model.TypeIdentifier;
 import com.fortmocks.core.model.project.dto.ProjectDto;
 import com.fortmocks.mock.rest.model.RestTypeIdentifier;
-import com.fortmocks.mock.rest.model.project.*;
+import com.fortmocks.mock.rest.model.project.domain.*;
 import com.fortmocks.mock.rest.model.project.dto.*;
 import com.fortmocks.web.core.model.project.service.ProjectServiceFacadeImpl;
 import com.fortmocks.web.core.model.project.service.ProjectServiceImpl;

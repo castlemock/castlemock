@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.project;
 
-import com.fortmocks.mock.soap.model.project.SoapOperationStatus;
+import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.mock.soap.web.mvc.command.port.DeleteSoapPortsCommand;

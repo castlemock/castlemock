@@ -16,8 +16,8 @@
 
 package com.fortmocks.mock.rest.model.project.dto;
 
-import com.fortmocks.mock.rest.model.project.RestContentType;
-import com.fortmocks.mock.rest.model.project.RestMockResponseStatus;
+import com.fortmocks.mock.rest.model.project.domain.RestContentType;
+import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;
 import org.dozer.Mapping;
 
 /**

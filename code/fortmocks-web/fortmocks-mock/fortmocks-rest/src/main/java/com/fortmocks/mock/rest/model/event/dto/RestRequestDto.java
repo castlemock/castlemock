@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.model.event.dto;
 
-import com.fortmocks.mock.rest.model.project.RestMethodType;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
 import org.dozer.Mapping;
 
 /**

@@ -18,7 +18,7 @@ package com.fortmocks.mock.rest.model.event.service;
 
 
 import com.fortmocks.core.model.event.service.EventService;
-import com.fortmocks.mock.rest.model.event.RestEvent;
+import com.fortmocks.mock.rest.model.event.domain.RestEvent;
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
 
 import java.util.List;

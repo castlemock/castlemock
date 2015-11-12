@@ -17,7 +17,7 @@
 package com.fortmocks.mock.soap.model.project.repository;
 
 import com.fortmocks.core.model.Repository;
-import com.fortmocks.mock.soap.model.project.SoapProject;
+import com.fortmocks.mock.soap.model.project.domain.SoapProject;
 
 /**
  * The soap project file repository provides the functionality to interact with the file system.

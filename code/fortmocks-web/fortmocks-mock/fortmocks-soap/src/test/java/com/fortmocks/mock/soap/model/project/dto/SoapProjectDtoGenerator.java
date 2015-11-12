@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.model.project.dto;
 
-import com.fortmocks.core.model.project.DomainNameStrategy;
+import com.fortmocks.core.model.project.domain.DomainNameStrategy;
 
 import java.util.Date;
 

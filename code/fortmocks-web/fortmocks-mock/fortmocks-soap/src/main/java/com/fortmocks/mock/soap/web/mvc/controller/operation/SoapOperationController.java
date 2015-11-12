@@ -18,7 +18,7 @@ package com.fortmocks.mock.soap.web.mvc.controller.operation;
 
 import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.mock.soap.model.event.service.SoapEventService;
-import com.fortmocks.mock.soap.model.project.SoapMockResponseStatus;
+import com.fortmocks.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
@@ -33,12 +33,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 /**

@@ -19,7 +19,7 @@ package com.fortmocks.mock.rest.model.event.service;
 import com.fortmocks.core.model.TypeIdentifier;
 import com.fortmocks.core.model.event.dto.EventDto;
 import com.fortmocks.mock.rest.model.RestTypeIdentifier;
-import com.fortmocks.mock.rest.model.event.RestEvent;
+import com.fortmocks.mock.rest.model.event.domain.RestEvent;
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.web.core.model.project.service.ProjectServiceFacadeImpl;
 import com.fortmocks.web.core.model.event.service.EventServiceImpl;

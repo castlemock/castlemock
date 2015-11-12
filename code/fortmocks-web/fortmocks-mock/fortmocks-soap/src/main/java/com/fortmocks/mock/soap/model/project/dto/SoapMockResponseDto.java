@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.model.project.dto;
 
-import com.fortmocks.mock.soap.model.project.SoapMockResponseStatus;
+import com.fortmocks.mock.soap.model.project.domain.SoapMockResponseStatus;
 import org.dozer.Mapping;
 
 /**

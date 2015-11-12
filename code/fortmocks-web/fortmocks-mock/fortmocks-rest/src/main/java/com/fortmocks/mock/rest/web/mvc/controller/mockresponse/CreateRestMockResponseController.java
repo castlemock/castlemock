@@ -16,8 +16,8 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.mockresponse;
 
-import com.fortmocks.mock.rest.model.project.RestContentType;
-import com.fortmocks.mock.rest.model.project.RestMockResponseStatus;
+import com.fortmocks.mock.rest.model.project.domain.RestContentType;
+import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;

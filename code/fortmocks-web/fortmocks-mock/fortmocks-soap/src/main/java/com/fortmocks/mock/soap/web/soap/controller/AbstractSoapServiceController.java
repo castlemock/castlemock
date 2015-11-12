@@ -20,7 +20,7 @@ import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.mock.soap.model.event.dto.SoapRequestDto;
 import com.fortmocks.mock.soap.model.event.dto.SoapResponseDto;
 import com.fortmocks.mock.soap.model.event.service.SoapEventService;
-import com.fortmocks.mock.soap.model.project.*;
+import com.fortmocks.mock.soap.model.project.domain.*;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.model.project.service.SoapProjectService;

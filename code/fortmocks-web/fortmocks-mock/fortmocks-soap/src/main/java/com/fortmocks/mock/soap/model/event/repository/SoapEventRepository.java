@@ -18,7 +18,7 @@ package com.fortmocks.mock.soap.model.event.repository;
 
 
 import com.fortmocks.core.model.Repository;
-import com.fortmocks.mock.soap.model.event.SoapEvent;
+import com.fortmocks.mock.soap.model.event.domain.SoapEvent;
 
 /**
  * The soap event file repository provides the functionality to interact with the file system.

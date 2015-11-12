@@ -16,8 +16,9 @@
 
 package com.fortmocks.web.core.model.user.dto;
 
-import com.fortmocks.core.model.user.Role;
-import com.fortmocks.core.model.user.Status;
+import com.fortmocks.core.model.user.domain.Role;
+import com.fortmocks.core.model.user.domain.Status;
+import com.fortmocks.core.model.user.domain.User;
 import com.fortmocks.core.model.user.dto.UserDto;
 
 import java.sql.Timestamp;
@@ -26,7 +27,7 @@ import java.util.Date;
 /**
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.core.model.user.User
+ * @see User
  * @see com.fortmocks.core.model.user.dto.UserDto
  */
 public class UserDtoGenerator {

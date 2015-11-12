@@ -17,7 +17,7 @@
 package com.fortmocks.mock.soap.model.project.service;
 
 import com.fortmocks.core.model.project.service.ProjectService;
-import com.fortmocks.mock.soap.model.project.*;
+import com.fortmocks.mock.soap.model.project.domain.*;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
@@ -54,11 +54,11 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * Count the operation statuses. Each status will be a key in the map and the corresponding status
      * count will be the value.
      * @return The result of the status count
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     Map<SoapOperationStatus, Integer> getOperationStatusCount(Long soapProjectId, Long soapPortId);
@@ -67,11 +67,11 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * Count the operation statuses. Each status will be a key in the map and the corresponding status
      * count will be the value.
      * @return The result of the status count
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     Map<SoapOperationStatus, Integer> getOperationStatusCount(SoapPortDto soapPortDto);
@@ -81,11 +81,11 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapProjectId The id of the project that the operations belongs to
      * @param soapPortId The id of the port that the operations belongs to
      * @param soapOperationStatus The new status that will be assigned to all operations
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     void updateStatus(Long soapProjectId, Long soapPortId, SoapOperationStatus soapOperationStatus);
@@ -96,11 +96,11 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapPortId
      * @param soapOperationId The id of the operation that will be updated
      * @param soapOperationStatus The new status that will be assigned to the operation
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     void updateStatus(Long soapProjectId, Long soapPortId, Long soapOperationId, SoapOperationStatus soapOperationStatus);
@@ -113,11 +113,11 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapOperationId The id of the operation that the mocked response belongs to
      * @param soapMockResponseId The id of the mocked response that will be updated with the new status
      * @param soapMockResponseStatus The new status that should be assigned to the MockResponse
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     void updateStatus(Long soapProjectId, Long soapPortId, Long soapOperationId, Long soapMockResponseId, SoapMockResponseStatus soapMockResponseStatus);
@@ -129,11 +129,11 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapOperationId The id of the operation that will be updated
      * @param updatedSoapOperation The soapOperationDto contains the new values that the operation with the provided id
      *                         will receive.
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      */
     void updateOperation(Long soapProjectId, Long soapPortId, Long soapOperationId, SoapOperationDto updatedSoapOperation);
 
@@ -142,7 +142,7 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapProjectId The id of the project that the ports belongs to
      * @param soapPorts The list of port that will be assigned the new forward address
      * @param forwardedEndpoint The updated forward endpoint address
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
      */
     void updateForwardedEndpoint(Long soapProjectId, List<SoapPortDto> soapPorts, String forwardedEndpoint);
@@ -153,9 +153,9 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapPortId The id of the port that the operation belongs to
      * @param soapOperations The list of operation ids that will updated with the provided forwarded endpoint
      * @param forwardedEndpoint The new value forwarded endpoint
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
      */
     void updateForwardedEndpoint(Long soapProjectId, Long soapPortId, List<SoapOperationDto> soapOperations, String forwardedEndpoint);
@@ -166,9 +166,9 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapPortId The id of the port that the operation belongs to
      * @param soapOperationId The id of the operation that will be retrieved
      * @return A operation that matches the search criteria. Returns null if no operation matches the search criteria
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
      */
     SoapOperationDto findSoapOperation(Long soapProjectId, Long soapPortId, Long soapOperationId);
@@ -178,9 +178,9 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapProjectId The id of the project which the port belongs to
      * @param soapPortId The id of the port that will be retrieved
      * @return Returns an port that matches the search criteria. Returns null if no port matches.
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
      */
     SoapPortDto findSoapPort(Long soapProjectId, Long soapPortId);
@@ -190,7 +190,7 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * With the provided soapProjectId
      * @param soapProjectId The identifier for the SOAP project that the ports will be added to
      * @param soapPorts The ports that will be added and saved to the SOAP project
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
      */
     void saveSoapPorts(Long soapProjectId, List<SoapPortDto> soapPorts);
@@ -200,9 +200,9 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * identifiers.
      * @param soapProjectId The identifier of the SOAP project that the port belongs to
      * @param soapPortId The identifier of the port that will be removed
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
      */
     void deleteSoapPort(Long soapProjectId, Long soapPortId);
@@ -211,9 +211,9 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * Takes a list of ports and delete them from the database
      * @param soapProjectId The id of the project that the ports belong to
      * @param soapPorts The list of ports that will be deleted
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
      */
     void deleteSoapPorts(Long soapProjectId, List<SoapPortDto> soapPorts);
@@ -226,13 +226,13 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapOperationId The id of the operation that the mocked response belongs to
      * @param soapMockResponseId The id of the mocked response that will be retrieved
      * @return Mocked response that match the provided parameters
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
-     * @see com.fortmocks.mock.soap.model.project.SoapMockResponse
+     * @see SoapMockResponse
      * @see com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto
      */
     SoapMockResponseDto findSoapMockResponse(Long soapProjectId, Long soapPortId, Long soapOperationId, Long soapMockResponseId);
@@ -244,11 +244,11 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapPortId The id of the port that the operation belongs to
      * @param soapOperationId The id of the operation that the mock SOAP response will be added to
      * @param soapMockResponseDto The mock response that will be added to the operation
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     void saveSoapMockResponse(Long soapProjectId, Long soapPortId, Long soapOperationId, SoapMockResponseDto soapMockResponseDto);
@@ -258,7 +258,7 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * identified with operation id
      * @param soapOperationId The id of the operation that the mock SOAP response will be added to
      * @param soapMockResponseDto The mock response that will be added to the operation
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     void saveSoapMockResponse(Long soapOperationId, SoapMockResponseDto soapMockResponseDto);
@@ -269,13 +269,13 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapPortId The id of the port that the operation belongs to
      * @param soapOperationId The id of the operation that the mock SOAP response belongs to
      * @param soapMockResponseId The id of the of the SOAP mock response that will be deleted
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
-     * @see com.fortmocks.mock.soap.model.project.SoapMockResponse
+     * @see SoapMockResponse
      * @see com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto
      */
     void deleteSoapMockResponse(Long soapProjectId, Long soapPortId, Long soapOperationId, Long soapMockResponseId);
@@ -286,11 +286,11 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapPortId The id of the port that the operation belongs to
      * @param soapOperationId The id of the operation that the mock SOAP responses belongs to
      * @param mockResponses The list of mock responses that will be deleted
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     void deleteSoapMockResponses(Long soapProjectId, Long soapPortId, Long soapOperationId, List<SoapMockResponseDto> mockResponses);
@@ -303,11 +303,11 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param soapMockResponseId The id of the SOAP mock response that will be updated
      * @param soapMockResponseDto The SOAP mock response contains all the updated values that will be assigned
      *                         to the mock response with the id equal to the provided soapMockResponseId
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapPort
+     * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     void updateSoapMockResponse(Long soapProjectId, Long soapPortId, Long soapOperationId, Long soapMockResponseId, SoapMockResponseDto soapMockResponseDto);
@@ -319,9 +319,9 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param uri The operation url
      * @param soapOperationMethod The operation method
      * @return A operation that matches the search criteria. Returns null if no operation matches the search criteria
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
+     * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     SoapOperationDto findSoapOperation(Long soapProjectId, String name, String uri, SoapOperationMethod soapOperationMethod, SoapOperationType type);
@@ -332,7 +332,7 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * @param status The status that the SOAP mock responses has to have
      * @return A list of {@link com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto} that match the provided
      * search criteria.
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     List<SoapMockResponseDto> findSoapMockResponses(Long soapOperationId, SoapMockResponseStatus status);
@@ -342,7 +342,7 @@ public interface SoapProjectService extends ProjectService<SoapProject, SoapProj
      * a specific operation
      * @param soapOperationId The id of the operation that will be updated
      * @param currentResponseSequenceIndex The new current response sequence index
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
     void updateCurrentResponseSequenceIndex(Long soapOperationId, Integer currentResponseSequenceIndex);

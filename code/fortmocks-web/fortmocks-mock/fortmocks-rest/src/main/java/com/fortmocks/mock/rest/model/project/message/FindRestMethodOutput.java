@@ -1,8 +1,9 @@
 package com.fortmocks.mock.rest.model.project.message;
 
 import com.fortmocks.core.model.Output;
+import com.fortmocks.core.model.validation.NotNull;
 import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
-import com.sun.istack.internal.NotNull;
+
 
 /**
  * @author Karl Dahlgren

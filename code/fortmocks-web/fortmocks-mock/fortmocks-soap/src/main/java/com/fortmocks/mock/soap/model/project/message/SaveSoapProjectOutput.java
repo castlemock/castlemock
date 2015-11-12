@@ -1,8 +1,6 @@
 package com.fortmocks.mock.soap.model.project.message;
 
 import com.fortmocks.core.model.Output;
-import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.mock.soap.model.project.SoapProject;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 
 /**

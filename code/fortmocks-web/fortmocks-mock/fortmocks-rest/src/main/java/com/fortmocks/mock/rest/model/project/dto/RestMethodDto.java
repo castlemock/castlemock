@@ -16,17 +16,14 @@
 
 package com.fortmocks.mock.rest.model.project.dto;
 
-import com.fortmocks.core.model.event.Event;
-import com.fortmocks.core.model.event.dto.EventDto;
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
-import com.fortmocks.mock.rest.model.project.RestMethodStatus;
-import com.fortmocks.mock.rest.model.project.RestMethodType;
-import com.fortmocks.mock.rest.model.project.RestResponseStrategy;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodStatus;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.mock.rest.model.project.domain.RestResponseStrategy;
 import org.dozer.Mapping;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Karl Dahlgren

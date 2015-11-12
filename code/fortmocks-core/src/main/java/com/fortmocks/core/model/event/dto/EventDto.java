@@ -18,7 +18,7 @@ package com.fortmocks.core.model.event.dto;
 
 import com.fortmocks.core.model.TypeIdentifiable;
 import com.fortmocks.core.model.TypeIdentifier;
-import com.fortmocks.core.model.event.Event;
+import com.fortmocks.core.model.event.domain.Event;
 import org.dozer.Mapping;
 
 import java.util.Date;

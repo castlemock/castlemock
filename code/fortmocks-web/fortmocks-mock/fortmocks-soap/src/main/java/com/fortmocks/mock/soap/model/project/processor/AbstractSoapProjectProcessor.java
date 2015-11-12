@@ -1,8 +1,6 @@
 package com.fortmocks.mock.soap.model.project.processor;
 
-import com.fortmocks.core.model.user.User;
-import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.mock.soap.model.project.SoapProject;
+import com.fortmocks.mock.soap.model.project.domain.SoapProject;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.web.core.model.AbstractProcessor;
 

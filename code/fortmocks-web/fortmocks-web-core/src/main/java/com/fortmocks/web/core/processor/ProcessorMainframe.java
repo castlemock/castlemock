@@ -1,7 +1,7 @@
 package com.fortmocks.web.core.processor;
 
 import com.fortmocks.core.model.*;
-import com.fortmocks.core.model.user.User;
+import com.fortmocks.core.model.user.domain.User;
 import com.fortmocks.core.model.validation.NotNull;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
@@ -10,9 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 /**
  * @author Karl Dahlgren

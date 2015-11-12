@@ -18,6 +18,7 @@ package com.fortmocks.web.core.model.configuration.dto;
 
 import com.fortmocks.core.model.configuration.dto.ConfigurationDto;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
+import com.fortmocks.core.model.event.domain.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.core.model.event.Event
+ * @see Event
  * @see ConfigurationGroupDtoGenerator
  */
 public class ConfigurationGroupDtoGenerator {

@@ -3,12 +3,10 @@ package com.fortmocks.web.core.model.user.processor;
 import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
-import com.fortmocks.core.model.user.Role;
+import com.fortmocks.core.model.user.domain.Role;
 import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.user.message.FindUsersByRoleInput;
 import com.fortmocks.core.model.user.message.FindUsersByRoleOutput;
-import com.fortmocks.core.model.user.message.UpdateUserInput;
-import com.fortmocks.core.model.user.message.UpdateUserOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

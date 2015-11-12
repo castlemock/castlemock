@@ -18,8 +18,8 @@ package com.fortmocks.core.model.project.dto;
 
 import com.fortmocks.core.model.TypeIdentifiable;
 import com.fortmocks.core.model.TypeIdentifier;
-import com.fortmocks.core.model.project.DomainNameStrategy;
-import com.fortmocks.core.model.project.Project;
+import com.fortmocks.core.model.project.domain.DomainNameStrategy;
+import com.fortmocks.core.model.project.domain.Project;
 import org.dozer.Mapping;
 
 import java.util.Date;

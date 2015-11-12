@@ -18,7 +18,7 @@ package com.fortmocks.mock.rest.model.project.repository;
 
 
 import com.fortmocks.core.model.Repository;
-import com.fortmocks.mock.rest.model.project.RestProject;
+import com.fortmocks.mock.rest.model.project.domain.RestProject;
 
 /**
  * The REST project file repository provides the functionality to interact with the file system.

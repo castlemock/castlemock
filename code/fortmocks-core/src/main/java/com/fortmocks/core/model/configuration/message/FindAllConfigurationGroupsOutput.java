@@ -1,9 +1,7 @@
 package com.fortmocks.core.model.configuration.message;
 
 import com.fortmocks.core.model.Output;
-import com.fortmocks.core.model.configuration.ConfigurationGroup;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.validation.NotNull;
 
 import java.util.List;

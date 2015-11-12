@@ -18,7 +18,7 @@ package com.fortmocks.mock.rest.web.mvc.controller.method;
 
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.mock.rest.model.event.service.RestEventService;
-import com.fortmocks.mock.rest.model.project.RestMockResponseStatus;
+import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
 import com.fortmocks.mock.rest.web.mvc.command.mockresponse.DeleteRestMockResponsesCommand;

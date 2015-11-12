@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.core.web.mvc.controller.configuration;
 
-import com.fortmocks.core.model.configuration.ConfigurationGroup;
+import com.fortmocks.core.model.configuration.domain.ConfigurationGroup;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
 import com.fortmocks.core.model.configuration.message.UpdateAllConfigurationGroupsInput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;

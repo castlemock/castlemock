@@ -19,7 +19,7 @@ package com.fortmocks.web.core.model.event.service;
 import com.fortmocks.core.model.TypeConverter;
 import com.fortmocks.core.model.TypeIdentifiable;
 import com.fortmocks.core.model.TypeIdentifier;
-import com.fortmocks.core.model.event.Event;
+import com.fortmocks.core.model.event.domain.Event;
 import com.fortmocks.core.model.event.dto.EventDto;
 import com.fortmocks.core.model.event.service.EventService;
 import com.fortmocks.web.core.model.ServiceImpl;

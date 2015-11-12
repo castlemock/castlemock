@@ -17,7 +17,7 @@
 package com.fortmocks.mock.soap.web.mvc.controller.mockresponse;
 
 
-import com.fortmocks.mock.soap.model.project.SoapMockResponseStatus;
+import com.fortmocks.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;

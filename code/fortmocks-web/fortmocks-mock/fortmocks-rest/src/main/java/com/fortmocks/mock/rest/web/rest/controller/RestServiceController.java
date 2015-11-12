@@ -16,9 +16,10 @@
 
 package com.fortmocks.mock.rest.web.rest.controller;
 
-import com.fortmocks.mock.rest.model.project.RestMethodType;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.mock.rest.model.project.domain.RestMockResponse;
+import com.fortmocks.mock.rest.model.project.domain.RestProject;
+import com.fortmocks.mock.rest.model.project.domain.RestResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,9 +46,9 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
-     * @see com.fortmocks.mock.rest.model.project.RestProject
-     * @see com.fortmocks.mock.rest.model.project.RestResource
-     * @see com.fortmocks.mock.rest.model.project.RestMockResponse
+     * @see RestProject
+     * @see RestResource
+     * @see RestMockResponse
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/application/{applicationId}/**")
@@ -62,9 +63,9 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
-     * @see com.fortmocks.mock.rest.model.project.RestProject
-     * @see com.fortmocks.mock.rest.model.project.RestResource
-     * @see com.fortmocks.mock.rest.model.project.RestMockResponse
+     * @see RestProject
+     * @see RestResource
+     * @see RestMockResponse
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/application/{applicationId}/**")
@@ -79,9 +80,9 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
-     * @see com.fortmocks.mock.rest.model.project.RestProject
-     * @see com.fortmocks.mock.rest.model.project.RestResource
-     * @see com.fortmocks.mock.rest.model.project.RestMockResponse
+     * @see RestProject
+     * @see RestResource
+     * @see RestMockResponse
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT, value = "/{projectId}/application/{applicationId}/**")
@@ -96,9 +97,9 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
-     * @see com.fortmocks.mock.rest.model.project.RestProject
-     * @see com.fortmocks.mock.rest.model.project.RestResource
-     * @see com.fortmocks.mock.rest.model.project.RestMockResponse
+     * @see RestProject
+     * @see RestResource
+     * @see RestMockResponse
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.DELETE, value = "/{projectId}/application/{applicationId}/**")
@@ -113,9 +114,9 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
-     * @see com.fortmocks.mock.rest.model.project.RestProject
-     * @see com.fortmocks.mock.rest.model.project.RestResource
-     * @see com.fortmocks.mock.rest.model.project.RestMockResponse
+     * @see RestProject
+     * @see RestResource
+     * @see RestMockResponse
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, value = "/{projectId}/application/{applicationId}/**")
@@ -130,9 +131,9 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
-     * @see com.fortmocks.mock.rest.model.project.RestProject
-     * @see com.fortmocks.mock.rest.model.project.RestResource
-     * @see com.fortmocks.mock.rest.model.project.RestMockResponse
+     * @see RestProject
+     * @see RestResource
+     * @see RestMockResponse
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.HEAD, value = "/{projectId}/application/{applicationId}/**")
@@ -147,9 +148,9 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
-     * @see com.fortmocks.mock.rest.model.project.RestProject
-     * @see com.fortmocks.mock.rest.model.project.RestResource
-     * @see com.fortmocks.mock.rest.model.project.RestMockResponse
+     * @see RestProject
+     * @see RestResource
+     * @see RestMockResponse
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.OPTIONS, value = "/{projectId}/application/{applicationId}/**")
@@ -164,9 +165,9 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
-     * @see com.fortmocks.mock.rest.model.project.RestProject
-     * @see com.fortmocks.mock.rest.model.project.RestResource
-     * @see com.fortmocks.mock.rest.model.project.RestMockResponse
+     * @see RestProject
+     * @see RestResource
+     * @see RestMockResponse
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.TRACE, value = "/{projectId}/application/{applicationId}/**")

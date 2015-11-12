@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.core.web.mvc.command.user;
 
-import com.fortmocks.core.model.user.User;
+import com.fortmocks.core.model.user.domain.User;
 import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.web.core.web.mvc.controller.user.UpdateCurrentUserController;
 

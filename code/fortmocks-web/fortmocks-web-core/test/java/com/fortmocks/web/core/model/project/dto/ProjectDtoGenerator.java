@@ -16,7 +16,8 @@
 
 package com.fortmocks.web.core.model.project.dto;
 
-import com.fortmocks.core.model.project.DomainNameStrategy;
+import com.fortmocks.core.model.project.domain.DomainNameStrategy;
+import com.fortmocks.core.model.project.domain.Project;
 import com.fortmocks.core.model.project.dto.ProjectDto;
 
 import java.util.Date;
@@ -25,7 +26,7 @@ import java.util.Date;
  * @author Karl Dahlgren
  * @since 1.0
  * @see com.fortmocks.core.model.project.dto.ProjectDto
- * @see com.fortmocks.core.model.project.Project
+ * @see Project
  */
 public class ProjectDtoGenerator {
 

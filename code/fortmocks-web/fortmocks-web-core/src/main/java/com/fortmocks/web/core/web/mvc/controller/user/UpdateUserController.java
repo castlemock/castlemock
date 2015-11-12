@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.core.web.mvc.controller.user;
 
-import com.fortmocks.core.model.user.Role;
-import com.fortmocks.core.model.user.Status;
+import com.fortmocks.core.model.user.domain.Role;
+import com.fortmocks.core.model.user.domain.Status;
 import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.user.message.*;
 import com.fortmocks.web.core.model.user.service.UserDetailSecurityService;

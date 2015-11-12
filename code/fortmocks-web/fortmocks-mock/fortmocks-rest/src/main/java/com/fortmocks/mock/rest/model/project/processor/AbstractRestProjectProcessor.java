@@ -1,6 +1,6 @@
 package com.fortmocks.mock.rest.model.project.processor;
 
-import com.fortmocks.mock.rest.model.project.*;
+import com.fortmocks.mock.rest.model.project.domain.*;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.web.core.model.AbstractProcessor;

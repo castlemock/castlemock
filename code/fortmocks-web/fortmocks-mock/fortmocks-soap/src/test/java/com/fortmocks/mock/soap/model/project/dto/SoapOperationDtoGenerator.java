@@ -16,10 +16,9 @@
 
 package com.fortmocks.mock.soap.model.project.dto;
 
-import com.fortmocks.mock.soap.model.project.SoapOperationMethod;
-import com.fortmocks.mock.soap.model.project.SoapOperationStatus;
-import com.fortmocks.mock.soap.model.project.SoapOperationType;
-import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.mock.soap.model.project.domain.SoapOperationMethod;
+import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
+import com.fortmocks.mock.soap.model.project.domain.SoapOperationType;
 
 /**
  * @author Karl Dahlgren

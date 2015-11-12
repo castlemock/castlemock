@@ -16,9 +16,9 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.method;
 
-import com.fortmocks.mock.rest.model.project.RestMethodStatus;
-import com.fortmocks.mock.rest.model.project.RestMethodType;
-import com.fortmocks.mock.rest.model.project.RestResponseStrategy;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodStatus;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.mock.rest.model.project.domain.RestResponseStrategy;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;

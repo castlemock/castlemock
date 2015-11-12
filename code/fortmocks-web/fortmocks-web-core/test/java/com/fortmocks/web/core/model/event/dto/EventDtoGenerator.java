@@ -16,6 +16,7 @@
 
 package com.fortmocks.web.core.model.event.dto;
 
+import com.fortmocks.core.model.event.domain.Event;
 import com.fortmocks.core.model.event.dto.EventDto;
 
 import java.util.Date;
@@ -23,7 +24,7 @@ import java.util.Date;
 /**
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.core.model.event.Event
+ * @see Event
  * @see EventDtoGenerator
  */
 public class EventDtoGenerator {

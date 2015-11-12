@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.model.project.dto;
 
-import com.fortmocks.mock.soap.model.project.SoapOperationStatus;
+import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
 import org.dozer.Mapping;
 
 import java.util.HashMap;

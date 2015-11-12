@@ -3,7 +3,7 @@ package com.fortmocks.mock.rest.model.project.message;
 import com.fortmocks.core.model.Input;
 import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
-import com.sun.istack.internal.NotNull;
+import com.fortmocks.core.model.validation.NotNull;
 
 /**
  * @author Karl Dahlgren

@@ -16,6 +16,9 @@
 
 package com.fortmocks.mock.soap.web.soap.controller;
 
+import com.fortmocks.mock.soap.model.project.domain.SoapMockResponse;
+import com.fortmocks.mock.soap.model.project.domain.SoapOperation;
+import com.fortmocks.mock.soap.model.project.domain.SoapProject;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,9 +48,9 @@ public class SoapServiceController extends AbstractSoapServiceController {
      * @param projectId The id of the project that the request belongs to
      * @param request The incoming request that will be processed
      * @return Returns a mocked response
-     * @see com.fortmocks.mock.soap.model.project.SoapProject
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
-     * @see com.fortmocks.mock.soap.model.project.SoapMockResponse
+     * @see SoapProject
+     * @see SoapOperation
+     * @see SoapMockResponse
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})

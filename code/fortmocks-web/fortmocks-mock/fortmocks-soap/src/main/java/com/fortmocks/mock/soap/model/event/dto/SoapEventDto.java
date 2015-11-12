@@ -17,6 +17,7 @@
 package com.fortmocks.mock.soap.model.event.dto;
 
 import com.fortmocks.core.model.event.dto.EventDto;
+import com.fortmocks.mock.soap.model.project.domain.SoapOperation;
 import org.dozer.Mapping;
 
 import java.util.Date;
@@ -53,7 +54,7 @@ public class SoapEventDto extends EventDto {
      * Constructor for the SOAP event DTO
      * @param soapRequest The SOAP request that the event is representing
      * @param soapOperationId The id of the SOAP operation that is affected by the provided SOAP request
-     * @see com.fortmocks.mock.soap.model.project.SoapOperation
+     * @see SoapOperation
      */
     public SoapEventDto(final SoapRequestDto soapRequest, final Long soapOperationId) {
         this.soapRequest = soapRequest;

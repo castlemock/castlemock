@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.core.web.mvc.command.project;
 
-import com.fortmocks.core.model.project.Project;
+import com.fortmocks.core.model.project.domain.Project;
 import com.fortmocks.core.model.project.dto.ProjectDto;
 
 /**
