@@ -3,8 +3,8 @@ package com.fortmocks.web.core.model.user.processor;
 import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
-import com.fortmocks.core.model.user.message.DeleteUserInput;
-import com.fortmocks.core.model.user.message.DeleteUserOutput;
+import com.fortmocks.core.model.user.processor.message.input.DeleteUserInput;
+import com.fortmocks.core.model.user.processor.messge.output.DeleteUserOutput;
 import org.springframework.stereotype.Service;
 
 /**

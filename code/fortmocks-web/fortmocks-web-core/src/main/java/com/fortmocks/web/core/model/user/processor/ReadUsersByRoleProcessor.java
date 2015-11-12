@@ -5,8 +5,8 @@ import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
 import com.fortmocks.core.model.user.domain.Role;
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.ReadUsersByRoleInput;
-import com.fortmocks.core.model.user.message.ReadUsersByRoleOutput;
+import com.fortmocks.core.model.user.processor.message.input.ReadUsersByRoleInput;
+import com.fortmocks.core.model.user.processor.messge.output.ReadUsersByRoleOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

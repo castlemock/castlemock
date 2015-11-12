@@ -12,9 +12,9 @@ import com.google.common.base.Preconditions;
  */
 public abstract class AbstractRestProjectProcessor extends AbstractProcessor<RestProject, RestProjectDto, Long> {
 
-    private static final String SLASH = "/";
-    private static final String START_BRACKET = "{";
-    private static final String END_BRACKET = "}";
+    protected static final String SLASH = "/";
+    protected static final String START_BRACKET = "{";
+    protected static final String END_BRACKET = "}";
 
 
     /**
@@ -59,7 +59,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
      * The method calculates the next REST application id
      * @return The new generated REST application id
      */
-    private Long getNextRestApplicationId(){
+    protected Long getNextRestApplicationId(){
         Long nextRestApplicationId = 0L;
         for(RestProject restProject : findAllTypes()){
             for(RestApplication restApplication : restProject.getRestApplications()){
@@ -75,7 +75,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
      * The method calculates the next REST resource id
      * @return The new generated REST resource id
      */
-    private Long getNextRestResourceId(){
+    protected Long getNextRestResourceId(){
         Long nextRestResourceId = 0L;
         for(RestProject restProject : findAllTypes()){
             for(RestApplication restApplication : restProject.getRestApplications()){
@@ -93,7 +93,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
      * The method calculates the next REST method id
      * @return The new generated REST method id
      */
-    private Long getNextRestMethodId(){
+    protected Long getNextRestMethodId(){
         Long nextRestMethodId = 0L;
         for(RestProject restProject : findAllTypes()){
             for(RestApplication restApplication : restProject.getRestApplications()){
@@ -113,7 +113,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
      * The method calculates the next REST mock response id
      * @return The new generated REST mock response id
      */
-    private Long getNextRestMockResponseId(){
+    protected Long getNextRestMockResponseId(){
         Long nextRestMockResponseId = 0L;
         for(RestProject restProject : findAllTypes()){
             for(RestApplication restApplication : restProject.getRestApplications()){
@@ -134,7 +134,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
 
 
 
-    private RestApplication findRestApplicationType(final Long restProjectId, final Long restApplicationId) {
+    protected RestApplication findRestApplicationType(final Long restProjectId, final Long restApplicationId) {
         Preconditions.checkNotNull(restProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(restApplicationId, "Application id cannot be null");
         final RestProject restProject = findType(restProjectId);
@@ -146,7 +146,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
         throw new IllegalArgumentException("Unable to find a REST application with id " + restApplicationId);
     }
 
-    private RestResource findRestResourceType(final Long restProjectId, final Long restApplicationId, final Long restResourceId){
+    protected RestResource findRestResourceType(final Long restProjectId, final Long restApplicationId, final Long restResourceId){
         Preconditions.checkNotNull(restResourceId, "Resource id cannot be null");
         final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
         for(RestResource restResource : restApplication.getRestResources()){
@@ -157,7 +157,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
         throw new IllegalArgumentException("Unable to find a REST resource with id " + restResourceId);
     }
 
-    private RestMethod findRestMethodType(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId){
+    protected RestMethod findRestMethodType(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId){
         Preconditions.checkNotNull(restMethodId, "Method id cannot be null");
         final RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
         for(RestMethod restMethod : restResource.getRestMethods()){
@@ -168,7 +168,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
         throw new IllegalArgumentException("Unable to find a REST method with id " + restMethodId);
     }
 
-    private RestMockResponse findRestMockResponseType(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId, final Long restMockResponseId){
+    protected RestMockResponse findRestMockResponseType(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId, final Long restMockResponseId){
         Preconditions.checkNotNull(restMockResponseId, "Mock response id cannot be null");
         final RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
         for(RestMockResponse restMockResponse : restMethod.getRestMockResponses()) {
@@ -187,7 +187,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
      * @param otherRestResourceUriParts The set of resources that will be used to identify the REST resource
      * @return A REST resource that matches the search criteria. Null otherwise
      */
-    private RestResource findRestResourceType(final Long restProjectId, final Long restApplicationId, final String[] otherRestResourceUriParts) {
+    protected RestResource findRestResourceType(final Long restProjectId, final Long restApplicationId, final String[] otherRestResourceUriParts) {
         final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
 
         for(RestResource restResource : restApplication.getRestResources()){
@@ -207,7 +207,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
      * @param otherRestResourceUriParts The second set of resource URI parts
      * @return True if the provided URIs are matching. False otherwise
      */
-    private boolean compareRestResourceUri(final String[] restResourceUriParts, final String[] otherRestResourceUriParts){
+    protected boolean compareRestResourceUri(final String[] restResourceUriParts, final String[] otherRestResourceUriParts){
         if(restResourceUriParts.length != otherRestResourceUriParts.length){
             return false;
         }
@@ -235,7 +235,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
      * @see RestMethod
      * @see RestMethodDto
      */
-    private RestMethod findRestMethodByRestMethodId(final Long restMethodId) {
+    protected RestMethod findRestMethodByRestMethodId(final Long restMethodId) {
         Preconditions.checkNotNull(restMethodId, "REST method id cannot be null");
         for(RestProject restProject : findAllTypes()){
             for(RestApplication restApplication : restProject.getRestApplications()){
@@ -258,7 +258,7 @@ public abstract class AbstractRestProjectProcessor extends AbstractProcessor<Res
      * @see RestMethod
      * @see RestMethodDto
      */
-    private Long findRestProjectIdForRestMethod(final Long restMethodId) {
+    protected Long findRestProjectIdForRestMethod(final Long restMethodId) {
         Preconditions.checkNotNull(restMethodId, "Method id cannot be null");
         for(RestProject restProject : findAllTypes()){
             for(RestApplication restApplication : restProject.getRestApplications()){

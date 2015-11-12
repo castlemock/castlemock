@@ -17,8 +17,8 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.ReadUserByUsernameInput;
-import com.fortmocks.core.model.user.message.ReadUserByUsernameOutput;
+import com.fortmocks.core.model.user.processor.message.input.ReadUserByUsernameInput;
+import com.fortmocks.core.model.user.processor.messge.output.ReadUserByUsernameOutput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;

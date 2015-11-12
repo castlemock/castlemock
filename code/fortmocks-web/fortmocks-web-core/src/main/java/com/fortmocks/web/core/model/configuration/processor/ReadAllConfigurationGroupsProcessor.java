@@ -4,8 +4,8 @@ import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.message.ReadAllConfigurationGroupsInput;
-import com.fortmocks.core.model.configuration.message.ReadAllConfigurationGroupsOutput;
+import com.fortmocks.core.model.configuration.processor.message.input.ReadAllConfigurationGroupsInput;
+import com.fortmocks.core.model.configuration.processor.message.output.ReadAllConfigurationGroupsOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

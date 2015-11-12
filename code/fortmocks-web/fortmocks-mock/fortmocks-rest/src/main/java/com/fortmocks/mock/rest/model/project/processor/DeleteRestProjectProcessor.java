@@ -3,8 +3,8 @@ package com.fortmocks.mock.rest.model.project.processor;
 import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
-import com.fortmocks.mock.rest.model.project.message.DeleteRestProjectInput;
-import com.fortmocks.mock.rest.model.project.message.DeleteRestProjectOutput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.DeleteRestProjectInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.DeleteRestProjectOutput;
 import org.springframework.stereotype.Service;
 
 /**

@@ -17,8 +17,8 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.CreateUserInput;
-import com.fortmocks.core.model.user.message.CreateUserOutput;
+import com.fortmocks.core.model.user.processor.message.input.CreateUserInput;
+import com.fortmocks.core.model.user.processor.messge.output.CreateUserOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.user.dto.UserDtoGenerator;
 import com.fortmocks.web.core.processor.ProcessorMainframe;

@@ -4,8 +4,8 @@ import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
 import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
-import com.fortmocks.mock.rest.model.project.message.UpdateRestProjectInput;
-import com.fortmocks.mock.rest.model.project.message.UpdateRestProjectOutput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.UpdateRestProjectInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.UpdateRestProjectOutput;
 import org.springframework.stereotype.Service;
 
 /**

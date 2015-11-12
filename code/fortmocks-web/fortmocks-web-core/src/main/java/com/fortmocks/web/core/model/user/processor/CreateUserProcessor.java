@@ -4,8 +4,8 @@ import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.message.CreateUserInput;
-import com.fortmocks.core.model.user.message.CreateUserOutput;
+import com.fortmocks.core.model.user.processor.message.input.CreateUserInput;
+import com.fortmocks.core.model.user.processor.messge.output.CreateUserOutput;
 import org.springframework.stereotype.Service;
 
 /**

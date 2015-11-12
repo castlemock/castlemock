@@ -6,8 +6,8 @@ import com.fortmocks.core.model.Task;
 import com.fortmocks.core.model.configuration.domain.ConfigurationGroup;
 import com.fortmocks.core.model.configuration.dto.ConfigurationDto;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.message.UpdateAllConfigurationGroupsInput;
-import com.fortmocks.core.model.configuration.message.UpdateAllConfigurationGroupsOutput;
+import com.fortmocks.core.model.configuration.processor.message.input.UpdateAllConfigurationGroupsInput;
+import com.fortmocks.core.model.configuration.processor.message.output.UpdateAllConfigurationGroupsOutput;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
 
