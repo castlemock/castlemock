@@ -16,10 +16,10 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.resource;
 
-import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
-import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestResourceInput;
-import com.fortmocks.mock.rest.model.project.service.message.input.UpdateRestResourceInput;
-import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestResourceInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

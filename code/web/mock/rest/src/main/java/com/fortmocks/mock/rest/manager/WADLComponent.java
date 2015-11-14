@@ -16,12 +16,12 @@
 
 package com.fortmocks.mock.rest.manager;
 
-import com.fortmocks.mock.rest.model.project.domain.RestMethodStatus;
-import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
-import com.fortmocks.mock.rest.model.project.domain.RestResponseStrategy;
-import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
-import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.web.core.manager.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

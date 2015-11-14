@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.web.mvc.command.method;
 
-import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 
 import java.util.List;
 

@@ -16,8 +16,8 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.event;
 
-import com.fortmocks.mock.rest.model.event.service.message.input.ReadRestEventInput;
-import com.fortmocks.mock.rest.model.event.service.message.output.ReadRestEventOutput;
+import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
+import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadRestEventOutput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;

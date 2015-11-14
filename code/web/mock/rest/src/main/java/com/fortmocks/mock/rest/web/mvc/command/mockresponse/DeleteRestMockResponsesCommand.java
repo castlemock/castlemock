@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.web.mvc.command.mockresponse;
 
-import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
 
 import java.util.List;
 

@@ -16,10 +16,10 @@
 
 package com.fortmocks.mock.rest.web.rest.controller;
 
-import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
-import com.fortmocks.mock.rest.model.project.domain.RestMockResponse;
-import com.fortmocks.mock.rest.model.project.domain.RestProject;
-import com.fortmocks.mock.rest.model.project.domain.RestResource;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponse;
+import com.fortmocks.core.mock.rest.model.project.domain.RestProject;
+import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

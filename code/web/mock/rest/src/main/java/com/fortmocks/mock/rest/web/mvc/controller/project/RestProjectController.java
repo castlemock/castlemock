@@ -16,11 +16,11 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.project;
 
-import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
-import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestProjectInput;
-import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
-import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 import com.fortmocks.mock.rest.web.mvc.command.application.DeleteRestApplicationsCommand;
 import com.fortmocks.mock.rest.web.mvc.command.application.RestApplicationModifierCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;

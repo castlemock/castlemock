@@ -1,6 +1,6 @@
 package com.fortmocks.mock.rest.web.rest.controller;
 
-import com.fortmocks.mock.rest.model.RestException;
+import com.fortmocks.core.mock.rest.model.RestException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;

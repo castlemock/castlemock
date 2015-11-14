@@ -16,12 +16,12 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.mockresponse;
 
-import com.fortmocks.mock.rest.model.project.domain.RestContentType;
-import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;
-import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
-import com.fortmocks.mock.rest.model.project.service.message.input.CreateRestMockResponseInput;
-import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestMethodInput;
-import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
+import com.fortmocks.core.mock.rest.model.project.domain.RestContentType;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponseStatus;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestMockResponseInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

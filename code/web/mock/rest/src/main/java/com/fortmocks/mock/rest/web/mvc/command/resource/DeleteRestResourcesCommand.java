@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.web.mvc.command.resource;
 
-import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 
 import java.util.List;
 

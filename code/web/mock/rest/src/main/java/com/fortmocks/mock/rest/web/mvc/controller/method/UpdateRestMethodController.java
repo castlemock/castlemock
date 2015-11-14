@@ -16,13 +16,13 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.method;
 
-import com.fortmocks.mock.rest.model.project.domain.RestMethodStatus;
-import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
-import com.fortmocks.mock.rest.model.project.domain.RestResponseStrategy;
-import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
-import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestMethodInput;
-import com.fortmocks.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
-import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

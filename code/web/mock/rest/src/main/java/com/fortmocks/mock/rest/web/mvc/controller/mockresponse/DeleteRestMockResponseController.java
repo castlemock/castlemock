@@ -16,10 +16,10 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.mockresponse;
 
-import com.fortmocks.mock.rest.model.project.service.message.input.DeleteRestMockResponseInput;
-import com.fortmocks.mock.rest.model.project.service.message.input.DeleteRestMockResponsesInput;
-import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
-import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.DeleteRestMockResponseInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.DeleteRestMockResponsesInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
 import com.fortmocks.mock.rest.web.mvc.command.mockresponse.DeleteRestMockResponsesCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.context.annotation.Scope;

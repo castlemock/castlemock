@@ -16,22 +16,20 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.method;
 
-import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
-import com.fortmocks.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
-import com.fortmocks.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
-import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;
-import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
-import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
-import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestMethodInput;
-import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
-import com.fortmocks.mock.rest.model.project.service.message.input.UpdateRestMockResponseStatusInput;
-import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
-import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
+import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
+import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponseStatus;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseStatusInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
 import com.fortmocks.mock.rest.web.mvc.command.mockresponse.DeleteRestMockResponsesCommand;
 import com.fortmocks.mock.rest.web.mvc.command.mockresponse.RestMockResponseModifierCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

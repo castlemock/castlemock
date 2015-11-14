@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.web.mvc.command.application;
 
-import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 
 /**
  * @author Karl Dahlgren

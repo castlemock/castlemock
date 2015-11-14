@@ -17,8 +17,8 @@
 package com.fortmocks.mock.rest.web.mvc.controller.project;
 
 import com.fortmocks.mock.rest.manager.WADLComponent;
-import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.mock.rest.model.project.service.message.input.CreateRestApplicationsInput;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestApplicationsInput;
 import com.fortmocks.mock.rest.web.mvc.command.project.WADLFileUploadForm;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.beans.factory.annotation.Autowired;

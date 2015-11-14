@@ -16,8 +16,8 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.application;
 
-import com.fortmocks.mock.rest.model.project.service.message.input.CreateRestApplicationInput;
-import com.fortmocks.mock.rest.model.project.service.message.output.CreateRestApplicationOutput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestApplicationInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestApplicationOutput;
 import com.fortmocks.mock.rest.web.mvc.command.application.CreateRestApplicationCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
