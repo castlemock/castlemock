@@ -1,6 +1,8 @@
 package com.fortmocks.mock.soap.model.project.processor.message.input;
 
 import com.fortmocks.core.model.Input;
+import com.fortmocks.core.model.validation.NotNull;
+import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 
 /**
@@ -9,8 +11,21 @@ import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
  */
 public class UpdateSoapOperationInput implements Input {
 
+    @NotNull
     private Long soapProjectId;
-    private SoapProjectDto soapProject;
+    @NotNull
+    private Long soapPortId;
+    @NotNull
+    private Long soapOperationId;
+    @NotNull
+    private SoapOperationDto updatedSoapOperation;
+
+    public UpdateSoapOperationInput(Long soapProjectId, Long soapPortId, Long soapOperationId, SoapOperationDto updatedSoapOperation) {
+        this.soapProjectId = soapProjectId;
+        this.soapPortId = soapPortId;
+        this.soapOperationId = soapOperationId;
+        this.updatedSoapOperation = updatedSoapOperation;
+    }
 
     public Long getSoapProjectId() {
         return soapProjectId;
@@ -20,11 +35,27 @@ public class UpdateSoapOperationInput implements Input {
         this.soapProjectId = soapProjectId;
     }
 
-    public SoapProjectDto getSoapProject() {
-        return soapProject;
+    public Long getSoapPortId() {
+        return soapPortId;
     }
 
-    public void setSoapProject(SoapProjectDto soapProject) {
-        this.soapProject = soapProject;
+    public void setSoapPortId(Long soapPortId) {
+        this.soapPortId = soapPortId;
+    }
+
+    public Long getSoapOperationId() {
+        return soapOperationId;
+    }
+
+    public void setSoapOperationId(Long soapOperationId) {
+        this.soapOperationId = soapOperationId;
+    }
+
+    public SoapOperationDto getUpdatedSoapOperation() {
+        return updatedSoapOperation;
+    }
+
+    public void setUpdatedSoapOperation(SoapOperationDto updatedSoapOperation) {
+        this.updatedSoapOperation = updatedSoapOperation;
     }
 }

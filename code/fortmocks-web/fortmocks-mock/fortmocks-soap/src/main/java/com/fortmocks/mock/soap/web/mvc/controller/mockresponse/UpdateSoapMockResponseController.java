@@ -17,6 +17,7 @@
 package com.fortmocks.mock.soap.web.mvc.controller.mockresponse;
 
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.mock.soap.model.project.processor.message.input.UpdateSoapMockResponseInput;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,7 +50,7 @@ public class UpdateSoapMockResponseController extends AbstractSoapViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/response/{soapMockResponseId}/update", method = RequestMethod.POST)
     public ModelAndView updateSoapMockResponse(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @PathVariable final Long soapMockResponseId,  @ModelAttribute final SoapMockResponseDto soapMockResponseDto) {
-        soapProjectService.updateSoapMockResponse(soapProjectId, soapPortId, soapOperationId, soapMockResponseId, soapMockResponseDto);
+        processorMainframe.process(new UpdateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId, soapMockResponseDto));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 

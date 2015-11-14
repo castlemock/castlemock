@@ -1,6 +1,7 @@
 package com.fortmocks.mock.soap.model.project.processor.message.output;
 
 import com.fortmocks.core.model.Output;
+import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 
 /**
@@ -9,13 +10,17 @@ import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
  */
 public class ReadSoapMockResponseOutput implements Output{
 
-    private SoapProjectDto soapProject;
+    private SoapMockResponseDto soapMockResponse;
 
-    public SoapProjectDto getSoapProject() {
-        return soapProject;
+    public ReadSoapMockResponseOutput(SoapMockResponseDto soapMockResponse) {
+        this.soapMockResponse = soapMockResponse;
     }
 
-    public void setSoapProject(SoapProjectDto soapProject) {
-        this.soapProject = soapProject;
+    public SoapMockResponseDto getSoapMockResponse() {
+        return soapMockResponse;
+    }
+
+    public void setSoapMockResponse(SoapMockResponseDto soapMockResponse) {
+        this.soapMockResponse = soapMockResponse;
     }
 }

@@ -43,7 +43,4 @@ public class AbstractSoapViewController extends AbstractViewController {
     protected static final String SOAP_MOCK_RESPONSE_STATUSES = "soapMockResponseStatuses";
     protected static final String SOAP_MOCK_RESPONSE_STRATEGIES = "soapMockResponseStrategies";
 
-    @Autowired
-    protected SoapProjectService soapProjectService;
-
 }

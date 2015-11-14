@@ -1,6 +1,8 @@
 package com.fortmocks.mock.soap.model.project.processor.message.input;
 
 import com.fortmocks.core.model.Input;
+import com.fortmocks.core.model.validation.NotNull;
+import com.fortmocks.mock.soap.model.project.domain.SoapMockResponseStatus;
 
 /**
  * @author Karl Dahlgren
@@ -8,13 +10,24 @@ import com.fortmocks.core.model.Input;
  */
 public class ReadSoapMockResponsesInput implements Input {
 
-    private Long soapProjectId;
+    @NotNull
+    private Long soapOperationId;
+    @NotNull
+    private SoapMockResponseStatus status;
 
-    public Long getSoapProjectId() {
-        return soapProjectId;
+    public Long getSoapOperationId() {
+        return soapOperationId;
     }
 
-    public void setSoapProjectId(Long soapProjectId) {
-        this.soapProjectId = soapProjectId;
+    public void setSoapOperationId(Long soapOperationId) {
+        this.soapOperationId = soapOperationId;
+    }
+
+    public SoapMockResponseStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(SoapMockResponseStatus status) {
+        this.status = status;
     }
 }

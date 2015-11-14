@@ -1,21 +1,93 @@
 package com.fortmocks.mock.soap.model.project.processor;
 
-import com.fortmocks.mock.soap.model.project.domain.SoapMockResponse;
-import com.fortmocks.mock.soap.model.project.domain.SoapOperation;
-import com.fortmocks.mock.soap.model.project.domain.SoapPort;
-import com.fortmocks.mock.soap.model.project.domain.SoapProject;
+import com.fortmocks.mock.soap.model.project.domain.*;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.web.core.model.AbstractProcessor;
 import com.google.common.base.Preconditions;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<SoapProject, SoapProjectDto, Long> {
+
+
+    /**
+     * Count the operation statuses
+     * @param soapOperations The list of operations, which status will be counted
+     * @return The result of the status count
+     */
+    protected Map<SoapOperationStatus, Integer> getSoapOperationStatusCount(final List<SoapOperation> soapOperations){
+        Preconditions.checkNotNull(soapOperations, "The operation list cannot be null");
+        final Map<SoapOperationStatus, Integer> statuses = new HashMap<SoapOperationStatus, Integer>();
+
+        for(SoapOperationStatus soapOperationStatus : SoapOperationStatus.values()){
+            statuses.put(soapOperationStatus, 0);
+        }
+        for(SoapOperation soapOperation : soapOperations){
+            SoapOperationStatus soapOperationStatus = soapOperation.getSoapOperationStatus();
+            statuses.put(soapOperationStatus, statuses.get(soapOperationStatus)+1);
+        }
+        return statuses;
+    }
+
+    /**
+     * Finds a project by a given name
+     * @param name The name of the project that should be retrieved
+     * @return Returns a project with the provided name
+     * @see SoapProject
+     */
+    public SoapProjectDto findSoapProject(final String name) {
+        Preconditions.checkNotNull(name, "Project name cannot be null");
+        Preconditions.checkArgument(!name.isEmpty(), "Project name cannot be empty");
+        for(SoapProject soapProject : findAllTypes()){
+            if(soapProject.getName().equalsIgnoreCase(name)) {
+                return toDto(soapProject);
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * The save method saves a project to the database
+     * @param project Project that will be saved to the database
+     * @return The saved project
+     */
+    @Override
+    public SoapProjectDto save(final SoapProjectDto project){
+        Preconditions.checkNotNull(project, "Project cannot be null");
+        Preconditions.checkArgument(!project.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
+        final SoapProjectDto projectInDatebase = findSoapProject(project.getName());
+        Preconditions.checkArgument(projectInDatebase == null, "Project name is already taken");
+        project.setUpdated(new Date());
+        project.setCreated(new Date());
+
+        return super.save(project);
+    }
+
+    /**
+     * Updates a project with new information
+     * @param soapProjectId The id of the project that will be updated
+     * @param updatedProject The updated version of the project
+     * @return The updated version project
+     */
+    @Override
+    public SoapProjectDto update(final Long soapProjectId, final SoapProjectDto updatedProject){
+        Preconditions.checkNotNull(soapProjectId, "Project id be null");
+        Preconditions.checkArgument(soapProjectId >= 0, "Project id cannot be negative");
+        Preconditions.checkNotNull(updatedProject, "Project cannot be null");
+        Preconditions.checkArgument(!updatedProject.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
+        final SoapProjectDto projectWithNameDto = findSoapProject(updatedProject.getName());
+        Preconditions.checkArgument(projectWithNameDto == null || projectWithNameDto.getId().equals(soapProjectId), "Project name is already taken");
+        final SoapProjectDto project = find(soapProjectId);
+        project.setName(updatedProject.getName());
+        project.setDescription(updatedProject.getDescription());
+        return super.save(project);
+    }
+
 
 
 
@@ -30,7 +102,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
      */
-    private SoapPort findSoapPortType(final Long soapProjectId, final Long soapPortId) {
+    protected SoapPort findSoapPortType(final Long soapProjectId, final Long soapPortId) {
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(soapPortId, "Port id cannot be null");
         final SoapProject soapProject = findType(soapProjectId);
@@ -56,7 +128,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
-    private SoapOperation findSoapOperationType(final Long soapProjectId, final Long soapPortId, final Long soapOperationId){
+    protected SoapOperation findSoapOperationType(final Long soapProjectId, final Long soapPortId, final Long soapOperationId){
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         for(SoapOperation soapOperation : soapPort.getSoapOperations()){
@@ -77,7 +149,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * @see SoapPort
      * @see com.fortmocks.mock.soap.model.project.dto.SoapPortDto
      */
-    private List<SoapOperation> findSoapOperationType(final Long soapProjectId, final Long soapPortId) {
+    protected List<SoapOperation> findSoapOperationType(final Long soapProjectId, final Long soapPortId) {
         final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         return soapPort != null ? soapPort.getSoapOperations() : null;
     }
@@ -90,7 +162,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
-    private SoapOperation findSoapOperationType(final Long soapOperationId) {
+    protected SoapOperation findSoapOperationType(final Long soapOperationId) {
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         for(SoapProject soapProject : findAllTypes()){
             for(SoapPort soapPort : soapProject.getSoapPorts()){
@@ -112,7 +184,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
-    private Long findSoapProjectType(final Long soapOperationId) {
+    protected Long findSoapProjectType(final Long soapOperationId) {
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         for(SoapProject soapProject : findAllTypes()){
             for(SoapPort soapPort : soapProject.getSoapPorts()){
@@ -133,7 +205,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * @see SoapProject
      * @see com.fortmocks.mock.soap.model.project.dto.SoapProjectDto
      */
-    private List<SoapOperation> findSoapOperationTypeWithSoapProjectId(final Long soapProjectId) {
+    protected List<SoapOperation> findSoapOperationTypeWithSoapProjectId(final Long soapProjectId) {
         final SoapProject soapProject = findType(soapProjectId);
 
         if(soapProject == null){
@@ -165,7 +237,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * @see SoapMockResponse
      * @see com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto
      */
-    private SoapMockResponse findSoapMockResponseType(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final Long soapMockResponseId) {
+    protected SoapMockResponse findSoapMockResponseType(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final Long soapMockResponseId) {
         final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
             if(soapMockResponse.getId().equals(soapMockResponseId)){
@@ -199,7 +271,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * @see SoapOperation
      * @see com.fortmocks.mock.soap.model.project.dto.SoapOperationDto
      */
-    private Long getNexSoapOperationId(){
+    protected Long getNexSoapOperationId(){
         Long nextSoapOperationId = 0L;
         for(SoapProject soapProject : findAllTypes()){
             for(SoapPort soapPort : soapProject.getSoapPorts()){
@@ -219,7 +291,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * @see SoapMockResponse
      * @see com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto
      */
-    private Long getNextSoapMockResponseId(){
+    protected Long getNextSoapMockResponseId(){
         Long nextSoapMockResponseId = 0L;
         for(SoapProject soapProject : findAllTypes()){
             for(SoapPort soapPort : soapProject.getSoapPorts()){
@@ -239,7 +311,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * The method provides the functionality to generate new identifiers for a of SOAP port
      * @param soapPort The SOAP port that will receive new identifiers
      */
-    private void generateId(final SoapPort soapPort){
+    protected void generateId(final SoapPort soapPort){
         Long nextSoapPortId = getNextSoapPortId();
         Long nextSoapOperationId = getNexSoapOperationId();
         Long nextSoapMockResponseId = getNextSoapMockResponseId();
@@ -266,7 +338,7 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
      * The method provides the functionality to generate new identifiers for a SOAP operation
      * @param soapOperation The SOAP port that will receive new identifiers
      */
-    private void generateId(final SoapOperation soapOperation){
+    protected void generateId(final SoapOperation soapOperation){
         Long nextSoapOperationId = getNexSoapOperationId();
         Long nextSoapMockResponseId = getNextSoapMockResponseId();
 
@@ -279,6 +351,38 @@ public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<Soa
                 soapMockResponse.setId(nextSoapMockResponseId++);
             }
         }
+    }
+
+    /**
+     * The method provides the functionality to find a SOAP port with a specific name
+     * @param soapProject The SOAP project that will be searched for the SOAP port
+     * @param soapPortName The name of the SOAP port that should be retrieved
+     * @return A SOAP port that matches the search criteria. If no SOAP ports matches the provided
+     * name then null will be returned.
+     */
+    protected SoapPort findSoapPortWithName(final SoapProject soapProject, final String soapPortName){
+        for(SoapPort soapPort : soapProject.getSoapPorts()){
+            if(soapPort.getName().equals(soapPortName)){
+                return soapPort;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * The method provides the functionality to find a SOAP operation with a specific name
+     * @param soapPort The SOAP port that will be searched for the SOAP operation
+     * @param soapOperationName The name of the SOAP operation that should be retrieved
+     * @return A SOAP operation that matches the search criteria. If no SOAP operation matches the provided
+     * name then null will be returned.
+     */
+    protected SoapOperation findSoapOperationWithName(final SoapPort soapPort, final String soapOperationName){
+        for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+            if(soapOperation.getName().equals(soapOperationName)){
+                return soapOperation;
+            }
+        }
+        return null;
     }
 
 }

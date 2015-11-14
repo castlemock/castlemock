@@ -3,9 +3,13 @@ package com.fortmocks.mock.soap.model.project.processor;
 import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
+import com.fortmocks.mock.soap.model.project.domain.SoapPort;
+import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.mock.soap.model.project.processor.message.input.ReadAllSoapProjectsInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapPortInput;
 import com.fortmocks.mock.soap.model.project.processor.message.output.ReadAllSoapProjectsOutput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapPortOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 @Service
-public class ReadSoapPortProcessor extends AbstractSoapProjectProcessor implements Processor<ReadAllSoapProjectsInput, ReadAllSoapProjectsOutput> {
+public class ReadSoapPortProcessor extends AbstractSoapProjectProcessor implements Processor<ReadSoapPortInput, ReadSoapPortOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate
@@ -26,10 +30,10 @@ public class ReadSoapPortProcessor extends AbstractSoapProjectProcessor implemen
      * @see Result
      */
     @Override
-    public Result<ReadAllSoapProjectsOutput> process(final Task<ReadAllSoapProjectsInput> task) {
-        final List<SoapProjectDto> soapProjects = findAll();
-        final ReadAllSoapProjectsOutput output = new ReadAllSoapProjectsOutput();
-        output.setSoapProjects(soapProjects);
-        return createResult(output);
+    public Result<ReadSoapPortOutput> process(final Task<ReadSoapPortInput> task) {
+        final ReadSoapPortInput input = task.getInput();
+        final SoapPort soapPort = findSoapPortType(input.getSoapProjectId(), input.getSoapPortId());
+        final SoapPortDto soapPortDto = soapPort != null ? mapper.map(soapPort, SoapPortDto.class) : null;
+        return createResult(new ReadSoapPortOutput(soapPortDto));
     }
 }

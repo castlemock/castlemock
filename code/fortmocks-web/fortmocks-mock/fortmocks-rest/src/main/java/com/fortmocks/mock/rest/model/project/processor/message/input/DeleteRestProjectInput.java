@@ -28,6 +28,10 @@ public class DeleteRestProjectInput implements Input{
     @NotNull
     private Long restProjectId;
 
+    public DeleteRestProjectInput(Long restProjectId) {
+        this.restProjectId = restProjectId;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

@@ -19,6 +19,10 @@ package com.fortmocks.mock.soap.web.mvc.controller.operation;
 import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapOperationInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.UpdateSoapOperationInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.UpdateSoapOperationsForwardedEndpointInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapOperationOutput;
 import com.fortmocks.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import com.google.common.base.Preconditions;
@@ -53,9 +57,9 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId) {
-        final SoapOperationDto soapOperationDto = soapProjectService.findSoapOperation(soapProjectId, soapPortId, soapOperationId);
+        final ReadSoapOperationOutput output = processorMainframe.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(COMMAND, soapOperationDto);
+        model.addObject(COMMAND, output.getSoapOperation());
         model.addObject(SOAP_PROJECT_ID, soapProjectId);
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(SOAP_OPERATION_ID, soapOperationId);
@@ -75,7 +79,7 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @ModelAttribute final SoapOperationDto soapOperationDto) {
-        soapProjectService.updateOperation(soapProjectId, soapPortId, soapOperationId, soapOperationDto);
+        processorMainframe.process(new UpdateSoapOperationInput(soapProjectId, soapPortId, soapOperationId, soapOperationDto));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 
@@ -91,7 +95,7 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/update/confirm", method = RequestMethod.POST)
     public ModelAndView updateEndpoint(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @ModelAttribute final UpdateSoapOperationsEndpointCommand updateSoapOperationsEndpointCommand) {
         Preconditions.checkNotNull(updateSoapOperationsEndpointCommand, "The update operation endpoint command cannot be null");
-        soapProjectService.updateForwardedEndpoint(soapProjectId, soapPortId, updateSoapOperationsEndpointCommand.getSoapOperations(), updateSoapOperationsEndpointCommand.getForwardedEndpoint());
+        processorMainframe.process(new UpdateSoapOperationsForwardedEndpointInput(soapProjectId, soapPortId, updateSoapOperationsEndpointCommand.getSoapOperations(), updateSoapOperationsEndpointCommand.getForwardedEndpoint()));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId);
     }
 

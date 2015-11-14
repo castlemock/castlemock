@@ -19,6 +19,11 @@ package com.fortmocks.mock.soap.web.mvc.controller.project;
 import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
+import com.fortmocks.mock.soap.model.project.processor.message.input.GetSoapOperationStatusCountInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapPortInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapProjectInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.UpdateSoapPortsStatusInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapPortOutput;
 import com.fortmocks.mock.soap.web.mvc.command.port.DeleteSoapPortsCommand;
 import com.fortmocks.mock.soap.web.mvc.command.port.SoapPortModifierCommand;
 import com.fortmocks.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
@@ -61,10 +66,10 @@ public class SoapProjectController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
     public ModelAndView getProject(@PathVariable final Long projectId) {
-        final SoapProjectDto project = soapProjectService.findOne(projectId);
+        final SoapProjectDto project = processorMainframe.process(new ReadSoapProjectInput(projectId));
 
         for(final SoapPortDto soapPortDto : project.getSoapPorts()){
-            final Map<SoapOperationStatus, Integer> statusCount = soapProjectService.getOperationStatusCount(soapPortDto);
+            final Map<SoapOperationStatus, Integer> statusCount = processorMainframe.process(new GetSoapOperationStatusCountInput(projectId, soapPortDto.getId()));
             soapPortDto.setStatusCount(statusCount);
         }
 
@@ -91,13 +96,13 @@ public class SoapProjectController extends AbstractSoapViewController {
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final SoapOperationStatus soapOperationStatus = SoapOperationStatus.valueOf(soapPortModifierCommand.getSoapPortStatus());
             for(Long soapPortId : soapPortModifierCommand.getSoapPortIds()){
-                soapProjectService.updateStatus(projectId, soapPortId, soapOperationStatus);
+                processorMainframe.process(new UpdateSoapPortsStatusInput(projectId, soapPortId, soapOperationStatus));
             }
         } else if(DELETE_SOAP_PORTS.equalsIgnoreCase(action)) {
             final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
             for(Long soapPortId : soapPortModifierCommand.getSoapPortIds()){
-                final SoapPortDto soapPortDto = soapProjectService.findSoapPort(projectId, soapPortId);
-                soapPortDtos.add(soapPortDto);
+                final ReadSoapPortOutput output = processorMainframe.process(new ReadSoapPortInput(projectId, soapPortId));
+                soapPortDtos.add(output.getSoapPort());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_SOAP_PORTS_PAGE);
             model.addObject(SOAP_PROJECT_ID, projectId);
@@ -107,8 +112,8 @@ public class SoapProjectController extends AbstractSoapViewController {
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
             for(Long soapPortId : soapPortModifierCommand.getSoapPortIds()){
-                final SoapPortDto soapPortDto = soapProjectService.findSoapPort(projectId, soapPortId);
-                soapPortDtos.add(soapPortDto);
+                final ReadSoapPortOutput output = processorMainframe.process(new ReadSoapPortInput(projectId, soapPortId));
+                soapPortDtos.add(output.getSoapPort());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_SOAP_PORTS_ENDPOINT_PAGE);
             model.addObject(SOAP_PROJECT_ID, projectId);

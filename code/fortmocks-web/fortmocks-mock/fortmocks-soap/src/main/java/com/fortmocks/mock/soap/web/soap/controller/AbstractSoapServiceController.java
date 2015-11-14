@@ -23,6 +23,9 @@ import com.fortmocks.mock.soap.model.event.service.SoapEventService;
 import com.fortmocks.mock.soap.model.project.domain.*;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.mock.soap.model.project.processor.message.input.CreateRecordedSoapMockResponseInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapOperationWithTypeInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.UpdateCurrentMockResponseSequenceIndexInput;
 import com.fortmocks.mock.soap.model.project.service.SoapProjectService;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.fortmocks.mock.soap.model.SoapException;
@@ -58,8 +61,6 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
     @Autowired
     private SoapEventService soapEventService;
-    @Autowired
-    protected SoapProjectService soapProjectService;
 
 
     private static final String RECORDED_RESPONSE_NAME = "Recorded response";
@@ -83,7 +84,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         Preconditions.checkNotNull(projectId, "THe project id cannot be null");
         Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
         final SoapRequestDto request = prepareRequest(projectId, httpServletRequest);
-        final SoapOperationDto operation = soapProjectService.findSoapOperation(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType());
+        final SoapOperationDto operation = processorMainframe.process(new ReadSoapOperationWithTypeInput(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType()));
         return process(operation, request, httpServletResponse);
     }
 
@@ -175,7 +176,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 currentSequenceNumber = 0;
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
-            soapProjectService.updateCurrentResponseSequenceIndex(soapOperationDto.getId(), currentSequenceNumber + 1);
+            processorMainframe.process(new UpdateCurrentMockResponseSequenceIndexInput(soapOperationDto.getId(), currentSequenceNumber + 1));
         }
 
         if(mockResponse == null){
@@ -204,7 +205,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         mockResponse.setBody(response.getBody());
         mockResponse.setSoapMockResponseStatus(SoapMockResponseStatus.ENABLED);
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
-        soapProjectService.saveSoapMockResponse(soapOperationDto.getId(), mockResponse);
+        processorMainframe.process(new CreateRecordedSoapMockResponseInput(soapOperationDto.getId(), mockResponse));
         return response;
     }
 

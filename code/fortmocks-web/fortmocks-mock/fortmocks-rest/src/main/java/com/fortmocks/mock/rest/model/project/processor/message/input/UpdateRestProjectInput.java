@@ -31,6 +31,11 @@ public class UpdateRestProjectInput implements Input {
     @NotNull
     private RestProjectDto restProject;
 
+    public UpdateRestProjectInput(Long restProjectId, RestProjectDto restProject) {
+        this.restProjectId = restProjectId;
+        this.restProject = restProject;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

@@ -1,6 +1,7 @@
 package com.fortmocks.mock.soap.model.project.processor.message.input;
 
 import com.fortmocks.core.model.Input;
+import com.fortmocks.core.model.validation.NotNull;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 
 /**
@@ -9,8 +10,15 @@ import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
  */
 public class UpdateSoapProjectInput implements Input {
 
+    @NotNull
     private Long soapProjectId;
+    @NotNull
     private SoapProjectDto soapProject;
+
+    public UpdateSoapProjectInput(Long soapProjectId, SoapProjectDto soapProject) {
+        this.soapProjectId = soapProjectId;
+        this.soapProject = soapProject;
+    }
 
     public Long getSoapProjectId() {
         return soapProjectId;

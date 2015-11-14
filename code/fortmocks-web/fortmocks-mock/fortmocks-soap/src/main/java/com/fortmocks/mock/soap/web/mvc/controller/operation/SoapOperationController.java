@@ -21,6 +21,12 @@ import com.fortmocks.mock.soap.model.event.service.SoapEventService;
 import com.fortmocks.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapMockResponseInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapOperationInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.UpdateSoapMockResponseInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.UpdateSoapMockResponseStatusInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapMockResponseOutput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapOperationOutput;
 import com.fortmocks.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.fortmocks.mock.soap.web.mvc.command.mockresponse.SoapMockResponseModifierCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
@@ -68,7 +74,8 @@ public class SoapOperationController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, final ServletRequest request) {
-        final SoapOperationDto soapOperation = soapProjectService.findSoapOperation(soapProjectId, soapPortId, soapOperationId);
+        final ReadSoapOperationOutput output = processorMainframe.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
+        final SoapOperationDto soapOperation = output.getSoapOperation();
         final List<SoapEventDto> events = soapEventService.findEventsByOperationId(soapOperationId);
         soapOperation.setEvents(events);
 
@@ -110,13 +117,13 @@ public class SoapOperationController extends AbstractSoapViewController {
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final SoapMockResponseStatus status = SoapMockResponseStatus.valueOf(soapMockResponseModifierCommand.getSoapMockResponseStatus());
             for(Long mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()){
-                soapProjectService.updateStatus(soapProjectId, soapPortId, soapOperationId, mockResponseId, status);
+                processorMainframe.process(new UpdateSoapMockResponseStatusInput(soapProjectId, soapPortId, soapOperationId, mockResponseId, status));
             }
         } else if(DELETE_MOCK_RESPONSES.equalsIgnoreCase(action)) {
             final List<SoapMockResponseDto> mockResponses = new ArrayList<SoapMockResponseDto>();
             for(Long mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()){
-                final SoapMockResponseDto soapMockResponseDto = soapProjectService.findSoapMockResponse(soapProjectId, soapPortId, soapOperationId, mockResponseId);
-                mockResponses.add(soapMockResponseDto);
+                final ReadSoapMockResponseOutput output = processorMainframe.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, mockResponseId));
+                mockResponses.add(output.getSoapMockResponse());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_MOCK_RESPONSES_PAGE);
             model.addObject(SOAP_PROJECT_ID, soapProjectId);

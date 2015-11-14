@@ -17,6 +17,10 @@
 package com.fortmocks.mock.soap.web.mvc.controller.port;
 
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.mock.soap.model.project.processor.message.input.DeleteSoapPortInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.DeleteSoapPortsInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapPortInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapPortOutput;
 import com.fortmocks.mock.soap.web.mvc.command.port.DeleteSoapPortsCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.context.annotation.Scope;
@@ -49,10 +53,10 @@ public class DeleteSoapPortController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/delete", method = RequestMethod.GET)
     public ModelAndView showConfirmationPage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId) {
-        SoapPortDto soapPortDto = soapProjectService.findSoapPort(soapProjectId, soapPortId);
+        final ReadSoapPortOutput output = processorMainframe.process(new ReadSoapPortInput(soapProjectId, soapPortId));
         ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT_ID,soapProjectId);
-        model.addObject(SOAP_PORT, soapPortDto);
+        model.addObject(SOAP_PORT, output.getSoapPort());
         return model;
     }
 
@@ -66,7 +70,7 @@ public class DeleteSoapPortController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/delete/confirm", method = RequestMethod.GET)
     public ModelAndView confirm(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId) {
-        soapProjectService.deleteSoapPort(soapProjectId, soapPortId);
+        processorMainframe.process(new DeleteSoapPortInput(soapProjectId, soapPortId));
         return redirect("/soap/project/" + soapProjectId);
     }
 
@@ -79,7 +83,7 @@ public class DeleteSoapPortController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/delete/confirm", method = RequestMethod.POST)
     public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final Long soapProjectId, @ModelAttribute final DeleteSoapPortsCommand deleteSoapPortsCommand) {
-        soapProjectService.deleteSoapPorts(soapProjectId, deleteSoapPortsCommand.getSoapPorts());
+        processorMainframe.process(new DeleteSoapPortsInput(soapProjectId, deleteSoapPortsCommand.getSoapPorts()));
         return redirect("/soap/project/" + soapProjectId);
     }
 

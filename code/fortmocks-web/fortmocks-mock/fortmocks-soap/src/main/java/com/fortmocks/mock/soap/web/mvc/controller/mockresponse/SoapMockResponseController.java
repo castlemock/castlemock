@@ -17,6 +17,8 @@
 package com.fortmocks.mock.soap.web.mvc.controller.mockresponse;
 
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapMockResponseInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapMockResponseOutput;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,9 +51,9 @@ public class SoapMockResponseController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/response/{soapMockResponseId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @PathVariable final Long soapMockResponseId) {
-        final SoapMockResponseDto mockResponse = soapProjectService.findSoapMockResponse(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
+        final ReadSoapMockResponseOutput output = processorMainframe.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId));
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(SOAP_MOCK_RESPONSE, mockResponse);
+        model.addObject(SOAP_MOCK_RESPONSE, output.getSoapMockResponse());
         model.addObject(SOAP_PROJECT_ID, soapProjectId);
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(SOAP_OPERATION_ID, soapOperationId);

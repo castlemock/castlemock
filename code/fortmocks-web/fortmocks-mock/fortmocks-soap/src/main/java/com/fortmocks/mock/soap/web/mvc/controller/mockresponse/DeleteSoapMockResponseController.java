@@ -17,6 +17,10 @@
 package com.fortmocks.mock.soap.web.mvc.controller.mockresponse;
 
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.mock.soap.model.project.processor.message.input.DeleteSoapMockResponseInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.DeleteSoapMockResponsesInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapMockResponseInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapMockResponseOutput;
 import com.fortmocks.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.context.annotation.Scope;
@@ -54,12 +58,12 @@ public class DeleteSoapMockResponseController extends AbstractSoapViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/response/{soapMockResponseId}/delete", method = RequestMethod.GET)
     public ModelAndView showConfirmationPage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @PathVariable final Long soapMockResponseId) {
-        final SoapMockResponseDto mockResponse = soapProjectService.findSoapMockResponse(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
+        final ReadSoapMockResponseOutput output = processorMainframe.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId));
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT_ID, soapProjectId);
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(SOAP_OPERATION_ID, soapOperationId);
-        model.addObject(SOAP_MOCK_RESPONSE,mockResponse);
+        model.addObject(SOAP_MOCK_RESPONSE, output.getSoapMockResponse());
         return model;
     }
 
@@ -74,7 +78,7 @@ public class DeleteSoapMockResponseController extends AbstractSoapViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/response/{soapMockResponseId}/delete/confirm", method = RequestMethod.GET)
     public ModelAndView confirm(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @PathVariable final Long soapMockResponseId) {
-        soapProjectService.deleteSoapMockResponse(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
+        processorMainframe.process(new DeleteSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 
@@ -88,7 +92,7 @@ public class DeleteSoapMockResponseController extends AbstractSoapViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/response/delete/confirm", method = RequestMethod.POST)
     public ModelAndView confirmDeletationOfMultpleMockResponses(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @ModelAttribute final DeleteSoapMockResponsesCommand deleteSoapMockResponsesCommand) {
-        soapProjectService.deleteSoapMockResponses(soapProjectId, soapPortId, soapOperationId, deleteSoapMockResponsesCommand.getSoapMockResponses());
+        processorMainframe.process(new DeleteSoapMockResponsesInput(soapProjectId, soapPortId, soapOperationId, deleteSoapMockResponsesCommand.getSoapMockResponses()));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 

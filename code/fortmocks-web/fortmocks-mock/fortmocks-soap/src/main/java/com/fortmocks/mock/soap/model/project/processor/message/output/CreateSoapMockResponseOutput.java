@@ -9,13 +9,4 @@ import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
  */
 public class CreateSoapMockResponseOutput implements Output {
 
-    private SoapProjectDto savedSoapProject;
-
-    public SoapProjectDto getSavedSoapProject() {
-        return savedSoapProject;
-    }
-
-    public void setSavedSoapProject(SoapProjectDto savedSoapProject) {
-        this.savedSoapProject = savedSoapProject;
-    }
 }

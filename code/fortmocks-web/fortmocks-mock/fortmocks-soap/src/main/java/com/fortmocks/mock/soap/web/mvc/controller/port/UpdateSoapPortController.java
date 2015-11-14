@@ -16,6 +16,7 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.port;
 
+import com.fortmocks.mock.soap.model.project.processor.message.input.UpdateSoapPortsForwardedEndpointInput;
 import com.fortmocks.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import com.google.common.base.Preconditions;
@@ -51,7 +52,7 @@ public class UpdateSoapPortController extends AbstractSoapViewController {
     @RequestMapping(value = "/{projectId}/port/update/confirm", method = RequestMethod.POST)
     public ModelAndView updateEndpoint(@PathVariable final Long projectId, @ModelAttribute final UpdateSoapPortsEndpointCommand updateSoapPortsEndpointCommand) {
         Preconditions.checkNotNull(updateSoapPortsEndpointCommand, "The update port endpoint command cannot be null");
-        soapProjectService.updateForwardedEndpoint(projectId, updateSoapPortsEndpointCommand.getSoapPorts(), updateSoapPortsEndpointCommand.getForwardedEndpoint());
+        processorMainframe.process(new UpdateSoapPortsForwardedEndpointInput(projectId, updateSoapPortsEndpointCommand.getSoapPorts(), updateSoapPortsEndpointCommand.getForwardedEndpoint()));
         return redirect("/soap/project/" + projectId);
     }
 

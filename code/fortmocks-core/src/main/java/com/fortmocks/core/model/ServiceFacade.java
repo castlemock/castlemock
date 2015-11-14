@@ -33,22 +33,12 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
 
 
     /**
-     * The initiate method is responsible for for locating all the service instances for a specific module
-     * and organizing them depending on the type.
-     * @see Service
-     * @see TypeIdentifier
-     * @see TypeIdentifiable
-     */
-    void initiate();
-
-    /**
      * The method provides the functionality to create and store a DTO instance to a specific service.
      * The service is identified with the provided type value.
-     * @param type The type of the instance that will be created
      * @param dto The instance that will be created
      * @return The saved instance
      */
-    D save(String type, D dto);
+    D create(D dto);
 
     /**
      * The method provides the functionality to delete a specific instance. The type is
@@ -77,7 +67,7 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
      * The method is responsible for retrieving all instances from all the various service types.
      * @return A list containing all the instance independent from type
      */
-    List<D> findAll();
+    List<D> readAll();
 
     /**
      * The method is used to retrieve a instance with a specific type. The type is
@@ -88,21 +78,6 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
      * @return A instance that matches the instance type and the provided id. If no instance matches the provided
      *         values, null will be returned.
      */
-    D findOne(String typeUrl, I id);
-
-    /**
-     * The method retrieves all service types
-     * @return A list with all the service types
-     */
-    List<String> getTypes();
-
-    /**
-     * Returns the type URL for a specific type
-     * @param type The type that will be used to retrieve the type URL
-     * @return The matching type URL
-     * @throws java.lang.IllegalArgumentException A IllegalArgumentException will be thrown
-     * If no service matches the provided type
-     */
-    String getTypeUrl(String type);
+    D read(String typeUrl, I id);
 
 }

@@ -3,7 +3,11 @@ package com.fortmocks.mock.soap.model.project.processor;
 import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
+import com.fortmocks.mock.soap.model.project.domain.SoapPort;
+import com.fortmocks.mock.soap.model.project.domain.SoapProject;
+import com.fortmocks.mock.soap.model.project.processor.message.input.DeleteSoapPortInput;
 import com.fortmocks.mock.soap.model.project.processor.message.input.DeleteSoapProjectInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.DeleteSoapPortOutput;
 import com.fortmocks.mock.soap.model.project.processor.message.output.DeleteSoapProjectOutput;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @since 1.0
  */
 @Service
-public class DeleteSoapPortProcessor extends AbstractSoapProjectProcessor implements Processor<DeleteSoapProjectInput, DeleteSoapProjectOutput> {
+public class DeleteSoapPortProcessor extends AbstractSoapProjectProcessor implements Processor<DeleteSoapPortInput, DeleteSoapPortOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate
@@ -23,10 +27,12 @@ public class DeleteSoapPortProcessor extends AbstractSoapProjectProcessor implem
      * @see Result
      */
     @Override
-    public Result<DeleteSoapProjectOutput> process(final Task<DeleteSoapProjectInput> task) {
-        final DeleteSoapProjectInput input = task.getInput();
-        final Long soapProjectId = input.getSoapProjectId();
-        delete(soapProjectId);
-        return createResult(new DeleteSoapProjectOutput());
+    public Result<DeleteSoapPortOutput> process(final Task<DeleteSoapPortInput> task) {
+        final DeleteSoapPortInput input = task.getInput();
+        final SoapProject soapProject = findType(input.getSoapProjectId());
+        final SoapPort soapPort = findSoapPortType(input.getSoapProjectId(), input.getSoapPortId());
+        soapProject.getSoapPorts().remove(soapPort);
+        save(input.getSoapProjectId());
+        return createResult(new DeleteSoapPortOutput());
     }
 }

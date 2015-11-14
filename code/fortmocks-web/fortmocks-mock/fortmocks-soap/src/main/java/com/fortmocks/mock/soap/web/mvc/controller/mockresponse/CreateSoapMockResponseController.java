@@ -20,6 +20,9 @@ package com.fortmocks.mock.soap.web.mvc.controller.mockresponse;
 import com.fortmocks.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.mock.soap.model.project.processor.message.input.CreateSoapMockResponseInput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapOperationInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapOperationOutput;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,21 +49,22 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
 
     /**
      * The method returns a view used for creating a new mocked response
-     * @param soapProject The id of the project which the operation belongs to
+     * @param soapProjectId The id of the project which the operation belongs to
      * @param soapPortId The id of the port which the operation belongs to
      * @param soapOperationId The id of the operation that should get a new mocked response
      * @return Returns a view that displays all the required attributes needed for creating a mocked response
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{soapProject}/port/{soapPortId}/operation/{soapOperationId}/create/response", method = RequestMethod.GET)
-    public ModelAndView dispayCreatePage(@PathVariable final Long soapProject, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId) {
-        final SoapOperationDto soapOperationDto = soapProjectService.findSoapOperation(soapProject, soapPortId, soapOperationId);
+    @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/create/response", method = RequestMethod.GET)
+    public ModelAndView dispayCreatePage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId) {
+        final ReadSoapOperationOutput output = processorMainframe.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
+        final SoapOperationDto soapOperationDto = output.getSoapOperation();
         final SoapMockResponseDto mockResponse = new SoapMockResponseDto();
         mockResponse.setBody(soapOperationDto.getDefaultBody());
         mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_OPERATION, soapOperationDto);
-        model.addObject(SOAP_PROJECT_ID, soapProject);
+        model.addObject(SOAP_PROJECT_ID, soapOperationDto);
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(COMMAND, mockResponse);
         return model;
@@ -78,7 +82,7 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/create/response", method = RequestMethod.POST)
     public ModelAndView createResponse(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @ModelAttribute final SoapMockResponseDto soapMockResponseDto) {
         soapMockResponseDto.setSoapMockResponseStatus(SoapMockResponseStatus.ENABLED);
-        soapProjectService.saveSoapMockResponse(soapProjectId, soapPortId, soapOperationId, soapMockResponseDto);
+        processorMainframe.process(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseDto));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 

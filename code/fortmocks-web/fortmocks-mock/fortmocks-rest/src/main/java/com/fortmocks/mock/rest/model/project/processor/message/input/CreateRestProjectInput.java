@@ -29,6 +29,10 @@ public class CreateRestProjectInput implements Input {
     @NotNull
     private RestProjectDto restProject;
 
+    public CreateRestProjectInput(RestProjectDto restProject) {
+        this.restProject = restProject;
+    }
+
     public RestProjectDto getRestProject() {
         return restProject;
     }

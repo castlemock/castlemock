@@ -19,6 +19,10 @@ package com.fortmocks.mock.soap.web.mvc.controller.port;
 import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.mock.soap.model.project.processor.message.input.*;
+import com.fortmocks.mock.soap.model.project.processor.message.output.GetSoapOperationStatusCountOutput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapOperationOutput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapPortOutput;
 import com.fortmocks.mock.soap.web.mvc.command.operation.SoapOperationModifierCommand;
 import com.fortmocks.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
@@ -60,13 +64,14 @@ public class SoapPortController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}", method = RequestMethod.GET)
     public ModelAndView getSoapPort(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId) {
-        final SoapPortDto soapPortDto = soapProjectService.findSoapPort(soapProjectId, soapPortId);
-
-        final Map<SoapOperationStatus, Integer> statusCount = soapProjectService.getOperationStatusCount(soapPortDto);
-        soapPortDto.setStatusCount(statusCount);
+        final ReadSoapPortOutput readSoapPortOutput = processorMainframe.process(new ReadSoapPortInput(soapProjectId, soapPortId));
+        final SoapPortDto soapPort = readSoapPortOutput.getSoapPort();
+        final GetSoapOperationStatusCountOutput getSoapOperationStatusCountOutput = processorMainframe.process(new GetSoapOperationStatusCountInput(soapProjectId, soapPortId));
+        final Map<SoapOperationStatus, Integer> statusCount = getSoapOperationStatusCountOutput.getSoapOperationStatuses();
+        soapPort.setStatusCount(statusCount);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT_ID,soapProjectId);
-        model.addObject(SOAP_PORT,soapPortDto);
+        model.addObject(SOAP_PORT,soapPort);
         model.addObject(SOAP_OPERATION_STATUSES, SoapOperationStatus.values());
         model.addObject(SOAP_OPERATION_MODIFIER_COMMAND, new SoapOperationModifierCommand());
         return model;
@@ -88,13 +93,13 @@ public class SoapPortController extends AbstractSoapViewController {
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final SoapOperationStatus soapOperationStatus = SoapOperationStatus.valueOf(soapOperationModifierCommand.getSoapOperationStatus());
             for(Long operationId : soapOperationModifierCommand.getSoapOperationIds()){
-                soapProjectService.updateStatus(soapProjectId, soapPortId, operationId, soapOperationStatus);
+                processorMainframe.process(new UpdateSoapOperationsStatusInput(soapProjectId, soapPortId, operationId, soapOperationStatus));
             }
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<SoapOperationDto> soapOperations = new ArrayList<SoapOperationDto>();
-            for(Long operationId : soapOperationModifierCommand.getSoapOperationIds()){
-                final SoapOperationDto soapOperationDto = soapProjectService.findSoapOperation(soapProjectId, soapPortId, operationId);
-                soapOperations.add(soapOperationDto);
+            for(Long soapOperationId : soapOperationModifierCommand.getSoapOperationIds()){
+                final ReadSoapOperationOutput output = processorMainframe.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
+                soapOperations.add(output.getSoapOperation());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_SOAP_OPERATIONS_ENDPOINT_PAGE);
             model.addObject(SOAP_PROJECT_ID, soapProjectId);
