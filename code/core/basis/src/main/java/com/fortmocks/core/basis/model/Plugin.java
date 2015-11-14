@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.plugin;
+package com.fortmocks.core.basis.model;
 
 /**
  * @author Karl Dahlgren
