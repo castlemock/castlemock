@@ -16,12 +16,10 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.method;
 
-import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
-import com.fortmocks.mock.rest.model.project.processor.message.input.DeleteRestMethodInput;
-import com.fortmocks.mock.rest.model.project.processor.message.input.DeleteRestMethodsInput;
-import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestMethodInput;
-import com.fortmocks.mock.rest.model.project.processor.message.output.DeleteRestMethodOutput;
-import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestMethodOutput;
+import com.fortmocks.mock.rest.model.project.service.message.input.DeleteRestMethodInput;
+import com.fortmocks.mock.rest.model.project.service.message.input.DeleteRestMethodsInput;
+import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestMethodInput;
+import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.fortmocks.mock.rest.web.mvc.command.method.DeleteRestMethodsCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;

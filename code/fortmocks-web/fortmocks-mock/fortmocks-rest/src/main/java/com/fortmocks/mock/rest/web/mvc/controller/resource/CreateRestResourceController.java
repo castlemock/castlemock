@@ -16,9 +16,8 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.resource;
 
-import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
-import com.fortmocks.mock.rest.model.project.processor.message.input.CreateRestResourceInput;
-import com.fortmocks.mock.rest.model.project.processor.message.output.CreateRestResourceOutput;
+import com.fortmocks.mock.rest.model.project.service.message.input.CreateRestResourceInput;
+import com.fortmocks.mock.rest.model.project.service.message.output.CreateRestResourceOutput;
 import com.fortmocks.mock.rest.web.mvc.command.resource.CreateRestResourceCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;

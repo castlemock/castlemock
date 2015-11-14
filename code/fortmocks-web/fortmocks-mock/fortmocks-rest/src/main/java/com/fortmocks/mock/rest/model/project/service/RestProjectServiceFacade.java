@@ -2,11 +2,11 @@ package com.fortmocks.mock.rest.model.project.service;
 
 import com.fortmocks.core.model.ServiceFacade;
 import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
-import com.fortmocks.mock.rest.model.project.processor.message.input.*;
-import com.fortmocks.mock.rest.model.project.processor.message.output.CreateRestProjectOutput;
-import com.fortmocks.mock.rest.model.project.processor.message.output.ReadAllRestProjectsOutput;
-import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestProjectOutput;
-import com.fortmocks.mock.rest.model.project.processor.message.output.UpdateRestProjectOutput;
+import com.fortmocks.mock.rest.model.project.service.message.input.*;
+import com.fortmocks.mock.rest.model.project.service.message.output.CreateRestProjectOutput;
+import com.fortmocks.mock.rest.model.project.service.message.output.ReadAllRestProjectsOutput;
+import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
+import com.fortmocks.mock.rest.model.project.service.message.output.UpdateRestProjectOutput;
 import com.fortmocks.web.core.processor.ProcessorMainframe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

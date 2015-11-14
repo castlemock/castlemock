@@ -17,7 +17,7 @@
 package com.fortmocks.mock.rest.web.mvc.controller.mockresponse;
 
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
-import com.fortmocks.mock.rest.model.project.processor.message.input.UpdateRestMockResponseInput;
+import com.fortmocks.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;

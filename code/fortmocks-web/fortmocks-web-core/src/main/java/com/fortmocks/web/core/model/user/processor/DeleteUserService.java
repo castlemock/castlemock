@@ -32,7 +32,7 @@ public class DeleteUserService extends AbstractUserProcessor implements Service<
     /**
      * The process message is responsible for processing an incoming task and generate
      * a response based on the incoming task input
-     * @param task The task that will be processed by the processor
+     * @param task The task that will be processed by the service
      * @return A result based on the processed incoming task
      * @see Task
      * @see Result

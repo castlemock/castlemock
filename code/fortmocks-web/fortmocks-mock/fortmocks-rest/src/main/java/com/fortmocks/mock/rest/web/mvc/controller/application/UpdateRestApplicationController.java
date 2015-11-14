@@ -17,9 +17,9 @@
 package com.fortmocks.mock.rest.web.mvc.controller.application;
 
 import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestApplicationInput;
-import com.fortmocks.mock.rest.model.project.processor.message.input.UpdateRestApplicationInput;
-import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestApplicationOutput;
+import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
+import com.fortmocks.mock.rest.model.project.service.message.input.UpdateRestApplicationInput;
+import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

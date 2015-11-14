@@ -2,11 +2,11 @@ package com.fortmocks.mock.soap.model.project.service;
 
 import com.fortmocks.core.model.ServiceFacade;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.mock.soap.model.project.processor.message.input.*;
-import com.fortmocks.mock.soap.model.project.processor.message.output.CreateSoapProjectOutput;
-import com.fortmocks.mock.soap.model.project.processor.message.output.ReadAllSoapProjectsOutput;
-import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapProjectOutput;
-import com.fortmocks.mock.soap.model.project.processor.message.output.UpdateSoapProjectOutput;
+import com.fortmocks.mock.soap.model.project.service.message.input.*;
+import com.fortmocks.mock.soap.model.project.service.message.output.CreateSoapProjectOutput;
+import com.fortmocks.mock.soap.model.project.service.message.output.ReadAllSoapProjectsOutput;
+import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+import com.fortmocks.mock.soap.model.project.service.message.output.UpdateSoapProjectOutput;
 import com.fortmocks.web.core.processor.ProcessorMainframe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

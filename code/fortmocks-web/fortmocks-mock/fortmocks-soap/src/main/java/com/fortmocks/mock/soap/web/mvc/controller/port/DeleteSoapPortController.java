@@ -16,11 +16,10 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.port;
 
-import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.mock.soap.model.project.processor.message.input.DeleteSoapPortInput;
-import com.fortmocks.mock.soap.model.project.processor.message.input.DeleteSoapPortsInput;
-import com.fortmocks.mock.soap.model.project.processor.message.input.ReadSoapPortInput;
-import com.fortmocks.mock.soap.model.project.processor.message.output.ReadSoapPortOutput;
+import com.fortmocks.mock.soap.model.project.service.message.input.DeleteSoapPortInput;
+import com.fortmocks.mock.soap.model.project.service.message.input.DeleteSoapPortsInput;
+import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapPortInput;
+import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.mock.soap.web.mvc.command.port.DeleteSoapPortsCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.context.annotation.Scope;
