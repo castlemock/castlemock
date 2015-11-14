@@ -17,12 +17,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fortmocks</groupId>
-	<artifactId>fortmocks-plugin</artifactId>
+	<artifactId>fortmocks-core-basis</artifactId>
 	<packaging>jar</packaging>
 	<version>0.2-SNAPSHOT</version>
-    <name>Fort mocks plugin</name>
+    <name>Fort mocks core - basis</name>
 	<url>http://www.fortmocks.com</url>
-	<description>The plugin module contains the plugin package for Fort Mocks</description>
+	<description>The core module contains the core package for Fort Mocks</description>
 
 	<developers>
 		<developer>
@@ -33,20 +33,10 @@
 
 	<parent>
 		<groupId>com.fortmocks</groupId>
-		<artifactId>fortmocks-parent</artifactId>
+		<artifactId>fortmocks-core</artifactId>
 		<version>0.2-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-core-basis</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<dependencies>
 		<dependency>

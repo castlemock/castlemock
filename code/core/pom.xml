@@ -18,7 +18,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks-core</artifactId>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<version>0.2-SNAPSHOT</version>
     <name>Fort mocks core</name>
 	<url>http://www.fortmocks.com</url>
@@ -38,27 +38,10 @@
 		<relativePath>../</relativePath>
 	</parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.dozer</groupId>
-			<artifactId>dozer</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-		</dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-        </dependency>
-    </dependencies>
+
+	<modules>
+		<module>basis</module>
+	</modules>
+
 
 </project>

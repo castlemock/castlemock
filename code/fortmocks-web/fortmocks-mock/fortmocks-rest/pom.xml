@@ -42,7 +42,7 @@
 
 		<dependency>
 			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-core</artifactId>
+			<artifactId>fortmocks-core-basis</artifactId>
 		</dependency>
 
 		<dependency>

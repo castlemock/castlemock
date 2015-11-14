@@ -53,7 +53,7 @@
 
 	<modules>
 		<module>fortmocks-plugin</module>
-		<module>fortmocks-core</module>
+		<module>core</module>
 		<module>fortmocks-web</module>
 	</modules>
 
