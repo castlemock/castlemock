@@ -16,10 +16,10 @@
 
 package com.fortmocks.mock.soap.manager;
 
-import com.fortmocks.mock.soap.model.project.domain.*;
-import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.core.mock.soap.model.project.domain.*;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 
 import com.fortmocks.web.core.manager.FileManager;
 import org.apache.log4j.Logger;

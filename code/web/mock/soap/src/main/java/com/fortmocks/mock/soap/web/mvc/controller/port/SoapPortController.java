@@ -16,13 +16,16 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.port;
 
-import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
-import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.mock.soap.model.project.service.message.input.*;
-import com.fortmocks.mock.soap.model.project.service.message.output.GetSoapOperationStatusCountOutput;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.GetSoapOperationStatusCountInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsStatusInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.GetSoapOperationStatusCountOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.mock.soap.web.mvc.command.operation.SoapOperationModifierCommand;
 import com.fortmocks.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;

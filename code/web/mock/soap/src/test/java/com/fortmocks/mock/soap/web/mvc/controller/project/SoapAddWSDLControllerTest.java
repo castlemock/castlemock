@@ -17,13 +17,13 @@
 package com.fortmocks.mock.soap.web.mvc.controller.project;
 
 import com.fortmocks.mock.soap.manager.WSDLComponent;
-import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.mock.soap.config.TestApplication;
-import com.fortmocks.mock.soap.model.project.dto.SoapPortDtoGenerator;
-import com.fortmocks.mock.soap.model.project.dto.SoapProjectDtoGenerator;
-import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDtoGenerator;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDtoGenerator;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.fortmocks.mock.soap.web.mvc.command.project.WSDLFileUploadForm;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import com.fortmocks.web.core.service.ServiceProcessor;

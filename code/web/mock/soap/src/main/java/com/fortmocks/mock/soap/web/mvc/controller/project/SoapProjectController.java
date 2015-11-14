@@ -16,17 +16,16 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.project;
 
-import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
-import com.fortmocks.mock.soap.model.project.domain.SoapProject;
-import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.mock.soap.model.project.service.message.input.GetSoapOperationStatusCountInput;
-import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapPortInput;
-import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
-import com.fortmocks.mock.soap.model.project.service.message.input.UpdateSoapPortsStatusInput;
-import com.fortmocks.mock.soap.model.project.service.message.output.GetSoapOperationStatusCountOutput;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.GetSoapOperationStatusCountInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapPortsStatusInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.GetSoapOperationStatusCountOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.fortmocks.mock.soap.web.mvc.command.port.DeleteSoapPortsCommand;
 import com.fortmocks.mock.soap.web.mvc.command.port.SoapPortModifierCommand;
 import com.fortmocks.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
@@ -39,7 +38,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The project controller provides functionality to retrieve a specific project

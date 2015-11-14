@@ -16,18 +16,18 @@
 
 package com.fortmocks.mock.soap.web.soap.controller;
 
-import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
-import com.fortmocks.mock.soap.model.event.dto.SoapRequestDto;
-import com.fortmocks.mock.soap.model.event.dto.SoapResponseDto;
-import com.fortmocks.mock.soap.model.event.service.message.input.CreateSoapEventInput;
-import com.fortmocks.mock.soap.model.project.domain.*;
-import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.mock.soap.model.project.service.message.input.CreateRecordedSoapMockResponseInput;
-import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
-import com.fortmocks.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
+import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
+import com.fortmocks.core.mock.soap.model.event.dto.SoapRequestDto;
+import com.fortmocks.core.mock.soap.model.event.dto.SoapResponseDto;
+import com.fortmocks.core.mock.soap.model.event.service.message.input.CreateSoapEventInput;
+import com.fortmocks.core.mock.soap.model.project.domain.*;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.CreateRecordedSoapMockResponseInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
-import com.fortmocks.mock.soap.model.SoapException;
+import com.fortmocks.core.mock.soap.model.SoapException;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;

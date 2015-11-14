@@ -16,22 +16,20 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.operation;
 
-import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
-import com.fortmocks.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
-import com.fortmocks.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
-import com.fortmocks.mock.soap.model.project.domain.SoapMockResponseStatus;
-import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
-import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
-import com.fortmocks.mock.soap.model.project.service.message.input.UpdateSoapMockResponseStatusInput;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.fortmocks.core.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
+import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponseStatus;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseStatusInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.fortmocks.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.fortmocks.mock.soap.web.mvc.command.mockresponse.SoapMockResponseModifierCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

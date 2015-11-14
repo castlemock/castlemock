@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.port;
 
-import com.fortmocks.mock.soap.model.project.service.message.input.UpdateSoapPortsForwardedEndpointInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapPortsForwardedEndpointInput;
 import com.fortmocks.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import com.google.common.base.Preconditions;

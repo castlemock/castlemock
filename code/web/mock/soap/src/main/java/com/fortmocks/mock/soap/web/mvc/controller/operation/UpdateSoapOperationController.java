@@ -16,13 +16,13 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.operation;
 
-import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
-import com.fortmocks.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
-import com.fortmocks.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
-import com.fortmocks.mock.soap.model.project.service.message.input.UpdateSoapOperationsForwardedEndpointInput;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapResponseStrategy;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsForwardedEndpointInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.fortmocks.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import com.google.common.base.Preconditions;

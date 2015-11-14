@@ -16,17 +16,15 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.mockresponse;
 
-import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.mock.soap.config.TestApplication;
-import com.fortmocks.mock.soap.model.project.dto.SoapOperationDtoGenerator;
-import com.fortmocks.mock.soap.model.project.dto.SoapPortDtoGenerator;
-import com.fortmocks.mock.soap.model.project.dto.SoapProjectDtoGenerator;
-import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
-import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapPortInput;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDtoGenerator;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDtoGenerator;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDtoGenerator;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import com.fortmocks.web.core.service.ServiceProcessor;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
@@ -42,7 +40,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 
 

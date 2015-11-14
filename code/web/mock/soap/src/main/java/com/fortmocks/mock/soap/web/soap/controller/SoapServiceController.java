@@ -16,9 +16,9 @@
 
 package com.fortmocks.mock.soap.web.soap.controller;
 
-import com.fortmocks.mock.soap.model.project.domain.SoapMockResponse;
-import com.fortmocks.mock.soap.model.project.domain.SoapOperation;
-import com.fortmocks.mock.soap.model.project.domain.SoapProject;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapProject;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
