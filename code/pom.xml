@@ -52,9 +52,9 @@
 	</issueManagement>
 
 	<modules>
-		<module>fortmocks-plugin</module>
+		<module>plugin</module>
 		<module>core</module>
-		<module>fortmocks-web</module>
+		<module>web</module>
 	</modules>
 
 	<properties>

@@ -17,7 +17,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fortmocks</groupId>
-	<artifactId>fortmocks-mock</artifactId>
+	<artifactId>fortmocks-web-mock</artifactId>
 	<packaging>pom</packaging>
 	<version>0.2-SNAPSHOT</version>
     <name>Fort mocks mock</name>
@@ -35,15 +35,15 @@
 		<dependencies>
 			<dependency>
 				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-web-core</artifactId>
+				<artifactId>fortmocks-web-basis</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<modules>
-		<module>fortmocks-soap</module>
-		<module>fortmocks-rest</module>
+		<module>soap</module>
+		<module>rest</module>
 	</modules>
 
 	<parent>

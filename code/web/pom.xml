@@ -39,9 +39,9 @@
 	</parent>
 
 	<modules>
-		<module>fortmocks-war</module>
-		<module>fortmocks-web-core</module>
-		<module>fortmocks-mock</module>
+		<module>war</module>
+		<module>basis</module>
+		<module>mock</module>
 	</modules>
 
 
