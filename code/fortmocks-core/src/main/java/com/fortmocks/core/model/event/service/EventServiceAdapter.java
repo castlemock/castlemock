@@ -29,6 +29,6 @@ import com.fortmocks.core.model.event.dto.EventDto;
  * @see Event
  * @see EventDto
  */
-public interface EventServiceAdapter<D extends EventDto> extends ServiceAdapter<EventDto, D, Long> {
+public interface EventServiceAdapter<P, D extends EventDto> extends ServiceAdapter<D, Long> {
 
 }

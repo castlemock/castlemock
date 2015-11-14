@@ -22,9 +22,11 @@ import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.mock.soap.config.TestApplication;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDtoGenerator;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDtoGenerator;
-import com.fortmocks.mock.soap.model.project.service.SoapProjectService;
+import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
+import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.fortmocks.mock.soap.web.mvc.command.project.WSDLFileUploadForm;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
+import com.fortmocks.web.core.service.ServiceProcessor;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +69,7 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
     private SoapAddWSDLController  soapAddWSDLController;
 
     @Mock
-    private SoapProjectService soapProjectService;
+    private ServiceProcessor serviceProcessor;
 
     @Mock
     private WSDLComponent wsdlComponent;
@@ -80,7 +82,7 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
     @Test
     public void testAddWSDLGet() throws Exception {
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        when(soapProjectService.findOne(anyLong())).thenReturn(soapProjectDto);
+        when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(new ReadSoapProjectOutput(soapProjectDto));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + soapProjectDto.getId() + SLASH + ADD + SLASH + WSDL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -103,7 +105,7 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
             soapPortDtos.add(soapPortDto);
         }
 
-        when(soapProjectService.findOne(anyLong())).thenReturn(soapProjectDto);
+        when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(new ReadSoapProjectOutput(soapProjectDto));
         when(wsdlComponent.createSoapPorts(anyListOf(MultipartFile.class), anyBoolean())).thenReturn(soapPortDtos);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + soapProjectDto.getId() + SLASH + ADD + SLASH + WSDL).param("type", "file").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
@@ -125,7 +127,7 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
             soapPortDtos.add(soapPortDto);
         }
 
-        when(soapProjectService.findOne(anyLong())).thenReturn(soapProjectDto);
+        when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(new ReadSoapProjectOutput(soapProjectDto));
         when(wsdlComponent.createSoapPorts(anyListOf(MultipartFile.class), anyBoolean())).thenReturn(soapPortDtos);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + soapProjectDto.getId() + SLASH + ADD + SLASH + WSDL).param("type", "link").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)

@@ -3,6 +3,7 @@ package com.fortmocks.mock.soap.model.project.service.adapter;
 import com.fortmocks.core.model.TypeIdentifier;
 import com.fortmocks.core.model.project.dto.ProjectDto;
 import com.fortmocks.core.model.project.service.ProjectServiceAdapter;
+import com.fortmocks.mock.soap.model.SoapTypeIdentifier;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.mock.soap.model.project.service.message.input.*;
 import com.fortmocks.mock.soap.model.project.service.message.output.CreateSoapProjectOutput;
@@ -24,6 +25,7 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
 
     @Autowired
     private ServiceProcessor serviceProcessor;
+    private static final SoapTypeIdentifier SOAP_TYPE_IDENTIFIER = new SoapTypeIdentifier();
 
     @Override
     public SoapProjectDto create(SoapProjectDto dto) {
@@ -56,13 +58,14 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
 
     @Override
     public TypeIdentifier getTypeIdentifier() {
-        return null;
+        return SOAP_TYPE_IDENTIFIER;
     }
 
     @Override
-    public SoapProjectDto convertType(ProjectDto parent) {
-        return null;
+    public SoapProjectDto convertType(SoapProjectDto parent) {
+        return new SoapProjectDto(parent);
     }
+
 
     @Override
     public String exportProject(Long id) {

@@ -19,18 +19,17 @@ package com.fortmocks.mock.soap.web.soap.controller;
 import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.mock.soap.model.event.dto.SoapRequestDto;
 import com.fortmocks.mock.soap.model.event.dto.SoapResponseDto;
+import com.fortmocks.mock.soap.model.event.service.message.input.CreateSoapEventInput;
 import com.fortmocks.mock.soap.model.project.domain.*;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.model.project.service.message.input.CreateRecordedSoapMockResponseInput;
 import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
 import com.fortmocks.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
-import com.fortmocks.mock.soap.model.project.service.SoapProjectService;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.fortmocks.mock.soap.model.SoapException;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,11 +55,6 @@ import java.util.Random;
  */
 @Controller
 public abstract class AbstractSoapServiceController extends AbstractController{
-
-
-    @Autowired
-    private SoapEventService soapEventService;
-
 
     private static final String RECORDED_RESPONSE_NAME = "Recorded response";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -144,7 +138,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         } finally{
             if(event != null){
                 event.finish(response);
-                soapEventService.save(event);
+                serviceProcessor.process(new CreateSoapEventInput(event));
             }
         }
     }

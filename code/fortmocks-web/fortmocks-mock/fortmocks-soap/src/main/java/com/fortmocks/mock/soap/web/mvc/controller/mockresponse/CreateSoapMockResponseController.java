@@ -64,7 +64,7 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
         mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_OPERATION, soapOperationDto);
-        model.addObject(SOAP_PROJECT_ID, soapOperationDto);
+        model.addObject(SOAP_PROJECT_ID, soapProjectId);
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(COMMAND, mockResponse);
         return model;

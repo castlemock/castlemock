@@ -30,6 +30,11 @@ public class UpdateCurrentRestMockResponseSequenceIndexInput implements Input {
     @NotNull
     private Integer currentRestMockResponseSequenceIndex;
 
+    public UpdateCurrentRestMockResponseSequenceIndexInput(Long restMethodId, Integer currentRestMockResponseSequenceIndex) {
+        this.restMethodId = restMethodId;
+        this.currentRestMockResponseSequenceIndex = currentRestMockResponseSequenceIndex;
+    }
+
     public Long getRestMethodId() {
         return restMethodId;
     }

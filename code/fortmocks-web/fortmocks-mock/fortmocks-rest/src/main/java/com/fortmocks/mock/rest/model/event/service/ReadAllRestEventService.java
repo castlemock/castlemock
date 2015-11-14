@@ -13,6 +13,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@org.springframework.stereotype.Service
 public class ReadAllRestEventService extends AbstractRestEventProcessor implements Service<ReadAllRestEventInput, ReadAllRestEventOutput> {
 
     /**

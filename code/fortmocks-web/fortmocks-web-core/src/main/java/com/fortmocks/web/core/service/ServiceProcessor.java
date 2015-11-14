@@ -45,6 +45,11 @@ public class ServiceProcessor {
     public <I extends Input, O extends Output> O process(final I input){
         validateMessage(input);
         final Service<I,O> service = serviceRegistry.getProcessor(input);
+
+        if(service == null){
+            throw new IllegalArgumentException("Unable to find service for " + input.getClass().getSimpleName());
+        }
+
         final Task<I> task = new Task<I>();
         task.setInput(input);
         task.setExecuter(getLoggedInUsername());

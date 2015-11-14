@@ -14,6 +14,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@org.springframework.stereotype.Service
 public class ReadRestEventWithMethodIdService extends AbstractRestEventProcessor implements Service<ReadRestEventWithMethodIdInput, ReadRestEventWithMethodIdOutput> {
 
     /**

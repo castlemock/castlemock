@@ -11,6 +11,10 @@ public class ReadSoapProjectOutput implements Output{
 
     private SoapProjectDto soapProject;
 
+    public ReadSoapProjectOutput(SoapProjectDto soapProject) {
+        this.soapProject = soapProject;
+    }
+
     public SoapProjectDto getSoapProject() {
         return soapProject;
     }

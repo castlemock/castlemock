@@ -30,7 +30,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-@Service
+
 public class AbstractSoapEventProcessor extends AbstractProcessor<SoapEvent, SoapEventDto, Long>{
 
 

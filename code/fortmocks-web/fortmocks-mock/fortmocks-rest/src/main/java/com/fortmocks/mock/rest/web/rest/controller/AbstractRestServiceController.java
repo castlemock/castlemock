@@ -4,17 +4,18 @@ import com.fortmocks.mock.rest.model.RestException;
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.mock.rest.model.event.dto.RestResponseDto;
+import com.fortmocks.mock.rest.model.event.service.message.input.CreateRestEventInput;
 import com.fortmocks.mock.rest.model.project.domain.RestMethodStatus;
 import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.mock.rest.model.project.domain.RestResponseStrategy;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
-import com.fortmocks.mock.rest.model.project.service.RestProjectService;
+import com.fortmocks.mock.rest.model.project.service.message.input.ReadRestMethodWithMethodTypeInput;
+import com.fortmocks.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
+import com.fortmocks.mock.rest.model.project.service.message.output.ReadRestMethodWithMethodTypeOutput;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.google.common.base.Preconditions;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -27,10 +28,6 @@ import java.util.Random;
  */
 public abstract class AbstractRestServiceController extends AbstractController {
 
-    @Autowired
-    private RestProjectService restProjectService;
-    @Autowired
-    private RestEventService restEventService;
     private static final String REST = "rest";
     private static final String APPLICATION = "application";
     private static final Random RANDOM = new Random();
@@ -52,13 +49,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
         Preconditions.checkNotNull(httpServletResponse, "The HTTP Servlet Response cannot be null");
 
         final RestRequestDto restRequest = prepareRequest(projectId, applicationId, restMethodType, httpServletRequest);
-        final RestMethodDto restMethod = restProjectService.findRestMethod(projectId, applicationId, restRequest.getUri(), restMethodType);
-
-        if(restMethod == null){
-            throw new RestException("Unable to locate the REST method");
-        }
-
-        return process(restRequest, restMethod, httpServletResponse);
+        final ReadRestMethodWithMethodTypeOutput output = serviceProcessor.process(new ReadRestMethodWithMethodTypeInput(projectId, applicationId, restRequest.getUri(), restMethodType));
+        return process(restRequest, output.getRestMethod(), httpServletResponse);
     }
 
     /**
@@ -107,7 +99,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         } finally{
             if(event != null){
                 event.finish(response);
-                restEventService.save(event);
+                serviceProcessor.process(new CreateRestEventInput(event));
             }
         }
     }
@@ -160,7 +152,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 currentSequenceNumber = 0;
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
-            restProjectService.updateCurrentResponseSequenceIndex(restMethod.getId(), currentSequenceNumber + 1);
+            serviceProcessor.process(new UpdateCurrentRestMockResponseSequenceIndexInput(restMethod.getId(), currentSequenceNumber + 1));
         }
 
         if(mockResponse == null){

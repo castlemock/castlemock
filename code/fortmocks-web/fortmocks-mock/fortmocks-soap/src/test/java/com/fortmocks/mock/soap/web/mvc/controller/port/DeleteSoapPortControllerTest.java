@@ -16,13 +16,16 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.port;
 
+import com.fortmocks.core.model.Input;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.mock.soap.config.TestApplication;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDtoGenerator;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDtoGenerator;
-import com.fortmocks.mock.soap.model.project.service.SoapProjectService;
+import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
+import com.fortmocks.web.core.service.ServiceProcessor;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +38,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -56,7 +60,7 @@ public class DeleteSoapPortControllerTest extends AbstractSoapControllerTest {
     private DeleteSoapPortController deleteSoapPortController;
 
     @Mock
-    private SoapProjectService soapProjectService;
+    private ServiceProcessor serviceProcessor;
 
     @Override
     protected AbstractController getController() {
@@ -67,7 +71,7 @@ public class DeleteSoapPortControllerTest extends AbstractSoapControllerTest {
     public void testDeleteApplicationWithValidId() throws Exception {
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
         final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-        when(soapProjectService.findSoapPort(anyLong(), anyLong())).thenReturn(soapPortDto);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapPortOutput(soapPortDto));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + DELETE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())

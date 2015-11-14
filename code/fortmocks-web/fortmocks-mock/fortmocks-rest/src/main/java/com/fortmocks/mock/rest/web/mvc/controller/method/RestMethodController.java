@@ -17,6 +17,8 @@
 package com.fortmocks.mock.rest.web.mvc.controller.method;
 
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
+import com.fortmocks.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
+import com.fortmocks.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
 import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
@@ -57,9 +59,6 @@ public class RestMethodController extends AbstractRestViewController {
     private static final String DELETE_MOCK_RESPONSES_PAGE = "mock/rest/mockresponse/deleteRestMockResponses";
     protected static final String REST_MOCK_RESPONSE_STATUSES = "restMockResponseStatuses";
 
-    @Autowired
-    private RestEventService restEventService;
-
     /**
      * Retrieves a specific project with a project id
      * @param restProjectId The id of the project that will be retrieved
@@ -70,8 +69,8 @@ public class RestMethodController extends AbstractRestViewController {
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId) {
         final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
         final RestMethodDto restMethod = output.getRestMethod();
-        final List<RestEventDto> events = restEventService.findEventsByMethodId(restMethodId);
-        restMethod.setEvents(events);
+        final ReadRestEventWithMethodIdOutput readRestEventWithMethodIdOutput = serviceProcessor.process(new ReadRestEventWithMethodIdInput(restMethodId));
+        restMethod.setEvents(readRestEventWithMethodIdOutput.getRestEvents());
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);

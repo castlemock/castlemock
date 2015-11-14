@@ -17,6 +17,7 @@
 package com.fortmocks.mock.soap.web.mvc.controller.event;
 
 import com.fortmocks.core.model.event.dto.EventDto;
+import com.fortmocks.mock.soap.model.event.service.message.input.ReadSoapEventInput;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -40,9 +41,6 @@ public class SoapEventController extends AbstractSoapViewController {
 
     private static final String PAGE = "mock/soap/event/soapEvent";
 
-    @Autowired
-    private SoapEventService soapEventService;
-
     /**
      * The method creates a view that displays all the logged information to the user
      * @return View with all the logged information
@@ -50,7 +48,7 @@ public class SoapEventController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "soap/event/{eventId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long eventId) {
-        final EventDto event = soapEventService.findOne(eventId);
+        final EventDto event = serviceProcessor.process(new ReadSoapEventInput(eventId));
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(EVENT, event);
         return model;

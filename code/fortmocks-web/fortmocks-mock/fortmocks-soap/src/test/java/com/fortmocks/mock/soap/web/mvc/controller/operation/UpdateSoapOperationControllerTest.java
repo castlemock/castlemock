@@ -15,6 +15,7 @@
  */
 package com.fortmocks.mock.soap.web.mvc.controller.operation;
 
+import com.fortmocks.core.model.Input;
 import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
@@ -24,8 +25,9 @@ import com.fortmocks.mock.soap.config.TestApplication;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDtoGenerator;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDtoGenerator;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDtoGenerator;
-import com.fortmocks.mock.soap.model.project.service.SoapProjectService;
+import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
+import com.fortmocks.web.core.service.ServiceProcessor;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +40,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -61,7 +63,7 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
     private UpdateSoapOperationController updateSoapOperationController;
 
     @Mock
-    private SoapProjectService soapProjectService;
+    private ServiceProcessor serviceProcessor;
 
     @Override
     protected AbstractController getController() {
@@ -73,7 +75,7 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
         final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
         final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        when(soapProjectService.findSoapOperation(anyLong(), anyLong(), anyLong())).thenReturn(soapOperationDto);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapOperationOutput(soapOperationDto));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + UPDATE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -93,7 +95,7 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
         final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
         final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        when(soapProjectService.findSoapOperation(anyLong(), anyLong(), anyLong())).thenReturn(soapOperationDto);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapOperationOutput(soapOperationDto));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + UPDATE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())

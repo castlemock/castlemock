@@ -17,6 +17,8 @@
 package com.fortmocks.mock.soap.web.mvc.controller.operation;
 
 import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
+import com.fortmocks.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
+import com.fortmocks.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
 import com.fortmocks.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
@@ -58,9 +60,6 @@ public class SoapOperationController extends AbstractSoapViewController {
     private static final String DELETE_MOCK_RESPONSES = "delete";
     private static final Logger LOGGER = Logger.getLogger(SoapOperationController.class);
 
-    @Autowired
-    private SoapEventService soapEventService;
-
     /**
      * The method provides functionality to retrieve a specific operation
      * @param soapProjectId The id of the project that the operation belongs to
@@ -74,8 +73,8 @@ public class SoapOperationController extends AbstractSoapViewController {
     public ModelAndView defaultPage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, final ServletRequest request) {
         final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
         final SoapOperationDto soapOperation = output.getSoapOperation();
-        final List<SoapEventDto> events = soapEventService.findEventsByOperationId(soapOperationId);
-        soapOperation.setEvents(events);
+        final ReadSoapEventsByOperationIdOutput readSoapEventsByOperationIdOutput = serviceProcessor.process(new ReadSoapEventsByOperationIdInput(soapOperationId));
+        soapOperation.setEvents(readSoapEventsByOperationIdOutput.getSoapEvents());
 
         String requestProtocol = HTTP;
         if(request.isSecure()){

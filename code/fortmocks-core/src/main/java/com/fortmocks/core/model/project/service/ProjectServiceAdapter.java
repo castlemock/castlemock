@@ -30,7 +30,7 @@ import com.fortmocks.core.model.project.dto.ProjectDto;
  * @see Project
  * @see ProjectDto
  */
-public interface ProjectServiceAdapter<D extends TypeIdentifiable> extends ServiceAdapter<ProjectDto, D, Long>{
+public interface ProjectServiceAdapter<D extends TypeIdentifiable> extends ServiceAdapter<D, Long>{
 
     /**
      * The method provides the functionality to export a project and convert it to a String

@@ -11,6 +11,7 @@ import com.fortmocks.mock.rest.model.event.service.message.output.ReadRestEventO
  * @author Karl Dahlgren
  * @since 1.0
  */
+@org.springframework.stereotype.Service
 public class ReadRestEventService extends AbstractRestEventProcessor implements Service<ReadRestEventInput, ReadRestEventOutput> {
 
     /**

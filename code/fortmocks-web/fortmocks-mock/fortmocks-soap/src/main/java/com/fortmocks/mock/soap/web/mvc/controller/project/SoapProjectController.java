@@ -17,13 +17,16 @@
 package com.fortmocks.mock.soap.web.mvc.controller.project;
 
 import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
+import com.fortmocks.mock.soap.model.project.domain.SoapProject;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.mock.soap.model.project.service.message.input.GetSoapOperationStatusCountInput;
 import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapPortInput;
 import com.fortmocks.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
 import com.fortmocks.mock.soap.model.project.service.message.input.UpdateSoapPortsStatusInput;
+import com.fortmocks.mock.soap.model.project.service.message.output.GetSoapOperationStatusCountOutput;
 import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
+import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.fortmocks.mock.soap.web.mvc.command.port.DeleteSoapPortsCommand;
 import com.fortmocks.mock.soap.web.mvc.command.port.SoapPortModifierCommand;
 import com.fortmocks.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
@@ -66,11 +69,11 @@ public class SoapProjectController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
     public ModelAndView getProject(@PathVariable final Long projectId) {
-        final SoapProjectDto project = serviceProcessor.process(new ReadSoapProjectInput(projectId));
-
+        final ReadSoapProjectOutput readSoapProjectOutput = serviceProcessor.process(new ReadSoapProjectInput(projectId));
+        final SoapProjectDto project = readSoapProjectOutput.getSoapProject();
         for(final SoapPortDto soapPortDto : project.getSoapPorts()){
-            final Map<SoapOperationStatus, Integer> statusCount = serviceProcessor.process(new GetSoapOperationStatusCountInput(projectId, soapPortDto.getId()));
-            soapPortDto.setStatusCount(statusCount);
+            final GetSoapOperationStatusCountOutput getSoapOperationStatusCountOutput = serviceProcessor.process(new GetSoapOperationStatusCountInput(projectId, soapPortDto.getId()));
+            soapPortDto.setStatusCount(getSoapOperationStatusCountOutput.getSoapOperationStatuses());
         }
 
         final ModelAndView model = createPartialModelAndView(PAGE);

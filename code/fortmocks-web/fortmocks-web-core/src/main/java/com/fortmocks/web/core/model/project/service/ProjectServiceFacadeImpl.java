@@ -36,7 +36,7 @@ import org.springframework.stereotype.Service;
  * @see ProjectDto
  */
 @Service
-public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, ProjectDto, Long, ProjectServiceAdapter<ProjectDto>> implements ProjectServiceFacade {
+public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, Long, ProjectServiceAdapter<ProjectDto>> implements ProjectServiceFacade {
 
     /**
      * The initiate method is responsible for for locating all the service instances for a specific module

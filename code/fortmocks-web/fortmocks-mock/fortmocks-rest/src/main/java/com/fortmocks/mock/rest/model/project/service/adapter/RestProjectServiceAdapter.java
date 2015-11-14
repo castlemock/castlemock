@@ -3,6 +3,7 @@ package com.fortmocks.mock.rest.model.project.service.adapter;
 import com.fortmocks.core.model.TypeIdentifier;
 import com.fortmocks.core.model.project.dto.ProjectDto;
 import com.fortmocks.core.model.project.service.ProjectServiceAdapter;
+import com.fortmocks.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.mock.rest.model.project.service.message.input.*;
 import com.fortmocks.mock.rest.model.project.service.message.output.CreateRestProjectOutput;
@@ -24,6 +25,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
 
     @Autowired
     private ServiceProcessor serviceProcessor;
+    private RestTypeIdentifier REST_TYPE_IDENTIFIER = new RestTypeIdentifier();
 
     @Override
     public RestProjectDto create(RestProjectDto dto) {
@@ -56,12 +58,12 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
 
     @Override
     public TypeIdentifier getTypeIdentifier() {
-        return null;
+        return REST_TYPE_IDENTIFIER;
     }
 
     @Override
-    public RestProjectDto convertType(ProjectDto parent) {
-        return null;
+    public RestProjectDto convertType(RestProjectDto parent) {
+        return new RestProjectDto(parent);
     }
 
     @Override

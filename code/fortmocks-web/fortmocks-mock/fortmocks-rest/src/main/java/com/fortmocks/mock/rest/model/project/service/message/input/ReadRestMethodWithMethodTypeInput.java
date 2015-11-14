@@ -35,6 +35,13 @@ public class ReadRestMethodWithMethodTypeInput implements Input {
     @NotNull
     private RestMethodType restMethodType;
 
+    public ReadRestMethodWithMethodTypeInput(Long restProjectId, Long restApplicationId, String restResourceUri, RestMethodType restMethodType) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceUri = restResourceUri;
+        this.restMethodType = restMethodType;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

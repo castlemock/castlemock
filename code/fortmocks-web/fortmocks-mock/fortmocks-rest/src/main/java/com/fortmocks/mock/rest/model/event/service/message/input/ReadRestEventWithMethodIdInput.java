@@ -1,6 +1,7 @@
 package com.fortmocks.mock.rest.model.event.service.message.input;
 
 import com.fortmocks.core.model.Input;
+import com.fortmocks.core.model.validation.NotNull;
 
 /**
  * @author Karl Dahlgren
@@ -8,6 +9,7 @@ import com.fortmocks.core.model.Input;
  */
 public class ReadRestEventWithMethodIdInput implements Input {
 
+    @NotNull
     private Long restMethodId;
 
     public ReadRestEventWithMethodIdInput(Long restMethodId) {

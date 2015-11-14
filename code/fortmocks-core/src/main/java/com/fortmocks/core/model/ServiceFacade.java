@@ -29,7 +29,7 @@ import java.util.List;
  * @param <I> The ID type that is used to identify the type (TYPE)
  * @see Service
  */
-public interface ServiceFacade<P, D extends TypeIdentifiable, I extends Serializable> {
+public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializable> {
 
 
     /**
@@ -48,7 +48,7 @@ public interface ServiceFacade<P, D extends TypeIdentifiable, I extends Serializ
      * @param dto The instance that will be created
      * @return The saved instance
      */
-    D save(String type, P dto);
+    D save(String type, D dto);
 
     /**
      * The method provides the functionality to delete a specific instance. The type is
@@ -71,7 +71,7 @@ public interface ServiceFacade<P, D extends TypeIdentifiable, I extends Serializ
      * @param dto The instance with the new updated values
      * @return The updated instance
      */
-    D update(String typeUrl, I id, P dto);
+    D update(String typeUrl, I id, D dto);
 
     /**
      * The method is responsible for retrieving all instances from all the various service types.

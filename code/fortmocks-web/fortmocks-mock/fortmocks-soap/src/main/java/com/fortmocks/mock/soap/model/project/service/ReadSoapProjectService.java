@@ -26,8 +26,6 @@ public class ReadSoapProjectService extends AbstractSoapProjectProcessor impleme
     public Result<ReadSoapProjectOutput> process(final Task<ReadSoapProjectInput> task) {
         final ReadSoapProjectInput input = task.getInput();
         final SoapProjectDto soapProject = find(input.getSoapProjectId());
-        final ReadSoapProjectOutput output = new ReadSoapProjectOutput();
-        output.setSoapProject(soapProject);
-        return createResult(output);
+        return createResult(new ReadSoapProjectOutput(soapProject));
     }
 }

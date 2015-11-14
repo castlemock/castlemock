@@ -13,6 +13,7 @@ import com.fortmocks.mock.soap.model.event.service.message.output.ReadSoapEventO
  * @author Karl Dahlgren
  * @since 1.0
  */
+@org.springframework.stereotype.Service
 public class CreateSoapEventService extends AbstractSoapEventProcessor implements Service<CreateSoapEventInput, CreateSoapEventOutput> {
 
     @Override
