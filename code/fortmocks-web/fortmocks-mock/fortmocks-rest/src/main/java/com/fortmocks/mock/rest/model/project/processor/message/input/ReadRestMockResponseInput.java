@@ -36,6 +36,14 @@ public class ReadRestMockResponseInput implements Input {
     @NotNull
     private Long restMockResponse;
 
+    public ReadRestMockResponseInput(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponse) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceId = restResourceId;
+        this.restMethodId = restMethodId;
+        this.restMockResponse = restMockResponse;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

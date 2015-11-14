@@ -18,6 +18,10 @@ package com.fortmocks.mock.rest.web.mvc.controller.mockresponse;
 
 import com.fortmocks.mock.rest.model.project.domain.RestContentType;
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestMethodInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestMockResponseInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestMethodOutput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestMockResponseOutput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -41,14 +45,14 @@ public class RestMockResponseController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/{restMockResponseId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @PathVariable final Long restMockResponseId) {
-        final RestMockResponseDto restMockResponseDto = restProjectService.findRestMockResponse(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        final ReadRestMockResponseOutput output = processorMainframe.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restMethodId);
-        model.addObject(REST_MOCK_RESPONSE, restMockResponseDto);
+        model.addObject(REST_MOCK_RESPONSE, output.getRestMockResponse());
         model.addObject(REST_CONTENT_TYPES, RestContentType.values());
         return model;
     }

@@ -4,16 +4,18 @@ import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.mock.soap.model.project.message.FindSoapProjectInput;
-import com.fortmocks.mock.soap.model.project.message.FindSoapProjectOutput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.ReadAllSoapProjectsInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.ReadAllSoapProjectsOutput;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @Service
-public class FindSoapProjectProcessor extends AbstractSoapProjectProcessor implements Processor<FindSoapProjectInput, FindSoapProjectOutput> {
+public class ReadSoapMockResponsesProcessor extends AbstractSoapProjectProcessor implements Processor<ReadAllSoapProjectsInput, ReadAllSoapProjectsOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate
@@ -24,11 +26,10 @@ public class FindSoapProjectProcessor extends AbstractSoapProjectProcessor imple
      * @see Result
      */
     @Override
-    public Result<FindSoapProjectOutput> process(final Task<FindSoapProjectInput> task) {
-        final FindSoapProjectInput input = task.getInput();
-        final SoapProjectDto soapProject = find(input.getSoapProjectId());
-        final FindSoapProjectOutput output = new FindSoapProjectOutput();
-        output.setSoapProject(soapProject);
+    public Result<ReadAllSoapProjectsOutput> process(final Task<ReadAllSoapProjectsInput> task) {
+        final List<SoapProjectDto> soapProjects = findAll();
+        final ReadAllSoapProjectsOutput output = new ReadAllSoapProjectsOutput();
+        output.setSoapProjects(soapProjects);
         return createResult(output);
     }
 }

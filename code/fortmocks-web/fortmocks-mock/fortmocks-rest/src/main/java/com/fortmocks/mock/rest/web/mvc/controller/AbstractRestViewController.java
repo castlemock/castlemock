@@ -55,8 +55,4 @@ public class AbstractRestViewController extends AbstractViewController {
 
     protected static final String REST_CONTENT_TYPES = "restContentTypes";
 
-    @Autowired
-    protected RestProjectService restProjectService;
-
-
 }

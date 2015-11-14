@@ -20,6 +20,9 @@ import com.fortmocks.mock.rest.model.project.domain.RestContentType;
 import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.CreateRestMockResponseInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestMethodInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestMethodOutput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -45,10 +48,10 @@ public class CreateRestMockResponseController extends AbstractRestViewController
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/create/response", method = RequestMethod.GET)
     public ModelAndView dispayCreatePage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId) {
-        final RestMethodDto restMethodDto = restProjectService.findRestMethod(restProjectId, restApplicationId, restResourceId, restMethodId);
+        final ReadRestMethodOutput output = processorMainframe.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
 
         final RestMockResponseDto mockResponse = new RestMockResponseDto();
-        mockResponse.setBody(restMethodDto.getDefaultBody());
+        mockResponse.setBody(output.getRestMethod().getDefaultBody());
         mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
@@ -65,7 +68,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/create/response", method = RequestMethod.POST)
     public ModelAndView createResponse(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @ModelAttribute final RestMockResponseDto restMockResponseDto) {
         restMockResponseDto.setRestMockResponseStatus(RestMockResponseStatus.ENABLED);
-        restProjectService.saveRestMockResponse(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseDto);
+        processorMainframe.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseDto));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 

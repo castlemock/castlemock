@@ -17,6 +17,8 @@
 package com.fortmocks.mock.rest.web.mvc.controller.resource;
 
 import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.CreateRestResourceInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.CreateRestResourceOutput;
 import com.fortmocks.mock.rest.web.mvc.command.resource.CreateRestResourceCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -54,8 +56,8 @@ public class CreateRestResourceController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/create/resource", method = RequestMethod.POST)
     public ModelAndView createResource(@PathVariable final Long projectId, @PathVariable final Long applicationId, @ModelAttribute final CreateRestResourceCommand createRestResourceCommand) {
-        final RestResourceDto restResourceDto = restProjectService.saveRestResource(projectId, applicationId, createRestResourceCommand.getRestResource());
-        return redirect("/rest/project/" + projectId + "/application/" + applicationId + "/resource/" +  restResourceDto.getId());
+        final CreateRestResourceOutput output = processorMainframe.process(new CreateRestResourceInput(projectId, applicationId, createRestResourceCommand.getRestResource()));
+        return redirect("/rest/project/" + projectId + "/application/" + applicationId + "/resource/" +  output.getCreatedRestResource().getId());
     }
 
 

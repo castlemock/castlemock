@@ -18,6 +18,10 @@ package com.fortmocks.mock.rest.web.mvc.controller.application;
 
 import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestApplicationInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestResourceInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestApplicationOutput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestResourceOutput;
 import com.fortmocks.mock.rest.web.mvc.command.resource.DeleteRestResourcesCommand;
 import com.fortmocks.mock.rest.web.mvc.command.resource.RestResourceModifierCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -54,11 +58,11 @@ public class RestApplicationController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId) {
-        final RestApplicationDto restApplication = restProjectService.findRestApplication(restProjectId, restApplicationId);
+        final ReadRestApplicationOutput output = processorMainframe.process(new ReadRestApplicationInput(restProjectId, restApplicationId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
-        model.addObject(REST_APPLICATION, restApplication);
+        model.addObject(REST_APPLICATION, output.getRestApplication());
         model.addObject(REST_RESOURCE_MODIFIER_COMMAND, new RestResourceModifierCommand());
         return model;
     }
@@ -70,8 +74,8 @@ public class RestApplicationController extends AbstractRestViewController {
         if(DELETE_REST_RESOURCES.equalsIgnoreCase(action)) {
             final List<RestResourceDto> restResources = new ArrayList<RestResourceDto>();
             for(Long restResourceId : restResourceModifierCommand.getRestResourceIds()){
-                final RestResourceDto restResourceDto = restProjectService.findRestResource(restProjectId, restApplicationId, restResourceId);
-                restResources.add(restResourceDto);
+                ReadRestResourceOutput output = processorMainframe.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
+                restResources.add(output.getRestResource());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_REST_RESOURCES_PAGE);
             model.addObject(REST_PROJECT_ID, restProjectId);

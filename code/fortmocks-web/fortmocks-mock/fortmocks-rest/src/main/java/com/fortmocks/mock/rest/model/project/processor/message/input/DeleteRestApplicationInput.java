@@ -30,6 +30,11 @@ public class DeleteRestApplicationInput implements Input{
     @NotNull
     private Long restApplicationId;
 
+    public DeleteRestApplicationInput(Long restProjectId, Long restApplicationId) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

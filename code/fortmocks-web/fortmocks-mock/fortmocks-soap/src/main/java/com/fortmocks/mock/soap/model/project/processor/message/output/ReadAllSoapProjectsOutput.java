@@ -1,7 +1,6 @@
-package com.fortmocks.mock.soap.model.project.message;
+package com.fortmocks.mock.soap.model.project.processor.message.output;
 
 import com.fortmocks.core.model.Output;
-import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class FindAllSoapProjectsOutput implements Output {
+public class ReadAllSoapProjectsOutput implements Output {
 
     private List<SoapProjectDto> soapProjects;
 

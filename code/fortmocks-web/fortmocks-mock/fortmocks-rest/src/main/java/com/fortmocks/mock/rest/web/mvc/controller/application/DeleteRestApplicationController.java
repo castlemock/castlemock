@@ -16,7 +16,10 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller.application;
 
-import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.DeleteRestApplicationInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.DeleteRestApplicationsInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestApplicationInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestApplicationOutput;
 import com.fortmocks.mock.rest.web.mvc.command.application.DeleteRestApplicationsCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,10 +45,10 @@ public class DeleteRestApplicationController extends AbstractRestViewController 
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/delete", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId) {
-        RestApplicationDto restApplicationDto = restProjectService.findRestApplication(restProjectId, restApplicationId);
+        final ReadRestApplicationOutput ouput = processorMainframe.process(new ReadRestApplicationInput(restProjectId, restApplicationId));
         ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
-        model.addObject(REST_APPLICATION, restApplicationDto);
+        model.addObject(REST_APPLICATION, ouput.getRestApplication());
         return model;
     }
 
@@ -53,14 +56,14 @@ public class DeleteRestApplicationController extends AbstractRestViewController 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/delete/confirm", method = RequestMethod.GET)
     public ModelAndView confirm(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId) {
-        restProjectService.deleteRestApplication(restProjectId, restApplicationId);
+        processorMainframe.process(new DeleteRestApplicationInput(restProjectId, restApplicationId));
         return redirect("/rest/project/" + restProjectId);
     }
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/delete/confirm", method = RequestMethod.POST)
     public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final Long restProjectId, @ModelAttribute final DeleteRestApplicationsCommand deleteRestApplicationsCommand) {
-        restProjectService.deleteRestApplications(restProjectId, deleteRestApplicationsCommand.getRestApplications());
+        processorMainframe.process(new DeleteRestApplicationsInput(restProjectId, deleteRestApplicationsCommand.getRestApplications()));
         return redirect("/rest/project/" + restProjectId);
     }
 

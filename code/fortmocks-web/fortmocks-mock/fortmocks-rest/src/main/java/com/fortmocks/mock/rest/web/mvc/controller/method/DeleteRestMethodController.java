@@ -17,6 +17,11 @@
 package com.fortmocks.mock.rest.web.mvc.controller.method;
 
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.DeleteRestMethodInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.DeleteRestMethodsInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestMethodInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.DeleteRestMethodOutput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestMethodOutput;
 import com.fortmocks.mock.rest.web.mvc.command.method.DeleteRestMethodsCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,27 +47,27 @@ public class DeleteRestMethodController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/delete", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId) {
-        final RestMethodDto restMethodDto = restProjectService.findRestMethod(restProjectId, restApplicationId, restResourceId, restMethodId);
+        final ReadRestMethodOutput output = processorMainframe.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE_ID, restResourceId);
-        model.addObject(REST_METHOD, restMethodDto);
+        model.addObject(REST_METHOD, output.getRestMethod());
         return model;
     }
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/delete/confirm", method = RequestMethod.GET)
     public ModelAndView confirm(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId) {
-        restProjectService.deleteRestMethod(restProjectId, restApplicationId, restResourceId, restMethodId);
+        processorMainframe.process(new DeleteRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId);
     }
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/delete/confirm", method = RequestMethod.POST)
     public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @ModelAttribute final DeleteRestMethodsCommand deleteRestMethodsCommand) {
-        restProjectService.deleteRestMethods(restProjectId, restApplicationId, restResourceId, deleteRestMethodsCommand.getRestMethods());
+        processorMainframe.process(new DeleteRestMethodsInput(restProjectId, restApplicationId, restResourceId, deleteRestMethodsCommand.getRestMethods()));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId);
     }
 

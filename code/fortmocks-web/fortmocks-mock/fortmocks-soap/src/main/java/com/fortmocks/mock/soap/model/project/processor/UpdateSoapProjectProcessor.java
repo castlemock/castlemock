@@ -4,8 +4,8 @@ import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.mock.soap.model.project.message.UpdateSoapProjectInput;
-import com.fortmocks.mock.soap.model.project.message.UpdateSoapProjectOutput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.UpdateSoapProjectInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.UpdateSoapProjectOutput;
 import org.springframework.stereotype.Service;
 
 /**

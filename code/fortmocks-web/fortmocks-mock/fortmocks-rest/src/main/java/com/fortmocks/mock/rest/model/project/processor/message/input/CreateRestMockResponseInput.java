@@ -38,6 +38,14 @@ public class CreateRestMockResponseInput implements Input {
     @NotNull
     private RestMockResponseDto restMockResponse;
 
+    public CreateRestMockResponseInput(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, RestMockResponseDto restMockResponse) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceId = restResourceId;
+        this.restMethodId = restMethodId;
+        this.restMockResponse = restMockResponse;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

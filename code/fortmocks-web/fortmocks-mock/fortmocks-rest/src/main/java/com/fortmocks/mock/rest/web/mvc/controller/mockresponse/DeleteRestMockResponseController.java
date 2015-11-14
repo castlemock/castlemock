@@ -17,6 +17,12 @@
 package com.fortmocks.mock.rest.web.mvc.controller.mockresponse;
 
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.DeleteRestMockResponseInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.DeleteRestMockResponsesInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestMethodInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestMockResponseInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestMethodOutput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestMockResponseOutput;
 import com.fortmocks.mock.rest.web.mvc.command.mockresponse.DeleteRestMockResponsesCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.context.annotation.Scope;
@@ -44,13 +50,13 @@ public class DeleteRestMockResponseController extends AbstractRestViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/{restMockResponseId}/delete", method = RequestMethod.GET)
     public ModelAndView showConfirmationPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @PathVariable final Long restMockResponseId) {
-        final RestMockResponseDto mockResponse = restProjectService.findRestMockResponse(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        final ReadRestMockResponseOutput output = processorMainframe.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId));
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restMethodId);
-        model.addObject(REST_MOCK_RESPONSE, mockResponse);
+        model.addObject(REST_MOCK_RESPONSE, output.getRestMockResponse());
         return model;
     }
 
@@ -58,7 +64,7 @@ public class DeleteRestMockResponseController extends AbstractRestViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/{restMockResponseId}/delete/confirm", method = RequestMethod.GET)
     public ModelAndView confirm(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @PathVariable final Long restMockResponseId) {
-        restProjectService.deleteRestMockResponse(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        processorMainframe.process(new DeleteRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 
@@ -66,7 +72,7 @@ public class DeleteRestMockResponseController extends AbstractRestViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/delete/confirm", method = RequestMethod.POST)
     public ModelAndView confirmDeletationOfMultpleMockResponses(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @ModelAttribute final DeleteRestMockResponsesCommand deleteRestMockResponsesCommand) {
-        restProjectService.deleteRestMockResponses(restProjectId, restApplicationId, restResourceId, restMethodId, deleteRestMockResponsesCommand.getRestMockResponses());
+        processorMainframe.process(new DeleteRestMockResponsesInput(restProjectId, restApplicationId, restResourceId, restMethodId, deleteRestMockResponsesCommand.getRestMockResponses()));
         return redirect("/rest/project/" + restApplicationId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 

@@ -39,6 +39,14 @@ public class DeleteRestMockResponsesInput implements Input{
     @NotNull
     private List<RestMockResponseDto> restMockResponses;
 
+    public DeleteRestMockResponsesInput(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, List<RestMockResponseDto> restMockResponses) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceId = restResourceId;
+        this.restMethodId = restMethodId;
+        this.restMockResponses = restMockResponses;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

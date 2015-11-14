@@ -32,6 +32,11 @@ public class CreateRestApplicationInput implements Input {
     @NotNull
     private RestApplicationDto restApplication;
 
+    public CreateRestApplicationInput(Long restProjectId, RestApplicationDto restApplication) {
+        this.restProjectId = restProjectId;
+        this.restApplication = restApplication;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

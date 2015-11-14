@@ -40,6 +40,14 @@ public class UpdateRestMethodInput implements Input {
     @NotNull
     private RestMethodDto restMethod;
 
+    public UpdateRestMethodInput(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, RestMethodDto restMethod) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceId = restResourceId;
+        this.restMethodId = restMethodId;
+        this.restMethod = restMethod;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

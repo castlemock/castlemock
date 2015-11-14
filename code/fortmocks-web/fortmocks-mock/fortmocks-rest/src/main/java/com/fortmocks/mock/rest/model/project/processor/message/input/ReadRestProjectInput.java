@@ -28,6 +28,10 @@ public class ReadRestProjectInput implements Input {
     @NotNull
     private Long restProjectId;
 
+    public ReadRestProjectInput(Long restProjectId) {
+        this.restProjectId = restProjectId;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

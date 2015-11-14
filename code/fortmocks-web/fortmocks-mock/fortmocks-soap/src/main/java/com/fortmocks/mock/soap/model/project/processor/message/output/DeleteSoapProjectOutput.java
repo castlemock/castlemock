@@ -1,4 +1,4 @@
-package com.fortmocks.mock.soap.model.project.message;
+package com.fortmocks.mock.soap.model.project.processor.message.output;
 
 import com.fortmocks.core.model.Output;
 

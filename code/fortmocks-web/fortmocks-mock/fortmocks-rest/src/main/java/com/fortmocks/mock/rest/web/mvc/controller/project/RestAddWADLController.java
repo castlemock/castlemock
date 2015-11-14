@@ -19,6 +19,7 @@ package com.fortmocks.mock.rest.web.mvc.controller.project;
 import com.fortmocks.mock.rest.manager.WADLComponent;
 import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.CreateRestApplicationsInput;
 import com.fortmocks.mock.rest.web.mvc.command.project.WADLFileUploadForm;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,7 @@ public class RestAddWADLController extends AbstractRestViewController {
             restApplicationDtos = wadlComponent.createApplication(uploadForm.getLink(), uploadForm.isGenerateResponse());
         }
 
-        restProjectService.saveRestApplications(projectId, restApplicationDtos);
+        processorMainframe.process(new CreateRestApplicationsInput(projectId, restApplicationDtos));
         return redirect("/rest/project/" + projectId);
     }
 }

@@ -38,6 +38,13 @@ public class UpdateRestResourceInput implements Input {
     @NotNull
     private RestResourceDto restResource;
 
+    public UpdateRestResourceInput(Long restProjectId, Long restApplicationId, Long restResourceId, RestResourceDto restResource) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceId = restResourceId;
+        this.restResource = restResource;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

@@ -34,6 +34,12 @@ public class UpdateRestApplicationInput implements Input {
     @NotNull
     private RestApplicationDto restApplication;
 
+    public UpdateRestApplicationInput(Long restProjectId, Long restApplicationId, RestApplicationDto restApplication) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restApplication = restApplication;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

@@ -4,8 +4,8 @@ import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.mock.soap.model.project.message.SaveSoapProjectInput;
-import com.fortmocks.mock.soap.model.project.message.SaveSoapProjectOutput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.CreateSoapProjectInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.CreateSoapProjectOutput;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @since 1.0
  */
 @Service
-public class SaveSoapProjectProcessor extends AbstractSoapProjectProcessor implements Processor<SaveSoapProjectInput, SaveSoapProjectOutput> {
+public class CreateSoapProjectProcessor extends AbstractSoapProjectProcessor implements Processor<CreateSoapProjectInput, CreateSoapProjectOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate
@@ -24,11 +24,11 @@ public class SaveSoapProjectProcessor extends AbstractSoapProjectProcessor imple
      * @see Result
      */
     @Override
-    public Result<SaveSoapProjectOutput> process(final Task<SaveSoapProjectInput> task) {
-        final SaveSoapProjectInput input = task.getInput();
+    public Result<CreateSoapProjectOutput> process(final Task<CreateSoapProjectInput> task) {
+        final CreateSoapProjectInput input = task.getInput();
         final SoapProjectDto soapProject = input.getSoapProject();
         final SoapProjectDto savedSoapProject = save(soapProject);
-        final SaveSoapProjectOutput output = new SaveSoapProjectOutput();
+        final CreateSoapProjectOutput output = new CreateSoapProjectOutput();
         output.setSavedSoapProject(savedSoapProject);
         return createResult(output);
     }

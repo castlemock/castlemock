@@ -18,6 +18,10 @@ package com.fortmocks.mock.rest.web.mvc.controller.project;
 
 import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestApplicationInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestProjectInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestApplicationOutput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestProjectOutput;
 import com.fortmocks.mock.rest.web.mvc.command.application.DeleteRestApplicationsCommand;
 import com.fortmocks.mock.rest.web.mvc.command.application.RestApplicationModifierCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -54,10 +58,10 @@ public class RestProjectController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
     public ModelAndView getProject(@PathVariable final Long projectId) {
-        final RestProjectDto project = restProjectService.findOne(projectId);
+        final ReadRestProjectOutput output =  processorMainframe.process(new ReadRestProjectInput(projectId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(REST_PROJECT, project);
+        model.addObject(REST_PROJECT, output.getRestProject());
         model.addObject(REST_APPLICATION_MODIFIER_COMMAND, new RestApplicationModifierCommand());
         return model;
     }
@@ -76,8 +80,8 @@ public class RestProjectController extends AbstractRestViewController {
         if(DELETE_REST_APPLICATIONS.equalsIgnoreCase(action)) {
             final List<RestApplicationDto> restApplications = new ArrayList<RestApplicationDto>();
             for(Long restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
-                final RestApplicationDto restApplicationDto = restProjectService.findRestApplication(projectId, restApplicationId);
-                restApplications.add(restApplicationDto);
+                final ReadRestApplicationOutput output = processorMainframe.process(new ReadRestApplicationInput(projectId, restApplicationId));
+                restApplications.add(output.getRestApplication());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_REST_APPLICATIONS_PAGE);
             model.addObject(REST_PROJECT_ID, projectId);

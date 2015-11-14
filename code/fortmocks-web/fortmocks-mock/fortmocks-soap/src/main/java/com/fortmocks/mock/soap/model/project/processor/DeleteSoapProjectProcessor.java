@@ -3,8 +3,8 @@ package com.fortmocks.mock.soap.model.project.processor;
 import com.fortmocks.core.model.Processor;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
-import com.fortmocks.mock.soap.model.project.message.DeleteSoapProjectInput;
-import com.fortmocks.mock.soap.model.project.message.DeleteSoapProjectOutput;
+import com.fortmocks.mock.soap.model.project.processor.message.input.DeleteSoapProjectInput;
+import com.fortmocks.mock.soap.model.project.processor.message.output.DeleteSoapProjectOutput;
 import org.springframework.stereotype.Service;
 
 /**

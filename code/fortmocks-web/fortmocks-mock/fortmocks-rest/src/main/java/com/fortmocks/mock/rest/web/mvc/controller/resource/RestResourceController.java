@@ -17,8 +17,12 @@
 package com.fortmocks.mock.rest.web.mvc.controller.resource;
 
 
+import com.fortmocks.mock.rest.model.project.domain.RestResource;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestMethodInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestResourceInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestResourceOutput;
 import com.fortmocks.mock.rest.web.mvc.command.method.DeleteRestMethodsCommand;
 import com.fortmocks.mock.rest.web.mvc.command.method.RestMethodModifierCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -49,14 +53,14 @@ public class RestResourceController extends AbstractRestViewController {
     private static final String DELETE_REST_METHODS_COMMAND = "deleteRestMethodsCommand";
     /**
      * Retrieves a specific project with a project id
-     * @param projectId The id of the project that will be retrieved
+     * @param restProjectId The id of the project that will be retrieved
      * @return Project that matches the provided project id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId, @PathVariable final Long resourceId, final ServletRequest request) {
-        final RestResourceDto restResource = restProjectService.findRestResource(projectId, applicationId, resourceId);
-
+    @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}", method = RequestMethod.GET)
+    public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, final ServletRequest request) {
+        final ReadRestResourceOutput output = processorMainframe.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
+        final RestResourceDto restResource = output.getRestResource();
         String requestProtocol = HTTP;
         if(request.isSecure()){
             requestProtocol = HTTPS;
@@ -64,7 +68,7 @@ public class RestResourceController extends AbstractRestViewController {
 
         try {
             final String hostAddress = getHostAddress();
-            restResource.setInvokeAddress(requestProtocol + hostAddress + ":" + request.getServerPort() + getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + restResource.getUri());
+            restResource.setInvokeAddress(requestProtocol + hostAddress + ":" + request.getServerPort() + getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + restProjectId + SLASH + APPLICATION + SLASH + restApplicationId + restResource.getUri());
         } catch (Exception exception) {
             LOGGER.error("Unable to generate invoke URL", exception);
             throw new IllegalStateException("Unable to generate invoke URL for " + restResource.getName());
@@ -73,8 +77,8 @@ public class RestResourceController extends AbstractRestViewController {
 
 
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(REST_PROJECT_ID, projectId);
-        model.addObject(REST_APPLICATION_ID, applicationId);
+        model.addObject(REST_PROJECT_ID, restProjectId);
+        model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE, restResource);
         model.addObject(REST_METHOD_MODIFIER_COMMAND, new RestMethodModifierCommand());
         return model;
@@ -87,7 +91,7 @@ public class RestResourceController extends AbstractRestViewController {
         if(DELETE_REST_METHODS.equalsIgnoreCase(action)) {
             final List<RestMethodDto> restMethods = new ArrayList<RestMethodDto>();
             for(Long restMethodId : restMethodModifierCommand.getRestMethodIds()){
-                final RestMethodDto restResourceDto = restProjectService.findRestMethod(restProjectId, restApplicationId, restResourceId, restMethodId);
+                final RestMethodDto restResourceDto = processorMainframe.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
                 restMethods.add(restResourceDto);
             }
             final ModelAndView model = createPartialModelAndView(DELETE_REST_METHODS_PAGE);

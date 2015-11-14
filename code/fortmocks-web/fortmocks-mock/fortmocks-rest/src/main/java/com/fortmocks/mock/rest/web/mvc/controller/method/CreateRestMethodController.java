@@ -18,6 +18,8 @@ package com.fortmocks.mock.rest.web.mvc.controller.method;
 
 import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.CreateRestMethodInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.CreateRestMethodOutput;
 import com.fortmocks.mock.rest.web.mvc.command.method.CreateRestMethodCommand;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -54,9 +56,9 @@ public class CreateRestMethodController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}/create/method", method = RequestMethod.POST)
-    public ModelAndView createResource(@PathVariable final Long projectId, @PathVariable final Long applicationId, @PathVariable final Long resourceId, @ModelAttribute final CreateRestMethodCommand createRestMethodCommand) {
-        final RestMethodDto restMethodDto = restProjectService.saveRestMethod(projectId, applicationId, resourceId, createRestMethodCommand.getRestMethod());
-        return redirect("/rest/project/" + projectId + "/application/" + applicationId + "/resource/" + resourceId + "/method/" + restMethodDto.getId());
+    public ModelAndView createMethod(@PathVariable final Long projectId, @PathVariable final Long applicationId, @PathVariable final Long resourceId, @ModelAttribute final CreateRestMethodCommand createRestMethodCommand) {
+        final CreateRestMethodOutput output = processorMainframe.process(new CreateRestMethodInput(projectId, applicationId, resourceId, createRestMethodCommand.getRestMethod()));
+        return redirect("/rest/project/" + projectId + "/application/" + applicationId + "/resource/" + resourceId + "/method/" + output.getCreatedRestMethod().getId());
     }
 
 

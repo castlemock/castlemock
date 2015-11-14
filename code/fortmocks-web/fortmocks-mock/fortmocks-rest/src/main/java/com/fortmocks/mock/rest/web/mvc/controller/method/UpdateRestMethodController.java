@@ -20,6 +20,9 @@ import com.fortmocks.mock.rest.model.project.domain.RestMethodStatus;
 import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.mock.rest.model.project.domain.RestResponseStrategy;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestMethodInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.UpdateRestMethodInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestMethodOutput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -44,9 +47,9 @@ public class UpdateRestMethodController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId) {
-        final RestMethodDto restMethodDto = restProjectService.findRestMethod(restProjectId, restApplicationId, restResourceId, restMethodId);
+        final ReadRestMethodOutput output = processorMainframe.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(REST_METHOD, restMethodDto);
+        model.addObject(REST_METHOD, output.getRestMethod());
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE_ID, restResourceId);
@@ -60,7 +63,7 @@ public class UpdateRestMethodController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @ModelAttribute final RestMethodDto restMethodDto) {
-        restProjectService.updateRestMethod(restProjectId, restApplicationId, restResourceId, restMethodId, restMethodDto);
+        processorMainframe.process(new UpdateRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMethodDto));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 

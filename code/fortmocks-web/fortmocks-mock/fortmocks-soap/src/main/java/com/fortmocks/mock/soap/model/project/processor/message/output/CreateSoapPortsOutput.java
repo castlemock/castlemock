@@ -1,4 +1,4 @@
-package com.fortmocks.mock.soap.model.project.message;
+package com.fortmocks.mock.soap.model.project.processor.message.output;
 
 import com.fortmocks.core.model.Output;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
@@ -7,7 +7,7 @@ import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class SaveSoapProjectOutput implements Output {
+public class CreateSoapPortsOutput implements Output {
 
     private SoapProjectDto savedSoapProject;
 

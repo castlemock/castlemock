@@ -31,6 +31,11 @@ public class ReadRestApplicationInput implements Input {
     @NotNull
     private Long restApplicationId;
 
+    public ReadRestApplicationInput(Long restProjectId, Long restApplicationId) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

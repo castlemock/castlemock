@@ -40,6 +40,15 @@ public class UpdateRestMockResponseStatusInput implements Input {
     @NotNull
     private RestMockResponseStatus status;
 
+    public UpdateRestMockResponseStatusInput(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponseId, RestMockResponseStatus status) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceId = restResourceId;
+        this.restMethodId = restMethodId;
+        this.restMockResponseId = restMockResponseId;
+        this.status = status;
+    }
+
     public Long getRestProjectId() {
         return restProjectId;
     }

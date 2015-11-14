@@ -17,6 +17,9 @@
 package com.fortmocks.mock.rest.web.mvc.controller.resource;
 
 import com.fortmocks.mock.rest.model.project.dto.RestResourceDto;
+import com.fortmocks.mock.rest.model.project.processor.message.input.ReadRestResourceInput;
+import com.fortmocks.mock.rest.model.project.processor.message.input.UpdateRestResourceInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.ReadRestResourceOutput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -40,9 +43,9 @@ public class UpdateRestResourceController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId) {
-        final RestResourceDto restResourceDto = restProjectService.findRestResource(restProjectId, restApplicationId, restResourceId);
+        final ReadRestResourceOutput output = processorMainframe.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(REST_RESOURCE, restResourceDto);
+        model.addObject(REST_RESOURCE, output.getRestResource());
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE_ID, restResourceId);
@@ -52,7 +55,7 @@ public class UpdateRestResourceController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId,  @ModelAttribute final RestResourceDto restResourceDto) {
-        restProjectService.updateRestResource(restProjectId, restApplicationId, restResourceId, restResourceDto);
+        processorMainframe.process(new UpdateRestResourceInput(restProjectId, restApplicationId, restResourceId, restResourceDto));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId);
     }
 
