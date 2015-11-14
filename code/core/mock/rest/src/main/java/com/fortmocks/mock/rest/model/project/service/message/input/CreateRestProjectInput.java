@@ -17,31 +17,20 @@
 package com.fortmocks.mock.rest.model.project.service.message.input;
 
 import com.fortmocks.core.basis.model.Input;
-import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.basis.model.validation.NotNull;
+import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestProjectInput implements Input {
+public class CreateRestProjectInput implements Input {
 
-    @NotNull
-    private Long restProjectId;
     @NotNull
     private RestProjectDto restProject;
 
-    public UpdateRestProjectInput(Long restProjectId, RestProjectDto restProject) {
-        this.restProjectId = restProjectId;
+    public CreateRestProjectInput(RestProjectDto restProject) {
         this.restProject = restProject;
-    }
-
-    public Long getRestProjectId() {
-        return restProjectId;
-    }
-
-    public void setRestProjectId(Long restProjectId) {
-        this.restProjectId = restProjectId;
     }
 
     public RestProjectDto getRestProject() {

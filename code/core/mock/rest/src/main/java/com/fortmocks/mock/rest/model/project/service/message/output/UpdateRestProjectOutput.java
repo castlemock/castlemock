@@ -17,27 +17,23 @@
 package com.fortmocks.mock.rest.model.project.service.message.output;
 
 import com.fortmocks.core.basis.model.Output;
-import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.basis.model.validation.NotNull;
+import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateRestApplicationOutput implements Output {
+public class UpdateRestProjectOutput implements Output {
 
     @NotNull
-    private RestApplicationDto savedRestApplication;
+    private RestProjectDto updatedRestProject;
 
-    public CreateRestApplicationOutput(RestApplicationDto savedRestApplication) {
-        this.savedRestApplication = savedRestApplication;
+    public RestProjectDto getUpdatedRestProject() {
+        return updatedRestProject;
     }
 
-    public RestApplicationDto getSavedRestApplication() {
-        return savedRestApplication;
-    }
-
-    public void setSavedRestApplication(RestApplicationDto savedRestApplication) {
-        this.savedRestApplication = savedRestApplication;
+    public void setUpdatedRestProject(RestProjectDto updatedRestProject) {
+        this.updatedRestProject = updatedRestProject;
     }
 }

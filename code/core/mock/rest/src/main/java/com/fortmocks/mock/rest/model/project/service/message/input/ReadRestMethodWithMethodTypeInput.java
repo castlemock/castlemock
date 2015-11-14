@@ -17,8 +17,8 @@
 package com.fortmocks.mock.rest.model.project.service.message.input;
 
 import com.fortmocks.core.basis.model.Input;
-import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.core.basis.model.validation.NotNull;
+import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
 
 /**
  * @author Karl Dahlgren

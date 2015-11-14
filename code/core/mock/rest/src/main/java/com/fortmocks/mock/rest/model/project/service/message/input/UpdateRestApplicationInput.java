@@ -17,22 +17,25 @@
 package com.fortmocks.mock.rest.model.project.service.message.input;
 
 import com.fortmocks.core.basis.model.Input;
-import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.basis.model.validation.NotNull;
+import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateRestApplicationInput implements Input {
+public class UpdateRestApplicationInput implements Input {
 
     @NotNull
     private Long restProjectId;
     @NotNull
+    private Long restApplicationId;
+    @NotNull
     private RestApplicationDto restApplication;
 
-    public CreateRestApplicationInput(Long restProjectId, RestApplicationDto restApplication) {
+    public UpdateRestApplicationInput(Long restProjectId, Long restApplicationId, RestApplicationDto restApplication) {
         this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
         this.restApplication = restApplication;
     }
 
@@ -42,6 +45,14 @@ public class CreateRestApplicationInput implements Input {
 
     public void setRestProjectId(Long restProjectId) {
         this.restProjectId = restProjectId;
+    }
+
+    public Long getRestApplicationId() {
+        return restApplicationId;
+    }
+
+    public void setRestApplicationId(Long restApplicationId) {
+        this.restApplicationId = restApplicationId;
     }
 
     public RestApplicationDto getRestApplication() {

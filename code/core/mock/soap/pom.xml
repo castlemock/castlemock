@@ -17,10 +17,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fortmocks</groupId>
-	<artifactId>fortmocks-core</artifactId>
-	<packaging>pom</packaging>
+	<artifactId>fortmocks-core-mock-soap</artifactId>
+	<packaging>jar</packaging>
 	<version>0.2-SNAPSHOT</version>
-    <name>Fort mocks core</name>
+    <name>Fort mocks core - mock soap</name>
 	<url>http://www.fortmocks.com</url>
 	<description>The core module contains the core package for Fort Mocks</description>
 
@@ -33,16 +33,36 @@
 
 	<parent>
 		<groupId>com.fortmocks</groupId>
-		<artifactId>fortmocks-parent</artifactId>
+		<artifactId>fortmocks-core-mock</artifactId>
 		<version>0.2-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
-
-	<modules>
-		<module>basis</module>
-		<module>mock</module>
-	</modules>
-
+	<dependencies>
+		<dependency>
+			<groupId>com.fortmocks</groupId>
+			<artifactId>fortmocks-core-basis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

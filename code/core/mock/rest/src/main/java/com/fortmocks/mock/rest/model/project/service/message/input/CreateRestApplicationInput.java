@@ -14,23 +14,34 @@
  * limitations under the License.
  */
 
-package com.fortmocks.mock.rest.model.project.service.message.output;
+package com.fortmocks.mock.rest.model.project.service.message.input;
 
-import com.fortmocks.core.basis.model.Output;
-import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
+import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.validation.NotNull;
+import com.fortmocks.mock.rest.model.project.dto.RestApplicationDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadRestApplicationOutput implements Output{
+public class CreateRestApplicationInput implements Input {
 
+    @NotNull
+    private Long restProjectId;
     @NotNull
     private RestApplicationDto restApplication;
 
-    public ReadRestApplicationOutput(RestApplicationDto restApplication) {
+    public CreateRestApplicationInput(Long restProjectId, RestApplicationDto restApplication) {
+        this.restProjectId = restProjectId;
         this.restApplication = restApplication;
+    }
+
+    public Long getRestProjectId() {
+        return restProjectId;
+    }
+
+    public void setRestProjectId(Long restProjectId) {
+        this.restProjectId = restProjectId;
     }
 
     public RestApplicationDto getRestApplication() {

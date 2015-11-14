@@ -44,6 +44,13 @@
 
 	<dependencies>
 
+
+		<dependency>
+			<groupId>com.fortmocks</groupId>
+			<artifactId>fortmocks-core-mock-soap</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.fortmocks</groupId>
 			<artifactId>fortmocks-core-basis</artifactId>

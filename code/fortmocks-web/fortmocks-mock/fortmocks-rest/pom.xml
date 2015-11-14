@@ -40,6 +40,13 @@
 
 	<dependencies>
 
+
+		<dependency>
+			<groupId>com.fortmocks</groupId>
+			<artifactId>fortmocks-core-mock-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.fortmocks</groupId>
 			<artifactId>fortmocks-core-basis</artifactId>
