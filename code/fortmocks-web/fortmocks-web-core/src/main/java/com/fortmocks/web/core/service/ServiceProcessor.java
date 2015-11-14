@@ -16,9 +16,10 @@
 
 package com.fortmocks.web.core.service;
 
-import com.fortmocks.core.model.*;
-import com.fortmocks.core.model.user.domain.User;
-import com.fortmocks.core.model.validation.NotNull;
+import com.fortmocks.core.basis.model.*;
+import com.fortmocks.core.basis.model.*;
+import com.fortmocks.core.basis.model.user.domain.User;
+import com.fortmocks.core.basis.model.validation.NotNull;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

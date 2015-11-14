@@ -1,7 +1,7 @@
 package com.fortmocks.mock.soap.model.event.service.adapter;
 
-import com.fortmocks.core.model.TypeIdentifier;
-import com.fortmocks.core.model.event.service.EventServiceAdapter;
+import com.fortmocks.core.basis.model.TypeIdentifier;
+import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
 import com.fortmocks.mock.soap.model.SoapTypeIdentifier;
 import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.mock.soap.model.event.service.message.input.ReadAllSoapEventInput;

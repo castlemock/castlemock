@@ -16,9 +16,9 @@
 
 package com.fortmocks.mock.soap.model.project.service;
 
-import com.fortmocks.core.model.Service;
-import com.fortmocks.core.model.Result;
-import com.fortmocks.core.model.Task;
+import com.fortmocks.core.basis.model.Service;
+import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.Task;
 import com.fortmocks.mock.soap.model.project.domain.SoapOperation;
 import com.fortmocks.mock.soap.model.project.service.message.input.UpdateSoapOperationsStatusInput;
 import com.fortmocks.mock.soap.model.project.service.message.output.UpdateSoapOperationsStatusOutput;

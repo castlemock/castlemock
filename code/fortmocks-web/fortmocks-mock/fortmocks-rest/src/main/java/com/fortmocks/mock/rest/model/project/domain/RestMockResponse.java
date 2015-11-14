@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.model.project.domain;
 
-import com.fortmocks.core.model.Saveable;
+import com.fortmocks.core.basis.model.Saveable;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

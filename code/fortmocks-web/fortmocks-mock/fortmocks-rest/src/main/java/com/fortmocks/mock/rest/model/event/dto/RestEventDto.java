@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.model.event.dto;
 
-import com.fortmocks.core.model.event.dto.EventDto;
+import com.fortmocks.core.basis.model.event.dto.EventDto;
 import org.dozer.Mapping;
 
 import java.util.Date;

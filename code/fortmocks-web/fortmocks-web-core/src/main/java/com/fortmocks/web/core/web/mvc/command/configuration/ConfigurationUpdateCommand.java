@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.core.web.mvc.command.configuration;
 
-import com.fortmocks.core.model.configuration.domain.ConfigurationGroup;
-import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
+import com.fortmocks.core.basis.model.configuration.domain.ConfigurationGroup;
+import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
 
 import java.util.List;
 

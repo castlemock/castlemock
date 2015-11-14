@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.core.model;
 
-import com.fortmocks.core.model.Repository;
-import com.fortmocks.core.model.Saveable;
+import com.fortmocks.core.basis.model.Repository;
+import com.fortmocks.core.basis.model.Saveable;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 

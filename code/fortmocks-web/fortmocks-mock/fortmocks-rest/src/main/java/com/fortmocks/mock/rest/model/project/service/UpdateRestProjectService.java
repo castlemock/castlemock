@@ -16,9 +16,9 @@
 
 package com.fortmocks.mock.rest.model.project.service;
 
-import com.fortmocks.core.model.Service;
-import com.fortmocks.core.model.Result;
-import com.fortmocks.core.model.Task;
+import com.fortmocks.core.basis.model.Service;
+import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.Task;
 import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.mock.rest.model.project.service.message.input.UpdateRestProjectInput;
 import com.fortmocks.mock.rest.model.project.service.message.output.UpdateRestProjectOutput;

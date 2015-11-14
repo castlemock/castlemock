@@ -15,7 +15,7 @@
  */
 package com.fortmocks.mock.soap.web.mvc.controller.operation;
 
-import com.fortmocks.core.model.Input;
+import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;

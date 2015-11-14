@@ -17,7 +17,7 @@
 package com.fortmocks.mock.rest.model.event.repository;
 
 
-import com.fortmocks.core.model.Repository;
+import com.fortmocks.core.basis.model.Repository;
 import com.fortmocks.mock.rest.model.event.domain.RestEvent;
 
 /**

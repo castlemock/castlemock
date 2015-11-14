@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.core.web.mvc.controller.event;
 
-import com.fortmocks.core.model.event.dto.EventDto;
+import com.fortmocks.core.basis.model.event.dto.EventDto;
 import com.fortmocks.web.core.model.event.service.EventServiceFacadeImpl;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;

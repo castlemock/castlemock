@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.model.project.domain;
 
-import com.fortmocks.core.model.project.domain.Project;
+import com.fortmocks.core.basis.model.project.domain.Project;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;

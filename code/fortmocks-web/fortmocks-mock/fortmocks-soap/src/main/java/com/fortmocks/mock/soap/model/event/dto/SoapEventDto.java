@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.model.event.dto;
 
-import com.fortmocks.core.model.event.dto.EventDto;
+import com.fortmocks.core.basis.model.event.dto.EventDto;
 import com.fortmocks.mock.soap.model.project.domain.SoapOperation;
 import org.dozer.Mapping;
 

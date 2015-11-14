@@ -1,7 +1,7 @@
 package com.fortmocks.mock.rest.model.event.service.message.input;
 
-import com.fortmocks.core.model.Input;
-import com.fortmocks.core.model.validation.NotNull;
+import com.fortmocks.core.basis.model.Input;
+import com.fortmocks.core.basis.model.validation.NotNull;
 
 /**
  * @author Karl Dahlgren

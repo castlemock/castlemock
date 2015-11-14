@@ -16,12 +16,12 @@
 
 package com.fortmocks.web.core.model.user.processor;
 
-import com.fortmocks.core.model.Service;
-import com.fortmocks.core.model.Result;
-import com.fortmocks.core.model.Task;
-import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.message.input.ReadUserInput;
-import com.fortmocks.core.model.user.service.message.output.ReadUserOutput;
+import com.fortmocks.core.basis.model.Service;
+import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.user.dto.UserDto;
+import com.fortmocks.core.basis.model.user.service.message.input.ReadUserInput;
+import com.fortmocks.core.basis.model.user.service.message.output.ReadUserOutput;
 
 /**
  * @author Karl Dahlgren

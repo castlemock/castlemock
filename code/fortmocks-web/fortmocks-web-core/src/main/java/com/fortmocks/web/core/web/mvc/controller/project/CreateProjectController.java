@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.core.web.mvc.controller.project;
 
-import com.fortmocks.core.model.project.domain.DomainNameStrategy;
-import com.fortmocks.core.model.project.dto.ProjectDto;
+import com.fortmocks.core.basis.model.project.domain.DomainNameStrategy;
+import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import com.fortmocks.web.core.model.project.service.ProjectServiceFacadeImpl;
 import com.fortmocks.web.core.web.mvc.command.project.CreateProjectCommand;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;

@@ -16,9 +16,9 @@
 
 package com.fortmocks.mock.rest.model.project.service;
 
-import com.fortmocks.core.model.Service;
-import com.fortmocks.core.model.Result;
-import com.fortmocks.core.model.Task;
+import com.fortmocks.core.basis.model.Service;
+import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.Task;
 import com.fortmocks.mock.rest.model.project.domain.RestApplication;
 import com.fortmocks.mock.rest.model.project.domain.RestProject;
 import com.fortmocks.mock.rest.model.project.service.message.input.DeleteRestApplicationInput;

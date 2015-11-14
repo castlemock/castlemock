@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.core.web.mvc.controller.project;
 
-import com.fortmocks.core.model.project.service.ProjectServiceFacade;
+import com.fortmocks.core.basis.model.project.service.ProjectServiceFacade;
 import com.fortmocks.web.core.manager.FileManager;
 import com.fortmocks.web.core.web.mvc.command.ProjectFileUploadForm;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;

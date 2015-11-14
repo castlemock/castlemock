@@ -1,6 +1,6 @@
 package com.fortmocks.mock.rest.model.event.service.message.input;
 
-import com.fortmocks.core.model.Input;
+import com.fortmocks.core.basis.model.Input;
 
 /**
  * @author Karl Dahlgren

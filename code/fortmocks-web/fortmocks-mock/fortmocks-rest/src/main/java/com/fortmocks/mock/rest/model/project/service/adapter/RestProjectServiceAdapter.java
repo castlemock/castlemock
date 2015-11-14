@@ -1,8 +1,7 @@
 package com.fortmocks.mock.rest.model.project.service.adapter;
 
-import com.fortmocks.core.model.TypeIdentifier;
-import com.fortmocks.core.model.project.dto.ProjectDto;
-import com.fortmocks.core.model.project.service.ProjectServiceAdapter;
+import com.fortmocks.core.basis.model.TypeIdentifier;
+import com.fortmocks.core.basis.model.project.service.ProjectServiceAdapter;
 import com.fortmocks.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.mock.rest.model.project.service.message.input.*;

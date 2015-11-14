@@ -16,12 +16,12 @@
 
 package com.fortmocks.web.core.model.project.service;
 
-import com.fortmocks.core.model.TypeIdentifiable;
-import com.fortmocks.core.model.TypeIdentifier;
-import com.fortmocks.core.model.project.domain.Project;
-import com.fortmocks.core.model.project.dto.ProjectDto;
-import com.fortmocks.core.model.project.service.ProjectServiceAdapter;
-import com.fortmocks.core.model.project.service.ProjectServiceFacade;
+import com.fortmocks.core.basis.model.TypeIdentifiable;
+import com.fortmocks.core.basis.model.TypeIdentifier;
+import com.fortmocks.core.basis.model.project.domain.Project;
+import com.fortmocks.core.basis.model.project.dto.ProjectDto;
+import com.fortmocks.core.basis.model.project.service.ProjectServiceAdapter;
+import com.fortmocks.core.basis.model.project.service.ProjectServiceFacade;
 import com.fortmocks.web.core.model.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +41,7 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, Long
     /**
      * The initiate method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
-     * @see com.fortmocks.core.model.Service
+     * @see com.fortmocks.core.basis.model.Service
      * @see TypeIdentifier
      * @see TypeIdentifiable
      */

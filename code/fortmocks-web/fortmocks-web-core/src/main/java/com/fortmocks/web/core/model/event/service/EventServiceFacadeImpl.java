@@ -16,12 +16,12 @@
 
 package com.fortmocks.web.core.model.event.service;
 
-import com.fortmocks.core.model.TypeIdentifiable;
-import com.fortmocks.core.model.TypeIdentifier;
-import com.fortmocks.core.model.event.domain.Event;
-import com.fortmocks.core.model.event.dto.EventDto;
-import com.fortmocks.core.model.event.service.EventServiceAdapter;
-import com.fortmocks.core.model.event.service.EventServiceFacade;
+import com.fortmocks.core.basis.model.TypeIdentifiable;
+import com.fortmocks.core.basis.model.TypeIdentifier;
+import com.fortmocks.core.basis.model.event.domain.Event;
+import com.fortmocks.core.basis.model.event.dto.EventDto;
+import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
+import com.fortmocks.core.basis.model.event.service.EventServiceFacade;
 import com.fortmocks.web.core.model.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +39,7 @@ public class EventServiceFacadeImpl extends ServiceFacadeImpl<EventDto, Long, Ev
     /**
      * The initiate method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
-     * @see com.fortmocks.core.model.Service
+     * @see com.fortmocks.core.basis.model.Service
      * @see TypeIdentifier
      * @see TypeIdentifiable
      */

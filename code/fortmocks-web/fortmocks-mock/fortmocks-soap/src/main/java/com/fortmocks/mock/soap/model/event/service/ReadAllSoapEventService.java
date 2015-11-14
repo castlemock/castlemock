@@ -1,13 +1,11 @@
 package com.fortmocks.mock.soap.model.event.service;
 
-import com.fortmocks.core.model.Result;
-import com.fortmocks.core.model.Service;
-import com.fortmocks.core.model.Task;
-import com.fortmocks.mock.soap.model.event.domain.SoapEvent;
+import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.Service;
+import com.fortmocks.core.basis.model.Task;
 import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.mock.soap.model.event.service.message.input.ReadAllSoapEventInput;
 import com.fortmocks.mock.soap.model.event.service.message.output.ReadAllSoapEventOutput;
-import com.fortmocks.web.core.model.AbstractProcessor;
 
 import java.util.List;
 

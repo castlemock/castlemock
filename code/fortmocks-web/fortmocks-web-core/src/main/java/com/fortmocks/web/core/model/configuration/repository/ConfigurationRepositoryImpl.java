@@ -16,10 +16,10 @@
 
 package com.fortmocks.web.core.model.configuration.repository;
 
-import com.fortmocks.core.model.configuration.domain.Configuration;
-import com.fortmocks.core.model.configuration.domain.ConfigurationGroup;
-import com.fortmocks.core.model.configuration.repository.ConfigurationRepository;
-import com.fortmocks.core.model.user.repository.UserRepository;
+import com.fortmocks.core.basis.model.configuration.domain.Configuration;
+import com.fortmocks.core.basis.model.configuration.domain.ConfigurationGroup;
+import com.fortmocks.core.basis.model.configuration.repository.ConfigurationRepository;
+import com.fortmocks.core.basis.model.user.repository.UserRepository;
 import com.fortmocks.web.core.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;

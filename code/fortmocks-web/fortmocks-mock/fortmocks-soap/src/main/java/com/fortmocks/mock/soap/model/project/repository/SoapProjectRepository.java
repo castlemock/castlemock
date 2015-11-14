@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.model.project.repository;
 
-import com.fortmocks.core.model.Repository;
+import com.fortmocks.core.basis.model.Repository;
 import com.fortmocks.mock.soap.model.project.domain.SoapProject;
 
 /**

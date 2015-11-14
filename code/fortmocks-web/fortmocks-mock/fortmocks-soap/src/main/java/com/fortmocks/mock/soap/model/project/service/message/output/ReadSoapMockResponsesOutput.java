@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.model.project.service.message.output;
 
-import com.fortmocks.core.model.Output;
+import com.fortmocks.core.basis.model.Output;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 
 import java.util.List;

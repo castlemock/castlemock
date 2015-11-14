@@ -16,13 +16,12 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.project;
 
-import com.fortmocks.core.model.Input;
+import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.mock.soap.config.TestApplication;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDtoGenerator;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDtoGenerator;
-import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import com.fortmocks.web.core.service.ServiceProcessor;
@@ -43,7 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 
 /**

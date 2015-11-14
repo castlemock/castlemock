@@ -16,14 +16,14 @@
 
 package com.fortmocks.web.core.model.configuration.processor;
 
-import com.fortmocks.core.model.Service;
-import com.fortmocks.core.model.Result;
-import com.fortmocks.core.model.Task;
-import com.fortmocks.core.model.configuration.domain.ConfigurationGroup;
-import com.fortmocks.core.model.configuration.dto.ConfigurationDto;
-import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.service.message.input.UpdateAllConfigurationGroupsInput;
-import com.fortmocks.core.model.configuration.service.message.output.UpdateAllConfigurationGroupsOutput;
+import com.fortmocks.core.basis.model.Service;
+import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.configuration.domain.ConfigurationGroup;
+import com.fortmocks.core.basis.model.configuration.dto.ConfigurationDto;
+import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
+import com.fortmocks.core.basis.model.configuration.service.message.input.UpdateAllConfigurationGroupsInput;
+import com.fortmocks.core.basis.model.configuration.service.message.output.UpdateAllConfigurationGroupsOutput;
 import com.google.common.base.Preconditions;
 
 import java.util.ArrayList;

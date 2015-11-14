@@ -17,7 +17,7 @@
 package com.fortmocks.mock.rest.model;
 
 
-import com.fortmocks.core.model.TypeIdentifier;
+import com.fortmocks.core.basis.model.TypeIdentifier;
 
 /**
  * @author Karl Dahlgren

@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.model.event.domain;
 
-import com.fortmocks.core.model.event.domain.Event;
+import com.fortmocks.core.basis.model.event.domain.Event;
 import com.fortmocks.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.mock.rest.model.event.dto.RestResponseDto;
 

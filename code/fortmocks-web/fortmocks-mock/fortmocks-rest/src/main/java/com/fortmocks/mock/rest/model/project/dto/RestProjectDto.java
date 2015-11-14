@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.model.project.dto;
 
-import com.fortmocks.core.model.project.dto.ProjectDto;
+import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import org.dozer.Mapping;
 
 import java.util.LinkedList;

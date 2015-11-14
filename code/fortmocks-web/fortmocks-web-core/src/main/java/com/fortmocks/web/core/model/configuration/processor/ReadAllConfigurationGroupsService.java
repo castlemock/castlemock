@@ -16,12 +16,12 @@
 
 package com.fortmocks.web.core.model.configuration.processor;
 
-import com.fortmocks.core.model.Service;
-import com.fortmocks.core.model.Result;
-import com.fortmocks.core.model.Task;
-import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
-import com.fortmocks.core.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
+import com.fortmocks.core.basis.model.Service;
+import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
+import com.fortmocks.core.basis.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
+import com.fortmocks.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 
 import java.util.List;
 

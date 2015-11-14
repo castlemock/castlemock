@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.model.project.service.message.output;
 
-import com.fortmocks.core.model.Output;
+import com.fortmocks.core.basis.model.Output;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 
 /**

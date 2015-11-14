@@ -16,8 +16,8 @@
 
 package com.fortmocks.war.config;
 
-import com.fortmocks.core.model.Repository;
-import com.fortmocks.core.model.ServiceFacade;
+import com.fortmocks.core.basis.model.Repository;
+import com.fortmocks.core.basis.model.ServiceFacade;
 import com.fortmocks.web.core.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,8 +76,8 @@ public class Application extends SpringBootServletInitializer {
 
     /**
      * The initiate method is responsible for initiating all the components when the application has been started.
-     * @see com.fortmocks.core.model.Repository
-     * @see com.fortmocks.core.model.Service
+     * @see Repository
+     * @see com.fortmocks.core.basis.model.Service
      */
     @PostConstruct
     protected void initiate(){
@@ -103,7 +103,7 @@ public class Application extends SpringBootServletInitializer {
 
     /**
      * The method provides the functionality to retrieve all the repositories and initiate them
-     * @see com.fortmocks.core.model.Repository
+     * @see Repository
      */
     protected void initiateRepository(){
         final Map<String, Object> repositories = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Repository.class);
@@ -119,8 +119,8 @@ public class Application extends SpringBootServletInitializer {
 
     /**
      * The method provides the functionality to retrieve all the service facades and initiate them
-     * @see com.fortmocks.core.model.ServiceFacade
-     * @see com.fortmocks.core.model.Service
+     * @see ServiceFacade
+     * @see com.fortmocks.core.basis.model.Service
      */
     protected void initiateServiceFacade(){
         final Map<String, Object> components = applicationContext.getBeansWithAnnotation(Service.class);
@@ -135,7 +135,7 @@ public class Application extends SpringBootServletInitializer {
 
     /**
      * The method provides the functionality to retrieve all the repositories and initiate them
-     * @see com.fortmocks.core.model.Repository
+     * @see Repository
      */
     protected void initiateProcessRegistry(){
         serviceRegistry.initializeProcessorRegistry();;

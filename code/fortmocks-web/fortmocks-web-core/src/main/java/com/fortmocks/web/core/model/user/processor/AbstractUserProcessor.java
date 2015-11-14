@@ -16,10 +16,10 @@
 
 package com.fortmocks.web.core.model.user.processor;
 
-import com.fortmocks.core.model.user.domain.Role;
-import com.fortmocks.core.model.user.domain.Status;
-import com.fortmocks.core.model.user.domain.User;
-import com.fortmocks.core.model.user.dto.UserDto;
+import com.fortmocks.core.basis.model.user.domain.Role;
+import com.fortmocks.core.basis.model.user.domain.Status;
+import com.fortmocks.core.basis.model.user.domain.User;
+import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.web.core.model.AbstractProcessor;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;

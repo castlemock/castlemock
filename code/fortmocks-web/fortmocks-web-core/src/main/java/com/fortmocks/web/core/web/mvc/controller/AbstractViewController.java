@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.core.web.mvc.controller;
 
-import com.fortmocks.core.model.user.domain.Role;
-import com.fortmocks.core.model.user.domain.User;
+import com.fortmocks.core.basis.model.user.domain.Role;
+import com.fortmocks.core.basis.model.user.domain.User;
 import com.fortmocks.web.core.model.ContentItem;
 import com.fortmocks.web.core.model.ContentItemGroup;
 import org.springframework.beans.factory.annotation.Autowired;

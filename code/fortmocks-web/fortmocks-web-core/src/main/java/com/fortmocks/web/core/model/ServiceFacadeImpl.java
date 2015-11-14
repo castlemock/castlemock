@@ -16,7 +16,8 @@
 
 package com.fortmocks.web.core.model;
 
-import com.fortmocks.core.model.*;
+import com.fortmocks.core.basis.model.*;
+import com.fortmocks.core.basis.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 

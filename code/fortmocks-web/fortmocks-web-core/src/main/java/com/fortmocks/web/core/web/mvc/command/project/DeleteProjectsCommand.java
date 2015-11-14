@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.core.web.mvc.command.project;
 
-import com.fortmocks.core.model.project.domain.Project;
-import com.fortmocks.core.model.project.dto.ProjectDto;
+import com.fortmocks.core.basis.model.project.domain.Project;
+import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 
 /**
  * The DeleteProjectsCommand is a command class and is used to identify which projects

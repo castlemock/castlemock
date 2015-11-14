@@ -1,13 +1,11 @@
 package com.fortmocks.mock.rest.model.event.service;
 
-import com.fortmocks.core.model.Result;
-import com.fortmocks.core.model.Service;
-import com.fortmocks.core.model.Task;
+import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.Service;
+import com.fortmocks.core.basis.model.Task;
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.mock.rest.model.event.service.message.input.CreateRestEventInput;
-import com.fortmocks.mock.rest.model.event.service.message.input.ReadRestEventInput;
 import com.fortmocks.mock.rest.model.event.service.message.output.CreateRestEventOutput;
-import com.fortmocks.mock.rest.model.event.service.message.output.ReadRestEventOutput;
 
 /**
  * @author Karl Dahlgren

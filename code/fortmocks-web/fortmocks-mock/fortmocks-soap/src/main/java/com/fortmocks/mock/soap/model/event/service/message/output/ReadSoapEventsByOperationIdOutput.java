@@ -1,6 +1,6 @@
 package com.fortmocks.mock.soap.model.event.service.message.output;
 
-import com.fortmocks.core.model.Output;
+import com.fortmocks.core.basis.model.Output;
 import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
 
 import java.util.List;

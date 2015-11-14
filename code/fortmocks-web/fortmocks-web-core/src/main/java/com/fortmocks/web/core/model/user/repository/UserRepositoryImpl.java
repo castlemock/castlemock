@@ -17,10 +17,10 @@
 package com.fortmocks.web.core.model.user.repository;
 
 import com.fortmocks.web.core.model.RepositoryImpl;
-import com.fortmocks.core.model.user.domain.Role;
-import com.fortmocks.core.model.user.domain.Status;
-import com.fortmocks.core.model.user.domain.User;
-import com.fortmocks.core.model.user.repository.UserRepository;
+import com.fortmocks.core.basis.model.user.domain.Role;
+import com.fortmocks.core.basis.model.user.domain.Status;
+import com.fortmocks.core.basis.model.user.domain.User;
+import com.fortmocks.core.basis.model.user.repository.UserRepository;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

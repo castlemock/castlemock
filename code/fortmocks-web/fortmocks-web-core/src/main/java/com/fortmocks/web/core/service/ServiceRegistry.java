@@ -16,9 +16,9 @@
 
 package com.fortmocks.web.core.service;
 
-import com.fortmocks.core.model.Input;
-import com.fortmocks.core.model.Output;
-import com.fortmocks.core.model.Service;
+import com.fortmocks.core.basis.model.Input;
+import com.fortmocks.core.basis.model.Output;
+import com.fortmocks.core.basis.model.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.GenericTypeResolver;

@@ -16,11 +16,9 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller.event;
 
-import com.fortmocks.core.model.event.dto.EventDto;
 import com.fortmocks.mock.soap.model.event.service.message.input.ReadSoapEventInput;
 import com.fortmocks.mock.soap.model.event.service.message.output.ReadSoapEventOutput;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapViewController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
