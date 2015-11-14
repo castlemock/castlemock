@@ -9,4 +9,5 @@ import com.fortmocks.core.model.Input;
 public class ReadAllSoapEventInput implements Input {
 
 
+
 }

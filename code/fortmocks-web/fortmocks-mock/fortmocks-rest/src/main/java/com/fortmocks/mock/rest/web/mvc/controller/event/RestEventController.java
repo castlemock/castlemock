@@ -18,6 +18,7 @@ package com.fortmocks.mock.rest.web.mvc.controller.event;
 
 import com.fortmocks.core.model.event.dto.EventDto;
 import com.fortmocks.mock.rest.model.event.service.message.input.ReadRestEventInput;
+import com.fortmocks.mock.rest.model.event.service.message.output.ReadRestEventOutput;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -48,9 +49,9 @@ public class RestEventController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "rest/event/{eventId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long eventId) {
-        final ReadRestEventInput input = serviceProcessor.process(new ReadRestEventInput(eventId));
+        final ReadRestEventOutput output = serviceProcessor.process(new ReadRestEventInput(eventId));
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(EVENT, input.getRestEventId());
+        model.addObject(EVENT, output.getRestEvent());
         return model;
     }
 
