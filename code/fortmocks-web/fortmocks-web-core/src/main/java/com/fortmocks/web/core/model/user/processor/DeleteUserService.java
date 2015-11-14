@@ -14,13 +14,20 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model;
+package com.fortmocks.web.core.model.user.processor;
+
+import com.fortmocks.core.model.Service;
+import com.fortmocks.core.model.Result;
+import com.fortmocks.core.model.Task;
+import com.fortmocks.core.model.user.processor.message.input.DeleteUserInput;
+import com.fortmocks.core.model.user.processor.messge.output.DeleteUserOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public interface Service<I extends Input, O extends Output> {
+@org.springframework.stereotype.Service
+public class DeleteUserService extends AbstractUserProcessor implements Service<DeleteUserInput, DeleteUserOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate
@@ -30,6 +37,11 @@ public interface Service<I extends Input, O extends Output> {
      * @see Task
      * @see Result
      */
-    Result<O> process(Task<I> task);
-
+    @Override
+    public Result<DeleteUserOutput> process(final Task<DeleteUserInput> task) {
+        final DeleteUserInput input = task.getInput();
+        final Long userId = input.getUserId();
+        delete(userId);
+        return createResult(new DeleteUserOutput());
+    }
 }

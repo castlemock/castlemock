@@ -14,13 +14,21 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model;
+package com.fortmocks.web.core.model.user.processor;
+
+import com.fortmocks.core.model.Service;
+import com.fortmocks.core.model.Result;
+import com.fortmocks.core.model.Task;
+import com.fortmocks.core.model.user.dto.UserDto;
+import com.fortmocks.core.model.user.processor.message.input.ReadUserInput;
+import com.fortmocks.core.model.user.processor.messge.output.ReadUserOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public interface Service<I extends Input, O extends Output> {
+@org.springframework.stereotype.Service
+public class ReadUserService extends AbstractUserProcessor implements Service<ReadUserInput, ReadUserOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate
@@ -30,6 +38,12 @@ public interface Service<I extends Input, O extends Output> {
      * @see Task
      * @see Result
      */
-    Result<O> process(Task<I> task);
-
+    @Override
+    public Result<ReadUserOutput> process(final Task<ReadUserInput> task) {
+        final ReadUserInput input = task.getInput();
+        final UserDto user = find(input.getUserId());
+        final ReadUserOutput output = new ReadUserOutput();
+        output.setUser(user);
+        return createResult(output);
+    }
 }

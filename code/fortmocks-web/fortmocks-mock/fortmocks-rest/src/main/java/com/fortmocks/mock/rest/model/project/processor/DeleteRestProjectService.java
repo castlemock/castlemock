@@ -14,13 +14,20 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model;
+package com.fortmocks.mock.rest.model.project.processor;
+
+import com.fortmocks.core.model.Service;
+import com.fortmocks.core.model.Result;
+import com.fortmocks.core.model.Task;
+import com.fortmocks.mock.rest.model.project.processor.message.input.DeleteRestProjectInput;
+import com.fortmocks.mock.rest.model.project.processor.message.output.DeleteRestProjectOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public interface Service<I extends Input, O extends Output> {
+@org.springframework.stereotype.Service
+public class DeleteRestProjectService extends AbstractRestProjectProcessor implements Service<DeleteRestProjectInput, DeleteRestProjectOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate
@@ -30,6 +37,11 @@ public interface Service<I extends Input, O extends Output> {
      * @see Task
      * @see Result
      */
-    Result<O> process(Task<I> task);
-
+    @Override
+    public Result<DeleteRestProjectOutput> process(final Task<DeleteRestProjectInput> task) {
+        final DeleteRestProjectInput input = task.getInput();
+        final Long restProjectId = input.getRestProjectId();
+        delete(restProjectId);
+        return createResult(new DeleteRestProjectOutput());
+    }
 }

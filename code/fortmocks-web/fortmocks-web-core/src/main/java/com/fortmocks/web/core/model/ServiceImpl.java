@@ -18,7 +18,6 @@ package com.fortmocks.web.core.model;
 
 import com.fortmocks.core.model.Repository;
 import com.fortmocks.core.model.Saveable;
-import com.fortmocks.core.model.Service;
 import com.google.common.base.Preconditions;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;

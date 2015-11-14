@@ -30,12 +30,12 @@ public class RestProjectServiceFacade implements ServiceFacade<RestProjectDto, L
     }
 
     @Override
-    public void delete(String typeUrl, Long id) {
+    public void delete(Long id) {
         processorMainframe.process(new DeleteRestProjectInput(id));
     }
 
     @Override
-    public RestProjectDto update(String typeUrl, Long id, RestProjectDto dto) {
+    public RestProjectDto update(Long id, RestProjectDto dto) {
         final UpdateRestProjectOutput output = processorMainframe.process(new UpdateRestProjectInput(id, dto));
         return output.getUpdatedRestProject();
     }
@@ -47,7 +47,7 @@ public class RestProjectServiceFacade implements ServiceFacade<RestProjectDto, L
     }
 
     @Override
-    public RestProjectDto read(String typeUrl, Long id) {
+    public RestProjectDto read(Long id) {
         final ReadRestProjectOutput output = processorMainframe.process(new ReadRestProjectInput(id));
         return output.getRestProject();
     }

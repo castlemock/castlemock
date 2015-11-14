@@ -30,12 +30,12 @@ public class SoapProjectServiceFacade implements ServiceFacade<SoapProjectDto, L
     }
 
     @Override
-    public void delete(String typeUrl, Long id) {
+    public void delete(Long id) {
         processorMainframe.process(new DeleteSoapProjectInput(id));
     }
 
     @Override
-    public SoapProjectDto update(String typeUrl, Long id, SoapProjectDto dto) {
+    public SoapProjectDto update(Long id, SoapProjectDto dto) {
         final UpdateSoapProjectOutput output = processorMainframe.process(new UpdateSoapProjectInput(id, dto));
         return output.getUpdatedSoapProject();
     }
@@ -47,7 +47,7 @@ public class SoapProjectServiceFacade implements ServiceFacade<SoapProjectDto, L
     }
 
     @Override
-    public SoapProjectDto read(String typeUrl, Long id) {
+    public SoapProjectDto read(Long id) {
         final ReadSoapProjectOutput output = processorMainframe.process(new ReadSoapProjectInput(id));
         return output.getSoapProject();
     }

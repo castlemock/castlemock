@@ -44,12 +44,12 @@ public class ProcessorMainframe {
 
     public <I extends Input, O extends Output> O process(final I input){
         validateMessage(input);
-        final Processor<I,O> processor = processorRegistry.getProcessor(input);
+        final Service<I,O> service = processorRegistry.getProcessor(input);
         final Task<I> task = new Task<I>();
         task.setInput(input);
         task.setExecuter(getLoggedInUsername());
-        LOGGER.debug(getLoggedInUsername() + " is requesting " + processor.getClass().getSimpleName() + " to process the following input message: " + input.getClass().getSimpleName());
-        final Result<O> result = processor.process(task);
+        LOGGER.debug(getLoggedInUsername() + " is requesting " + service.getClass().getSimpleName() + " to process the following input message: " + input.getClass().getSimpleName());
+        final Result<O> result = service.process(task);
         validateMessage(result.getOutput());
         return result.getOutput();
     }

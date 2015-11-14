@@ -45,10 +45,9 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
      * identified with the provided typeUrl value. When the type has been identified, the instance
      * itself has to be identified. This is done with the provided id. The instance with the matching type
      * and id will be deleted.
-     * @param typeUrl The url for the specific type that the instance belongs to
      * @param id The id of the instance that will be deleted
      */
-    void delete(String typeUrl, I id);
+    void delete(I id);
 
     /**
      * The method is used to update an already existing instance. The instance type is
@@ -56,12 +55,11 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
      * itself has to be identified. This is done with the provided id. The instance with the matching id will be
      * replaced with the provided dto instance. Please note that not all values will be updated. It depends on the instance
      * type.
-     * @param typeUrl The url for the specific type that the instance belongs to
      * @param id The id of the instance that will be updated
      * @param dto The instance with the new updated values
      * @return The updated instance
      */
-    D update(String typeUrl, I id, D dto);
+    D update(I id, D dto);
 
     /**
      * The method is responsible for retrieving all instances from all the various service types.
@@ -73,11 +71,10 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
      * The method is used to retrieve a instance with a specific type. The type is
      * identified with the provided typeUrl value. When the instance type has been identified, the instance
      * itself has to be identified.
-     * @param typeUrl The url for the specific type that the instance belongs to
      * @param id The id of the instance that will be retrieved
      * @return A instance that matches the instance type and the provided id. If no instance matches the provided
      *         values, null will be returned.
      */
-    D read(String typeUrl, I id);
+    D read(I id);
 
 }
