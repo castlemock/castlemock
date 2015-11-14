@@ -17,7 +17,6 @@
 package com.fortmocks.mock.rest.web.mvc.controller.event;
 
 import com.fortmocks.core.model.event.dto.EventDto;
-import com.fortmocks.mock.rest.model.event.service.RestEventService;
 import com.fortmocks.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

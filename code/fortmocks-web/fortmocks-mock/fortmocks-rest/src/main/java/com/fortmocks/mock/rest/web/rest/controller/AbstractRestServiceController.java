@@ -4,7 +4,6 @@ import com.fortmocks.mock.rest.model.RestException;
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.mock.rest.model.event.dto.RestResponseDto;
-import com.fortmocks.mock.rest.model.event.service.RestEventService;
 import com.fortmocks.mock.rest.model.project.domain.RestMethodStatus;
 import com.fortmocks.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;

@@ -57,7 +57,7 @@ public class RestApplicationController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId) {
-        final ReadRestApplicationOutput output = processorMainframe.process(new ReadRestApplicationInput(restProjectId, restApplicationId));
+        final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(restProjectId, restApplicationId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
@@ -73,7 +73,7 @@ public class RestApplicationController extends AbstractRestViewController {
         if(DELETE_REST_RESOURCES.equalsIgnoreCase(action)) {
             final List<RestResourceDto> restResources = new ArrayList<RestResourceDto>();
             for(Long restResourceId : restResourceModifierCommand.getRestResourceIds()){
-                ReadRestResourceOutput output = processorMainframe.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
+                ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
                 restResources.add(output.getRestResource());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_REST_RESOURCES_PAGE);

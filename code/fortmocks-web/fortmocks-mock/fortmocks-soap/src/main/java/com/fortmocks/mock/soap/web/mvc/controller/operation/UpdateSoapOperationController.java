@@ -57,7 +57,7 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId) {
-        final ReadSoapOperationOutput output = processorMainframe.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
+        final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(COMMAND, output.getSoapOperation());
         model.addObject(SOAP_PROJECT_ID, soapProjectId);
@@ -79,7 +79,7 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @ModelAttribute final SoapOperationDto soapOperationDto) {
-        processorMainframe.process(new UpdateSoapOperationInput(soapProjectId, soapPortId, soapOperationId, soapOperationDto));
+        serviceProcessor.process(new UpdateSoapOperationInput(soapProjectId, soapPortId, soapOperationId, soapOperationDto));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 
@@ -95,7 +95,7 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/update/confirm", method = RequestMethod.POST)
     public ModelAndView updateEndpoint(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @ModelAttribute final UpdateSoapOperationsEndpointCommand updateSoapOperationsEndpointCommand) {
         Preconditions.checkNotNull(updateSoapOperationsEndpointCommand, "The update operation endpoint command cannot be null");
-        processorMainframe.process(new UpdateSoapOperationsForwardedEndpointInput(soapProjectId, soapPortId, updateSoapOperationsEndpointCommand.getSoapOperations(), updateSoapOperationsEndpointCommand.getForwardedEndpoint()));
+        serviceProcessor.process(new UpdateSoapOperationsForwardedEndpointInput(soapProjectId, soapPortId, updateSoapOperationsEndpointCommand.getSoapOperations(), updateSoapOperationsEndpointCommand.getForwardedEndpoint()));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId);
     }
 

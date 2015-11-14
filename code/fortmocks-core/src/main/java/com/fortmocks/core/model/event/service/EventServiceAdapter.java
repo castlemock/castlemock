@@ -14,24 +14,21 @@
  * limitations under the License.
  */
 
-package com.fortmocks.mock.soap.model.event.service;
+package com.fortmocks.core.model.event.service;
 
-import com.fortmocks.core.model.event.service.EventService;
-import com.fortmocks.mock.soap.model.event.domain.SoapEvent;
-import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
-
-import java.util.List;
+import com.fortmocks.core.model.ServiceAdapter;
+import com.fortmocks.core.model.event.domain.Event;
+import com.fortmocks.core.model.event.dto.EventDto;
 
 /**
+ * The event service is responsible for providing the basic functionality for all the
+ * event services.
  * @author Karl Dahlgren
  * @since 1.0
+ * @param <D> The dto event type
+ * @see Event
+ * @see EventDto
  */
-public interface SoapEventService extends EventService<SoapEvent, SoapEventDto> {
-    /**
-     * The events for a specific operation id
-     * @param soapOperationId The id of the operation that the event belongs to
-     * @return Returns a list of events
-     */
-    public List<SoapEventDto> findEventsByOperationId(final Long soapOperationId);
+public interface EventServiceAdapter<D extends EventDto> extends ServiceAdapter<EventDto, D, Long> {
 
 }

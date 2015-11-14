@@ -21,7 +21,6 @@ import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.mock.soap.config.TestApplication;
-import com.fortmocks.mock.soap.model.event.service.SoapEventService;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDtoGenerator;
 import com.fortmocks.mock.soap.model.project.dto.SoapPortDtoGenerator;
 import com.fortmocks.mock.soap.model.project.dto.SoapProjectDtoGenerator;

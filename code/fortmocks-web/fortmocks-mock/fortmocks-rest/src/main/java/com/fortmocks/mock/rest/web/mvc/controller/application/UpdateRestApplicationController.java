@@ -44,7 +44,7 @@ public class UpdateRestApplicationController extends AbstractRestViewController 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId) {
-        final ReadRestApplicationOutput output = processorMainframe.process(new ReadRestApplicationInput(projectId, applicationId));
+        final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(projectId, applicationId));
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_APPLICATION, output.getRestApplication());
         model.addObject(REST_PROJECT_ID, projectId);
@@ -54,7 +54,7 @@ public class UpdateRestApplicationController extends AbstractRestViewController 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable final Long projectId, @PathVariable final Long applicationId,  @ModelAttribute final RestApplicationDto restApplicationDto) {
-        processorMainframe.process(new UpdateRestApplicationInput(projectId, applicationId, restApplicationDto));
+        serviceProcessor.process(new UpdateRestApplicationInput(projectId, applicationId, restApplicationDto));
         return redirect("/rest/project/" + projectId + "/application/" + applicationId);
     }
 

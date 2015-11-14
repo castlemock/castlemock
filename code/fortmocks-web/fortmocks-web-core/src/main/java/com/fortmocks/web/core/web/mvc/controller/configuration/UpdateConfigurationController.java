@@ -52,7 +52,7 @@ public class UpdateConfigurationController extends AbstractViewController {
     public ModelAndView updateConfiguration(@ModelAttribute final ConfigurationUpdateCommand configurationUpdateCommand) {
         final UpdateAllConfigurationGroupsInput input = new UpdateAllConfigurationGroupsInput();
         input.setConfigurationGroups(configurationUpdateCommand.getConfigurationGroups());
-        processorMainframe.process(input);
+        serviceProcessor.process(input);
         return redirect();
     }
 

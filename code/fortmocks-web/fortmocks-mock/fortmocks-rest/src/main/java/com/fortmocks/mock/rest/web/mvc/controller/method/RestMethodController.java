@@ -17,7 +17,6 @@
 package com.fortmocks.mock.rest.web.mvc.controller.method;
 
 import com.fortmocks.mock.rest.model.event.dto.RestEventDto;
-import com.fortmocks.mock.rest.model.event.service.RestEventService;
 import com.fortmocks.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.mock.rest.model.project.dto.RestMockResponseDto;
@@ -69,7 +68,7 @@ public class RestMethodController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId) {
-        final ReadRestMethodOutput output = processorMainframe.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
+        final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
         final RestMethodDto restMethod = output.getRestMethod();
         final List<RestEventDto> events = restEventService.findEventsByMethodId(restMethodId);
         restMethod.setEvents(events);
@@ -91,12 +90,12 @@ public class RestMethodController extends AbstractRestViewController {
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final RestMockResponseStatus status = RestMockResponseStatus.valueOf(restMockResponseModifierCommand.getRestMockResponseStatus());
             for(Long mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
-                processorMainframe.process(new UpdateRestMockResponseStatusInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId, status));
+                serviceProcessor.process(new UpdateRestMockResponseStatusInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId, status));
             }
         } else if(DELETE_MOCK_RESPONSES.equalsIgnoreCase(action)) {
             final List<RestMockResponseDto> mockResponses = new ArrayList<RestMockResponseDto>();
             for(Long mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
-                final ReadRestMockResponseOutput output = processorMainframe.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId));
+                final ReadRestMockResponseOutput output = serviceProcessor.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId));
                 mockResponses.add(output.getRestMockResponse());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_MOCK_RESPONSES_PAGE);

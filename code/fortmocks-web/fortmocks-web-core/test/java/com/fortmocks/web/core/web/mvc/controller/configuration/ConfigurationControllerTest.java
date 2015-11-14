@@ -21,7 +21,7 @@ import com.fortmocks.core.model.configuration.service.message.input.ReadAllConfi
 import com.fortmocks.core.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.configuration.dto.ConfigurationGroupDtoGenerator;
-import com.fortmocks.web.core.processor.ProcessorMainframe;
+import com.fortmocks.web.core.service.ServiceProcessor;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
@@ -57,7 +57,7 @@ public class ConfigurationControllerTest extends AbstractControllerTest {
     private ConfigurationController configurationController;
 
     @Mock
-    private ProcessorMainframe processorMainframe;
+    private ServiceProcessor serviceProcessor;
 
     @Override
     protected AbstractController getController() {
@@ -73,7 +73,7 @@ public class ConfigurationControllerTest extends AbstractControllerTest {
         final ReadAllConfigurationGroupsOutput readAllConfigurationGroupsOutput = new ReadAllConfigurationGroupsOutput();
         readAllConfigurationGroupsOutput.setConfigurationGroups(configurationGroups);
 
-        Mockito.when(processorMainframe.process(any(ReadAllConfigurationGroupsInput.class))).thenReturn(readAllConfigurationGroupsOutput);
+        Mockito.when(serviceProcessor.process(any(ReadAllConfigurationGroupsInput.class))).thenReturn(readAllConfigurationGroupsOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())

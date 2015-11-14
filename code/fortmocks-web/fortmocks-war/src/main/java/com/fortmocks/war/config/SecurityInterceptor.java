@@ -22,7 +22,7 @@ import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.user.service.message.input.ReadUserByUsernameInput;
 import com.fortmocks.core.model.user.service.message.output.ReadUserByUsernameOutput;
 import com.fortmocks.web.core.model.user.service.UserDetailSecurityService;
-import com.fortmocks.web.core.processor.ProcessorMainframe;
+import com.fortmocks.web.core.service.ServiceProcessor;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
-    private ProcessorMainframe processorMainframe;
+    private ServiceProcessor serviceProcessor;
     @Autowired
     private UserDetailSecurityService userDetailSecurityService;
     private static final Logger LOGGER = Logger.getLogger(SecurityInterceptor.class);
@@ -78,7 +78,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
         final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput();
         readUserByUsernameInput.setUsername(loggedInUsername);
-        final ReadUserByUsernameOutput readUserByUsernameOutput = processorMainframe.process(readUserByUsernameInput);
+        final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(readUserByUsernameInput);
         final UserDto loggedInUser = readUserByUsernameOutput.getUser();
         if(loggedInUser == null){
             LOGGER.info("The following logged in user is not valid anymore: " + loggedInUsername);

@@ -54,7 +54,7 @@ public class ConfigurationController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
-        final ReadAllConfigurationGroupsOutput output = processorMainframe.process(new ReadAllConfigurationGroupsInput());
+        final ReadAllConfigurationGroupsOutput output = serviceProcessor.process(new ReadAllConfigurationGroupsInput());
         final List<ConfigurationGroupDto> configurationGroupDtos = output.getConfigurationGroups();
         final ConfigurationUpdateCommand configurationUpdateCommand = new ConfigurationUpdateCommand();
         configurationUpdateCommand.setConfigurationGroups(configurationGroupDtos);

@@ -21,7 +21,7 @@ import com.fortmocks.core.model.user.service.message.input.ReadUserInput;
 import com.fortmocks.core.model.user.service.message.output.ReadUserOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.user.dto.UserDtoGenerator;
-import com.fortmocks.web.core.processor.ProcessorMainframe;
+import com.fortmocks.web.core.service.ServiceProcessor;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
@@ -55,7 +55,7 @@ public class UserControllerTest extends AbstractControllerTest {
     private UserController userController;
 
     @Mock
-    private ProcessorMainframe processorMainframe;
+    private ServiceProcessor serviceProcessor;
 
     @Override
     protected AbstractController getController() {
@@ -67,7 +67,7 @@ public class UserControllerTest extends AbstractControllerTest {
         final ReadUserOutput readUserOutput = new ReadUserOutput();
         final UserDto userDto = UserDtoGenerator.generateUserDto();
         readUserOutput.setUser(userDto);
-        when(processorMainframe.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
+        when(serviceProcessor.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + userDto.getId());
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())

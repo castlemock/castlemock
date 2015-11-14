@@ -50,7 +50,7 @@ public class SoapMockResponseController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/response/{soapMockResponseId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @PathVariable final Long soapMockResponseId) {
-        final ReadSoapMockResponseOutput output = processorMainframe.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId));
+        final ReadSoapMockResponseOutput output = serviceProcessor.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId));
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_MOCK_RESPONSE, output.getSoapMockResponse());
         model.addObject(SOAP_PROJECT_ID, soapProjectId);

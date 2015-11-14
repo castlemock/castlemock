@@ -46,7 +46,7 @@ public class CreateUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView defaultPage(@ModelAttribute final UserDto userDto) {
-        processorMainframe.process(new CreateUserInput(userDto));
+        serviceProcessor.process(new CreateUserInput(userDto));
         return redirect("/user/");
     }
 

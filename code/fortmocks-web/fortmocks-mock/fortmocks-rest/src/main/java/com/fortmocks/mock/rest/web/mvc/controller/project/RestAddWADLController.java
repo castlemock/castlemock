@@ -78,7 +78,7 @@ public class RestAddWADLController extends AbstractRestViewController {
             restApplicationDtos = wadlComponent.createApplication(uploadForm.getLink(), uploadForm.isGenerateResponse());
         }
 
-        processorMainframe.process(new CreateRestApplicationsInput(projectId, restApplicationDtos));
+        serviceProcessor.process(new CreateRestApplicationsInput(projectId, restApplicationDtos));
         return redirect("/rest/project/" + projectId);
     }
 }

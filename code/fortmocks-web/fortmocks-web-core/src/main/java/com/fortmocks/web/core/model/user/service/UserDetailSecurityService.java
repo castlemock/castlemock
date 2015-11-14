@@ -20,7 +20,7 @@ import com.fortmocks.core.model.user.domain.Role;
 import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.user.service.message.input.ReadUserByUsernameInput;
 import com.fortmocks.core.model.user.service.message.output.ReadUserByUsernameOutput;
-import com.fortmocks.web.core.processor.ProcessorMainframe;
+import com.fortmocks.web.core.service.ServiceProcessor;
 import com.fortmocks.web.core.web.mvc.controller.user.UpdateCurrentUserController;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ import java.util.List;
 public class UserDetailSecurityService implements UserDetailsService {
 
     @Autowired
-    private ProcessorMainframe processorMainframe;
+    private ServiceProcessor serviceProcessor;
 
     /**
      * Loads a user by the username
@@ -64,7 +64,7 @@ public class UserDetailSecurityService implements UserDetailsService {
         Preconditions.checkArgument(!username.isEmpty(), "Username cannot be empty");
         final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput();
         readUserByUsernameInput.setUsername(username);
-        final ReadUserByUsernameOutput readUserByUsernameOutput = processorMainframe.process(readUserByUsernameInput);
+        final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(readUserByUsernameInput);
         final UserDto user = readUserByUsernameOutput.getUser();
         Preconditions.checkNotNull(user, "Unable to find user");
         final List<GrantedAuthority> authorities = buildUserAuthority(user.getRole());

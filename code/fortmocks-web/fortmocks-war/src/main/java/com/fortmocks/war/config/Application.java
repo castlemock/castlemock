@@ -18,7 +18,7 @@ package com.fortmocks.war.config;
 
 import com.fortmocks.core.model.Repository;
 import com.fortmocks.core.model.ServiceFacade;
-import com.fortmocks.web.core.processor.ProcessorRegistry;
+import com.fortmocks.web.core.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -50,7 +50,7 @@ public class Application extends SpringBootServletInitializer {
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
-    private ProcessorRegistry processorRegistry;
+    private ServiceRegistry serviceRegistry;
 
     /**
      * The configure method for Fort Mocks. The method is responsible for mark all the configuration classes
@@ -138,6 +138,6 @@ public class Application extends SpringBootServletInitializer {
      * @see com.fortmocks.core.model.Repository
      */
     protected void initiateProcessRegistry(){
-        processorRegistry.initializeProcessorRegistry();;
+        serviceRegistry.initializeProcessorRegistry();;
     }
 }

@@ -49,7 +49,7 @@ public class UserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}",method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long userId) {
-        final ReadUserOutput readUserOutput = processorMainframe.process(new ReadUserInput(userId));
+        final ReadUserOutput readUserOutput = serviceProcessor.process(new ReadUserInput(userId));
         final UserDto userDto = readUserOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USER, userDto);

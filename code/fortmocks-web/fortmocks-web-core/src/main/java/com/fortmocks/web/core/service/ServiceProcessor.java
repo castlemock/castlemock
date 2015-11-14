@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.processor;
+package com.fortmocks.web.core.service;
 
 import com.fortmocks.core.model.*;
 import com.fortmocks.core.model.user.domain.User;
@@ -33,18 +33,18 @@ import java.lang.reflect.Field;
  * @since 1.0
  */
 @Component
-public class ProcessorMainframe {
+public class ServiceProcessor {
 
     @Autowired
-    private ProcessorRegistry processorRegistry;
+    private ServiceRegistry serviceRegistry;
 
     private static final String UNKNOWN_USER = "Unknown";
-    private static final Logger LOGGER = Logger.getLogger(ProcessorMainframe.class);
+    private static final Logger LOGGER = Logger.getLogger(ServiceProcessor.class);
 
 
     public <I extends Input, O extends Output> O process(final I input){
         validateMessage(input);
-        final Service<I,O> service = processorRegistry.getProcessor(input);
+        final Service<I,O> service = serviceRegistry.getProcessor(input);
         final Task<I> task = new Task<I>();
         task.setInput(input);
         task.setExecuter(getLoggedInUsername());

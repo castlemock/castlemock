@@ -64,9 +64,9 @@ public class SoapPortController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}", method = RequestMethod.GET)
     public ModelAndView getSoapPort(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId) {
-        final ReadSoapPortOutput readSoapPortOutput = processorMainframe.process(new ReadSoapPortInput(soapProjectId, soapPortId));
+        final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
         final SoapPortDto soapPort = readSoapPortOutput.getSoapPort();
-        final GetSoapOperationStatusCountOutput getSoapOperationStatusCountOutput = processorMainframe.process(new GetSoapOperationStatusCountInput(soapProjectId, soapPortId));
+        final GetSoapOperationStatusCountOutput getSoapOperationStatusCountOutput = serviceProcessor.process(new GetSoapOperationStatusCountInput(soapProjectId, soapPortId));
         final Map<SoapOperationStatus, Integer> statusCount = getSoapOperationStatusCountOutput.getSoapOperationStatuses();
         soapPort.setStatusCount(statusCount);
         final ModelAndView model = createPartialModelAndView(PAGE);
@@ -93,12 +93,12 @@ public class SoapPortController extends AbstractSoapViewController {
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final SoapOperationStatus soapOperationStatus = SoapOperationStatus.valueOf(soapOperationModifierCommand.getSoapOperationStatus());
             for(Long operationId : soapOperationModifierCommand.getSoapOperationIds()){
-                processorMainframe.process(new UpdateSoapOperationsStatusInput(soapProjectId, soapPortId, operationId, soapOperationStatus));
+                serviceProcessor.process(new UpdateSoapOperationsStatusInput(soapProjectId, soapPortId, operationId, soapOperationStatus));
             }
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<SoapOperationDto> soapOperations = new ArrayList<SoapOperationDto>();
             for(Long soapOperationId : soapOperationModifierCommand.getSoapOperationIds()){
-                final ReadSoapOperationOutput output = processorMainframe.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
+                final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
                 soapOperations.add(output.getSoapOperation());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_SOAP_OPERATIONS_ENDPOINT_PAGE);

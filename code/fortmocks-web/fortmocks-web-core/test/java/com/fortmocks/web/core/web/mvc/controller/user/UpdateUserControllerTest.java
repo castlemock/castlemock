@@ -27,7 +27,7 @@ import com.fortmocks.core.model.user.service.message.output.ReadUserOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.user.dto.UserDtoGenerator;
 import com.fortmocks.web.core.model.user.service.UserDetailSecurityService;
-import com.fortmocks.web.core.processor.ProcessorMainframe;
+import com.fortmocks.web.core.service.ServiceProcessor;
 import com.fortmocks.web.core.web.mvc.controller.AbstractController;
 import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
@@ -64,7 +64,7 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
     private UpdateUserController updateUserController;
 
     @Mock
-    private ProcessorMainframe processorMainframe;
+    private ServiceProcessor serviceProcessor;
 
     @Mock
     private UserDetailSecurityService userDetailSecurityService;
@@ -79,7 +79,7 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
         final ReadUserOutput readUserOutput = new ReadUserOutput();
         final UserDto userDto = UserDtoGenerator.generateUserDto();
         readUserOutput.setUser(userDto);
-        when(processorMainframe.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
+        when(serviceProcessor.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + userDto.getId() + UPDATE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -98,8 +98,8 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + userDto.getId() + UPDATE);
         readUserByUsernameOutput.setUser(userDto);
 
-        when(processorMainframe.process(any(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);
-        when(processorMainframe.process(any(UpdateUserInput.class))).thenReturn(readUserByUsernameOutput);
+        when(serviceProcessor.process(any(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);
+        when(serviceProcessor.process(any(UpdateUserInput.class))).thenReturn(readUserByUsernameOutput);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

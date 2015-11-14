@@ -52,7 +52,7 @@ public class UpdateSoapPortController extends AbstractSoapViewController {
     @RequestMapping(value = "/{projectId}/port/update/confirm", method = RequestMethod.POST)
     public ModelAndView updateEndpoint(@PathVariable final Long projectId, @ModelAttribute final UpdateSoapPortsEndpointCommand updateSoapPortsEndpointCommand) {
         Preconditions.checkNotNull(updateSoapPortsEndpointCommand, "The update port endpoint command cannot be null");
-        processorMainframe.process(new UpdateSoapPortsForwardedEndpointInput(projectId, updateSoapPortsEndpointCommand.getSoapPorts(), updateSoapPortsEndpointCommand.getForwardedEndpoint()));
+        serviceProcessor.process(new UpdateSoapPortsForwardedEndpointInput(projectId, updateSoapPortsEndpointCommand.getSoapPorts(), updateSoapPortsEndpointCommand.getForwardedEndpoint()));
         return redirect("/soap/project/" + projectId);
     }
 

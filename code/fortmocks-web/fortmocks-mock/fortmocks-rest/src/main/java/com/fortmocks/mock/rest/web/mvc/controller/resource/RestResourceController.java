@@ -58,7 +58,7 @@ public class RestResourceController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, final ServletRequest request) {
-        final ReadRestResourceOutput output = processorMainframe.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
+        final ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
         final RestResourceDto restResource = output.getRestResource();
         String requestProtocol = HTTP;
         if(request.isSecure()){
@@ -90,7 +90,7 @@ public class RestResourceController extends AbstractRestViewController {
         if(DELETE_REST_METHODS.equalsIgnoreCase(action)) {
             final List<RestMethodDto> restMethods = new ArrayList<RestMethodDto>();
             for(Long restMethodId : restMethodModifierCommand.getRestMethodIds()){
-                final RestMethodDto restResourceDto = processorMainframe.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
+                final RestMethodDto restResourceDto = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
                 restMethods.add(restResourceDto);
             }
             final ModelAndView model = createPartialModelAndView(DELETE_REST_METHODS_PAGE);

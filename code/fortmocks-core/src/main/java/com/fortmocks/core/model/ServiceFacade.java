@@ -29,25 +29,36 @@ import java.util.List;
  * @param <I> The ID type that is used to identify the type (TYPE)
  * @see Service
  */
-public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializable> {
+public interface ServiceFacade<P, D extends TypeIdentifiable, I extends Serializable> {
 
+
+    /**
+     * The initiate method is responsible for for locating all the service instances for a specific module
+     * and organizing them depending on the type.
+     * @see Service
+     * @see TypeIdentifier
+     * @see TypeIdentifiable
+     */
+    void initiate();
 
     /**
      * The method provides the functionality to create and store a DTO instance to a specific service.
      * The service is identified with the provided type value.
+     * @param type The type of the instance that will be created
      * @param dto The instance that will be created
      * @return The saved instance
      */
-    D create(D dto);
+    D save(String type, P dto);
 
     /**
      * The method provides the functionality to delete a specific instance. The type is
      * identified with the provided typeUrl value. When the type has been identified, the instance
      * itself has to be identified. This is done with the provided id. The instance with the matching type
      * and id will be deleted.
+     * @param typeUrl The url for the specific type that the instance belongs to
      * @param id The id of the instance that will be deleted
      */
-    void delete(I id);
+    void delete(String typeUrl, I id);
 
     /**
      * The method is used to update an already existing instance. The instance type is
@@ -55,26 +66,43 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
      * itself has to be identified. This is done with the provided id. The instance with the matching id will be
      * replaced with the provided dto instance. Please note that not all values will be updated. It depends on the instance
      * type.
+     * @param typeUrl The url for the specific type that the instance belongs to
      * @param id The id of the instance that will be updated
      * @param dto The instance with the new updated values
      * @return The updated instance
      */
-    D update(I id, D dto);
+    D update(String typeUrl, I id, P dto);
 
     /**
      * The method is responsible for retrieving all instances from all the various service types.
      * @return A list containing all the instance independent from type
      */
-    List<D> readAll();
+    List<D> findAll();
 
     /**
      * The method is used to retrieve a instance with a specific type. The type is
      * identified with the provided typeUrl value. When the instance type has been identified, the instance
      * itself has to be identified.
+     * @param typeUrl The url for the specific type that the instance belongs to
      * @param id The id of the instance that will be retrieved
      * @return A instance that matches the instance type and the provided id. If no instance matches the provided
      *         values, null will be returned.
      */
-    D read(I id);
+    D findOne(String typeUrl, I id);
+
+    /**
+     * The method retrieves all service types
+     * @return A list with all the service types
+     */
+    List<String> getTypes();
+
+    /**
+     * Returns the type URL for a specific type
+     * @param type The type that will be used to retrieve the type URL
+     * @return The matching type URL
+     * @throws java.lang.IllegalArgumentException A IllegalArgumentException will be thrown
+     * If no service matches the provided type
+     */
+    String getTypeUrl(String type);
 
 }

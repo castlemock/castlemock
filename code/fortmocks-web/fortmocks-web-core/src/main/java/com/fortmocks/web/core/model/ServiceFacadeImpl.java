@@ -32,18 +32,14 @@ import java.util.Map;
  * from one single point.
  * @author Karl Dahlgren
  * @since 1.0
- * @param <T> The type that the service facade is managing
- * @param <D> The DTO (Data transfer object) version of the type (TYPE)
- * @param <I> The ID type that is used to identify the type (TYPE)
- * @param <S> The service which provides the basic functionality for the TYPE
  * @see Service
  */
 @org.springframework.stereotype.Service
-public abstract class ServiceFacadeImpl<T extends Saveable<I>, D extends TypeIdentifiable, I extends Serializable, S extends TypeIdentifiable & TypeConverter<D, D> & Service<T,D,I>> implements ServiceFacade<D, I> {
+public abstract class ServiceFacadeImpl<P, D extends TypeIdentifiable, I extends Serializable, SA extends ServiceAdapter<P,D,I>> implements ServiceFacade<P, D, I> {
 
     @Autowired
     private ApplicationContext applicationContext;
-    protected final Map<String, S> services = new HashMap<String, S>();
+    protected final Map<String, SA> services = new HashMap<String, SA>();
 
     /**
      * The initiate method is responsible for for locating all the service instances for a specific module
@@ -58,9 +54,9 @@ public abstract class ServiceFacadeImpl<T extends Saveable<I>, D extends TypeIde
         for(Map.Entry<String, Object> entry : foundServices.entrySet()){
             final Object value = entry.getValue();
             if(clazz.isInstance(value)){
-                final S service = (S) value;
-                final String type = service.getTypeIdentifier().getType().toUpperCase();
-                services.put(type, service);
+                final SA serviceAdapter = (SA) value;
+                final String type = serviceAdapter.getTypeIdentifier().getType().toUpperCase();
+                services.put(type, serviceAdapter);
             }
         }
     }
@@ -73,9 +69,9 @@ public abstract class ServiceFacadeImpl<T extends Saveable<I>, D extends TypeIde
      * @return The saved instance
      */
     @Override
-    public D save(final String type, final D dto){
-        final S service = findByType(type);
-        return service.save(service.convertType(dto));
+    public D save(final String type, final P dto){
+        final SA serviceAdapter = findByType(type);
+        return serviceAdapter.create(serviceAdapter.convertType(dto));
     }
 
     /**
@@ -88,8 +84,8 @@ public abstract class ServiceFacadeImpl<T extends Saveable<I>, D extends TypeIde
      */
     @Override
     public void delete(final String typeUrl, final I id){
-        final S service = findByTypeUrl(typeUrl);
-        service.delete(id);
+        final ServiceAdapter serviceAdapter = findByTypeUrl(typeUrl);
+        serviceAdapter.delete(id);
     }
 
     /**
@@ -104,9 +100,9 @@ public abstract class ServiceFacadeImpl<T extends Saveable<I>, D extends TypeIde
      * @return The updated instance
      */
     @Override
-    public D update(final String typeUrl, final I id, final D dto){
-        final S service = findByTypeUrl(typeUrl);
-        return service.update(id, service.convertType(dto));
+    public D update(final String typeUrl, final I id, final P dto){
+        final SA serviceAdapter = findByTypeUrl(typeUrl);
+        return serviceAdapter.update(id, serviceAdapter.convertType(dto));
     }
 
     /**
@@ -116,11 +112,11 @@ public abstract class ServiceFacadeImpl<T extends Saveable<I>, D extends TypeIde
     @Override
     public List<D> findAll(){
         final List<D> dtoList = new LinkedList<D>();
-        for(Map.Entry<String, S> entry : services.entrySet()){
-            S service = entry.getValue();
+        for(Map.Entry<String, SA> entry : services.entrySet()){
+            SA serviceAdapter = entry.getValue();
 
-            for(D dto : service.findAll()){
-                dto.setTypeIdentifier(service.getTypeIdentifier());
+            for(D dto : serviceAdapter.readAll()){
+                dto.setTypeIdentifier(serviceAdapter.getTypeIdentifier());
                 dtoList.add(dto);
             }
         }
@@ -138,9 +134,9 @@ public abstract class ServiceFacadeImpl<T extends Saveable<I>, D extends TypeIde
      */
     @Override
     public D findOne(String typeUrl, final I id){
-        final S service = findByTypeUrl(typeUrl);
-        final D dto = service.findOne(id);
-        final TypeIdentifier typeIdentifier = service.getTypeIdentifier();
+        final SA serviceAdapter = findByTypeUrl(typeUrl);
+        final D dto = serviceAdapter.read(id);
+        final TypeIdentifier typeIdentifier = serviceAdapter.getTypeIdentifier();
         dto.setTypeIdentifier(typeIdentifier);
         return dto;
     }
@@ -162,20 +158,20 @@ public abstract class ServiceFacadeImpl<T extends Saveable<I>, D extends TypeIde
      * @throws IllegalArgumentException A IllegalArgumentException will be thrown
      * if no service matches the provided type
      */
-    protected S findByTypeUrl(final String typeUrl){
-        S service = null;
-        for(S tmpService : services.values()){
+    protected SA findByTypeUrl(final String typeUrl){
+        SA serviceAdapter = null;
+        for(SA tmpService : services.values()){
             if(tmpService.getTypeIdentifier().getTypeUrl().equals(typeUrl)){
-                service = tmpService;
+                serviceAdapter = tmpService;
                 break;
             }
         }
 
-        if(service == null){
+        if(serviceAdapter == null){
             throw new IllegalArgumentException("Invalid type");
         }
 
-        return service;
+        return serviceAdapter;
     }
 
     /**
@@ -186,14 +182,14 @@ public abstract class ServiceFacadeImpl<T extends Saveable<I>, D extends TypeIde
      * @throws IllegalArgumentException A IllegalArgumentException will be thrown
      * If no service matches the provided type
      */
-    protected S findByType(final String type){
-        final S service = services.get(type);
+    protected SA findByType(final String type){
+        final SA serviceAdapter = services.get(type);
 
-        if(service == null){
+        if(serviceAdapter == null){
             throw new IllegalArgumentException("Invalid type");
         }
 
-        return service;
+        return serviceAdapter;
     }
 
     /**
@@ -205,7 +201,7 @@ public abstract class ServiceFacadeImpl<T extends Saveable<I>, D extends TypeIde
      */
     @Override
     public String getTypeUrl(final String type){
-        final S service = findByType(type);
-        return service.getTypeIdentifier().getTypeUrl();
+        final SA serviceAdapter = findByType(type);
+        return serviceAdapter.getTypeIdentifier().getTypeUrl();
     }
 }

@@ -58,7 +58,7 @@ public class UpdateCurrentUserController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final String loggedInUsername = getLoggedInUsername();
-        final ReadUserByUsernameOutput readUserByUsernameOutput = processorMainframe.process(new ReadUserByUsernameInput(loggedInUsername));
+        final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(new ReadUserByUsernameInput(loggedInUsername));
         final UserDto userDto = readUserByUsernameOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         final UpdateCurrentUserCommand updateCurrentUserCommand = new UpdateCurrentUserCommand();
@@ -81,7 +81,7 @@ public class UpdateCurrentUserController extends AbstractViewController {
         if(userPassword != null){
             Preconditions.checkArgument(userPassword.equals(updateCurrentUserCommand.getVerifiedPassword()), "The password and the verified password does not match");
         }
-        final UpdateCurrentUserOutput updateCurrentUserOutput = processorMainframe.process(new UpdateCurrentUserInput(updatedUser));
+        final UpdateCurrentUserOutput updateCurrentUserOutput = serviceProcessor.process(new UpdateCurrentUserInput(updatedUser));
         final UserDto savedUser = updateCurrentUserOutput.getUpdatedUser();
 
         // Updates the logged in username if the updated user received a new username

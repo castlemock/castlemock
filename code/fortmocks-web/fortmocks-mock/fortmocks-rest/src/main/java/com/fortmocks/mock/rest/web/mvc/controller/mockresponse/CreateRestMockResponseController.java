@@ -47,7 +47,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/create/response", method = RequestMethod.GET)
     public ModelAndView dispayCreatePage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId) {
-        final ReadRestMethodOutput output = processorMainframe.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
+        final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
 
         final RestMockResponseDto mockResponse = new RestMockResponseDto();
         mockResponse.setBody(output.getRestMethod().getDefaultBody());
@@ -67,7 +67,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/create/response", method = RequestMethod.POST)
     public ModelAndView createResponse(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @ModelAttribute final RestMockResponseDto restMockResponseDto) {
         restMockResponseDto.setRestMockResponseStatus(RestMockResponseStatus.ENABLED);
-        processorMainframe.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseDto));
+        serviceProcessor.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseDto));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 

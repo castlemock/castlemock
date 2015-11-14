@@ -20,6 +20,7 @@ import com.fortmocks.core.model.TypeIdentifiable;
 import com.fortmocks.core.model.TypeIdentifier;
 import com.fortmocks.core.model.project.domain.Project;
 import com.fortmocks.core.model.project.dto.ProjectDto;
+import com.fortmocks.core.model.project.service.ProjectServiceAdapter;
 import com.fortmocks.core.model.project.service.ProjectServiceFacade;
 import com.fortmocks.web.core.model.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ import org.springframework.stereotype.Service;
  * @see ProjectDto
  */
 @Service
-public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, ProjectDto, Long, ProjectServiceImpl<Project, ProjectDto>> implements ProjectServiceFacade {
+public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, ProjectDto, Long, ProjectServiceAdapter<ProjectDto>> implements ProjectServiceFacade {
 
     /**
      * The initiate method is responsible for for locating all the service instances for a specific module
@@ -46,7 +47,7 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, Project
      */
     @Override
     public void initiate(){
-        initiate(ProjectServiceImpl.class);
+        initiate(ProjectServiceAdapter.class);
     }
 
     /**
@@ -57,7 +58,7 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, Project
      */
     @Override
     public String exportProject(final String typeUrl, final Long id){
-        final ProjectServiceImpl<Project, ProjectDto> service = findByTypeUrl(typeUrl);
+        final ProjectServiceAdapter<ProjectDto> service = findByTypeUrl(typeUrl);
         return service.exportProject(id);
     }
 
@@ -68,7 +69,7 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, Project
      */
     @Override
     public void importProject(String type, String rawProject) {
-        final ProjectServiceImpl<Project, ProjectDto> service = findByType(type);
+        final ProjectServiceAdapter<ProjectDto> service = findByType(type);
         service.importProject(rawProject);
     }
 

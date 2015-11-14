@@ -50,7 +50,7 @@ public class UpdateSoapMockResponseController extends AbstractSoapViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/response/{soapMockResponseId}/update", method = RequestMethod.POST)
     public ModelAndView updateSoapMockResponse(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @PathVariable final Long soapMockResponseId,  @ModelAttribute final SoapMockResponseDto soapMockResponseDto) {
-        processorMainframe.process(new UpdateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId, soapMockResponseDto));
+        serviceProcessor.process(new UpdateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId, soapMockResponseDto));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 

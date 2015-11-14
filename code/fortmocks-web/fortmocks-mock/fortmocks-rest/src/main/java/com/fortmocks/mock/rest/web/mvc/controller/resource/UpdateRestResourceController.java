@@ -43,7 +43,7 @@ public class UpdateRestResourceController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId) {
-        final ReadRestResourceOutput output = processorMainframe.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
+        final ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_RESOURCE, output.getRestResource());
         model.addObject(REST_PROJECT_ID, restProjectId);
@@ -55,7 +55,7 @@ public class UpdateRestResourceController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId,  @ModelAttribute final RestResourceDto restResourceDto) {
-        processorMainframe.process(new UpdateRestResourceInput(restProjectId, restApplicationId, restResourceId, restResourceDto));
+        serviceProcessor.process(new UpdateRestResourceInput(restProjectId, restApplicationId, restResourceId, restResourceDto));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId);
     }
 

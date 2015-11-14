@@ -52,7 +52,7 @@ public class UserOverviewController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
-        final ReadAllUsersOutput readAllUsersOutput = processorMainframe.process(new ReadAllUsersInput());
+        final ReadAllUsersOutput readAllUsersOutput = serviceProcessor.process(new ReadAllUsersInput());
         final List<UserDto> users = readAllUsersOutput.getUsers();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USERS, users);

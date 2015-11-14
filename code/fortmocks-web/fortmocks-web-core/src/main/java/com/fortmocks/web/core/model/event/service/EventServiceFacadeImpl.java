@@ -20,6 +20,7 @@ import com.fortmocks.core.model.TypeIdentifiable;
 import com.fortmocks.core.model.TypeIdentifier;
 import com.fortmocks.core.model.event.domain.Event;
 import com.fortmocks.core.model.event.dto.EventDto;
+import com.fortmocks.core.model.event.service.EventServiceAdapter;
 import com.fortmocks.core.model.event.service.EventServiceFacade;
 import com.fortmocks.web.core.model.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ import org.springframework.stereotype.Service;
  * @see EventDto
  */
 @Service
-public class EventServiceFacadeImpl extends ServiceFacadeImpl<Event, EventDto, Long, EventServiceImpl<Event, EventDto>> implements EventServiceFacade {
+public class EventServiceFacadeImpl extends ServiceFacadeImpl<Event, EventDto, Long, EventServiceAdapter<EventDto>> implements EventServiceFacade {
 
     /**
      * The initiate method is responsible for for locating all the service instances for a specific module
@@ -44,6 +45,6 @@ public class EventServiceFacadeImpl extends ServiceFacadeImpl<Event, EventDto, L
      */
     @Override
     public void initiate(){
-        initiate(EventServiceImpl.class);
+        initiate(EventServiceAdapter.class);
     }
 }

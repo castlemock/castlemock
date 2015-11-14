@@ -61,7 +61,7 @@ public class UpdateUserController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final Long userId) {
-        final ReadUserOutput readUserOutput = processorMainframe.process(new ReadUserInput(userId));
+        final ReadUserOutput readUserOutput = serviceProcessor.process(new ReadUserInput(userId));
         final UserDto userDto = readUserOutput.getUser();
         userDto.setPassword(EMPTY);
         final ModelAndView model = createPartialModelAndView(PAGE);
@@ -81,9 +81,9 @@ public class UpdateUserController extends AbstractViewController {
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable final Long userId, @ModelAttribute final UserDto updatedUser) {
         final String loggedInUsername = getLoggedInUsername();
-        final ReadUserByUsernameOutput readUserByUsernameOutput = processorMainframe.process(new ReadUserByUsernameInput(loggedInUsername));
+        final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(new ReadUserByUsernameInput(loggedInUsername));
         final UserDto loggedInUser = readUserByUsernameOutput.getUser();
-        final UpdateUserOutput updateUserOutput = processorMainframe.process(new UpdateUserInput(userId, updatedUser));
+        final UpdateUserOutput updateUserOutput = serviceProcessor.process(new UpdateUserInput(userId, updatedUser));
         final UserDto savedUser = updateUserOutput.getUpdatedUser();
 
         // Update the current logged in user if the username has been updated

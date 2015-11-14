@@ -19,7 +19,6 @@ package com.fortmocks.mock.soap.web.soap.controller;
 import com.fortmocks.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.mock.soap.model.event.dto.SoapRequestDto;
 import com.fortmocks.mock.soap.model.event.dto.SoapResponseDto;
-import com.fortmocks.mock.soap.model.event.service.SoapEventService;
 import com.fortmocks.mock.soap.model.project.domain.*;
 import com.fortmocks.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.mock.soap.model.project.dto.SoapOperationDto;
@@ -84,7 +83,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         Preconditions.checkNotNull(projectId, "THe project id cannot be null");
         Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
         final SoapRequestDto request = prepareRequest(projectId, httpServletRequest);
-        final SoapOperationDto operation = processorMainframe.process(new ReadSoapOperationWithTypeInput(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType()));
+        final SoapOperationDto operation = serviceProcessor.process(new ReadSoapOperationWithTypeInput(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType()));
         return process(operation, request, httpServletResponse);
     }
 
@@ -176,7 +175,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 currentSequenceNumber = 0;
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
-            processorMainframe.process(new UpdateCurrentMockResponseSequenceIndexInput(soapOperationDto.getId(), currentSequenceNumber + 1));
+            serviceProcessor.process(new UpdateCurrentMockResponseSequenceIndexInput(soapOperationDto.getId(), currentSequenceNumber + 1));
         }
 
         if(mockResponse == null){
@@ -205,7 +204,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         mockResponse.setBody(response.getBody());
         mockResponse.setSoapMockResponseStatus(SoapMockResponseStatus.ENABLED);
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
-        processorMainframe.process(new CreateRecordedSoapMockResponseInput(soapOperationDto.getId(), mockResponse));
+        serviceProcessor.process(new CreateRecordedSoapMockResponseInput(soapOperationDto.getId(), mockResponse));
         return response;
     }
 

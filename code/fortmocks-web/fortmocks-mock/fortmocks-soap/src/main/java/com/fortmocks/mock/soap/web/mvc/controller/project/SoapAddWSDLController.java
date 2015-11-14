@@ -78,7 +78,7 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
             soapPorts = wsdlComponent.createSoapPorts(uploadForm.getLink(), uploadForm.isGenerateResponse());
         }
 
-        processorMainframe.process(new CreateSoapPortsInput(projectId, soapPorts));
+        serviceProcessor.process(new CreateSoapPortsInput(projectId, soapPorts));
         return redirect("/soap/project/" + projectId);
     }
 }

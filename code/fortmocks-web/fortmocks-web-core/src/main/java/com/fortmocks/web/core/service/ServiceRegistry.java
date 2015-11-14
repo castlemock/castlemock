@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.processor;
+package com.fortmocks.web.core.service;
 
 import com.fortmocks.core.model.Input;
 import com.fortmocks.core.model.Output;
@@ -32,7 +32,7 @@ import java.util.Map;
  * @since 1.0
  */
 @Component
-public class ProcessorRegistry<I extends Input, O extends Output> {
+public class ServiceRegistry<I extends Input, O extends Output> {
 
     @Autowired
     private ApplicationContext applicationContext;

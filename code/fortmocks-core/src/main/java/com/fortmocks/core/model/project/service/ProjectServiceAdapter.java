@@ -16,6 +16,8 @@
 
 package com.fortmocks.core.model.project.service;
 
+import com.fortmocks.core.model.ServiceAdapter;
+import com.fortmocks.core.model.TypeIdentifiable;
 import com.fortmocks.core.model.project.domain.Project;
 import com.fortmocks.core.model.project.dto.ProjectDto;
 
@@ -24,12 +26,11 @@ import com.fortmocks.core.model.project.dto.ProjectDto;
  * project services.
  * @author Karl Dahlgren
  * @since 1.0
- * @param <T> The project type
  * @param <D> The dto project type
  * @see Project
  * @see ProjectDto
  */
-public interface ProjectService<T extends Project, D extends ProjectDto> extends Service<T, D, Long> {
+public interface ProjectServiceAdapter<D extends TypeIdentifiable> extends ServiceAdapter<ProjectDto, D, Long>{
 
     /**
      * The method provides the functionality to export a project and convert it to a String
