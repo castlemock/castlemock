@@ -5,7 +5,7 @@ import com.fortmocks.core.basis.model.project.service.ProjectServiceAdapter;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.*;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadAllRestProjectsOutput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
-import com.fortmocks.core.mock.rest.model.RestTypeIdentifier;
+import com.fortmocks.web.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestProjectOutput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.UpdateRestProjectOutput;

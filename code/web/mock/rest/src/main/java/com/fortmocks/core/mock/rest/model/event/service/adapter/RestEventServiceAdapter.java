@@ -2,7 +2,7 @@ package com.fortmocks.core.mock.rest.model.event.service.adapter;
 
 import com.fortmocks.core.basis.model.TypeIdentifier;
 import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
-import com.fortmocks.core.mock.rest.model.RestTypeIdentifier;
+import com.fortmocks.web.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadAllRestEventInput;
 import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
