@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.configuration.processor.message.output;
+package com.fortmocks.core.model.configuration.service.message.output;
 
 import com.fortmocks.core.model.Output;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;

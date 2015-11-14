@@ -14,33 +14,33 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.user.processor.message.input;
+package com.fortmocks.core.model.user.service.message.input;
 
 import com.fortmocks.core.model.Input;
-import com.fortmocks.core.model.user.domain.Role;
+import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.validation.NotNull;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadUsersByRoleInput implements Input {
+public class CreateUserInput implements Input {
 
     @NotNull
-    private Role role;
+    private UserDto user;
 
-    public ReadUsersByRoleInput() {
+    public CreateUserInput() {
     }
 
-    public ReadUsersByRoleInput(Role role) {
-        this.role = role;
+    public CreateUserInput(UserDto user) {
+        this.user = user;
     }
 
-    public Role getRole() {
-        return role;
+    public UserDto getUser() {
+        return user;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 }

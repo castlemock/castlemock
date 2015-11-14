@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.user.processor.messge.output;
+package com.fortmocks.core.model.user.service.message.output;
 
 import com.fortmocks.core.model.Output;
 import com.fortmocks.core.model.user.dto.UserDto;
@@ -24,16 +24,16 @@ import com.fortmocks.core.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateUserOutput implements Output {
+public class ReadUserOutput implements Output{
 
     @NotNull
-    private UserDto updatedUser;
+    private UserDto user;
 
-    public UserDto getUpdatedUser() {
-        return updatedUser;
+    public UserDto getUser() {
+        return user;
     }
 
-    public void setUpdatedUser(UserDto updatedUser) {
-        this.updatedUser = updatedUser;
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 }

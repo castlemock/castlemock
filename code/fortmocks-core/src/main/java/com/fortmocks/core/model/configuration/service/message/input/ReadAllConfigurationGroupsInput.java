@@ -14,26 +14,13 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.user.processor.messge.output;
+package com.fortmocks.core.model.configuration.service.message.input;
 
-import com.fortmocks.core.model.Output;
-import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.validation.NotNull;
+import com.fortmocks.core.model.Input;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadUserOutput implements Output{
-
-    @NotNull
-    private UserDto user;
-
-    public UserDto getUser() {
-        return user;
-    }
-
-    public void setUser(UserDto user) {
-        this.user = user;
-    }
+public class ReadAllConfigurationGroupsInput implements Input {
 }

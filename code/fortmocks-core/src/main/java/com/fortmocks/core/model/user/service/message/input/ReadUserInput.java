@@ -14,28 +14,32 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.user.processor.messge.output;
+package com.fortmocks.core.model.user.service.message.input;
 
-import com.fortmocks.core.model.Output;
-import com.fortmocks.core.model.user.dto.UserDto;
+import com.fortmocks.core.model.Input;
 import com.fortmocks.core.model.validation.NotNull;
-
-import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadAllUsersOutput implements Output {
+public class ReadUserInput implements Input {
 
     @NotNull
-    private List<UserDto> users;
+    private Long userId;
 
-    public List<UserDto> getUsers() {
-        return users;
+    public ReadUserInput() {
     }
 
-    public void setUsers(List<UserDto> users) {
-        this.users = users;
+    public ReadUserInput(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

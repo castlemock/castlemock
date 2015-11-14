@@ -20,8 +20,8 @@ import com.fortmocks.core.model.Service;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.processor.message.input.CreateUserInput;
-import com.fortmocks.core.model.user.processor.messge.output.CreateUserOutput;
+import com.fortmocks.core.model.user.service.message.input.CreateUserInput;
+import com.fortmocks.core.model.user.service.message.output.CreateUserOutput;
 
 /**
  * @author Karl Dahlgren

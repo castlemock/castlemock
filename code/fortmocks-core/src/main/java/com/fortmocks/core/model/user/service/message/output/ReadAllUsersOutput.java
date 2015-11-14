@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.user.processor.messge.output;
+package com.fortmocks.core.model.user.service.message.output;
 
 import com.fortmocks.core.model.Output;
 import com.fortmocks.core.model.user.dto.UserDto;
@@ -26,16 +26,16 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateCurrentUserOutput implements Output{
+public class ReadAllUsersOutput implements Output {
 
     @NotNull
-    private UserDto updatedUser;
+    private List<UserDto> users;
 
-    public UserDto getUpdatedUser() {
-        return updatedUser;
+    public List<UserDto> getUsers() {
+        return users;
     }
 
-    public void setUpdatedUser(UserDto updatedUser) {
-        this.updatedUser = updatedUser;
+    public void setUsers(List<UserDto> users) {
+        this.users = users;
     }
 }

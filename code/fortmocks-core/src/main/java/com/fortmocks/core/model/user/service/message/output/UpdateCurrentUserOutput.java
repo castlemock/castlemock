@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.configuration.processor.message.output;
+package com.fortmocks.core.model.user.service.message.output;
 
 import com.fortmocks.core.model.Output;
-import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
+import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.validation.NotNull;
 
 import java.util.List;
@@ -26,16 +26,16 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadAllConfigurationGroupsOutput implements Output {
+public class UpdateCurrentUserOutput implements Output{
 
     @NotNull
-    private List<ConfigurationGroupDto> configurationGroups;
+    private UserDto updatedUser;
 
-    public List<ConfigurationGroupDto> getConfigurationGroups() {
-        return configurationGroups;
+    public UserDto getUpdatedUser() {
+        return updatedUser;
     }
 
-    public void setConfigurationGroups(List<ConfigurationGroupDto> configurationGroups) {
-        this.configurationGroups = configurationGroups;
+    public void setUpdatedUser(UserDto updatedUser) {
+        this.updatedUser = updatedUser;
     }
 }

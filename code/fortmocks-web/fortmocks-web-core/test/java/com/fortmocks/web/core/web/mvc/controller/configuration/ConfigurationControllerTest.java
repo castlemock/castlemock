@@ -17,8 +17,8 @@
 package com.fortmocks.web.core.web.mvc.controller.configuration;
 
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.processor.message.input.ReadAllConfigurationGroupsInput;
-import com.fortmocks.core.model.configuration.processor.message.output.ReadAllConfigurationGroupsOutput;
+import com.fortmocks.core.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
+import com.fortmocks.core.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 import com.fortmocks.web.core.config.TestApplication;
 import com.fortmocks.web.core.model.configuration.dto.ConfigurationGroupDtoGenerator;
 import com.fortmocks.web.core.processor.ProcessorMainframe;

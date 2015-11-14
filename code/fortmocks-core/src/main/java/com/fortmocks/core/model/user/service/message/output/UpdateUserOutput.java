@@ -14,32 +14,26 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.user.processor.message.input;
+package com.fortmocks.core.model.user.service.message.output;
 
-import com.fortmocks.core.model.Input;
+import com.fortmocks.core.model.Output;
+import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.validation.NotNull;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteUserInput implements Input{
+public class UpdateUserOutput implements Output {
 
     @NotNull
-    private Long userId;
+    private UserDto updatedUser;
 
-    public DeleteUserInput() {
+    public UserDto getUpdatedUser() {
+        return updatedUser;
     }
 
-    public DeleteUserInput(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUpdatedUser(UserDto updatedUser) {
+        this.updatedUser = updatedUser;
     }
 }

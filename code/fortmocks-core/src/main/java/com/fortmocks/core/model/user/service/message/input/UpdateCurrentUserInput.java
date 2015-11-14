@@ -14,28 +14,33 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.configuration.processor.message.input;
+package com.fortmocks.core.model.user.service.message.input;
 
 import com.fortmocks.core.model.Input;
-import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
+import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.validation.NotNull;
-
-import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateAllConfigurationGroupsInput implements Input{
+public class UpdateCurrentUserInput implements Input {
 
     @NotNull
-    private List<ConfigurationGroupDto> configurationGroups;
+    private UserDto user;
 
-    public List<ConfigurationGroupDto> getConfigurationGroups() {
-        return configurationGroups;
+    public UpdateCurrentUserInput() {
     }
 
-    public void setConfigurationGroups(List<ConfigurationGroupDto> configurationGroups) {
-        this.configurationGroups = configurationGroups;
+    public UpdateCurrentUserInput(UserDto user) {
+        this.user = user;
+    }
+
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 }

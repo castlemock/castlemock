@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.user.processor.message.input;
+package com.fortmocks.core.model.user.service.message.input;
 
 import com.fortmocks.core.model.Input;
 import com.fortmocks.core.model.validation.NotNull;
@@ -23,23 +23,23 @@ import com.fortmocks.core.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadUserInput implements Input {
+public class ReadUserByUsernameInput implements Input {
 
     @NotNull
-    private Long userId;
+    private String username;
 
-    public ReadUserInput() {
+    public ReadUserByUsernameInput() {
     }
 
-    public ReadUserInput(Long userId) {
-        this.userId = userId;
+    public ReadUserByUsernameInput(String username) {
+        this.username = username;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

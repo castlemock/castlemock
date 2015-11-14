@@ -17,10 +17,10 @@
 package com.fortmocks.web.core.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.processor.message.input.ReadUserByUsernameInput;
-import com.fortmocks.core.model.user.processor.messge.output.ReadUserByUsernameOutput;
-import com.fortmocks.core.model.user.processor.message.input.UpdateCurrentUserInput;
-import com.fortmocks.core.model.user.processor.messge.output.UpdateCurrentUserOutput;
+import com.fortmocks.core.model.user.service.message.input.ReadUserByUsernameInput;
+import com.fortmocks.core.model.user.service.message.output.ReadUserByUsernameOutput;
+import com.fortmocks.core.model.user.service.message.input.UpdateCurrentUserInput;
+import com.fortmocks.core.model.user.service.message.output.UpdateCurrentUserOutput;
 import com.fortmocks.web.core.model.user.service.UserDetailSecurityService;
 import com.fortmocks.web.core.web.mvc.command.user.UpdateCurrentUserCommand;
 import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;

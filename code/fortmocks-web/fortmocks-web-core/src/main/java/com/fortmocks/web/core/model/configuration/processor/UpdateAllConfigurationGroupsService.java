@@ -22,8 +22,8 @@ import com.fortmocks.core.model.Task;
 import com.fortmocks.core.model.configuration.domain.ConfigurationGroup;
 import com.fortmocks.core.model.configuration.dto.ConfigurationDto;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.processor.message.input.UpdateAllConfigurationGroupsInput;
-import com.fortmocks.core.model.configuration.processor.message.output.UpdateAllConfigurationGroupsOutput;
+import com.fortmocks.core.model.configuration.service.message.input.UpdateAllConfigurationGroupsInput;
+import com.fortmocks.core.model.configuration.service.message.output.UpdateAllConfigurationGroupsOutput;
 import com.google.common.base.Preconditions;
 
 import java.util.ArrayList;

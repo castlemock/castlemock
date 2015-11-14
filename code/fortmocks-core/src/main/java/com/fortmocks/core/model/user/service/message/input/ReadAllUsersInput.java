@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.model.configuration.processor.message.input;
+package com.fortmocks.core.model.user.service.message.input;
 
 import com.fortmocks.core.model.Input;
 
@@ -22,5 +22,5 @@ import com.fortmocks.core.model.Input;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadAllConfigurationGroupsInput implements Input {
+public class ReadAllUsersInput implements Input {
 }

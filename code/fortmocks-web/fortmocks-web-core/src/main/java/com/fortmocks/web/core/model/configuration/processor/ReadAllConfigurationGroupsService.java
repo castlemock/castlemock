@@ -20,8 +20,8 @@ import com.fortmocks.core.model.Service;
 import com.fortmocks.core.model.Result;
 import com.fortmocks.core.model.Task;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.model.configuration.processor.message.input.ReadAllConfigurationGroupsInput;
-import com.fortmocks.core.model.configuration.processor.message.output.ReadAllConfigurationGroupsOutput;
+import com.fortmocks.core.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
+import com.fortmocks.core.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 
 import java.util.List;
 
