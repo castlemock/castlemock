@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.web.mvc.controller;
 
-import com.fortmocks.web.core.web.mvc.controller.AbstractController;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

@@ -17,7 +17,7 @@
 package com.fortmocks.core.mock.soap.model;
 
 
-import com.fortmocks.web.core.web.mvc.controller.ViewControllerAdvice;
+import com.fortmocks.web.basis.web.mvc.controller.ViewControllerAdvice;
 
 /**
  * The SoapException is the main exception for the all SOAP related issues. All SOAP related exceptions

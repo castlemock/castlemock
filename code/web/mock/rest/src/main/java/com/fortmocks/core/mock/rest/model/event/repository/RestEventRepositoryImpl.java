@@ -17,7 +17,7 @@
 package com.fortmocks.core.mock.rest.model.event.repository;
 
 import com.fortmocks.core.mock.rest.model.event.domain.RestEvent;
-import com.fortmocks.web.core.model.RepositoryImpl;
+import com.fortmocks.web.basis.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

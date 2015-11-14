@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.rest.web.mvc.controller;
 
-import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractViewController;
 
 /**
  * The class operates as a shared base for all the view related to the REST module

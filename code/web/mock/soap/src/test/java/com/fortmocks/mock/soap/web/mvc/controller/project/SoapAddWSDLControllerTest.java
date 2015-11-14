@@ -26,8 +26,8 @@ import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoap
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.fortmocks.mock.soap.web.mvc.command.project.WSDLFileUploadForm;
 import com.fortmocks.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
-import com.fortmocks.web.core.service.ServiceProcessor;
-import com.fortmocks.web.core.web.mvc.controller.AbstractController;
+import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

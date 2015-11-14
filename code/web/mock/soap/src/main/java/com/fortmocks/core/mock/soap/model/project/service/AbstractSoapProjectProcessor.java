@@ -21,7 +21,7 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.web.core.model.AbstractProcessor;
+import com.fortmocks.web.basis.model.AbstractProcessor;
 import com.google.common.base.Preconditions;
 
 import java.util.*;

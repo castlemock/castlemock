@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.web.mvc.controller.user;
+package com.fortmocks.web.basis.web.mvc.controller.user;
 
 import com.fortmocks.core.model.user.dto.UserDto;
 import com.fortmocks.core.model.user.service.message.input.ReadUserInput;
 import com.fortmocks.core.model.user.service.message.output.ReadUserOutput;
-import com.fortmocks.web.core.config.TestApplication;
-import com.fortmocks.web.core.model.user.dto.UserDtoGenerator;
-import com.fortmocks.web.core.service.ServiceProcessor;
-import com.fortmocks.web.core.web.mvc.controller.AbstractController;
-import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
+import com.fortmocks.web.basis.config.TestApplication;
+import com.fortmocks.web.basis.model.user.dto.UserDtoGenerator;
+import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -48,7 +48,7 @@ import static org.mockito.Mockito.when;
 public class UserControllerTest extends AbstractControllerTest {
 
     private static final String SERVICE_URL = "/web/user/";
-    private static final String PAGE = "partial/core/user/user.jsp";
+    private static final String PAGE = "partial/basis/user/user.jsp";
     private static final String USER = "user";
 
     @InjectMocks

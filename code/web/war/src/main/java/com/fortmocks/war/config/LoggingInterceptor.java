@@ -16,7 +16,7 @@
 
 package com.fortmocks.war.config;
 
-import com.fortmocks.web.core.web.mvc.controller.AbstractController;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import org.apache.log4j.Logger;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

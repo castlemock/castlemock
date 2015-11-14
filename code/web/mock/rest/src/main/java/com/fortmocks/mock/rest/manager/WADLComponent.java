@@ -22,7 +22,7 @@ import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
-import com.fortmocks.web.core.manager.FileManager;
+import com.fortmocks.web.basis.manager.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

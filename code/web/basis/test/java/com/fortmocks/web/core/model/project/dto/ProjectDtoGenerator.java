@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.model.project.dto;
+package com.fortmocks.web.basis.model.project.dto;
 
 import com.fortmocks.core.model.project.domain.DomainNameStrategy;
 import com.fortmocks.core.model.project.domain.Project;

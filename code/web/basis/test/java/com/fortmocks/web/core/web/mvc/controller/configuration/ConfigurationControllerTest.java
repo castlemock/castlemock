@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.web.mvc.controller.configuration;
+package com.fortmocks.web.basis.web.mvc.controller.configuration;
 
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;
 import com.fortmocks.core.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
 import com.fortmocks.core.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
-import com.fortmocks.web.core.config.TestApplication;
-import com.fortmocks.web.core.model.configuration.dto.ConfigurationGroupDtoGenerator;
-import com.fortmocks.web.core.service.ServiceProcessor;
-import com.fortmocks.web.core.web.mvc.controller.AbstractController;
-import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
+import com.fortmocks.web.basis.config.TestApplication;
+import com.fortmocks.web.basis.model.configuration.dto.ConfigurationGroupDtoGenerator;
+import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -51,7 +51,7 @@ import static org.mockito.Matchers.any;
 public class ConfigurationControllerTest extends AbstractControllerTest {
 
     private static final String SERVICE_URL = "/web/configuration";
-    private static final String PAGE = "partial/core/configuration/configuration.jsp";
+    private static final String PAGE = "partial/basis/configuration/configuration.jsp";
 
     @InjectMocks
     private ConfigurationController configurationController;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.model.event.dto;
+package com.fortmocks.web.basis.model.event.dto;
 
 import com.fortmocks.core.model.event.domain.Event;
 import com.fortmocks.core.model.event.dto.EventDto;

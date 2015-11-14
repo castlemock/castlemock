@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.web.mvc.controller.project;
+package com.fortmocks.web.basis.web.mvc.controller.project;
 
 import com.fortmocks.core.model.project.dto.ProjectDto;
-import com.fortmocks.web.core.config.TestApplication;
-import com.fortmocks.web.core.model.project.dto.ProjectDtoGenerator;
-import com.fortmocks.web.core.model.project.service.ProjectServiceFacadeImpl;
-import com.fortmocks.web.core.web.mvc.controller.AbstractController;
-import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
+import com.fortmocks.web.basis.config.TestApplication;
+import com.fortmocks.web.basis.model.project.dto.ProjectDtoGenerator;
+import com.fortmocks.web.basis.model.project.service.ProjectServiceFacadeImpl;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -49,7 +49,7 @@ public class CreateProjectControllerTest extends AbstractControllerTest {
 
 
     private static final String SERVICE_URL = "/web/project/create";
-    private static final String PAGE = "partial/core/project/createProject.jsp";
+    private static final String PAGE = "partial/basis/project/createProject.jsp";
 
     @InjectMocks
     private CreateProjectController createProjectController;

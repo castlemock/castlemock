@@ -1,4 +1,4 @@
-package com.fortmocks.web.core.config;
+package com.fortmocks.web.basis.config;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.web.SpringBootServletInitializer;

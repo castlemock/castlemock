@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.web.mvc.controller.event;
+package com.fortmocks.web.basis.web.mvc.controller.event;
 
 import com.fortmocks.core.model.event.dto.EventDto;
-import com.fortmocks.web.core.config.TestApplication;
-import com.fortmocks.web.core.model.event.dto.EventDtoGenerator;
-import com.fortmocks.web.core.model.event.service.EventServiceFacadeImpl;
-import com.fortmocks.web.core.web.mvc.controller.AbstractController;
-import com.fortmocks.web.core.web.mvc.controller.AbstractControllerTest;
+import com.fortmocks.web.basis.config.TestApplication;
+import com.fortmocks.web.basis.model.event.dto.EventDtoGenerator;
+import com.fortmocks.web.basis.model.event.service.EventServiceFacadeImpl;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -48,7 +48,7 @@ import static org.mockito.Mockito.when;
 public class EventOverviewControllerTest extends AbstractControllerTest {
 
     private static final String SERVICE_URL = "/web/event";
-    private static final String PAGE = "partial/core/event/eventOverview.jsp";
+    private static final String PAGE = "partial/basis/event/eventOverview.jsp";
     private static final String EVENTS = "events";
     private static final Integer EVENT_COUNT = 5;
 

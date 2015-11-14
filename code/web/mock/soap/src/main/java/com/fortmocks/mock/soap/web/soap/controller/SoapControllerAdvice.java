@@ -16,7 +16,7 @@
 
 package com.fortmocks.mock.soap.web.soap.controller;
 
-import com.fortmocks.web.core.web.mvc.controller.AbstractViewController;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractViewController;
 import com.fortmocks.core.mock.soap.model.SoapErrorMessage;
 import com.fortmocks.core.mock.soap.model.SoapException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -26,7 +26,7 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.CreateRecordedSoapMockResponseInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
-import com.fortmocks.web.core.web.mvc.controller.AbstractController;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.core.mock.soap.model.SoapException;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;

@@ -17,7 +17,7 @@
 package com.fortmocks.core.mock.rest.model;
 
 
-import com.fortmocks.web.core.web.mvc.controller.ViewControllerAdvice;
+import com.fortmocks.web.basis.web.mvc.controller.ViewControllerAdvice;
 
 /**
  * The RestException is the main exception for the all REST related issues. All REST related exceptions

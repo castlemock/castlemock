@@ -19,7 +19,7 @@ package com.fortmocks.core.mock.soap.model.event.service;
 
 import com.fortmocks.core.mock.soap.model.event.domain.SoapEvent;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
-import com.fortmocks.web.core.model.AbstractProcessor;
+import com.fortmocks.web.basis.model.AbstractProcessor;
 
 import java.util.ArrayList;
 import java.util.List;

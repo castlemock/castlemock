@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.web.mvc.controller;
+package com.fortmocks.web.basis.web.mvc.controller;
 
-import com.fortmocks.web.core.config.TestApplication;
+import com.fortmocks.web.basis.config.TestApplication;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;

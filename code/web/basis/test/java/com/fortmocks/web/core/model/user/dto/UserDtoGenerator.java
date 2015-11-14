@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.model.user.dto;
+package com.fortmocks.web.basis.model.user.dto;
 
 import com.fortmocks.core.model.user.domain.Role;
 import com.fortmocks.core.model.user.domain.Status;

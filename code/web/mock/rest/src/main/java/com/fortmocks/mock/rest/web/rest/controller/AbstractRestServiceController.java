@@ -14,7 +14,7 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodWithMethodTypeInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodWithMethodTypeOutput;
-import com.fortmocks.web.core.web.mvc.controller.AbstractController;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.google.common.base.Preconditions;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

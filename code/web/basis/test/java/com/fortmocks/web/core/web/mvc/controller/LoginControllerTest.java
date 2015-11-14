@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.web.mvc.controller;
+package com.fortmocks.web.basis.web.mvc.controller;
 
 
 import org.junit.Before;

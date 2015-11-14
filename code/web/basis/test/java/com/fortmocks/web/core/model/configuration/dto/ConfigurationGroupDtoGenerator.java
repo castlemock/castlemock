@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.core.model.configuration.dto;
+package com.fortmocks.web.basis.model.configuration.dto;
 
 import com.fortmocks.core.model.configuration.dto.ConfigurationDto;
 import com.fortmocks.core.model.configuration.dto.ConfigurationGroupDto;

@@ -9,7 +9,7 @@ import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadAll
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.UpdateSoapProjectOutput;
 import com.fortmocks.core.mock.soap.model.SoapTypeIdentifier;
-import com.fortmocks.web.core.service.ServiceProcessor;
+import com.fortmocks.web.basis.service.ServiceProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
