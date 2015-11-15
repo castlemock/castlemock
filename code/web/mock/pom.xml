@@ -20,7 +20,7 @@
 	<artifactId>fortmocks-web-mock</artifactId>
 	<packaging>pom</packaging>
 	<version>0.2-SNAPSHOT</version>
-    <name>Fort mocks mock</name>
+    <name>Fort mocks web mock</name>
 	<url>http://www.fortmocks.com</url>
 	<description>The module that constitutes the main Fort Mocks mock</description>
 
