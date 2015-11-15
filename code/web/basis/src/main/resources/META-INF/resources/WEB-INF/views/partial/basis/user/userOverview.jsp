@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <td class="column1"><form:label path="password"><spring:message code="general.useroverview.label.password"/></form:label></td>
-                <td class="column2"><form:input path="password" />
+                <td class="column2"><form:password path="password" />
             </tr>
             <tr>
                 <td class="column1"><form:label path="email"><spring:message code="general.useroverview.label.email"/></form:label></td>
