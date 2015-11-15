@@ -9,7 +9,13 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.GenericTypeResolver;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -159,6 +165,44 @@ public abstract class AbstractService<T extends Saveable<I>, D, I extends Serial
 
     protected <O extends Output> ServiceResult<O> createServiceResult(O output){
         return new ServiceResult(output);
+    }
+
+    /**
+     * The method provides the functionality to export a project and convert it to a String
+     * @param id The id of the project that will be converted and exported
+     * @return The project with the provided id as a String
+     */
+    protected String exportType(final I id){
+        try {
+            final T type = findType(id);
+            final JAXBContext context = JAXBContext.newInstance(entityClass);
+            final Marshaller marshaller = context.createMarshaller();
+            final StringWriter writer = new StringWriter();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.marshal(type, writer);
+            return writer.toString();
+        }
+        catch (JAXBException e) {
+            throw new IllegalStateException("Unable to export type");
+        }
+    }
+
+    /**
+     * The method provides the functionality to import a project as a String
+     * @param projectRaw The project as a String
+     */
+    protected void importType(final String projectRaw){
+
+        try {
+            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream (projectRaw.getBytes());
+            final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass);
+            final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            final T type = (T) jaxbUnmarshaller.unmarshal(byteArrayInputStream);
+            type.setId(null);
+            save(type);
+        } catch (JAXBException e) {
+            throw new IllegalStateException("Unable to import type");
+        }
     }
 
 }

@@ -35,4 +35,4 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>
 </div>
-<script src=<c:url value="/resources/js/FileUpload.js"/>></script>
+<script src=<c:url value="/resources/js/importProject.js"/>></script>
