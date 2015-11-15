@@ -30,7 +30,7 @@ import com.fortmocks.core.mock.rest.model.project.service.message.output.DeleteR
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class DeleteRestApplicationsService extends AbstractRestProjectProcessor implements Service<DeleteRestApplicationsInput, DeleteRestApplicationsOutput> {
+public class DeleteRestApplicationsService extends AbstractRestProjectService implements Service<DeleteRestApplicationsInput, DeleteRestApplicationsOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

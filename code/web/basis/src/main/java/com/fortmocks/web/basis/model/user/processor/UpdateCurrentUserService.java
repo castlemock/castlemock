@@ -33,7 +33,7 @@ import java.util.Date;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateCurrentUserService extends AbstractUserProcessor implements Service<UpdateCurrentUserInput, UpdateCurrentUserOutput> {
+public class UpdateCurrentUserService extends AbstractUserService implements Service<UpdateCurrentUserInput, UpdateCurrentUserOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

@@ -28,7 +28,7 @@ import com.fortmocks.core.basis.model.user.service.message.output.CreateUserOutp
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class CreateUserService extends AbstractUserProcessor implements Service<CreateUserInput, CreateUserOutput> {
+public class CreateUserService extends AbstractUserService implements Service<CreateUserInput, CreateUserOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

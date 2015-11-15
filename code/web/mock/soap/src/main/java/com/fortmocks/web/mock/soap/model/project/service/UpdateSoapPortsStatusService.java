@@ -30,7 +30,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateSoapPortsStatusService extends AbstractSoapProjectProcessor implements Service<UpdateSoapPortsStatusInput, UpdateSoapPortsStatusOutput> {
+public class UpdateSoapPortsStatusService extends AbstractSoapProjectService implements Service<UpdateSoapPortsStatusInput, UpdateSoapPortsStatusOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

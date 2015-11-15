@@ -18,13 +18,13 @@ package com.fortmocks.web.basis.model.configuration.processor;
 
 import com.fortmocks.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.web.basis.model.AbstractProcessor;
+import com.fortmocks.web.basis.model.AbstractService;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractConfigurationGroupProcessor extends AbstractProcessor<ConfigurationGroup, ConfigurationGroupDto, Long> {
+public abstract class AbstractConfigurationGroupService extends AbstractService<ConfigurationGroup, ConfigurationGroupDto, Long> {
 
 
 }

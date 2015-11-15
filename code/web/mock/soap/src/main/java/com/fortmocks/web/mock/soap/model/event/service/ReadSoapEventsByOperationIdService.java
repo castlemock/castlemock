@@ -16,7 +16,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadSoapEventsByOperationIdService extends AbstractSoapEventProcessor implements Service<ReadSoapEventsByOperationIdInput, ReadSoapEventsByOperationIdOutput> {
+public class ReadSoapEventsByOperationIdService extends AbstractSoapEventService implements Service<ReadSoapEventsByOperationIdInput, ReadSoapEventsByOperationIdOutput> {
 
     @Override
     public Result<ReadSoapEventsByOperationIdOutput> process(Task<ReadSoapEventsByOperationIdInput> task) {

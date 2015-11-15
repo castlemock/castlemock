@@ -30,7 +30,7 @@ import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRe
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class CreateRestMockResponseService extends AbstractRestProjectProcessor implements Service<CreateRestMockResponseInput, CreateRestMockResponseOutput> {
+public class CreateRestMockResponseService extends AbstractRestProjectService implements Service<CreateRestMockResponseInput, CreateRestMockResponseOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

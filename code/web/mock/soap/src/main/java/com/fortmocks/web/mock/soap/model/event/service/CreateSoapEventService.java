@@ -12,7 +12,7 @@ import com.fortmocks.core.mock.soap.model.event.service.message.output.CreateSoa
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class CreateSoapEventService extends AbstractSoapEventProcessor implements Service<CreateSoapEventInput, CreateSoapEventOutput> {
+public class CreateSoapEventService extends AbstractSoapEventService implements Service<CreateSoapEventInput, CreateSoapEventOutput> {
 
     @Override
     public Result<CreateSoapEventOutput> process(Task<CreateSoapEventInput> task) {

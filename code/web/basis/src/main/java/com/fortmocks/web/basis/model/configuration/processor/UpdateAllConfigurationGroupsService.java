@@ -34,7 +34,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateAllConfigurationGroupsService extends AbstractConfigurationGroupProcessor implements Service<UpdateAllConfigurationGroupsInput, UpdateAllConfigurationGroupsOutput> {
+public class UpdateAllConfigurationGroupsService extends AbstractConfigurationGroupService implements Service<UpdateAllConfigurationGroupsInput, UpdateAllConfigurationGroupsOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

@@ -31,7 +31,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadUsersByRoleService extends AbstractUserProcessor implements Service<ReadUsersByRoleInput, ReadUsersByRoleOutput> {
+public class ReadUsersByRoleService extends AbstractUserService implements Service<ReadUsersByRoleInput, ReadUsersByRoleOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

@@ -18,7 +18,7 @@ package com.fortmocks.web.mock.rest.model.event.service;
 
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.domain.RestEvent;
-import com.fortmocks.web.basis.model.AbstractProcessor;
+import com.fortmocks.web.basis.model.AbstractService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import java.util.List;
  * @since 1.0
  */
 @Service
-public class AbstractRestEventProcessor extends AbstractProcessor<RestEvent, RestEventDto, Long>{
+public class AbstractRestEventService extends AbstractService<RestEvent, RestEventDto, Long> {
 
 
     public List<RestEventDto> findEventsByMethodId(Long restMethodId) {

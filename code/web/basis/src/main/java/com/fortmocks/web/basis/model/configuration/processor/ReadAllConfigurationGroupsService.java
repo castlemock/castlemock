@@ -30,7 +30,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadAllConfigurationGroupsService extends AbstractConfigurationGroupProcessor implements Service<ReadAllConfigurationGroupsInput, ReadAllConfigurationGroupsOutput> {
+public class ReadAllConfigurationGroupsService extends AbstractConfigurationGroupService implements Service<ReadAllConfigurationGroupsInput, ReadAllConfigurationGroupsOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

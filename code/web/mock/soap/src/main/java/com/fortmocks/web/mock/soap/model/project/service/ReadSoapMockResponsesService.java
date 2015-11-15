@@ -33,7 +33,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadSoapMockResponsesService extends AbstractSoapProjectProcessor implements Service<ReadSoapMockResponsesInput, ReadSoapMockResponsesOutput> {
+public class ReadSoapMockResponsesService extends AbstractSoapProjectService implements Service<ReadSoapMockResponsesInput, ReadSoapMockResponsesOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

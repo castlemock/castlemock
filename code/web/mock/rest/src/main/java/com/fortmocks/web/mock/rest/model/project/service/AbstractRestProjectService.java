@@ -19,14 +19,14 @@ package com.fortmocks.web.mock.rest.model.project.service;
 import com.fortmocks.core.mock.rest.model.project.domain.*;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
-import com.fortmocks.web.basis.model.AbstractProcessor;
+import com.fortmocks.web.basis.model.AbstractService;
 import com.google.common.base.Preconditions;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractRestProjectProcessor extends AbstractProcessor<RestProject, RestProjectDto, Long> {
+public abstract class AbstractRestProjectService extends AbstractService<RestProject, RestProjectDto, Long> {
 
     protected static final String SLASH = "/";
     protected static final String START_BRACKET = "{";

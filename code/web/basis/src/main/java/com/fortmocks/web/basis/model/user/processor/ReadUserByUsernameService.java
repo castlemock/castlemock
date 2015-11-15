@@ -28,7 +28,7 @@ import com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUser
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadUserByUsernameService extends AbstractUserProcessor implements Service<ReadUserByUsernameInput, ReadUserByUsernameOutput> {
+public class ReadUserByUsernameService extends AbstractUserService implements Service<ReadUserByUsernameInput, ReadUserByUsernameOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

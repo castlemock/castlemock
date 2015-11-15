@@ -31,7 +31,7 @@ import java.util.Map;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class GetSoapOperationStatusCountService extends AbstractSoapProjectProcessor implements Service<GetSoapOperationStatusCountInput, GetSoapOperationStatusCountOutput> {
+public class GetSoapOperationStatusCountService extends AbstractSoapProjectService implements Service<GetSoapOperationStatusCountInput, GetSoapOperationStatusCountOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

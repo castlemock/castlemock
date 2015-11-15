@@ -30,7 +30,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadAllSoapProjectsService extends AbstractSoapProjectProcessor implements Service<ReadAllSoapProjectsInput, ReadAllSoapProjectsOutput> {
+public class ReadAllSoapProjectsService extends AbstractSoapProjectService implements Service<ReadAllSoapProjectsInput, ReadAllSoapProjectsOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

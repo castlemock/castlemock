@@ -29,7 +29,7 @@ import com.fortmocks.core.mock.rest.model.project.service.message.output.UpdateR
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateRestResourceService extends AbstractRestProjectProcessor implements Service<UpdateRestResourceInput, UpdateRestResourceOutput> {
+public class UpdateRestResourceService extends AbstractRestProjectService implements Service<UpdateRestResourceInput, UpdateRestResourceOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

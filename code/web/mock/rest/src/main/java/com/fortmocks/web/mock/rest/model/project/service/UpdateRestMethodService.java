@@ -29,7 +29,7 @@ import com.fortmocks.core.mock.rest.model.project.service.message.output.UpdateR
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateRestMethodService extends AbstractRestProjectProcessor implements Service<UpdateRestMethodInput, UpdateRestMethodOutput> {
+public class UpdateRestMethodService extends AbstractRestProjectService implements Service<UpdateRestMethodInput, UpdateRestMethodOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate
@@ -50,6 +50,6 @@ public class UpdateRestMethodService extends AbstractRestProjectProcessor implem
         restMethod.setRestMethodStatus(updatedRestMethod.getRestMethodStatus());
         restMethod.setForwardedEndpoint(updatedRestMethod.getForwardedEndpoint());
         save(input.getRestProjectId());
-        return createResult(new UpdateRestMethodOutput());
+        return createResult(new UpdateRestMethodOutput(updatedRestMethod));
     }
 }

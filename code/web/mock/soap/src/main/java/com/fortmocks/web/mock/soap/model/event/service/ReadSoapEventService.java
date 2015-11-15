@@ -12,7 +12,7 @@ import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadSoapE
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadSoapEventService  extends AbstractSoapEventProcessor implements Service<ReadSoapEventInput, ReadSoapEventOutput> {
+public class ReadSoapEventService  extends AbstractSoapEventService implements Service<ReadSoapEventInput, ReadSoapEventOutput> {
 
     @Override
     public Result<ReadSoapEventOutput> process(Task<ReadSoapEventInput> task) {

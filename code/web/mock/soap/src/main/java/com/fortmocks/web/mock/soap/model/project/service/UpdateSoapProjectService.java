@@ -28,7 +28,7 @@ import com.fortmocks.core.mock.soap.model.project.service.message.output.UpdateS
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateSoapProjectService extends AbstractSoapProjectProcessor implements Service<UpdateSoapProjectInput, UpdateSoapProjectOutput> {
+public class UpdateSoapProjectService extends AbstractSoapProjectService implements Service<UpdateSoapProjectInput, UpdateSoapProjectOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

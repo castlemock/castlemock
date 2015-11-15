@@ -14,7 +14,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadAllRestEventService extends AbstractRestEventProcessor implements Service<ReadAllRestEventInput, ReadAllRestEventOutput> {
+public class ReadAllRestEventService extends AbstractRestEventService implements Service<ReadAllRestEventInput, ReadAllRestEventOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

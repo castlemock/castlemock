@@ -30,7 +30,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadAllRestProjectsService extends AbstractRestProjectProcessor implements Service<ReadAllRestProjectsInput, ReadAllRestProjectsOutput> {
+public class ReadAllRestProjectsService extends AbstractRestProjectService implements Service<ReadAllRestProjectsInput, ReadAllRestProjectsOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

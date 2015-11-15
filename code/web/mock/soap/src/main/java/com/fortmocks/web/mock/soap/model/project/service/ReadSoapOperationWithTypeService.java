@@ -31,7 +31,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadSoapOperationWithTypeService extends AbstractSoapProjectProcessor implements Service<ReadSoapOperationWithTypeInput, ReadSoapOperationWithTypeOutput> {
+public class ReadSoapOperationWithTypeService extends AbstractSoapProjectService implements Service<ReadSoapOperationWithTypeInput, ReadSoapOperationWithTypeOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

@@ -29,7 +29,7 @@ import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoa
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadSoapMockResponseService extends AbstractSoapProjectProcessor implements Service<ReadSoapMockResponseInput, ReadSoapMockResponseOutput> {
+public class ReadSoapMockResponseService extends AbstractSoapProjectService implements Service<ReadSoapMockResponseInput, ReadSoapMockResponseOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

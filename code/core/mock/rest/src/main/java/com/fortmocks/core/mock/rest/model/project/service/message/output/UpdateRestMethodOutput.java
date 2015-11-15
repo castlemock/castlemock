@@ -29,6 +29,10 @@ public class UpdateRestMethodOutput implements Output {
     @NotNull
     private RestMethodDto restMethod;
 
+    public UpdateRestMethodOutput(RestMethodDto restMethod) {
+        this.restMethod = restMethod;
+    }
+
     public RestMethodDto getRestMethod() {
         return restMethod;
     }

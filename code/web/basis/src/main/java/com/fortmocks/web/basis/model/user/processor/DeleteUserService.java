@@ -27,7 +27,7 @@ import com.fortmocks.core.basis.model.user.service.message.output.DeleteUserOutp
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class DeleteUserService extends AbstractUserProcessor implements Service<DeleteUserInput, DeleteUserOutput> {
+public class DeleteUserService extends AbstractUserService implements Service<DeleteUserInput, DeleteUserOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

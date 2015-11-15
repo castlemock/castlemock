@@ -30,7 +30,7 @@ import com.fortmocks.core.mock.soap.model.project.service.message.output.DeleteS
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class DeleteSoapPortsService extends AbstractSoapProjectProcessor implements Service<DeleteSoapPortsInput, DeleteSoapPortsOutput> {
+public class DeleteSoapPortsService extends AbstractSoapProjectService implements Service<DeleteSoapPortsInput, DeleteSoapPortsOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

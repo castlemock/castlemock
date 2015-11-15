@@ -30,7 +30,7 @@ import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRes
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadRestResourceWithUriService extends AbstractRestProjectProcessor implements Service<ReadRestResourceWithUriInput, ReadRestResourceWithUriOutput> {
+public class ReadRestResourceWithUriService extends AbstractRestProjectService implements Service<ReadRestResourceWithUriInput, ReadRestResourceWithUriOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

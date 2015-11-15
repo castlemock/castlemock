@@ -28,7 +28,7 @@ import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateCu
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateCurrentRestMockResponseSequenceIndexService extends AbstractRestProjectProcessor implements Service<UpdateCurrentRestMockResponseSequenceIndexInput, UpdateCurrentRestMockResponseSequenceIndexOutput> {
+public class UpdateCurrentRestMockResponseSequenceIndexService extends AbstractRestProjectService implements Service<UpdateCurrentRestMockResponseSequenceIndexInput, UpdateCurrentRestMockResponseSequenceIndexOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

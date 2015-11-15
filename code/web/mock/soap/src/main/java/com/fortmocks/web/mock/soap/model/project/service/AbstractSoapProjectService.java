@@ -21,7 +21,7 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.web.basis.model.AbstractProcessor;
+import com.fortmocks.web.basis.model.AbstractService;
 import com.google.common.base.Preconditions;
 
 import java.util.*;
@@ -30,7 +30,7 @@ import java.util.*;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractSoapProjectProcessor extends AbstractProcessor<SoapProject, SoapProjectDto, Long> {
+public abstract class AbstractSoapProjectService extends AbstractService<SoapProject, SoapProjectDto, Long> {
 
 
     /**

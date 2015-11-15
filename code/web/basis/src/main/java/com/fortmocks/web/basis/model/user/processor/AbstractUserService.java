@@ -20,7 +20,7 @@ import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.user.domain.Status;
 import com.fortmocks.core.basis.model.user.domain.User;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
-import com.fortmocks.web.basis.model.AbstractProcessor;
+import com.fortmocks.web.basis.model.AbstractService;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,10 +34,10 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractUserProcessor extends AbstractProcessor<User, UserDto, Long> {
+public abstract class AbstractUserService extends AbstractService<User, UserDto, Long> {
 
     protected static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
-    private static final Logger LOGGER = Logger.getLogger(AbstractUserProcessor.class);
+    private static final Logger LOGGER = Logger.getLogger(AbstractUserService.class);
 
     /**
      * Get a list of users that has the same role as the provided role

@@ -28,7 +28,7 @@ import com.fortmocks.core.basis.model.user.service.message.output.UpdateUserOutp
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateUserService extends AbstractUserProcessor implements Service<UpdateUserInput, UpdateUserOutput> {
+public class UpdateUserService extends AbstractUserService implements Service<UpdateUserInput, UpdateUserOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

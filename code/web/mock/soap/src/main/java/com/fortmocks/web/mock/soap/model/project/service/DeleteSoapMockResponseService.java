@@ -29,7 +29,7 @@ import com.fortmocks.core.mock.soap.model.project.service.message.output.DeleteS
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class DeleteSoapMockResponseService extends AbstractSoapProjectProcessor implements Service<DeleteSoapMockResponseInput, DeleteSoapMockResponseOutput> {
+public class DeleteSoapMockResponseService extends AbstractSoapProjectService implements Service<DeleteSoapMockResponseInput, DeleteSoapMockResponseOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

@@ -1,6 +1,7 @@
 package com.fortmocks.core.mock.rest.model.event.service.message.output;
 
 import com.fortmocks.core.basis.model.Output;
+import com.fortmocks.core.basis.model.validation.NotNull;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 
 /**
@@ -9,6 +10,7 @@ import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
  */
 public class CreateRestEventOutput implements Output {
 
+    @NotNull
     private RestEventDto createdRestEvent;
 
     public CreateRestEventOutput(RestEventDto createdRestEvent) {

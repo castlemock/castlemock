@@ -29,7 +29,7 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateRestApplicationService extends AbstractRestProjectProcessor implements Service<UpdateRestApplicationInput, UpdateRestApplicationOutput> {
+public class UpdateRestApplicationService extends AbstractRestProjectService implements Service<UpdateRestApplicationInput, UpdateRestApplicationOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

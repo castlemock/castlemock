@@ -30,7 +30,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadAllUsersService extends AbstractUserProcessor implements Service<ReadAllUsersInput, ReadAllUsersOutput> {
+public class ReadAllUsersService extends AbstractUserService implements Service<ReadAllUsersInput, ReadAllUsersOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

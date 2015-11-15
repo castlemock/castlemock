@@ -33,7 +33,7 @@ import java.util.List;
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class CreateSoapPortsService extends AbstractSoapProjectProcessor implements Service<CreateSoapPortsInput, CreateSoapPortsOutput> {
+public class CreateSoapPortsService extends AbstractSoapProjectService implements Service<CreateSoapPortsInput, CreateSoapPortsOutput> {
 
     /**
      * The process message is responsible for processing an incoming task and generate

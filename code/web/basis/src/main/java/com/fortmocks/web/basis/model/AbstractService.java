@@ -18,7 +18,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractProcessor<T extends Saveable<I>, D, I extends Serializable> {
+public abstract class AbstractService<T extends Saveable<I>, D, I extends Serializable> {
 
     @Autowired
     private Repository<T, I> repository;
@@ -32,8 +32,8 @@ public abstract class AbstractProcessor<T extends Saveable<I>, D, I extends Seri
      * The default constructor for the GenericServiceImpl class.
      * It will create an instance of the entity class and the dto class
      */
-    public AbstractProcessor() {
-        Class<?>[] genericClasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractProcessor.class);
+    public AbstractService() {
+        Class<?>[] genericClasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractService.class);
         this.entityClass = (Class<T>) genericClasses[0];
         this.dtoClass = (Class<D>) genericClasses[1];
     }
