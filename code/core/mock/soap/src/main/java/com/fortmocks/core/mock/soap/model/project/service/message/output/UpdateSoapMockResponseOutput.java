@@ -17,6 +17,7 @@
 package com.fortmocks.core.mock.soap.model.project.service.message.output;
 
 import com.fortmocks.core.basis.model.Output;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 
 /**
  * @author Karl Dahlgren
@@ -24,4 +25,17 @@ import com.fortmocks.core.basis.model.Output;
  */
 public class UpdateSoapMockResponseOutput implements Output {
 
+    private SoapMockResponseDto updatedSoapMockResponse;
+
+    public UpdateSoapMockResponseOutput(SoapMockResponseDto updatedSoapMockResponse) {
+        this.updatedSoapMockResponse = updatedSoapMockResponse;
+    }
+
+    public SoapMockResponseDto getUpdatedSoapMockResponse() {
+        return updatedSoapMockResponse;
+    }
+
+    public void setUpdatedSoapMockResponse(SoapMockResponseDto updatedSoapMockResponse) {
+        this.updatedSoapMockResponse = updatedSoapMockResponse;
+    }
 }

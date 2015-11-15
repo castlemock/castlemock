@@ -29,6 +29,10 @@ public class UpdateRestResourceOutput implements Output {
     @NotNull
     private RestResourceDto updatedRestResource;
 
+    public UpdateRestResourceOutput(RestResourceDto updatedRestResource) {
+        this.updatedRestResource = updatedRestResource;
+    }
+
     public RestResourceDto getUpdatedRestResource() {
         return updatedRestResource;
     }

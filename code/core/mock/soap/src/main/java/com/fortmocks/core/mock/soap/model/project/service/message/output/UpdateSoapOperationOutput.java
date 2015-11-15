@@ -17,6 +17,7 @@
 package com.fortmocks.core.mock.soap.model.project.service.message.output;
 
 import com.fortmocks.core.basis.model.Output;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 
 /**
@@ -25,13 +26,17 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
  */
 public class UpdateSoapOperationOutput implements Output {
 
-    private SoapProjectDto updatedSoapProject;
+    private SoapOperationDto soapOperationDto;
 
-    public SoapProjectDto getUpdatedSoapProject() {
-        return updatedSoapProject;
+    public UpdateSoapOperationOutput(SoapOperationDto soapOperationDto) {
+        this.soapOperationDto = soapOperationDto;
     }
 
-    public void setUpdatedSoapProject(SoapProjectDto updatedSoapProject) {
-        this.updatedSoapProject = updatedSoapProject;
+    public SoapOperationDto getSoapOperationDto() {
+        return soapOperationDto;
+    }
+
+    public void setSoapOperationDto(SoapOperationDto soapOperationDto) {
+        this.soapOperationDto = soapOperationDto;
     }
 }

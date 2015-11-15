@@ -47,6 +47,6 @@ public class UpdateRestResourceService extends AbstractRestProjectService implem
         restResource.setName(updatedRestResource.getName());
         restResource.setUri(updatedRestResource.getUri());
         save(input.getRestProjectId());
-        return createServiceResult(new UpdateRestResourceOutput());
+        return createServiceResult(new UpdateRestResourceOutput(updatedRestResource));
     }
 }

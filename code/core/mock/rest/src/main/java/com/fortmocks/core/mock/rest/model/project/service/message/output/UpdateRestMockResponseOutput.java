@@ -29,6 +29,10 @@ public class UpdateRestMockResponseOutput implements Output {
     @NotNull
     private RestMockResponseDto updatedRestMockResponse;
 
+    public UpdateRestMockResponseOutput(RestMockResponseDto updatedRestMockResponse) {
+        this.updatedRestMockResponse = updatedRestMockResponse;
+    }
+
     public RestMockResponseDto getUpdatedRestMockResponse() {
         return updatedRestMockResponse;
     }

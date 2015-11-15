@@ -48,6 +48,6 @@ public class UpdateSoapOperationService extends AbstractSoapProjectService imple
         soapOperation.setForwardedEndpoint(updatedSoapOperation.getForwardedEndpoint());
         soapOperation.setSoapResponseStrategy(updatedSoapOperation.getSoapResponseStrategy());
         save(input.getSoapProjectId());
-        return createServiceResult(new UpdateSoapOperationOutput());
+        return createServiceResult(new UpdateSoapOperationOutput(updatedSoapOperation));
     }
 }

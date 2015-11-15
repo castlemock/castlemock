@@ -46,6 +46,6 @@ public class UpdateRestApplicationService extends AbstractRestProjectService imp
         final RestApplicationDto updatedRestApplication = input.getRestApplication();
         restApplication.setName(updatedRestApplication.getName());
         save(input.getRestProjectId());
-        return createServiceResult(new UpdateRestApplicationOutput());
+        return createServiceResult(new UpdateRestApplicationOutput(updatedRestApplication));
     }
 }

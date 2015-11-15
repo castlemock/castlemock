@@ -29,6 +29,10 @@ public class UpdateRestApplicationOutput implements Output {
     @NotNull
     private RestApplicationDto updatedRestApplication;
 
+    public UpdateRestApplicationOutput(RestApplicationDto updatedRestApplication) {
+        this.updatedRestApplication = updatedRestApplication;
+    }
+
     public RestApplicationDto getUpdatedRestApplication() {
         return updatedRestApplication;
     }
