@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.soap.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
@@ -32,18 +32,18 @@ import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoap
 public class ReadSoapPortService extends AbstractSoapProjectService implements Service<ReadSoapPortInput, ReadSoapPortOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<ReadSoapPortOutput> process(final Task<ReadSoapPortInput> task) {
-        final ReadSoapPortInput input = task.getInput();
+    public ServiceResult<ReadSoapPortOutput> process(final ServiceTask<ReadSoapPortInput> serviceTask) {
+        final ReadSoapPortInput input = serviceTask.getInput();
         final SoapPort soapPort = findSoapPortType(input.getSoapProjectId(), input.getSoapPortId());
         final SoapPortDto soapPortDto = soapPort != null ? mapper.map(soapPort, SoapPortDto.class) : null;
-        return createResult(new ReadSoapPortOutput(soapPortDto));
+        return createServiceResult(new ReadSoapPortOutput(soapPortDto));
     }
 }

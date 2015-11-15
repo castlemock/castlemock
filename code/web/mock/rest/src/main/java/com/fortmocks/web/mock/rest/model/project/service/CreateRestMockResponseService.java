@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.rest.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponse;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
@@ -33,22 +33,22 @@ import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRe
 public class CreateRestMockResponseService extends AbstractRestProjectService implements Service<CreateRestMockResponseInput, CreateRestMockResponseOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<CreateRestMockResponseOutput> process(final Task<CreateRestMockResponseInput> task) {
-        final CreateRestMockResponseInput input = task.getInput();
+    public ServiceResult<CreateRestMockResponseOutput> process(final ServiceTask<CreateRestMockResponseInput> serviceTask) {
+        final CreateRestMockResponseInput input = serviceTask.getInput();
         final RestMethod restMethod = findRestMethodType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId());
         final RestMockResponse restMockResponse = mapper.map(input.getRestMockResponse(), RestMockResponse.class);
         final Long restMockResponseId = getNextRestMockResponseId();
         restMockResponse.setId(restMockResponseId);
         restMethod.getRestMockResponses().add(restMockResponse);
         save(input.getRestProjectId());
-        return createResult(new CreateRestMockResponseOutput(mapper.map(restMockResponse, RestMockResponseDto.class)));
+        return createServiceResult(new CreateRestMockResponseOutput(mapper.map(restMockResponse, RestMockResponseDto.class)));
     }
 }

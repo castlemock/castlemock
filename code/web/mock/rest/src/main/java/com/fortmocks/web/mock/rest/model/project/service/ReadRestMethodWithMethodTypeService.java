@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.rest.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
@@ -33,16 +33,16 @@ import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRes
 public class ReadRestMethodWithMethodTypeService extends AbstractRestProjectService implements Service<ReadRestMethodWithMethodTypeInput, ReadRestMethodWithMethodTypeOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<ReadRestMethodWithMethodTypeOutput> process(final Task<ReadRestMethodWithMethodTypeInput> task) {
-        final ReadRestMethodWithMethodTypeInput input = task.getInput();
+    public ServiceResult<ReadRestMethodWithMethodTypeOutput> process(final ServiceTask<ReadRestMethodWithMethodTypeInput> serviceTask) {
+        final ReadRestMethodWithMethodTypeInput input = serviceTask.getInput();
         final String[] restResourceUriParts = input.getRestResourceUri().split(SLASH);
         final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), restResourceUriParts);
         RestMethodDto restMethodDto = null;
@@ -54,6 +54,6 @@ public class ReadRestMethodWithMethodTypeService extends AbstractRestProjectServ
             }
         }
 
-        return createResult(new ReadRestMethodWithMethodTypeOutput(restMethodDto));
+        return createServiceResult(new ReadRestMethodWithMethodTypeOutput(restMethodDto));
     }
 }

@@ -23,13 +23,13 @@ package com.fortmocks.core.basis.model;
 public interface Service<I extends Input, O extends Output> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
-    Result<O> process(Task<I> task);
+    ServiceResult<O> process(ServiceTask<I> serviceTask);
 
 }

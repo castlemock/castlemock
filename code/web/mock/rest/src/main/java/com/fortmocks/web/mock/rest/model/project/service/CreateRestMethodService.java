@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.rest.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
@@ -35,16 +35,16 @@ import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateR
 public class CreateRestMethodService extends AbstractRestProjectService implements Service<CreateRestMethodInput, CreateRestMethodOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<CreateRestMethodOutput> process(final Task<CreateRestMethodInput> task) {
-        final CreateRestMethodInput input = task.getInput();
+    public ServiceResult<CreateRestMethodOutput> process(final ServiceTask<CreateRestMethodInput> serviceTask) {
+        final CreateRestMethodInput input = serviceTask.getInput();
         final RestMethodDto restMethod = input.getRestMethod();
         if(restMethod.getRestMethodStatus() == null){
             restMethod.setRestMethodStatus(RestMethodStatus.MOCKED);
@@ -59,6 +59,6 @@ public class CreateRestMethodService extends AbstractRestProjectService implemen
         final RestMethod createdRestMethod = mapper.map(restMethod, RestMethod.class);
         restResource.getRestMethods().add(createdRestMethod);
         save(input.getRestProjectId());
-        return createResult(new CreateRestMethodOutput(mapper.map(createdRestMethod, RestMethodDto.class)));
+        return createServiceResult(new CreateRestMethodOutput(mapper.map(createdRestMethod, RestMethodDto.class)));
     }
 }

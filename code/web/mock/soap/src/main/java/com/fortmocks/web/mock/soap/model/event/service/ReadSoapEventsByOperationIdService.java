@@ -1,8 +1,8 @@
 package com.fortmocks.web.mock.soap.model.event.service;
 
-import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.soap.model.event.domain.SoapEvent;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
@@ -19,8 +19,8 @@ import java.util.List;
 public class ReadSoapEventsByOperationIdService extends AbstractSoapEventService implements Service<ReadSoapEventsByOperationIdInput, ReadSoapEventsByOperationIdOutput> {
 
     @Override
-    public Result<ReadSoapEventsByOperationIdOutput> process(Task<ReadSoapEventsByOperationIdInput> task) {
-        final ReadSoapEventsByOperationIdInput input = task.getInput();
+    public ServiceResult<ReadSoapEventsByOperationIdOutput> process(ServiceTask<ReadSoapEventsByOperationIdInput> serviceTask) {
+        final ReadSoapEventsByOperationIdInput input = serviceTask.getInput();
         final List<SoapEventDto> events = new ArrayList<SoapEventDto>();
         for(SoapEvent event : findAllTypes()){
             if(event.getSoapOperationId().equals(input.getOperationId())){
@@ -28,6 +28,6 @@ public class ReadSoapEventsByOperationIdService extends AbstractSoapEventService
                 events.add(soapEventDto);
             }
         }
-        return createResult(new ReadSoapEventsByOperationIdOutput(events));
+        return createServiceResult(new ReadSoapEventsByOperationIdOutput(events));
     }
 }

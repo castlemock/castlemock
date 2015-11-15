@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.rest.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
@@ -32,18 +32,18 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 public class ReadRestApplicationService extends AbstractRestProjectService implements Service<ReadRestApplicationInput, ReadRestApplicationOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<ReadRestApplicationOutput> process(final Task<ReadRestApplicationInput> task) {
-        final ReadRestApplicationInput input = task.getInput();
+    public ServiceResult<ReadRestApplicationOutput> process(final ServiceTask<ReadRestApplicationInput> serviceTask) {
+        final ReadRestApplicationInput input = serviceTask.getInput();
         final RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), input.getRestApplicationId());
         final RestApplicationDto restApplicationDto = restApplication != null ? mapper.map(restApplication, RestApplicationDto.class) : null;
-        return createResult(new ReadRestApplicationOutput(restApplicationDto));
+        return createServiceResult(new ReadRestApplicationOutput(restApplicationDto));
     }
 }

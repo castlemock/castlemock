@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.soap.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
@@ -32,18 +32,18 @@ import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoa
 public class ReadSoapMockResponseService extends AbstractSoapProjectService implements Service<ReadSoapMockResponseInput, ReadSoapMockResponseOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<ReadSoapMockResponseOutput> process(final Task<ReadSoapMockResponseInput> task) {
-        final ReadSoapMockResponseInput input = task.getInput();
+    public ServiceResult<ReadSoapMockResponseOutput> process(final ServiceTask<ReadSoapMockResponseInput> serviceTask) {
+        final ReadSoapMockResponseInput input = serviceTask.getInput();
         final SoapMockResponse soapMockResponse = findSoapMockResponseType(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId(), input.getSoapMockResponseId());
         final SoapMockResponseDto soapMockResponseDto = soapMockResponse != null ? mapper.map(soapMockResponse, SoapMockResponseDto.class) : null;
-        return createResult(new ReadSoapMockResponseOutput(soapMockResponseDto));
+        return createServiceResult(new ReadSoapMockResponseOutput(soapMockResponseDto));
     }
 }

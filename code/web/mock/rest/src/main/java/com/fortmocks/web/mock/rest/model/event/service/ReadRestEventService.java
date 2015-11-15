@@ -1,8 +1,8 @@
 package com.fortmocks.web.mock.rest.model.event.service;
 
-import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
 import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadRestEventOutput;
@@ -15,17 +15,17 @@ import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadRestE
 public class ReadRestEventService extends AbstractRestEventService implements Service<ReadRestEventInput, ReadRestEventOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<ReadRestEventOutput> process(Task<ReadRestEventInput> task) {
-        final ReadRestEventInput input = task.getInput();
+    public ServiceResult<ReadRestEventOutput> process(ServiceTask<ReadRestEventInput> serviceTask) {
+        final ReadRestEventInput input = serviceTask.getInput();
         final RestEventDto restEvent = find(input.getRestEventId());
-        return createResult(new ReadRestEventOutput(restEvent));
+        return createServiceResult(new ReadRestEventOutput(restEvent));
     }
 }

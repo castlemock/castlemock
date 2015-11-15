@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.rest.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.DeleteRestMethodInput;
@@ -32,20 +32,20 @@ import com.fortmocks.core.mock.rest.model.project.service.message.output.DeleteR
 public class DeleteRestMethodService extends AbstractRestProjectService implements Service<DeleteRestMethodInput, DeleteRestMethodOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<DeleteRestMethodOutput> process(final Task<DeleteRestMethodInput> task) {
-        final DeleteRestMethodInput input = task.getInput();
+    public ServiceResult<DeleteRestMethodOutput> process(final ServiceTask<DeleteRestMethodInput> serviceTask) {
+        final DeleteRestMethodInput input = serviceTask.getInput();
         final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
         final RestMethod restMethod = findRestMethodType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId());
         restResource.getRestMethods().remove(restMethod);
         save(input.getRestProjectId());
-        return createResult(new DeleteRestMethodOutput());
+        return createServiceResult(new DeleteRestMethodOutput());
     }
 }

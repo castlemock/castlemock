@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.soap.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
@@ -34,16 +34,16 @@ import java.util.List;
 public class ReadSoapOperationWithTypeService extends AbstractSoapProjectService implements Service<ReadSoapOperationWithTypeInput, ReadSoapOperationWithTypeOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<ReadSoapOperationWithTypeOutput> process(final Task<ReadSoapOperationWithTypeInput> task) {
-        final ReadSoapOperationWithTypeInput input = task.getInput();
+    public ServiceResult<ReadSoapOperationWithTypeOutput> process(final ServiceTask<ReadSoapOperationWithTypeInput> serviceTask) {
+        final ReadSoapOperationWithTypeInput input = serviceTask.getInput();
         final List<SoapOperation> soapOperations = findSoapOperationTypeWithSoapProjectId(input.getSoapProjectId());
         SoapOperationDto soapOperationDto = null;
         for(SoapOperation soapOperation : soapOperations){
@@ -51,6 +51,6 @@ public class ReadSoapOperationWithTypeService extends AbstractSoapProjectService
                 soapOperationDto = mapper.map(soapOperation, SoapOperationDto.class);
             }
         }
-        return createResult(new ReadSoapOperationWithTypeOutput(soapOperationDto));
+        return createServiceResult(new ReadSoapOperationWithTypeOutput(soapOperationDto));
     }
 }

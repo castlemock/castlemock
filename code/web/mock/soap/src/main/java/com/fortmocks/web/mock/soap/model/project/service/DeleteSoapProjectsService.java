@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.soap.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.DeleteSoapProjectsInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.DeleteSoapProjectsOutput;
@@ -31,19 +31,19 @@ import com.fortmocks.core.mock.soap.model.project.service.message.output.DeleteS
 public class DeleteSoapProjectsService extends AbstractSoapProjectService implements Service<DeleteSoapProjectsInput, DeleteSoapProjectsOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<DeleteSoapProjectsOutput> process(final Task<DeleteSoapProjectsInput> task) {
-        final DeleteSoapProjectsInput input = task.getInput();
+    public ServiceResult<DeleteSoapProjectsOutput> process(final ServiceTask<DeleteSoapProjectsInput> serviceTask) {
+        final DeleteSoapProjectsInput input = serviceTask.getInput();
         for (SoapProjectDto soapProject : input.getSoapProjects()){
             delete(soapProject.getId());
         }
-        return createResult(new DeleteSoapProjectsOutput());
+        return createServiceResult(new DeleteSoapProjectsOutput());
     }
 }

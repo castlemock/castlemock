@@ -2,7 +2,7 @@ package com.fortmocks.web.basis.model;
 
 import com.fortmocks.core.basis.model.Output;
 import com.fortmocks.core.basis.model.Repository;
-import com.fortmocks.core.basis.model.Result;
+import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.Saveable;
 import com.google.common.base.Preconditions;
 import org.dozer.DozerBeanMapper;
@@ -157,8 +157,8 @@ public abstract class AbstractService<T extends Saveable<I>, D, I extends Serial
         return mapper.map(type, dtoClass);
     }
 
-    protected <O extends Output> Result<O> createResult(O output){
-        return new Result(output);
+    protected <O extends Output> ServiceResult<O> createServiceResult(O output){
+        return new ServiceResult(output);
     }
 
 }

@@ -17,8 +17,8 @@
 package com.fortmocks.web.basis.model.user.processor;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.ReadUserInput;
 import com.fortmocks.core.basis.model.user.service.message.output.ReadUserOutput;
@@ -31,19 +31,19 @@ import com.fortmocks.core.basis.model.user.service.message.output.ReadUserOutput
 public class ReadUserService extends AbstractUserService implements Service<ReadUserInput, ReadUserOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<ReadUserOutput> process(final Task<ReadUserInput> task) {
-        final ReadUserInput input = task.getInput();
+    public ServiceResult<ReadUserOutput> process(final ServiceTask<ReadUserInput> serviceTask) {
+        final ReadUserInput input = serviceTask.getInput();
         final UserDto user = find(input.getUserId());
         final ReadUserOutput output = new ReadUserOutput();
         output.setUser(user);
-        return createResult(output);
+        return createServiceResult(output);
     }
 }

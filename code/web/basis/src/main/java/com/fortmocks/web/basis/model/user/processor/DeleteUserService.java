@@ -17,8 +17,8 @@
 package com.fortmocks.web.basis.model.user.processor;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.basis.model.user.service.message.input.DeleteUserInput;
 import com.fortmocks.core.basis.model.user.service.message.output.DeleteUserOutput;
 
@@ -30,18 +30,18 @@ import com.fortmocks.core.basis.model.user.service.message.output.DeleteUserOutp
 public class DeleteUserService extends AbstractUserService implements Service<DeleteUserInput, DeleteUserOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<DeleteUserOutput> process(final Task<DeleteUserInput> task) {
-        final DeleteUserInput input = task.getInput();
+    public ServiceResult<DeleteUserOutput> process(final ServiceTask<DeleteUserInput> serviceTask) {
+        final DeleteUserInput input = serviceTask.getInput();
         final Long userId = input.getUserId();
         delete(userId);
-        return createResult(new DeleteUserOutput());
+        return createServiceResult(new DeleteUserOutput());
     }
 }

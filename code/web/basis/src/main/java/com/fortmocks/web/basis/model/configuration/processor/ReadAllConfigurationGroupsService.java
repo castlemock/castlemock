@@ -17,8 +17,8 @@
 package com.fortmocks.web.basis.model.configuration.processor;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.fortmocks.core.basis.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
 import com.fortmocks.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
@@ -33,18 +33,18 @@ import java.util.List;
 public class ReadAllConfigurationGroupsService extends AbstractConfigurationGroupService implements Service<ReadAllConfigurationGroupsInput, ReadAllConfigurationGroupsOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<ReadAllConfigurationGroupsOutput> process(final Task<ReadAllConfigurationGroupsInput> task) {
+    public ServiceResult<ReadAllConfigurationGroupsOutput> process(final ServiceTask<ReadAllConfigurationGroupsInput> serviceTask) {
         final List<ConfigurationGroupDto> configurationGroups = findAll();
         final ReadAllConfigurationGroupsOutput output = new ReadAllConfigurationGroupsOutput();
         output.setConfigurationGroups(configurationGroups);
-        return createResult(output);
+        return createServiceResult(output);
     }
 }

@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.rest.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
@@ -31,19 +31,19 @@ import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRest
 public class ReadRestProjectService extends AbstractRestProjectService implements Service<ReadRestProjectInput, ReadRestProjectOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<ReadRestProjectOutput> process(final Task<ReadRestProjectInput> task) {
-        final ReadRestProjectInput input = task.getInput();
+    public ServiceResult<ReadRestProjectOutput> process(final ServiceTask<ReadRestProjectInput> serviceTask) {
+        final ReadRestProjectInput input = serviceTask.getInput();
         final RestProjectDto restProject = find(input.getRestProjectId());
         final ReadRestProjectOutput output = new ReadRestProjectOutput();
         output.setRestProject(restProject);
-        return createResult(output);
+        return createServiceResult(output);
     }
 }

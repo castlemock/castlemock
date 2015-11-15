@@ -17,8 +17,8 @@
 package com.fortmocks.web.basis.model.user.processor;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.UpdateCurrentUserInput;
 import com.fortmocks.core.basis.model.user.service.message.output.UpdateCurrentUserOutput;
@@ -36,16 +36,16 @@ import java.util.Date;
 public class UpdateCurrentUserService extends AbstractUserService implements Service<UpdateCurrentUserInput, UpdateCurrentUserOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<UpdateCurrentUserOutput> process(final Task<UpdateCurrentUserInput> task) {
-        final UpdateCurrentUserInput input = task.getInput();
+    public ServiceResult<UpdateCurrentUserOutput> process(final ServiceTask<UpdateCurrentUserInput> serviceTask) {
+        final UpdateCurrentUserInput input = serviceTask.getInput();
         final UserDto user = input.getUser();
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final String loggedInUsername = authentication.getName();
@@ -68,6 +68,6 @@ public class UpdateCurrentUserService extends AbstractUserService implements Ser
         final UserDto updatedUser = super.save(user);
         final UpdateCurrentUserOutput output = new UpdateCurrentUserOutput();
         output.setUpdatedUser(updatedUser);
-        return createResult(output);
+        return createServiceResult(output);
     }
 }

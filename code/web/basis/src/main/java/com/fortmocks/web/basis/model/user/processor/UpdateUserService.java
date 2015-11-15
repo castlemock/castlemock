@@ -17,8 +17,8 @@
 package com.fortmocks.web.basis.model.user.processor;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.UpdateUserInput;
 import com.fortmocks.core.basis.model.user.service.message.output.UpdateUserOutput;
@@ -31,19 +31,19 @@ import com.fortmocks.core.basis.model.user.service.message.output.UpdateUserOutp
 public class UpdateUserService extends AbstractUserService implements Service<UpdateUserInput, UpdateUserOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<UpdateUserOutput> process(final Task<UpdateUserInput> task) {
-        final UpdateUserInput input = task.getInput();
+    public ServiceResult<UpdateUserOutput> process(final ServiceTask<UpdateUserInput> serviceTask) {
+        final UpdateUserInput input = serviceTask.getInput();
         final Long userId = input.getUserId();
         final UserDto user = input.getUser();
         update(userId, user);
-        return createResult(new UpdateUserOutput());
+        return createServiceResult(new UpdateUserOutput());
     }
 }

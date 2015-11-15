@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.rest.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
@@ -35,16 +35,16 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 public class CreateRestApplicationsService extends AbstractRestProjectService implements Service<CreateRestApplicationsInput, CreateRestApplicationsOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<CreateRestApplicationsOutput> process(final Task<CreateRestApplicationsInput> task) {
-        final CreateRestApplicationsInput input = task.getInput();
+    public ServiceResult<CreateRestApplicationsOutput> process(final ServiceTask<CreateRestApplicationsInput> serviceTask) {
+        final CreateRestApplicationsInput input = serviceTask.getInput();
         final RestProject restProject = findType(input.getRestProjectId());
 
         for(RestApplicationDto restApplicationDto : input.getRestApplications()){
@@ -64,6 +64,6 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
             restProject.getRestApplications().add(restApplication);
         }
 
-        return createResult(new CreateRestApplicationsOutput());
+        return createServiceResult(new CreateRestApplicationsOutput());
     }
 }

@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.rest.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestProjectInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.UpdateRestProjectOutput;
@@ -31,21 +31,21 @@ import com.fortmocks.core.mock.rest.model.project.service.message.output.UpdateR
 public class UpdateRestProjectService extends AbstractRestProjectService implements Service<UpdateRestProjectInput, UpdateRestProjectOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<UpdateRestProjectOutput> process(final Task<UpdateRestProjectInput> task) {
-        final UpdateRestProjectInput input = task.getInput();
+    public ServiceResult<UpdateRestProjectOutput> process(final ServiceTask<UpdateRestProjectInput> serviceTask) {
+        final UpdateRestProjectInput input = serviceTask.getInput();
         final Long restProjectId = input.getRestProjectId();
         final RestProjectDto restProject = input.getRestProject();
         final RestProjectDto updatedRestProject = update(restProjectId, restProject);
         final UpdateRestProjectOutput output = new UpdateRestProjectOutput();
         output.setUpdatedRestProject(updatedRestProject);
-        return createResult(output);
+        return createServiceResult(output);
     }
 }

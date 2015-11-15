@@ -20,11 +20,11 @@ package com.fortmocks.core.basis.model;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class Result<O extends Output> {
+public class ServiceResult<O extends Output> {
 
     private O output;
 
-    public Result(O output) {
+    public ServiceResult(O output) {
         this.output = output;
     }
 

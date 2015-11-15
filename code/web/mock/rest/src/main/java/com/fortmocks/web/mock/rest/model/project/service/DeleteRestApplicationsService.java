@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.rest.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
 import com.fortmocks.core.mock.rest.model.project.domain.RestProject;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
@@ -33,22 +33,22 @@ import com.fortmocks.core.mock.rest.model.project.service.message.output.DeleteR
 public class DeleteRestApplicationsService extends AbstractRestProjectService implements Service<DeleteRestApplicationsInput, DeleteRestApplicationsOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<DeleteRestApplicationsOutput> process(final Task<DeleteRestApplicationsInput> task) {
-        final DeleteRestApplicationsInput input = task.getInput();
+    public ServiceResult<DeleteRestApplicationsOutput> process(final ServiceTask<DeleteRestApplicationsInput> serviceTask) {
+        final DeleteRestApplicationsInput input = serviceTask.getInput();
         final RestProject restProject = findType(input.getRestProjectId());
         for(final RestApplicationDto restApplicationDto : input.getRestApplications()){
             final RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), restApplicationDto.getId());
             restProject.getRestApplications().remove(restApplication);
         }
         save(input.getRestProjectId());
-        return createResult(new DeleteRestApplicationsOutput());
+        return createServiceResult(new DeleteRestApplicationsOutput());
     }
 }

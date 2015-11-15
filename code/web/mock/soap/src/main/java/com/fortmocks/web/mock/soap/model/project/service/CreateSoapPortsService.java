@@ -17,8 +17,8 @@
 package com.fortmocks.web.mock.soap.model.project.service;
 
 import com.fortmocks.core.basis.model.Service;
-import com.fortmocks.core.basis.model.Result;
-import com.fortmocks.core.basis.model.Task;
+import com.fortmocks.core.basis.model.ServiceResult;
+import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapProject;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.CreateSoapPortsOutput;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
@@ -36,16 +36,16 @@ import java.util.List;
 public class CreateSoapPortsService extends AbstractSoapProjectService implements Service<CreateSoapPortsInput, CreateSoapPortsOutput> {
 
     /**
-     * The process message is responsible for processing an incoming task and generate
-     * a response based on the incoming task input
-     * @param task The task that will be processed by the service
-     * @return A result based on the processed incoming task
-     * @see Task
-     * @see Result
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
      */
     @Override
-    public Result<CreateSoapPortsOutput> process(final Task<CreateSoapPortsInput> task) {
-        final CreateSoapPortsInput input = task.getInput();
+    public ServiceResult<CreateSoapPortsOutput> process(final ServiceTask<CreateSoapPortsInput> serviceTask) {
+        final CreateSoapPortsInput input = serviceTask.getInput();
         final SoapProject soapProject = findType(input.getSoapProjectId());
         final List<SoapPort> soapPortTypes = toDtoList(input.getSoapPorts(), SoapPort.class);
 
@@ -75,6 +75,6 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         }
 
         save(soapProject);
-        return createResult(new CreateSoapPortsOutput());
+        return createServiceResult(new CreateSoapPortsOutput());
     }
 }

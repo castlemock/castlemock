@@ -50,13 +50,13 @@ public class ServiceProcessor {
             throw new IllegalArgumentException("Unable to find service for " + input.getClass().getSimpleName());
         }
 
-        final Task<I> task = new Task<I>();
-        task.setInput(input);
-        task.setExecuter(getLoggedInUsername());
+        final ServiceTask<I> serviceTask = new ServiceTask<I>();
+        serviceTask.setInput(input);
+        serviceTask.setServiceConsumer(getLoggedInUsername());
         LOGGER.debug(getLoggedInUsername() + " is requesting " + service.getClass().getSimpleName() + " to process the following input message: " + input.getClass().getSimpleName());
-        final Result<O> result = service.process(task);
-        validateMessage(result.getOutput());
-        return result.getOutput();
+        final ServiceResult<O> serviceResult = service.process(serviceTask);
+        validateMessage(serviceResult.getOutput());
+        return serviceResult.getOutput();
     }
 
     protected <M extends Message> void validateMessage(final M message){
