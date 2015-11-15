@@ -19,9 +19,12 @@ package com.fortmocks.web.basis.model.user.processor;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
+import com.fortmocks.core.basis.model.user.domain.Status;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.CreateUserInput;
 import com.fortmocks.core.basis.model.user.service.message.output.CreateUserOutput;
+
+import java.util.Date;
 
 /**
  * @author Karl Dahlgren
@@ -42,6 +45,9 @@ public class CreateUserService extends AbstractUserService implements Service<Cr
     public ServiceResult<CreateUserOutput> process(final ServiceTask<CreateUserInput> serviceTask) {
         final CreateUserInput input = serviceTask.getInput();
         final UserDto user = input.getUser();
+        user.setCreated(new Date());
+        user.setUpdated(new Date());
+        user.setStatus(Status.ACTIVE);
         final UserDto savedUser = save(user);
         final CreateUserOutput output = new CreateUserOutput();
         output.setSavedUser(savedUser);
