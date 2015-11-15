@@ -19,8 +19,13 @@ package com.fortmocks.core.basis.model.validation;
 import java.lang.annotation.*;
 
 /**
+ * The NotNull annotation will be used to enforce that variables are not null in a {@link com.fortmocks.core.basis.model.Message}
+ * class, such as an {@link com.fortmocks.core.basis.model.Input} or {@link com.fortmocks.core.basis.model.Output} message.
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.Message
+ * @see com.fortmocks.core.basis.model.Input
+ * @see com.fortmocks.core.basis.model.Output
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

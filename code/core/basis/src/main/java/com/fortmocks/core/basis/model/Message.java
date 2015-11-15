@@ -17,8 +17,12 @@
 package com.fortmocks.core.basis.model;
 
 /**
+ * The Message class is parent class for {@link Input} and {@link Output} classes and represent all
+ * communication with a {@link Service} class
  * @author Karl Dahlgren
  * @since 1.0
+ * @see Input
+ * @see Output
  */
 public interface Message {
 }

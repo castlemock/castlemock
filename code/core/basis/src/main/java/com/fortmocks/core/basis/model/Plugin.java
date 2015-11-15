@@ -17,6 +17,7 @@
 package com.fortmocks.core.basis.model;
 
 /**
+ * The Plugin class is used to create plugins and extensions for Fort Mocks
  * @author Karl Dahlgren
  * @since 1.0
  */

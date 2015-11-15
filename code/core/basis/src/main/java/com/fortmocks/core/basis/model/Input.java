@@ -17,8 +17,12 @@
 package com.fortmocks.core.basis.model;
 
 /**
+ * The Input message class contains all arguments and information required for a service to process a
+ * its functionality. All validation annotations in the input message will be controlled and their roles
+ * will be enforced.
  * @author Karl Dahlgren
  * @since 1.0
+ * @see Service
  */
 public interface Input extends Message {
 }

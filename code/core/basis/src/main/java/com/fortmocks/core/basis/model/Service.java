@@ -17,6 +17,8 @@
 package com.fortmocks.core.basis.model;
 
 /**
+ * The service class represent the service layer (Business layer) of Fort Mocks
+ * and is responsible for processing a specific functionality.
  * @author Karl Dahlgren
  * @since 1.0
  */
