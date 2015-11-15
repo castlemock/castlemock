@@ -18,7 +18,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks-plugin-basis</artifactId>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 	<version>0.2-SNAPSHOT</version>
     <name>Fort mocks plugin basis</name>
 	<url>http://www.fortmocks.com</url>
