@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.basis.model.configuration.processor;
+package com.fortmocks.web.basis.model.configuration.service;
 
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;

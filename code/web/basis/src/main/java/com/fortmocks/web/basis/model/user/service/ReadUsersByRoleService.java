@@ -14,21 +14,24 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.basis.model.user.processor;
+package com.fortmocks.web.basis.model.user.service;
 
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
+import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
-import com.fortmocks.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
-import com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
+import com.fortmocks.core.basis.model.user.service.message.input.ReadUsersByRoleInput;
+import com.fortmocks.core.basis.model.user.service.message.output.ReadUsersByRoleOutput;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadUserByUsernameService extends AbstractUserService implements Service<ReadUserByUsernameInput, ReadUserByUsernameOutput> {
+public class ReadUsersByRoleService extends AbstractUserService implements Service<ReadUsersByRoleInput, ReadUsersByRoleOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -39,12 +42,12 @@ public class ReadUserByUsernameService extends AbstractUserService implements Se
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<ReadUserByUsernameOutput> process(final ServiceTask<ReadUserByUsernameInput> serviceTask) {
-        final ReadUserByUsernameInput input = serviceTask.getInput();
-        final String username = input.getUsername();
-        final UserDto user = findByUsername(username);
-        final ReadUserByUsernameOutput output = new ReadUserByUsernameOutput();
-        output.setUser(user);
+    public ServiceResult<ReadUsersByRoleOutput> process(final ServiceTask<ReadUsersByRoleInput> serviceTask) {
+        final ReadUsersByRoleInput input = serviceTask.getInput();
+        final Role role = input.getRole();
+        final List<UserDto> users = findByRole(role);
+        final ReadUsersByRoleOutput output = new ReadUsersByRoleOutput();
+        output.setUsers(users);
         return createServiceResult(output);
     }
 }

@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.basis.model.configuration.processor;
+package com.fortmocks.web.basis.model.user.service;
 
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.basis.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
-import com.fortmocks.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
-
-import java.util.List;
+import com.fortmocks.core.basis.model.user.dto.UserDto;
+import com.fortmocks.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
+import com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadAllConfigurationGroupsService extends AbstractConfigurationGroupService implements Service<ReadAllConfigurationGroupsInput, ReadAllConfigurationGroupsOutput> {
+public class ReadUserByUsernameService extends AbstractUserService implements Service<ReadUserByUsernameInput, ReadUserByUsernameOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -41,10 +39,12 @@ public class ReadAllConfigurationGroupsService extends AbstractConfigurationGrou
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<ReadAllConfigurationGroupsOutput> process(final ServiceTask<ReadAllConfigurationGroupsInput> serviceTask) {
-        final List<ConfigurationGroupDto> configurationGroups = findAll();
-        final ReadAllConfigurationGroupsOutput output = new ReadAllConfigurationGroupsOutput();
-        output.setConfigurationGroups(configurationGroups);
+    public ServiceResult<ReadUserByUsernameOutput> process(final ServiceTask<ReadUserByUsernameInput> serviceTask) {
+        final ReadUserByUsernameInput input = serviceTask.getInput();
+        final String username = input.getUsername();
+        final UserDto user = findByUsername(username);
+        final ReadUserByUsernameOutput output = new ReadUserByUsernameOutput();
+        output.setUser(user);
         return createServiceResult(output);
     }
 }

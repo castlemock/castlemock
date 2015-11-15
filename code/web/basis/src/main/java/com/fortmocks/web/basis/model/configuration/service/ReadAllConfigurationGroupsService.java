@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.basis.model.user.processor;
+package com.fortmocks.web.basis.model.configuration.service;
 
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.basis.model.user.service.message.input.DeleteUserInput;
-import com.fortmocks.core.basis.model.user.service.message.output.DeleteUserOutput;
+import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
+import com.fortmocks.core.basis.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
+import com.fortmocks.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class DeleteUserService extends AbstractUserService implements Service<DeleteUserInput, DeleteUserOutput> {
+public class ReadAllConfigurationGroupsService extends AbstractConfigurationGroupService implements Service<ReadAllConfigurationGroupsInput, ReadAllConfigurationGroupsOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -38,10 +41,10 @@ public class DeleteUserService extends AbstractUserService implements Service<De
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<DeleteUserOutput> process(final ServiceTask<DeleteUserInput> serviceTask) {
-        final DeleteUserInput input = serviceTask.getInput();
-        final Long userId = input.getUserId();
-        delete(userId);
-        return createServiceResult(new DeleteUserOutput());
+    public ServiceResult<ReadAllConfigurationGroupsOutput> process(final ServiceTask<ReadAllConfigurationGroupsInput> serviceTask) {
+        final List<ConfigurationGroupDto> configurationGroups = findAll();
+        final ReadAllConfigurationGroupsOutput output = new ReadAllConfigurationGroupsOutput();
+        output.setConfigurationGroups(configurationGroups);
+        return createServiceResult(output);
     }
 }

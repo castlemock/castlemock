@@ -14,24 +14,21 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.basis.model.user.processor;
+package com.fortmocks.web.basis.model.user.service;
 
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
-import com.fortmocks.core.basis.model.user.service.message.input.ReadUsersByRoleInput;
-import com.fortmocks.core.basis.model.user.service.message.output.ReadUsersByRoleOutput;
-
-import java.util.List;
+import com.fortmocks.core.basis.model.user.service.message.input.ReadUserInput;
+import com.fortmocks.core.basis.model.user.service.message.output.ReadUserOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadUsersByRoleService extends AbstractUserService implements Service<ReadUsersByRoleInput, ReadUsersByRoleOutput> {
+public class ReadUserService extends AbstractUserService implements Service<ReadUserInput, ReadUserOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -42,12 +39,11 @@ public class ReadUsersByRoleService extends AbstractUserService implements Servi
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<ReadUsersByRoleOutput> process(final ServiceTask<ReadUsersByRoleInput> serviceTask) {
-        final ReadUsersByRoleInput input = serviceTask.getInput();
-        final Role role = input.getRole();
-        final List<UserDto> users = findByRole(role);
-        final ReadUsersByRoleOutput output = new ReadUsersByRoleOutput();
-        output.setUsers(users);
+    public ServiceResult<ReadUserOutput> process(final ServiceTask<ReadUserInput> serviceTask) {
+        final ReadUserInput input = serviceTask.getInput();
+        final UserDto user = find(input.getUserId());
+        final ReadUserOutput output = new ReadUserOutput();
+        output.setUser(user);
         return createServiceResult(output);
     }
 }

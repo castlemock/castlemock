@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.basis.model.user.processor;
+package com.fortmocks.web.basis.model.user.service;
 
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
-import com.fortmocks.core.basis.model.user.service.message.input.ReadUserInput;
-import com.fortmocks.core.basis.model.user.service.message.output.ReadUserOutput;
+import com.fortmocks.core.basis.model.user.service.message.input.ReadAllUsersInput;
+import com.fortmocks.core.basis.model.user.service.message.output.ReadAllUsersOutput;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadUserService extends AbstractUserService implements Service<ReadUserInput, ReadUserOutput> {
+public class ReadAllUsersService extends AbstractUserService implements Service<ReadAllUsersInput, ReadAllUsersOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -39,11 +41,10 @@ public class ReadUserService extends AbstractUserService implements Service<Read
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<ReadUserOutput> process(final ServiceTask<ReadUserInput> serviceTask) {
-        final ReadUserInput input = serviceTask.getInput();
-        final UserDto user = find(input.getUserId());
-        final ReadUserOutput output = new ReadUserOutput();
-        output.setUser(user);
+    public ServiceResult<ReadAllUsersOutput> process(final ServiceTask<ReadAllUsersInput> serviceTask) {
+        final List<UserDto> users = findAll();
+        final ReadAllUsersOutput output = new ReadAllUsersOutput();
+        output.setUsers(users);
         return createServiceResult(output);
     }
 }

@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.basis.model.user.processor;
+package com.fortmocks.web.basis.model.user.service;
 
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.basis.model.user.domain.Status;
-import com.fortmocks.core.basis.model.user.dto.UserDto;
-import com.fortmocks.core.basis.model.user.service.message.input.CreateUserInput;
-import com.fortmocks.core.basis.model.user.service.message.output.CreateUserOutput;
-
-import java.util.Date;
+import com.fortmocks.core.basis.model.user.service.message.input.DeleteUserInput;
+import com.fortmocks.core.basis.model.user.service.message.output.DeleteUserOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class CreateUserService extends AbstractUserService implements Service<CreateUserInput, CreateUserOutput> {
+public class DeleteUserService extends AbstractUserService implements Service<DeleteUserInput, DeleteUserOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -42,15 +38,10 @@ public class CreateUserService extends AbstractUserService implements Service<Cr
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<CreateUserOutput> process(final ServiceTask<CreateUserInput> serviceTask) {
-        final CreateUserInput input = serviceTask.getInput();
-        final UserDto user = input.getUser();
-        user.setCreated(new Date());
-        user.setUpdated(new Date());
-        user.setStatus(Status.ACTIVE);
-        final UserDto savedUser = save(user);
-        final CreateUserOutput output = new CreateUserOutput();
-        output.setSavedUser(savedUser);
-        return createServiceResult(output);
+    public ServiceResult<DeleteUserOutput> process(final ServiceTask<DeleteUserInput> serviceTask) {
+        final DeleteUserInput input = serviceTask.getInput();
+        final Long userId = input.getUserId();
+        delete(userId);
+        return createServiceResult(new DeleteUserOutput());
     }
 }

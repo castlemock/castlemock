@@ -14,23 +14,24 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.basis.model.user.processor;
+package com.fortmocks.web.basis.model.user.service;
 
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
+import com.fortmocks.core.basis.model.user.domain.Status;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
-import com.fortmocks.core.basis.model.user.service.message.input.ReadAllUsersInput;
-import com.fortmocks.core.basis.model.user.service.message.output.ReadAllUsersOutput;
+import com.fortmocks.core.basis.model.user.service.message.input.CreateUserInput;
+import com.fortmocks.core.basis.model.user.service.message.output.CreateUserOutput;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadAllUsersService extends AbstractUserService implements Service<ReadAllUsersInput, ReadAllUsersOutput> {
+public class CreateUserService extends AbstractUserService implements Service<CreateUserInput, CreateUserOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -41,10 +42,15 @@ public class ReadAllUsersService extends AbstractUserService implements Service<
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<ReadAllUsersOutput> process(final ServiceTask<ReadAllUsersInput> serviceTask) {
-        final List<UserDto> users = findAll();
-        final ReadAllUsersOutput output = new ReadAllUsersOutput();
-        output.setUsers(users);
+    public ServiceResult<CreateUserOutput> process(final ServiceTask<CreateUserInput> serviceTask) {
+        final CreateUserInput input = serviceTask.getInput();
+        final UserDto user = input.getUser();
+        user.setCreated(new Date());
+        user.setUpdated(new Date());
+        user.setStatus(Status.ACTIVE);
+        final UserDto savedUser = save(user);
+        final CreateUserOutput output = new CreateUserOutput();
+        output.setSavedUser(savedUser);
         return createServiceResult(output);
     }
 }

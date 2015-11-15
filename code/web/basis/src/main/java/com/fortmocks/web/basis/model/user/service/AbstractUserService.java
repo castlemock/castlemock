@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.basis.model.user.processor;
+package com.fortmocks.web.basis.model.user.service;
 
 import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.user.domain.Status;
