@@ -52,6 +52,7 @@
 	</issueManagement>
 
 	<modules>
+		<module>plugin</module>
 		<module>core</module>
 		<module>web</module>
 	</modules>
