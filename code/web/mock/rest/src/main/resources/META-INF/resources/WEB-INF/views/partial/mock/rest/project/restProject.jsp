@@ -65,7 +65,7 @@
                     <c:forEach items="${restProject.restApplications}" var="restApplication" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><form:checkbox path="restApplicationIds" name="${restApplication.id}" value="${restApplication.id}"/></td>
-                            <td><a href="<c:url value="/web/rest/project/${restApplication.id}/application/${restApplication.id}"/>">${restApplication.name}</a></td>
+                            <td><a href="<c:url value="/web/rest/project/${restProject.id}/application/${restApplication.id}"/>">${restApplication.name}</a></td>
                         </tr>
                     </c:forEach>
                 </table>

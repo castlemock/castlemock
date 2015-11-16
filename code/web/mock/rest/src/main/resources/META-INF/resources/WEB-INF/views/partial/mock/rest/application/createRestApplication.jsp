@@ -28,6 +28,6 @@
     </table>
  
     <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="rest.createapplication.button.createapplication"/></span></button>
-    <a href="<c:url value="/web"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="rest.createapplication.button.cancel"/></span></a>
+    <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="rest.createapplication.button.cancel"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>

@@ -70,7 +70,7 @@ public class DeleteRestMockResponseController extends AbstractRestViewController
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/delete/confirm", method = RequestMethod.POST)
     public ModelAndView confirmDeletationOfMultpleMockResponses(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @ModelAttribute final DeleteRestMockResponsesCommand deleteRestMockResponsesCommand) {
         serviceProcessor.process(new DeleteRestMockResponsesInput(restProjectId, restApplicationId, restResourceId, restMethodId, deleteRestMockResponsesCommand.getRestMockResponses()));
-        return redirect("/rest/project/" + restApplicationId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
+        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 
 }
