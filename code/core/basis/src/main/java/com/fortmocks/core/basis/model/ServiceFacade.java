@@ -45,10 +45,10 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
      * The method provides the functionality to create and store a DTO instance to a specific service.
      * The service is identified with the provided type value.
      * @param type The type of the instance that will be created
-     * @param dto The instance that will be created
+     * @param parent The instance that will be created
      * @return The saved instance
      */
-    D save(String type, D dto);
+    D save(String type, D parent);
 
     /**
      * The method provides the functionality to delete a specific instance. The type is
@@ -68,10 +68,10 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
      * type.
      * @param typeUrl The url for the specific type that the instance belongs to
      * @param id The id of the instance that will be updated
-     * @param dto The instance with the new updated values
+     * @param parent The instance with the new updated values
      * @return The updated instance
      */
-    D update(String typeUrl, I id, D dto);
+    D update(String typeUrl, I id, D parent);
 
     /**
      * The method is responsible for retrieving all instances from all the various service types.

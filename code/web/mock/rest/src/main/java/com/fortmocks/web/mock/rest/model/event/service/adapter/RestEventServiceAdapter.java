@@ -1,6 +1,7 @@
 package com.fortmocks.web.mock.rest.model.event.service.adapter;
 
 import com.fortmocks.core.basis.model.TypeIdentifier;
+import com.fortmocks.core.basis.model.event.dto.EventDto;
 import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
 import com.fortmocks.web.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
@@ -58,7 +59,7 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
     }
 
     @Override
-    public RestEventDto convertType(RestEventDto parent) {
+    public RestEventDto convertType(EventDto parent) {
         return new RestEventDto(parent);
     }
 

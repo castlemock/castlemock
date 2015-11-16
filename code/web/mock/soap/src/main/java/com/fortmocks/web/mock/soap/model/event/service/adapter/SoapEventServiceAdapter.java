@@ -1,6 +1,7 @@
 package com.fortmocks.web.mock.soap.model.event.service.adapter;
 
 import com.fortmocks.core.basis.model.TypeIdentifier;
+import com.fortmocks.core.basis.model.event.dto.EventDto;
 import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadAllSoapEventOutput;
@@ -58,7 +59,7 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
     }
 
     @Override
-    public SoapEventDto convertType(SoapEventDto parent) {
+    public SoapEventDto convertType(EventDto parent) {
         return new SoapEventDto(parent);
     }
 

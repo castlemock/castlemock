@@ -35,7 +35,7 @@ import java.util.Map;
  * @see Service
  */
 @org.springframework.stereotype.Service
-public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Serializable, SA extends ServiceAdapter<D,I>> implements ServiceFacade<D, I> {
+public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Serializable, SA extends ServiceAdapter<D,D,I>> implements ServiceFacade<D,I> {
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -71,7 +71,8 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
     @Override
     public D save(final String type, final D dto){
         final SA serviceAdapter = findByType(type);
-        return serviceAdapter.create(serviceAdapter.convertType(dto));
+        final D convertedDto = serviceAdapter.convertType(dto);
+        return serviceAdapter.create(convertedDto);
     }
 
     /**

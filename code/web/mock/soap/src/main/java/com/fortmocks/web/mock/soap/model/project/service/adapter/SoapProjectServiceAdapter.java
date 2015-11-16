@@ -17,6 +17,7 @@
 package com.fortmocks.web.mock.soap.model.project.service.adapter;
 
 import com.fortmocks.core.basis.model.TypeIdentifier;
+import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import com.fortmocks.core.basis.model.project.service.ProjectServiceAdapter;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.*;
@@ -74,7 +75,7 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
     }
 
     @Override
-    public SoapProjectDto convertType(SoapProjectDto parent) {
+    public SoapProjectDto convertType(ProjectDto parent) {
         return new SoapProjectDto(parent);
     }
 

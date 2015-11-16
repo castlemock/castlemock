@@ -17,6 +17,7 @@
 package com.fortmocks.web.mock.rest.model.project.service.adapter;
 
 import com.fortmocks.core.basis.model.TypeIdentifier;
+import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import com.fortmocks.core.basis.model.project.service.ProjectServiceAdapter;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.*;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.*;
@@ -74,7 +75,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
     }
 
     @Override
-    public RestProjectDto convertType(RestProjectDto parent) {
+    public RestProjectDto convertType(ProjectDto parent) {
         return new RestProjectDto(parent);
     }
 

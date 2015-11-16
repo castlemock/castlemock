@@ -23,7 +23,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public interface ServiceAdapter<D extends TypeIdentifiable, I extends Serializable>  {
+public interface ServiceAdapter<P extends TypeIdentifiable, D extends P, I extends Serializable>  {
 
     /**
      * The method provides the functionality to create and store a DTO instance to a specific service.
@@ -82,5 +82,5 @@ public interface ServiceAdapter<D extends TypeIdentifiable, I extends Serializab
      * @param parent The parent that will be converted into a subtype of the provided parent
      * @return A new instance of the parent, but as a subtype of the parent
      */
-    D convertType(D parent);
+    D convertType(P parent);
 }
