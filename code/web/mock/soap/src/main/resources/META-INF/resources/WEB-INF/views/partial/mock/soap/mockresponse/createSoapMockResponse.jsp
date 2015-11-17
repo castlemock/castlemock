@@ -7,11 +7,11 @@
     <table class="formTable">
         <tr>
             <td class="column1"><form:label path="name"><spring:message code="soap.createsoapmockresponse.label.name"/></form:label></td>
-            <td class="column2"><form:input path="name" />
+            <td class="column2"><form:input path="name" id="soapMockResponseNameInput"/></td>
         </tr>
         <tr>
             <td class="column1"><form:label path="httpStatusCode"><spring:message code="soap.createsoapmockresponse.label.httpstatuscode"/></form:label></td>
-            <td class="column2"><form:input path="httpStatusCode" />
+            <td class="column2"><form:input path="httpStatusCode" id="soapMockResponseHttpStatusCodeInput"/></td>
         </tr>
     </table>
     <div class="editor">
@@ -22,3 +22,7 @@
     <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="soap.createsoapmockresponse.button.cancel"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script>
+    $("#soapMockResponseNameInput").attr('required', '');
+    $("#soapMockResponseHttpStatusCodeInput").attr('required', '');
+</script>

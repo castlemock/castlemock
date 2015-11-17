@@ -23,7 +23,7 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.name"/></label></td>
-            <td class="column2"><form:input path="name" value="${restMethod.name}"/></td>
+            <td class="column2"><form:input path="name" id="restMethodNameInput" value="${restMethod.name}"/></td>
         </tr>
         <tr>
             <td class="column1"><spring:message code="rest.updatemethod.label.methodtype"/></td>
@@ -65,3 +65,6 @@
     <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}"/>" class="button-error pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.updatemethod.button.cancel"/></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script>
+    $("#restMethodNameInput").attr('required', '');
+</script>

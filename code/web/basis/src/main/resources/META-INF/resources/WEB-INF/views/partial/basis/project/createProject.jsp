@@ -7,7 +7,7 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label><spring:message code="general.createproject.label.name"/></label></td>
-            <td class="column2"><form:input path="project.name" />
+            <td class="column2"><form:input id="projectNameInput" path="project.name"  />
         </tr>
         <tr>
             <td class="column1"><spring:message code="general.createproject.label.description"/></td>
@@ -39,3 +39,6 @@
     <a href="<c:url value="/web"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="general.createproject.button.cancel"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script>
+    $("#projectNameInput").attr('required', '');
+</script>

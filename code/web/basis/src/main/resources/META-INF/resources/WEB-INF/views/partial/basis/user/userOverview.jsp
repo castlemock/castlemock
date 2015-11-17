@@ -9,11 +9,11 @@
         <table class="formTable">
             <tr>
                 <td class="column1"><form:label path="username"><spring:message code="general.useroverview.label.username"/></form:label></td>
-                <td class="column2"><form:input path="username" />
+                <td class="column2"><form:input path="username" id="userUsernameInput" />
             </tr>
             <tr>
                 <td class="column1"><form:label path="password"><spring:message code="general.useroverview.label.password"/></form:label></td>
-                <td class="column2"><form:password path="password" />
+                <td class="column2"><form:password path="password" id="userPasswordInput"/>
             </tr>
             <tr>
                 <td class="column1"><form:label path="email"><spring:message code="general.useroverview.label.email"/></form:label></td>
@@ -55,3 +55,7 @@
         </tr>
     </c:forEach>
 </table>
+<script>
+    $("#userUsernameInput").attr('required', '');
+    $("#userPasswordInput").attr('required', '');
+</script>

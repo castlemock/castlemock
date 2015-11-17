@@ -7,7 +7,7 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label><spring:message code="general.updatecurrentuser.label.username"/></label></td>
-            <td class="column2"><form:input path="user.username"/>
+            <td class="column2"><form:input path="user.username" id="userUsernameInput"/>
         </tr>
         <tr>
             <td class="column1"><label><spring:message code="general.updatecurrentuser.label.email"/></label></td>
@@ -26,3 +26,6 @@
     <a href="<c:url value="/web/me"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="general.updatecurrentuser.button.discardchanges"/></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script>
+    $("#userUsernameInput").attr('required', '');
+</script>

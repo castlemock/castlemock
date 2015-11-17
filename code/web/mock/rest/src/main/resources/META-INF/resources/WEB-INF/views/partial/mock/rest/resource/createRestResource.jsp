@@ -23,11 +23,11 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label><spring:message code="rest.createresource.label.name"/></label></td>
-            <td class="column2"><form:input path="restResource.name" />
+            <td class="column2"><form:input id="restResourceNameInput" path="restResource.name" />
         </tr>
         <tr>
             <td class="column1"><label><spring:message code="rest.createresource.label.uri"/></label></td>
-            <td class="column2"><form:input path="restResource.uri" />
+            <td class="column2"><form:input id="restResourceUriInput" path="restResource.uri" />
         </tr>
     </table>
  
@@ -35,3 +35,7 @@
     <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="rest.createresource.button.cancel"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script>
+    $("#restResourceNameInput").attr('required', '');
+    $("#restResourceUriInput").attr('required', '');
+</script>

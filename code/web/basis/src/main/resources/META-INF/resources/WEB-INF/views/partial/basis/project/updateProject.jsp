@@ -7,7 +7,7 @@
     <table class="formTable">
         <tr>
             <td class="column1"><form:label path="name"><spring:message code="general.updateproject.label.name"/></form:label></td>
-            <td class="column2"><form:input path="name" value="${project.name}"/></td>
+            <td class="column2"><form:input path="name" id="projectNameInput" value="${project.name}"/></td>
         </tr>
         <tr>
             <td class="column1"><spring:message code="general.updateproject.label.description"/></td>
@@ -19,3 +19,6 @@
     <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="general.updateproject.button.discardchanges"/></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script>
+    $("#projectNameInput").attr('required', '');
+</script>

@@ -17,7 +17,7 @@
         <table class="formTable">
             <tr>
                 <td class="column1"><form:label path="link"><spring:message code="soap.soapaddwsdl.label.link" arguments="WSDL"/></form:label></td>
-                <td class="column2"><form:input path="link" type="text" name="wsdlLink" id="wsdlLink" size="100"/>
+                <td class="column2"><form:input path="link" type="text" name="wsdlLinkInput" id="wsdlLinkInput" size="100"/>
             </tr>
             <tr>
                 <td class="column1"><form:label path="generateResponse"><spring:message code="soap.soapaddwsdl.label.generateresponse"/></form:label></td>
@@ -59,3 +59,6 @@
 </div>
 
 <script src=<c:url value="/resources/js/WSDLFileUpload.js"/>></script>
+<script>
+    $("#wsdlLinkInput").attr('required', '');
+</script>

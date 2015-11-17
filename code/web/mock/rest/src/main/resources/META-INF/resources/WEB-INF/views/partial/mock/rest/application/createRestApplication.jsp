@@ -23,7 +23,7 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label><spring:message code="rest.createapplication.label.name"/></label></td>
-            <td class="column2"><form:input path="restApplication.name" />
+            <td class="column2"><form:input id="restApplicationNameInput" path="restApplication.name" />
         </tr>
     </table>
  
@@ -31,3 +31,6 @@
     <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="rest.createapplication.button.cancel"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script>
+    $("#restApplicationNameInput").attr('required', '');
+</script>

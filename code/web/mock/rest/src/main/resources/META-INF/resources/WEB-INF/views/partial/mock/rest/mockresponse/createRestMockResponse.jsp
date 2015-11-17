@@ -23,11 +23,11 @@
     <table class="formTable">
         <tr>
             <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.name"/></form:label></td>
-            <td class="column2"><form:input path="name" />
+            <td class="column2"><form:input path="name" id="restMockResponseNameInput" /></td>
         </tr>
         <tr>
             <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.createrestmockresponse.label.httpstatuscode"/></form:label></td>
-            <td class="column2"><form:input path="httpStatusCode" />
+            <td class="column2"><form:input path="httpStatusCode" id="restMockResponseHttpResponseCodeInput" /></td>
         </tr>
         <tr>
             <td class="column1"><spring:message code="rest.createrestmockresponse.label.restcontenttype"/></td>
@@ -48,3 +48,7 @@
     <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="rest.createrestmockresponse.button.cancel"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script>
+    $("#restMockResponseNameInput").attr('required', '');
+    $("#restMockResponseHttpResponseCodeInput").attr('required', '');
+</script>

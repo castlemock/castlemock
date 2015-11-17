@@ -7,11 +7,11 @@
     <table class="formTable">
         <tr>
             <td class="column1"><form:label path="username"><spring:message code="general.updateuser.label.username"/></form:label></td>
-            <td class="column2"><form:input path="username" />
+            <td class="column2"><form:input path="username" id="userUsernameInput" />
         </tr>
         <tr>
             <td class="column1"><form:label path="password"><spring:message code="general.updateuser.label.password"/></form:label></td>
-            <td class="column2"><form:password path="password" />
+            <td class="column2"><form:password path="password" id="usePasswordInput" />
         </tr>
         <tr>
             <td class="column1"><form:label path="email"><spring:message code="general.updateuser.label.email"/></form:label></td>
@@ -43,3 +43,6 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     
 </form:form>
+<script>
+    $("#userUsernameInput").attr('required', '');
+</script>

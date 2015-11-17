@@ -33,7 +33,7 @@
         <table class="formTable">
             <tr>
                 <td class="column1"><form:label path="link"><spring:message code="rest.restaddwadl.label.link" arguments="WADL"/></form:label></td>
-                <td class="column2"><form:input path="link" type="text" name="wadlLink" id="wadlLink" size="100"/>
+                <td class="column2"><form:input path="link" type="text" name="wadlLinkInput" id="wadlLinkInput" size="100"/>
             </tr>
             <tr>
                 <td class="column1"><form:label path="generateResponse"><spring:message code="rest.restaddwadl.label.generateresponse"/></form:label></td>
@@ -74,4 +74,8 @@
     </form:form>
 </div>
 
-<script src=<c:url value="/resources/js/WADLFileUpload.js"/>></script>
+<script src=<c:url value="/resources/js/WADLFileUpload.js"/>>
+</script>
+<script>
+    $("#wadlLinkInput").attr('required', '');
+</script>

@@ -58,6 +58,10 @@ public class FileManager {
         final List<File> uploadedFiles = new ArrayList<File>();
         LOGGER.debug("Starting uploading files");
         for(MultipartFile file : files){
+            if(file.getOriginalFilename().isEmpty()){
+                continue;
+            }
+
             LOGGER.debug("Uploading file: " + file.getOriginalFilename());
             final File serverFile = new File(fileDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename());
             final byte[] bytes = file.getBytes();
