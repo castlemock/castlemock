@@ -94,6 +94,14 @@ public abstract class AbstractService<T extends Saveable<I>, D, I extends Serial
     }
 
     /**
+     * Count all the stored entities for the repository
+     * @return The count of entities
+     */
+    protected Integer count(){
+        return repository.count();
+    }
+
+    /**
      * The save method provides functionality to save the provided instance to the database
      * @param dto The instance that will be saved
      * @return Return the same instance that has been saved in the database

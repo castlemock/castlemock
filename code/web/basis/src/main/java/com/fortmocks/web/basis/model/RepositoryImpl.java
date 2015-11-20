@@ -113,7 +113,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
      *         have an identifier, then the method will generate a new identifier for the type.
      */
     @Override
-    public T save(final T type) {
+    public synchronized T save(final T type) {
         I id = type.getId();
 
         if(id == null){
@@ -146,6 +146,15 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
             }
         }
         return type;
+    }
+
+    /**
+     * Count all the stored entities for the repository
+     * @return The count of entities
+     */
+    @Override
+    public Integer count(){
+        return collection.size();
     }
 
     /**

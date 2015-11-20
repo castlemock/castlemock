@@ -20,6 +20,7 @@ package com.fortmocks.web.mock.soap.model.event.service;
 import com.fortmocks.core.mock.soap.model.event.domain.SoapEvent;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.web.basis.model.AbstractService;
+import com.fortmocks.web.basis.model.event.service.AbstractEventService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.List;
  * @since 1.0
  */
 
-public class AbstractSoapEventService extends AbstractService<SoapEvent, SoapEventDto, Long> {
+public class AbstractSoapEventService extends AbstractEventService<SoapEvent, SoapEventDto> {
 
 
     /**

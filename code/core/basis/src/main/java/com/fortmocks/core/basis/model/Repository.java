@@ -71,4 +71,9 @@ public interface Repository<T extends Saveable<I>, I extends Serializable> {
      */
     void delete(I id);
 
+    /**
+     * Count all the stored entities for the repository
+     * @return The count of entities
+     */
+    Integer count();
 }
