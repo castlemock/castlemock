@@ -28,9 +28,6 @@ public class ReadUserByUsernameInput implements Input {
     @NotNull
     private String username;
 
-    public ReadUserByUsernameInput() {
-    }
-
     public ReadUserByUsernameInput(String username) {
         this.username = username;
     }

@@ -62,8 +62,7 @@ public class UserDetailSecurityService implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) {
         Preconditions.checkNotNull(username, "Username cannot be null");
         Preconditions.checkArgument(!username.isEmpty(), "Username cannot be empty");
-        final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput();
-        readUserByUsernameInput.setUsername(username);
+        final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput(username);
         final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(readUserByUsernameInput);
         final UserDto user = readUserByUsernameOutput.getUser();
         Preconditions.checkNotNull(user, "Unable to find user");

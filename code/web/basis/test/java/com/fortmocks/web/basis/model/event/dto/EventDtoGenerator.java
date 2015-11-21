@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.basis.model.event.dto;
 
-import com.fortmocks.core.model.event.domain.Event;
-import com.fortmocks.core.model.event.dto.EventDto;
+import com.fortmocks.core.basis.model.event.domain.Event;
+import com.fortmocks.core.basis.model.event.dto.EventDto;
 
 import java.util.Date;
 

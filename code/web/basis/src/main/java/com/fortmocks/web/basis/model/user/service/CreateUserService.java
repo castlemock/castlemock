@@ -45,6 +45,7 @@ public class CreateUserService extends AbstractUserService implements Service<Cr
     public ServiceResult<CreateUserOutput> process(final ServiceTask<CreateUserInput> serviceTask) {
         final CreateUserInput input = serviceTask.getInput();
         final UserDto user = input.getUser();
+        user.setId(null);
         user.setCreated(new Date());
         user.setUpdated(new Date());
         user.setStatus(Status.ACTIVE);

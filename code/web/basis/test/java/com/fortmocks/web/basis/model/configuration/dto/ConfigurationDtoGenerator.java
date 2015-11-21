@@ -17,9 +17,9 @@
 package com.fortmocks.web.basis.model.configuration.dto;
 
 
-import com.fortmocks.core.model.configuration.domain.ConfigurationType;
-import com.fortmocks.core.model.configuration.dto.ConfigurationDto;
-import com.fortmocks.core.model.event.domain.Event;
+import com.fortmocks.core.basis.model.configuration.domain.ConfigurationType;
+import com.fortmocks.core.basis.model.configuration.dto.ConfigurationDto;
+import com.fortmocks.core.basis.model.event.domain.Event;
 
 /**
  * @author Karl Dahlgren

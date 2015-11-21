@@ -16,9 +16,9 @@
 
 package com.fortmocks.web.basis.model.project.dto;
 
-import com.fortmocks.core.model.project.domain.DomainNameStrategy;
-import com.fortmocks.core.model.project.domain.Project;
-import com.fortmocks.core.model.project.dto.ProjectDto;
+import com.fortmocks.core.basis.model.project.domain.DomainNameStrategy;
+import com.fortmocks.core.basis.model.project.domain.Project;
+import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 
 import java.util.Date;
 

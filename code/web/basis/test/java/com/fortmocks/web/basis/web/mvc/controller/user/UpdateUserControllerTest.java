@@ -16,14 +16,14 @@
 
 package com.fortmocks.web.basis.web.mvc.controller.user;
 
-import com.fortmocks.core.model.user.domain.Role;
-import com.fortmocks.core.model.user.domain.Status;
-import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.message.input.ReadUserByUsernameInput;
-import com.fortmocks.core.model.user.service.message.input.ReadUserInput;
-import com.fortmocks.core.model.user.service.message.input.UpdateUserInput;
-import com.fortmocks.core.model.user.service.message.output.ReadUserByUsernameOutput;
-import com.fortmocks.core.model.user.service.message.output.ReadUserOutput;
+import com.fortmocks.core.basis.model.user.domain.Role;
+import com.fortmocks.core.basis.model.user.domain.Status;
+import com.fortmocks.core.basis.model.user.dto.UserDto;
+import com.fortmocks.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
+import com.fortmocks.core.basis.model.user.service.message.input.ReadUserInput;
+import com.fortmocks.core.basis.model.user.service.message.input.UpdateUserInput;
+import com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
+import com.fortmocks.core.basis.model.user.service.message.output.ReadUserOutput;
 import com.fortmocks.web.basis.config.TestApplication;
 import com.fortmocks.web.basis.model.user.dto.UserDtoGenerator;
 import com.fortmocks.web.basis.model.user.service.UserDetailSecurityService;

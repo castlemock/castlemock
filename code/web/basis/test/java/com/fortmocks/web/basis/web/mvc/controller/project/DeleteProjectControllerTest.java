@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.basis.web.mvc.controller.project;
 
-import com.fortmocks.core.model.project.dto.ProjectDto;
+import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import com.fortmocks.web.basis.config.TestApplication;
 import com.fortmocks.web.basis.model.project.dto.ProjectDtoGenerator;
 import com.fortmocks.web.basis.model.project.service.ProjectServiceFacadeImpl;

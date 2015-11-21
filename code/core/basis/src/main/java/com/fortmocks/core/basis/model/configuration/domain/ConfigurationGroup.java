@@ -21,7 +21,7 @@ import com.fortmocks.core.basis.model.Saveable;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Set;
+import java.util.List;
 
 /**
  * The configuration group is responsible for grouping configurations together.
@@ -33,7 +33,7 @@ public class ConfigurationGroup implements Saveable<Long> {
 
     private Long id;
     private String name;
-    private Set<Configuration> configurations;
+    private List<Configuration> configurations;
 
     /**
      * Returns the configuration group id
@@ -77,7 +77,7 @@ public class ConfigurationGroup implements Saveable<Long> {
      */
     @XmlElementWrapper(name = "configurations")
     @XmlElement(name = "configuration")
-    public Set<Configuration> getConfigurations() {
+    public List<Configuration> getConfigurations() {
         return configurations;
     }
 
@@ -85,7 +85,7 @@ public class ConfigurationGroup implements Saveable<Long> {
      * Set a new list of configurations that belong to the configuration group
      * @param configurations The new list of configurations
      */
-    public void setConfigurations(Set<Configuration> configurations) {
+    public void setConfigurations(List<Configuration> configurations) {
         this.configurations = configurations;
     }
 

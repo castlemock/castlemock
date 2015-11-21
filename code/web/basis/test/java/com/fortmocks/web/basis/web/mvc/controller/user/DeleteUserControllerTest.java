@@ -16,9 +16,9 @@
 
 package com.fortmocks.web.basis.web.mvc.controller.user;
 
-import com.fortmocks.core.model.user.dto.UserDto;
-import com.fortmocks.core.model.user.service.message.input.ReadUserInput;
-import com.fortmocks.core.model.user.service.message.output.ReadUserOutput;
+import com.fortmocks.core.basis.model.user.dto.UserDto;
+import com.fortmocks.core.basis.model.user.service.message.input.ReadUserInput;
+import com.fortmocks.core.basis.model.user.service.message.output.ReadUserOutput;
 import com.fortmocks.web.basis.config.TestApplication;
 import com.fortmocks.web.basis.model.user.dto.UserDtoGenerator;
 import com.fortmocks.web.basis.service.ServiceProcessor;

@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.basis.web.mvc.controller.event;
 
-import com.fortmocks.core.model.event.dto.EventDto;
+import com.fortmocks.core.basis.model.event.dto.EventDto;
 import com.fortmocks.web.basis.config.TestApplication;
 import com.fortmocks.web.basis.model.event.dto.EventDtoGenerator;
 import com.fortmocks.web.basis.model.event.service.EventServiceFacadeImpl;
