@@ -23,7 +23,7 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.*;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.*;
 import com.fortmocks.web.mock.soap.model.SoapTypeIdentifier;
-import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

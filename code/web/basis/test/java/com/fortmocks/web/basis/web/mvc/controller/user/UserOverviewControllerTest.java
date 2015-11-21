@@ -22,7 +22,7 @@ import com.fortmocks.core.basis.model.user.service.message.input.ReadAllUsersInp
 import com.fortmocks.core.basis.model.user.service.message.output.ReadAllUsersOutput;
 import com.fortmocks.web.basis.config.TestApplication;
 import com.fortmocks.web.basis.model.user.dto.UserDtoGenerator;
-import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;

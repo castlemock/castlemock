@@ -16,11 +16,11 @@
 
 package com.fortmocks.web.basis.model.user.service;
 
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 import com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
-import com.fortmocks.web.basis.service.ServiceProcessor;
 import com.fortmocks.web.basis.web.mvc.controller.user.UpdateCurrentUserController;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;

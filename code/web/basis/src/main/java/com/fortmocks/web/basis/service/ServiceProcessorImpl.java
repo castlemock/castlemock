@@ -18,17 +18,14 @@ package com.fortmocks.web.basis.service;
 
 import com.fortmocks.core.basis.model.*;
 import com.fortmocks.core.basis.model.user.domain.User;
-import com.fortmocks.core.basis.model.validation.NotNull;
 import com.fortmocks.core.basis.model.validation.validator.NotNullValidator;
 import com.fortmocks.core.basis.model.validation.validator.Validator;
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,12 +37,12 @@ import java.util.List;
  * @since 1.0
  */
 @Component
-public class ServiceProcessor {
+public class ServiceProcessorImpl implements ServiceProcessor {
 
     @Autowired
     private ServiceRegistry serviceRegistry;
     private static final String UNKNOWN_USER = "Unknown";
-    private static final Logger LOGGER = Logger.getLogger(ServiceProcessor.class);
+    private static final Logger LOGGER = Logger.getLogger(ServiceProcessorImpl.class);
     private static final List<Validator> VALIDATORS = new ArrayList<Validator>();
 
     static {

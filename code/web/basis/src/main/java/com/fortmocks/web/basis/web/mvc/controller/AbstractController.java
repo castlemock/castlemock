@@ -16,8 +16,9 @@
 
 package com.fortmocks.web.basis.web.mvc.controller;
 
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.user.domain.User;
-import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -22,7 +22,7 @@ import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 import com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
 import com.fortmocks.web.basis.model.user.service.UserDetailSecurityService;
-import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,8 +76,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput();
-        readUserByUsernameInput.setUsername(loggedInUsername);
+        final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput(loggedInUsername);
         final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(readUserByUsernameInput);
         final UserDto loggedInUser = readUserByUsernameOutput.getUser();
         if(loggedInUser == null){

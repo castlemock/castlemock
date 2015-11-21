@@ -24,7 +24,7 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDtoGenerator;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDtoGenerator;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
-import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import org.junit.Test;
 import org.junit.runner.RunWith;

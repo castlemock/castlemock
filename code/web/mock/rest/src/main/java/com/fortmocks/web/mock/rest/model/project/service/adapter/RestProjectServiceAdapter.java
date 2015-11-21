@@ -23,7 +23,7 @@ import com.fortmocks.core.mock.rest.model.project.service.message.input.*;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.*;
 import com.fortmocks.web.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
-import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

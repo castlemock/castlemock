@@ -9,7 +9,7 @@ import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadAllRes
 import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
 import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadAllRestEventOutput;
 import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadRestEventOutput;
-import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

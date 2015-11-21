@@ -13,13 +13,13 @@ import org.mockito.MockitoAnnotations;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ServiceProcessorTest {
+public class ServiceProcessorImplTest {
 
     @Mock
     private ServiceRegistry serviceRegistry;
 
     @InjectMocks
-    private ServiceProcessor serviceProcessor;
+    private ServiceProcessorImpl serviceProcessor;
 
     @Before
     public void setup() {

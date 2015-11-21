@@ -16,12 +16,13 @@
 
 package com.fortmocks.web.basis.web.mvc.controller.user;
 
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.CreateUserInput;
 import com.fortmocks.core.basis.model.user.service.message.output.CreateUserOutput;
 import com.fortmocks.web.basis.config.TestApplication;
 import com.fortmocks.web.basis.model.user.dto.UserDtoGenerator;
-import com.fortmocks.web.basis.service.ServiceProcessor;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
