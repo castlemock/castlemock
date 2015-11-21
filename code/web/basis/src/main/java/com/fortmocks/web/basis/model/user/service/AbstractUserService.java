@@ -134,6 +134,10 @@ public abstract class AbstractUserService extends AbstractService<User, UserDto,
         Preconditions.checkArgument(userId >= 0, "User id cannot be less than zero");
         final UserDto userDto = find(userId);
 
+        if(userDto == null){
+            throw new IllegalArgumentException("Unable to find the user with the user id " + userId);
+        }
+
         if(userDto.getRole().equals(Role.ADMIN) && findByRole(Role.ADMIN).size() == 1){
             throw new IllegalArgumentException("Unable to delete the last administrator");
         }

@@ -46,7 +46,7 @@ public class CreateUserServiceTest {
         user.setStatus(Status.ACTIVE);
         user.setRole(Role.ADMIN);
         user.setEmail("email@email.com");
-        
+
         User createdUser = new User();
         createdUser.setId(1L);
         createdUser.setPassword("Password");
