@@ -17,9 +17,7 @@
 package com.fortmocks.core.basis.model.project.dto;
 
 import com.fortmocks.core.basis.model.TypeIdentifiable;
-import com.fortmocks.core.basis.model.project.domain.Project;
 import com.fortmocks.core.basis.model.TypeIdentifier;
-import com.fortmocks.core.basis.model.project.domain.DomainNameStrategy;
 import org.dozer.Mapping;
 
 import java.util.Date;
@@ -48,9 +46,6 @@ public class ProjectDto implements TypeIdentifiable {
     @Mapping("description")
     private String description;
 
-    @Mapping("domainNameStrategy")
-    private DomainNameStrategy domainNameStrategy;
-
     private TypeIdentifier typeIdentifier;
 
     /**
@@ -70,7 +65,6 @@ public class ProjectDto implements TypeIdentifiable {
         this.updated = projectDto.getUpdated();
         this.created = projectDto.getCreated();
         this.description = projectDto.getDescription();
-        this.domainNameStrategy = projectDto.getDomainNameStrategy();
     }
 
     public Long getId() {
@@ -112,15 +106,6 @@ public class ProjectDto implements TypeIdentifiable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public DomainNameStrategy getDomainNameStrategy() {
-        return domainNameStrategy;
-    }
-
-    public void setDomainNameStrategy(DomainNameStrategy domainNameStrategy) {
-        this.domainNameStrategy = domainNameStrategy;
-    }
-
 
     @Override
     public TypeIdentifier getTypeIdentifier() {

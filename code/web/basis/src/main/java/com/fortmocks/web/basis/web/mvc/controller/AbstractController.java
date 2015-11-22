@@ -53,7 +53,6 @@ public abstract class AbstractController {
     protected static final String PROJECT = "project";
     protected static final String PROJECTS = "projects";
     protected static final String PROJECT_TYPES = "projectTypes";
-    protected static final String DOMAIN_NAME_STRATEGIES = "domainNameStrategies";
     protected static final String ROLES = "roles";
     protected static final String SLASH = "/";
     protected static final String SPACE = " ";

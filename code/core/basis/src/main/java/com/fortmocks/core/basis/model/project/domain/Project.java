@@ -39,7 +39,6 @@ public abstract class Project implements Saveable<Long> {
     private String description;
     private Date updated;
     private Date created;
-    private DomainNameStrategy domainNameStrategy;
 
     @XmlElement
     @Override
@@ -86,15 +85,6 @@ public abstract class Project implements Saveable<Long> {
 
     public void setCreated(Date created) {
         this.created = created;
-    }
-
-    @XmlElement
-    public DomainNameStrategy getDomainNameStrategy() {
-        return domainNameStrategy;
-    }
-
-    public void setDomainNameStrategy(DomainNameStrategy domainNameStrategy) {
-        this.domainNameStrategy = domainNameStrategy;
     }
 
 }

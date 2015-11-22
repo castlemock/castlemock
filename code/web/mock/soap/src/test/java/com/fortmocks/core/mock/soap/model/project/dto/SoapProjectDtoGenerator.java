@@ -16,8 +16,6 @@
 
 package com.fortmocks.core.mock.soap.model.project.dto;
 
-import com.fortmocks.core.basis.model.project.domain.DomainNameStrategy;
-
 import java.util.Date;
 
 
@@ -32,7 +30,6 @@ public class SoapProjectDtoGenerator {
         projectDto.setId(1L);
         projectDto.setName("Project name");
         projectDto.setDescription("Project description");
-        projectDto.setDomainNameStrategy(DomainNameStrategy.PERCENT_ENCODING);
         projectDto.setCreated(new Date());
         projectDto.setUpdated(new Date());
         return projectDto;

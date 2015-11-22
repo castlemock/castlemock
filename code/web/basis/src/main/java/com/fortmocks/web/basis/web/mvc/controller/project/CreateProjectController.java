@@ -16,7 +16,6 @@
 
 package com.fortmocks.web.basis.web.mvc.controller.project;
 
-import com.fortmocks.core.basis.model.project.domain.DomainNameStrategy;
 import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import com.fortmocks.web.basis.model.project.service.ProjectServiceFacadeImpl;
 import com.fortmocks.web.basis.web.mvc.command.project.CreateProjectCommand;
@@ -56,7 +55,6 @@ public class CreateProjectController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(DOMAIN_NAME_STRATEGIES, DomainNameStrategy.values());
         model.addObject(PROJECT_TYPES, projectServiceFacade.getTypes());
         model.addObject(COMMAND, new CreateProjectCommand());
         return model;

@@ -23,16 +23,6 @@
                 </form:select>
             </td>
         </tr>
-        <tr>
-            <td class="column1"><spring:message code="general.createproject.label.domainnamestrategies"/></td>
-            <td>
-                <form:select path="project.domainNameStrategy">
-                    <c:forEach items="${domainNameStrategies}" var="domainNameStrategy">
-                        <option value="${domainNameStrategy}">${domainNameStrategy.strategy}</option>
-                    </c:forEach>
-                </form:select>
-            </td>
-        </tr>
     </table>
  
     <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="general.createproject.button.createproject"/></span></button>

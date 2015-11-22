@@ -43,10 +43,6 @@
             <td class="column1"><label path="projectType"><spring:message code="rest.restproject.label.type"/></label></td>
             <td class="column2"><label path="projectType">REST</label></td>
         </tr>
-        <tr>
-            <td class="column1"><label path="domainNameStrategy"><spring:message code="rest.restproject.label.domainnamestrategies"/></label></td>
-            <td class="column2"><label path="domainNameStrategy">${restProject.domainNameStrategy.strategy}</label></td>
-        </tr>
     </table>
 </div>
 

@@ -26,10 +26,6 @@
             <td class="column1"><label path="projectType"><spring:message code="soap.soapproject.label.type"/></label></td>
             <td class="column2"><label path="projectType">SOAP</label></td>
         </tr>
-        <tr>
-            <td class="column1"><label path="domainNameStrategy"><spring:message code="soap.soapproject.label.domainnamestrategies"/></label></td>
-            <td class="column2"><label path="domainNameStrategy">${soapProject.domainNameStrategy.strategy}</label></td>
-        </tr>
     </table>
 </div>
 

@@ -16,8 +16,6 @@
 
 package com.fortmocks.web.basis.model.project.dto;
 
-import com.fortmocks.core.basis.model.project.domain.DomainNameStrategy;
-import com.fortmocks.core.basis.model.project.domain.Project;
 import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 
 import java.util.Date;
@@ -25,8 +23,7 @@ import java.util.Date;
 /**
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.core.model.project.dto.ProjectDto
- * @see Project
+ * @see ProjectDto
  */
 public class ProjectDtoGenerator {
 
@@ -35,7 +32,6 @@ public class ProjectDtoGenerator {
         projectDto.setId(1L);
         projectDto.setName("Project name");
         projectDto.setDescription("Project description");
-        projectDto.setDomainNameStrategy(DomainNameStrategy.PERCENT_ENCODING);
         projectDto.setCreated(new Date());
         projectDto.setUpdated(new Date());
         return projectDto;
