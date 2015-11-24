@@ -16,6 +16,8 @@
 
 package com.fortmocks.web.basis.model.project.service;
 
+import com.fortmocks.core.basis.model.SearchQuery;
+import com.fortmocks.core.basis.model.SearchResult;
 import com.fortmocks.core.basis.model.TypeIdentifiable;
 import com.fortmocks.core.basis.model.TypeIdentifier;
 import com.fortmocks.core.basis.model.project.domain.Project;
@@ -24,6 +26,9 @@ import com.fortmocks.core.basis.model.project.service.ProjectServiceAdapter;
 import com.fortmocks.core.basis.model.project.service.ProjectServiceFacade;
 import com.fortmocks.web.basis.model.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The project service component is used to assembly all the project service layers and interact with them
@@ -71,6 +76,22 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, Long
     public void importProject(String type, String rawProject) {
         final ProjectServiceAdapter<ProjectDto> service = findByType(type);
         service.importProject(rawProject);
+    }
+
+    /**
+     * Searches for resources that matches the provided query. The matching resources will
+     * be returned as a collection of {@link SearchResult}
+     * @param searchQuery The search query that will be used to identify the resources
+     * @return A list of search results
+     */
+    @Override
+    public List<SearchResult> search(SearchQuery searchQuery) {
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        for(ProjectServiceAdapter projectServiceAdapter : services.values()){
+            List<SearchResult> projectServiceSearchResult = projectServiceAdapter.search(searchQuery);
+            searchResults.addAll(projectServiceSearchResult);
+        }
+        return searchResults;
     }
 
 }

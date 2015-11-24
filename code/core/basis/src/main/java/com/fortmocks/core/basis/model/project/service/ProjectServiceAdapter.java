@@ -16,9 +16,13 @@
 
 package com.fortmocks.core.basis.model.project.service;
 
+import com.fortmocks.core.basis.model.SearchQuery;
+import com.fortmocks.core.basis.model.SearchResult;
 import com.fortmocks.core.basis.model.project.domain.Project;
 import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import com.fortmocks.core.basis.model.ServiceAdapter;
+
+import java.util.List;
 
 /**
  * The project service is responsible for providing the basic functionality for all the
@@ -43,5 +47,13 @@ public interface ProjectServiceAdapter<D extends ProjectDto> extends ServiceAdap
      * @param projectRaw The project as a String
      */
     void importProject(String projectRaw);
+
+    /**
+     * Searches for resources that matches the provided query. The matching resources will
+     * be returned as a collection of {@link SearchResult}
+     * @param searchQuery The search query that will be used to identify the resources
+     * @return A list of search results
+     */
+    List<SearchResult> search(SearchQuery searchQuery);
 
 }

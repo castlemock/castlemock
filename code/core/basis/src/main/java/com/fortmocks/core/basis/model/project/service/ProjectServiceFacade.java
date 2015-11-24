@@ -16,9 +16,13 @@
 
 package com.fortmocks.core.basis.model.project.service;
 
+import com.fortmocks.core.basis.model.SearchQuery;
+import com.fortmocks.core.basis.model.SearchResult;
 import com.fortmocks.core.basis.model.project.domain.Project;
 import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import com.fortmocks.core.basis.model.ServiceFacade;
+
+import java.util.List;
 
 
 /**
@@ -47,4 +51,12 @@ public interface ProjectServiceFacade extends ServiceFacade<ProjectDto, Long> {
      * @param rawProject The imported project file
      */
     void importProject(String type, String rawProject);
+
+    /**
+     * Searches for resources that matches the provided query. The matching resources will
+     * be returned as a collection of {@link SearchResult}
+     * @param searchQuery The search query that will be used to identify the resources
+     * @return A list of search results
+     */
+    List<SearchResult> search(SearchQuery searchQuery);
 }
