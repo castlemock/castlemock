@@ -25,6 +25,7 @@ import java.util.List;
 /**
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.configuration.service.message.output.UpdateAllConfigurationGroupsOutput
  */
 public class UpdateAllConfigurationGroupsInput implements Input{
 

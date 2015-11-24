@@ -20,16 +20,15 @@ import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.validation.NotNull;
 
 /**
+ * Read a user with a specific user id
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.output.ReadUserOutput
  */
 public class ReadUserInput implements Input {
 
     @NotNull
     private Long userId;
-
-    public ReadUserInput() {
-    }
 
     public ReadUserInput(Long userId) {
         this.userId = userId;

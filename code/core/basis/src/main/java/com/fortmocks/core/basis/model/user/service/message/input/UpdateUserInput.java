@@ -21,8 +21,10 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 import com.fortmocks.core.basis.model.Input;
 
 /**
+ * Update a user with a specific user id
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.output.UpdateUserOutput
  */
 public class UpdateUserInput implements Input {
 

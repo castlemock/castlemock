@@ -20,8 +20,10 @@ import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.validation.NotNull;
 
 /**
+ * Read a user with a specific username
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput
  */
 public class ReadUserByUsernameInput implements Input {
 

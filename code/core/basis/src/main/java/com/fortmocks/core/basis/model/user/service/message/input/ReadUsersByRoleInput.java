@@ -21,16 +21,15 @@ import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.validation.NotNull;
 
 /**
+ * Read users with a specific role
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.output.ReadUsersByRoleOutput
  */
 public class ReadUsersByRoleInput implements Input {
 
     @NotNull
     private Role role;
-
-    public ReadUsersByRoleInput() {
-    }
 
     public ReadUsersByRoleInput(Role role) {
         this.role = role;

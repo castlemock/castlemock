@@ -21,16 +21,15 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 import com.fortmocks.core.basis.model.Input;
 
 /**
+ * Update the current logged in user
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.output.UpdateCurrentUserOutput
  */
 public class UpdateCurrentUserInput implements Input {
 
     @NotNull
     private UserDto user;
-
-    public UpdateCurrentUserInput() {
-    }
 
     public UpdateCurrentUserInput(UserDto user) {
         this.user = user;

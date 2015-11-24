@@ -21,6 +21,7 @@ import com.fortmocks.core.basis.model.Output;
 /**
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.input.DeleteUserInput
  */
 public class DeleteUserOutput implements Output {
 }

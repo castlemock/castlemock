@@ -25,6 +25,7 @@ import java.util.List;
 /**
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.input.ReadUsersByRoleInput
  */
 public class ReadUsersByRoleOutput implements Output {
 

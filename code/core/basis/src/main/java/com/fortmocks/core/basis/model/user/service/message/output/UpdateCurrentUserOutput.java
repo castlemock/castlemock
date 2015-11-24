@@ -23,6 +23,7 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 /**
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.input.UpdateCurrentUserInput
  */
 public class UpdateCurrentUserOutput implements Output {
 

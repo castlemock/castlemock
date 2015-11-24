@@ -21,16 +21,15 @@ import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.validation.NotNull;
 
 /**
+ * Creates a new user
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.output.CreateUserOutput
  */
 public class CreateUserInput implements Input {
 
     @NotNull
     private UserDto user;
-
-    public CreateUserInput() {
-    }
 
     public CreateUserInput(UserDto user) {
         this.user = user;

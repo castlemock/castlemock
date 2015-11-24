@@ -20,16 +20,15 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 import com.fortmocks.core.basis.model.Input;
 
 /**
+ * Deletes a user
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.output.DeleteUserOutput
  */
 public class DeleteUserInput implements Input{
 
     @NotNull
     private Long userId;
-
-    public DeleteUserInput() {
-    }
 
     public DeleteUserInput(Long userId) {
         this.userId = userId;

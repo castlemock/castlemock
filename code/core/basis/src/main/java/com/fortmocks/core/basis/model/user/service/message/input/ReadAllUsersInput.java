@@ -19,8 +19,10 @@ package com.fortmocks.core.basis.model.user.service.message.input;
 import com.fortmocks.core.basis.model.Input;
 
 /**
+ * Read all users
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.user.service.message.output.ReadAllUsersOutput
  */
 public class ReadAllUsersInput implements Input {
 }

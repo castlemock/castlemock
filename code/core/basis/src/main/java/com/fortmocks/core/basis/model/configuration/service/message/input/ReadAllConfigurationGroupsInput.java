@@ -21,6 +21,7 @@ import com.fortmocks.core.basis.model.Input;
 /**
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput
  */
 public class ReadAllConfigurationGroupsInput implements Input {
 }
