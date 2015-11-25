@@ -20,6 +20,7 @@ import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.user.domain.User;
 import com.fortmocks.web.basis.model.ContentItem;
 import com.fortmocks.web.basis.model.ContentItemGroup;
+import com.fortmocks.web.basis.web.mvc.command.search.SearchCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -50,6 +51,7 @@ public abstract class AbstractViewController extends AbstractController {
     private static final String INDEX = "index";
     private static final String PARTIAL = "partial";
     private static final String CONTENT_ITEM_GROUPS = "contentItemGroups";
+    private static final String SEARCH_COMMAND = "searchCommand";
 
 
     /**
@@ -88,6 +90,7 @@ public abstract class AbstractViewController extends AbstractController {
         modelAndView.setViewName(INDEX);
         modelAndView.addObject(PARTIAL, createPartial(page));
         modelAndView.addObject(CONTENT_ITEM_GROUPS, createContentItemGroups(pageContentItems));
+        modelAndView.addObject(SEARCH_COMMAND, new SearchCommand());
         return modelAndView;
     }
 

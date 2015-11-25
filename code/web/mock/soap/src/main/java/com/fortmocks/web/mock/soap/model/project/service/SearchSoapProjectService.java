@@ -76,7 +76,7 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
         if(SearchValidator.validate(soapProject.getName(), query)){
             searchResult = new SearchResult();
             searchResult.setTitle(soapProject.getName());
-            searchResult.setLink(SLASH + SOAP + SLASH + PROJECT + SLASH + soapProject.getId());
+            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId());
         }
 
         if(searchResult != null){
@@ -103,7 +103,7 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
         if(SearchValidator.validate(soapPort.getName(), query)){
             searchResult = new SearchResult();
             searchResult.setTitle(soapPort.getName());
-            searchResult.setLink(SLASH + SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId());
+            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId());
         }
 
         if(searchResult != null){
@@ -132,7 +132,7 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
         if(SearchValidator.validate(soapOperation.getName(), query)){
             searchResult = new SearchResult();
             searchResult.setTitle(soapOperation.getName());
-            searchResult.setLink(SLASH + SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId());
+            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId());
         }
 
         if(searchResult != null){
@@ -164,7 +164,7 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
         if(SearchValidator.validate(soapMockResponse.getName(), query)){
             searchResult = new SearchResult();
             searchResult.setTitle(soapMockResponse.getName());
-            searchResult.setLink(SLASH + SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + RESPONSE + soapMockResponse.getId());
+            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + RESPONSE + soapMockResponse.getId());
         }
 
         return searchResult;

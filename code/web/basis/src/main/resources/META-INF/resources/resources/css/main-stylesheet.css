@@ -152,6 +152,8 @@ body {
     float: right;
     margin-top: 10px;
     margin-right: 40px; }
+    .main-header .meta form {
+      float: left; }
     .main-header .meta input[type=text] {
       width: 200px;
       padding: 5px;

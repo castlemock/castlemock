@@ -74,7 +74,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
         if(SearchValidator.validate(restProject.getName(), query)){
             searchResult = new SearchResult();
             searchResult.setTitle(restProject.getName());
-            searchResult.setLink(SLASH + REST + SLASH + PROJECT + SLASH + restProject.getId());
+            searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId());
         }
 
         if(searchResult != null){
@@ -101,7 +101,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
         if(SearchValidator.validate(restApplication.getName(), query)){
             searchResult = new SearchResult();
             searchResult.setTitle(restApplication.getName());
-            searchResult.setLink(SLASH + REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId());
+            searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId());
         }
 
         if(searchResult != null){
@@ -130,7 +130,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
         if(SearchValidator.validate(restResource.getName(), query)){
             searchResult = new SearchResult();
             searchResult.setTitle(restResource.getName());
-            searchResult.setLink(SLASH + REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId());
+            searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId());
         }
 
         if(searchResult != null){
@@ -160,7 +160,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
         if(SearchValidator.validate(restMethod.getName(), query)){
             searchResult = new SearchResult();
             searchResult.setTitle(restMethod.getName());
-            searchResult.setLink(SLASH + REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId());
+            searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId());
         }
 
         if(searchResult != null){
@@ -195,7 +195,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
         if(SearchValidator.validate(restMockResponse.getName(), query)){
             searchResult = new SearchResult();
             searchResult.setTitle(restMockResponse.getName());
-            searchResult.setLink(SLASH + REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId() + SLASH + RESPONSE + restMockResponse.getId());
+            searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId() + SLASH + RESPONSE + restMockResponse.getId());
         }
 
         return searchResult;
