@@ -7,12 +7,16 @@
     <c:when test="${searchResults.size() > 0}">
         <div class="table-frame">
             <table class="entityTable">
+                <col width="50%">
+                <col width="50%">
                 <tr>
                     <th><spring:message code="general.search.column.title"/></th>
+                    <th><spring:message code="general.search.column.description"/></th>
                 </tr>
                 <c:forEach items="${searchResults}" var="searchResult" varStatus="loopStatus">
                     <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                         <td><a href="<c:url value="/web/${searchResult.link}"/>">${searchResult.title}</a></td>
+                        <td>${searchResult.description}</td>
                     </tr>
                 </c:forEach>
             </table>

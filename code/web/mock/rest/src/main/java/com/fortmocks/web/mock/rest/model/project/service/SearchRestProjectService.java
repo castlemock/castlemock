@@ -20,6 +20,9 @@ import com.fortmocks.core.basis.model.*;
 import com.fortmocks.core.mock.rest.model.project.domain.*;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.SearchRestProjectInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.SearchRestProjectOutput;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -32,6 +35,9 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class SearchRestProjectService extends AbstractRestProjectService implements Service<SearchRestProjectInput, SearchRestProjectOutput> {
 
+    @Autowired
+    private MessageSource messageSource;
+
     private static final String SLASH = "/";
     private static final String REST = "rest";
     private static final String PROJECT = "project";
@@ -39,6 +45,8 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
     private static final String RESOURCE = "resource";
     private static final String METHOD = "method";
     private static final String RESPONSE = "response";
+    private static final String COMMA = ", ";
+    private static final String REST_TYPE = "REST";
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -70,14 +78,12 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
      */
     private List<SearchResult> searchRestProject(final RestProject restProject, final String query){
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        SearchResult searchResult = null;
         if(SearchValidator.validate(restProject.getName(), query)){
-            searchResult = new SearchResult();
+            final String projectType = messageSource.getMessage("general.type.project", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(restProject.getName());
             searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId());
-        }
-
-        if(searchResult != null){
+            searchResult.setDescription(REST_TYPE + COMMA + projectType);
             searchResults.add(searchResult);
         }
 
@@ -97,17 +103,14 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
      */
     private List<SearchResult> searchRestApplication(final RestProject restProject, final RestApplication restApplication, final String query){
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        SearchResult searchResult = null;
         if(SearchValidator.validate(restApplication.getName(), query)){
-            searchResult = new SearchResult();
+            final String applicationType = messageSource.getMessage("rest.type.application", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(restApplication.getName());
             searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId());
-        }
-
-        if(searchResult != null){
+            searchResult.setDescription(REST_TYPE + COMMA + applicationType);
             searchResults.add(searchResult);
         }
-
 
         for(RestResource restResource : restApplication.getRestResources()){
             List<SearchResult> restResourceSearchResult = searchRestResource(restProject, restApplication, restResource, query);
@@ -126,17 +129,15 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
      */
     private List<SearchResult> searchRestResource(final RestProject restProject, final RestApplication restApplication, final RestResource restResource, final String query){
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        SearchResult searchResult = null;
+
         if(SearchValidator.validate(restResource.getName(), query)){
-            searchResult = new SearchResult();
+            final String resourceType = messageSource.getMessage("rest.type.resource", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(restResource.getName());
             searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId());
-        }
-
-        if(searchResult != null){
+            searchResult.setDescription(REST_TYPE + COMMA + resourceType);
             searchResults.add(searchResult);
         }
-
 
         for(RestMethod restMethod : restResource.getRestMethods()){
             List<SearchResult> restMethodSearchResult = searchRestMethod(restProject, restApplication, restResource, restMethod, query);
@@ -156,17 +157,15 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
      */
     private List<SearchResult> searchRestMethod(final RestProject restProject, final RestApplication restApplication, final RestResource restResource, final RestMethod restMethod, final String query){
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        SearchResult searchResult = null;
+
         if(SearchValidator.validate(restMethod.getName(), query)){
-            searchResult = new SearchResult();
+            final String methodType = messageSource.getMessage("rest.type.method", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(restMethod.getName());
             searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId());
-        }
-
-        if(searchResult != null){
+            searchResult.setDescription(REST_TYPE + COMMA + methodType);
             searchResults.add(searchResult);
         }
-
 
         for(RestMockResponse restMockResponse : restMethod.getRestMockResponses()){
             SearchResult restMockResponseSearchResult = searchRestMockResponse(restProject, restApplication, restResource, restMethod, restMockResponse, query);
@@ -191,11 +190,12 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
      */
     private SearchResult searchRestMockResponse(final RestProject restProject, final RestApplication restApplication, final RestResource restResource, final RestMethod restMethod, final RestMockResponse restMockResponse, final String query){
         SearchResult searchResult = null;
-
         if(SearchValidator.validate(restMockResponse.getName(), query)){
+            final String mockResponseType = messageSource.getMessage("rest.type.mockresponse", null , LocaleContextHolder.getLocale());
             searchResult = new SearchResult();
             searchResult.setTitle(restMockResponse.getName());
             searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId() + SLASH + RESPONSE + restMockResponse.getId());
+            searchResult.setDescription(REST_TYPE + COMMA + mockResponseType);
         }
 
         return searchResult;
