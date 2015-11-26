@@ -31,4 +31,7 @@
 
         </form:form>
     </c:when>
+    <c:otherwise>
+        <spring:message code="general.configuration.label.noconfigurations"/>
+    </c:otherwise>
 </c:choose>
