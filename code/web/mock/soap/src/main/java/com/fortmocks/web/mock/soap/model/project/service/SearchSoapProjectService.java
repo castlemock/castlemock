@@ -166,7 +166,7 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
             final String mockResponseType = messageSource.getMessage("soap.type.mockresponse", null , LocaleContextHolder.getLocale());
             searchResult = new SearchResult();
             searchResult.setTitle(soapMockResponse.getName());
-            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + RESPONSE + soapMockResponse.getId());
+            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + RESPONSE + SLASH + soapMockResponse.getId());
             searchResult.setDescription(SOAP_TYPE + COMMA + mockResponseType);
         }
 

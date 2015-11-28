@@ -194,7 +194,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
             final String mockResponseType = messageSource.getMessage("rest.type.mockresponse", null , LocaleContextHolder.getLocale());
             searchResult = new SearchResult();
             searchResult.setTitle(restMockResponse.getName());
-            searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId() + SLASH + RESPONSE + restMockResponse.getId());
+            searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId() + SLASH + RESPONSE + SLASH + restMockResponse.getId());
             searchResult.setDescription(REST_TYPE + COMMA + mockResponseType);
         }
 

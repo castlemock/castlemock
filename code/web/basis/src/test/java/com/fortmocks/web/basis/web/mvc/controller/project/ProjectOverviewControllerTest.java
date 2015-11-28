@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.mock.soap.web.mvc.controller.project;
+package com.fortmocks.web.basis.web.mvc.controller.project;
 
-import com.fortmocks.core.basis.model.Input;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.web.mock.soap.config.TestApplication;
-import com.fortmocks.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.fortmocks.web.mock.soap.model.project.SoapProjectDtoGenerator;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
-import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
-import com.fortmocks.core.basis.model.ServiceProcessor;
+import com.fortmocks.core.basis.model.project.dto.ProjectDto;
+import com.fortmocks.web.basis.config.TestApplication;
+import com.fortmocks.web.basis.model.project.dto.ProjectDtoGenerator;
+import com.fortmocks.web.basis.model.project.service.ProjectServiceFacadeImpl;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
-import org.junit.Ignore;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -41,7 +36,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -51,40 +45,43 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestApplication.class)
 @WebAppConfiguration
-public class SoapProjectControllerTest extends AbstractSoapControllerTest {
+public class ProjectOverviewControllerTest extends AbstractControllerTest {
 
 
-    private static final String SERVICE_URL = "/web/soap/";
-    private static final String PAGE = "partial/mock/soap/project/soapProject.jsp";
+    private static final String SERVICE_URL = "/web/";
+    private static final String PAGE = "partial/basis/project/projectsOverview.jsp";
+    private static final String PROJECTS = "projects";
+    private static final Integer MAX_PROJECT_COUNT = 5;
+    private static final String STATUSES = "statuses";
+
 
     @InjectMocks
-    private SoapProjectController soapProjectController;
+    private ProjectsOverviewController projectsOverviewController;
 
     @Mock
-    private ServiceProcessor serviceProcessor;
+    private ProjectServiceFacadeImpl projectServiceComponent;
 
     @Override
     protected AbstractController getController() {
-        return soapProjectController;
+        return projectsOverviewController;
     }
 
     @Test
-    @Ignore
     public void testGetServiceValid() throws Exception {
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
-        soapPortDtos.add(soapPortDto);
-        soapProjectDto.setSoapPorts(soapPortDtos);
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH);
+        final List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
+        for(int index = 0; index < MAX_PROJECT_COUNT; index++){
+            final ProjectDto projectDto = ProjectDtoGenerator.generateProjectDto();
+            projectDtos.add(projectDto);
+        }
+
+        when(projectServiceComponent.findAll()).thenReturn(projectDtos);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(6))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT, soapProjectDto));
-
+                .andExpect(MockMvcResultMatchers.model().attribute(PROJECTS, projectDtos));
     }
 
 

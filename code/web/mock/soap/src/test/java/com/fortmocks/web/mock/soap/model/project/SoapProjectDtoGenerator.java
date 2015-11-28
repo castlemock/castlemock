@@ -14,33 +14,26 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.basis.model.user.service.message.input;
+package com.fortmocks.web.mock.soap.model.project;
 
-import com.fortmocks.core.basis.model.Input;
-import com.fortmocks.core.basis.model.validation.NotNull;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
+
+import java.util.Date;
+
 
 /**
- * Read a user with a specific username
  * @author Karl Dahlgren
  * @since 1.0
- * @see com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput
  */
-public class ReadUserByUsernameInput implements Input {
+public class SoapProjectDtoGenerator {
 
-    @NotNull
-    private String username;
-
-    public ReadUserByUsernameInput(String username) {
-        this.username = username;
+    public static SoapProjectDto generateSoapProjectDto(){
+        final SoapProjectDto projectDto = new SoapProjectDto();
+        projectDto.setId(1L);
+        projectDto.setName("Project name");
+        projectDto.setDescription("Project description");
+        projectDto.setCreated(new Date());
+        projectDto.setUpdated(new Date());
+        return projectDto;
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-
 }

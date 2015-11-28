@@ -22,10 +22,10 @@ import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadSoapE
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.mock.soap.config.TestApplication;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDtoGenerator;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDtoGenerator;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDtoGenerator;
+import com.fortmocks.web.mock.soap.config.TestApplication;
+import com.fortmocks.web.mock.soap.model.project.SoapOperationDtoGenerator;
+import com.fortmocks.web.mock.soap.model.project.SoapPortDtoGenerator;
+import com.fortmocks.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
