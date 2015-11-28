@@ -70,7 +70,7 @@ public class RestAddWADLController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value="/{projectId}/add/wadl", method=RequestMethod.POST)
     public ModelAndView uploadWADL(@PathVariable final Long projectId, @RequestParam final String type, @ModelAttribute("uploadForm") final WADLFileUploadForm uploadForm){
-        List<RestApplicationDto> restApplicationDtos = null;
+         List<RestApplicationDto> restApplicationDtos = null;
 
         if(TYPE_FILE.equals(type)){
             restApplicationDtos = wadlComponent.createApplication(uploadForm.getFiles(), uploadForm.isGenerateResponse());

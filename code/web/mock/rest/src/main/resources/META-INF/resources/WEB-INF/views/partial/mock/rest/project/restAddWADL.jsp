@@ -15,7 +15,7 @@
   ~ limitations under the License.
   --%>
 
-<c:url var="add_wadl_url"  value="/web/rest/project/${projectId}/add/wadl" />
+<c:url var="add_wadl_url"  value="/web/rest/project/${restProjectId}/add/wadl" />
 <div class="content-top">
     <h1><spring:message code="rest.restaddwadl.header.uploadfile" arguments="WADL"/></h1>
 </div>
@@ -69,7 +69,7 @@
 
 
         <button class="button-success pure-button" name="type" value="file"><i class="fa fa-upload"></i> <span><spring:message code="rest.restaddwadl.button.uploadfiles"/></span></button>
-        <a href="<c:url value="/web/rest/project/${projectId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.restaddwadl.button.cancel"/></a>
+        <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.restaddwadl.button.cancel"/></a>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>
 </div>
