@@ -20,12 +20,17 @@ import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +79,23 @@ public class FileManager {
             }
         }
         return uploadedFiles;
+    }
+
+    public List<File> uploadFiles(final String downloadURL) throws IOException {
+        final File fileDirectory = new File(tempFilesFolder);
+
+        if (!fileDirectory.exists()) {
+            fileDirectory.mkdirs();
+        }
+
+        final URL url = new URL(downloadURL);
+        final String fileName = url.getFile();
+        final File file = new File(fileDirectory.getAbsolutePath() + File.separator + fileName);
+        final Path targetPath = file.toPath();
+        Files.copy(url.openStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+        final List<File> files = new ArrayList<>();
+        files.add(file);
+        return files;
     }
 
     /**

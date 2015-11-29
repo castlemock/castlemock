@@ -63,7 +63,12 @@ public class WADLComponent {
      * @return  The extracted ports from the downloaded WADL file.
      */
     public List<RestApplicationDto> createApplication(final String wadlUrl, final boolean generateResponse) {
-        return null;
+        try {
+            List<File> uploadedFiles = fileManager.uploadFiles(wadlUrl);
+            return parseWADLFile(uploadedFiles, generateResponse);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unable parse WADL file");
+        }
     }
 
     /**
@@ -75,13 +80,21 @@ public class WADLComponent {
      * @return The extracted ports from the WADL file.
      */
     public List<RestApplicationDto> createApplication(final List<MultipartFile> files, final boolean generateResponse){
-
         try {
             List<File> uploadedFiles = fileManager.uploadFiles(files);
+            return parseWADLFile(uploadedFiles, generateResponse);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unable parse WADL file");
+        }
+    }
+
+    private List<RestApplicationDto> parseWADLFile(final List<File> files, final boolean generateResponse){
+
+        try {
             List<RestApplicationDto> applications = new LinkedList<RestApplicationDto>();
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
-            for(File file : uploadedFiles){
+            for(File file : files){
                 DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
                 Document document = documentBuilder.parse(file);
                 document.getDocumentElement().normalize();
@@ -119,16 +132,9 @@ public class WADLComponent {
                 }
             }
             return applications;
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unable parse WADL file");
         }
-
-
-        return null;
     }
 
     private List<Element> getApplications(Document document){
