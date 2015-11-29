@@ -16,8 +16,7 @@ footer {
   height: 30px;
   text-align: center;
   background-color: #F0F0F0;
-  border-top: 1px solid #8b8f86;
-  font-family: robotoThinFont; }
+  border-top: 1px solid #8b8f86; }
   footer .push {
     height: 4em; }
   footer .languages {
@@ -31,7 +30,7 @@ footer {
     padding-top: 7px; }
     footer .info a {
       text-decoration: underline;
-      font-size: 12px;
+      font-size: 11px;
       color: #000000; }
 
 a {
