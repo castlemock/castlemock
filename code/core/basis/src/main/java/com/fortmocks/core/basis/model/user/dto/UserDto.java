@@ -16,9 +16,9 @@
 
 package com.fortmocks.core.basis.model.user.dto;
 
-import com.fortmocks.core.basis.model.user.domain.User;
 import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.user.domain.Status;
+import com.fortmocks.core.basis.model.user.domain.User;
 import org.dozer.Mapping;
 
 import java.util.Date;

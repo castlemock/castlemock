@@ -1,6 +1,5 @@
 package com.fortmocks.web.mock.rest.web.rest.controller;
 
-import com.fortmocks.web.mock.rest.model.RestException;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
@@ -15,7 +14,9 @@ import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRest
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodWithMethodTypeOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
+import com.fortmocks.web.mock.rest.model.RestException;
 import com.google.common.base.Preconditions;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;

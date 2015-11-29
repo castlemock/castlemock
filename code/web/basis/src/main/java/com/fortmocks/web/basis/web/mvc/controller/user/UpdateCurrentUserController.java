@@ -18,8 +18,8 @@ package com.fortmocks.web.basis.web.mvc.controller.user;
 
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
-import com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
 import com.fortmocks.core.basis.model.user.service.message.input.UpdateCurrentUserInput;
+import com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
 import com.fortmocks.core.basis.model.user.service.message.output.UpdateCurrentUserOutput;
 import com.fortmocks.web.basis.model.user.service.UserDetailSecurityService;
 import com.fortmocks.web.basis.web.mvc.command.user.UpdateCurrentUserCommand;

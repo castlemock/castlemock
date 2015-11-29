@@ -1,7 +1,7 @@
 package com.fortmocks.web.mock.rest.model.event.service;
 
-import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.Service;
+import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadRestEventInput;

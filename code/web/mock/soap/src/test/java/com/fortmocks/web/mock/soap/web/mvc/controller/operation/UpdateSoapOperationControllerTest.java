@@ -16,19 +16,19 @@
 package com.fortmocks.web.mock.soap.web.mvc.controller.operation;
 
 import com.fortmocks.core.basis.model.Input;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.config.TestApplication;
 import com.fortmocks.web.mock.soap.model.project.SoapOperationDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapProjectDtoGenerator;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
-import com.fortmocks.core.basis.model.ServiceProcessor;
-import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

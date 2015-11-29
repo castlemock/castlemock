@@ -17,8 +17,8 @@
 package com.fortmocks.core.basis.model.user.repository;
 
 
-import com.fortmocks.core.basis.model.user.domain.User;
 import com.fortmocks.core.basis.model.Repository;
+import com.fortmocks.core.basis.model.user.domain.User;
 
 /**
  * The user file repository provides the functionality to interact with the file system.

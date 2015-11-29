@@ -16,7 +16,6 @@
 
 package com.fortmocks.core.mock.soap.model.project.dto;
 
-import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationMethod;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationType;

@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.basis.web.mvc.controller.project;
 
-import com.fortmocks.web.basis.config.TestApplication;
 import com.fortmocks.core.basis.model.project.service.ProjectServiceFacade;
+import com.fortmocks.web.basis.config.TestApplication;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;

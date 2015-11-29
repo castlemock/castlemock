@@ -19,9 +19,9 @@ package com.fortmocks.web.mock.soap.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.UpdateCurrentMockResponseSequenceIndexOutput;
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
 
 /**
  * @author Karl Dahlgren

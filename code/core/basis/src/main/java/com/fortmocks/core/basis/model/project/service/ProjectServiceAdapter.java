@@ -18,9 +18,9 @@ package com.fortmocks.core.basis.model.project.service;
 
 import com.fortmocks.core.basis.model.SearchQuery;
 import com.fortmocks.core.basis.model.SearchResult;
+import com.fortmocks.core.basis.model.ServiceAdapter;
 import com.fortmocks.core.basis.model.project.domain.Project;
 import com.fortmocks.core.basis.model.project.dto.ProjectDto;
-import com.fortmocks.core.basis.model.ServiceAdapter;
 
 import java.util.List;
 

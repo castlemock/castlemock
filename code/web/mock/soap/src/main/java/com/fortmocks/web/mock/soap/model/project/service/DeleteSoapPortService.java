@@ -19,10 +19,10 @@ package com.fortmocks.web.mock.soap.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.mock.soap.model.project.domain.SoapProject;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.DeleteSoapPortOutput;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapProject;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.DeleteSoapPortInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.DeleteSoapPortOutput;
 
 /**
  * @author Karl Dahlgren

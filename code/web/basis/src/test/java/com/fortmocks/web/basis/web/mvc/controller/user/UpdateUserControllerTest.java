@@ -16,6 +16,7 @@
 
 package com.fortmocks.web.basis.web.mvc.controller.user;
 
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.user.domain.Status;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
@@ -28,7 +29,6 @@ import com.fortmocks.core.basis.model.user.service.message.output.UpdateUserOutp
 import com.fortmocks.web.basis.config.TestApplication;
 import com.fortmocks.web.basis.model.user.dto.UserDtoGenerator;
 import com.fortmocks.web.basis.model.user.service.UserDetailSecurityService;
-import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Ignore;

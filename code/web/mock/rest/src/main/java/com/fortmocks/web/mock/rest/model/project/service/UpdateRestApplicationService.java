@@ -20,9 +20,9 @@ import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestApplicationInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.UpdateRestApplicationOutput;
-import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 
 /**
  * @author Karl Dahlgren

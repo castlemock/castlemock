@@ -16,10 +16,9 @@
 
 package com.fortmocks.core.basis.model.event.service;
 
-import com.fortmocks.core.basis.model.Saveable;
+import com.fortmocks.core.basis.model.ServiceAdapter;
 import com.fortmocks.core.basis.model.event.domain.Event;
 import com.fortmocks.core.basis.model.event.dto.EventDto;
-import com.fortmocks.core.basis.model.ServiceAdapter;
 
 /**
  * The event service is responsible for providing the basic functionality for all the

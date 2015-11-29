@@ -16,18 +16,18 @@
 
 package com.fortmocks.web.mock.soap.web.mvc.controller.project;
 
-import com.fortmocks.web.mock.soap.manager.WSDLComponent;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.web.mock.soap.config.TestApplication;
-import com.fortmocks.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.fortmocks.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
+import com.fortmocks.web.mock.soap.config.TestApplication;
+import com.fortmocks.web.mock.soap.manager.WSDLComponent;
+import com.fortmocks.web.mock.soap.model.project.SoapPortDtoGenerator;
+import com.fortmocks.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import com.fortmocks.web.mock.soap.web.mvc.command.project.WSDLFileUploadForm;
 import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
-import com.fortmocks.core.basis.model.ServiceProcessor;
-import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

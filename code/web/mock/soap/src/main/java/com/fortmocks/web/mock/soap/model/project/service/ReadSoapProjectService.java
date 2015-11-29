@@ -20,8 +20,8 @@ import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 
 /**
  * @author Karl Dahlgren

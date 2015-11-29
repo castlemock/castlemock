@@ -17,13 +17,11 @@
 package com.fortmocks.core.mock.soap.model.project.domain;
 
 import com.fortmocks.core.basis.model.Saveable;
-import com.fortmocks.core.basis.model.event.domain.Event;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Karl Dahlgren

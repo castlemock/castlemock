@@ -20,9 +20,9 @@ import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.UpdateSoapOperationOutput;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 
 /**
  * @author Karl Dahlgren

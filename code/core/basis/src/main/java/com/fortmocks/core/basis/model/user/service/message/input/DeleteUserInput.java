@@ -16,8 +16,8 @@
 
 package com.fortmocks.core.basis.model.user.service.message.input;
 
-import com.fortmocks.core.basis.model.validation.NotNull;
 import com.fortmocks.core.basis.model.Input;
+import com.fortmocks.core.basis.model.validation.NotNull;
 
 /**
  * Deletes a user

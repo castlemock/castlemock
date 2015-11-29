@@ -5,11 +5,11 @@ import com.fortmocks.core.basis.model.TypeIdentifier;
 import com.fortmocks.core.basis.model.event.dto.EventDto;
 import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
-import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadAllSoapEventOutput;
-import com.fortmocks.web.mock.soap.model.SoapTypeIdentifier;
 import com.fortmocks.core.mock.soap.model.event.service.message.input.ReadAllSoapEventInput;
 import com.fortmocks.core.mock.soap.model.event.service.message.input.ReadSoapEventInput;
+import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadAllSoapEventOutput;
 import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadSoapEventOutput;
+import com.fortmocks.web.mock.soap.model.SoapTypeIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

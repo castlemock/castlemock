@@ -16,8 +16,8 @@
 
 package com.fortmocks.core.basis.model.event.service;
 
-import com.fortmocks.core.basis.model.event.domain.Event;
 import com.fortmocks.core.basis.model.ServiceFacade;
+import com.fortmocks.core.basis.model.event.domain.Event;
 import com.fortmocks.core.basis.model.event.dto.EventDto;
 
 /**

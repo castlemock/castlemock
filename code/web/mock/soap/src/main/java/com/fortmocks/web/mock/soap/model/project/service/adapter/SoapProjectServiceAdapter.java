@@ -18,6 +18,7 @@ package com.fortmocks.web.mock.soap.model.project.service.adapter;
 
 import com.fortmocks.core.basis.model.SearchQuery;
 import com.fortmocks.core.basis.model.SearchResult;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.TypeIdentifier;
 import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import com.fortmocks.core.basis.model.project.service.ProjectServiceAdapter;
@@ -25,7 +26,6 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.*;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.*;
 import com.fortmocks.web.mock.soap.model.SoapTypeIdentifier;
-import com.fortmocks.core.basis.model.ServiceProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

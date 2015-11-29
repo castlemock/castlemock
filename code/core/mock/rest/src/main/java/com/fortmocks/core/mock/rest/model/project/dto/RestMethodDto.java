@@ -16,9 +16,8 @@
 
 package com.fortmocks.core.mock.rest.model.project.dto;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
-import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
 import org.dozer.Mapping;
 

@@ -2,8 +2,8 @@ package com.fortmocks.web.basis.model;
 
 import com.fortmocks.core.basis.model.Output;
 import com.fortmocks.core.basis.model.Repository;
-import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.Saveable;
+import com.fortmocks.core.basis.model.ServiceResult;
 import com.google.common.base.Preconditions;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;

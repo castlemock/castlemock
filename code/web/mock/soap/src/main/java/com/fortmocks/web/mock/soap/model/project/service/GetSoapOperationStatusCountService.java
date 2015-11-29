@@ -21,8 +21,8 @@ import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.GetSoapOperationStatusCountOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.GetSoapOperationStatusCountInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.GetSoapOperationStatusCountOutput;
 
 import java.util.Map;
 

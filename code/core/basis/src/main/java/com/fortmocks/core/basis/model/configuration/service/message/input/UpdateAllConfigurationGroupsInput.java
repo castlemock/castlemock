@@ -16,8 +16,8 @@
 
 package com.fortmocks.core.basis.model.configuration.service.message.input;
 
-import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.fortmocks.core.basis.model.Input;
+import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.fortmocks.core.basis.model.validation.NotNull;
 
 import java.util.List;

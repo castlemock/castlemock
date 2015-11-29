@@ -19,9 +19,9 @@ package com.fortmocks.web.mock.rest.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 
 /**
  * @author Karl Dahlgren

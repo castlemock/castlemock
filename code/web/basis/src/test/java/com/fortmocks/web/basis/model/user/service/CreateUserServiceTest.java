@@ -8,15 +8,12 @@ import com.fortmocks.core.basis.model.user.domain.Status;
 import com.fortmocks.core.basis.model.user.domain.User;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.CreateUserInput;
-import com.fortmocks.core.basis.model.user.service.message.input.ReadUserInput;
 import com.fortmocks.core.basis.model.user.service.message.output.CreateUserOutput;
-import com.fortmocks.core.basis.model.user.service.message.output.ReadUserOutput;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
-import org.mockito.verification.VerificationMode;
 
 /**
  * @author Karl Dahlgren

@@ -19,9 +19,9 @@ package com.fortmocks.web.mock.soap.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationWithTypeOutput;
 
 import java.util.List;

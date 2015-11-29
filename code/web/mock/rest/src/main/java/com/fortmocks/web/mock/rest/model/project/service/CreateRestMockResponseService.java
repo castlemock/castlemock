@@ -22,8 +22,8 @@ import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponse;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
-import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestMockResponseOutput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestMockResponseInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestMockResponseOutput;
 
 /**
  * @author Karl Dahlgren

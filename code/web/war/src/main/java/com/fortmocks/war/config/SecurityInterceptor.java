@@ -16,13 +16,13 @@
 
 package com.fortmocks.war.config;
 
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.user.domain.Status;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 import com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
 import com.fortmocks.web.basis.model.user.service.UserDetailSecurityService;
-import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

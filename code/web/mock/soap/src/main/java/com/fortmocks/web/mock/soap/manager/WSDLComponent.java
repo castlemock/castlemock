@@ -20,7 +20,6 @@ import com.fortmocks.core.mock.soap.model.project.domain.*;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
-
 import com.fortmocks.web.basis.manager.FileManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

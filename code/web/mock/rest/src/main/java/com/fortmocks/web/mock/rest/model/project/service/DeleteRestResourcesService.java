@@ -20,9 +20,9 @@ import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
+import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.DeleteRestResourcesInput;
-import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.DeleteRestResourcesOutput;
 
 /**

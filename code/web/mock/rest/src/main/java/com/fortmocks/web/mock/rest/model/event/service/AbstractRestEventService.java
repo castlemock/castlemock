@@ -16,9 +16,8 @@
 
 package com.fortmocks.web.mock.rest.model.event.service;
 
-import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.domain.RestEvent;
-import com.fortmocks.web.basis.model.AbstractService;
+import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.web.basis.model.event.service.AbstractEventService;
 import org.springframework.stereotype.Service;
 

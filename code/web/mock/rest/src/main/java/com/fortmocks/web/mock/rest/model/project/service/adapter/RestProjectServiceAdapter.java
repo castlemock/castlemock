@@ -18,14 +18,14 @@ package com.fortmocks.web.mock.rest.model.project.service.adapter;
 
 import com.fortmocks.core.basis.model.SearchQuery;
 import com.fortmocks.core.basis.model.SearchResult;
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.TypeIdentifier;
 import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import com.fortmocks.core.basis.model.project.service.ProjectServiceAdapter;
+import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.*;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.*;
 import com.fortmocks.web.mock.rest.model.RestTypeIdentifier;
-import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
-import com.fortmocks.core.basis.model.ServiceProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

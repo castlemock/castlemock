@@ -7,18 +7,13 @@ import com.fortmocks.core.basis.model.user.domain.Role;
 import com.fortmocks.core.basis.model.user.domain.Status;
 import com.fortmocks.core.basis.model.user.domain.User;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
-import com.fortmocks.core.basis.model.user.service.message.input.ReadAllUsersInput;
 import com.fortmocks.core.basis.model.user.service.message.input.ReadUserInput;
-import com.fortmocks.core.basis.model.user.service.message.output.ReadAllUsersOutput;
 import com.fortmocks.core.basis.model.user.service.message.output.ReadUserOutput;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Karl Dahlgren

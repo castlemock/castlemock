@@ -17,8 +17,8 @@
 package com.fortmocks.core.mock.rest.model.event.domain;
 
 import com.fortmocks.core.basis.model.event.domain.Event;
-import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
+import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

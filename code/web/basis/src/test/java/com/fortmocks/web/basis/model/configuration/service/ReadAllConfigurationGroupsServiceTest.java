@@ -11,11 +11,11 @@ import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.fortmocks.core.basis.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
 import com.fortmocks.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -20,8 +20,8 @@ import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethod;
-import com.fortmocks.core.mock.rest.model.project.service.message.output.UpdateCurrentRestMockResponseSequenceIndexOutput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.UpdateCurrentRestMockResponseSequenceIndexOutput;
 
 /**
  * @author Karl Dahlgren

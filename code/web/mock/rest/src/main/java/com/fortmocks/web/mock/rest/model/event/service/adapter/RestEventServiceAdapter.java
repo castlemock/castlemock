@@ -1,15 +1,15 @@
 package com.fortmocks.web.mock.rest.model.event.service.adapter;
 
+import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.TypeIdentifier;
 import com.fortmocks.core.basis.model.event.dto.EventDto;
 import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
-import com.fortmocks.web.mock.rest.model.RestTypeIdentifier;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadAllRestEventInput;
 import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
 import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadAllRestEventOutput;
 import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadRestEventOutput;
-import com.fortmocks.core.basis.model.ServiceProcessor;
+import com.fortmocks.web.mock.rest.model.RestTypeIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
