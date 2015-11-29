@@ -36,6 +36,7 @@ public class AbstractSoapViewController extends AbstractViewController {
     protected static final String SOAP_OPERATION = "soapOperation";
     protected static final String SOAP_OPERATION_ID = "soapOperationId";
     protected static final String SOAP_OPERATIONS = "soapOperations";
+    protected static final String SOAP_EVENTS = "soapEvents";
     protected static final String SOAP_MOCK_RESPONSE = "soapMockResponse";
     protected static final String SOAP_MOCK_RESPONSES = "soapMockResponses";
     protected static final String SOAP_MOCK_RESPONSE_STATUSES = "soapMockResponseStatuses";

@@ -101,7 +101,7 @@
 <div>
     <h2 class="decorated"><span><spring:message code="rest.restmethod.header.events"/></span></h2>
     <c:choose>
-        <c:when test="${restMethod.events.size() > 0}">
+        <c:when test="${restEvents.size() > 0}">
             <div class="table-frame">
                 <table width="100%">
                     <tr>
@@ -110,7 +110,7 @@
                         <th><spring:message code="rest.restmethod.column.enddate"/></th>
                         <th><spring:message code="rest.restmethod.column.mockedresponse"/></th>
                     </tr>
-                    <c:forEach items="${restMethod.events}" var="event" varStatus="loopStatus">
+                    <c:forEach items="${restEvents}" var="event" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.id}</a></td>
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.startDate}</a></td>

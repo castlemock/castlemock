@@ -56,9 +56,6 @@ public class RestMethodDto {
     @Mapping("restMockResponses")
     private List<RestMockResponseDto> restMockResponses = new LinkedList<RestMockResponseDto>();
 
-    @Mapping("events")
-    private List<RestEventDto> events;
-
     @Mapping("currentResponseSequenceIndex")
     private Integer currentResponseSequenceIndex = 0;
 
@@ -124,14 +121,6 @@ public class RestMethodDto {
 
     public void setRestResponseStrategy(RestResponseStrategy restResponseStrategy) {
         this.restResponseStrategy = restResponseStrategy;
-    }
-
-    public List<RestEventDto> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<RestEventDto> events) {
-        this.events = events;
     }
 
     public Integer getCurrentResponseSequenceIndex() {

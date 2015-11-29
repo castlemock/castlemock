@@ -67,6 +67,7 @@ public class LoginController extends AbstractViewController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) final String error, @RequestParam(value = "logout", required = false) final String logout, final HttpServletRequest request) {
+
         if(isLoggedIn()){
             LOGGER.debug("User is already logged in. Redirecting the user.");
             return redirect();

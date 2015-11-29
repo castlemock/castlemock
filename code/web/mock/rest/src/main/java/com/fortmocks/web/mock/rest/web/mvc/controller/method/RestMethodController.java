@@ -68,7 +68,6 @@ public class RestMethodController extends AbstractRestViewController {
         final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
         final RestMethodDto restMethod = output.getRestMethod();
         final ReadRestEventWithMethodIdOutput readRestEventWithMethodIdOutput = serviceProcessor.process(new ReadRestEventWithMethodIdInput(restMethodId));
-        restMethod.setEvents(readRestEventWithMethodIdOutput.getRestEvents());
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
@@ -76,6 +75,7 @@ public class RestMethodController extends AbstractRestViewController {
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD, restMethod);
         model.addObject(REST_MOCK_RESPONSE_STATUSES, RestMockResponseStatus.values());
+        model.addObject(REST_EVENTS, readRestEventWithMethodIdOutput.getRestEvents());
         model.addObject(REST_MOCK_RESPONSE_MODIFIER_COMMAND, new RestMockResponseModifierCommand());
         return model;
     }

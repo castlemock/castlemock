@@ -35,7 +35,6 @@ public class SoapOperation implements Saveable<Long> {
     private Long id;
     private String name;
     private String uri;
-    private Set<Event> events;
     private SoapResponseStrategy soapResponseStrategy;
     private List<SoapMockResponse> soapMockResponses;
     private SoapOperationStatus soapOperationStatus;
@@ -73,16 +72,6 @@ public class SoapOperation implements Saveable<Long> {
 
     public void setSoapResponseStrategy(SoapResponseStrategy soapResponseStrategy) {
         this.soapResponseStrategy = soapResponseStrategy;
-    }
-
-    @XmlElementWrapper(name = "events")
-    @XmlElement(name = "event")
-    public Set<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(Set<Event> events) {
-        this.events = events;
     }
 
     @XmlElement

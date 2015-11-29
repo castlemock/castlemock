@@ -72,7 +72,6 @@ public class SoapOperationController extends AbstractSoapViewController {
         final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
         final SoapOperationDto soapOperation = output.getSoapOperation();
         final ReadSoapEventsByOperationIdOutput readSoapEventsByOperationIdOutput = serviceProcessor.process(new ReadSoapEventsByOperationIdInput(soapOperationId));
-        soapOperation.setEvents(readSoapEventsByOperationIdOutput.getSoapEvents());
 
         String requestProtocol = HTTP;
         if(request.isSecure()){
@@ -92,6 +91,7 @@ public class SoapOperationController extends AbstractSoapViewController {
         model.addObject(SOAP_PROJECT_ID, soapProjectId);
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(SOAP_MOCK_RESPONSE_STATUSES, SoapMockResponseStatus.values());
+        model.addObject(SOAP_EVENTS, readSoapEventsByOperationIdOutput.getSoapEvents());
         model.addObject(SOAP_MOCK_RESPONSE_MODIFIER_COMMAND, new SoapMockResponseModifierCommand());
         return model;
     }

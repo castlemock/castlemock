@@ -41,9 +41,6 @@ public class SoapOperationDto {
     @Mapping("uri")
     private String uri;
 
-    @Mapping("events")
-    private List<SoapEventDto> events = new LinkedList<SoapEventDto>();
-
     @Mapping("soapMockResponses")
     private List<SoapMockResponseDto> soapMockResponses = new LinkedList<SoapMockResponseDto>();
 
@@ -95,14 +92,6 @@ public class SoapOperationDto {
 
     public void setUri(String uri) {
         this.uri = uri;
-    }
-
-    public List<SoapEventDto> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<SoapEventDto> events) {
-        this.events = events;
     }
 
     public SoapResponseStrategy getSoapResponseStrategy() {
