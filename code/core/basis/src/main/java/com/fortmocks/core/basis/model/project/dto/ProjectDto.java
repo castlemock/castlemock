@@ -26,7 +26,7 @@ import java.util.Date;
  * The Project DTO is a DTO (Data transfer object) class for the project class.
  * @author Karl Dahlgren
  * @since 1.0
- * @see Project
+ * @see com.fortmocks.core.basis.model.project.domain.Project
  */
 public class ProjectDto implements TypeIdentifiable {
 
