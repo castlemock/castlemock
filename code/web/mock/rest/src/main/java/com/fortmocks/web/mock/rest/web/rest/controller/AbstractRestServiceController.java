@@ -70,15 +70,22 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @return Returns the response as an String
      */
     protected String process(final Long projectId, final Long applicationId, final RestMethodType restMethodType, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
-        Preconditions.checkNotNull(projectId, "The project id cannot be null");
-        Preconditions.checkNotNull(applicationId, "The application id cannot be null");
-        Preconditions.checkNotNull(restMethodType, "The REST method cannot be null");
-        Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
-        Preconditions.checkNotNull(httpServletResponse, "The HTTP Servlet Response cannot be null");
+        try{
+            Preconditions.checkNotNull(projectId, "The project id cannot be null");
+            Preconditions.checkNotNull(applicationId, "The application id cannot be null");
+            Preconditions.checkNotNull(restMethodType, "The REST method cannot be null");
+            Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
+            Preconditions.checkNotNull(httpServletResponse, "The HTTP Servlet Response cannot be null");
 
-        final RestRequestDto restRequest = prepareRequest(projectId, applicationId, restMethodType, httpServletRequest);
-        final ReadRestMethodWithMethodTypeOutput output = serviceProcessor.process(new ReadRestMethodWithMethodTypeInput(projectId, applicationId, restRequest.getUri(), restMethodType));
-        return process(restRequest, output.getRestMethod(), httpServletResponse);
+            final RestRequestDto restRequest = prepareRequest(projectId, applicationId, restMethodType, httpServletRequest);
+            final ReadRestMethodWithMethodTypeOutput output = serviceProcessor.process(new ReadRestMethodWithMethodTypeInput(projectId, applicationId, restRequest.getUri(), restMethodType));
+            return process(restRequest, output.getRestMethod(), httpServletResponse);
+        }
+
+        catch (Exception exception){
+            LOGGER.debug("REST service exception: " + exception.getMessage(), exception);
+            throw new RestException(exception.getMessage());
+        }
     }
 
     /**

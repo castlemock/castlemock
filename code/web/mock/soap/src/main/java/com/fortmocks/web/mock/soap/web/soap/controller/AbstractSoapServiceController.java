@@ -75,12 +75,17 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @return Returns the response as an String
      */
     protected String process(final Long projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
-        Preconditions.checkNotNull(projectId, "THe project id cannot be null");
-        Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
-        final SoapRequestDto request = prepareRequest(projectId, httpServletRequest);
-        final ReadSoapOperationWithTypeOutput output = serviceProcessor.process(new ReadSoapOperationWithTypeInput(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType()));
-        final SoapOperationDto operation = output.getSoapOperation();
-        return process(operation, request, httpServletResponse);
+        try{
+            Preconditions.checkNotNull(projectId, "THe project id cannot be null");
+            Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
+            final SoapRequestDto request = prepareRequest(projectId, httpServletRequest);
+            final ReadSoapOperationWithTypeOutput output = serviceProcessor.process(new ReadSoapOperationWithTypeInput(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType()));
+            final SoapOperationDto operation = output.getSoapOperation();
+            return process(operation, request, httpServletResponse);
+        }catch(Exception exception){
+            LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
+            throw new SoapException(exception.getMessage());
+        }
     }
 
     /**
