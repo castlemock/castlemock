@@ -28,6 +28,20 @@ public class ServiceTask<I extends Input> {
     private String serviceConsumer;
 
     /**
+     * Default constructor for ServiceTask
+     */
+    public ServiceTask() {
+    }
+
+    /**
+     * Constructor for ServiceTask
+     * @param input The input that will be processed by the task
+     */
+    public ServiceTask(I input) {
+        this.input = input;
+    }
+
+    /**
      * The input message for the service layer. The input is used to identify which service
      * class is responsible for processing the task.
      * @return The input value
