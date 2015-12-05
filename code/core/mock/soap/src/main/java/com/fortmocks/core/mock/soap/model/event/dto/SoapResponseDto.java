@@ -31,6 +31,9 @@ public class SoapResponseDto {
     @Mapping("mockResponseName")
     private String mockResponseName;
 
+    @Mapping("httpStatusCode")
+    private Integer httpStatusCode;
+
     public String getBody() {
         return body;
     }
@@ -45,5 +48,13 @@ public class SoapResponseDto {
 
     public void setMockResponseName(String mockResponseName) {
         this.mockResponseName = mockResponseName;
+    }
+
+    public Integer getHttpStatusCode() {
+        return httpStatusCode;
+    }
+
+    public void setHttpStatusCode(Integer httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
     }
 }

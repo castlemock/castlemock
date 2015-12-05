@@ -29,8 +29,8 @@ public class SoapRequestDto {
     @Mapping("body")
     private String body;
 
-    @Mapping("contextType")
-    private String contextType;
+    @Mapping("contentType")
+    private String contentType;
 
     @Mapping("uri")
     private String uri;
@@ -52,12 +52,12 @@ public class SoapRequestDto {
         this.body = body;
     }
 
-    public String getContextType() {
-        return contextType;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setContextType(String contextType) {
-        this.contextType = contextType;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     public String getUri() {

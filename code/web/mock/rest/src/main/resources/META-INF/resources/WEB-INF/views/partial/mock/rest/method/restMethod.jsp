@@ -61,21 +61,24 @@
                 <div class="table-frame">
                     <table class="entityTable">
                         <col width="10%">
-                        <col width="10%">
-                        <col width="20%">
                         <col width="60%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
                         <tr>
                             <th><spring:message code="rest.restmethod.column.selected"/></th>
+                            <th><spring:message code="rest.restmethod.column.responsename"/></th>
                             <th><spring:message code="rest.restmethod.column.status"/></th>
                             <th><spring:message code="rest.restmethod.column.httpstatuscode"/></th>
-                            <th><spring:message code="rest.restmethod.column.responsename"/></th>
+                            <th><spring:message code="rest.restmethod.column.contenttype"/></th>
                         </tr>
                         <c:forEach items="${restMethod.restMockResponses}" var="restMockResponse" varStatus="loopStatus">
                             <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                                 <td><form:checkbox path="restMockResponseIds" name="${restMockResponse.id}" value="${restMockResponse.id}"/></td>
+                                <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
                                 <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.restMockResponseStatus}"/></td>
                                 <td>${restMockResponse.httpStatusCode}</td>
-                                <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
+                                <td>${restMockResponse.restContentType.contentType}</td>
                             </tr>
                         </c:forEach>
                     </table>
@@ -103,7 +106,11 @@
     <c:choose>
         <c:when test="${restEvents.size() > 0}">
             <div class="table-frame">
-                <table width="100%">
+                <table class="entityTable">
+                    <col width="10%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="60%">
                     <tr>
                         <th><spring:message code="rest.restmethod.column.id"/></th>
                         <th><spring:message code="rest.restmethod.column.startdate"/></th>

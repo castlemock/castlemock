@@ -26,6 +26,7 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.CreateRecordedSoapMockResponseInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationWithTypeOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.model.SoapException;
 import com.google.common.base.Preconditions;
@@ -77,7 +78,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         Preconditions.checkNotNull(projectId, "THe project id cannot be null");
         Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
         final SoapRequestDto request = prepareRequest(projectId, httpServletRequest);
-        final SoapOperationDto operation = serviceProcessor.process(new ReadSoapOperationWithTypeInput(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType()));
+        final ReadSoapOperationWithTypeOutput output = serviceProcessor.process(new ReadSoapOperationWithTypeInput(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType()));
+        final SoapOperationDto operation = output.getSoapOperation();
         return process(operation, request, httpServletResponse);
     }
 
@@ -99,7 +101,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
 
         request.setType(type);
-        request.setContextType(httpServletRequest.getContentType());
+        request.setContentType(httpServletRequest.getContentType());
         request.setUri(serviceUri);
         request.setSoapOperationMethod(SoapOperationMethod.valueOf(httpServletRequest.getMethod()));
         request.setBody(body);
@@ -179,6 +181,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         final SoapResponseDto response = new SoapResponseDto();
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
+        response.setHttpStatusCode(mockResponse.getHttpStatusCode());
         httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
         return response;
 
@@ -198,6 +201,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         mockResponse.setBody(response.getBody());
         mockResponse.setSoapMockResponseStatus(SoapMockResponseStatus.ENABLED);
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
+        mockResponse.setHttpStatusCode(response.getHttpStatusCode());
         serviceProcessor.process(new CreateRecordedSoapMockResponseInput(soapOperationDto.getId(), mockResponse));
         return response;
     }
@@ -218,7 +222,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod(request.getSoapOperationMethod().name());
-            connection.setRequestProperty(CONTENT_TYPE, request.getContextType());
+            connection.setRequestProperty(CONTENT_TYPE, request.getContentType());
             outputStream = connection.getOutputStream();
             outputStream.write(request.getBody().getBytes());
             outputStream.flush();
@@ -233,6 +237,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             }
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setBody(stringBuilder.toString());
+            response.setHttpStatusCode(connection.getResponseCode());
             return response;
         } catch (IOException exception) {
             LOGGER.error("Unable to forward request", exception);

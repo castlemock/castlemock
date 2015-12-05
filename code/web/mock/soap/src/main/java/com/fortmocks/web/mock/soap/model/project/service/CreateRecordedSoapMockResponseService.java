@@ -46,8 +46,9 @@ public class CreateRecordedSoapMockResponseService extends AbstractSoapProjectSe
         final Long soapProjectId = findSoapProjectType(input.getSoapOperationId());
         final SoapMockResponse soapMockResponse = mapper.map(input.getSoapMockResponseDto(), SoapMockResponse.class);
         final Long soapMockResponseId = getNextSoapMockResponseId();
+        soapMockResponse.setId(soapMockResponseId);
         soapOperation.getSoapMockResponses().add(soapMockResponse);
-        soapOperation.setId(soapMockResponseId);
+
         save(soapProjectId);
         return createServiceResult(new CreateRecordedSoapMockResponseOutput());
     }

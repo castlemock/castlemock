@@ -99,7 +99,11 @@
     <c:choose>
         <c:when test="${soapEvents.size() > 0}">
             <div class="table-frame">
-                <table width="100%">
+                <table class="entityTable">
+                    <col width="10%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="60%">
                     <tr>
                         <th><spring:message code="soap.soapoperation.column.id"/></th>
                         <th><spring:message code="soap.soapoperation.column.startdate"/></th>

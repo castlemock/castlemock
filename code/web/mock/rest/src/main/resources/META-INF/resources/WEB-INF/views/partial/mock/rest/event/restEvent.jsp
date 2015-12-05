@@ -33,18 +33,42 @@
             <td class="column1"><label path="name"><spring:message code="rest.event.column.enddate"/></label></td>
             <td class="column2"><label path="name">${event.endDate}</label></td>
         </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.event.column.request.uri"/></label></td>
+            <td class="column2"><label path="name">${event.restRequest.uri}</label></td>
+        </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.event.column.request.methodtype"/></label></td>
+            <td class="column2"><label path="name">${event.restRequest.restMethodType}</label></td>
+        </tr>
     </table>
 </div>
 
 <div>
     <h2 class="decorated"><span><spring:message code="rest.event.header.request"/></span></h2>
+    <table class="formTable">
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.event.column.request.contenttype"/></label></td>
+            <td class="column2"><label path="name">${event.restRequest.contentType}</label></td>
+        </tr>
+    </table>
     <div class="eventMessage">
-        <textarea id="requestBody" readonly><c:out value="${rest.restRequest.body}"/></textarea>
+        <textarea id="requestBody" readonly><c:out value="${event.restRequest.body}"/></textarea>
     </div>
 </div>
 
 <div>
     <h2 class="decorated"><span><spring:message code="rest.event.header.response"/></span></h2>
+    <table class="formTable">
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.event.column.response.statuscode"/></label></td>
+            <td class="column2"><label path="name">${event.restResponse.httpStatusCode}</label></td>
+        </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.event.column.response.contenttype"/></label></td>
+            <td class="column2"><label path="name">${event.restResponse.restContentType.contentType}</label></td>
+        </tr>
+    </table>
     <div class="eventMessage">
         <textarea id="responseBody" readonly><c:out value="${event.restResponse.body}"/></textarea>
     </div>

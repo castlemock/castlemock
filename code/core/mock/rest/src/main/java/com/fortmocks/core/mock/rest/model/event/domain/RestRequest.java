@@ -16,6 +16,7 @@
 
 package com.fortmocks.core.mock.rest.model.event.domain;
 
+import com.fortmocks.core.mock.rest.model.project.domain.RestContentType;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -30,7 +31,7 @@ import java.util.Map;
 public class RestRequest {
 
     private String body;
-    private String contextType;
+    private String contentType;
     private String uri;
     private RestMethodType restMethodType;
     private String serviceName;
@@ -46,12 +47,12 @@ public class RestRequest {
     }
 
     @XmlElement
-    public String getContextType() {
-        return contextType;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setContextType(String contextType) {
-        this.contextType = contextType;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     @XmlElement

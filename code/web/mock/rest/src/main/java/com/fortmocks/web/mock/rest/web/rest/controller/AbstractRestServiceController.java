@@ -94,7 +94,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final String restResourceUri = incomingRequestUri.replace(getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId, EMPTY);
         final Map<String, String> parameters = extractParameters(httpServletRequest);
 
-        request.setContextType(httpServletRequest.getContentType());
+        request.setContentType(httpServletRequest.getContentType());
         request.setRestMethodType(restMethodType);
         request.setBody(body);
         request.setUri(restResourceUri);
@@ -196,7 +196,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod(restRequest.getRestMethodType().name());
-            connection.setRequestProperty(CONTENT_TYPE, restRequest.getContextType());
+            connection.setRequestProperty(CONTENT_TYPE, restRequest.getContentType());
             outputStream = connection.getOutputStream();
             outputStream.write(restRequest.getBody().getBytes());
             outputStream.flush();
@@ -314,9 +314,11 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final RestResponseDto response = new RestResponseDto();
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
+        response.setHttpStatusCode(mockResponse.getHttpStatusCode());
+        response.setRestContentType(mockResponse.getRestContentType());
         httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
         httpServletResponse.setContentType(mockResponse.getRestContentType().getContentType());
-        httpServletResponse.setHeader("Content-type", mockResponse.getRestContentType().getContentType());
+        httpServletResponse.setHeader(CONTENT_TYPE, mockResponse.getRestContentType().getContentType());
         return response;
     }
 }

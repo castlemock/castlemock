@@ -28,6 +28,7 @@ public class SoapResponse {
 
     private String body;
     private String mockResponseName;
+    private Integer httpStatusCode;
 
     @XmlElement
     public String getBody() {
@@ -45,5 +46,14 @@ public class SoapResponse {
 
     public void setMockResponseName(String mockResponseName) {
         this.mockResponseName = mockResponseName;
+    }
+
+    @XmlElement
+    public Integer getHttpStatusCode() {
+        return httpStatusCode;
+    }
+
+    public void setHttpStatusCode(Integer httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
     }
 }

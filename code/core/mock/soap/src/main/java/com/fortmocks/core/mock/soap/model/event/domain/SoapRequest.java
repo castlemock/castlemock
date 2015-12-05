@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SoapRequest {
 
     private String body;
-    private String contextType;
+    private String contentType;
     private String uri;
     private SoapOperationMethod soapOperationMethod;
     private String serviceName;
@@ -46,12 +46,12 @@ public class SoapRequest {
     }
 
     @XmlElement
-    public String getContextType() {
-        return contextType;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setContextType(String contextType) {
-        this.contextType = contextType;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     @XmlElement
