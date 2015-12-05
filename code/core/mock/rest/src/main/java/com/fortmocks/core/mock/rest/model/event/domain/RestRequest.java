@@ -20,6 +20,7 @@ import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Map;
 
 /**
  * @author Karl Dahlgren
@@ -33,6 +34,7 @@ public class RestRequest {
     private String uri;
     private RestMethodType restMethodType;
     private String serviceName;
+    private Map<String, String> parameters;
 
     @XmlElement
     public String getBody() {
@@ -77,5 +79,14 @@ public class RestRequest {
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
+    }
+
+    @XmlElement
+    public Map<String, String> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Map<String, String> parameters) {
+        this.parameters = parameters;
     }
 }

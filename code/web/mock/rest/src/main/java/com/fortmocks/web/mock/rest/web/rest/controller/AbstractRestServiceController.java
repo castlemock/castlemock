@@ -20,34 +20,45 @@ import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
 import com.fortmocks.core.mock.rest.model.event.service.message.input.CreateRestEventInput;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponseStatus;
-import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
+import com.fortmocks.core.mock.rest.model.project.domain.*;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRecordedRestMockResponseInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodWithMethodTypeInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodWithMethodTypeOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.rest.model.RestException;
 import com.google.common.base.Preconditions;
+import org.apache.commons.collections.iterators.IteratorEnumeration;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author Karl Dahlgren
- * @since 13.4
+ * @since 1.0
  */
 public abstract class AbstractRestServiceController extends AbstractController {
 
     private static final String REST = "rest";
     private static final String APPLICATION = "application";
+    private static final String FORWARDED_RESPONSE_NAME = "Forwarded response";
+    private static final String RECORDED_RESPONSE_NAME = "Recorded response";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static final Random RANDOM = new Random();
+    private static final Logger LOGGER = Logger.getLogger(AbstractRestServiceController.class);
 
 
     /**
@@ -79,12 +90,59 @@ public abstract class AbstractRestServiceController extends AbstractController {
     protected RestRequestDto prepareRequest(final Long projectId, final Long applicationId, final RestMethodType restMethodType, final HttpServletRequest httpServletRequest) {
         final RestRequestDto request = new RestRequestDto();
         final String body = RestMessageSupport.getBody(httpServletRequest);
-        final String restResourceUri = httpServletRequest.getRequestURI().toLowerCase().replace(getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId, EMPTY);
+        final String incomingRequestUri = httpServletRequest.getRequestURI().toLowerCase();
+        final String restResourceUri = incomingRequestUri.replace(getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId, EMPTY);
+        final Map<String, String> parameters = extractParameters(httpServletRequest);
 
         request.setContextType(httpServletRequest.getContentType());
+        request.setRestMethodType(restMethodType);
         request.setBody(body);
         request.setUri(restResourceUri);
+        request.setParameters(parameters);
         return request;
+    }
+
+    /**
+     * Extract all the incoming parameters and stores them in a Map. The parameter name will
+     * act as the key and the parameter value will be the Map value
+     * @param httpServletRequest The incoming request which contains all the parameters
+     * @return A map with the extracted parameters
+     */
+    protected Map<String, String> extractParameters(final HttpServletRequest httpServletRequest){
+        final Map<String, String> parameters = new HashMap<>();
+
+        final Enumeration<String> enumeration = httpServletRequest.getParameterNames();
+        while(enumeration.hasMoreElements()){
+            String parameterName = enumeration.nextElement();
+            String parameterValue = httpServletRequest.getParameter(parameterName);
+            parameters.put(parameterName, parameterValue);
+        }
+        return parameters;
+    }
+
+    /**
+     * Builds a parameter URL string passed on the provided parameter map.
+     * Example on the output: ?name1=value1&name2=value2
+     * @param parameters The Map of parameters that will be used to build the parameter URI
+     * @return A URI that contains the parameters from the provided Map
+     */
+    protected String buildParameterUri(Map<String, String> parameters){
+        if(parameters.isEmpty()){
+            return EMPTY;
+        }
+        final Enumeration<String> enumeration = new IteratorEnumeration(parameters.keySet().iterator());
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("?");
+        while(enumeration.hasMoreElements()){
+            String parameterName = enumeration.nextElement();
+            String parameterValue = parameters.get(parameterName);
+            stringBuilder.append(parameterName + "=" + parameterValue);
+
+            if(enumeration.hasMoreElements()){
+                stringBuilder.append("&");
+            }
+        }
+        return stringBuilder.toString();
     }
 
 
@@ -128,6 +186,74 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @return The response received from the external endpoint
      */
     protected RestResponseDto forwardRequest(final RestRequestDto restRequest, final RestMethodDto restMethod){
+        final RestResponseDto response = new RestResponseDto();
+        HttpURLConnection connection = null;
+        OutputStream outputStream = null;
+        BufferedReader bufferedReader = null;
+        try {
+            final String parameterUri = buildParameterUri(restRequest.getParameters());
+            final URL url = new URL(restMethod.getForwardedEndpoint() + restRequest.getUri() + parameterUri);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod(restRequest.getRestMethodType().name());
+            connection.setRequestProperty(CONTENT_TYPE, restRequest.getContextType());
+            outputStream = connection.getOutputStream();
+            outputStream.write(restRequest.getBody().getBytes());
+            outputStream.flush();
+
+            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+            final StringBuilder stringBuilder = new StringBuilder();
+            String buffer;
+            while ((buffer = bufferedReader.readLine()) != null) {
+                stringBuilder.append(buffer);
+                stringBuilder.append(NEW_LINE);
+            }
+            response.setMockResponseName(FORWARDED_RESPONSE_NAME);
+            response.setBody(stringBuilder.toString());
+            response.setHttpStatusCode(connection.getResponseCode());
+            String contentType = connection.getHeaderField(CONTENT_TYPE);
+            if(contentType != null){
+                RestContentType restContentType = parseContentType(contentType);
+                response.setRestContentType(restContentType);
+            }
+
+            return response;
+        } catch (IOException exception) {
+            LOGGER.error("Unable to forward request", exception);
+            throw new RestException("Unable to forward request to configured endpoint");
+        } finally {
+            if(connection != null){
+                connection.disconnect();
+            }
+            if(outputStream != null){
+                try {
+                    outputStream.close();
+                } catch (IOException exception) {
+                    LOGGER.error("Unable to close output stream", exception);
+                }
+            }
+            if(bufferedReader != null){
+                try {
+                    bufferedReader.close();
+                } catch (IOException exception) {
+                    LOGGER.error("Unable to close buffered reader", exception);
+                }
+            }
+        }
+    }
+
+    /**
+     * Parse a raw content type and match it with a REST content type.
+     * @param rawContentType The raw content type
+     * @return The matched REST content type. Returns null if no REST content type is matched
+     */
+    protected RestContentType parseContentType(String rawContentType){
+        for(RestContentType restContentType : RestContentType.values()){
+            if(rawContentType.contains(restContentType.getContentType())){
+                return restContentType;
+            }
+        }
         return null;
     }
 
@@ -139,7 +265,16 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @return The response received from the external endpoint
      */
     protected RestResponseDto forwardRequestAndRecordResponse(final RestRequestDto restRequest, final RestMethodDto restMethod){
-        return null;
+        final RestResponseDto response = forwardRequest(restRequest, restMethod);
+        final RestMockResponseDto mockResponse = new RestMockResponseDto();
+        final Date date = new Date();
+        mockResponse.setBody(response.getBody());
+        mockResponse.setRestMockResponseStatus(RestMockResponseStatus.ENABLED);
+        mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
+        mockResponse.setHttpStatusCode(response.getHttpStatusCode());
+        mockResponse.setRestContentType(response.getRestContentType());
+        serviceProcessor.process(new CreateRecordedRestMockResponseInput(restMethod.getId(), mockResponse));
+        return response;
     }
 
     /**
