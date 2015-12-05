@@ -30,6 +30,10 @@ public class UpdateCurrentUserOutput implements Output {
     @NotNull
     private UserDto updatedUser;
 
+    public UpdateCurrentUserOutput(UserDto updatedUser) {
+        this.updatedUser = updatedUser;
+    }
+
     public UserDto getUpdatedUser() {
         return updatedUser;
     }

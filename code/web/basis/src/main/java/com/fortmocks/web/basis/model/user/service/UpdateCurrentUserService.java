@@ -47,8 +47,7 @@ public class UpdateCurrentUserService extends AbstractUserService implements Ser
     public ServiceResult<UpdateCurrentUserOutput> process(final ServiceTask<UpdateCurrentUserInput> serviceTask) {
         final UpdateCurrentUserInput input = serviceTask.getInput();
         final UserDto user = input.getUser();
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        final String loggedInUsername = authentication.getName();
+        final String loggedInUsername = serviceTask.getServiceConsumer();
 
         if(!user.getUsername().equalsIgnoreCase(loggedInUsername)){
             final UserDto existingUser = findByUsername(user.getUsername());
@@ -59,15 +58,12 @@ public class UpdateCurrentUserService extends AbstractUserService implements Ser
         final UserDto loggedInUser = findByUsername(loggedInUsername);
         loggedInUser.setUsername(user.getUsername());
         loggedInUser.setEmail(user.getEmail());
+        loggedInUser.setPassword(user.getPassword());
         loggedInUser.setUpdated(new Date());
 
-        if(user.getPassword() != null && !user.getPassword().isEmpty()){
-            user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
-        }
 
-        final UserDto updatedUser = super.save(user);
-        final UpdateCurrentUserOutput output = new UpdateCurrentUserOutput();
-        output.setUpdatedUser(updatedUser);
+        update(loggedInUser.getId(), loggedInUser);
+        final UpdateCurrentUserOutput output = new UpdateCurrentUserOutput(loggedInUser);
         return createServiceResult(output);
     }
 }
