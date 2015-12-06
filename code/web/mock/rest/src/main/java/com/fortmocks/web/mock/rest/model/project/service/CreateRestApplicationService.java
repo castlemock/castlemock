@@ -44,10 +44,7 @@ public class CreateRestApplicationService extends AbstractRestProjectService imp
     public ServiceResult<CreateRestApplicationOutput> process(final ServiceTask<CreateRestApplicationInput> serviceTask) {
         final CreateRestApplicationInput input = serviceTask.getInput();
         final RestProject restProject = findType(input.getRestProjectId());
-        final Long restApplicationId = getNextRestApplicationId();
         final RestApplicationDto restApplication = input.getRestApplication();
-        restApplication.setId(restApplicationId);
-
         final RestApplication createdRestApplication = mapper.map(restApplication, RestApplication.class);
         restProject.getRestApplications().add(createdRestApplication);
         save(input.getRestProjectId());

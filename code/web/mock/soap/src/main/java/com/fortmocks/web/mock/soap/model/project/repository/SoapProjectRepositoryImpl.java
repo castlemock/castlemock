@@ -16,10 +16,24 @@
 
 package com.fortmocks.web.mock.soap.model.project.repository;
 
+import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapProject;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.List;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -38,6 +52,10 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Long>
     private String soapProjectFileDirectory;
     @Value(value = "${soap.project.file.extension}")
     private String soapProjectFileExtension;
+
+    private transient Long globalPortId = 0L;
+    private transient Long globalOperationId = 0L;
+    private transient Long globalMockResponseId = 0L;
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -73,4 +91,102 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Long>
     protected void checkType(SoapProject soapProject) {
 
     }
+
+    /**
+     * The post initiate method can be used to run functionality for a specific service. The method is called when
+     * the method {@link #initiate} has finished successful. The method does not contain any functionality and the
+     * whole idea is the it should be overridden by subclasses, but only if certain functionality is required to
+     * run after the {@link #initiate} method has completed.
+     * @see #initiate
+     */
+    @Override
+    protected void postInitiate(){
+        Long globalPortId = 0L;
+        Long globalOperationId = 0L;
+        Long globalMockResponseId = 0L;
+        List<SoapProject> soapProjects = findAll();
+
+        for(SoapProject soapProject : soapProjects){
+            for(SoapPort soapPort : soapProject.getSoapPorts()){
+                if(soapPort.getId() > globalPortId){
+                    globalPortId = soapPort.getId();
+                }
+                for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+                    if(soapOperation.getId() > globalOperationId){
+                        globalOperationId = soapOperation.getId();
+                    }
+                    for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
+                        if(soapMockResponse.getId() > globalMockResponseId){
+                            globalMockResponseId = soapMockResponse.getId();
+                        }
+                    }
+
+                }
+            }
+        }
+        this.globalPortId = globalPortId;
+        this.globalOperationId = globalOperationId;
+        this.globalMockResponseId = globalMockResponseId;
+    }
+
+    /**
+     * The save method provides the functionality to save an instance to the file system.
+     * @param type The type that will be saved to the file system.
+     * @return The type that was saved to the file system. The main reason for it is being returned is because
+     *         there could be modifications of the object during the save process. For example, if the type does not
+     *         have an identifier, then the method will generate a new identifier for the type.
+     */
+    @Override
+    public SoapProject save(final SoapProject type) {
+        for(SoapPort soapPort : type.getSoapPorts()){
+            if(soapPort.getId() == null){
+                Long soapPortId = getNextSoapPortId();
+                soapPort.setId(soapPortId);
+            }
+            for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+                if(soapOperation.getId() == null){
+                    Long soapOperationId = getNextSoapOperationId();
+                    soapOperation.setId(soapOperationId);
+                }
+                for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
+                    if(soapMockResponse.getId() == null){
+                        Long soapMockResponseId = getNextSoapMockResponseId();
+                        soapMockResponse.setId(soapMockResponseId);
+                    }
+                }
+            }
+        }
+        return super.save(type);
+    }
+
+    /**
+     * The method calculates the next SOAP port id
+     * @return The new generated SOAP port id
+     * @see SoapPort
+     * @see SoapPortDto
+     */
+    protected synchronized Long getNextSoapPortId(){
+        return ++globalPortId;
+    }
+
+    /**
+     * The method calculates the next SOAP operation id
+     * @return The new generated SOAP operation id
+     * @see SoapOperation
+     * @see SoapOperationDto
+     */
+    protected synchronized Long getNextSoapOperationId(){
+        return ++globalOperationId;
+    }
+
+    /**
+     * The method calculates the next SOAP mock response id
+     * @return The new generated SOAP mock response id
+     * @see SoapMockResponse
+     * @see SoapMockResponseDto
+     */
+    protected synchronized Long getNextSoapMockResponseId(){
+        return ++globalMockResponseId;
+    }
+
 }

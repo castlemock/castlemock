@@ -32,7 +32,6 @@ import java.util.*;
  */
 public abstract class AbstractSoapProjectService extends AbstractService<SoapProject, SoapProjectDto, Long> {
 
-
     /**
      * Count the operation statuses
      * @param soapOperations The list of operations, which status will be counted
@@ -83,7 +82,6 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
         Preconditions.checkArgument(projectInDatebase == null, "Project name is already taken");
         project.setUpdated(new Date());
         project.setCreated(new Date());
-
         return super.save(project);
     }
 
@@ -264,112 +262,6 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
             }
         }
         throw new IllegalArgumentException("Unable to find a soap mock response with id " + soapMockResponseId);
-    }
-
-    /**
-     * The method calculates the next SOAP port id
-     * @return The new generated SOAP port id
-     * @see SoapPort
-     * @see SoapPortDto
-     */
-    private Long getNextSoapPortId(){
-        Long nextSoapPortId = 0L;
-        for(SoapProject soapProject : findAllTypes()){
-            for(SoapPort soapPort : soapProject.getSoapPorts()){
-                if(soapPort.getId() >= nextSoapPortId){
-                    nextSoapPortId = soapPort.getId() + 1;
-                }
-            }
-        }
-        return nextSoapPortId;
-    }
-
-    /**
-     * The method calculates the next SOAP operation id
-     * @return The new generated SOAP operation id
-     * @see SoapOperation
-     * @see SoapOperationDto
-     */
-    protected Long getNexSoapOperationId(){
-        Long nextSoapOperationId = 0L;
-        for(SoapProject soapProject : findAllTypes()){
-            for(SoapPort soapPort : soapProject.getSoapPorts()){
-                for(SoapOperation soapOperation : soapPort.getSoapOperations()){
-                    if(soapOperation.getId() >= nextSoapOperationId){
-                        nextSoapOperationId = soapOperation.getId() + 1;
-                    }
-                }
-            }
-        }
-        return nextSoapOperationId;
-    }
-
-    /**
-     * The method calculates the next SOAP mock response id
-     * @return The new generated SOAP mock response id
-     * @see SoapMockResponse
-     * @see SoapMockResponseDto
-     */
-    protected Long getNextSoapMockResponseId(){
-        Long nextSoapMockResponseId = 0L;
-        for(SoapProject soapProject : findAllTypes()){
-            for(SoapPort soapPort : soapProject.getSoapPorts()){
-                for(SoapOperation soapOperation : soapPort.getSoapOperations()){
-                    for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
-                        if(soapMockResponse.getId() >= nextSoapMockResponseId){
-                            nextSoapMockResponseId = soapMockResponse.getId() + 1;
-                        }
-                    }
-                }
-            }
-        }
-        return nextSoapMockResponseId;
-    }
-
-    /**
-     * The method provides the functionality to generate new identifiers for a of SOAP port
-     * @param soapPort The SOAP port that will receive new identifiers
-     */
-    protected void generateId(final SoapPort soapPort){
-        Long nextSoapPortId = getNextSoapPortId();
-        Long nextSoapOperationId = getNexSoapOperationId();
-        Long nextSoapMockResponseId = getNextSoapMockResponseId();
-
-
-        if(soapPort.getId() == null){
-            soapPort.setId(nextSoapPortId++);
-        }
-
-        for(SoapOperation soapOperation : soapPort.getSoapOperations()){
-            if(soapOperation.getId() == null){
-                soapOperation.setId(nextSoapOperationId++);
-            }
-
-            for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
-                if(soapMockResponse.getId() == null){
-                    soapMockResponse.setId(nextSoapMockResponseId++);
-                }
-            }
-        }
-    }
-
-    /**
-     * The method provides the functionality to generate new identifiers for a SOAP operation
-     * @param soapOperation The SOAP port that will receive new identifiers
-     */
-    protected void generateId(final SoapOperation soapOperation){
-        Long nextSoapOperationId = getNexSoapOperationId();
-        Long nextSoapMockResponseId = getNextSoapMockResponseId();
-
-        if(soapOperation.getId() == null){
-            soapOperation.setId(nextSoapOperationId++);
-        }
-
-        for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
-            if(soapMockResponse.getId() == null){
-                soapMockResponse.setId(nextSoapMockResponseId++);
-            }
-        }
     }
 
     /**

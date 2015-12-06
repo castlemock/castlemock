@@ -53,7 +53,6 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
             SoapPort existingSoapPort = findSoapPortWithName(soapProject, newSoapPort.getName());
 
             if(existingSoapPort == null){
-                generateId(newSoapPort);
                 soapProject.getSoapPorts().add(newSoapPort);
                 continue;
             }
@@ -67,7 +66,6 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                     existingSoapOperation.setSoapOperationType(newSoapOperation.getSoapOperationType());
                     soapOperations.add(existingSoapOperation);
                 } else {
-                    generateId(newSoapOperation);
                     soapOperations.add(newSoapOperation);
                 }
             }

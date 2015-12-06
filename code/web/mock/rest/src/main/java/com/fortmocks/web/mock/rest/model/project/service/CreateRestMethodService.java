@@ -54,8 +54,6 @@ public class CreateRestMethodService extends AbstractRestProjectService implemen
         }
 
         final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
-        final Long restMethodId = getNextRestMethodId();
-        restMethod.setId(restMethodId);
         final RestMethod createdRestMethod = mapper.map(restMethod, RestMethod.class);
         restResource.getRestMethods().add(createdRestMethod);
         save(input.getRestProjectId());

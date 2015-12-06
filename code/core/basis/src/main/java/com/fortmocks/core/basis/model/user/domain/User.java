@@ -191,4 +191,5 @@ public class User implements Saveable<Long> {
     public void setRole(Role role) {
         this.role = role;
     }
+
 }

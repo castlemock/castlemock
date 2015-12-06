@@ -39,5 +39,4 @@ public interface Saveable<I> {
      * @param id The new identifier
      */
     public void setId(final I id);
-
 }

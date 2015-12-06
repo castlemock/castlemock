@@ -44,9 +44,7 @@ public class CreateRestResourceService extends AbstractRestProjectService implem
     public ServiceResult<CreateRestResourceOutput> process(final ServiceTask<CreateRestResourceInput> serviceTask) {
         final CreateRestResourceInput input = serviceTask.getInput();
         final RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), input.getRestApplicationId());
-        final Long restResourceId = getNextRestResourceId();
         final RestResource restResource = mapper.map(input.getRestResource(), RestResource.class);
-        restResource.setId(restResourceId);
         restApplication.getRestResources().add(restResource);
         save(input.getRestProjectId());
         return createServiceResult(new CreateRestResourceOutput(mapper.map(restResource, RestResourceDto.class)));

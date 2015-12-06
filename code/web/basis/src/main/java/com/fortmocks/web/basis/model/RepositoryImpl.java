@@ -54,6 +54,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
     protected Map<I, T> collection = new ConcurrentHashMap<I, T>();
 
     private static final Logger LOGGER = Logger.getLogger(RepositoryImpl.class);
+    private transient Long globalId = 0L;
 
     /**
      * The default constructor for the AbstractRepositoryImpl class. The constructor will extract class instances of the
@@ -77,9 +78,15 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
     public void initiate(){
         LOGGER.debug("Start the initiate phase for the type " + entityClass.getSimpleName());
         final Collection<T> loadedFiles = loadFiles();
+        Long globalId = 0L;
         for(T type : loadedFiles){
+            Long id = (Long) type.getId();
             collection.put(type.getId(), type);
+            if(globalId > id){
+                globalId = id;
+            }
         }
+        this.globalId = globalId;
         postInitiate();
     }
 
@@ -113,11 +120,11 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
      *         have an identifier, then the method will generate a new identifier for the type.
      */
     @Override
-    public synchronized T save(final T type) {
+    public T save(final T type) {
         I id = type.getId();
 
         if(id == null){
-            id = generateId();
+            id = (I)generateId();
             type.setId(id);
         }
         checkType(type);
@@ -173,33 +180,6 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
         }
         collection.remove(id);
         LOGGER.debug("Deletion of " + entityClass.getSimpleName() + " with id " + id + " was successfully completed");
-    }
-
-    /**
-     * The method provides the functionality to generate a new id to an instance of TYPE
-     * @return The new generated id
-     */
-    protected I generateId(){
-        return generateId(collection.keySet(), idClass);
-    }
-
-    /**
-     * The method provides the functionality to generate a new id to an instance of TYPE
-     * @return The new generated id
-     */
-    protected <ID> ID generateId(final Collection<ID> ids, final Class<?> clazz){
-        if(clazz == Long.class){
-            Long nextId = 0L;
-            for(ID id : ids){
-                Long currentId = (Long) id;
-                if(currentId >= nextId){
-                    nextId = currentId;
-                    nextId++;
-                }
-            }
-            return (ID)nextId;
-        }
-        throw new IllegalStateException("Unable to generate next id");
     }
 
     private String getFilename(I id){
@@ -294,5 +274,9 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
             LOGGER.error("Unable to parse files for type " + entityClass.getSimpleName(), e);
         }
         return loadedTypes;
+    }
+
+    public synchronized Long generateId(){
+        return ++globalId;
     }
 }

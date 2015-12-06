@@ -23,6 +23,7 @@ import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
 import com.fortmocks.core.mock.rest.model.project.domain.RestProject;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestApplicationsInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestApplicationsOutput;
@@ -45,25 +46,9 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
     @Override
     public ServiceResult<CreateRestApplicationsOutput> process(final ServiceTask<CreateRestApplicationsInput> serviceTask) {
         final CreateRestApplicationsInput input = serviceTask.getInput();
-        final RestProject restProject = findType(input.getRestProjectId());
-
-        for(RestApplicationDto restApplicationDto : input.getRestApplications()){
-            final Long restApplicationId = getNextRestApplicationId();
-            restApplicationDto.setId(restApplicationId);
-
-            for(RestResourceDto restResourceDto : restApplicationDto.getRestResources()){
-                final Long restResourceId = getNextRestResourceId();
-                restResourceDto.setId(restResourceId);
-
-                for(RestMethodDto restMethodDto : restResourceDto.getRestMethods()){
-                    final Long restMethodId = getNextRestMethodId();
-                    restMethodDto.setId(restMethodId);
-                }
-            }
-            RestApplication restApplication = mapper.map(restApplicationDto, RestApplication.class);
-            restProject.getRestApplications().add(restApplication);
-        }
-
+        final RestProjectDto restProject = find(input.getRestProjectId());
+        restProject.getRestApplications().addAll(input.getRestApplications());
+        save(restProject);
         return createServiceResult(new CreateRestApplicationsOutput());
     }
 }

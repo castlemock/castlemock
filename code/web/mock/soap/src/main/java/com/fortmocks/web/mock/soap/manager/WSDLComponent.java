@@ -232,7 +232,7 @@ public class WSDLComponent {
                 soapOperation.setSoapMockResponses(new ArrayList<SoapMockResponseDto>());
                 soapOperation.setDefaultBody(defaultBody);
                 soapOperation.setCurrentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX);
-
+                soapOperation.setUri(soapPortName);
                 if(generateResponse){
                     final SoapMockResponseDto mockResponse = new SoapMockResponseDto();
                     mockResponse.setBody(soapOperation.getDefaultBody());
