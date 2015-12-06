@@ -55,7 +55,7 @@ public class UpdateProjectController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "{projectType}/project/{projectId}/update", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String projectType, @PathVariable final Long projectId) {
+    public ModelAndView defaultPage(@PathVariable final String projectType, @PathVariable final String projectId) {
         final ProjectDto projectDto = projectServiceComponent.findOne(projectType, projectId);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(PROJECT, projectDto);
@@ -71,7 +71,7 @@ public class UpdateProjectController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "{projectType}/project/{projectId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String projectType, @PathVariable final Long projectId, @ModelAttribute final ProjectDto updatedProject) {
+    public ModelAndView update(@PathVariable final String projectType, @PathVariable final String projectId, @ModelAttribute final ProjectDto updatedProject) {
         projectServiceComponent.update(projectType, projectId, updatedProject);
         return redirect("/" + projectType + "/project/" + projectId);
     }

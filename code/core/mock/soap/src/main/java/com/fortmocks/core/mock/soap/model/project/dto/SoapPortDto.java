@@ -31,7 +31,7 @@ import java.util.Map;
 public class SoapPortDto {
 
     @Mapping("id")
-    private Long id;
+    private String id;
 
     @Mapping("name")
     private String name;
@@ -41,11 +41,11 @@ public class SoapPortDto {
 
     private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -29,5 +29,5 @@ import com.fortmocks.core.mock.rest.model.event.domain.RestEvent;
  * @see RestEvent
  * @see Repository
  */
-public interface RestEventRepository extends Repository<RestEvent, Long> {
+public interface RestEventRepository extends Repository<RestEvent, String> {
 }

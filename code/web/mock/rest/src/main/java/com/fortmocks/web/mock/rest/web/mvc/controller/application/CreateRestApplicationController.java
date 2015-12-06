@@ -42,7 +42,7 @@ public class CreateRestApplicationController extends AbstractRestViewController 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/create/application", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long projectId) {
+    public ModelAndView defaultPage(@PathVariable final String projectId) {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
         model.addObject(COMMAND, new CreateRestApplicationCommand());
@@ -52,7 +52,7 @@ public class CreateRestApplicationController extends AbstractRestViewController 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/create/application", method = RequestMethod.POST)
-    public ModelAndView createProject(@PathVariable final Long projectId, @ModelAttribute final CreateRestApplicationCommand createRestApplicationCommand) {
+    public ModelAndView createProject(@PathVariable final String projectId, @ModelAttribute final CreateRestApplicationCommand createRestApplicationCommand) {
         final CreateRestApplicationOutput output = serviceProcessor.process(new CreateRestApplicationInput(projectId, createRestApplicationCommand.getRestApplication()));
         return redirect("/rest/project/" + projectId + "/application/" + output.getSavedRestApplication().getId());
     }

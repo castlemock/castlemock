@@ -29,20 +29,20 @@ import java.util.List;
 public class CreateRestApplicationsInput implements Input {
 
     @NotNull
-    private Long restProjectId;
+    private String restProjectId;
     @NotNull
     private List<RestApplicationDto> restApplications;
 
-    public CreateRestApplicationsInput(Long restProjectId, List<RestApplicationDto> restApplications) {
+    public CreateRestApplicationsInput(String restProjectId, List<RestApplicationDto> restApplications) {
         this.restProjectId = restProjectId;
         this.restApplications = restApplications;
     }
 
-    public Long getRestProjectId() {
+    public String getRestProjectId() {
         return restProjectId;
     }
 
-    public void setRestProjectId(Long restProjectId) {
+    public void setRestProjectId(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 

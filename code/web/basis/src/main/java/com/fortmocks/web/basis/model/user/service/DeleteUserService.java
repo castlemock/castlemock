@@ -40,7 +40,7 @@ public class DeleteUserService extends AbstractUserService implements Service<De
     @Override
     public ServiceResult<DeleteUserOutput> process(final ServiceTask<DeleteUserInput> serviceTask) {
         final DeleteUserInput input = serviceTask.getInput();
-        final Long userId = input.getUserId();
+        final String userId = input.getUserId();
         delete(userId);
         return createServiceResult(new DeleteUserOutput());
     }

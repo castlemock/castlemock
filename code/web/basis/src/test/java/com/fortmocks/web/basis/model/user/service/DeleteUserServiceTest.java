@@ -56,14 +56,14 @@ public class DeleteUserServiceTest {
         User user = new User();
         user.setRole(Role.MODIFIER);
 
-        Mockito.when(repository.findOne(Mockito.anyLong())).thenReturn(user);
+        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
 
-        final DeleteUserInput input = new DeleteUserInput(1L);
+        final DeleteUserInput input = new DeleteUserInput(new String());
         final ServiceTask<DeleteUserInput> serviceTask = new ServiceTask<DeleteUserInput>();
         serviceTask.setInput(input);
         final ServiceResult<DeleteUserOutput> serviceResult = service.process(serviceTask);
         serviceResult.getOutput();
-        Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyLong());
+        Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -74,15 +74,15 @@ public class DeleteUserServiceTest {
         List<User> users = new ArrayList<>();
         users.add(user);
 
-        Mockito.when(repository.findOne(Mockito.anyLong())).thenReturn(user);
+        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         Mockito.when(repository.findAll()).thenReturn(users);
 
-        final DeleteUserInput input = new DeleteUserInput(1L);
+        final DeleteUserInput input = new DeleteUserInput(new String());
         final ServiceTask<DeleteUserInput> serviceTask = new ServiceTask<DeleteUserInput>();
         serviceTask.setInput(input);
         final ServiceResult<DeleteUserOutput> serviceResult = service.process(serviceTask);
         serviceResult.getOutput();
-        Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyLong());
+        Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
     }
 
 

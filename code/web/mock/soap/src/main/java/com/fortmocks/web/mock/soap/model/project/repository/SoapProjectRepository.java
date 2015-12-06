@@ -28,5 +28,5 @@ import com.fortmocks.core.mock.soap.model.project.domain.SoapProject;
  * @see SoapProject
  * @see Repository
  */
-public interface SoapProjectRepository extends Repository<SoapProject, Long> {
+public interface SoapProjectRepository extends Repository<SoapProject, String> {
 }

@@ -28,7 +28,7 @@ import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationType;
 public class ReadSoapOperationWithTypeInput implements Input {
 
     @NotNull
-    private Long soapProjectId;
+    private String soapProjectId;
     @NotNull
     private String name;
     @NotNull
@@ -38,7 +38,7 @@ public class ReadSoapOperationWithTypeInput implements Input {
     @NotNull
     private SoapOperationType type;
 
-    public ReadSoapOperationWithTypeInput(Long soapProjectId, String name, String uri, SoapOperationMethod soapOperationMethod, SoapOperationType type) {
+    public ReadSoapOperationWithTypeInput(String soapProjectId, String name, String uri, SoapOperationMethod soapOperationMethod, SoapOperationType type) {
         this.soapProjectId = soapProjectId;
         this.name = name;
         this.uri = uri;
@@ -46,11 +46,11 @@ public class ReadSoapOperationWithTypeInput implements Input {
         this.type = type;
     }
 
-    public Long getSoapProjectId() {
+    public String getSoapProjectId() {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(Long soapProjectId) {
+    public void setSoapProjectId(String soapProjectId) {
         this.soapProjectId = soapProjectId;
     }
 

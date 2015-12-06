@@ -60,7 +60,7 @@ public class UpdateUserController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long userId) {
+    public ModelAndView defaultPage(@PathVariable final String userId) {
         final ReadUserOutput readUserOutput = serviceProcessor.process(new ReadUserInput(userId));
         final UserDto userDto = readUserOutput.getUser();
         userDto.setPassword(EMPTY);
@@ -79,7 +79,7 @@ public class UpdateUserController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final Long userId, @ModelAttribute final UserDto updatedUser) {
+    public ModelAndView update(@PathVariable final String userId, @ModelAttribute final UserDto updatedUser) {
         final String loggedInUsername = getLoggedInUsername();
         final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(new ReadUserByUsernameInput(loggedInUsername));
         final UserDto loggedInUser = readUserByUsernameOutput.getUser();

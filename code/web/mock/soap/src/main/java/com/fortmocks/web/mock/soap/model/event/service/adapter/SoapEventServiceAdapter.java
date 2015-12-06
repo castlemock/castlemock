@@ -48,12 +48,12 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SoapEventDto update(Long id, SoapEventDto dto) {
+    public SoapEventDto update(String id, SoapEventDto dto) {
         throw new UnsupportedOperationException();
     }
 
@@ -64,7 +64,7 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
     }
 
     @Override
-    public SoapEventDto read(Long id) {
+    public SoapEventDto read(String id) {
         final ReadSoapEventOutput output = serviceProcessor.process(new ReadSoapEventInput(id));
         return output.getSoapEvent();
     }

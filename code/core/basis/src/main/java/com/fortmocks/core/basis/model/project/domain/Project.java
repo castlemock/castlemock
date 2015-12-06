@@ -32,9 +32,9 @@ import java.util.Date;
  * @see ProjectDto
  */
 @XmlRootElement
-public abstract class Project implements Saveable<Long> {
+public abstract class Project implements Saveable<String> {
 
-    private Long id;
+    private String id;
     private String name;
     private String description;
     private Date updated;
@@ -42,12 +42,12 @@ public abstract class Project implements Saveable<Long> {
 
     @XmlElement
     @Override
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

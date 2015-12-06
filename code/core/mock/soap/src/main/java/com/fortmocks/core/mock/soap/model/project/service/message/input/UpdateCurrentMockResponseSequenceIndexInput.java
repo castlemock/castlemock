@@ -26,20 +26,20 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 public class UpdateCurrentMockResponseSequenceIndexInput implements Input {
 
     @NotNull
-    private Long soapOperationId;
+    private String soapOperationId;
     @NotNull
     private Integer currentResponseSequenceIndex;
 
-    public UpdateCurrentMockResponseSequenceIndexInput(Long soapOperationId, Integer currentResponseSequenceIndex) {
+    public UpdateCurrentMockResponseSequenceIndexInput(String soapOperationId, Integer currentResponseSequenceIndex) {
         this.soapOperationId = soapOperationId;
         this.currentResponseSequenceIndex = currentResponseSequenceIndex;
     }
 
-    public Long getSoapOperationId() {
+    public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(Long soapOperationId) {
+    public void setSoapOperationId(String soapOperationId) {
         this.soapOperationId = soapOperationId;
     }
 

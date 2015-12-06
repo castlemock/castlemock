@@ -61,7 +61,7 @@ public class CreateUserServiceTest {
         user.setEmail("email@email.com");
 
         User createdUser = new User();
-        createdUser.setId(1L);
+        createdUser.setId(new String());
         createdUser.setPassword("Password");
         createdUser.setUsername("Username");
         createdUser.setStatus(Status.ACTIVE);

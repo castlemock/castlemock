@@ -31,7 +31,7 @@ public class SoapEvent extends Event {
 
     private SoapRequest soapRequest;
     private SoapResponse soapResponse;
-    private Long soapOperationId;
+    private String soapOperationId;
 
 
     @XmlElement
@@ -53,11 +53,11 @@ public class SoapEvent extends Event {
     }
 
     @XmlElement
-    public Long getSoapOperationId() {
+    public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(Long soapOperationId) {
+    public void setSoapOperationId(String soapOperationId) {
         this.soapOperationId = soapOperationId;
     }
 

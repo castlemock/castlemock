@@ -28,7 +28,7 @@ import java.util.Date;
  * @author Karl Dahlgren
  * @since 1.0
  * @see User
- * @see com.fortmocks.core.model.user.dto.UserDto
+ * @see UserDto
  */
 public class UserDtoGenerator {
 
@@ -39,7 +39,7 @@ public class UserDtoGenerator {
         userDto.setRole(Role.ADMIN);
         userDto.setStatus(Status.ACTIVE);
         userDto.setEmail("test@test.com");
-        userDto.setId(1L);
+        userDto.setId("User");
         userDto.setPassword("password");
         userDto.setUsername("admin");
         return userDto;

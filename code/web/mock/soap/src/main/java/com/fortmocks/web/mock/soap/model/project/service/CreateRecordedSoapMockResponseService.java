@@ -43,7 +43,7 @@ public class CreateRecordedSoapMockResponseService extends AbstractSoapProjectSe
     public ServiceResult<CreateRecordedSoapMockResponseOutput> process(final ServiceTask<CreateRecordedSoapMockResponseInput> serviceTask) {
         final CreateRecordedSoapMockResponseInput input = serviceTask.getInput();
         final SoapOperation soapOperation = findSoapOperationType(input.getSoapOperationId());
-        final Long soapProjectId = findSoapProjectType(input.getSoapOperationId());
+        final String soapProjectId = findSoapProjectType(input.getSoapOperationId());
         final SoapMockResponse soapMockResponse = mapper.map(input.getSoapMockResponseDto(), SoapMockResponse.class);
         soapOperation.getSoapMockResponses().add(soapMockResponse);
 

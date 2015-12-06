@@ -29,42 +29,42 @@ import java.util.List;
 public class DeleteRestMethodsInput implements Input{
 
     @NotNull
-    private Long restProjectId;
+    private String restProjectId;
     @NotNull
-    private Long restApplicationId;
+    private String restApplicationId;
     @NotNull
-    private Long restResourceId;
+    private String restResourceId;
     @NotNull
     private List<RestMethodDto> restMethods;
 
-    public DeleteRestMethodsInput(Long restProjectId, Long restApplicationId, Long restResourceId, List<RestMethodDto> restMethods) {
+    public DeleteRestMethodsInput(String restProjectId, String restApplicationId, String restResourceId, List<RestMethodDto> restMethods) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
         this.restMethods = restMethods;
     }
 
-    public Long getRestProjectId() {
+    public String getRestProjectId() {
         return restProjectId;
     }
 
-    public void setRestProjectId(Long restProjectId) {
+    public void setRestProjectId(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 
-    public Long getRestApplicationId() {
+    public String getRestApplicationId() {
         return restApplicationId;
     }
 
-    public void setRestApplicationId(Long restApplicationId) {
+    public void setRestApplicationId(String restApplicationId) {
         this.restApplicationId = restApplicationId;
     }
 
-    public Long getRestResourceId() {
+    public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(Long restResourceId) {
+    public void setRestResourceId(String restResourceId) {
         this.restResourceId = restResourceId;
     }
 

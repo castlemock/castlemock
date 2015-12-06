@@ -31,7 +31,7 @@ public class EventDtoGenerator {
 
     public static EventDto generateEventDto(){
         EventDto eventDto = new EventDto();
-        eventDto.setId(1L);
+        eventDto.setId(new String());
         eventDto.setStartDate(new Date());
         eventDto.setEndDate(new Date());
         return eventDto;

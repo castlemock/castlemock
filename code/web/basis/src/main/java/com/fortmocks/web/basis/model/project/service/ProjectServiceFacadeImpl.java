@@ -41,7 +41,7 @@ import java.util.List;
  * @see ProjectDto
  */
 @Service
-public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, Long, ProjectServiceAdapter<ProjectDto>> implements ProjectServiceFacade {
+public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, String, ProjectServiceAdapter<ProjectDto>> implements ProjectServiceFacade {
 
     /**
      * The initiate method is responsible for for locating all the service instances for a specific module
@@ -62,7 +62,7 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, Long
      * @return The project with the provided id as a String
      */
     @Override
-    public String exportProject(final String typeUrl, final Long id){
+    public String exportProject(final String typeUrl, final String id){
         final ProjectServiceAdapter<ProjectDto> service = findByTypeUrl(typeUrl);
         return service.exportProject(id);
     }

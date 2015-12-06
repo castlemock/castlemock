@@ -62,7 +62,7 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         serviceProcessor.process(new DeleteSoapProjectInput(id));
     }
 
@@ -77,7 +77,7 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @return The updated instance
      */
     @Override
-    public SoapProjectDto update(Long id, SoapProjectDto dto) {
+    public SoapProjectDto update(String id, SoapProjectDto dto) {
         final UpdateSoapProjectOutput output = serviceProcessor.process(new UpdateSoapProjectInput(id, dto));
         return output.getUpdatedSoapProject();
     }
@@ -101,7 +101,7 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      *         values, null will be returned.
      */
     @Override
-    public SoapProjectDto read(Long id) {
+    public SoapProjectDto read(String id) {
         final ReadSoapProjectOutput output = serviceProcessor.process(new ReadSoapProjectInput(id));
         return output.getSoapProject();
     }
@@ -133,7 +133,7 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @return The project with the provided id as a String
      */
     @Override
-    public String exportProject(Long id) {
+    public String exportProject(String id) {
         final ExportSoapProjectOutput output = serviceProcessor.process(new ExportSoapProjectInput(id));
         return output.getExportedProject();
     }

@@ -29,17 +29,17 @@ import java.util.List;
 public class DeleteRestMockResponsesInput implements Input{
 
     @NotNull
-    private Long restProjectId;
+    private String restProjectId;
     @NotNull
-    private Long restApplicationId;
+    private String restApplicationId;
     @NotNull
-    private Long restResourceId;
+    private String restResourceId;
     @NotNull
-    private Long restMethodId;
+    private String restMethodId;
     @NotNull
     private List<RestMockResponseDto> restMockResponses;
 
-    public DeleteRestMockResponsesInput(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, List<RestMockResponseDto> restMockResponses) {
+    public DeleteRestMockResponsesInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, List<RestMockResponseDto> restMockResponses) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -47,35 +47,35 @@ public class DeleteRestMockResponsesInput implements Input{
         this.restMockResponses = restMockResponses;
     }
 
-    public Long getRestProjectId() {
+    public String getRestProjectId() {
         return restProjectId;
     }
 
-    public void setRestProjectId(Long restProjectId) {
+    public void setRestProjectId(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 
-    public Long getRestApplicationId() {
+    public String getRestApplicationId() {
         return restApplicationId;
     }
 
-    public void setRestApplicationId(Long restApplicationId) {
+    public void setRestApplicationId(String restApplicationId) {
         this.restApplicationId = restApplicationId;
     }
 
-    public Long getRestResourceId() {
+    public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(Long restResourceId) {
+    public void setRestResourceId(String restResourceId) {
         this.restResourceId = restResourceId;
     }
 
-    public Long getRestMethodId() {
+    public String getRestMethodId() {
         return restMethodId;
     }
 
-    public void setRestMethodId(Long restMethodId) {
+    public void setRestMethodId(String restMethodId) {
         this.restMethodId = restMethodId;
     }
 

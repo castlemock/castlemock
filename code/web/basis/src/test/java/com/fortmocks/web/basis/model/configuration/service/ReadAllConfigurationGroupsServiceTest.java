@@ -59,7 +59,7 @@ public class ReadAllConfigurationGroupsServiceTest {
     public void testProcess(){
         List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
         ConfigurationGroup configurationGroup = new ConfigurationGroup();
-        configurationGroup.setId(1L);
+        configurationGroup.setId(new String());
         configurationGroup.setName("Configuration group");
         configurationGroup.setConfigurations(new ArrayList<Configuration>());
         Configuration configuration = new Configuration();

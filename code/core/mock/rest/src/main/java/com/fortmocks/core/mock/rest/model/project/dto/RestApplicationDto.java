@@ -28,7 +28,7 @@ import java.util.List;
 public class RestApplicationDto {
 
     @Mapping("id")
-    private Long id;
+    private String id;
 
     @Mapping("name")
     private String name;
@@ -36,11 +36,11 @@ public class RestApplicationDto {
     @Mapping("restResources")
     private List<RestResourceDto> restResources = new LinkedList<RestResourceDto>();
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

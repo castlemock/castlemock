@@ -56,7 +56,7 @@ public class RestApplicationController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId) {
+    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId) {
         final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(restProjectId, restApplicationId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
@@ -68,11 +68,11 @@ public class RestApplicationController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}", method = RequestMethod.POST)
-    public ModelAndView projectFunctionality(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @RequestParam final String action, @ModelAttribute final RestResourceModifierCommand restResourceModifierCommand) {
+    public ModelAndView projectFunctionality(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @RequestParam final String action, @ModelAttribute final RestResourceModifierCommand restResourceModifierCommand) {
         LOGGER.debug("Requested REST project action requested: " + action);
         if(DELETE_REST_RESOURCES.equalsIgnoreCase(action)) {
             final List<RestResourceDto> restResources = new ArrayList<RestResourceDto>();
-            for(Long restResourceId : restResourceModifierCommand.getRestResourceIds()){
+            for(String restResourceId : restResourceModifierCommand.getRestResourceIds()){
                 ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
                 restResources.add(output.getRestResource());
             }

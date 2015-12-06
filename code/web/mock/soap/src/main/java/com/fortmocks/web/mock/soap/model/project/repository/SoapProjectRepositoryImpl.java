@@ -46,16 +46,12 @@ import java.util.List;
  * @see SoapProject
  */
 @Repository
-public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Long> implements SoapProjectRepository {
+public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, String> implements SoapProjectRepository {
 
     @Value(value = "${soap.project.file.directory}")
     private String soapProjectFileDirectory;
     @Value(value = "${soap.project.file.extension}")
     private String soapProjectFileExtension;
-
-    private transient Long globalPortId = 0L;
-    private transient Long globalOperationId = 0L;
-    private transient Long globalMockResponseId = 0L;
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -92,42 +88,6 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Long>
 
     }
 
-    /**
-     * The post initiate method can be used to run functionality for a specific service. The method is called when
-     * the method {@link #initiate} has finished successful. The method does not contain any functionality and the
-     * whole idea is the it should be overridden by subclasses, but only if certain functionality is required to
-     * run after the {@link #initiate} method has completed.
-     * @see #initiate
-     */
-    @Override
-    protected void postInitiate(){
-        Long globalPortId = 0L;
-        Long globalOperationId = 0L;
-        Long globalMockResponseId = 0L;
-        List<SoapProject> soapProjects = findAll();
-
-        for(SoapProject soapProject : soapProjects){
-            for(SoapPort soapPort : soapProject.getSoapPorts()){
-                if(soapPort.getId() > globalPortId){
-                    globalPortId = soapPort.getId();
-                }
-                for(SoapOperation soapOperation : soapPort.getSoapOperations()){
-                    if(soapOperation.getId() > globalOperationId){
-                        globalOperationId = soapOperation.getId();
-                    }
-                    for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
-                        if(soapMockResponse.getId() > globalMockResponseId){
-                            globalMockResponseId = soapMockResponse.getId();
-                        }
-                    }
-
-                }
-            }
-        }
-        this.globalPortId = globalPortId;
-        this.globalOperationId = globalOperationId;
-        this.globalMockResponseId = globalMockResponseId;
-    }
 
     /**
      * The save method provides the functionality to save an instance to the file system.
@@ -140,53 +100,23 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Long>
     public SoapProject save(final SoapProject type) {
         for(SoapPort soapPort : type.getSoapPorts()){
             if(soapPort.getId() == null){
-                Long soapPortId = getNextSoapPortId();
+                String soapPortId = generateId();
                 soapPort.setId(soapPortId);
             }
             for(SoapOperation soapOperation : soapPort.getSoapOperations()){
                 if(soapOperation.getId() == null){
-                    Long soapOperationId = getNextSoapOperationId();
+                    String soapOperationId = generateId();
                     soapOperation.setId(soapOperationId);
                 }
                 for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
                     if(soapMockResponse.getId() == null){
-                        Long soapMockResponseId = getNextSoapMockResponseId();
+                        String soapMockResponseId = generateId();
                         soapMockResponse.setId(soapMockResponseId);
                     }
                 }
             }
         }
         return super.save(type);
-    }
-
-    /**
-     * The method calculates the next SOAP port id
-     * @return The new generated SOAP port id
-     * @see SoapPort
-     * @see SoapPortDto
-     */
-    protected synchronized Long getNextSoapPortId(){
-        return ++globalPortId;
-    }
-
-    /**
-     * The method calculates the next SOAP operation id
-     * @return The new generated SOAP operation id
-     * @see SoapOperation
-     * @see SoapOperationDto
-     */
-    protected synchronized Long getNextSoapOperationId(){
-        return ++globalOperationId;
-    }
-
-    /**
-     * The method calculates the next SOAP mock response id
-     * @return The new generated SOAP mock response id
-     * @see SoapMockResponse
-     * @see SoapMockResponseDto
-     */
-    protected synchronized Long getNextSoapMockResponseId(){
-        return ++globalMockResponseId;
     }
 
 }

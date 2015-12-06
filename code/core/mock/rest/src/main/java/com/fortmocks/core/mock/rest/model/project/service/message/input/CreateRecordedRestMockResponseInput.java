@@ -27,20 +27,20 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
 public class CreateRecordedRestMockResponseInput implements Input {
 
     @NotNull
-    private Long restMethodId;
+    private String restMethodId;
     @NotNull
     private RestMockResponseDto restMockResponseDto;
 
-    public CreateRecordedRestMockResponseInput(Long restMethodId, RestMockResponseDto restMockResponseDto) {
+    public CreateRecordedRestMockResponseInput(String restMethodId, RestMockResponseDto restMockResponseDto) {
         this.restMethodId = restMethodId;
         this.restMockResponseDto = restMockResponseDto;
     }
 
-    public Long getRestMethodId() {
+    public String getRestMethodId() {
         return restMethodId;
     }
 
-    public void setRestMethodId(Long restMethodId) {
+    public void setRestMethodId(String restMethodId) {
         this.restMethodId = restMethodId;
     }
 

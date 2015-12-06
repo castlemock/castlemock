@@ -56,7 +56,7 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/create/response", method = RequestMethod.GET)
-    public ModelAndView dispayCreatePage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId) {
+    public ModelAndView dispayCreatePage(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId) {
         final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
         final SoapOperationDto soapOperationDto = output.getSoapOperation();
         final SoapMockResponseDto mockResponse = new SoapMockResponseDto();
@@ -80,7 +80,7 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/create/response", method = RequestMethod.POST)
-    public ModelAndView createResponse(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @ModelAttribute final SoapMockResponseDto soapMockResponseDto) {
+    public ModelAndView createResponse(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @ModelAttribute final SoapMockResponseDto soapMockResponseDto) {
         soapMockResponseDto.setSoapMockResponseStatus(SoapMockResponseStatus.ENABLED);
         serviceProcessor.process(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseDto));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);

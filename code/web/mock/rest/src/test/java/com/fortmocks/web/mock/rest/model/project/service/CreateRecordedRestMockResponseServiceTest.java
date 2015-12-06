@@ -36,7 +36,7 @@ public class CreateRecordedRestMockResponseServiceTest {
         final RestApplication restApplication = new RestApplication();
         final RestResource restResource = new RestResource();
         final RestMethod restMethod = new RestMethod();
-        restMethod.setId(1L);
+        restMethod.setId("REST METHOD");
 
         restProject.setRestApplications(new ArrayList<RestApplication>());
         restApplication.setRestResources(new ArrayList<RestResource>());
@@ -56,7 +56,7 @@ public class CreateRecordedRestMockResponseServiceTest {
 
     @Test
     public void testProcess(){
-        final Long restMethodId = 1L;
+        final String restMethodId = "REST METHOD";
         final RestMockResponseDto restMockResponseDto = Mockito.mock(RestMockResponseDto.class);
         final CreateRecordedRestMockResponseInput input = new CreateRecordedRestMockResponseInput(restMethodId, restMockResponseDto);
         final ServiceTask<CreateRecordedRestMockResponseInput> serviceTask = new ServiceTask<>(input);

@@ -54,7 +54,7 @@ public class UpdateUserServiceTest {
     @Test
     public void testProcess(){
         User user = new User();
-        user.setId(1L);
+        user.setId(new String());
         user.setPassword("Password");
         user.setUsername("Username");
         user.setStatus(Status.ACTIVE);
@@ -62,16 +62,16 @@ public class UpdateUserServiceTest {
         user.setEmail("email@email.com");
 
         UserDto updatedUser = new UserDto();
-        updatedUser.setId(1L);
+        updatedUser.setId(new String());
         updatedUser.setPassword("UpdatedPassword");
         updatedUser.setUsername("UpdatedUsername");
         updatedUser.setStatus(Status.ACTIVE);
         updatedUser.setRole(Role.ADMIN);
         updatedUser.setEmail("email@email.com");
 
-        Mockito.when(repository.findOne(Mockito.anyLong())).thenReturn(user);
+        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
-        final UpdateUserInput input = new UpdateUserInput(1L, updatedUser);
+        final UpdateUserInput input = new UpdateUserInput(new String(), updatedUser);
         final ServiceTask<UpdateUserInput> serviceTask = new ServiceTask<UpdateUserInput>();
         serviceTask.setInput(input);
         final ServiceResult<UpdateUserOutput> serviceResult = service.process(serviceTask);

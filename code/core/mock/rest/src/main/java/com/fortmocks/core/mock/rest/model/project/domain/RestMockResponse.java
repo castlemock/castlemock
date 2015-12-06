@@ -26,9 +26,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @since 1.0
  */
 @XmlRootElement
-public class RestMockResponse implements Saveable<Long> {
+public class RestMockResponse implements Saveable<String> {
 
-    private Long id;
+    private String id;
     private String name;
     private String body;
     private Integer httpStatusCode;
@@ -37,12 +37,12 @@ public class RestMockResponse implements Saveable<Long> {
 
     @Override
     @XmlElement
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

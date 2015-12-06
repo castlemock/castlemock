@@ -41,7 +41,7 @@ public class UpdateUserService extends AbstractUserService implements Service<Up
     @Override
     public ServiceResult<UpdateUserOutput> process(final ServiceTask<UpdateUserInput> serviceTask) {
         final UpdateUserInput input = serviceTask.getInput();
-        final Long userId = input.getUserId();
+        final String userId = input.getUserId();
         final UserDto user = input.getUser();
         update(userId, user);
         return createServiceResult(new UpdateUserOutput(user));

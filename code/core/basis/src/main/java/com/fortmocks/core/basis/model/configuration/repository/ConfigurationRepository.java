@@ -28,5 +28,5 @@ import com.fortmocks.core.basis.model.configuration.domain.ConfigurationGroup;
  * @see ConfigurationGroup
  * @see Repository
  */
-public interface ConfigurationRepository extends Repository<ConfigurationGroup, Long> {
+public interface ConfigurationRepository extends Repository<ConfigurationGroup, String> {
 }

@@ -24,14 +24,14 @@ package com.fortmocks.web.mock.soap.web.mvc.command.operation;
  */
 public class SoapOperationModifierCommand {
 
-    private Long[] soapOperationIds;
+    private String[] soapOperationIds;
     private String soapOperationStatus;
 
     /**
      * Returns a list of the services that will get the new status
      * @return List of services
      */
-    public Long[] getSoapOperationIds() {
+    public String[] getSoapOperationIds() {
         return soapOperationIds;
     }
 
@@ -39,7 +39,7 @@ public class SoapOperationModifierCommand {
      * Sets a new list of operation ids
      * @param soapOperationIds The new value for operation ids
      */
-    public void setSoapOperationIds(Long[] soapOperationIds) {
+    public void setSoapOperationIds(String[] soapOperationIds) {
         this.soapOperationIds = soapOperationIds;
     }
 

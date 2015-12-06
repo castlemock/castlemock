@@ -26,7 +26,7 @@ import org.dozer.Mapping;
 public class SoapMockResponseDto {
 
     @Mapping("id")
-    private Long id;
+    private String id;
 
     @Mapping("name")
     private String name;
@@ -40,11 +40,11 @@ public class SoapMockResponseDto {
     @Mapping("httpStatusCode")
     private Integer httpStatusCode;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

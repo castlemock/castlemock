@@ -26,17 +26,17 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 public class ExportSoapProjectInput implements Input {
 
     @NotNull
-    private Long restProjectId;
+    private String restProjectId;
 
-    public ExportSoapProjectInput(Long restProjectId) {
+    public ExportSoapProjectInput(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 
-    public Long getRestProjectId() {
+    public String getRestProjectId() {
         return restProjectId;
     }
 
-    public void setRestProjectId(Long restProjectId) {
+    public void setRestProjectId(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 }

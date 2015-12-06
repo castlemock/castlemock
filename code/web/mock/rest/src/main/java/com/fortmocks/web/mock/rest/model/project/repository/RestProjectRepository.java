@@ -29,5 +29,5 @@ import com.fortmocks.core.mock.rest.model.project.domain.RestProject;
  * @see RestProject
  * @see Repository
  */
-public interface RestProjectRepository extends Repository<RestProject, Long> {
+public interface RestProjectRepository extends Repository<RestProject, String> {
 }

@@ -26,39 +26,39 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 public class ReadSoapOperationInput implements Input {
 
     @NotNull
-    private Long soapProjectId;
+    private String soapProjectId;
     @NotNull
-    private Long soapPortId;
+    private String soapPortId;
     @NotNull
-    private Long soapOperationId;
+    private String soapOperationId;
 
-    public ReadSoapOperationInput(Long soapProjectId, Long soapPortId, Long soapOperationId) {
+    public ReadSoapOperationInput(String soapProjectId, String soapPortId, String soapOperationId) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
         this.soapOperationId = soapOperationId;
     }
 
-    public Long getSoapProjectId() {
+    public String getSoapProjectId() {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(Long soapProjectId) {
+    public void setSoapProjectId(String soapProjectId) {
         this.soapProjectId = soapProjectId;
     }
 
-    public Long getSoapPortId() {
+    public String getSoapPortId() {
         return soapPortId;
     }
 
-    public void setSoapPortId(Long soapPortId) {
+    public void setSoapPortId(String soapPortId) {
         this.soapPortId = soapPortId;
     }
 
-    public Long getSoapOperationId() {
+    public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(Long soapOperationId) {
+    public void setSoapOperationId(String soapOperationId) {
         this.soapOperationId = soapOperationId;
     }
 }

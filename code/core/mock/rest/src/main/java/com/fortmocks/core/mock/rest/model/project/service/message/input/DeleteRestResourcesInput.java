@@ -29,31 +29,31 @@ import java.util.List;
 public class DeleteRestResourcesInput implements Input{
 
     @NotNull
-    private Long restProjectId;
+    private String restProjectId;
     @NotNull
-    private Long restApplicationId;
+    private String restApplicationId;
     @NotNull
     private List<RestResourceDto> restResources;
 
-    public DeleteRestResourcesInput(Long restProjectId, Long restApplicationId, List<RestResourceDto> restResources) {
+    public DeleteRestResourcesInput(String restProjectId, String restApplicationId, List<RestResourceDto> restResources) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResources = restResources;
     }
 
-    public Long getRestProjectId() {
+    public String getRestProjectId() {
         return restProjectId;
     }
 
-    public void setRestProjectId(Long restProjectId) {
+    public void setRestProjectId(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 
-    public Long getRestApplicationId() {
+    public String getRestApplicationId() {
         return restApplicationId;
     }
 
-    public void setRestApplicationId(Long restApplicationId) {
+    public void setRestApplicationId(String restApplicationId) {
         this.restApplicationId = restApplicationId;
     }
 

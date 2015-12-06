@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
  * @see EventDto
  */
 @Service
-public class EventServiceFacadeImpl extends ServiceFacadeImpl<EventDto, Long, EventServiceAdapter<EventDto>> implements EventServiceFacade {
+public class EventServiceFacadeImpl extends ServiceFacadeImpl<EventDto, String, EventServiceAdapter<EventDto>> implements EventServiceFacade {
 
     /**
      * The initiate method is responsible for for locating all the service instances for a specific module

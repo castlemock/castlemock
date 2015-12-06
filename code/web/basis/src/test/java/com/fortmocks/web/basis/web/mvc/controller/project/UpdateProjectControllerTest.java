@@ -33,7 +33,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -65,7 +65,7 @@ public class UpdateProjectControllerTest extends AbstractControllerTest {
     @Test
     public void testUpdateProjectWithValidId() throws Exception {
         final ProjectDto projectDto = ProjectDtoGenerator.generateProjectDto();
-        when(projectServiceComponent.findOne(anyString(), anyLong())).thenReturn(projectDto);
+        when(projectServiceComponent.findOne(anyString(), anyString())).thenReturn(projectDto);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + projectDto.getId() + UPDATE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())

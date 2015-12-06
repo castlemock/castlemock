@@ -24,17 +24,17 @@ import com.fortmocks.core.basis.model.Input;
  */
 public class ReadSoapEventInput implements Input {
 
-    private Long soapEventId;
+    private String soapEventId;
 
-    public ReadSoapEventInput(Long soapEventId) {
+    public ReadSoapEventInput(String soapEventId) {
         this.soapEventId = soapEventId;
     }
 
-    public Long getSoapEventId() {
+    public String getSoapEventId() {
         return soapEventId;
     }
 
-    public void setSoapEventId(Long soapEventId) {
+    public void setSoapEventId(String soapEventId) {
         this.soapEventId = soapEventId;
     }
 

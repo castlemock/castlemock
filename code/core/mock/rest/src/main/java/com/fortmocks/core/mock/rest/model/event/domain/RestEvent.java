@@ -32,7 +32,7 @@ public class RestEvent extends Event {
 
     private RestRequestDto restRequest;
     private RestResponseDto restResponse;
-    private Long restMethodId;
+    private String restMethodId;
 
     public RestRequestDto getRestRequest() {
         return restRequest;
@@ -50,11 +50,11 @@ public class RestEvent extends Event {
         this.restResponse = restResponse;
     }
 
-    public Long getRestMethodId() {
+    public String getRestMethodId() {
         return restMethodId;
     }
 
-    public void setRestMethodId(Long restMethodId) {
+    public void setRestMethodId(String restMethodId) {
         this.restMethodId = restMethodId;
     }
 }

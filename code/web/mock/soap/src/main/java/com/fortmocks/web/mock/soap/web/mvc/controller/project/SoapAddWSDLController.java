@@ -53,7 +53,7 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/add/wsdl", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long projectId) {
+    public ModelAndView defaultPage(@PathVariable final String projectId) {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT_ID, projectId);
         model.addObject(FILE_UPLOAD_FORM, new WSDLFileUploadForm());
@@ -69,7 +69,7 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value="/{projectId}/add/wsdl", method=RequestMethod.POST)
-    public ModelAndView uploadWSDL(@PathVariable final Long projectId, @RequestParam final String type, @ModelAttribute("uploadForm") final WSDLFileUploadForm uploadForm){
+    public ModelAndView uploadWSDL(@PathVariable final String projectId, @RequestParam final String type, @ModelAttribute("uploadForm") final WSDLFileUploadForm uploadForm){
         List<SoapPortDto> soapPorts = null;
 
         if(TYPE_FILE.equals(type)){

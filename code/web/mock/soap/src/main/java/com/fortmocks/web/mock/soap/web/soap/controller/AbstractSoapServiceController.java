@@ -74,7 +74,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletRequest The incoming request
      * @return Returns the response as an String
      */
-    protected String process(final Long projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected String process(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
@@ -94,7 +94,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletRequest The incoming request
      * @return A new created project
      */
-    protected SoapRequestDto prepareRequest(final Long projectId, final HttpServletRequest httpServletRequest) {
+    protected SoapRequestDto prepareRequest(final String projectId, final HttpServletRequest httpServletRequest) {
         SoapRequestDto request = new SoapRequestDto();
         final String body = SoapMessageSupport.getBody(httpServletRequest);
         final String serviceName = SoapMessageSupport.extractSoapRequestName(body);

@@ -52,7 +52,7 @@ public class ExportProjectController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "{projectType}/project/{projectId}/export", method = RequestMethod.GET)
-    public ResponseEntity<String> defaultPage(@PathVariable final String projectType, @PathVariable final Long projectId) {
+    public ResponseEntity<String> defaultPage(@PathVariable final String projectType, @PathVariable final String projectId) {
         final String exportedProject = projectServiceFacade.exportProject(projectType, projectId);
 
         HttpHeaders respHeaders = new HttpHeaders();

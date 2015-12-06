@@ -46,7 +46,7 @@ public class RestEventController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "rest/event/{eventId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long eventId) {
+    public ModelAndView defaultPage(@PathVariable final String eventId) {
         final ReadRestEventOutput output = serviceProcessor.process(new ReadRestEventInput(eventId));
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(EVENT, output.getRestEvent());

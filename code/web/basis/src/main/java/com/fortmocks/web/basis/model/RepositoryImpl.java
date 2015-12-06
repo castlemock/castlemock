@@ -19,6 +19,7 @@ package com.fortmocks.web.basis.model;
 import com.fortmocks.core.basis.model.Repository;
 import com.fortmocks.core.basis.model.Saveable;
 import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 
 import javax.xml.bind.JAXBContext;
@@ -54,7 +55,6 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
     protected Map<I, T> collection = new ConcurrentHashMap<I, T>();
 
     private static final Logger LOGGER = Logger.getLogger(RepositoryImpl.class);
-    private transient Long globalId = 0L;
 
     /**
      * The default constructor for the AbstractRepositoryImpl class. The constructor will extract class instances of the
@@ -78,15 +78,10 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
     public void initiate(){
         LOGGER.debug("Start the initiate phase for the type " + entityClass.getSimpleName());
         final Collection<T> loadedFiles = loadFiles();
-        Long globalId = 0L;
         for(T type : loadedFiles){
-            Long id = (Long) type.getId();
             collection.put(type.getId(), type);
-            if(globalId > id){
-                globalId = id;
-            }
         }
-        this.globalId = globalId;
+
         postInitiate();
     }
 
@@ -276,7 +271,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
         return loadedTypes;
     }
 
-    public synchronized Long generateId(){
-        return ++globalId;
+    protected String generateId(){
+        return RandomStringUtils.random(6, true, true);
     }
 }

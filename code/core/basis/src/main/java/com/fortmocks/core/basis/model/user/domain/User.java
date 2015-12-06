@@ -33,9 +33,9 @@ import java.util.Date;
  * @see UserDto
  */
 @XmlRootElement
-public class User implements Saveable<Long> {
+public class User implements Saveable<String> {
 
-    private Long id = 0L;
+    private String id;
     private String username;
     private String password;
     private String email;
@@ -59,7 +59,7 @@ public class User implements Saveable<Long> {
      */
     @XmlElement
     @Override
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -69,7 +69,7 @@ public class User implements Saveable<Long> {
      * @param id New user id
      */
     @Override
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

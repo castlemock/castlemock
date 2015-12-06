@@ -29,7 +29,7 @@ public class SoapOperationDtoGenerator {
 
     public static SoapOperationDto generateSoapOperationDto(){
         final SoapOperationDto soapOperationDto = new SoapOperationDto();
-        soapOperationDto.setId(1L);
+        soapOperationDto.setId("SOAP OPERATION");
         soapOperationDto.setName("Soap operation name");
         soapOperationDto.setCurrentResponseSequenceIndex(1);
         soapOperationDto.setDefaultBody("Default body");

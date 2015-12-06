@@ -51,7 +51,7 @@ public class DeleteSoapPortController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/delete", method = RequestMethod.GET)
-    public ModelAndView showConfirmationPage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId) {
+    public ModelAndView showConfirmationPage(@PathVariable final String soapProjectId, @PathVariable final String soapPortId) {
         final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
         ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT_ID,soapProjectId);
@@ -68,7 +68,7 @@ public class DeleteSoapPortController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/delete/confirm", method = RequestMethod.GET)
-    public ModelAndView confirm(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId) {
+    public ModelAndView confirm(@PathVariable final String soapProjectId, @PathVariable final String soapPortId) {
         serviceProcessor.process(new DeleteSoapPortInput(soapProjectId, soapPortId));
         return redirect("/soap/project/" + soapProjectId);
     }
@@ -81,7 +81,7 @@ public class DeleteSoapPortController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/delete/confirm", method = RequestMethod.POST)
-    public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final Long soapProjectId, @ModelAttribute final DeleteSoapPortsCommand deleteSoapPortsCommand) {
+    public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final String soapProjectId, @ModelAttribute final DeleteSoapPortsCommand deleteSoapPortsCommand) {
         serviceProcessor.process(new DeleteSoapPortsInput(soapProjectId, deleteSoapPortsCommand.getSoapPorts()));
         return redirect("/soap/project/" + soapProjectId);
     }

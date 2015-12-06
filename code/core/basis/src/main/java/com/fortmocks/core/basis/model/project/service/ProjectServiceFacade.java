@@ -35,7 +35,7 @@ import java.util.List;
  * @see Project
  * @see ProjectDto
  */
-public interface ProjectServiceFacade extends ServiceFacade<ProjectDto, Long> {
+public interface ProjectServiceFacade extends ServiceFacade<ProjectDto, String> {
 
     /**
      * The method provides the functionality to export a project and convert it to a String
@@ -43,7 +43,7 @@ public interface ProjectServiceFacade extends ServiceFacade<ProjectDto, Long> {
      * @param id The id of the project that will be converted and exported
      * @return The project with the provided id as a String
      */
-    String exportProject(String typeUrl, Long id);
+    String exportProject(String typeUrl, String id);
 
     /**
      * The method provides the functionality to import a project as a String

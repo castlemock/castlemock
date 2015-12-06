@@ -29,7 +29,7 @@ public class SoapProjectDtoGenerator {
 
     public static SoapProjectDto generateSoapProjectDto(){
         final SoapProjectDto projectDto = new SoapProjectDto();
-        projectDto.setId(1L);
+        projectDto.setId("SOAP PROJECT");
         projectDto.setName("Project name");
         projectDto.setDescription("Project description");
         projectDto.setCreated(new Date());

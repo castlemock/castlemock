@@ -37,7 +37,7 @@ import org.springframework.stereotype.Repository;
  * @see ConfigurationGroup
  */
 @Repository
-public class ConfigurationRepositoryImpl extends RepositoryImpl<ConfigurationGroup, Long> implements ConfigurationRepository {
+public class ConfigurationRepositoryImpl extends RepositoryImpl<ConfigurationGroup, String> implements ConfigurationRepository {
 
     @Value(value = "${configuration.file.directory}")
     private String configurationFileDirectory;

@@ -29,20 +29,20 @@ import java.util.List;
 public class DeleteSoapPortsInput implements Input{
 
     @NotNull
-    private Long soapProjectId;
+    private String soapProjectId;
     @NotNull
     private List<SoapPortDto> soapPorts;
 
-    public DeleteSoapPortsInput(Long soapProjectId, List<SoapPortDto> soapPorts) {
+    public DeleteSoapPortsInput(String soapProjectId, List<SoapPortDto> soapPorts) {
         this.soapProjectId = soapProjectId;
         this.soapPorts = soapPorts;
     }
 
-    public Long getSoapProjectId() {
+    public String getSoapProjectId() {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(Long soapProjectId) {
+    public void setSoapProjectId(String soapProjectId) {
         this.soapProjectId = soapProjectId;
     }
 

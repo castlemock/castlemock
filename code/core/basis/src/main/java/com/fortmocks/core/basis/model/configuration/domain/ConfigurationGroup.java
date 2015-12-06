@@ -29,9 +29,9 @@ import java.util.List;
  * @since 1.0
  */
 @XmlRootElement
-public class ConfigurationGroup implements Saveable<Long> {
+public class ConfigurationGroup implements Saveable<String> {
 
-    private Long id;
+    private String id;
     private String name;
     private List<Configuration> configurations;
 
@@ -41,7 +41,7 @@ public class ConfigurationGroup implements Saveable<Long> {
      */
     @XmlElement
     @Override
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -50,7 +50,7 @@ public class ConfigurationGroup implements Saveable<Long> {
      * @param id The new id for the configuration group
      */
     @Override
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

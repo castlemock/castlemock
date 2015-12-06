@@ -60,7 +60,7 @@ public class UpdateCurrentUserServiceTest {
     public void testProcess(){
         List<User> users = new ArrayList<User>();
         User user = new User();
-        user.setId(1L);
+        user.setId(new String());
         user.setPassword("Password");
         user.setUsername("Username");
         user.setStatus(Status.ACTIVE);
@@ -69,14 +69,14 @@ public class UpdateCurrentUserServiceTest {
         users.add(user);
 
         UserDto updatedUser = new UserDto();
-        updatedUser.setId(1L);
+        updatedUser.setId(new String());
         updatedUser.setPassword("UpdatedPassword");
         updatedUser.setUsername("UpdatedUsername");
         updatedUser.setStatus(Status.ACTIVE);
         updatedUser.setRole(Role.ADMIN);
         updatedUser.setEmail("email@email.com");
 
-        Mockito.when(repository.findOne(Mockito.anyLong())).thenReturn(user);
+        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         Mockito.when(repository.findAll()).thenReturn(users);
         Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
         final UpdateCurrentUserInput input = new UpdateCurrentUserInput(updatedUser);

@@ -27,7 +27,7 @@ import org.dozer.Mapping;
 public class RestMockResponseDto {
 
     @Mapping("id")
-    private Long id;
+    private String id;
 
     @Mapping("name")
     private String name;
@@ -44,11 +44,11 @@ public class RestMockResponseDto {
     @Mapping("restContentType")
     private RestContentType restContentType;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

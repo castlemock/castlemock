@@ -33,14 +33,14 @@ import java.util.List;
  * @see Project
  * @see ProjectDto
  */
-public interface ProjectServiceAdapter<D extends ProjectDto> extends ServiceAdapter<ProjectDto, D, Long>{
+public interface ProjectServiceAdapter<D extends ProjectDto> extends ServiceAdapter<ProjectDto, D, String>{
 
     /**
      * The method provides the functionality to export a project and convert it to a String
      * @param id The id of the project that will be converted and exported
      * @return The project with the provided id as a String
      */
-    String exportProject(Long id);
+    String exportProject(String id);
 
     /**
      * The method provides the functionality to import a project as a String

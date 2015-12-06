@@ -26,17 +26,17 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 public class ReadRestMockResponseInput implements Input {
 
     @NotNull
-    private Long restProjectId;
+    private String restProjectId;
     @NotNull
-    private Long restApplicationId;
+    private String restApplicationId;
     @NotNull
-    private Long restResourceId;
+    private String restResourceId;
     @NotNull
-    private Long restMethodId;
+    private String restMethodId;
     @NotNull
-    private Long restMockResponse;
+    private String restMockResponse;
 
-    public ReadRestMockResponseInput(Long restProjectId, Long restApplicationId, Long restResourceId, Long restMethodId, Long restMockResponse) {
+    public ReadRestMockResponseInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponse) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -44,43 +44,43 @@ public class ReadRestMockResponseInput implements Input {
         this.restMockResponse = restMockResponse;
     }
 
-    public Long getRestProjectId() {
+    public String getRestProjectId() {
         return restProjectId;
     }
 
-    public void setRestProjectId(Long restProjectId) {
+    public void setRestProjectId(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 
-    public Long getRestApplicationId() {
+    public String getRestApplicationId() {
         return restApplicationId;
     }
 
-    public void setRestApplicationId(Long restApplicationId) {
+    public void setRestApplicationId(String restApplicationId) {
         this.restApplicationId = restApplicationId;
     }
 
-    public Long getRestResourceId() {
+    public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(Long restResourceId) {
+    public void setRestResourceId(String restResourceId) {
         this.restResourceId = restResourceId;
     }
 
-    public Long getRestMethodId() {
+    public String getRestMethodId() {
         return restMethodId;
     }
 
-    public void setRestMethodId(Long restMethodId) {
+    public void setRestMethodId(String restMethodId) {
         this.restMethodId = restMethodId;
     }
 
-    public Long getRestMockResponse() {
+    public String getRestMockResponse() {
         return restMockResponse;
     }
 
-    public void setRestMockResponse(Long restMockResponse) {
+    public void setRestMockResponse(String restMockResponse) {
         this.restMockResponse = restMockResponse;
     }
 }

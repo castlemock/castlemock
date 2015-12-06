@@ -54,7 +54,7 @@ public class SoapServiceController extends AbstractSoapServiceController {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public String postMethod(@PathVariable final Long projectId, final HttpServletRequest request, final HttpServletResponse response) {
+    public String postMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
         return process(projectId, request, response);
     }
 }

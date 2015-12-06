@@ -27,20 +27,20 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 public class UpdateSoapProjectInput implements Input {
 
     @NotNull
-    private Long soapProjectId;
+    private String soapProjectId;
     @NotNull
     private SoapProjectDto soapProject;
 
-    public UpdateSoapProjectInput(Long soapProjectId, SoapProjectDto soapProject) {
+    public UpdateSoapProjectInput(String soapProjectId, SoapProjectDto soapProject) {
         this.soapProjectId = soapProjectId;
         this.soapProject = soapProject;
     }
 
-    public Long getSoapProjectId() {
+    public String getSoapProjectId() {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(Long soapProjectId) {
+    public void setSoapProjectId(String soapProjectId) {
         this.soapProjectId = soapProjectId;
     }
 

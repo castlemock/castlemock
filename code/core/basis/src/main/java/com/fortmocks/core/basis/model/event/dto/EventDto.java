@@ -32,7 +32,7 @@ import java.util.Date;
 public class EventDto implements TypeIdentifiable {
 
     @Mapping("id")
-    private Long id;
+    private String id;
 
     @Mapping("startDate")
     private Date startDate;
@@ -59,11 +59,11 @@ public class EventDto implements TypeIdentifiable {
         this.endDate = eventDto.getEndDate();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

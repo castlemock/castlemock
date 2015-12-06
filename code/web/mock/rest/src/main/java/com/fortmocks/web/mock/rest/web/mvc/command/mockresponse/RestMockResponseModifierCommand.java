@@ -22,14 +22,14 @@ package com.fortmocks.web.mock.rest.web.mvc.command.mockresponse;
  */
 public class RestMockResponseModifierCommand {
 
-    private Long[] restMockResponseIds;
+    private String[] restMockResponseIds;
     private String restMockResponseStatus;
 
-    public Long[] getRestMockResponseIds() {
+    public String[] getRestMockResponseIds() {
         return restMockResponseIds;
     }
 
-    public void setRestMockResponseIds(Long[] restMockResponseIds) {
+    public void setRestMockResponseIds(String[] restMockResponseIds) {
         this.restMockResponseIds = restMockResponseIds;
     }
 

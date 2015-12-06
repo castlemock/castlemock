@@ -32,7 +32,7 @@ import java.util.List;
 public class RestMethodDto {
 
     @Mapping("id")
-    private Long id;
+    private String id;
 
     @Mapping("name")
     private String name;
@@ -58,11 +58,11 @@ public class RestMethodDto {
     @Mapping("currentResponseSequenceIndex")
     private Integer currentResponseSequenceIndex = 0;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

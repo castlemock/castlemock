@@ -33,7 +33,7 @@ import java.util.List;
 public class AbstractRestEventService extends AbstractEventService<RestEvent, RestEventDto> {
 
 
-    public List<RestEventDto> findEventsByMethodId(Long restMethodId) {
+    public List<RestEventDto> findEventsByMethodId(String restMethodId) {
         final List<RestEvent> events = new ArrayList<RestEvent>();
         for(RestEvent event : findAllTypes()){
             if(event.getRestMethodId().equals(restMethodId)){

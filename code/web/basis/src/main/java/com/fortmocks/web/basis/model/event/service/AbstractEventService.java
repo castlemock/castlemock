@@ -24,7 +24,7 @@ import com.fortmocks.web.basis.model.AbstractService;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractEventService<T extends Event, D extends EventDto> extends AbstractService<T,D,Long> {
+public abstract class AbstractEventService<T extends Event, D extends EventDto> extends AbstractService<T,D,String> {
 
     /**
      * The service finds the

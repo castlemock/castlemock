@@ -56,7 +56,7 @@ public class RestProjectController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
-    public ModelAndView getProject(@PathVariable final Long projectId) {
+    public ModelAndView getProject(@PathVariable final String projectId) {
         final ReadRestProjectOutput output =  serviceProcessor.process(new ReadRestProjectInput(projectId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
@@ -74,11 +74,11 @@ public class RestProjectController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.POST)
-    public ModelAndView projectFunctionality(@PathVariable final Long projectId, @RequestParam final String action, @ModelAttribute final RestApplicationModifierCommand restApplicationModifierCommand) {
+    public ModelAndView projectFunctionality(@PathVariable final String projectId, @RequestParam final String action, @ModelAttribute final RestApplicationModifierCommand restApplicationModifierCommand) {
         LOGGER.debug("Requested REST project action requested: " + action);
         if(DELETE_REST_APPLICATIONS.equalsIgnoreCase(action)) {
             final List<RestApplicationDto> restApplications = new ArrayList<RestApplicationDto>();
-            for(Long restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
+            for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
                 final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(projectId, restApplicationId));
                 restApplications.add(output.getRestApplication());
             }

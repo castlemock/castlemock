@@ -28,17 +28,17 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 public class DeleteUserInput implements Input{
 
     @NotNull
-    private Long userId;
+    private String userId;
 
-    public DeleteUserInput(Long userId) {
+    public DeleteUserInput(String userId) {
         this.userId = userId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 }

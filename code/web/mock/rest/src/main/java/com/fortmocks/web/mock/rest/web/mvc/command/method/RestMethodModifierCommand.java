@@ -24,13 +24,13 @@ package com.fortmocks.web.mock.rest.web.mvc.command.method;
  */
 public class RestMethodModifierCommand {
 
-    private Long[] restMethodIds;
+    private String[] restMethodIds;
 
-    public Long[] getRestMethodIds() {
+    public String[] getRestMethodIds() {
         return restMethodIds;
     }
 
-    public void setRestMethodIds(Long[] restMethodIds) {
+    public void setRestMethodIds(String[] restMethodIds) {
         this.restMethodIds = restMethodIds;
     }
 }

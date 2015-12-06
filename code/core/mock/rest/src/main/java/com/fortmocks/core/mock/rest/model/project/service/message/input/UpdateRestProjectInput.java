@@ -27,20 +27,20 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 public class UpdateRestProjectInput implements Input {
 
     @NotNull
-    private Long restProjectId;
+    private String restProjectId;
     @NotNull
     private RestProjectDto restProject;
 
-    public UpdateRestProjectInput(Long restProjectId, RestProjectDto restProject) {
+    public UpdateRestProjectInput(String restProjectId, RestProjectDto restProject) {
         this.restProjectId = restProjectId;
         this.restProject = restProject;
     }
 
-    public Long getRestProjectId() {
+    public String getRestProjectId() {
         return restProjectId;
     }
 
-    public void setRestProjectId(Long restProjectId) {
+    public void setRestProjectId(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 

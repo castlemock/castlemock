@@ -27,17 +27,17 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 public class UpdateSoapMockResponseInput implements Input {
 
     @NotNull
-    private Long soapProjectId;
+    private String soapProjectId;
     @NotNull
-    private Long soapPortId;
+    private String soapPortId;
     @NotNull
-    private Long soapOperationId;
+    private String soapOperationId;
     @NotNull
-    private Long soapMockResponseId;
+    private String soapMockResponseId;
     @NotNull
     private SoapMockResponseDto soapMockResponseDto;
 
-    public UpdateSoapMockResponseInput(Long soapProjectId, Long soapPortId, Long soapOperationId, Long soapMockResponseId, SoapMockResponseDto soapMockResponseDto) {
+    public UpdateSoapMockResponseInput(String soapProjectId, String soapPortId, String soapOperationId, String soapMockResponseId, SoapMockResponseDto soapMockResponseDto) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
         this.soapOperationId = soapOperationId;
@@ -45,35 +45,35 @@ public class UpdateSoapMockResponseInput implements Input {
         this.soapMockResponseDto = soapMockResponseDto;
     }
 
-    public Long getSoapProjectId() {
+    public String getSoapProjectId() {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(Long soapProjectId) {
+    public void setSoapProjectId(String soapProjectId) {
         this.soapProjectId = soapProjectId;
     }
 
-    public Long getSoapPortId() {
+    public String getSoapPortId() {
         return soapPortId;
     }
 
-    public void setSoapPortId(Long soapPortId) {
+    public void setSoapPortId(String soapPortId) {
         this.soapPortId = soapPortId;
     }
 
-    public Long getSoapOperationId() {
+    public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(Long soapOperationId) {
+    public void setSoapOperationId(String soapOperationId) {
         this.soapOperationId = soapOperationId;
     }
 
-    public Long getSoapMockResponseId() {
+    public String getSoapMockResponseId() {
         return soapMockResponseId;
     }
 
-    public void setSoapMockResponseId(Long soapMockResponseId) {
+    public void setSoapMockResponseId(String soapMockResponseId) {
         this.soapMockResponseId = soapMockResponseId;
     }
 

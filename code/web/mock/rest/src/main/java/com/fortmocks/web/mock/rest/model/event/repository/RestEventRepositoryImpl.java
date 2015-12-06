@@ -33,7 +33,7 @@ import org.springframework.stereotype.Repository;
  * @see RestEvent
  */
 @Repository
-public class RestEventRepositoryImpl extends RepositoryImpl<RestEvent, Long> implements RestEventRepository {
+public class RestEventRepositoryImpl extends RepositoryImpl<RestEvent, String> implements RestEventRepository {
 
     @Value(value = "${rest.event.file.directory}")
     private String restEventFileDirectory;

@@ -55,7 +55,7 @@ public class ExportProjectControllerTest extends AbstractControllerTest {
 
     @Test
     public void testProjectExport() throws Exception {
-        Mockito.when(projectServiceFacade.exportProject(Mockito.anyString(), Mockito.anyLong())).thenReturn("Project information");
+        Mockito.when(projectServiceFacade.exportProject(Mockito.anyString(), Mockito.anyString())).thenReturn("Project information");
         final String url = "/web/soap/project/0/export";
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(url);
         mockMvc.perform(message)

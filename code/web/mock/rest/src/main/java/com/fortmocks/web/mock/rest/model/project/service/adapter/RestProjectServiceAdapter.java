@@ -62,7 +62,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         serviceProcessor.process(new DeleteRestProjectInput(id));
     }
 
@@ -77,7 +77,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      * @return The updated instance
      */
     @Override
-    public RestProjectDto update(Long id, RestProjectDto dto) {
+    public RestProjectDto update(String id, RestProjectDto dto) {
         final UpdateRestProjectOutput output = serviceProcessor.process(new UpdateRestProjectInput(id, dto));
         return output.getUpdatedRestProject();
     }
@@ -101,7 +101,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      *         values, null will be returned.
      */
     @Override
-    public RestProjectDto read(Long id) {
+    public RestProjectDto read(String id) {
         final ReadRestProjectOutput output = serviceProcessor.process(new ReadRestProjectInput(id));
         return output.getRestProject();
     }
@@ -132,7 +132,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      * @return The project with the provided id as a String
      */
     @Override
-    public String exportProject(Long id) {
+    public String exportProject(String id) {
         final ExportRestProjectOutput output = serviceProcessor.process(new ExportRestProjectInput(id));
         return output.getExportedProject();
     }

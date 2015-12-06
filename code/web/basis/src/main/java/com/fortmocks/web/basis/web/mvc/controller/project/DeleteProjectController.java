@@ -53,7 +53,7 @@ public class DeleteProjectController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "{projectType}/project/{projectId}/delete", method = RequestMethod.GET)
-    public ModelAndView getDeleteConfirmationPage(@PathVariable final String projectType, @PathVariable final Long projectId) {
+    public ModelAndView getDeleteConfirmationPage(@PathVariable final String projectType, @PathVariable final String projectId) {
 
         final ProjectDto projectDto = projectServiceComponent.findOne(projectType, projectId);
         if(projectDto == null){
@@ -72,7 +72,7 @@ public class DeleteProjectController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "{projectType}/project/{projectId}/delete/confirm", method = RequestMethod.GET)
-    public ModelAndView deleteProject(@PathVariable final String projectType, @PathVariable Long projectId) {
+    public ModelAndView deleteProject(@PathVariable final String projectType, @PathVariable String projectId) {
         projectServiceComponent.delete(projectType, projectId);
         return redirect();
     }
@@ -86,7 +86,7 @@ public class DeleteProjectController extends AbstractViewController {
     @RequestMapping(value = "project/delete/confirm", method = RequestMethod.POST)
     public ModelAndView confirmDeletationOfMultpleProjects(@ModelAttribute DeleteProjectsCommand deleteProjectsCommand) {
         for(int index = 0; index < deleteProjectsCommand.getProjectIds().length; index++){
-            final Long projectId = Long.parseLong(deleteProjectsCommand.getProjectIds()[index]);
+            final String projectId = deleteProjectsCommand.getProjectIds()[index];
             final String projectTypeUrl = deleteProjectsCommand.getTypeUrls()[index];
             projectServiceComponent.delete(projectTypeUrl, projectId);
         }

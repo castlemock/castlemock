@@ -24,14 +24,14 @@ package com.fortmocks.web.mock.soap.web.mvc.command.port;
  */
 public class SoapPortModifierCommand {
 
-    private Long[] soapPortIds;
+    private String[] soapPortIds;
     private String soapPortStatus;
 
-    public Long[] getSoapPortIds() {
+    public String[] getSoapPortIds() {
         return soapPortIds;
     }
 
-    public void setSoapPortIds(Long[] soapPortIds) {
+    public void setSoapPortIds(String[] soapPortIds) {
         this.soapPortIds = soapPortIds;
     }
 

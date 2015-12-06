@@ -27,20 +27,20 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 public class CreateRecordedSoapMockResponseInput implements Input {
 
     @NotNull
-    private Long soapOperationId;
+    private String soapOperationId;
     @NotNull
     private SoapMockResponseDto soapMockResponseDto;
 
-    public CreateRecordedSoapMockResponseInput(Long soapOperationId, SoapMockResponseDto soapMockResponseDto) {
+    public CreateRecordedSoapMockResponseInput(String soapOperationId, SoapMockResponseDto soapMockResponseDto) {
         this.soapOperationId = soapOperationId;
         this.soapMockResponseDto = soapMockResponseDto;
     }
 
-    public Long getSoapOperationId() {
+    public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(Long soapOperationId) {
+    public void setSoapOperationId(String soapOperationId) {
         this.soapOperationId = soapOperationId;
     }
 

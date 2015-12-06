@@ -67,27 +67,27 @@ public class SearchRestProjectServiceTest {
         final RestProject restProject = new RestProject();
         restProject.setDescription("Project Description");
         restProject.setName("Rest project");
-        restProject.setId(1L);
+        restProject.setId("1");
         restProject.setRestApplications(new ArrayList<RestApplication>());
 
         final RestApplication restApplication = new RestApplication();
         restApplication.setName("Rest application");
-        restApplication.setId(2L);
+        restApplication.setId("2");
         restApplication.setRestResources(new ArrayList<RestResource>());
 
         final RestResource restResource = new RestResource();
         restResource.setName("Rest resource");
-        restResource.setId(3L);
+        restResource.setId("3");
         restResource.setRestMethods(new ArrayList<RestMethod>());
 
         final RestMethod restMethod = new RestMethod();
         restMethod.setName("Rest method");
-        restMethod.setId(4L);
+        restMethod.setId("4");
         restMethod.setRestMockResponses(new ArrayList<RestMockResponse>());
 
         final RestMockResponse restMockResponse = new RestMockResponse();
         restMockResponse.setName("Rest mock response");
-        restMockResponse.setId(5L);
+        restMockResponse.setId("5");
 
         restProject.getRestApplications().add(restApplication);
         restApplication.getRestResources().add(restResource);

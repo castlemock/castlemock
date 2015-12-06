@@ -68,7 +68,7 @@ public class SoapOperationController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, final ServletRequest request) {
+    public ModelAndView defaultPage(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, final ServletRequest request) {
         final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
         final SoapOperationDto soapOperation = output.getSoapOperation();
         final ReadSoapEventsByOperationIdOutput readSoapEventsByOperationIdOutput = serviceProcessor.process(new ReadSoapEventsByOperationIdInput(soapOperationId));
@@ -107,16 +107,16 @@ public class SoapOperationController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}", method = RequestMethod.POST)
-    public ModelAndView serviceFunctionality(@PathVariable final Long soapProjectId, @PathVariable final Long soapPortId, @PathVariable final Long soapOperationId, @RequestParam final String action, @ModelAttribute final SoapMockResponseModifierCommand soapMockResponseModifierCommand) {
+    public ModelAndView serviceFunctionality(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @RequestParam final String action, @ModelAttribute final SoapMockResponseModifierCommand soapMockResponseModifierCommand) {
         LOGGER.debug("SOAP operation action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final SoapMockResponseStatus status = SoapMockResponseStatus.valueOf(soapMockResponseModifierCommand.getSoapMockResponseStatus());
-            for(Long mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()){
+            for(String mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()){
                 serviceProcessor.process(new UpdateSoapMockResponseStatusInput(soapProjectId, soapPortId, soapOperationId, mockResponseId, status));
             }
         } else if(DELETE_MOCK_RESPONSES.equalsIgnoreCase(action)) {
             final List<SoapMockResponseDto> mockResponses = new ArrayList<SoapMockResponseDto>();
-            for(Long mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()){
+            for(String mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()){
                 final ReadSoapMockResponseOutput output = serviceProcessor.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, mockResponseId));
                 mockResponses.add(output.getSoapMockResponse());
             }

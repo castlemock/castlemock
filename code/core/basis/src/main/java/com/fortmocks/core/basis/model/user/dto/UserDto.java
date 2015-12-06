@@ -32,7 +32,7 @@ import java.util.Date;
 public class UserDto {
 
     @Mapping("id")
-    private Long id;
+    private String id;
 
     @Mapping("username")
     private String username;
@@ -59,7 +59,7 @@ public class UserDto {
      * Get the user id
      * @return User id
      */
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -67,7 +67,7 @@ public class UserDto {
      * Set a new value to user id
      * @param id New user id
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

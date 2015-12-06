@@ -41,7 +41,7 @@ public class CreateRestResourceController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/create/resource", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long projectId, @PathVariable final Long applicationId) {
+    public ModelAndView defaultPage(@PathVariable final String projectId, @PathVariable final String applicationId) {
         CreateRestResourceCommand createRestResourceCommand = new CreateRestResourceCommand();
         createRestResourceCommand.getRestResource().setUri(SLASH);
         final ModelAndView model = createPartialModelAndView(PAGE);
@@ -54,7 +54,7 @@ public class CreateRestResourceController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/create/resource", method = RequestMethod.POST)
-    public ModelAndView createResource(@PathVariable final Long projectId, @PathVariable final Long applicationId, @ModelAttribute final CreateRestResourceCommand createRestResourceCommand) {
+    public ModelAndView createResource(@PathVariable final String projectId, @PathVariable final String applicationId, @ModelAttribute final CreateRestResourceCommand createRestResourceCommand) {
         final CreateRestResourceOutput output = serviceProcessor.process(new CreateRestResourceInput(projectId, applicationId, createRestResourceCommand.getRestResource()));
         return redirect("/rest/project/" + projectId + "/application/" + applicationId + "/resource/" +  output.getCreatedRestResource().getId());
     }

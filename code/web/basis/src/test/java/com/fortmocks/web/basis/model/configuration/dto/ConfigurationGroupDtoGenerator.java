@@ -44,7 +44,7 @@ public class ConfigurationGroupDtoGenerator {
         }
 
         configurationGroupDto.setName("COnfiguration group name");
-        configurationGroupDto.setId(1L);
+        configurationGroupDto.setId(new String());
         configurationGroupDto.setConfigurations(configurationDtos);
         return configurationGroupDto;
     }

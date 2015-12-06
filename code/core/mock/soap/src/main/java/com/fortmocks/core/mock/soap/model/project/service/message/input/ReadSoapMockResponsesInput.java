@@ -27,15 +27,15 @@ import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 public class ReadSoapMockResponsesInput implements Input {
 
     @NotNull
-    private Long soapOperationId;
+    private String soapOperationId;
     @NotNull
     private SoapMockResponseStatus status;
 
-    public Long getSoapOperationId() {
+    public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(Long soapOperationId) {
+    public void setSoapOperationId(String soapOperationId) {
         this.soapOperationId = soapOperationId;
     }
 

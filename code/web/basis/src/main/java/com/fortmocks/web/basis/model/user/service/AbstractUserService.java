@@ -34,7 +34,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractUserService extends AbstractService<User, UserDto, Long> {
+public abstract class AbstractUserService extends AbstractService<User, UserDto, String> {
 
     protected static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
     private static final Logger LOGGER = Logger.getLogger(AbstractUserService.class);
@@ -85,7 +85,7 @@ public abstract class AbstractUserService extends AbstractService<User, UserDto,
      * @return Returns the updated user
      */
     @Override
-    public UserDto update(final Long userId, final UserDto updatedUser){
+    public UserDto update(final String userId, final UserDto updatedUser){
         Preconditions.checkNotNull(updatedUser);
         Preconditions.checkArgument(!updatedUser.getUsername().isEmpty(), "Invalid username. Username cannot be empty");
         final UserDto existingUser = findByUsername(updatedUser.getUsername());
@@ -128,10 +128,9 @@ public abstract class AbstractUserService extends AbstractService<User, UserDto,
      * @param userId The user with the user id that will be deleted
      */
     @Override
-    public void delete(final Long userId){
+    public void delete(final String userId){
         LOGGER.debug("Deleting user with id " + userId);
         Preconditions.checkNotNull(userId, "User id cannot be null");
-        Preconditions.checkArgument(userId >= 0, "User id cannot be less than zero");
         final UserDto userDto = find(userId);
 
         if(userDto == null){

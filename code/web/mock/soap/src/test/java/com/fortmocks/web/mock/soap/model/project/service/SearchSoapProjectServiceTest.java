@@ -68,22 +68,22 @@ public class SearchSoapProjectServiceTest {
         final SoapProject soapProject = new SoapProject();
         soapProject.setDescription("Project Description");
         soapProject.setName("Soap project");
-        soapProject.setId(1L);
+        soapProject.setId("1");
         soapProject.setSoapPorts(new ArrayList<SoapPort>());
 
         final SoapPort soapPort = new SoapPort();
         soapPort.setName("Soap port");
-        soapPort.setId(2L);
+        soapPort.setId("2");
         soapPort.setSoapOperations(new ArrayList<SoapOperation>());
 
         final SoapOperation soapOperation = new SoapOperation();
         soapOperation.setName("Soap operation");
-        soapOperation.setId(3L);
+        soapOperation.setId("3");
         soapOperation.setSoapMockResponses(new ArrayList<SoapMockResponse>());
 
         final SoapMockResponse soapMockResponse = new SoapMockResponse();
         soapMockResponse.setName("Soap mock response");
-        soapMockResponse.setId(4L);
+        soapMockResponse.setId("4");
 
 
         soapProject.getSoapPorts().add(soapPort);

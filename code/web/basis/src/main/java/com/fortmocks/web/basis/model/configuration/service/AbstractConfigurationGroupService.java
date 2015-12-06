@@ -24,7 +24,7 @@ import com.fortmocks.web.basis.model.AbstractService;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractConfigurationGroupService extends AbstractService<ConfigurationGroup, ConfigurationGroupDto, Long> {
+public abstract class AbstractConfigurationGroupService extends AbstractService<ConfigurationGroup, ConfigurationGroupDto, String> {
 
 
 }

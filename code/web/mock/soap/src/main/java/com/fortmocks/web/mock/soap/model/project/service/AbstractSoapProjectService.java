@@ -30,7 +30,7 @@ import java.util.*;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractSoapProjectService extends AbstractService<SoapProject, SoapProjectDto, Long> {
+public abstract class AbstractSoapProjectService extends AbstractService<SoapProject, SoapProjectDto, String> {
 
     /**
      * Count the operation statuses
@@ -92,9 +92,8 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * @return The updated version project
      */
     @Override
-    public SoapProjectDto update(final Long soapProjectId, final SoapProjectDto updatedProject){
+    public SoapProjectDto update(final String soapProjectId, final SoapProjectDto updatedProject){
         Preconditions.checkNotNull(soapProjectId, "Project id be null");
-        Preconditions.checkArgument(soapProjectId >= 0, "Project id cannot be negative");
         Preconditions.checkNotNull(updatedProject, "Project cannot be null");
         Preconditions.checkArgument(!updatedProject.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
         final SoapProjectDto projectWithNameDto = findSoapProject(updatedProject.getName());
@@ -119,7 +118,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * @see SoapPort
      * @see SoapPortDto
      */
-    protected SoapPort findSoapPortType(final Long soapProjectId, final Long soapPortId) {
+    protected SoapPort findSoapPortType(final String soapProjectId, final String soapPortId) {
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(soapPortId, "Port id cannot be null");
         final SoapProject soapProject = findType(soapProjectId);
@@ -145,7 +144,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * @see SoapOperation
      * @see SoapOperationDto
      */
-    protected SoapOperation findSoapOperationType(final Long soapProjectId, final Long soapPortId, final Long soapOperationId){
+    protected SoapOperation findSoapOperationType(final String soapProjectId, final String soapPortId, final String soapOperationId){
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         for(SoapOperation soapOperation : soapPort.getSoapOperations()){
@@ -166,7 +165,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * @see SoapPort
      * @see SoapPortDto
      */
-    protected List<SoapOperation> findSoapOperationType(final Long soapProjectId, final Long soapPortId) {
+    protected List<SoapOperation> findSoapOperationType(final String soapProjectId, final String soapPortId) {
         final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         return soapPort != null ? soapPort.getSoapOperations() : null;
     }
@@ -179,7 +178,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * @see SoapOperation
      * @see SoapOperationDto
      */
-    protected SoapOperation findSoapOperationType(final Long soapOperationId) {
+    protected SoapOperation findSoapOperationType(final String soapOperationId) {
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         for(SoapProject soapProject : findAllTypes()){
             for(SoapPort soapPort : soapProject.getSoapPorts()){
@@ -201,7 +200,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * @see SoapOperation
      * @see SoapOperationDto
      */
-    protected Long findSoapProjectType(final Long soapOperationId) {
+    protected String findSoapProjectType(final String soapOperationId) {
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         for(SoapProject soapProject : findAllTypes()){
             for(SoapPort soapPort : soapProject.getSoapPorts()){
@@ -222,7 +221,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * @see SoapProject
      * @see SoapProjectDto
      */
-    protected List<SoapOperation> findSoapOperationTypeWithSoapProjectId(final Long soapProjectId) {
+    protected List<SoapOperation> findSoapOperationTypeWithSoapProjectId(final String soapProjectId) {
         final SoapProject soapProject = findType(soapProjectId);
 
         if(soapProject == null){
@@ -254,7 +253,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * @see SoapMockResponse
      * @see SoapMockResponseDto
      */
-    protected SoapMockResponse findSoapMockResponseType(final Long soapProjectId, final Long soapPortId, final Long soapOperationId, final Long soapMockResponseId) {
+    protected SoapMockResponse findSoapMockResponseType(final String soapProjectId, final String soapPortId, final String soapOperationId, final String soapMockResponseId) {
         final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
             if(soapMockResponse.getId().equals(soapMockResponseId)){

@@ -26,17 +26,17 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 public class ReadRestEventInput implements Input {
 
     @NotNull
-    private Long restEventId;
+    private String restEventId;
 
-    public ReadRestEventInput(Long restEventId) {
+    public ReadRestEventInput(String restEventId) {
         this.restEventId = restEventId;
     }
 
-    public Long getRestEventId() {
+    public String getRestEventId() {
         return restEventId;
     }
 
-    public void setRestEventId(Long restEventId) {
+    public void setRestEventId(String restEventId) {
         this.restEventId = restEventId;
     }
 }

@@ -29,5 +29,5 @@ import com.fortmocks.core.mock.soap.model.event.domain.SoapEvent;
  * @see SoapEvent
  * @see Repository
  */
-public interface SoapEventRepository extends Repository<SoapEvent, Long> {
+public interface SoapEventRepository extends Repository<SoapEvent, String> {
 }

@@ -26,20 +26,20 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 public class UpdateCurrentRestMockResponseSequenceIndexInput implements Input {
 
     @NotNull
-    private Long restMethodId;
+    private String restMethodId;
     @NotNull
     private Integer currentRestMockResponseSequenceIndex;
 
-    public UpdateCurrentRestMockResponseSequenceIndexInput(Long restMethodId, Integer currentRestMockResponseSequenceIndex) {
+    public UpdateCurrentRestMockResponseSequenceIndexInput(String restMethodId, Integer currentRestMockResponseSequenceIndex) {
         this.restMethodId = restMethodId;
         this.currentRestMockResponseSequenceIndex = currentRestMockResponseSequenceIndex;
     }
 
-    public Long getRestMethodId() {
+    public String getRestMethodId() {
         return restMethodId;
     }
 
-    public void setRestMethodId(Long restMethodId) {
+    public void setRestMethodId(String restMethodId) {
         this.restMethodId = restMethodId;
     }
 

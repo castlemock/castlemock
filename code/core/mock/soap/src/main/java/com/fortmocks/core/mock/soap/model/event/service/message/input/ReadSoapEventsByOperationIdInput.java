@@ -24,17 +24,17 @@ import com.fortmocks.core.basis.model.Input;
  */
 public class ReadSoapEventsByOperationIdInput implements Input {
 
-    private Long operationId;
+    private String operationId;
 
-    public ReadSoapEventsByOperationIdInput(Long operationId) {
+    public ReadSoapEventsByOperationIdInput(String operationId) {
         this.operationId = operationId;
     }
 
-    public Long getOperationId() {
+    public String getOperationId() {
         return operationId;
     }
 
-    public void setOperationId(Long operationId) {
+    public void setOperationId(String operationId) {
         this.operationId = operationId;
     }
 }

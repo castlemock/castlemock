@@ -26,28 +26,28 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 public class DeleteSoapPortInput implements Input{
 
     @NotNull
-    private Long soapProjectId;
+    private String soapProjectId;
     @NotNull
-    private Long soapPortId;
+    private String soapPortId;
 
-    public DeleteSoapPortInput(Long soapProjectId, Long soapPortId) {
+    public DeleteSoapPortInput(String soapProjectId, String soapPortId) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
     }
 
-    public Long getSoapProjectId() {
+    public String getSoapProjectId() {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(Long soapProjectId) {
+    public void setSoapProjectId(String soapProjectId) {
         this.soapProjectId = soapProjectId;
     }
 
-    public Long getSoapPortId() {
+    public String getSoapPortId() {
         return soapPortId;
     }
 
-    public void setSoapPortId(Long soapPortId) {
+    public void setSoapPortId(String soapPortId) {
         this.soapPortId = soapPortId;
     }
 }

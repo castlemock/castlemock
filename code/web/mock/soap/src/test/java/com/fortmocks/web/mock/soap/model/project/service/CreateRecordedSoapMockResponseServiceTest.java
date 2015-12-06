@@ -38,7 +38,7 @@ public class CreateRecordedSoapMockResponseServiceTest {
         final SoapProject soapProject = new SoapProject();
         final SoapPort soapPort = new SoapPort();
         final SoapOperation soapOperation = new SoapOperation();
-        soapOperation.setId(1L);
+        soapOperation.setId(new String());
 
         soapProject.setSoapPorts(new ArrayList<SoapPort>());
         soapPort.setSoapOperations(new ArrayList<SoapOperation>());
@@ -56,7 +56,7 @@ public class CreateRecordedSoapMockResponseServiceTest {
 
     @Test
     public void testProcess(){
-        final Long SoapMethodId = 1L;
+        final String SoapMethodId = new String();
         final SoapMockResponseDto SoapMockResponseDto = Mockito.mock(SoapMockResponseDto.class);
         final CreateRecordedSoapMockResponseInput input = new CreateRecordedSoapMockResponseInput(SoapMethodId, SoapMockResponseDto);
         final ServiceTask<CreateRecordedSoapMockResponseInput> serviceTask = new ServiceTask<>(input);

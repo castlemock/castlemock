@@ -117,7 +117,7 @@ public class ProjectsOverviewController extends AbstractViewController {
                     }
 
                     final String projectTypeUrl = projectData[0];
-                    final Long projectId = Long.parseLong(projectData[1]);
+                    final String projectId = projectData[1];
                     final String exportedProject = projectServiceFacade.exportProject(projectTypeUrl, projectId);
                     final byte[] data = exportedProject.getBytes();
                     final String filename = "exported-project-" + projectTypeUrl + "-" + projectId + ".xml";
@@ -162,7 +162,7 @@ public class ProjectsOverviewController extends AbstractViewController {
                 }
 
                 final String projectTypeUrl = projectData[0];
-                final Long projectId = Long.parseLong(projectData[1]);
+                final String projectId = projectData[1];
                 final ProjectDto projectDto = projectServiceFacade.findOne(projectTypeUrl, projectId);
                 projects.add(projectDto);
             }

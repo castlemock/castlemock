@@ -30,9 +30,9 @@ import java.util.Date;
  * @since 1.0
  */
 @XmlRootElement
-public abstract class Event implements Saveable<Long> {
+public abstract class Event implements Saveable<String> {
 
-    private Long id;
+    private String id;
     private Date startDate;
     private Date endDate;
 
@@ -41,12 +41,12 @@ public abstract class Event implements Saveable<Long> {
 
     @XmlElement
     @Override
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

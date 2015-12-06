@@ -29,23 +29,23 @@ import java.util.List;
 public class UpdateSoapPortsForwardedEndpointInput implements Input {
 
     @NotNull
-    private Long soapProjectId;
+    private String soapProjectId;
     @NotNull
     private List<SoapPortDto> soapPorts;
     @NotNull
     private String forwardedEndpoint;
 
-    public UpdateSoapPortsForwardedEndpointInput(Long soapProjectId, List<SoapPortDto> soapPorts, String forwardedEndpoint) {
+    public UpdateSoapPortsForwardedEndpointInput(String soapProjectId, List<SoapPortDto> soapPorts, String forwardedEndpoint) {
         this.soapProjectId = soapProjectId;
         this.soapPorts = soapPorts;
         this.forwardedEndpoint = forwardedEndpoint;
     }
 
-    public Long getSoapProjectId() {
+    public String getSoapProjectId() {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(Long soapProjectId) {
+    public void setSoapProjectId(String soapProjectId) {
         this.soapProjectId = soapProjectId;
     }
 

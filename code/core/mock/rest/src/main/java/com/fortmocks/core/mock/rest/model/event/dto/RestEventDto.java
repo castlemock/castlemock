@@ -34,7 +34,7 @@ public class RestEventDto extends EventDto {
     private RestResponseDto restResponse;
 
     @Mapping("restMethodId")
-    private Long restMethodId;
+    private String restMethodId;
 
     /**
      * Default constructor for the REST event DTO
@@ -54,7 +54,7 @@ public class RestEventDto extends EventDto {
      * @param restRequest The REST request that the event is representing
      * @param restMethodId The id of the REST operation that is affected by the provided REST request
      */
-    public RestEventDto(final RestRequestDto restRequest, final Long restMethodId) {
+    public RestEventDto(final RestRequestDto restRequest, final String restMethodId) {
         this.restRequest = restRequest;
         this.restMethodId = restMethodId;
         setStartDate(new Date());
@@ -86,11 +86,11 @@ public class RestEventDto extends EventDto {
         this.restResponse = restResponse;
     }
 
-    public Long getRestMethodId() {
+    public String getRestMethodId() {
         return restMethodId;
     }
 
-    public void setRestMethodId(Long restMethodId) {
+    public void setRestMethodId(String restMethodId) {
         this.restMethodId = restMethodId;
     }
 }

@@ -28,5 +28,5 @@ import com.fortmocks.core.basis.model.event.dto.EventDto;
  * @see Event
  * @see EventDto
  */
-public interface EventServiceFacade extends ServiceFacade<EventDto, Long> {
+public interface EventServiceFacade extends ServiceFacade<EventDto, String> {
 }

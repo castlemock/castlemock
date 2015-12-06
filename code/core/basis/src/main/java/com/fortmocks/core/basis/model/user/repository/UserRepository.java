@@ -29,5 +29,5 @@ import com.fortmocks.core.basis.model.user.domain.User;
  * @see User
  * @see Repository
  */
-public interface UserRepository extends Repository<User, Long> {
+public interface UserRepository extends Repository<User, String> {
 }

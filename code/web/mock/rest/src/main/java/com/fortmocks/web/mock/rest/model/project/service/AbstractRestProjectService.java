@@ -26,7 +26,7 @@ import com.google.common.base.Preconditions;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractRestProjectService extends AbstractService<RestProject, RestProjectDto, Long> {
+public abstract class AbstractRestProjectService extends AbstractService<RestProject, RestProjectDto, String> {
 
     protected static final String SLASH = "/";
     protected static final String START_BRACKET = "{";
@@ -56,9 +56,8 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
      * @return The updated version project
      */
     @Override
-    public RestProjectDto update(final Long restProjectId, final RestProjectDto updatedProject){
+    public RestProjectDto update(final String restProjectId, final RestProjectDto updatedProject){
         Preconditions.checkNotNull(restProjectId, "Project id be null");
-        Preconditions.checkArgument(restProjectId >= 0, "Project id cannot be negative");
         Preconditions.checkNotNull(updatedProject, "Project cannot be null");
         Preconditions.checkArgument(!updatedProject.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
         final RestProjectDto projectWithNameDto = findRestProject(updatedProject.getName());
@@ -69,7 +68,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         return super.save(project);
     }
 
-    protected RestApplication findRestApplicationType(final Long restProjectId, final Long restApplicationId) {
+    protected RestApplication findRestApplicationType(final String restProjectId, final String restApplicationId) {
         Preconditions.checkNotNull(restProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(restApplicationId, "Application id cannot be null");
         final RestProject restProject = findType(restProjectId);
@@ -81,7 +80,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         throw new IllegalArgumentException("Unable to find a REST application with id " + restApplicationId);
     }
 
-    protected RestResource findRestResourceType(final Long restProjectId, final Long restApplicationId, final Long restResourceId){
+    protected RestResource findRestResourceType(final String restProjectId, final String restApplicationId, final String restResourceId){
         Preconditions.checkNotNull(restResourceId, "Resource id cannot be null");
         final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
         for(RestResource restResource : restApplication.getRestResources()){
@@ -92,7 +91,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         throw new IllegalArgumentException("Unable to find a REST resource with id " + restResourceId);
     }
 
-    protected RestMethod findRestMethodType(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId){
+    protected RestMethod findRestMethodType(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId){
         Preconditions.checkNotNull(restMethodId, "Method id cannot be null");
         final RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
         for(RestMethod restMethod : restResource.getRestMethods()){
@@ -103,7 +102,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         throw new IllegalArgumentException("Unable to find a REST method with id " + restMethodId);
     }
 
-    protected RestMockResponse findRestMockResponseType(final Long restProjectId, final Long restApplicationId, final Long restResourceId, final Long restMethodId, final Long restMockResponseId){
+    protected RestMockResponse findRestMockResponseType(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId, final String restMockResponseId){
         Preconditions.checkNotNull(restMockResponseId, "Mock response id cannot be null");
         final RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
         for(RestMockResponse restMockResponse : restMethod.getRestMockResponses()) {
@@ -122,7 +121,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
      * @param otherRestResourceUriParts The set of resources that will be used to identify the REST resource
      * @return A REST resource that matches the search criteria. Null otherwise
      */
-    protected RestResource findRestResourceType(final Long restProjectId, final Long restApplicationId, final String[] otherRestResourceUriParts) {
+    protected RestResource findRestResourceType(final String restProjectId, final String restApplicationId, final String[] otherRestResourceUriParts) {
         final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
 
         for(RestResource restResource : restApplication.getRestResources()){
@@ -170,7 +169,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
      * @see RestMethod
      * @see RestMethodDto
      */
-    protected RestMethod findRestMethodByRestMethodId(final Long restMethodId) {
+    protected RestMethod findRestMethodByRestMethodId(final String restMethodId) {
         Preconditions.checkNotNull(restMethodId, "REST method id cannot be null");
         for(RestProject restProject : findAllTypes()){
             for(RestApplication restApplication : restProject.getRestApplications()){
@@ -193,7 +192,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
      * @see RestMethod
      * @see RestMethodDto
      */
-    protected Long findRestProjectIdForRestMethod(final Long restMethodId) {
+    protected String findRestProjectIdForRestMethod(final String restMethodId) {
         Preconditions.checkNotNull(restMethodId, "Method id cannot be null");
         for(RestProject restProject : findAllTypes()){
             for(RestApplication restApplication : restProject.getRestApplications()){

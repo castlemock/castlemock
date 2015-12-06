@@ -29,20 +29,20 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 public class UpdateUserInput implements Input {
 
     @NotNull
-    private Long userId;
+    private String userId;
     @NotNull
     private UserDto user;
 
-    public UpdateUserInput(Long userId, UserDto user) {
+    public UpdateUserInput(String userId, UserDto user) {
         this.userId = userId;
         this.user = user;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

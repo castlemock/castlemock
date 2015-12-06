@@ -64,7 +64,7 @@ public class RestMethodController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId) {
+    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId) {
         final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
         final RestMethodDto restMethod = output.getRestMethod();
         final ReadRestEventWithMethodIdOutput readRestEventWithMethodIdOutput = serviceProcessor.process(new ReadRestEventWithMethodIdInput(restMethodId));
@@ -82,16 +82,16 @@ public class RestMethodController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}", method = RequestMethod.POST)
-    public ModelAndView serviceFunctionality(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId, @PathVariable final Long restResourceId, @PathVariable final Long restMethodId, @RequestParam final String action, @ModelAttribute final RestMockResponseModifierCommand restMockResponseModifierCommand) {
+    public ModelAndView serviceFunctionality(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @RequestParam final String action, @ModelAttribute final RestMockResponseModifierCommand restMockResponseModifierCommand) {
         LOGGER.debug("REST operation action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final RestMockResponseStatus status = RestMockResponseStatus.valueOf(restMockResponseModifierCommand.getRestMockResponseStatus());
-            for(Long mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
+            for(String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
                 serviceProcessor.process(new UpdateRestMockResponseStatusInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId, status));
             }
         } else if(DELETE_MOCK_RESPONSES.equalsIgnoreCase(action)) {
             final List<RestMockResponseDto> mockResponses = new ArrayList<RestMockResponseDto>();
-            for(Long mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
+            for(String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
                 final ReadRestMockResponseOutput output = serviceProcessor.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId));
                 mockResponses.add(output.getRestMockResponse());
             }

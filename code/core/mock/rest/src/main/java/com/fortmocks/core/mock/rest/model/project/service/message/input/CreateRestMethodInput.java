@@ -27,42 +27,42 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 public class CreateRestMethodInput implements Input {
 
     @NotNull
-    private Long restProjectId;
+    private String restProjectId;
     @NotNull
-    private Long restApplicationId;
+    private String restApplicationId;
     @NotNull
-    private Long restResourceId;
+    private String restResourceId;
     @NotNull
     private RestMethodDto restMethod;
 
-    public CreateRestMethodInput(Long restProjectId, Long restApplicationId, Long restResourceId, RestMethodDto restMethod) {
+    public CreateRestMethodInput(String restProjectId, String restApplicationId, String restResourceId, RestMethodDto restMethod) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
         this.restMethod = restMethod;
     }
 
-    public Long getRestProjectId() {
+    public String getRestProjectId() {
         return restProjectId;
     }
 
-    public void setRestProjectId(Long restProjectId) {
+    public void setRestProjectId(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 
-    public Long getRestApplicationId() {
+    public String getRestApplicationId() {
         return restApplicationId;
     }
 
-    public void setRestApplicationId(Long restApplicationId) {
+    public void setRestApplicationId(String restApplicationId) {
         this.restApplicationId = restApplicationId;
     }
 
-    public Long getRestResourceId() {
+    public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(Long restResourceId) {
+    public void setRestResourceId(String restResourceId) {
         this.restResourceId = restResourceId;
     }
 

@@ -29,7 +29,7 @@ public class SoapMockResponseDtoGenerator {
         final SoapMockResponseDto soapMockResponseDto = new SoapMockResponseDto();
         soapMockResponseDto.setName("Soap mock response name");
         soapMockResponseDto.setBody("Soap mock response body");
-        soapMockResponseDto.setId(1L);
+        soapMockResponseDto.setId("SOAP MOCK RESPONSE");
         soapMockResponseDto.setSoapMockResponseStatus(SoapMockResponseStatus.ENABLED);
         return soapMockResponseDto;
     }

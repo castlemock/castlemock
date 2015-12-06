@@ -42,7 +42,7 @@ public class UpdateCurrentRestMockResponseSequenceIndexService extends AbstractR
     public ServiceResult<UpdateCurrentRestMockResponseSequenceIndexOutput> process(final ServiceTask<UpdateCurrentRestMockResponseSequenceIndexInput> serviceTask) {
         final UpdateCurrentRestMockResponseSequenceIndexInput input = serviceTask.getInput();
         final RestMethod restMethod = findRestMethodByRestMethodId(input.getRestMethodId());
-        final Long restProjectId = findRestProjectIdForRestMethod(input.getRestMethodId());
+        final String restProjectId = findRestProjectIdForRestMethod(input.getRestMethodId());
         restMethod.setCurrentResponseSequenceIndex(input.getCurrentRestMockResponseSequenceIndex());
         save(restProjectId);
         return createServiceResult(new UpdateCurrentRestMockResponseSequenceIndexOutput());

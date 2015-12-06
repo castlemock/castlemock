@@ -53,7 +53,7 @@ public class RestAddWADLController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/add/wadl", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long projectId) {
+    public ModelAndView defaultPage(@PathVariable final String projectId) {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
         model.addObject(FILE_UPLOAD_FORM, new WADLFileUploadForm());
@@ -69,7 +69,7 @@ public class RestAddWADLController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value="/{projectId}/add/wadl", method=RequestMethod.POST)
-    public ModelAndView uploadWADL(@PathVariable final Long projectId, @RequestParam final String type, @ModelAttribute("uploadForm") final WADLFileUploadForm uploadForm){
+    public ModelAndView uploadWADL(@PathVariable final String projectId, @RequestParam final String type, @ModelAttribute("uploadForm") final WADLFileUploadForm uploadForm){
          List<RestApplicationDto> restApplicationDtos = null;
 
         if(TYPE_FILE.equals(type)){

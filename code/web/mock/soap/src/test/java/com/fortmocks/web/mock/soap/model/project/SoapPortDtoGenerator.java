@@ -26,7 +26,7 @@ public class SoapPortDtoGenerator {
 
     public static SoapPortDto generateSoapPortDto(){
         final SoapPortDto soapPortDto = new SoapPortDto();
-        soapPortDto.setId(1L);
+        soapPortDto.setId("SOAP PORT");
         soapPortDto.setName("Soap port name");
         return soapPortDto;
     }

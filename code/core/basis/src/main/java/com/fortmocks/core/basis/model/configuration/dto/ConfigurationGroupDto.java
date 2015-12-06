@@ -33,7 +33,7 @@ import java.util.List;
 public class ConfigurationGroupDto {
 
     @Mapping("id")
-    private Long id;
+    private String id;
 
     @Mapping("name")
     private String name;
@@ -45,7 +45,7 @@ public class ConfigurationGroupDto {
      * Returns the configuration group id
      * @return The configuration group id
      */
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -53,7 +53,7 @@ public class ConfigurationGroupDto {
      * Sets a new id value for the configuration group
      * @param id The new id for the configuration group
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

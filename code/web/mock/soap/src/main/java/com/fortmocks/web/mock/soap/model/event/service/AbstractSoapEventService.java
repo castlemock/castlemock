@@ -38,7 +38,7 @@ public class AbstractSoapEventService extends AbstractEventService<SoapEvent, So
      * @param operationId The id of the operation that the event belongs to
      * @return Returns a list of events
      */
-    protected List<SoapEventDto> findEventsByOperationId(final Long operationId){
+    protected List<SoapEventDto> findEventsByOperationId(final String operationId){
         final List<SoapEvent> events = new ArrayList<SoapEvent>();
         for(SoapEvent event : findAllTypes()){
             if(event.getSoapOperationId().equals(operationId)){

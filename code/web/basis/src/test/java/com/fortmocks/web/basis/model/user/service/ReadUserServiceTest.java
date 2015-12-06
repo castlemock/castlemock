@@ -54,16 +54,16 @@ public class ReadUserServiceTest {
     @Test
     public void testProcess(){
         User user = new User();
-        user.setId(1L);
+        user.setId("UserId");
         user.setUsername("Username");
         user.setStatus(Status.ACTIVE);
         user.setRole(Role.ADMIN);
         user.setEmail("email@email.com");
 
 
-        Mockito.when(repository.findOne(Mockito.anyLong())).thenReturn(user);
+        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         final ReadUserInput input = Mockito.mock(ReadUserInput.class);
-        input.setUserId(1L);
+        Mockito.when(input.getUserId()).thenReturn("UserId");
         final ServiceTask<ReadUserInput> serviceTask = new ServiceTask<ReadUserInput>();
         serviceTask.setInput(input);
         final ServiceResult<ReadUserOutput> serviceResult = service.process(serviceTask);

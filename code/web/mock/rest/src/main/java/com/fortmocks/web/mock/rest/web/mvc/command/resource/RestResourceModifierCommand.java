@@ -24,13 +24,13 @@ package com.fortmocks.web.mock.rest.web.mvc.command.resource;
  */
 public class RestResourceModifierCommand {
 
-    private Long[] restResourceIds;
+    private String[] restResourceIds;
 
-    public Long[] getRestResourceIds() {
+    public String[] getRestResourceIds() {
         return restResourceIds;
     }
 
-    public void setRestResourceIds(Long[] restResourceIds) {
+    public void setRestResourceIds(String[] restResourceIds) {
         this.restResourceIds = restResourceIds;
     }
 }

@@ -22,14 +22,14 @@ package com.fortmocks.web.mock.soap.web.mvc.command.mockresponse;
  */
 public class SoapMockResponseModifierCommand {
 
-    private Long[] soapMockResponseIds;
+    private String[] soapMockResponseIds;
     private String soapMockResponseStatus;
 
-    public Long[] getSoapMockResponseIds() {
+    public String[] getSoapMockResponseIds() {
         return soapMockResponseIds;
     }
 
-    public void setSoapMockResponseIds(Long[] soapMockResponseIds) {
+    public void setSoapMockResponseIds(String[] soapMockResponseIds) {
         this.soapMockResponseIds = soapMockResponseIds;
     }
 

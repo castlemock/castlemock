@@ -44,7 +44,7 @@ public class DeleteRestApplicationController extends AbstractRestViewController 
 
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/delete", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId) {
+    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId) {
         final ReadRestApplicationOutput ouput = serviceProcessor.process(new ReadRestApplicationInput(restProjectId, restApplicationId));
         ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
@@ -55,14 +55,14 @@ public class DeleteRestApplicationController extends AbstractRestViewController 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/delete/confirm", method = RequestMethod.GET)
-    public ModelAndView confirm(@PathVariable final Long restProjectId, @PathVariable final Long restApplicationId) {
+    public ModelAndView confirm(@PathVariable final String restProjectId, @PathVariable final String restApplicationId) {
         serviceProcessor.process(new DeleteRestApplicationInput(restProjectId, restApplicationId));
         return redirect("/rest/project/" + restProjectId);
     }
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/delete/confirm", method = RequestMethod.POST)
-    public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final Long restProjectId, @ModelAttribute final DeleteRestApplicationsCommand deleteRestApplicationsCommand) {
+    public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final String restProjectId, @ModelAttribute final DeleteRestApplicationsCommand deleteRestApplicationsCommand) {
         serviceProcessor.process(new DeleteRestApplicationsInput(restProjectId, deleteRestApplicationsCommand.getRestApplications()));
         return redirect("/rest/project/" + restProjectId);
     }

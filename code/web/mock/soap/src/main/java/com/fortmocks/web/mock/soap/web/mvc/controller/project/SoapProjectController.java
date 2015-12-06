@@ -66,7 +66,7 @@ public class SoapProjectController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
-    public ModelAndView getProject(@PathVariable final Long projectId) {
+    public ModelAndView getProject(@PathVariable final String projectId) {
         final ReadSoapProjectOutput readSoapProjectOutput = serviceProcessor.process(new ReadSoapProjectInput(projectId));
         final SoapProjectDto project = readSoapProjectOutput.getSoapProject();
         for(final SoapPortDto soapPortDto : project.getSoapPorts()){
@@ -92,16 +92,16 @@ public class SoapProjectController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.POST)
-    public ModelAndView projectFunctionality(@PathVariable final Long projectId, @RequestParam final String action, @ModelAttribute final SoapPortModifierCommand soapPortModifierCommand) {
+    public ModelAndView projectFunctionality(@PathVariable final String projectId, @RequestParam final String action, @ModelAttribute final SoapPortModifierCommand soapPortModifierCommand) {
         LOGGER.debug("Requested SOAP project action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final SoapOperationStatus soapOperationStatus = SoapOperationStatus.valueOf(soapPortModifierCommand.getSoapPortStatus());
-            for(Long soapPortId : soapPortModifierCommand.getSoapPortIds()){
+            for(String soapPortId : soapPortModifierCommand.getSoapPortIds()){
                 serviceProcessor.process(new UpdateSoapPortsStatusInput(projectId, soapPortId, soapOperationStatus));
             }
         } else if(DELETE_SOAP_PORTS.equalsIgnoreCase(action)) {
             final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
-            for(Long soapPortId : soapPortModifierCommand.getSoapPortIds()){
+            for(String soapPortId : soapPortModifierCommand.getSoapPortIds()){
                 final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(projectId, soapPortId));
                 soapPortDtos.add(output.getSoapPort());
             }
@@ -112,7 +112,7 @@ public class SoapProjectController extends AbstractSoapViewController {
             return model;
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
-            for(Long soapPortId : soapPortModifierCommand.getSoapPortIds()){
+            for(String soapPortId : soapPortModifierCommand.getSoapPortIds()){
                 final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(projectId, soapPortId));
                 soapPortDtos.add(output.getSoapPort());
             }

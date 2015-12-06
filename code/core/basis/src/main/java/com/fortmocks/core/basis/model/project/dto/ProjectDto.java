@@ -32,7 +32,7 @@ public class ProjectDto implements TypeIdentifiable {
 
 
     @Mapping("id")
-    private Long id;
+    private String id;
 
     @Mapping("name")
     private String name;
@@ -67,11 +67,11 @@ public class ProjectDto implements TypeIdentifiable {
         this.description = projectDto.getDescription();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

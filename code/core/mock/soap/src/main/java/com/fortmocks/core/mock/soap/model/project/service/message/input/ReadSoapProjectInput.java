@@ -26,17 +26,17 @@ import com.fortmocks.core.basis.model.validation.NotNull;
 public class ReadSoapProjectInput implements Input {
 
     @NotNull
-    private Long soapProjectId;
+    private String soapProjectId;
 
-    public ReadSoapProjectInput(Long soapProjectId) {
+    public ReadSoapProjectInput(String soapProjectId) {
         this.soapProjectId = soapProjectId;
     }
 
-    public Long getSoapProjectId() {
+    public String getSoapProjectId() {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(Long soapProjectId) {
+    public void setSoapProjectId(String soapProjectId) {
         this.soapProjectId = soapProjectId;
     }
 }

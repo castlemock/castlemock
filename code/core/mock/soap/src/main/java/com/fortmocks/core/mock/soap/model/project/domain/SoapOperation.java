@@ -28,9 +28,9 @@ import java.util.List;
  * @since 1.0
  */
 @XmlRootElement
-public class SoapOperation implements Saveable<Long> {
+public class SoapOperation implements Saveable<String> {
 
-    private Long id;
+    private String id;
     private String name;
     private String uri;
     private SoapResponseStrategy soapResponseStrategy;
@@ -45,12 +45,12 @@ public class SoapOperation implements Saveable<Long> {
 
     @XmlElement
     @Override
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

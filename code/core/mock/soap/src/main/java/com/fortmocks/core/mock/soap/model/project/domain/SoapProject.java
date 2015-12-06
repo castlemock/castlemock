@@ -30,7 +30,6 @@ import java.util.List;
 @XmlRootElement
 public class SoapProject extends Project {
 
-    private static transient Long globalId = 0L;
     private List<SoapPort> soapPorts;
 
     @XmlElementWrapper(name = "soapPorts")

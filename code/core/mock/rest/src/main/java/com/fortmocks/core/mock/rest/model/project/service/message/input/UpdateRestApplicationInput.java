@@ -27,31 +27,31 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 public class UpdateRestApplicationInput implements Input {
 
     @NotNull
-    private Long restProjectId;
+    private String restProjectId;
     @NotNull
-    private Long restApplicationId;
+    private String restApplicationId;
     @NotNull
     private RestApplicationDto restApplication;
 
-    public UpdateRestApplicationInput(Long restProjectId, Long restApplicationId, RestApplicationDto restApplication) {
+    public UpdateRestApplicationInput(String restProjectId, String restApplicationId, RestApplicationDto restApplication) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restApplication = restApplication;
     }
 
-    public Long getRestProjectId() {
+    public String getRestProjectId() {
         return restProjectId;
     }
 
-    public void setRestProjectId(Long restProjectId) {
+    public void setRestProjectId(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 
-    public Long getRestApplicationId() {
+    public String getRestApplicationId() {
         return restApplicationId;
     }
 
-    public void setRestApplicationId(Long restApplicationId) {
+    public void setRestApplicationId(String restApplicationId) {
         this.restApplicationId = restApplicationId;
     }
 

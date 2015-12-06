@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @since 1.0
  */
 @XmlRootElement
-public class SoapMockResponse implements Saveable<Long> {
+public class SoapMockResponse implements Saveable<String> {
 
-    private Long id;
+    private String id;
     private String name;
     private String body;
     private Integer httpStatusCode;
@@ -38,12 +38,12 @@ public class SoapMockResponse implements Saveable<Long> {
 
     @XmlElement
     @Override
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

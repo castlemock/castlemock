@@ -28,7 +28,7 @@ import java.util.List;
 public class RestResourceDto {
 
     @Mapping("id")
-    private Long id;
+    private String id;
 
     @Mapping("name")
     private String name;
@@ -41,11 +41,11 @@ public class RestResourceDto {
 
     private String invokeAddress;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

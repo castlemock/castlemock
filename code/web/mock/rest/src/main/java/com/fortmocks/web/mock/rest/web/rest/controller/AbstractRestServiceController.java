@@ -69,7 +69,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param httpServletResponse The outgoing response
      * @return Returns the response as an String
      */
-    protected String process(final Long projectId, final Long applicationId, final RestMethodType restMethodType, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected String process(final String projectId, final String applicationId, final RestMethodType restMethodType, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "The project id cannot be null");
             Preconditions.checkNotNull(applicationId, "The application id cannot be null");
@@ -94,7 +94,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param httpServletRequest The incoming request
      * @return A new created project
      */
-    protected RestRequestDto prepareRequest(final Long projectId, final Long applicationId, final RestMethodType restMethodType, final HttpServletRequest httpServletRequest) {
+    protected RestRequestDto prepareRequest(final String projectId, final String applicationId, final RestMethodType restMethodType, final HttpServletRequest httpServletRequest) {
         final RestRequestDto request = new RestRequestDto();
         final String body = RestMessageSupport.getBody(httpServletRequest);
         final String incomingRequestUri = httpServletRequest.getRequestURI().toLowerCase();

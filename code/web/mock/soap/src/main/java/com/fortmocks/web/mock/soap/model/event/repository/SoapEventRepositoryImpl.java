@@ -33,7 +33,7 @@ import org.springframework.stereotype.Repository;
  * @see SoapEvent
  */
 @Repository
-public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, Long> implements SoapEventRepository {
+public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, String> implements SoapEventRepository {
 
     @Value(value = "${soap.event.file.directory}")
     private String soapEventFileDirectory;

@@ -26,20 +26,20 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class RestApplication implements Saveable<Long> {
+public class RestApplication implements Saveable<String> {
 
-    private Long id;
+    private String id;
     private String name;
     private List<RestResource> restResources;
 
     @Override
     @XmlElement
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

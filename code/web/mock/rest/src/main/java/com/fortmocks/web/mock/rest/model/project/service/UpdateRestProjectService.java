@@ -41,7 +41,7 @@ public class UpdateRestProjectService extends AbstractRestProjectService impleme
     @Override
     public ServiceResult<UpdateRestProjectOutput> process(final ServiceTask<UpdateRestProjectInput> serviceTask) {
         final UpdateRestProjectInput input = serviceTask.getInput();
-        final Long restProjectId = input.getRestProjectId();
+        final String restProjectId = input.getRestProjectId();
         final RestProjectDto restProject = input.getRestProject();
         final RestProjectDto updatedRestProject = update(restProjectId, restProject);
         final UpdateRestProjectOutput output = new UpdateRestProjectOutput();

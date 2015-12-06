@@ -40,7 +40,7 @@ public class DeleteRestProjectService extends AbstractRestProjectService impleme
     @Override
     public ServiceResult<DeleteRestProjectOutput> process(final ServiceTask<DeleteRestProjectInput> serviceTask) {
         final DeleteRestProjectInput input = serviceTask.getInput();
-        final Long restProjectId = input.getRestProjectId();
+        final String restProjectId = input.getRestProjectId();
         delete(restProjectId);
         return createServiceResult(new DeleteRestProjectOutput());
     }

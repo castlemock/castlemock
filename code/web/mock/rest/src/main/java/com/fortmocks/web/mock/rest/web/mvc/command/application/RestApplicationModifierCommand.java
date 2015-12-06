@@ -24,13 +24,13 @@ package com.fortmocks.web.mock.rest.web.mvc.command.application;
  */
 public class RestApplicationModifierCommand {
 
-    private Long[] restApplicationIds;
+    private String[] restApplicationIds;
 
-    public Long[] getRestApplicationIds() {
+    public String[] getRestApplicationIds() {
         return restApplicationIds;
     }
 
-    public void setRestApplicationIds(Long[] restApplicationIds) {
+    public void setRestApplicationIds(String[] restApplicationIds) {
         this.restApplicationIds = restApplicationIds;
     }
 }

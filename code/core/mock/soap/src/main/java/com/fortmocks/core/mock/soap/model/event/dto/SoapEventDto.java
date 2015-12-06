@@ -35,7 +35,7 @@ public class SoapEventDto extends EventDto {
     private SoapResponseDto soapResponse;
 
     @Mapping("soapOperationId")
-    private Long soapOperationId;
+    private String soapOperationId;
 
     /**
      * Default constructor for the SOAP event DTO
@@ -56,7 +56,7 @@ public class SoapEventDto extends EventDto {
      * @param soapOperationId The id of the SOAP operation that is affected by the provided SOAP request
      * @see SoapOperation
      */
-    public SoapEventDto(final SoapRequestDto soapRequest, final Long soapOperationId) {
+    public SoapEventDto(final SoapRequestDto soapRequest, final String soapOperationId) {
         this.soapRequest = soapRequest;
         this.soapOperationId = soapOperationId;
         setStartDate(new Date());
@@ -108,7 +108,7 @@ public class SoapEventDto extends EventDto {
      * Returns the SOAP operation id
      * @return The SOAP operation id
      */
-    public Long getSoapOperationId() {
+    public String getSoapOperationId() {
         return soapOperationId;
     }
 
@@ -116,7 +116,7 @@ public class SoapEventDto extends EventDto {
      * Set a new value to the SOAP operation id
      * @param soapOperationId The new value to the SOAP operation id
      */
-    public void setSoapOperationId(Long soapOperationId) {
+    public void setSoapOperationId(String soapOperationId) {
         this.soapOperationId = soapOperationId;
     }
 }

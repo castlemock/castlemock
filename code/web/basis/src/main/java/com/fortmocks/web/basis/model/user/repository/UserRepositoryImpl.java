@@ -40,7 +40,7 @@ import java.util.Date;
  * @see User
  */
 @Repository
-public class UserRepositoryImpl extends RepositoryImpl<User, Long> implements UserRepository {
+public class UserRepositoryImpl extends RepositoryImpl<User, String> implements UserRepository {
 
     @Value(value = "${user.file.directory}")
     private String userFileDirectory;
@@ -59,7 +59,7 @@ public class UserRepositoryImpl extends RepositoryImpl<User, Long> implements Us
     protected void postInitiate() {
         if(collection.isEmpty()){
             final User user = new User();
-            user.setId(0L);
+            user.setId(new String());
             user.setUsername("admin");
             user.setPassword(PASSWORD_ENCODER.encode("admin"));
             user.setStatus(Status.ACTIVE);
@@ -112,7 +112,6 @@ public class UserRepositoryImpl extends RepositoryImpl<User, Long> implements Us
         Preconditions.checkNotNull(user.getStatus());
         Preconditions.checkNotNull(user.getUpdated());
         Preconditions.checkNotNull(user.getUsername());
-        Preconditions.checkArgument(user.getId() >= 0, "User id cannot be negative");
         Preconditions.checkArgument(!user.getPassword().isEmpty(), "User password cannot be empty");
         Preconditions.checkArgument(!user.getUsername().isEmpty(), "User username cannot be empty");
     }

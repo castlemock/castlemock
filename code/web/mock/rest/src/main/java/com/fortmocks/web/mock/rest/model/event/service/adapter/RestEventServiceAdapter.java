@@ -48,12 +48,12 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public RestEventDto update(Long id, RestEventDto dto) {
+    public RestEventDto update(String id, RestEventDto dto) {
         throw new UnsupportedOperationException();
     }
 
@@ -64,7 +64,7 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
     }
 
     @Override
-    public RestEventDto read(Long id) {
+    public RestEventDto read(String id) {
         final ReadRestEventOutput output = serviceProcessor.process(new ReadRestEventInput(id));
         return output.getRestEvent();
     }

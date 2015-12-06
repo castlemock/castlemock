@@ -27,42 +27,42 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 public class UpdateSoapOperationInput implements Input {
 
     @NotNull
-    private Long soapProjectId;
+    private String soapProjectId;
     @NotNull
-    private Long soapPortId;
+    private String soapPortId;
     @NotNull
-    private Long soapOperationId;
+    private String soapOperationId;
     @NotNull
     private SoapOperationDto updatedSoapOperation;
 
-    public UpdateSoapOperationInput(Long soapProjectId, Long soapPortId, Long soapOperationId, SoapOperationDto updatedSoapOperation) {
+    public UpdateSoapOperationInput(String soapProjectId, String soapPortId, String soapOperationId, SoapOperationDto updatedSoapOperation) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
         this.soapOperationId = soapOperationId;
         this.updatedSoapOperation = updatedSoapOperation;
     }
 
-    public Long getSoapProjectId() {
+    public String getSoapProjectId() {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(Long soapProjectId) {
+    public void setSoapProjectId(String soapProjectId) {
         this.soapProjectId = soapProjectId;
     }
 
-    public Long getSoapPortId() {
+    public String getSoapPortId() {
         return soapPortId;
     }
 
-    public void setSoapPortId(Long soapPortId) {
+    public void setSoapPortId(String soapPortId) {
         this.soapPortId = soapPortId;
     }
 
-    public Long getSoapOperationId() {
+    public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(Long soapOperationId) {
+    public void setSoapOperationId(String soapOperationId) {
         this.soapOperationId = soapOperationId;
     }
 

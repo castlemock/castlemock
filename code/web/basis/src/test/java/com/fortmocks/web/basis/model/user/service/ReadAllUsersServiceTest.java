@@ -58,7 +58,7 @@ public class ReadAllUsersServiceTest {
     public void testProcess(){
         List<User> users = new ArrayList<User>();
         User user = new User();
-        user.setId(1L);
+        user.setId(new String());
         user.setUsername("Username");
         user.setStatus(Status.ACTIVE);
         user.setRole(Role.ADMIN);
