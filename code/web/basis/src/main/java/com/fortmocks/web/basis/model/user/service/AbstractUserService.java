@@ -21,8 +21,10 @@ import com.fortmocks.core.basis.model.user.domain.Status;
 import com.fortmocks.core.basis.model.user.domain.User;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.web.basis.model.AbstractService;
+import com.fortmocks.web.basis.model.session.token.repository.SessionTokenRepository;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -35,6 +37,9 @@ import java.util.List;
  * @since 1.0
  */
 public abstract class AbstractUserService extends AbstractService<User, UserDto, String> {
+
+    @Autowired
+    private SessionTokenRepository sessionTokenRepository;
 
     protected static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
     private static final Logger LOGGER = Logger.getLogger(AbstractUserService.class);
@@ -100,6 +105,7 @@ public abstract class AbstractUserService extends AbstractService<User, UserDto,
         }
 
         final UserDto user = find(userId);
+        final String oldUsername = user.getUsername();
         final Date updatedTimestamp = new Date();
 
         LOGGER.debug("Updating user with id " + userId + "\n" +
@@ -119,8 +125,9 @@ public abstract class AbstractUserService extends AbstractService<User, UserDto,
         if(!updatedUser.getPassword().isEmpty()){
             user.setPassword(PASSWORD_ENCODER.encode(updatedUser.getPassword()));
         }
-
-        return super.save(user);
+        UserDto savedUser = super.save(user);
+        sessionTokenRepository.updateToken(oldUsername, user.getUsername());
+        return savedUser;
     }
 
     /**

@@ -16,7 +16,7 @@
 
 package com.fortmocks.war.config;
 
-import com.fortmocks.war.config.session.token.SessionTokenRepository;
+import com.fortmocks.web.basis.model.session.token.repository.SessionTokenRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

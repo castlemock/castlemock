@@ -1,5 +1,6 @@
-package com.fortmocks.war.config.session.token;
+package com.fortmocks.web.basis.model.session.token;
 
+import com.fortmocks.web.basis.model.session.token.repository.SessionTokenRepository;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 
 import javax.xml.bind.annotation.XmlElement;

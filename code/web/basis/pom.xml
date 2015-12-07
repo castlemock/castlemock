@@ -64,6 +64,12 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+		</dependency>
+
+
 		<!-- test -->
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -90,7 +96,9 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
-    </dependencies>
+
+
+	</dependencies>
 
 	<build>
 		<plugins>

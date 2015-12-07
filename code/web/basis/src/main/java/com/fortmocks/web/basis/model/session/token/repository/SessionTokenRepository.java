@@ -1,5 +1,7 @@
-package com.fortmocks.war.config.session.token;
+package com.fortmocks.web.basis.model.session.token.repository;
 
+import com.fortmocks.web.basis.model.session.token.SessionToken;
+import com.fortmocks.web.basis.model.session.token.SessionTokenList;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -75,6 +77,27 @@ public class SessionTokenRepository implements PersistentTokenRepository {
     }
 
     /**
+     * The method provides the functionality to update the token with a new username. The token
+     * will be identified with the old username and upon found, the username will be updated to the
+     * new provided username value
+     * @param oldUsername The old username. It is used to identify the token
+     * @param newUsername The new username. It will replace the old username
+     */
+    public synchronized void updateToken(String oldUsername, String newUsername) {
+        final List<PersistentRememberMeToken> tokens = new LinkedList<PersistentRememberMeToken>();
+        for(PersistentRememberMeToken token : seriesTokens.values()){
+            if(token.getUsername().equalsIgnoreCase(oldUsername)){
+                PersistentRememberMeToken newToken = new PersistentRememberMeToken(newUsername, token.getSeries(), token.getTokenValue(), token.getDate());
+                tokens.add(newToken);
+            }
+        }
+        for(PersistentRememberMeToken token : tokens){
+           seriesTokens.put(token.getSeries(), token);
+        }
+        saveTokens();
+    }
+
+    /**
      * Get a specific token for a series
      * @param seriesId The id of the series that the token belongs to
      * @return Token that matches the provided series id. Null will be returned if no token matches
@@ -104,7 +127,7 @@ public class SessionTokenRepository implements PersistentTokenRepository {
     /**
      * Saves all the tokens into the file system
      */
-    private void saveTokens(){
+    private synchronized void saveTokens(){
         final SessionTokenList tokens = getTokens();
         final String filename = tokenDirectory + File.separator +  tokenFileName;
         Writer writer = null;

@@ -27,10 +27,7 @@ import com.fortmocks.core.basis.model.validation.NotNull;
  */
 public class ReadUserByUsernameOutput implements Output {
 
-    @NotNull
     private UserDto user;
-
-
 
     public UserDto getUser() {
         return user;
