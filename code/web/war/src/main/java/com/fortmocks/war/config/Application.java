@@ -18,6 +18,7 @@ package com.fortmocks.war.config;
 
 import com.fortmocks.core.basis.model.Repository;
 import com.fortmocks.core.basis.model.ServiceFacade;
+import com.fortmocks.war.config.session.token.SessionTokenRepository;
 import com.fortmocks.web.basis.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,6 +52,8 @@ public class Application extends SpringBootServletInitializer {
     private ApplicationContext applicationContext;
     @Autowired
     private ServiceRegistry serviceRegistry;
+    @Autowired
+    private SessionTokenRepository tokenRepository;
 
     /**
      * The configure method for Fort Mocks. The method is responsible for mark all the configuration classes
@@ -85,6 +88,7 @@ public class Application extends SpringBootServletInitializer {
         initiateProcessRegistry();
         initiateRepository();
         initiateServiceFacade();
+        initiateTokenRepository();
     }
 
     protected void printLogo(){
@@ -131,6 +135,10 @@ public class Application extends SpringBootServletInitializer {
                 serviceFacade.initiate();
             }
         }
+    }
+
+    protected void initiateTokenRepository(){
+        tokenRepository.initiate();
     }
 
     /**

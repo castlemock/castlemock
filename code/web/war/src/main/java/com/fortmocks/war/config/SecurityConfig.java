@@ -16,9 +16,11 @@
 
 package com.fortmocks.war.config;
 
+import com.fortmocks.war.config.session.token.SessionTokenRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -44,6 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
+    @Autowired
+    @Qualifier("tokenRepository")
+    private SessionTokenRepository tokenRepository;
+    @Value(value = "${token.validity.seconds}")
+    private Integer tokenValiditySeconds;
     private static final Logger LOGGER = Logger.getLogger(SecurityConfig.class);
 
     /**
@@ -77,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout().logoutSuccessUrl("/login?logout")
-                .and().csrf()
+                .and().csrf().and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(tokenValiditySeconds)
                 .and().exceptionHandling().accessDeniedPage("/forbidden");
         httpSecurity.authorizeRequests().antMatchers("/mock/**").permitAll().and().csrf().disable();
     }
