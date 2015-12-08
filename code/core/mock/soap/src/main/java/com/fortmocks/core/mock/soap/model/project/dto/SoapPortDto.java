@@ -36,8 +36,13 @@ public class SoapPortDto {
     @Mapping("name")
     private String name;
 
+    @Mapping("urlPath")
+    private String urlPath;
+
     @Mapping("soapOperations")
     private List<SoapOperationDto> soapOperations = new LinkedList<SoapOperationDto>();
+
+    private String invokeAddress;
 
     private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
 
@@ -73,4 +78,19 @@ public class SoapPortDto {
         this.name = name;
     }
 
+    public String getUrlPath() {
+        return urlPath;
+    }
+
+    public void setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
+    }
+
+    public String getInvokeAddress() {
+        return invokeAddress;
+    }
+
+    public void setInvokeAddress(String invokeAddress) {
+        this.invokeAddress = invokeAddress;
+    }
 }

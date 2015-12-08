@@ -19,13 +19,17 @@ package com.fortmocks.web.mock.soap.web.mvc.controller.operation;
 import com.fortmocks.core.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
 import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponseStatus;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseStatusInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.web.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.fortmocks.web.mock.soap.web.mvc.command.mockresponse.SoapMockResponseModifierCommand;
 import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
@@ -69,22 +73,16 @@ public class SoapOperationController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, final ServletRequest request) {
-        final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
-        final SoapOperationDto soapOperation = output.getSoapOperation();
+        final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
+        final SoapPortDto soapPort = readSoapPortOutput.getSoapPort();
+
+        final ReadSoapOperationOutput readSoapOperationOutput = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
+        final SoapOperationDto soapOperation = readSoapOperationOutput.getSoapOperation();
         final ReadSoapEventsByOperationIdOutput readSoapEventsByOperationIdOutput = serviceProcessor.process(new ReadSoapEventsByOperationIdInput(soapOperationId));
 
-        String requestProtocol = HTTP;
-        if(request.isSecure()){
-            requestProtocol = HTTPS;
-        }
-
-        try {
-            final String hostAddress = getHostAddress();
-            soapOperation.setInvokeAddress(requestProtocol + hostAddress + ":" + request.getServerPort() + getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + soapProjectId + SLASH + soapOperation.getUri());
-        } catch (Exception exception) {
-            LOGGER.error("Unable to generate invoke URL", exception);
-            throw new IllegalStateException("Unable to generate invoke URL for " + soapOperation.getName());
-        }
+        final String protocol = getProtocol(request);
+        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUrlPath());
+        soapOperation.setInvokeAddress(invokeAddress);
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_OPERATION, soapOperation);

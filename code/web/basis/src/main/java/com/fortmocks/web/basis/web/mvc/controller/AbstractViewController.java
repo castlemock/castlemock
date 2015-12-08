@@ -30,6 +30,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -200,5 +201,13 @@ public abstract class AbstractViewController extends AbstractController {
         return !(auth instanceof AnonymousAuthenticationToken);
     }
 
+    /**
+     * The method indicates which protocol is used for the incoming request: HTTP or HTTPS
+     * @param request The request is used to determine the protocol
+     * @return HTTP is returned if the request is not secured. HTTPS is returned if the request is secured.
+     */
+    protected String getProtocol(final ServletRequest request){
+        return request.isSecure() ? HTTPS : HTTP;
+    }
 
 }

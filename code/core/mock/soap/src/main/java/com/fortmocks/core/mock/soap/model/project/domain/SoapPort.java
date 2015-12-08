@@ -33,6 +33,7 @@ public class SoapPort implements Saveable<String> {
 
     private String id;
     private String name;
+    private String urlPath;
     private List<SoapOperation> soapOperations;
 
     @XmlElement
@@ -65,4 +66,12 @@ public class SoapPort implements Saveable<String> {
         this.name = name;
     }
 
+    @XmlElement
+    public String getUrlPath() {
+        return urlPath;
+    }
+
+    public void setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
+    }
 }

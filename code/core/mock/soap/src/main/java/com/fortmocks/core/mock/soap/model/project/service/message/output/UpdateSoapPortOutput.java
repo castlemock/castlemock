@@ -14,21 +14,29 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.mock.soap.model.project;
+package com.fortmocks.core.mock.soap.model.project.service.message.output;
 
+import com.fortmocks.core.basis.model.Output;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class SoapPortDtoGenerator {
+public class UpdateSoapPortOutput implements Output {
 
-    public static SoapPortDto generateSoapPortDto(){
-        final SoapPortDto soapPortDto = new SoapPortDto();
-        soapPortDto.setId("SOAP PORT");
-        soapPortDto.setName("Soap port name");
-        soapPortDto.setUrlPath("UrlPath");
+    private SoapPortDto soapPortDto;
+
+    public UpdateSoapPortOutput(SoapPortDto soapPortDto) {
+        this.soapPortDto = soapPortDto;
+    }
+
+    public SoapPortDto getSoapPortDto() {
         return soapPortDto;
+    }
+
+    public void setSoapPortDto(SoapPortDto soapPortDto) {
+        this.soapPortDto = soapPortDto;
     }
 }

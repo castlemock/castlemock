@@ -25,6 +25,7 @@ import com.fortmocks.core.basis.model.user.domain.User;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.UpdateUserInput;
 import com.fortmocks.core.basis.model.user.service.message.output.UpdateUserOutput;
+import com.fortmocks.web.basis.model.session.token.repository.SessionTokenRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,6 +43,9 @@ public class UpdateUserServiceTest {
 
     @Mock
     private Repository repository;
+
+    @Mock
+    private SessionTokenRepository sessionTokenRepository;
 
     @InjectMocks
     private UpdateUserService service;

@@ -19,7 +19,9 @@ package com.fortmocks.web.mock.soap.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
+import com.fortmocks.core.basis.model.project.domain.Project;
+import com.fortmocks.core.basis.model.project.dto.ProjectDto;
+import com.fortmocks.core.mock.soap.model.project.domain.*;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationWithTypeOutput;
@@ -44,13 +46,32 @@ public class ReadSoapOperationWithTypeService extends AbstractSoapProjectService
     @Override
     public ServiceResult<ReadSoapOperationWithTypeOutput> process(final ServiceTask<ReadSoapOperationWithTypeInput> serviceTask) {
         final ReadSoapOperationWithTypeInput input = serviceTask.getInput();
-        final List<SoapOperation> soapOperations = findSoapOperationTypeWithSoapProjectId(input.getSoapProjectId());
+        final SoapProject project= findType(input.getSoapProjectId());
         SoapOperationDto soapOperationDto = null;
-        for(SoapOperation soapOperation : soapOperations){
-            if(soapOperation.getUri().equals(input.getUri()) && soapOperation.getSoapOperationMethod().equals(input.getSoapOperationMethod()) && soapOperation.getSoapOperationType().equals(input.getType()) && soapOperation.getName().equalsIgnoreCase(input.getName())){
-                soapOperationDto = mapper.map(soapOperation, SoapOperationDto.class);
+        for(SoapPort soapPort : project.getSoapPorts()){
+            if(soapPort.getUrlPath().equals(input.getUri())){
+                soapOperationDto = findSoapOperation(soapPort, input.getSoapOperationMethod(), input.getType(), input.getName());
+                break;
             }
         }
+
         return createServiceResult(new ReadSoapOperationWithTypeOutput(soapOperationDto));
+    }
+
+    /**
+     * The method finds a specific SOAP operation in a SOAP port and with specific attributes
+     * @param soapPort The SOAP port that is responsible for the SOAP operation
+     * @param soapOperationMethod The SOAP operation method
+     * @param soapOperationType The SOAP operation type
+     * @param soapOperationName The SOAP operation name
+     * @return The SOAP operation that matches the search criteria. Null otherwise
+     */
+    private SoapOperationDto findSoapOperation(SoapPort soapPort, SoapOperationMethod soapOperationMethod, SoapOperationType soapOperationType, String soapOperationName){
+        for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+            if(soapOperation.getSoapOperationMethod().equals(soapOperationMethod) && soapOperation.getSoapOperationType().equals(soapOperationType) && soapOperation.getName().equalsIgnoreCase(soapOperationName)){
+                return mapper.map(soapOperation, SoapOperationDto.class);
+            }
+        }
+        return null;
     }
 }

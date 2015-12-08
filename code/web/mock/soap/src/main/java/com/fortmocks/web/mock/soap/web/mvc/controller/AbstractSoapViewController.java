@@ -17,6 +17,7 @@
 package com.fortmocks.web.mock.soap.web.mvc.controller;
 
 import com.fortmocks.web.basis.web.mvc.controller.AbstractViewController;
+import org.apache.log4j.Logger;
 
 /**
  * The class operates as a shared base for all the view related to the SOAP module
@@ -41,5 +42,25 @@ public class AbstractSoapViewController extends AbstractViewController {
     protected static final String SOAP_MOCK_RESPONSES = "soapMockResponses";
     protected static final String SOAP_MOCK_RESPONSE_STATUSES = "soapMockResponseStatuses";
     protected static final String SOAP_MOCK_RESPONSE_STRATEGIES = "soapMockResponseStrategies";
+
+    private static final Logger LOGGER = Logger.getLogger(AbstractSoapViewController.class);
+
+    /**
+     * The method provides the functionality to create the address which is used to invoke a SOAP service
+     * @param protocol THe protocol
+     * @param serverPort The server port
+     * @param projectId The id of the project
+     * @param urlPath The URL path (The end of the URL, which is used to identify the SOAP service)
+     * @return A URL based on all the incoming parameters
+     */
+    protected String getSoapInvokeAddress(String protocol, int serverPort, String projectId, String urlPath){
+        try {
+            final String hostAddress = getHostAddress();
+            return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH + urlPath;
+        } catch (Exception exception) {
+            LOGGER.error("Unable to generate invoke URL", exception);
+            throw new IllegalStateException("Unable to generate invoke URL for " + projectId);
+        }
+    }
 
 }

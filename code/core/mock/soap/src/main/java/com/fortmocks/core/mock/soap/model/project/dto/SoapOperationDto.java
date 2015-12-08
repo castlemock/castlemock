@@ -37,9 +37,6 @@ public class SoapOperationDto {
     @Mapping("name")
     private String name;
 
-    @Mapping("uri")
-    private String uri;
-
     @Mapping("soapMockResponses")
     private List<SoapMockResponseDto> soapMockResponses = new LinkedList<SoapMockResponseDto>();
 
@@ -83,14 +80,6 @@ public class SoapOperationDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
     }
 
     public SoapResponseStrategy getSoapResponseStrategy() {

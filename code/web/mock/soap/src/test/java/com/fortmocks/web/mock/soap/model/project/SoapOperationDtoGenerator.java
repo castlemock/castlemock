@@ -39,7 +39,6 @@ public class SoapOperationDtoGenerator {
         soapOperationDto.setSoapOperationMethod(SoapOperationMethod.POST);
         soapOperationDto.setSoapOperationStatus(SoapOperationStatus.MOCKED);
         soapOperationDto.setSoapOperationType(SoapOperationType.SOAP11);
-        soapOperationDto.setUri("Soap uri");
         return soapOperationDto;
     }
 }

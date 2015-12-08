@@ -36,6 +36,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,11 +67,15 @@ public class SoapPortController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}", method = RequestMethod.GET)
-    public ModelAndView getSoapPort(@PathVariable final String soapProjectId, @PathVariable final String soapPortId) {
+    public ModelAndView getSoapPort(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, final ServletRequest request) {
         final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
         final SoapPortDto soapPort = readSoapPortOutput.getSoapPort();
         final GetSoapOperationStatusCountOutput getSoapOperationStatusCountOutput = serviceProcessor.process(new GetSoapOperationStatusCountInput(soapProjectId, soapPortId));
         final Map<SoapOperationStatus, Integer> statusCount = getSoapOperationStatusCountOutput.getSoapOperationStatuses();
+        final String protocol = getProtocol(request);
+        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUrlPath());
+
+        soapPort.setInvokeAddress(invokeAddress);
         soapPort.setStatusCount(statusCount);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT_ID,soapProjectId);

@@ -32,7 +32,6 @@ public class SoapOperation implements Saveable<String> {
 
     private String id;
     private String name;
-    private String uri;
     private SoapResponseStrategy soapResponseStrategy;
     private List<SoapMockResponse> soapMockResponses;
     private SoapOperationStatus soapOperationStatus;
@@ -70,15 +69,6 @@ public class SoapOperation implements Saveable<String> {
 
     public void setSoapResponseStrategy(SoapResponseStrategy soapResponseStrategy) {
         this.soapResponseStrategy = soapResponseStrategy;
-    }
-
-    @XmlElement
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
     }
 
     @XmlElement

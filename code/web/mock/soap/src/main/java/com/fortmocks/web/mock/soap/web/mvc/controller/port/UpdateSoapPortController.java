@@ -16,7 +16,13 @@
 
 package com.fortmocks.web.mock.soap.web.mvc.controller.port;
 
-import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapPortsForwardedEndpointInput;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapResponseStrategy;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.*;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.web.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
 import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import com.google.common.base.Preconditions;
@@ -39,6 +45,43 @@ import org.springframework.web.servlet.ModelAndView;
 @Scope("request")
 @RequestMapping("/web/soap/project")
 public class UpdateSoapPortController extends AbstractSoapViewController {
+
+
+
+    private static final String PAGE = "mock/soap/port/updateSoapPort";
+
+    /**
+     * The method retrieves a specific port and returns a view that displays the retrieved operation.
+     * @param soapProjectId The id of the project that the port belongs to
+     * @param soapPortId The id of the port that will be retrieved
+     * @return A view that displays the retrieved port
+     */
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/update", method = RequestMethod.GET)
+    public ModelAndView defaultPage(@PathVariable final String soapProjectId, @PathVariable final String soapPortId) {
+        final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
+        final ModelAndView model = createPartialModelAndView(PAGE);
+        model.addObject(COMMAND, output.getSoapPort());
+        model.addObject(SOAP_PROJECT_ID, soapProjectId);
+        model.addObject(SOAP_PORT_ID, soapPortId);
+        model.addObject(SOAP_MOCK_RESPONSE_STRATEGIES, SoapResponseStrategy.values());
+        model.addObject(SOAP_OPERATION_STATUSES, SoapOperationStatus.values());
+        return model;
+    }
+
+    /**
+     * The update method is responsible for updating a specific port
+     * @param soapProjectId The id of the project that the port belongs to
+     * @param soapPortId The id of the port that will be updated
+     * @param soapPortDto The updated version of the port that will be updated
+     * @return Redirects the user to the main page of the port that was updated
+     */
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/update", method = RequestMethod.POST)
+    public ModelAndView update(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @ModelAttribute final SoapPortDto soapPortDto) {
+        serviceProcessor.process(new UpdateSoapPortInput(soapProjectId, soapPortId, soapPortDto));
+        return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId);
+    }
 
     /**
      * The method provides the functionality to update the endpoint address for multiple
