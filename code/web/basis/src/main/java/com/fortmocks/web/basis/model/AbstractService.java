@@ -207,7 +207,7 @@ public abstract class AbstractService<T extends Saveable<I>, D, I extends Serial
             return writer.toString();
         }
         catch (JAXBException e) {
-            throw new IllegalStateException("Unable to export type");
+            throw new IllegalStateException("Unable to export type", e);
         }
     }
 
@@ -225,7 +225,7 @@ public abstract class AbstractService<T extends Saveable<I>, D, I extends Serial
             type.setId(null);
             save(type);
         } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to import type");
+            throw new IllegalStateException("Unable to import type", e);
         }
     }
 

@@ -53,7 +53,7 @@ public class NotNullValidator extends Validator {
                 throw new NullPointerException("The following value cannot be null in the message " + message.getClass().getSimpleName() + ": " + field);
             }
         } catch (IllegalAccessException e) {
-            LOGGER.error("Unable to read the following value in the message " + message.getClass().getSimpleName() + ": " + field);
+            LOGGER.error("Unable to read the following value in the message " + message.getClass().getSimpleName() + ": " + field, e);
         }
     }
 }

@@ -64,7 +64,7 @@ public class WADLComponent {
             List<File> uploadedFiles = fileManager.uploadFiles(wadlUrl);
             return parseWADLFile(uploadedFiles, generateResponse);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Unable parse WADL file");
+            throw new IllegalArgumentException("Unable parse WADL file", e);
         }
     }
 
@@ -81,7 +81,7 @@ public class WADLComponent {
             List<File> uploadedFiles = fileManager.uploadFiles(files);
             return parseWADLFile(uploadedFiles, generateResponse);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Unable parse WADL file");
+            throw new IllegalArgumentException("Unable parse WADL file", e);
         }
     }
 
@@ -130,7 +130,7 @@ public class WADLComponent {
             }
             return applications;
         } catch (Exception e) {
-            throw new IllegalArgumentException("Unable parse WADL file");
+            throw new IllegalArgumentException("Unable parse WADL file", e);
         }
     }
 
