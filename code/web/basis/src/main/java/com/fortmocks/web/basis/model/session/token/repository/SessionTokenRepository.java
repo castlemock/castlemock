@@ -45,7 +45,7 @@ public class SessionTokenRepository implements PersistentTokenRepository {
      * The initialize method is responsible for initiating the token repository and load
      * all the stored tokens
      */
-    public void initiate(){
+    public void initialize(){
         loadTokens();
     }
 

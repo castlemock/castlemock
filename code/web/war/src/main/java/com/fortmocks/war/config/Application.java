@@ -85,10 +85,10 @@ public class Application extends SpringBootServletInitializer {
     @PostConstruct
     protected void initiate(){
         printLogo();
-        initiateProcessRegistry();
-        initiateRepository();
-        initiateServiceFacade();
-        initiateTokenRepository();
+        initializeProcessRegistry();
+        initializeRepository();
+        initializeServiceFacade();
+        initializeTokenRepository();
     }
 
     protected void printLogo(){
@@ -109,7 +109,7 @@ public class Application extends SpringBootServletInitializer {
      * The method provides the functionality to retrieve all the repositories and initialize them
      * @see Repository
      */
-    protected void initiateRepository(){
+    protected void initializeRepository(){
         final Map<String, Object> repositories = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Repository.class);
         for(Map.Entry<String, Object> entry : repositories.entrySet()){
             final Object value = entry.getValue();
@@ -126,7 +126,7 @@ public class Application extends SpringBootServletInitializer {
      * @see ServiceFacade
      * @see com.fortmocks.core.basis.model.Service
      */
-    protected void initiateServiceFacade(){
+    protected void initializeServiceFacade(){
         final Map<String, Object> components = applicationContext.getBeansWithAnnotation(Service.class);
         for(Map.Entry<String, Object> entry : components.entrySet()){
             final Object value = entry.getValue();
@@ -137,15 +137,15 @@ public class Application extends SpringBootServletInitializer {
         }
     }
 
-    protected void initiateTokenRepository(){
-        tokenRepository.initiate();
+    protected void initializeTokenRepository(){
+        tokenRepository.initialize();
     }
 
     /**
      * The method provides the functionality to retrieve all the repositories and initialize them
      * @see Repository
      */
-    protected void initiateProcessRegistry(){
+    protected void initializeProcessRegistry(){
         serviceRegistry.initialize();;
     }
 }
