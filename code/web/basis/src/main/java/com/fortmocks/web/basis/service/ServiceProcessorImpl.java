@@ -59,7 +59,7 @@ public class ServiceProcessorImpl implements ServiceProcessor {
      */
     public <I extends Input, O extends Output> O process(final I input){
         validateMessage(input);
-        final Service<I,O> service = serviceRegistry.getProcessor(input);
+        final Service<I,O> service = serviceRegistry.getService(input);
 
         if(service == null){
             throw new IllegalArgumentException("Unable to find service for " + input.getClass().getSimpleName());

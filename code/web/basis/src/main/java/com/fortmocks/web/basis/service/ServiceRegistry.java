@@ -28,8 +28,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * The service registry is a registry for all the services. The class provides the functionality to
+ * map an input message to a service class that is responsible for processing the incoming message.
  * @author Karl Dahlgren
  * @since 1.0
+ * @see Input
+ * @see Output
+ * @see Service
  */
 @Component
 public class ServiceRegistry<I extends Input, O extends Output> {
@@ -37,21 +42,36 @@ public class ServiceRegistry<I extends Input, O extends Output> {
     @Autowired
     private ApplicationContext applicationContext;
 
-    private Map<Class<I>, Service<I,O>> processors = new HashMap<Class<I>, Service<I,O>>();
+    /**
+     * The collection contains all the services and their identifiers (The input message class)
+     */
+    private Map<Class<I>, Service<I,O>> services = new HashMap<Class<I>, Service<I,O>>();
 
-    public Service<I,O> getProcessor(final I input){
-        return processors.get(input.getClass());
+    /**
+     * The method provides the functionality to retrieve a specific service that is identified
+     * with the provided input parameter
+     * @param input The input message. The message is used to identify the service class responsible
+     *              for processing the incoming input message and generating an output message
+     * @return The service class that is identified with the input message
+     */
+    public Service<I,O> getService(final I input){
+        return services.get(input.getClass());
     }
 
-    public void initializeProcessorRegistry(){
+    /**
+     * The initialize method is responsible for initializing the service registry.
+     * The initialize method will search for all the classes with the @service annotation and
+     * store all the classes that are an instance of the Service class.
+     */
+    public void initialize(){
         final Map<String, Object> components = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Service.class);
         for(Map.Entry<String, Object> entry : components.entrySet()){
             final Object value = entry.getValue();
             if(value instanceof Service){
                 final Service service = (Service) value;
-                Class<?>[] processorInputOutputClasses = GenericTypeResolver.resolveTypeArguments(service.getClass(), Service.class);
+                final Class<?>[] processorInputOutputClasses = GenericTypeResolver.resolveTypeArguments(service.getClass(), Service.class);
                 final Class<I> processorInputClass = (Class<I>) processorInputOutputClasses[0];
-                processors.put(processorInputClass, service);
+                services.put(processorInputClass, service);
             }
         }
     }

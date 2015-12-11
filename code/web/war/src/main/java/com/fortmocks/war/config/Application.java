@@ -146,6 +146,6 @@ public class Application extends SpringBootServletInitializer {
      * @see Repository
      */
     protected void initiateProcessRegistry(){
-        serviceRegistry.initializeProcessorRegistry();;
+        serviceRegistry.initialize();;
     }
 }
