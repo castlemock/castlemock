@@ -42,7 +42,7 @@ public class SessionTokenRepository implements PersistentTokenRepository {
     private final Map<String, PersistentRememberMeToken> seriesTokens = new HashMap();
 
     /**
-     * The initiate method is responsible for initiating the token repository and load
+     * The initialize method is responsible for initiating the token repository and load
      * all the stored tokens
      */
     public void initiate(){

@@ -42,7 +42,7 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
     protected final Map<String, SA> services = new HashMap<String, SA>();
 
     /**
-     * The initiate method is responsible for for locating all the service instances for a specific module
+     * The initialize method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
      * @see Service
      * @see TypeIdentifier

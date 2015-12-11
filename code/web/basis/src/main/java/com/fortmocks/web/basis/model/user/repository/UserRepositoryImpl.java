@@ -48,11 +48,11 @@ public class UserRepositoryImpl extends RepositoryImpl<User, String> implements 
     private String userFileExtension;
     private static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
     /**
-     * The post initiate method can be used to run functionality for a specific service. The method is called when
-     * the method {@link #initiate} has finished successful. The method is responsible for creating an administrator
+     * The post initialize method can be used to run functionality for a specific service. The method is called when
+     * the method {@link #initialize} has finished successful. The method is responsible for creating an administrator
      * and saving it to the file system in case of no user is registered on application startup. This is
      * a typical scenario for when users are using Fort Mocks for the first time after the installation.
-     * @see #initiate
+     * @see #initialize
      * @see User
      */
     @Override

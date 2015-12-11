@@ -37,7 +37,7 @@ import org.springframework.stereotype.Service;
 public class EventServiceFacadeImpl extends ServiceFacadeImpl<EventDto, String, EventServiceAdapter<EventDto>> implements EventServiceFacade {
 
     /**
-     * The initiate method is responsible for for locating all the service instances for a specific module
+     * The initialize method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
      * @see com.fortmocks.core.basis.model.Service
      * @see TypeIdentifier

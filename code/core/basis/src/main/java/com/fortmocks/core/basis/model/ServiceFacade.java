@@ -33,7 +33,7 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
 
 
     /**
-     * The initiate method is responsible for for locating all the service instances for a specific module
+     * The initialize method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
      * @see Service
      * @see TypeIdentifier

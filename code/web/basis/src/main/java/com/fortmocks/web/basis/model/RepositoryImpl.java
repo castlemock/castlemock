@@ -69,14 +69,14 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
 
 
     /**
-     * The initiate method is responsible for initiating the file repository. This procedure involves loading
+     * The initialize method is responsible for initiating the file repository. This procedure involves loading
      * the types (TYPE) from the file system and store them in the collection.
      * @see #loadFiles()
      * @see #postInitiate()
      */
     @Override
-    public void initiate(){
-        LOGGER.debug("Start the initiate phase for the type " + entityClass.getSimpleName());
+    public void initialize(){
+        LOGGER.debug("Start the initialize phase for the type " + entityClass.getSimpleName());
         final Collection<T> loadedFiles = loadFiles();
         for(T type : loadedFiles){
             collection.put(type.getId(), type);
@@ -184,14 +184,14 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
     }
 
     /**
-     * The post initiate method can be used to run functionality for a specific service. The method is called when
-     * the method {@link #initiate} has finished successful. The method does not contain any functionality and the
+     * The post initialize method can be used to run functionality for a specific service. The method is called when
+     * the method {@link #initialize} has finished successful. The method does not contain any functionality and the
      * whole idea is the it should be overridden by subclasses, but only if certain functionality is required to
-     * run after the {@link #initiate} method has completed.
-     * @see #initiate
+     * run after the {@link #initialize} method has completed.
+     * @see #initialize
      */
     protected void postInitiate(){
-        LOGGER.debug("Post initiate method not implemented for " + entityClass.getSimpleName());
+        LOGGER.debug("Post initialize method not implemented for " + entityClass.getSimpleName());
     }
 
     /**

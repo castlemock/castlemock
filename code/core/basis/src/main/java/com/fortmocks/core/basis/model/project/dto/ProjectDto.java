@@ -56,7 +56,7 @@ public class ProjectDto implements TypeIdentifiable {
     }
 
     /**
-     * The constructor provides the functionality to initiate a new project DTO based on another project DTO
+     * The constructor provides the functionality to initialize a new project DTO based on another project DTO
      * @param projectDto The project DTO that the new project DTO is going to based on
      */
     protected ProjectDto(ProjectDto projectDto){

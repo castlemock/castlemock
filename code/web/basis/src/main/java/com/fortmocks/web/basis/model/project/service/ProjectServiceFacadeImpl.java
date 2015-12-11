@@ -44,7 +44,7 @@ import java.util.List;
 public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, String, ProjectServiceAdapter<ProjectDto>> implements ProjectServiceFacade {
 
     /**
-     * The initiate method is responsible for for locating all the service instances for a specific module
+     * The initialize method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
      * @see com.fortmocks.core.basis.model.Service
      * @see TypeIdentifier

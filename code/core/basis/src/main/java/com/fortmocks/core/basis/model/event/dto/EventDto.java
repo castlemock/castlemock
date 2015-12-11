@@ -50,7 +50,7 @@ public class EventDto implements TypeIdentifiable {
     }
 
     /**
-     * The constructor provides the functionality to initiate a new event DTO based on another event DTO
+     * The constructor provides the functionality to initialize a new event DTO based on another event DTO
      * @param eventDto The event DTO that the new event DTO is going to based on
      */
     public EventDto(final EventDto eventDto){

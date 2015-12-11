@@ -34,10 +34,10 @@ public interface Repository<T extends Saveable<I>, I extends Serializable> {
 
 
     /**
-     * The initiate method is responsible for initiating the file repository. This procedure involves loading
+     * The initialize method is responsible for initiating the file repository. This procedure involves loading
      * the types (TYPE) from the file system and store them in the collection.
      */
-    public void initiate();
+    void initialize();
 
     /**
      * The method provides the functionality to find a specific instance that matches the provided id

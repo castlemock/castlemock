@@ -78,7 +78,7 @@ public class Application extends SpringBootServletInitializer {
     }
 
     /**
-     * The initiate method is responsible for initiating all the components when the application has been started.
+     * The initialize method is responsible for initiating all the components when the application has been started.
      * @see Repository
      * @see com.fortmocks.core.basis.model.Service
      */
@@ -106,7 +106,7 @@ public class Application extends SpringBootServletInitializer {
     }
 
     /**
-     * The method provides the functionality to retrieve all the repositories and initiate them
+     * The method provides the functionality to retrieve all the repositories and initialize them
      * @see Repository
      */
     protected void initiateRepository(){
@@ -115,14 +115,14 @@ public class Application extends SpringBootServletInitializer {
             final Object value = entry.getValue();
             if(value instanceof Repository){
                 final Repository repository = (Repository) value;
-                repository.initiate();
+                repository.initialize();
             }
         }
     }
 
 
     /**
-     * The method provides the functionality to retrieve all the service facades and initiate them
+     * The method provides the functionality to retrieve all the service facades and initialize them
      * @see ServiceFacade
      * @see com.fortmocks.core.basis.model.Service
      */
@@ -142,7 +142,7 @@ public class Application extends SpringBootServletInitializer {
     }
 
     /**
-     * The method provides the functionality to retrieve all the repositories and initiate them
+     * The method provides the functionality to retrieve all the repositories and initialize them
      * @see Repository
      */
     protected void initiateProcessRegistry(){
