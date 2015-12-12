@@ -44,6 +44,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 
 /**
@@ -94,7 +95,6 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @Ignore
     public void testUpdateUserConfirmWithValidId() throws Exception {
         final UserDto userDto = UserDtoGenerator.generateUserDto();
         final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput();
@@ -102,8 +102,8 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
         readUserByUsernameOutput.setUser(userDto);
         updateUserOutput.setUpdatedUser(userDto);
 
-        when(serviceProcessor.process(any(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);
-        when(serviceProcessor.process(any(UpdateUserInput.class))).thenReturn(updateUserOutput);
+        when(serviceProcessor.process(isA(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);
+        when(serviceProcessor.process(isA(UpdateUserInput.class))).thenReturn(updateUserOutput);
 
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + userDto.getId() + UPDATE);
 

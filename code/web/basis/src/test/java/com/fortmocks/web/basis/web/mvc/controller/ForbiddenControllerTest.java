@@ -35,11 +35,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestApplication.class)
 @WebAppConfiguration
-@Ignore
 public class ForbiddenControllerTest extends AbstractControllerTest {
 
     private static final String SERVICE_URL = "/web/forbidden";
-    private static final String PAGE = "forbidden";
+    private static final String PAGE = "forbidden.jsp";
 
     @InjectMocks
     private ForbiddenController forbiddenController;
@@ -54,8 +53,8 @@ public class ForbiddenControllerTest extends AbstractControllerTest {
     public void testForbiddenNotLoggedIn() throws Exception {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().size(0));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(1));
     }
 
     @Test
@@ -63,7 +62,7 @@ public class ForbiddenControllerTest extends AbstractControllerTest {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(0))
+                .andExpect(MockMvcResultMatchers.model().size(1))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(PAGE));
     }
 
