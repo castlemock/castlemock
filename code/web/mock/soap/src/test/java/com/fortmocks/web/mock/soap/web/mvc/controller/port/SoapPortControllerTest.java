@@ -22,9 +22,7 @@ import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.GetSoapOperationStatusCountInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.GetSoapOperationStatusCountOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.config.TestApplication;
@@ -78,8 +76,7 @@ public class SoapPortControllerTest extends AbstractSoapControllerTest {
     }
 
     @Test
-    @Ignore
-    public void testGetServiceValid() throws Exception {
+    public void getSoapPort() throws Exception {
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
         final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
         final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
@@ -87,11 +84,10 @@ public class SoapPortControllerTest extends AbstractSoapControllerTest {
         operationDtos.add(soapOperationDto);
         soapPortDto.setSoapOperations(operationDtos);
         when(serviceProcessor.process(any(ReadSoapPortInput.class))).thenReturn(new ReadSoapPortOutput(soapPortDto));
-        when(serviceProcessor.process(any(GetSoapOperationStatusCountInput.class))).thenReturn(new GetSoapOperationStatusCountOutput(new HashMap<SoapOperationStatus, Integer>()));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH);
         ResultActions result = mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(7))
+                .andExpect(MockMvcResultMatchers.model().size(8))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT, soapPortDto));

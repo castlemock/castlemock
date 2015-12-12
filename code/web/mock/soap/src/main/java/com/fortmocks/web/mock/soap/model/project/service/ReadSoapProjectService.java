@@ -19,9 +19,13 @@ package com.fortmocks.web.mock.soap.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+
+import java.util.Map;
 
 /**
  * @author Karl Dahlgren
@@ -42,6 +46,10 @@ public class ReadSoapProjectService extends AbstractSoapProjectService implement
     public ServiceResult<ReadSoapProjectOutput> process(final ServiceTask<ReadSoapProjectInput> serviceTask) {
         final ReadSoapProjectInput input = serviceTask.getInput();
         final SoapProjectDto soapProject = find(input.getSoapProjectId());
+        for(final SoapPortDto soapPortDto : soapProject.getSoapPorts()){
+            final Map<SoapOperationStatus, Integer> soapOperationStatusCount = getSoapOperationStatusCount(soapPortDto.getSoapOperations());
+            soapPortDto.setStatusCount(soapOperationStatusCount);
+        }
         return createServiceResult(new ReadSoapProjectOutput(soapProject));
     }
 }

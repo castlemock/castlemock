@@ -19,11 +19,9 @@ package com.fortmocks.web.mock.soap.web.mvc.controller.port;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.GetSoapOperationStatusCountInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsStatusInput;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.GetSoapOperationStatusCountOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.web.mock.soap.web.mvc.command.operation.SoapOperationModifierCommand;
@@ -39,7 +37,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The SoapPortController provides functionality to retrieve a specific port for a project
@@ -70,13 +67,10 @@ public class SoapPortController extends AbstractSoapViewController {
     public ModelAndView getSoapPort(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, final ServletRequest request) {
         final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
         final SoapPortDto soapPort = readSoapPortOutput.getSoapPort();
-        final GetSoapOperationStatusCountOutput getSoapOperationStatusCountOutput = serviceProcessor.process(new GetSoapOperationStatusCountInput(soapProjectId, soapPortId));
-        final Map<SoapOperationStatus, Integer> statusCount = getSoapOperationStatusCountOutput.getSoapOperationStatuses();
         final String protocol = getProtocol(request);
         final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUrlPath());
 
         soapPort.setInvokeAddress(invokeAddress);
-        soapPort.setStatusCount(statusCount);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT_ID,soapProjectId);
         model.addObject(SOAP_PORT,soapPort);

@@ -19,11 +19,9 @@ package com.fortmocks.web.mock.soap.web.mvc.controller.project;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.GetSoapOperationStatusCountInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapPortsStatusInput;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.GetSoapOperationStatusCountOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.fortmocks.web.mock.soap.web.mvc.command.port.DeleteSoapPortsCommand;
@@ -69,11 +67,6 @@ public class SoapProjectController extends AbstractSoapViewController {
     public ModelAndView getProject(@PathVariable final String projectId) {
         final ReadSoapProjectOutput readSoapProjectOutput = serviceProcessor.process(new ReadSoapProjectInput(projectId));
         final SoapProjectDto project = readSoapProjectOutput.getSoapProject();
-        for(final SoapPortDto soapPortDto : project.getSoapPorts()){
-            final GetSoapOperationStatusCountOutput getSoapOperationStatusCountOutput = serviceProcessor.process(new GetSoapOperationStatusCountInput(projectId, soapPortDto.getId()));
-            soapPortDto.setStatusCount(getSoapOperationStatusCountOutput.getSoapOperationStatuses());
-        }
-
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT, project);
         model.addObject(SOAP_OPERATION_STATUSES, SoapOperationStatus.values());

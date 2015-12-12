@@ -37,14 +37,14 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * @param soapOperations The list of operations, which status will be counted
      * @return The result of the status count
      */
-    protected Map<SoapOperationStatus, Integer> getSoapOperationStatusCount(final List<SoapOperation> soapOperations){
+    protected Map<SoapOperationStatus, Integer> getSoapOperationStatusCount(final List<SoapOperationDto> soapOperations){
         Preconditions.checkNotNull(soapOperations, "The operation list cannot be null");
         final Map<SoapOperationStatus, Integer> statuses = new HashMap<SoapOperationStatus, Integer>();
 
         for(SoapOperationStatus soapOperationStatus : SoapOperationStatus.values()){
             statuses.put(soapOperationStatus, 0);
         }
-        for(SoapOperation soapOperation : soapOperations){
+        for(SoapOperationDto soapOperation : soapOperations){
             SoapOperationStatus soapOperationStatus = soapOperation.getSoapOperationStatus();
             statuses.put(soapOperationStatus, statuses.get(soapOperationStatus)+1);
         }
