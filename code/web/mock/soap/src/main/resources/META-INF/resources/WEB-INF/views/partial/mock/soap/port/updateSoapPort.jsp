@@ -1,17 +1,17 @@
 <%@ include file="../../../../includes.jspf"%>
 <c:url var="update_soap_port_url"  value="/web/soap/project/${soapProjectId}/port/${soapPortId}/update" />
 <div class="content-top">
-    <h1><spring:message code="soap.updatesoapport.header.updateport" arguments="${command.name}"/></h1>
+    <h1><spring:message code="soap.updatesoapport.header.updateport" arguments="${soapPort.name}"/></h1>
 </div>
-<form:form action="${update_soap_port_url}" method="POST">
+<form:form action="${update_soap_port_url}" method="POST" commandName="soapPort">
     <table class="formTable">
         <tr>
             <td class="column1"><label path="name"><spring:message code="soap.updatesoapport.label.name"/></label></td>
-            <td class="column2"><label path="name">${command.name}</label></td>
+            <td class="column2"><label path="name">${soapPort.name}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="urlPath"><spring:message code="soap.updatesoapport.label.urlpath"/></label></td>
-            <td class="column2"><form:input path="urlPath" value="${command.urlPath}"/></td>
+            <td class="column2"><form:input path="urlPath" value="${soapPort.urlPath}"/></td>
         </tr>
     </table>
     

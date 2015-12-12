@@ -44,23 +44,11 @@ public class UpdateSoapPortInput implements Input {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapPortId() {
         return soapPortId;
     }
 
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
-    }
-
     public SoapPortDto getUpdatedSoapPort() {
         return updatedSoapPort;
-    }
-
-    public void setUpdatedSoapPort(SoapPortDto updatedSoapPort) {
-        this.updatedSoapPort = updatedSoapPort;
     }
 }

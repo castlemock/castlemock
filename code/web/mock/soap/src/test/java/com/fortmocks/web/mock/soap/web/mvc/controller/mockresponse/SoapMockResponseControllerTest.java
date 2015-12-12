@@ -17,13 +17,18 @@
 package com.fortmocks.web.mock.soap.web.mvc.controller.mockresponse;
 
 import com.fortmocks.core.basis.model.ServiceProcessor;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapMockResponsesOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.UpdateSoapMockResponseOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.config.TestApplication;
+import com.fortmocks.web.mock.soap.model.project.SoapMockResponseDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapOperationDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapProjectDtoGenerator;
@@ -50,29 +55,30 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestApplication.class)
 @WebAppConfiguration
-public class CreateSoapMockResponseControllerTest extends AbstractSoapControllerTest {
+public class SoapMockResponseControllerTest extends AbstractSoapControllerTest {
 
-    private static final String PAGE = "partial/mock/soap/mockresponse/createSoapMockResponse.jsp";
-    private static final String CREATE_RESPONSE = "create/response";
+    private static final String PAGE = "partial/mock/soap/mockresponse/soapMockResponse.jsp";
+
 
     @InjectMocks
-    private CreateSoapMockResponseController createMockResponseController;
+    private SoapMockResponseController soapMockResponseController;
 
     @Mock
     private ServiceProcessor serviceProcessor;
 
     @Override
     protected AbstractController getController() {
-        return createMockResponseController;
+        return soapMockResponseController;
     }
 
     @Test
-    public void testCreateResponse() throws Exception {
+    public void testGetMockResponse() throws Exception {
         final SoapProjectDto projectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
         final SoapPortDto applicationDto = SoapPortDtoGenerator.generateSoapPortDto();
         final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        when(serviceProcessor.process(any(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperationDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + projectDto.getId() + SLASH + PORT + SLASH + applicationDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + CREATE_RESPONSE + SLASH);
+        final SoapMockResponseDto soapMockResponseDto = SoapMockResponseDtoGenerator.generateSoapMockResponseDto();
+        when(serviceProcessor.process(any(ReadSoapMockResponseInput.class))).thenReturn(new ReadSoapMockResponseOutput(soapMockResponseDto));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + projectDto.getId() + SLASH + PORT + SLASH + applicationDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + RESPONSE + SLASH + soapMockResponseDto.getId());
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(8))
@@ -80,19 +86,8 @@ public class CreateSoapMockResponseControllerTest extends AbstractSoapController
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, projectDto.getId()))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, applicationDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION, soapOperationDto));
-    }
-
-    @Test
-    public void testPostCreateResponse() throws Exception {
-        final SoapProjectDto projectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto applicationDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        when(serviceProcessor.process(any(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperationDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectDto.getId() + SLASH + PORT + SLASH + applicationDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + CREATE_RESPONSE + SLASH);
-        mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().size(1));
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_ID, soapOperationDto.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_MOCK_RESPONSE, soapMockResponseDto));
     }
 
 }

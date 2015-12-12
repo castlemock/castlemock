@@ -59,8 +59,6 @@ import static org.mockito.Mockito.when;
 @WebAppConfiguration
 public class SoapPortControllerTest extends AbstractSoapControllerTest {
 
-
-    private static final String SERVICE_URL = "/web/soap/";
     private static final String PAGE = "partial/mock/soap/port/soapPort.jsp";
 
 

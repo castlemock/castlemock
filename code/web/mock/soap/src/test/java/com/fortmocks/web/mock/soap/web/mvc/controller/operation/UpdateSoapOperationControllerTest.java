@@ -52,7 +52,6 @@ import static org.mockito.Mockito.when;
 @WebAppConfiguration
 public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTest {
 
-    private static final String SERVICE_URL = "/web/soap/";
     private static final String PAGE = "partial/mock/soap/operation/updateSoapOperation.jsp";
     private static final String SLASH = "/";
     private static final String UPDATE = "update";

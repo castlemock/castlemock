@@ -23,7 +23,11 @@ package com.fortmocks.web.mock.soap.web.mvc.controller;
  */
 public abstract class AbstractSoapControllerTest extends AbstractControllerTest {
 
+    protected static final String SERVICE_URL = "/web/soap/";
+
+    protected static final String SOAP_MOCK_RESPONSE = "soapMockResponse";
     protected static final String SOAP_MOCK_RESPONSE_STRATEGIES = "soapMockResponseStrategies";
+    protected static final String RESPONSE = "response";
 
     protected static final String SOAP_PROJECT = "soapProject";
     protected static final String OPERATION = "operation";
@@ -35,4 +39,6 @@ public abstract class AbstractSoapControllerTest extends AbstractControllerTest 
 
     protected static final String SOAP_PORT = "soapPort";
     protected static final String SOAP_OPERATION = "soapOperation";
+
+    protected static final String EVENT = "event";
 }

@@ -90,7 +90,7 @@ public class DeleteSoapMockResponseController extends AbstractSoapViewController
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/response/delete/confirm", method = RequestMethod.POST)
-    public ModelAndView confirmDeletationOfMultpleMockResponses(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @ModelAttribute final DeleteSoapMockResponsesCommand deleteSoapMockResponsesCommand) {
+    public ModelAndView confirmDeletationOfMultipleMockResponses(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @ModelAttribute final DeleteSoapMockResponsesCommand deleteSoapMockResponsesCommand) {
         serviceProcessor.process(new DeleteSoapMockResponsesInput(soapProjectId, soapPortId, soapOperationId, deleteSoapMockResponsesCommand.getSoapMockResponses()));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }

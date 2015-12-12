@@ -61,7 +61,7 @@ public class UpdateSoapPortController extends AbstractSoapViewController {
     public ModelAndView defaultPage(@PathVariable final String soapProjectId, @PathVariable final String soapPortId) {
         final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(COMMAND, output.getSoapPort());
+        model.addObject(SOAP_PORT, output.getSoapPort());
         model.addObject(SOAP_PROJECT_ID, soapProjectId);
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(SOAP_MOCK_RESPONSE_STRATEGIES, SoapResponseStrategy.values());
