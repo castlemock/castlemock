@@ -50,8 +50,7 @@ public class UpdateConfigurationController extends AbstractViewController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView updateConfiguration(@ModelAttribute final ConfigurationUpdateCommand configurationUpdateCommand) {
-        final UpdateAllConfigurationGroupsInput input = new UpdateAllConfigurationGroupsInput();
-        input.setConfigurationGroups(configurationUpdateCommand.getConfigurationGroups());
+        final UpdateAllConfigurationGroupsInput input = new UpdateAllConfigurationGroupsInput(configurationUpdateCommand.getConfigurationGroups());
         serviceProcessor.process(input);
         return redirect();
     }

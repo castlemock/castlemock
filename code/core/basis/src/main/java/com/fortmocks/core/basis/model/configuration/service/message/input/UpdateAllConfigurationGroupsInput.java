@@ -32,6 +32,10 @@ public class UpdateAllConfigurationGroupsInput implements Input{
     @NotNull
     private List<ConfigurationGroupDto> configurationGroups;
 
+    public UpdateAllConfigurationGroupsInput(List<ConfigurationGroupDto> configurationGroups) {
+        this.configurationGroups = configurationGroups;
+    }
+
     public List<ConfigurationGroupDto> getConfigurationGroups() {
         return configurationGroups;
     }
