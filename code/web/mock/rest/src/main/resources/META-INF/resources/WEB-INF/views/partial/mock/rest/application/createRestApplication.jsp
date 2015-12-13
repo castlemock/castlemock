@@ -19,11 +19,11 @@
 <div class="content-top">
     <h1><spring:message code="rest.createapplication.header.application"/></h1>
 </div>
-<form:form action="${create_rest_application_url}" method="POST">
+<form:form action="${create_rest_application_url}" method="POST" commandName="restApplication">
     <table class="formTable">
         <tr>
             <td class="column1"><label><spring:message code="rest.createapplication.label.name"/></label></td>
-            <td class="column2"><form:input id="restApplicationNameInput" path="restApplication.name" />
+            <td class="column2"><form:input id="restApplicationNameInput" path="name" />
         </tr>
     </table>
  

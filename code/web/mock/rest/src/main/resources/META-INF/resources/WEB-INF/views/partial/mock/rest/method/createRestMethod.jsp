@@ -19,7 +19,7 @@
 <div class="content-top">
     <h1><spring:message code="rest.createmethod.header.method"/></h1>
 </div>
-<form:form action="${create_rest_method_url}" method="POST">
+<form:form action="${create_rest_method_url}" method="POST" commandName="restMethod">
     <table class="formTable">
         <tr>
             <td class="column1"><label><spring:message code="rest.restresource.label.name"/></label></td>

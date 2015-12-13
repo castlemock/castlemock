@@ -19,15 +19,15 @@
 <div class="content-top">
     <h1><spring:message code="rest.createresource.header.resource"/></h1>
 </div>
-<form:form action="${create_rest_resource_url}" method="POST">
+<form:form action="${create_rest_resource_url}" method="POST" commandName="restResource">
     <table class="formTable">
         <tr>
             <td class="column1"><label><spring:message code="rest.createresource.label.name"/></label></td>
-            <td class="column2"><form:input id="restResourceNameInput" path="restResource.name" />
+            <td class="column2"><form:input id="restResourceNameInput" path="name" />
         </tr>
         <tr>
             <td class="column1"><label><spring:message code="rest.createresource.label.uri"/></label></td>
-            <td class="column2"><form:input id="restResourceUriInput" path="restResource.uri" />
+            <td class="column2"><form:input id="restResourceUriInput" path="uri" />
         </tr>
     </table>
  

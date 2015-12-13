@@ -14,19 +14,26 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.mock.rest.web.mvc.controller.mockresponse;
+package com.fortmocks.web.mock.rest.web.mvc.controller.method;
 
 import com.fortmocks.core.basis.model.ServiceProcessor;
-import com.fortmocks.core.mock.rest.model.project.dto.*;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.DeleteRestMethodInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.DeleteRestMockResponseInput;
-import com.fortmocks.core.mock.rest.model.project.service.message.input.DeleteRestMockResponsesInput;
-import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.DeleteRestMethodOutput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.DeleteRestMockResponsesOutput;
-import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.rest.config.TestApplication;
-import com.fortmocks.web.mock.rest.model.project.*;
-import com.fortmocks.web.mock.rest.web.mvc.command.mockresponse.DeleteRestMockResponsesCommand;
+import com.fortmocks.web.mock.rest.model.project.RestApplicationDtoGenerator;
+import com.fortmocks.web.mock.rest.model.project.RestMethodDtoGenerator;
+import com.fortmocks.web.mock.rest.model.project.RestProjectDtoGenerator;
+import com.fortmocks.web.mock.rest.model.project.RestResourceDtoGenerator;
+import com.fortmocks.web.mock.rest.web.mvc.command.method.DeleteRestMethodsCommand;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,54 +59,51 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestApplication.class)
 @WebAppConfiguration
-public class DeleteRestMockResponseControllerTest extends AbstractRestControllerTest {
+public class DeleteRestMethodControllerTest extends AbstractRestControllerTest {
 
-    private static final String PAGE = "partial/mock/rest/mockresponse/deleteRestMockResponse.jsp";
+    private static final String PAGE = "partial/mock/rest/method/deleteRestMethod.jsp";
     private static final String DELETE = "delete";
     private static final String CONFIRM = "confirm";
 
 
     @InjectMocks
-    private DeleteRestMockResponseController deleteSoapMockResponseController;
+    private DeleteRestMethodController deleteRestMethodController;
 
     @Mock
     private ServiceProcessor serviceProcessor;
 
     @Override
     protected AbstractController getController() {
-        return deleteSoapMockResponseController;
+        return deleteRestMethodController;
     }
 
     @Test
-    public void testDeleteMockResponse() throws Exception {
+    public void testDeleteMethod() throws Exception {
         final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
         final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
         final RestResourceDto restResourceDto = RestResourceDtoGenerator.generateRestResourceDto();
         final RestMethodDto restMethodDto = RestMethodDtoGenerator.generateRestMethodDto();
-        final RestMockResponseDto restMockResponseDto = RestMockResponseDtoGenerator.generateRestMockResponseDto();
-        when(serviceProcessor.process(any(ReadRestMockResponseInput.class))).thenReturn(new ReadRestMockResponseOutput(restMockResponseDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + METHOD + SLASH + restMethodDto.getId() + SLASH + RESPONSE + SLASH + restMockResponseDto.getId() + SLASH + DELETE);
+        when(serviceProcessor.process(any(ReadRestMethodInput.class))).thenReturn(new ReadRestMethodOutput(restMethodDto));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + METHOD + SLASH + restMethodDto.getId() +  SLASH + DELETE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(9))
+                .andExpect(MockMvcResultMatchers.model().size(8))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProjectDto.getId()))
                 .andExpect(MockMvcResultMatchers.model().attribute(REST_APPLICATION_ID, restApplicationDto.getId()))
                 .andExpect(MockMvcResultMatchers.model().attribute(REST_RESOURCE_ID, restResourceDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_METHOD_ID, restMethodDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_MOCK_RESPONSE, restMockResponseDto));
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_METHOD, restMethodDto));
     }
 
     @Test
-    public void testDeleteMockResponseConfirm() throws Exception {
+    public void testDeleteMethodConfirm() throws Exception {
         final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
         final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
         final RestResourceDto restResourceDto = RestResourceDtoGenerator.generateRestResourceDto();
         final RestMethodDto restMethodDto = RestMethodDtoGenerator.generateRestMethodDto();
-        final RestMockResponseDto restMockResponseDto = RestMockResponseDtoGenerator.generateRestMockResponseDto();
         when(serviceProcessor.process(any(DeleteRestMockResponseInput.class))).thenReturn(new DeleteRestMockResponsesOutput());
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + METHOD + SLASH + restMethodDto.getId() + SLASH + RESPONSE + SLASH + restMockResponseDto.getId() + SLASH + DELETE + SLASH + CONFIRM);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + METHOD + SLASH + restMethodDto.getId() + SLASH + DELETE + SLASH + CONFIRM);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(0));
@@ -108,18 +112,17 @@ public class DeleteRestMockResponseControllerTest extends AbstractRestController
 
 
     @Test
-    public void testConfirmDeletationOfMultipleMockResponses() throws Exception {
+    public void testConfirmDeletationOfMultipleMethods() throws Exception {
         final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
         final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
         final RestResourceDto restResourceDto = RestResourceDtoGenerator.generateRestResourceDto();
         final RestMethodDto restMethodDto = RestMethodDtoGenerator.generateRestMethodDto();
-        final RestMockResponseDto restMockResponseDto = RestMockResponseDtoGenerator.generateRestMockResponseDto();
-        final DeleteRestMockResponsesCommand deleteRestMockResponsesCommand = new DeleteRestMockResponsesCommand();
-        deleteRestMockResponsesCommand.setRestMockResponses(new ArrayList<RestMockResponseDto>());
-        deleteRestMockResponsesCommand.getRestMockResponses().add(restMockResponseDto);
+        final DeleteRestMethodsCommand deleteRestMethodsCommand = new DeleteRestMethodsCommand();
+        deleteRestMethodsCommand.setRestMethods(new ArrayList<RestMethodDto>());
+        deleteRestMethodsCommand.getRestMethods().add(restMethodDto);
 
-        when(serviceProcessor.process(any(DeleteRestMockResponsesInput.class))).thenReturn(new DeleteRestMockResponsesOutput());
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + METHOD + SLASH + restMethodDto.getId() + SLASH + RESPONSE + SLASH + DELETE + SLASH + CONFIRM);
+        when(serviceProcessor.process(any(DeleteRestMethodInput.class))).thenReturn(new DeleteRestMethodOutput());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + METHOD + SLASH + DELETE + SLASH + CONFIRM);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

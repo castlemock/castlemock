@@ -16,9 +16,9 @@
 
 package com.fortmocks.web.mock.rest.web.mvc.controller.resource;
 
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestResourceInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestResourceOutput;
-import com.fortmocks.web.mock.rest.web.mvc.command.resource.CreateRestResourceCommand;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -42,20 +42,20 @@ public class CreateRestResourceController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/create/resource", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String projectId, @PathVariable final String applicationId) {
-        CreateRestResourceCommand createRestResourceCommand = new CreateRestResourceCommand();
-        createRestResourceCommand.getRestResource().setUri(SLASH);
+        final RestResourceDto restResourceDto = new RestResourceDto();
+        restResourceDto.setUri(SLASH);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
         model.addObject(REST_APPLICATION_ID, applicationId);
-        model.addObject(COMMAND, createRestResourceCommand);
+        model.addObject(REST_RESOURCE, restResourceDto);
         return model;
     }
 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/create/resource", method = RequestMethod.POST)
-    public ModelAndView createResource(@PathVariable final String projectId, @PathVariable final String applicationId, @ModelAttribute final CreateRestResourceCommand createRestResourceCommand) {
-        final CreateRestResourceOutput output = serviceProcessor.process(new CreateRestResourceInput(projectId, applicationId, createRestResourceCommand.getRestResource()));
+    public ModelAndView createResource(@PathVariable final String projectId, @PathVariable final String applicationId, @ModelAttribute final RestResourceDto restResourceDto) {
+        final CreateRestResourceOutput output = serviceProcessor.process(new CreateRestResourceInput(projectId, applicationId, restResourceDto));
         return redirect("/rest/project/" + projectId + "/application/" + applicationId + "/resource/" +  output.getCreatedRestResource().getId());
     }
 

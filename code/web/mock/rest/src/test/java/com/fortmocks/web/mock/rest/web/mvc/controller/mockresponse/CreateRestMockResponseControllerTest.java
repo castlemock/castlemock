@@ -17,7 +17,6 @@
 package com.fortmocks.web.mock.rest.web.mvc.controller.mockresponse;
 
 import com.fortmocks.core.basis.model.ServiceProcessor;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.dto.*;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestMockResponseInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
@@ -72,7 +71,6 @@ public class CreateRestMockResponseControllerTest extends AbstractRestController
         final RestResourceDto restResourceDto = RestResourceDtoGenerator.generateRestResourceDto();
         final RestMethodDto restMethodDto = RestMethodDtoGenerator.generateRestMethodDto();
         when(serviceProcessor.process(any(ReadRestMethodInput.class))).thenReturn(new ReadRestMethodOutput(restMethodDto));
-        System.out.println(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + METHOD + SLASH + restMethodDto.getId() + SLASH + RESPONSE + SLASH + CREATE_RESPONSE);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + METHOD + SLASH + restMethodDto.getId() + SLASH + CREATE_RESPONSE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())

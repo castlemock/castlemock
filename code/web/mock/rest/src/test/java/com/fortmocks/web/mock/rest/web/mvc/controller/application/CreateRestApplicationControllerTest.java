@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.mock.rest.web.mvc.controller.project;
+package com.fortmocks.web.mock.rest.web.mvc.controller.application;
 
 import com.fortmocks.core.basis.model.ServiceProcessor;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestApplicationInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestApplicationOutput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.rest.config.TestApplication;
+import com.fortmocks.web.mock.rest.model.project.RestApplicationDtoGenerator;
 import com.fortmocks.web.mock.rest.model.project.RestProjectDtoGenerator;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
 import org.junit.Test;
@@ -38,41 +42,53 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
+
 /**
- * @author Karl Dahlgren
- * @since 1.0
+ * @author: Karl Dahlgren
+ * @since: 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestApplication.class)
 @WebAppConfiguration
-public class RestProjectControllerTest extends AbstractRestControllerTest {
+public class CreateRestApplicationControllerTest extends AbstractRestControllerTest {
 
-    private static final String PAGE = "partial/mock/rest/project/restProject.jsp";
+    private static final String PAGE = "partial/mock/rest/application/createRestApplication.jsp";
+    private static final String CREATE_APPLICATION = "create/application";
 
     @InjectMocks
-    private RestProjectController restProjectController;
+    private CreateRestApplicationController createRestApplicationController;
 
     @Mock
     private ServiceProcessor serviceProcessor;
 
     @Override
     protected AbstractController getController() {
-        return restProjectController;
+        return createRestApplicationController;
     }
 
     @Test
-    public void testGetServiceValid() throws Exception {
+    public void testCreateMethod() throws Exception {
         final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + CREATE_APPLICATION);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(6))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT, restProjectDto));
-
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProjectDto.getId()))
+                .andExpect(MockMvcResultMatchers.model().attributeExists(REST_APPLICATION));
     }
 
+    @Test
+    public void testPostCreateMethod() throws Exception {
+        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
+        final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
+        when(serviceProcessor.process(any(CreateRestApplicationInput.class))).thenReturn(new CreateRestApplicationOutput(restApplicationDto));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + CREATE_APPLICATION);
+        mockMvc.perform(message)
+                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.model().size(1));
+    }
 
 }

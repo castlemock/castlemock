@@ -47,7 +47,7 @@ public class CreateRestMethodController extends AbstractRestViewController {
         model.addObject(REST_PROJECT_ID, projectId);
         model.addObject(REST_APPLICATION_ID, applicationId);
         model.addObject(REST_RESOURCE_ID, resourceId);
-        model.addObject(COMMAND, new CreateRestMethodCommand());
+        model.addObject(REST_METHOD, new CreateRestMethodCommand());
         model.addObject(REST_METHOD_TYPES, RestMethodType.values());
         return model;
     }

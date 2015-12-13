@@ -17,7 +17,6 @@
 package com.fortmocks.web.mock.rest.web.mvc.controller.resource;
 
 import com.fortmocks.core.basis.model.ServiceProcessor;
-import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
@@ -29,7 +28,6 @@ import com.fortmocks.web.mock.rest.model.project.RestApplicationDtoGenerator;
 import com.fortmocks.web.mock.rest.model.project.RestProjectDtoGenerator;
 import com.fortmocks.web.mock.rest.model.project.RestResourceDtoGenerator;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -41,8 +39,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.ArrayList;
 
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;

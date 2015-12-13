@@ -15,7 +15,6 @@
  */
 package com.fortmocks.web.mock.rest.web.mvc.controller.resource;
 
-import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
@@ -54,9 +53,7 @@ import static org.mockito.Mockito.when;
 public class UpdateRestResourceControllerTest extends AbstractRestControllerTest {
 
     private static final String PAGE = "partial/mock/rest/resource/updateRestResource.jsp";
-    private static final String SLASH = "/";
     private static final String UPDATE = "update";
-    private static final String COMMAND = "command";
 
     @InjectMocks
     private UpdateRestResourceController updateRestResourceController;

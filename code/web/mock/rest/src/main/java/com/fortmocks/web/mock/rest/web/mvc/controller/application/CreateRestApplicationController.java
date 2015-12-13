@@ -16,9 +16,9 @@
 
 package com.fortmocks.web.mock.rest.web.mvc.controller.application;
 
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestApplicationInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestApplicationOutput;
-import com.fortmocks.web.mock.rest.web.mvc.command.application.CreateRestApplicationCommand;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -45,15 +45,15 @@ public class CreateRestApplicationController extends AbstractRestViewController 
     public ModelAndView defaultPage(@PathVariable final String projectId) {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
-        model.addObject(COMMAND, new CreateRestApplicationCommand());
+        model.addObject(REST_APPLICATION, new RestApplicationDto());
         return model;
     }
 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/create/application", method = RequestMethod.POST)
-    public ModelAndView createProject(@PathVariable final String projectId, @ModelAttribute final CreateRestApplicationCommand createRestApplicationCommand) {
-        final CreateRestApplicationOutput output = serviceProcessor.process(new CreateRestApplicationInput(projectId, createRestApplicationCommand.getRestApplication()));
+    public ModelAndView createProject(@PathVariable final String projectId, @ModelAttribute final RestApplicationDto restApplicationDto) {
+        final CreateRestApplicationOutput output = serviceProcessor.process(new CreateRestApplicationInput(projectId, restApplicationDto));
         return redirect("/rest/project/" + projectId + "/application/" + output.getSavedRestApplication().getId());
     }
 
