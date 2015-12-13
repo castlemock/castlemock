@@ -57,7 +57,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restMethodId);
-        model.addObject(COMMAND, mockResponse);
+        model.addObject(REST_MOCK_RESPONSE, mockResponse);
         model.addObject(REST_CONTENT_TYPES, RestContentType.values());
         return model;
     }

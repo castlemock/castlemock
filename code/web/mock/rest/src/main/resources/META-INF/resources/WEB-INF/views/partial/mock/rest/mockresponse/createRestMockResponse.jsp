@@ -19,7 +19,7 @@
 <div class="content-top">
     <h1><spring:message code="rest.createrestmockresponse.header.createmockresponse"/></h1>
 </div>
-<form:form action="${create_rest_mock_response_url}" method="POST">
+<form:form action="${create_rest_mock_response_url}" method="POST" commandName="restMockResponse">
     <table class="formTable">
         <tr>
             <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.name"/></form:label></td>

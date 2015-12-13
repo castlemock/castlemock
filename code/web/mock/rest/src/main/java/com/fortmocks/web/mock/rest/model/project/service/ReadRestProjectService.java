@@ -42,8 +42,6 @@ public class ReadRestProjectService extends AbstractRestProjectService implement
     public ServiceResult<ReadRestProjectOutput> process(final ServiceTask<ReadRestProjectInput> serviceTask) {
         final ReadRestProjectInput input = serviceTask.getInput();
         final RestProjectDto restProject = find(input.getRestProjectId());
-        final ReadRestProjectOutput output = new ReadRestProjectOutput();
-        output.setRestProject(restProject);
-        return createServiceResult(output);
+        return createServiceResult(new ReadRestProjectOutput(restProject));
     }
 }

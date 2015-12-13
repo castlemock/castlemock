@@ -61,10 +61,10 @@
                 <div class="table-frame">
                     <table class="entityTable">
                         <col width="10%">
-                        <col width="60%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
+                        <col width="45%">
+                        <col width="15%">
+                        <col width="15%">
+                        <col width="15%">
                         <tr>
                             <th><spring:message code="rest.restmethod.column.selected"/></th>
                             <th><spring:message code="rest.restmethod.column.responsename"/></th>

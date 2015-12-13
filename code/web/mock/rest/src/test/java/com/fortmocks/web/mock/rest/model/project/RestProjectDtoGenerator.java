@@ -14,30 +14,29 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.mock.rest.model.project.service.message.output;
+package com.fortmocks.web.mock.rest.model.project;
 
-import com.fortmocks.core.basis.model.Output;
-import com.fortmocks.core.basis.model.validation.NotNull;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadRestProjectOutput implements Output{
+public class RestProjectDtoGenerator {
 
-    @NotNull
-    private RestProjectDto restProject;
-
-    public ReadRestProjectOutput(RestProjectDto restProject) {
-        this.restProject = restProject;
-    }
-
-    public RestProjectDto getRestProject() {
-        return restProject;
-    }
-
-    public void setRestProject(RestProjectDto restProject) {
-        this.restProject = restProject;
+    public static RestProjectDto generateRestProjectDto(){
+        final RestProjectDto projectDto = new RestProjectDto();
+        projectDto.setId("REST PROJECT");
+        projectDto.setName("Project name");
+        projectDto.setDescription("Project description");
+        projectDto.setCreated(new Date());
+        projectDto.setUpdated(new Date());
+        projectDto.setRestApplications(new ArrayList<RestApplicationDto>());
+        return projectDto;
     }
 }
