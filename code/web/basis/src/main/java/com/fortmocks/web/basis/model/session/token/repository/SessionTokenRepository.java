@@ -53,6 +53,7 @@ public class SessionTokenRepository implements PersistentTokenRepository {
      * The method provides the functionality to store a new token in the token repository
      * @param token The token that will be stored in the token repository
      */
+    @Override
     public synchronized void createNewToken(PersistentRememberMeToken token) {
         PersistentRememberMeToken current = this.seriesTokens.get(token.getSeries());
         if(current != null) {
@@ -69,6 +70,7 @@ public class SessionTokenRepository implements PersistentTokenRepository {
      * @param tokenValue The new token value
      * @param lastUsed Date for when it was last used
      */
+    @Override
     public synchronized void updateToken(String series, String tokenValue, Date lastUsed) {
         PersistentRememberMeToken token = this.getTokenForSeries(series);
         PersistentRememberMeToken newToken = new PersistentRememberMeToken(token.getUsername(), series, tokenValue, new Date());
@@ -103,6 +105,7 @@ public class SessionTokenRepository implements PersistentTokenRepository {
      * @return Token that matches the provided series id. Null will be returned if no token matches
      * the provided series id
      */
+    @Override
     public synchronized PersistentRememberMeToken getTokenForSeries(String seriesId) {
         return this.seriesTokens.get(seriesId);
     }
@@ -111,6 +114,7 @@ public class SessionTokenRepository implements PersistentTokenRepository {
      * Remove a user token from the repository
      * @param username The token that matches this user name will be removed
      */
+    @Override
     public synchronized void removeUserTokens(String username) {
         Iterator series = this.seriesTokens.keySet().iterator();
 

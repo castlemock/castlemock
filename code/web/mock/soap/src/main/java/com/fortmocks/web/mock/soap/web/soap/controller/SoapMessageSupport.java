@@ -41,6 +41,10 @@ public class SoapMessageSupport {
     private static final String BODY = "Body";
     private static final Logger LOGGER = Logger.getLogger(SoapMessageSupport.class);
 
+    private SoapMessageSupport(){
+
+    }
+
     /**
      * The method extract the operation name from the SOAP body
      * @param body The body that contains the operation name

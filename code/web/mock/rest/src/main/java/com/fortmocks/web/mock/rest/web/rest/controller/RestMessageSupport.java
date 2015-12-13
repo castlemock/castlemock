@@ -29,11 +29,11 @@ import java.io.IOException;
  */
 public class RestMessageSupport {
 
-    protected static final String DIVIDER = ":";
-    protected static final String VARIABLE = "#";
-    private static final String BODY = "Body";
     private static final Logger LOGGER = Logger.getLogger(RestMessageSupport.class);
 
+    private RestMessageSupport(){
+
+    }
 
     /**
      * The getBody method is used to extract the body from the incoming request

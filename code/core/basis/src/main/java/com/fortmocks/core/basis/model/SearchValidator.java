@@ -7,6 +7,10 @@ package com.fortmocks.core.basis.model;
  */
 public class SearchValidator {
 
+    private SearchValidator(){
+
+    }
+
 
     public static final boolean validate(final String input, final String query){
         return input.toLowerCase().contains(query.toLowerCase());
