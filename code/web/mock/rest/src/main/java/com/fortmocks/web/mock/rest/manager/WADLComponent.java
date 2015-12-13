@@ -16,11 +16,10 @@
 
 package com.fortmocks.web.mock.rest.manager;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
-import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
+import com.fortmocks.core.mock.rest.model.project.domain.*;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.web.basis.manager.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,6 +49,7 @@ public class WADLComponent {
 
     @Autowired
     private FileManager fileManager;
+    private static final String AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME = "Auto-generated mocked response";
 
     /**
      * The method provides the functionality to download a WADL file from a specific URL, download it and generate
@@ -123,6 +124,18 @@ public class WADLComponent {
                             restMethodDto.setRestMethodType(RestMethodType.valueOf(methodType));
                             restMethodDto.setRestMethodStatus(RestMethodStatus.MOCKED);
                             restMethodDto.setRestResponseStrategy(RestResponseStrategy.RANDOM);
+                            restMethodDto.setRestMockResponses(new ArrayList<RestMockResponseDto>());
+
+
+                            if(generateResponse){
+                                RestMockResponseDto restMockResponse = new RestMockResponseDto();
+                                restMockResponse.setRestContentType(RestContentType.APPLICATION_JSON);
+                                restMockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
+                                restMockResponse.setHttpStatusCode(200);
+                                restMockResponse.setRestMockResponseStatus(RestMockResponseStatus.ENABLED);
+                                restMethodDto.getRestMockResponses().add(restMockResponse);
+                            }
+
                             restResourceDto.getRestMethods().add(restMethodDto);
                         }
                     }
@@ -134,6 +147,11 @@ public class WADLComponent {
         }
     }
 
+    /**
+     * The method extracts all the application elements from the provided document
+     * @param document The document which contains all the application that will be extracted
+     * @return A list of application elements
+     */
     private List<Element> getApplications(Document document){
         List<Element> applicationElements = new LinkedList<Element>();
         final NodeList applicationNodeList = document.getElementsByTagName("application");
@@ -148,6 +166,11 @@ public class WADLComponent {
         return applicationElements;
     }
 
+    /**
+     * The method extracts all the resource elements from the provided application element
+     * @param applicationElement The application element which contains all the resources that will be extracted
+     * @return A list of resource elements
+     */
     private List<Element> getResources(Element applicationElement){
         List<Element> resourceElements = new LinkedList<Element>();
         NodeList resourceNodeList = applicationElement.getElementsByTagName("resource");
@@ -162,6 +185,11 @@ public class WADLComponent {
         return resourceElements;
     }
 
+    /**
+     * The method extracts all the method elements from the provided resource element
+     * @param resourceElement The resource element which contains all the methods that will be extracted
+     * @return A list of method elements
+     */
     private List<Element> getMethods(Element resourceElement){
         List<Element> methodElements = new LinkedList<Element>();
         NodeList methodNodeList = resourceElement.getElementsByTagName("method");
@@ -176,6 +204,12 @@ public class WADLComponent {
         return methodElements;
     }
 
+    /**
+     * The method provides the functionality to extract the resource base from a provided application element
+     * @param applicationElement The application element that contains the resource base
+     * @return The resource base from the application element
+     * @throws MalformedURLException
+     */
     private String resourceBase(Element applicationElement) throws MalformedURLException {
         final NodeList resourcesNodeList = applicationElement.getElementsByTagName("resources");
         for (int resourcesIndex = 0; resourcesIndex < resourcesNodeList.getLength(); resourcesIndex++) {
