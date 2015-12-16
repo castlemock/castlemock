@@ -45,6 +45,13 @@ public class CreateUserService extends AbstractUserService implements Service<Cr
     public ServiceResult<CreateUserOutput> process(final ServiceTask<CreateUserInput> serviceTask) {
         final CreateUserInput input = serviceTask.getInput();
         final UserDto user = input.getUser();
+
+        final UserDto existingUser = findByUsername(user.getUsername());
+        if(existingUser != null){
+            throw new IllegalArgumentException("User with the username '" + user.getUsername() + "' already exists.");
+        }
+
+
         user.setId(null);
         user.setCreated(new Date());
         user.setUpdated(new Date());

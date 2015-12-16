@@ -21,14 +21,15 @@ import com.fortmocks.core.basis.model.event.dto.EventDto;
 import com.fortmocks.web.basis.model.AbstractService;
 
 /**
+ * The event service provides the functionality that affects all events
  * @author Karl Dahlgren
  * @since 1.0
  */
 public abstract class AbstractEventService<T extends Event, D extends EventDto> extends AbstractService<T,D,String> {
 
     /**
-     * The service finds the
-     * @return
+     * The service finds the oldest event
+     * @return The oldest event
      */
     protected EventDto getOldestEvent(){
         Event oldestEvent = null;
