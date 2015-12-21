@@ -24,7 +24,7 @@ Full documentation will be provided shortly.
 - Website: [http://www.fortmocks.com/](http://www.fortmocks.com/)
 - Google Group: [FortMocks](http://groups.google.com/d/forum/fortmocks)
 - Twitter: [@FortMocks](http://twitter.com/FortMocks)
-- [GitHub Issues](https://github.com/karldahlgren/fortmocks/issues)
+- [Jira Issues](http://jira.fortmocks.com/)
 
 ## Bugs and Feedback
 
@@ -32,13 +32,13 @@ For bugs, questions and discussions please use the [GitHub Issues](https://githu
 
 ## News and Website
 All information about Fort Mocks can be found on our website. Follow us on Twitter: [FortMocks](http://twitter.com/FortMocks).
- 
+
 ## License
 
 Fort Mocks is **licensed** under the **[Apache License](https://github.com/fortmocks/fortmocks/blob/master/LICENSE.txt)**. The terms of the license are as follows:
 
     Apache License
-   
+
     Copyright 2015 Karl Dahlgren and a number of other contributors.
 
     Licensed under the Apache License, Version 2.0 (the "License");
