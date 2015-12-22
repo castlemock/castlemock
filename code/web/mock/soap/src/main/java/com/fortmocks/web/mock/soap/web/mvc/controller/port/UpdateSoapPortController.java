@@ -18,10 +18,10 @@ package com.fortmocks.web.mock.soap.web.mvc.controller.port;
 
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.*;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapPortInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapPortsForwardedEndpointInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.web.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
 import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapViewController;

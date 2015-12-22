@@ -23,8 +23,6 @@ import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.UpdateCurrentUserInput;
 import com.fortmocks.core.basis.model.user.service.message.output.UpdateCurrentUserOutput;
 import com.google.common.base.Preconditions;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Date;
 

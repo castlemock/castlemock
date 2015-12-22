@@ -20,7 +20,6 @@ import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapPortInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.UpdateSoapPortOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;

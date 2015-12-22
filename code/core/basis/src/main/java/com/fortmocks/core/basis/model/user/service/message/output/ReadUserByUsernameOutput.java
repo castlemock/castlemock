@@ -18,7 +18,6 @@ package com.fortmocks.core.basis.model.user.service.message.output;
 
 import com.fortmocks.core.basis.model.Output;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
-import com.fortmocks.core.basis.model.validation.NotNull;
 
 /**
  * @author Karl Dahlgren

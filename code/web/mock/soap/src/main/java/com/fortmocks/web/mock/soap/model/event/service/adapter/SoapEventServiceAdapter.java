@@ -20,7 +20,6 @@ import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.TypeIdentifier;
 import com.fortmocks.core.basis.model.event.dto.EventDto;
 import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
-import com.fortmocks.core.mock.soap.model.event.domain.SoapEvent;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.core.mock.soap.model.event.service.message.input.ReadAllSoapEventInput;
 import com.fortmocks.core.mock.soap.model.event.service.message.input.ReadSoapEventInput;

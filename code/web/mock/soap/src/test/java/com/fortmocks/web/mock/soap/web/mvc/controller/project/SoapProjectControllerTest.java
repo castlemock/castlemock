@@ -26,7 +26,6 @@ import com.fortmocks.web.mock.soap.config.TestApplication;
 import com.fortmocks.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

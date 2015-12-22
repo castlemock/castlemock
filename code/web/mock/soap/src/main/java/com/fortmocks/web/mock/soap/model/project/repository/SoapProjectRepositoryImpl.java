@@ -20,20 +20,9 @@ import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapProject;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.List;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.

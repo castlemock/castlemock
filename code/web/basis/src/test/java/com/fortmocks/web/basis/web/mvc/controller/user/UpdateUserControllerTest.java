@@ -31,7 +31,6 @@ import com.fortmocks.web.basis.model.user.dto.UserDtoGenerator;
 import com.fortmocks.web.basis.model.user.service.UserDetailSecurityService;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

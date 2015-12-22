@@ -21,8 +21,6 @@ import com.fortmocks.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
  * The repository is responsible for loading and saving REST project from the file system. Each REST project is stored as

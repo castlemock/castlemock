@@ -21,7 +21,6 @@ import com.fortmocks.core.mock.soap.model.event.dto.SoapRequestDto;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapResponseDto;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationMethod;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationType;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 
 import java.util.Date;
 

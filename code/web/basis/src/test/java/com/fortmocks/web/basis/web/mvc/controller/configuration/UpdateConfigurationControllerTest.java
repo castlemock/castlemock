@@ -18,11 +18,9 @@ package com.fortmocks.web.basis.web.mvc.controller.configuration;
 
 import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
-import com.fortmocks.core.basis.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
 import com.fortmocks.core.basis.model.configuration.service.message.input.UpdateAllConfigurationGroupsInput;
 import com.fortmocks.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 import com.fortmocks.web.basis.config.TestApplication;
-import com.fortmocks.web.basis.model.configuration.dto.ConfigurationGroupDtoGenerator;
 import com.fortmocks.web.basis.web.mvc.command.configuration.ConfigurationUpdateCommand;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractControllerTest;
@@ -39,7 +37,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Matchers.any;
 

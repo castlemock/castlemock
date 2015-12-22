@@ -21,11 +21,7 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.DeleteSoapMockResponseInput;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.DeleteSoapMockResponseOutput;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.UpdateSoapMockResponseOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.config.TestApplication;
@@ -33,7 +29,6 @@ import com.fortmocks.web.mock.soap.model.project.SoapMockResponseDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapOperationDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapProjectDtoGenerator;
-import com.fortmocks.web.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,8 +40,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.ArrayList;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;

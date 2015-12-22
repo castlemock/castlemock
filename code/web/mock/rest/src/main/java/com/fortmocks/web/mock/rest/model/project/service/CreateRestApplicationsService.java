@@ -19,12 +19,7 @@ package com.fortmocks.web.mock.rest.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
-import com.fortmocks.core.mock.rest.model.project.domain.RestProject;
-import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
-import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestApplicationsInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestApplicationsOutput;
 

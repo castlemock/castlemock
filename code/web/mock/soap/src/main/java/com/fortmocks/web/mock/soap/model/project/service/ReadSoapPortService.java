@@ -19,13 +19,10 @@ package com.fortmocks.web.mock.soap.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
-
-import java.util.Map;
 
 /**
  * @author Karl Dahlgren

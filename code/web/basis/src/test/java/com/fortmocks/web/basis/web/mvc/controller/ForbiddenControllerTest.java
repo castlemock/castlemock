@@ -17,7 +17,6 @@
 package com.fortmocks.web.basis.web.mvc.controller;
 
 import com.fortmocks.web.basis.config.TestApplication;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

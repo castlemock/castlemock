@@ -18,7 +18,6 @@ package com.fortmocks.core.mock.soap.model.project.service.message.input;
 
 import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.validation.NotNull;
-import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 
 /**
