@@ -31,6 +31,8 @@ public class SoapEvent extends Event {
 
     private SoapRequest soapRequest;
     private SoapResponse soapResponse;
+    private String soapProjectId;
+    private String soapPortId;
     private String soapOperationId;
 
 
@@ -50,6 +52,24 @@ public class SoapEvent extends Event {
 
     public void setSoapResponse(SoapResponse soapResponse) {
         this.soapResponse = soapResponse;
+    }
+
+    @XmlElement
+    public String getSoapProjectId() {
+        return soapProjectId;
+    }
+
+    public void setSoapProjectId(String soapProjectId) {
+        this.soapProjectId = soapProjectId;
+    }
+
+    @XmlElement
+    public String getSoapPortId() {
+        return soapPortId;
+    }
+
+    public void setSoapPortId(String soapPortId) {
+        this.soapPortId = soapPortId;
     }
 
     @XmlElement

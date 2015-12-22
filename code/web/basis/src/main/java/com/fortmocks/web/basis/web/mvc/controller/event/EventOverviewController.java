@@ -43,7 +43,7 @@ public class EventOverviewController extends AbstractViewController {
     private static final String PAGE = "basis/event/eventOverview";
 
     @Autowired
-    private EventServiceFacadeImpl eventServiceComponent;
+    private EventServiceFacadeImpl eventServiceFacade;
 
     /**
      * The method creates a view that displays all the logged information to the user
@@ -52,7 +52,7 @@ public class EventOverviewController extends AbstractViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
-        final List<EventDto> events = eventServiceComponent.findAll();
+        final List<EventDto> events = eventServiceFacade.findAll();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(EVENTS, events);
         return model;

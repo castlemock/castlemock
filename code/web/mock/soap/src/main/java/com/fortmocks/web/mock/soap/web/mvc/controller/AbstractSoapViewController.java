@@ -53,7 +53,7 @@ public class AbstractSoapViewController extends AbstractViewController {
      * @param urlPath The URL path (The end of the URL, which is used to identify the SOAP service)
      * @return A URL based on all the incoming parameters
      */
-    protected String getSoapInvokeAddress(String protocol, int serverPort, String projectId, String urlPath){
+    protected String getSoapInvokeAddress(final String protocol, int serverPort, final String projectId, final String urlPath){
         try {
             final String hostAddress = getHostAddress();
             return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH + urlPath;

@@ -34,6 +34,12 @@ public class SoapEventDto extends EventDto {
     @Mapping("soapResponse")
     private SoapResponseDto soapResponse;
 
+    @Mapping("soapProjectId")
+    private String soapProjectId;
+
+    @Mapping("soapPortId")
+    private String soapPortId;
+
     @Mapping("soapOperationId")
     private String soapOperationId;
 
@@ -53,13 +59,17 @@ public class SoapEventDto extends EventDto {
     /**
      * Constructor for the SOAP event DTO
      * @param soapRequest The SOAP request that the event is representing
+     * @param soapProjectId The id of the SOAP project that is affected by the provided SOAP request
+     * @param soapPortId The id of the SOAP port that is affected by the provided SOAP request
      * @param soapOperationId The id of the SOAP operation that is affected by the provided SOAP request
      * @see SoapOperation
      */
-    public SoapEventDto(final SoapRequestDto soapRequest, final String soapOperationId) {
+    public SoapEventDto(final String resourceName, final SoapRequestDto soapRequest, final String soapProjectId, final String soapPortId, final String soapOperationId) {
+        super(resourceName);
         this.soapRequest = soapRequest;
+        this.soapProjectId = soapProjectId;
+        this.soapPortId = soapPortId;
         this.soapOperationId = soapOperationId;
-        setStartDate(new Date());
     }
 
     /**
@@ -118,5 +128,39 @@ public class SoapEventDto extends EventDto {
      */
     public void setSoapOperationId(String soapOperationId) {
         this.soapOperationId = soapOperationId;
+    }
+
+    /**
+     * The SOAP project id is used to identify the project for which the
+     * event spans from
+     * @return The id of the project which the event affected
+     */
+    public String getSoapProjectId() {
+        return soapProjectId;
+    }
+
+    /**
+     * Set a new value to the SOAP project id
+     * @param soapProjectId The new SOAP project id
+     */
+    public void setSoapProjectId(String soapProjectId) {
+        this.soapProjectId = soapProjectId;
+    }
+
+    /**
+     * The SOAP port id is used to identify the port for which the
+     * event spans from
+     * @return The id of the port which the event affected
+     */
+    public String getSoapPortId() {
+        return soapPortId;
+    }
+
+    /**
+     * Sets a new value to the SOAP port id
+     * @param soapPortId The new SOAP port id
+     */
+    public void setSoapPortId(String soapPortId) {
+        this.soapPortId = soapPortId;
     }
 }

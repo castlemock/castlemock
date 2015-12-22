@@ -19,21 +19,17 @@ package com.fortmocks.web.mock.soap.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.basis.model.project.domain.Project;
-import com.fortmocks.core.basis.model.project.dto.ProjectDto;
 import com.fortmocks.core.mock.soap.model.project.domain.*;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationWithTypeOutput;
-
-import java.util.List;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.IdentifySoapOperationInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class ReadSoapOperationWithTypeService extends AbstractSoapProjectService implements Service<ReadSoapOperationWithTypeInput, ReadSoapOperationWithTypeOutput> {
+public class IdentifySoapOperationService extends AbstractSoapProjectService implements Service<IdentifySoapOperationInput, IdentifySoapOperationOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -44,18 +40,20 @@ public class ReadSoapOperationWithTypeService extends AbstractSoapProjectService
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<ReadSoapOperationWithTypeOutput> process(final ServiceTask<ReadSoapOperationWithTypeInput> serviceTask) {
-        final ReadSoapOperationWithTypeInput input = serviceTask.getInput();
+    public ServiceResult<IdentifySoapOperationOutput> process(final ServiceTask<IdentifySoapOperationInput> serviceTask) {
+        final IdentifySoapOperationInput input = serviceTask.getInput();
         final SoapProject project= findType(input.getSoapProjectId());
+        SoapPort soapPort = null;
         SoapOperationDto soapOperationDto = null;
-        for(SoapPort soapPort : project.getSoapPorts()){
-            if(soapPort.getUrlPath().equals(input.getUri())){
-                soapOperationDto = findSoapOperation(soapPort, input.getSoapOperationMethod(), input.getType(), input.getName());
+        for(SoapPort tempSoapPort : project.getSoapPorts()){
+            if(tempSoapPort.getUrlPath().equals(input.getUri())){
+                soapPort = tempSoapPort;
+                soapOperationDto = findSoapOperation(tempSoapPort, input.getSoapOperationMethod(), input.getType(), input.getName());
                 break;
             }
         }
 
-        return createServiceResult(new ReadSoapOperationWithTypeOutput(soapOperationDto));
+        return createServiceResult(new IdentifySoapOperationOutput(project.getId(), soapPort.getId(), soapOperationDto.getId(), soapOperationDto));
     }
 
     /**

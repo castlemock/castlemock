@@ -20,8 +20,13 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * The service adapter is an adapter class that provides the basic functionality to retrieve,
+ * delete, update, create instances for a specific model class.
+ *
  * @author Karl Dahlgren
  * @since 1.0
+ * @see TypeIdentifiable
+ *
  */
 public interface ServiceAdapter<P extends TypeIdentifiable, D extends P, I extends Serializable>  {
 

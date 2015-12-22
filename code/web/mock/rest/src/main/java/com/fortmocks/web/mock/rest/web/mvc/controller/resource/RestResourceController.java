@@ -60,21 +60,10 @@ public class RestResourceController extends AbstractRestViewController {
     public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, final ServletRequest request) {
         final ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
         final RestResourceDto restResource = output.getRestResource();
-        String requestProtocol = HTTP;
-        if(request.isSecure()){
-            requestProtocol = HTTPS;
-        }
 
-        try {
-            final String hostAddress = getHostAddress();
-            restResource.setInvokeAddress(requestProtocol + hostAddress + ":" + request.getServerPort() + getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + restProjectId + SLASH + APPLICATION + SLASH + restApplicationId + restResource.getUri());
-        } catch (Exception exception) {
-            LOGGER.error("Unable to generate invoke URL", exception);
-            throw new IllegalStateException("Unable to generate invoke URL for " + restResource.getName());
-        }
-
-
-
+        final String protocol = getProtocol(request);
+        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), restProjectId, restApplicationId, restResourceId);
+        restResource.setInvokeAddress(invokeAddress);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);

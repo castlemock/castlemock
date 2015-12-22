@@ -17,6 +17,7 @@
 package com.fortmocks.web.mock.rest.web.mvc.controller;
 
 import com.fortmocks.web.basis.web.mvc.controller.AbstractViewController;
+import org.apache.log4j.Logger;
 
 /**
  * The class operates as a shared base for all the view related to the REST module
@@ -28,6 +29,7 @@ public class AbstractRestViewController extends AbstractViewController {
 
     protected static final String REST = "rest";
     protected static final String APPLICATION = "application";
+    protected static final String RESOURCE = "resource";
 
     protected static final String REST_PROJECT = "restProject";
     protected static final String REST_PROJECT_ID = "restProjectId";
@@ -54,5 +56,26 @@ public class AbstractRestViewController extends AbstractViewController {
     protected static final String REST_RESPONSE_STRATEGIES = "restResponsestrategies";
 
     protected static final String REST_CONTENT_TYPES = "restContentTypes";
+
+    private static final Logger LOGGER = Logger.getLogger(AbstractRestViewController.class);
+
+    /**
+     * The method provides the functionality to create the address which is used to invoke a REST service
+     * @param protocol THe protocol
+     * @param serverPort The server port
+     * @param projectId The id of the project
+     * @param applicationId The id of the application
+     * @param resourceId The id of the resource
+     * @return A URL based on all the incoming parameters
+     */
+    protected String getSoapInvokeAddress(final String protocol, int serverPort, final String projectId, final String applicationId, final String resourceId){
+        try {
+            final String hostAddress = getHostAddress();
+            return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId;
+        } catch (Exception exception) {
+            LOGGER.error("Unable to generate invoke URL", exception);
+            throw new IllegalStateException("Unable to generate invoke URL for " + projectId);
+        }
+    }
 
 }

@@ -35,6 +35,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,10 +65,14 @@ public class RestMethodController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId) {
+    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, final ServletRequest request) {
         final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
         final RestMethodDto restMethod = output.getRestMethod();
         final ReadRestEventWithMethodIdOutput readRestEventWithMethodIdOutput = serviceProcessor.process(new ReadRestEventWithMethodIdInput(restMethodId));
+
+        final String protocol = getProtocol(request);
+        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), restProjectId, restApplicationId, restResourceId);
+        restMethod.setInvokeAddress(invokeAddress);
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);

@@ -34,6 +34,9 @@ public class EventDto implements TypeIdentifiable {
     @Mapping("id")
     private String id;
 
+    @Mapping("resourceName")
+    private String resourceName;
+
     @Mapping("startDate")
     private Date startDate;
 
@@ -41,6 +44,8 @@ public class EventDto implements TypeIdentifiable {
     private Date endDate;
 
     private TypeIdentifier typeIdentifier;
+
+    private String resourceLink;
 
     /**
      * The default constructor for the event DTO
@@ -50,10 +55,20 @@ public class EventDto implements TypeIdentifiable {
     }
 
     /**
+     * The default constructor for the event DTO
+     */
+    public EventDto(final String resourceName){
+        this.resourceName = resourceName;
+        setStartDate(new Date());
+    }
+
+    /**
      * The constructor provides the functionality to initialize a new event DTO based on another event DTO
      * @param eventDto The event DTO that the new event DTO is going to based on
      */
     public EventDto(final EventDto eventDto){
+        this.resourceName = eventDto.getResourceName();
+        this.resourceLink = eventDto.getResourceLink();
         this.id = eventDto.getId();
         this.startDate = eventDto.getStartDate();
         this.endDate = eventDto.getEndDate();
@@ -65,6 +80,14 @@ public class EventDto implements TypeIdentifiable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
     }
 
     public Date getStartDate() {
@@ -91,5 +114,13 @@ public class EventDto implements TypeIdentifiable {
     @Override
     public void setTypeIdentifier(TypeIdentifier typeIdentifier) {
         this.typeIdentifier = typeIdentifier;
+    }
+
+    public String getResourceLink() {
+        return resourceLink;
+    }
+
+    public void setResourceLink(String resourceLink) {
+        this.resourceLink = resourceLink;
     }
 }

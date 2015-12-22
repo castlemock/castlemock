@@ -24,7 +24,7 @@ import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadRestMethodWithMethodTypeInput implements Input {
+public class IdentifyRestMethodInput implements Input {
 
     @NotNull
     private String restProjectId;
@@ -35,7 +35,7 @@ public class ReadRestMethodWithMethodTypeInput implements Input {
     @NotNull
     private RestMethodType restMethodType;
 
-    public ReadRestMethodWithMethodTypeInput(String restProjectId, String restApplicationId, String restResourceUri, RestMethodType restMethodType) {
+    public IdentifyRestMethodInput(String restProjectId, String restApplicationId, String restResourceUri, RestMethodType restMethodType) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceUri = restResourceUri;

@@ -42,6 +42,10 @@
             <td class="column2"><label path="name">${restMethod.restMethodStatus}</label></td>
         </tr>
         <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.address"/></label></td>
+            <td class="column2"><label path="name">${restMethod.invokeAddress}</label></td>
+        </tr>
+        <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.restResponsestrategy"/></label></td>
             <td class="column2"><label path="name">${restMethod.restResponseStrategy}</label></td>
         </tr>
@@ -108,21 +112,21 @@
             <div class="table-frame">
                 <table class="entityTable">
                     <col width="10%">
-                    <col width="15%">
-                    <col width="15%">
-                    <col width="60%">
+                    <col width="40%">
+                    <col width="25%">
+                    <col width="25%">
                     <tr>
                         <th><spring:message code="rest.restmethod.column.id"/></th>
+                        <th><spring:message code="rest.restmethod.column.mockedresponse"/></th>
                         <th><spring:message code="rest.restmethod.column.startdate"/></th>
                         <th><spring:message code="rest.restmethod.column.enddate"/></th>
-                        <th><spring:message code="rest.restmethod.column.mockedresponse"/></th>
                     </tr>
                     <c:forEach items="${restEvents}" var="event" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.id}</a></td>
+                            <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.restResponse.mockResponseName}</a></td>
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.startDate}</a></td>
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.endDate}</a></td>
-                            <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.restResponse.mockResponseName}</a></td>
                         </tr>
                     </c:forEach>
                 </table>

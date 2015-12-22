@@ -33,6 +33,7 @@ import java.util.Date;
 public abstract class Event implements Saveable<String> {
 
     private String id;
+    private String resourceName;
     private Date startDate;
     private Date endDate;
 
@@ -48,6 +49,15 @@ public abstract class Event implements Saveable<String> {
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    @XmlElement
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
     }
 
     @XmlElement

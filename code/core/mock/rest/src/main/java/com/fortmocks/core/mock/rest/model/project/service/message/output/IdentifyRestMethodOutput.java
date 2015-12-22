@@ -14,43 +14,47 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.mock.rest.model.event.domain;
+package com.fortmocks.core.mock.rest.model.project.service.message.output;
 
-import com.fortmocks.core.basis.model.event.domain.Event;
-import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
-import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
-
-import javax.xml.bind.annotation.XmlRootElement;
+import com.fortmocks.core.basis.model.Output;
+import com.fortmocks.core.basis.model.validation.NotNull;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
+public class IdentifyRestMethodOutput implements Output{
 
-@XmlRootElement
-public class RestEvent extends Event {
-
-    private RestRequestDto restRequest;
-    private RestResponseDto restResponse;
+    @NotNull
     private String restProjectId;
+
+    @NotNull
     private String restApplicationId;
+
+    @NotNull
     private String restResourceId;
+
+    @NotNull
     private String restMethodId;
 
-    public RestRequestDto getRestRequest() {
-        return restRequest;
+    @NotNull
+    private RestMethodDto restMethod;
+
+    public IdentifyRestMethodOutput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, RestMethodDto restMethod) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceId = restResourceId;
+        this.restMethodId = restMethodId;
+        this.restMethod = restMethod;
     }
 
-    public void setRestRequest(RestRequestDto restRequest) {
-        this.restRequest = restRequest;
+    public RestMethodDto getRestMethod() {
+        return restMethod;
     }
 
-    public RestResponseDto getRestResponse() {
-        return restResponse;
-    }
-
-    public void setRestResponse(RestResponseDto restResponse) {
-        this.restResponse = restResponse;
+    public void setRestMethod(RestMethodDto restMethod) {
+        this.restMethod = restMethod;
     }
 
     public String getRestProjectId() {

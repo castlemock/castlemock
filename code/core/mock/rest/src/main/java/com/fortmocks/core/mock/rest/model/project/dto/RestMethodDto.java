@@ -58,6 +58,8 @@ public class RestMethodDto {
     @Mapping("currentResponseSequenceIndex")
     private Integer currentResponseSequenceIndex = 0;
 
+    private String invokeAddress;
+
     public String getId() {
         return id;
     }
@@ -128,5 +130,13 @@ public class RestMethodDto {
 
     public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
         this.currentResponseSequenceIndex = currentResponseSequenceIndex;
+    }
+
+    public String getInvokeAddress() {
+        return invokeAddress;
+    }
+
+    public void setInvokeAddress(String invokeAddress) {
+        this.invokeAddress = invokeAddress;
     }
 }

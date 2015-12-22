@@ -24,9 +24,9 @@ import com.fortmocks.core.mock.rest.model.project.domain.*;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRecordedRestMockResponseInput;
-import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodWithMethodTypeInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.IdentifyRestMethodInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
-import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodWithMethodTypeOutput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.rest.model.RestException;
 import com.google.common.base.Preconditions;
@@ -55,7 +55,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
     private static final String APPLICATION = "application";
     private static final String FORWARDED_RESPONSE_NAME = "Forwarded response";
     private static final String RECORDED_RESPONSE_NAME = "Recorded response";
-    private static final String CONTENT_TYPE = "Content-Type";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static final Random RANDOM = new Random();
     private static final Logger LOGGER = Logger.getLogger(AbstractRestServiceController.class);
@@ -78,8 +77,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
             Preconditions.checkNotNull(httpServletResponse, "The HTTP Servlet Response cannot be null");
 
             final RestRequestDto restRequest = prepareRequest(projectId, applicationId, restMethodType, httpServletRequest);
-            final ReadRestMethodWithMethodTypeOutput output = serviceProcessor.process(new ReadRestMethodWithMethodTypeInput(projectId, applicationId, restRequest.getUri(), restMethodType));
-            return process(restRequest, output.getRestMethod(), httpServletResponse);
+            final IdentifyRestMethodOutput output = serviceProcessor.process(new IdentifyRestMethodInput(projectId, applicationId, restRequest.getUri(), restMethodType));
+            final String resourceId = output.getRestResourceId();
+
+            return process(restRequest, projectId, applicationId, resourceId, output.getRestMethod(), httpServletResponse);
         }
 
         catch (Exception exception){
@@ -98,7 +99,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final RestRequestDto request = new RestRequestDto();
         final String body = RestMessageSupport.getBody(httpServletRequest);
         final String incomingRequestUri = httpServletRequest.getRequestURI().toLowerCase();
-        final String restResourceUri = incomingRequestUri.replace(getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId, EMPTY);
+        final String restResourceUri = incomingRequestUri.replace(getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId.toLowerCase() + SLASH + APPLICATION + SLASH + applicationId.toLowerCase(), EMPTY);
         final Map<String, String> parameters = extractParameters(httpServletRequest);
 
         request.setContentType(httpServletRequest.getContentType());
@@ -162,12 +163,12 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param httpServletResponse The HTTP servlet response
      * @return A response in String format
      */
-    protected String process(final RestRequestDto restRequest, final RestMethodDto restMethod, final HttpServletResponse httpServletResponse){
+    protected String process(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(restRequest, "Rest request cannot be null");
         RestEventDto event = null;
         RestResponseDto response = null;
         try {
-            event = new RestEventDto(restRequest, restMethod.getId());
+            event = new RestEventDto(restMethod.getName(), restRequest, projectId, applicationId, resourceId, restMethod.getId());
             if (RestMethodStatus.DISABLED.equals(restMethod.getRestMethodStatus())) {
                 throw new RestException("The requested REST method, " + restMethod.getName() + ", is disabled");
             } else if (RestMethodStatus.FORWARDED.equals(restMethod.getRestMethodStatus())) {

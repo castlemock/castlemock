@@ -33,6 +33,15 @@ public class RestEventDto extends EventDto {
     @Mapping("restResponse")
     private RestResponseDto restResponse;
 
+    @Mapping("restProjectId")
+    private String restProjectId;
+
+    @Mapping("restApplicationId")
+    private String restApplicationId;
+
+    @Mapping("restResourceId")
+    private String restResourceId;
+
     @Mapping("restMethodId")
     private String restMethodId;
 
@@ -52,12 +61,18 @@ public class RestEventDto extends EventDto {
     /**
      * Constructor for the REST event DTO
      * @param restRequest The REST request that the event is representing
+     * @param restProjectId The project id that the event belongs to
+     * @param restApplicationId The application id that the event belongs to
+     * @param restResourceId The resource id that the event belongs to
      * @param restMethodId The id of the REST operation that is affected by the provided REST request
      */
-    public RestEventDto(final RestRequestDto restRequest, final String restMethodId) {
+    public RestEventDto(final String resourceName, final RestRequestDto restRequest, final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId) {
+        super(resourceName);
         this.restRequest = restRequest;
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceId = restResourceId;
         this.restMethodId = restMethodId;
-        setStartDate(new Date());
     }
 
     /**
@@ -82,8 +97,32 @@ public class RestEventDto extends EventDto {
         return restResponse;
     }
 
+    public String getRestProjectId() {
+        return restProjectId;
+    }
+
+    public void setRestProjectId(String restProjectId) {
+        this.restProjectId = restProjectId;
+    }
+
+    public String getRestApplicationId() {
+        return restApplicationId;
+    }
+
+    public void setRestApplicationId(String restApplicationId) {
+        this.restApplicationId = restApplicationId;
+    }
+
     public void setRestResponse(RestResponseDto restResponse) {
         this.restResponse = restResponse;
+    }
+
+    public String getRestResourceId() {
+        return restResourceId;
+    }
+
+    public void setRestResourceId(String restResourceId) {
+        this.restResourceId = restResourceId;
     }
 
     public String getRestMethodId() {

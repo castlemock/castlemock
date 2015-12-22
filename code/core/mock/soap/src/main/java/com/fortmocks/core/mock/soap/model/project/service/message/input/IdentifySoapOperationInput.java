@@ -25,7 +25,7 @@ import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationType;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadSoapOperationWithTypeInput implements Input {
+public class IdentifySoapOperationInput implements Input {
 
     @NotNull
     private String soapProjectId;
@@ -38,7 +38,7 @@ public class ReadSoapOperationWithTypeInput implements Input {
     @NotNull
     private SoapOperationType type;
 
-    public ReadSoapOperationWithTypeInput(String soapProjectId, String name, String uri, SoapOperationMethod soapOperationMethod, SoapOperationType type) {
+    public IdentifySoapOperationInput(String soapProjectId, String name, String uri, SoapOperationMethod soapOperationMethod, SoapOperationType type) {
         this.soapProjectId = soapProjectId;
         this.name = name;
         this.uri = uri;

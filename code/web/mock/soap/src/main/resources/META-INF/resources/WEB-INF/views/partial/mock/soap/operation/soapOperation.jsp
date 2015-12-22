@@ -101,21 +101,21 @@
             <div class="table-frame">
                 <table class="entityTable">
                     <col width="10%">
-                    <col width="15%">
-                    <col width="15%">
-                    <col width="60%">
+                    <col width="40%">
+                    <col width="25%">
+                    <col width="25%">
                     <tr>
                         <th><spring:message code="soap.soapoperation.column.id"/></th>
+                        <th><spring:message code="soap.soapoperation.column.mockedresponse"/></th>
                         <th><spring:message code="soap.soapoperation.column.startdate"/></th>
                         <th><spring:message code="soap.soapoperation.column.enddate"/></th>
-                        <th><spring:message code="soap.soapoperation.column.mockedresponse"/></th>
                     </tr>
                     <c:forEach items="${soapEvents}" var="event" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.id}</a></td>
+                            <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.soapResponse.mockResponseName}</a></td>
                             <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.startDate}</a></td>
                             <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.endDate}</a></td>
-                            <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.soapResponse.mockResponseName}</a></td>
                         </tr>
                     </c:forEach>
                 </table>

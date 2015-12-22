@@ -16,7 +16,6 @@
 
 package com.fortmocks.core.mock.rest.model.event.domain;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestContentType;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 
 import javax.xml.bind.annotation.XmlElement;

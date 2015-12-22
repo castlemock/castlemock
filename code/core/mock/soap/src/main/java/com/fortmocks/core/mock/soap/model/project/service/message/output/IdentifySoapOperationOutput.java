@@ -17,17 +17,31 @@
 package com.fortmocks.core.mock.soap.model.project.service.message.output;
 
 import com.fortmocks.core.basis.model.Output;
+import com.fortmocks.core.basis.model.validation.NotNull;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadSoapOperationWithTypeOutput implements Output{
+public class IdentifySoapOperationOutput implements Output{
 
+    @NotNull
+    private String soapProjectId;
+
+    @NotNull
+    private String soapPortId;
+
+    @NotNull
+    private String soapOperationId;
+
+    @NotNull
     private SoapOperationDto soapOperation;
 
-    public ReadSoapOperationWithTypeOutput(SoapOperationDto soapOperation) {
+    public IdentifySoapOperationOutput(String soapProjectId, String soapPortId, String soapOperationId, SoapOperationDto soapOperation) {
+        this.soapProjectId = soapProjectId;
+        this.soapPortId = soapPortId;
+        this.soapOperationId = soapOperationId;
         this.soapOperation = soapOperation;
     }
 
@@ -37,5 +51,29 @@ public class ReadSoapOperationWithTypeOutput implements Output{
 
     public void setSoapOperation(SoapOperationDto soapOperation) {
         this.soapOperation = soapOperation;
+    }
+
+    public String getSoapProjectId() {
+        return soapProjectId;
+    }
+
+    public void setSoapProjectId(String soapProjectId) {
+        this.soapProjectId = soapProjectId;
+    }
+
+    public String getSoapPortId() {
+        return soapPortId;
+    }
+
+    public void setSoapPortId(String soapPortId) {
+        this.soapPortId = soapPortId;
+    }
+
+    public String getSoapOperationId() {
+        return soapOperationId;
+    }
+
+    public void setSoapOperationId(String soapOperationId) {
+        this.soapOperationId = soapOperationId;
     }
 }

@@ -21,8 +21,8 @@ import com.fortmocks.core.basis.model.event.domain.Event;
 import com.fortmocks.core.basis.model.event.dto.EventDto;
 
 /**
- * The event service is responsible for providing the basic functionality for all the
- * event services.
+ * The event service adapter provides the functionality to translate incoming
+ * requests and transform them into correct service input messages
  * @author Karl Dahlgren
  * @since 1.0
  * @param <D> The dto event type
@@ -30,5 +30,13 @@ import com.fortmocks.core.basis.model.event.dto.EventDto;
  * @see EventDto
  */
 public interface EventServiceAdapter<D extends EventDto> extends ServiceAdapter<EventDto, D, String> {
+
+    /**
+     * The method provides the functionality to generate resource link for an incoming
+     * event. The resource link will be based on event attributes.
+     * @param event The incoming event which will be used to generate the resource link
+     * @return The resource link generated based on the incoming event
+     */
+    String generateResourceLink(D event);
 
 }

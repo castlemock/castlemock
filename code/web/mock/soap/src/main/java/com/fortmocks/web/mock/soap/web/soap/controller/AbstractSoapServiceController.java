@@ -24,9 +24,9 @@ import com.fortmocks.core.mock.soap.model.project.domain.*;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.CreateRecordedSoapMockResponseInput;
-import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationWithTypeInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.IdentifySoapOperationInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
-import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationWithTypeOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.model.SoapException;
 import com.google.common.base.Preconditions;
@@ -79,9 +79,9 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
             final SoapRequestDto request = prepareRequest(projectId, httpServletRequest);
-            final ReadSoapOperationWithTypeOutput output = serviceProcessor.process(new ReadSoapOperationWithTypeInput(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType()));
+            final IdentifySoapOperationOutput output = serviceProcessor.process(new IdentifySoapOperationInput(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType()));
             final SoapOperationDto operation = output.getSoapOperation();
-            return process(operation, request, httpServletResponse);
+            return process(projectId, output.getSoapPortId(), operation, request, httpServletResponse);
         }catch(Exception exception){
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
             throw new SoapException(exception.getMessage());
@@ -119,11 +119,13 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * The process method is responsible for processing the incoming request and
      * finding the appropriate response. The method is also responsible for creating
      * events and storing them.
+     * @param soapProjectId The id of the project that the incoming request belong to
+     * @param soapPortId The id of the port that the incoming request belong to
      * @param soapOperationDto The operation that contain the appropriate mocked response
      * @param request The incoming request
      * @return Returns the response as an String
      */
-    protected String process(final SoapOperationDto soapOperationDto, final SoapRequestDto request, final HttpServletResponse httpServletResponse){
+    protected String process(final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto, final SoapRequestDto request, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(request, "Request cannot be null");
         if(soapOperationDto == null){
             throw new SoapException("Soap operation could not be found");
@@ -131,7 +133,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         SoapEventDto event = null;
         SoapResponseDto response = null;
         try {
-            event = new SoapEventDto(request, soapOperationDto.getId());
+            event = new SoapEventDto(soapOperationDto.getName(), request, soapProjectId, soapPortId, soapOperationDto.getId());
             if (SoapOperationStatus.DISABLED.equals(soapOperationDto.getSoapOperationStatus())) {
                 throw new SoapException("The requested soap operation, " + soapOperationDto.getName() + ", is disabled");
             } else if (SoapOperationStatus.FORWARDED.equals(soapOperationDto.getSoapOperationStatus())) {
