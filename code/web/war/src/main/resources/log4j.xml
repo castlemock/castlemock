@@ -14,7 +14,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.fortmocks">
-		<level value="debug" />
+		<level value="warn" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
@@ -37,6 +37,19 @@
 	<logger name="org.springframework.security">
 		<level value="warn" />
 	</logger>
+
+	<logger name="org.springframework.aop">
+		<level value="warn" />
+	</logger>
+
+	<logger name="org.springframework.boot">
+		<level value="warn" />
+	</logger>
+
+	<logger name="org.dozer">
+		<level value="warn" />
+	</logger>
+
 	<logger name="org.springframework.boot.context.web.ErrorPageFilter">
 		 <level value="OFF"/>
 	</logger>
