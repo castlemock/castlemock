@@ -35,7 +35,7 @@
     </form:form>
 </fieldset>
 <h2 class="decorated"><span><spring:message code="general.useroverview.header.usertable"/></span></h2>
-<table width="100%" align="left">
+<table class="entityTable">
     <tr>
         <th><spring:message code="general.useroverview.column.name"/></th>
         <th><spring:message code="general.useroverview.column.email"/></th>

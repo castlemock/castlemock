@@ -81,9 +81,21 @@ a {
 @media screen and (max-width: 900px) {
   .container {
     width: 100%; }
-    .container section {
-      width: auto;
-      margin: 0 10px; } }
+
+  .main-header {
+    border-bottom: 0px solid #f0f0f0; }
+
+  aside {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none; }
+
+  .header-nav {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none; } }
 @media screen and (max-width: 720px) {
   .main-header .meta {
     float: none;
