@@ -81,6 +81,8 @@ a {
 @media screen and (max-width: 900px) {
   .container {
     width: 100%; }
+    .container section {
+      width: 100%; }
 
   .main-header {
     border-bottom: 0px solid #f0f0f0; }
