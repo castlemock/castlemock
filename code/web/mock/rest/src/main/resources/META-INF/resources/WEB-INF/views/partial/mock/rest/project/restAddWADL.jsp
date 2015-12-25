@@ -49,20 +49,14 @@
 
 <div class="upload-file">
     <form:form method="POST" enctype="multipart/form-data" action="${add_wadl_url}" modelAttribute="uploadForm">
-        <div>
-            <div id="filedrag">
-                <i class="fa fa-cloud-upload fa-5x"></i><br/>
-                <spring:message code="rest.restaddwadl.label.uploaddescription"/> <input type="file" id="files" name="files" multiple="multiple"/>
-            </div>
-        </div>
-
+        <input type="file" id="files" name="files" multiple="multiple"/>
 
         <div id="messages">
         </div>
 
         <table class="formTable">
             <tr>
-                <td class="column1"><form:label path="generateResponse"><spring:message code="rest.restaddwadl.label.generateresponse"/></form:label></td>
+                <td class="column1"><form:label path="generateResponse"><spring:message code="soap.soapaddwsdl.label.generateresponse"/></form:label></td>
                 <td class="column1"><form:checkbox path="generateResponse" title="Generate response"></form:checkbox></td>
             </tr>
         </table>

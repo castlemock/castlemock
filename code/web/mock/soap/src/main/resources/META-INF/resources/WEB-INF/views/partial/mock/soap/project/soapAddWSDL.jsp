@@ -33,13 +33,8 @@
 
 <div class="upload-file">
     <form:form method="POST" enctype="multipart/form-data" action="${add_wsdl_url}" modelAttribute="uploadForm">
-        <div>
-            <div id="filedrag">
-                <i class="fa fa-cloud-upload fa-5x"></i><br/>
-                <spring:message code="soap.soapaddwsdl.label.uploaddescription"/> <input type="file" id="files" name="files" multiple="multiple"/>
-            </div>
-        </div>
 
+        <input type="file" id="files" name="files" multiple="multiple"/>
 
         <div id="messages">
         </div>

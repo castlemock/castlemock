@@ -21,25 +21,17 @@ function $id(id) {
 }
 
 // output information
-function Output(msg) {
+function output(msg) {
     var messages = $id("messages");
     messages.innerHTML = msg + messages.innerHTML;
 }
 
-// file drag hover
-function FileDragHover(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    var filedrag = $id("filedrag");
-    filedrag.className = (e.type == "dragover" ? "hover" : "");
+function parseFile(file) {
+    output("<p><strong>" + file.name + "</strong> (" + file.size + "bytes)</p>");
 }
 
-
 // file selection
-function FileSelectHandler(e) {
-
-    // cancel event and hover styling
-    FileDragHover(e);
+function fileSelectHandler(e) {
 
     var messages = $id("messages");
     messages.innerHTML = "";
@@ -49,35 +41,21 @@ function FileSelectHandler(e) {
 
     // process all File objects
     for (var i = 0, file; file = files[i]; i++) {
-        ParseFile(file);
+        parseFile(file);
     }
 }
 
-function ParseFile(file) {
-    Output("<p><strong>" + file.name + "</strong> (" + file.size + "bytes)</p>");
-}
 
 // initialize
-function Init() {
+function init() {
 
-    var fileselect = $id("files"), filedrag = $id("filedrag")
+    var fileselect = $id("files");
 
     // file select
-    fileselect.addEventListener("change", FileSelectHandler, false);
-
-    // is XHR2 available?
-    var xhr = new XMLHttpRequest();
-    if (xhr.upload) {
-
-        // file drop
-        filedrag.addEventListener("dragover", FileDragHover, false);
-        filedrag.addEventListener("dragleave", FileDragHover, false);
-        filedrag.addEventListener("drop", FileSelectHandler, false);
-        filedrag.style.display = "block";
-    }
+    fileselect.addEventListener("change", fileSelectHandler, false);
 }
 
 // call initialization file
 if (window.File && window.FileList && window.FileReader) {
-    Init();
+    init();
 }

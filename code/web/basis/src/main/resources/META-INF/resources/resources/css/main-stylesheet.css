@@ -244,9 +244,6 @@ section {
   min-height: 100%;
   margin-bottom: 50px;
   float: right; }
-  section input[type='file'] {
-    color: transparent;
-    width: 95px; }
   section .upload-information {
     width: 100%;
     border-bottom: 1px solid #ddd !important;
@@ -367,18 +364,3 @@ select {
     display: inline; }
   .content-top div {
     float: right; }
-
-#filedrag {
-  display: none;
-  font-weight: bold;
-  text-align: center;
-  padding: 1em 0;
-  margin: 1em 0;
-  color: #555;
-  border: 2px dashed #555;
-  border-radius: 7px;
-  cursor: default; }
-
-#filedrag.hover {
-  color: #1CB841;
-  border: 2px dashed #1CB841; }
