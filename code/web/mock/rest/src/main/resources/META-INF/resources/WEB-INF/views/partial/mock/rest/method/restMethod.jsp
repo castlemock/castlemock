@@ -16,7 +16,7 @@
   ~ limitations under the License.
   --%>
 
-<c:url var="rest_mock_response_update_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restMethodId}/method/${restMethod.id}" />
+<c:url var="rest_mock_response_update_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}" />
 <div class="content-top">
     <h1><spring:message code="rest.restmethod.header.method" arguments="${restMethod.name}"/></h1>
     <div align="right">
