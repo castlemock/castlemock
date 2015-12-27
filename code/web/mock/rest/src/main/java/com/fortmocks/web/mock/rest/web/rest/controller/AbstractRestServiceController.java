@@ -266,7 +266,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 return restContentType;
             }
         }
-        return null;
+        return RestContentType.TEXT_PLAIN;
     }
 
     /**
