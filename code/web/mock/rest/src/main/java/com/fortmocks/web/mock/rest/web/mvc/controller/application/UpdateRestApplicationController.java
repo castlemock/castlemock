@@ -19,8 +19,11 @@ package com.fortmocks.web.mock.rest.web.mvc.controller.application;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestApplicationInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsForwardedEndpointInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
+import com.fortmocks.web.mock.rest.web.mvc.command.application.UpdateRestApplicationsEndpointCommand;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestViewController;
+import com.google.common.base.Preconditions;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -58,5 +61,20 @@ public class UpdateRestApplicationController extends AbstractRestViewController 
         return redirect("/rest/project/" + projectId + "/application/" + applicationId);
     }
 
+    /**
+     * The method provides the functionality to update the endpoint address for multiple
+     * applications at once
+     * @param projectId The id of the project that the ports belongs to
+     * @param updateRestApplicationsEndpointCommand The command object contains both the application that
+     *                                          will be updated and the new forwarded address
+     * @return Redirects the user to the project page
+     */
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @RequestMapping(value = "/{projectId}/application/update/confirm", method = RequestMethod.POST)
+    public ModelAndView updateEndpoint(@PathVariable final String projectId, @ModelAttribute final UpdateRestApplicationsEndpointCommand updateRestApplicationsEndpointCommand) {
+        Preconditions.checkNotNull(updateRestApplicationsEndpointCommand, "The update application endpoint command cannot be null");
+        serviceProcessor.process(new UpdateRestApplicationsForwardedEndpointInput(projectId, updateRestApplicationsEndpointCommand.getRestApplications(), updateRestApplicationsEndpointCommand.getForwardedEndpoint()));
+        return redirect("/rest/project/" + projectId);
+    }
 }
 
