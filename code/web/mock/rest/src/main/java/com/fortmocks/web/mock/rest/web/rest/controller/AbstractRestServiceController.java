@@ -35,10 +35,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
@@ -58,6 +55,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static final Random RANDOM = new Random();
     private static final Logger LOGGER = Logger.getLogger(AbstractRestServiceController.class);
+    private static final Integer OK_RESPONSE = 200;
 
 
     /**
@@ -208,8 +206,14 @@ public abstract class AbstractRestServiceController extends AbstractController {
             outputStream = connection.getOutputStream();
             outputStream.write(restRequest.getBody().getBytes());
             outputStream.flush();
+            InputStreamReader inputStreamReader = null;
+            if(connection.getResponseCode() == OK_RESPONSE){
+                inputStreamReader = new InputStreamReader(connection.getInputStream());
+            } else {
+                inputStreamReader = new InputStreamReader(connection.getErrorStream());
+            }
 
-            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            bufferedReader = new BufferedReader(inputStreamReader);
 
             final StringBuilder stringBuilder = new StringBuilder();
             String buffer;
@@ -217,8 +221,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 stringBuilder.append(buffer);
                 stringBuilder.append(NEW_LINE);
             }
-            response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setBody(stringBuilder.toString());
+            response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setHttpStatusCode(connection.getResponseCode());
             String contentType = connection.getHeaderField(CONTENT_TYPE);
             if(contentType != null){
