@@ -18,9 +18,14 @@ package com.fortmocks.web.mock.rest.web.mvc.controller.resource;
 
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsForwardedEndpointInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestResourceInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestResourcesForwardedEndpointInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
+import com.fortmocks.web.mock.rest.web.mvc.command.application.UpdateRestApplicationsEndpointCommand;
+import com.fortmocks.web.mock.rest.web.mvc.command.resource.UpdateRestResourcesEndpointCommand;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestViewController;
+import com.google.common.base.Preconditions;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -57,6 +62,23 @@ public class UpdateRestResourceController extends AbstractRestViewController {
     public ModelAndView update(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId,  @ModelAttribute final RestResourceDto restResourceDto) {
         serviceProcessor.process(new UpdateRestResourceInput(restProjectId, restApplicationId, restResourceId, restResourceDto));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId);
+    }
+
+    /**
+     * The method provides the functionality to update the endpoint address for multiple
+     * resources at once
+     * @param restProjectId The id of the project that the resources belongs to
+     * @param restApplicationId The id of the application that the resources belongs to
+     * @param updateRestResourcesEndpointCommand The command object contains both the resources that
+     *                                          will be updated and the new forwarded address
+     * @return Redirects the user to the application page
+     */
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/update/confirm", method = RequestMethod.POST)
+    public ModelAndView updateEndpoint(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @ModelAttribute final UpdateRestResourcesEndpointCommand updateRestResourcesEndpointCommand) {
+        Preconditions.checkNotNull(updateRestResourcesEndpointCommand, "The update application endpoint command cannot be null");
+        serviceProcessor.process(new UpdateRestResourcesForwardedEndpointInput(restProjectId, restApplicationId, updateRestResourcesEndpointCommand.getRestResources(), updateRestResourcesEndpointCommand.getForwardedEndpoint()));
+        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);
     }
 
 }
