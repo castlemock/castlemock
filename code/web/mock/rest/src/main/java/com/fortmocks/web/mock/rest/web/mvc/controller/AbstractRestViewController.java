@@ -65,13 +65,13 @@ public class AbstractRestViewController extends AbstractViewController {
      * @param serverPort The server port
      * @param projectId The id of the project
      * @param applicationId The id of the application
-     * @param resourceId The id of the resource
+     * @param resourceUri The resource uri
      * @return A URL based on all the incoming parameters
      */
-    protected String getSoapInvokeAddress(final String protocol, int serverPort, final String projectId, final String applicationId, final String resourceId){
+    protected String getRestInvokeAddress(final String protocol, int serverPort, final String projectId, final String applicationId, final String resourceUri){
         try {
             final String hostAddress = getHostAddress();
-            return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId;
+            return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + resourceUri;
         } catch (Exception exception) {
             LOGGER.error("Unable to generate invoke URL", exception);
             throw new IllegalStateException("Unable to generate invoke URL for " + projectId);

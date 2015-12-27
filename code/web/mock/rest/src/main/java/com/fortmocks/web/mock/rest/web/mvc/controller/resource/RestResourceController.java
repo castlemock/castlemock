@@ -62,7 +62,7 @@ public class RestResourceController extends AbstractRestViewController {
         final RestResourceDto restResource = output.getRestResource();
 
         final String protocol = getProtocol(request);
-        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), restProjectId, restApplicationId, restResourceId);
+        final String invokeAddress = getRestInvokeAddress(protocol, request.getServerPort(), restProjectId, restApplicationId, restResource.getUri());
         restResource.setInvokeAddress(invokeAddress);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);

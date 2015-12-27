@@ -21,11 +21,14 @@ import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadRestE
 import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseStatusInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
 import com.fortmocks.web.mock.rest.web.mvc.command.mockresponse.DeleteRestMockResponsesCommand;
 import com.fortmocks.web.mock.rest.web.mvc.command.mockresponse.RestMockResponseModifierCommand;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -66,12 +69,14 @@ public class RestMethodController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, final ServletRequest request) {
-        final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
-        final RestMethodDto restMethod = output.getRestMethod();
+        final ReadRestResourceOutput readRestResourceOutput = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
+        final ReadRestMethodOutput restMethodOutput = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
+        final RestResourceDto restResource = readRestResourceOutput.getRestResource();
+        final RestMethodDto restMethod = restMethodOutput.getRestMethod();
         final ReadRestEventWithMethodIdOutput readRestEventWithMethodIdOutput = serviceProcessor.process(new ReadRestEventWithMethodIdInput(restMethodId));
 
         final String protocol = getProtocol(request);
-        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), restProjectId, restApplicationId, restResourceId);
+        final String invokeAddress = getRestInvokeAddress(protocol, request.getServerPort(), restProjectId, restApplicationId, restResource.getUri());
         restMethod.setInvokeAddress(invokeAddress);
 
         final ModelAndView model = createPartialModelAndView(PAGE);
