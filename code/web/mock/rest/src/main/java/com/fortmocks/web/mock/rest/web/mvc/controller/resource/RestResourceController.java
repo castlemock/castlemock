@@ -17,6 +17,7 @@
 package com.fortmocks.web.mock.rest.web.mvc.controller.resource;
 
 
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
@@ -68,6 +69,7 @@ public class RestResourceController extends AbstractRestViewController {
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE, restResource);
+        model.addObject(REST_METHOD_STATUSES, RestMethodStatus.values());
         model.addObject(REST_METHOD_MODIFIER_COMMAND, new RestMethodModifierCommand());
         return model;
     }

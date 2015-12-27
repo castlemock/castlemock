@@ -25,7 +25,9 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
+import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.rest.config.TestApplication;
 import com.fortmocks.web.mock.rest.model.project.RestApplicationDtoGenerator;
@@ -79,6 +81,7 @@ public class RestMethodControllerTest extends AbstractRestControllerTest {
         final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
         final RestResourceDto restResourceDto = RestResourceDtoGenerator.generateRestResourceDto();
         final RestMethodDto restMethodDto = RestMethodDtoGenerator.generateRestMethodDto();
+        when(serviceProcessor.process(isA(ReadRestResourceInput.class))).thenReturn(new ReadRestResourceOutput(restResourceDto));
         when(serviceProcessor.process(isA(ReadRestMethodInput.class))).thenReturn(new ReadRestMethodOutput(restMethodDto));
         when(serviceProcessor.process(isA(ReadRestEventWithMethodIdInput.class))).thenReturn(new ReadRestEventWithMethodIdOutput(new ArrayList<RestEventDto>()));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + METHOD + SLASH + restMethodDto.getId());

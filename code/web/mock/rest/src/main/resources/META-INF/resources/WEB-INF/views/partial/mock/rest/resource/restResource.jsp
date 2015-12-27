@@ -22,7 +22,7 @@
     <div align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
             <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/create/method"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restresource.button.createmethod"/></span></a>
-            <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restresource.button.update"/></span></a>
+            <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restresource.button.updateresource"/></span></a>
             <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restresource.button.delete"/></span></a>
         </sec:authorize>
     </div>
@@ -74,6 +74,13 @@
                 </table>
             </div>
             <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+                <form:select path="restMethodStatus">
+                    <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
+                        <form:option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></form:option>
+                    </c:forEach>
+                </form:select>
+                <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restresource.button.update"/></span></button>
+                <button class="button-secondary pure-button" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="rest.restresource.button.updateendpoint"/></span></button>
                 <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restresource.button.deleteresource"/></span></button>
             </sec:authorize>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

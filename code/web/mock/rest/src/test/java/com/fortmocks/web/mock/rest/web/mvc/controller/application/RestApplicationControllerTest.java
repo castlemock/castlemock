@@ -72,7 +72,7 @@ public class RestApplicationControllerTest extends AbstractRestControllerTest {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId());
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(7))
+                .andExpect(MockMvcResultMatchers.model().size(8))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProjectDto.getId()))

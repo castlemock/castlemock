@@ -16,6 +16,7 @@
 
 package com.fortmocks.web.mock.rest.web.mvc.controller.project;
 
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
@@ -61,6 +62,7 @@ public class RestProjectController extends AbstractRestViewController {
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT, output.getRestProject());
+        model.addObject(REST_METHOD_STATUSES, RestMethodStatus.values());
         model.addObject(REST_APPLICATION_MODIFIER_COMMAND, new RestApplicationModifierCommand());
         return model;
     }

@@ -24,7 +24,16 @@ package com.fortmocks.web.mock.rest.web.mvc.command.application;
  */
 public class RestApplicationModifierCommand {
 
+    private String restMethodStatus;
     private String[] restApplicationIds;
+
+    public String getRestMethodStatus() {
+        return restMethodStatus;
+    }
+
+    public void setRestMethodStatus(String restMethodStatus) {
+        this.restMethodStatus = restMethodStatus;
+    }
 
     public String[] getRestApplicationIds() {
         return restApplicationIds;

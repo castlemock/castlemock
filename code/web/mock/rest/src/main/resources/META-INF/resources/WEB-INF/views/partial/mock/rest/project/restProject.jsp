@@ -67,6 +67,13 @@
                 </table>
             </div>
             <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+                <form:select path="restMethodStatus">
+                    <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
+                        <form:option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></form:option>
+                    </c:forEach>
+                </form:select>
+                <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restproject.button.update"/></span></button>
+                <button class="button-secondary pure-button" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="rest.restproject.button.updateendpoint"/></span></button>
                 <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.deleteapplication"/></span></button>
             </sec:authorize>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
