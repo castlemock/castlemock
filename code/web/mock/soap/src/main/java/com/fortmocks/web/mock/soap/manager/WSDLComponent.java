@@ -161,7 +161,8 @@ public class WSDLComponent {
                         }
 
                         final String portName = getAttribute(portElement, "name");
-                        final List<SoapOperationDto> soapOperations = getSoapOperations(document, portName, soapOperationAddress, soapOperationType, generateResponse);
+                        final String portBinding = getAttribute(portElement, "binding");
+                        final List<SoapOperationDto> soapOperations = getSoapOperations(document, portBinding, soapOperationAddress, soapOperationType, generateResponse);
                         final SoapPortDto soapPort = new SoapPortDto();
                         soapPort.setName(portName);
                         soapPort.setSoapOperations(soapOperations);
@@ -178,16 +179,16 @@ public class WSDLComponent {
     /**
      * The method provides the functionality to extract SOAP operation from a document
      * @param document The document which will be parsed
-     * @param soapPortName The SOAP port name which the operations belongs to
+     * @param soapPortBinding The SOAP port binding which the operations belongs to
      * @param soapOperationAddress The address that will be assigned as the default address to the operations
      * @param soapOperationType The SOAP operation type (SOAP 11 or SOAP 12)
      * @param generateResponse Boolean value determining if a response should be generated for each extracted
       *                         operation.
      * @return A list of extracted SOAP operations
      */
-    private List<SoapOperationDto> getSoapOperations(final Document document, final String soapPortName, final String soapOperationAddress, final SoapOperationType soapOperationType, final boolean generateResponse){
+    private List<SoapOperationDto> getSoapOperations(final Document document, final String soapPortBinding, final String soapOperationAddress, final SoapOperationType soapOperationType, final boolean generateResponse){
         final List<SoapOperationDto> soapOperations = new LinkedList<SoapOperationDto>();
-        final Element bindingElement = findElement(document, WSDL_NAMESPACE, "binding", soapPortName);
+        final Element bindingElement = findElement(document, WSDL_NAMESPACE, "binding", soapPortBinding);
         if(bindingElement == null){
             return soapOperations;
         }
