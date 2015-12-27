@@ -56,6 +56,8 @@ public class CreateUserService extends AbstractUserService implements Service<Cr
         user.setCreated(new Date());
         user.setUpdated(new Date());
         user.setStatus(Status.ACTIVE);
+        user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
+
         final UserDto savedUser = save(user);
         final CreateUserOutput output = new CreateUserOutput();
         output.setSavedUser(savedUser);
