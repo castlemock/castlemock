@@ -19,9 +19,14 @@ package com.fortmocks.web.mock.rest.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
+import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
+
+import java.util.Map;
 
 /**
  * @author Karl Dahlgren
@@ -42,6 +47,10 @@ public class ReadRestProjectService extends AbstractRestProjectService implement
     public ServiceResult<ReadRestProjectOutput> process(final ServiceTask<ReadRestProjectInput> serviceTask) {
         final ReadRestProjectInput input = serviceTask.getInput();
         final RestProjectDto restProject = find(input.getRestProjectId());
+        for(final RestApplicationDto restApplicationDto : restProject.getRestApplications()){
+            final Map<RestMethodStatus, Integer> soapOperationStatusCount = getRestMethodStatusCount(restApplicationDto);
+            restApplicationDto.setStatusCount(soapOperationStatusCount);
+        }
         return createServiceResult(new ReadRestProjectOutput(restProject));
     }
 }

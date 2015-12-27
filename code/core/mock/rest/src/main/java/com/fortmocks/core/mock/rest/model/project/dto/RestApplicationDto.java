@@ -16,10 +16,13 @@
 
 package com.fortmocks.core.mock.rest.model.project.dto;
 
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
 import org.dozer.Mapping;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Karl Dahlgren
@@ -35,6 +38,8 @@ public class RestApplicationDto {
 
     @Mapping("restResources")
     private List<RestResourceDto> restResources = new LinkedList<RestResourceDto>();
+
+    private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
 
     public String getId() {
         return id;
@@ -58,5 +63,13 @@ public class RestApplicationDto {
 
     public void setRestResources(List<RestResourceDto> restResources) {
         this.restResources = restResources;
+    }
+
+    public Map<RestMethodStatus, Integer> getStatusCount() {
+        return statusCount;
+    }
+
+    public void setStatusCount(Map<RestMethodStatus, Integer> statusCount) {
+        this.statusCount = statusCount;
     }
 }

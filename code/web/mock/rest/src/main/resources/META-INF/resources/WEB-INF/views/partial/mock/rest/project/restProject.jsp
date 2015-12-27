@@ -53,15 +53,25 @@
             <div class="table-frame">
                 <table class="entityTable">
                     <col width="10%">
-                    <col width="90%">
+                    <col width="50%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
                     <tr>
                         <th><spring:message code="rest.restproject.column.selected"/></th>
                         <th><spring:message code="rest.restproject.column.application"/></th>
+                        <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
+                            <th><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></th>
+                        </c:forEach>
                     </tr>
                     <c:forEach items="${restProject.restApplications}" var="restApplication" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><form:checkbox path="restApplicationIds" name="${restApplication.id}" value="${restApplication.id}"/></td>
                             <td><a href="<c:url value="/web/rest/project/${restProject.id}/application/${restApplication.id}"/>">${restApplication.name}</a></td>
+                            <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
+                                <td>${restApplication.statusCount[restMethodStatus]}</td>
+                            </c:forEach>
                         </tr>
                     </c:forEach>
                 </table>

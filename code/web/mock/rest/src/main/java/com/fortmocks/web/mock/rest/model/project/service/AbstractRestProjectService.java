@@ -17,10 +17,16 @@
 package com.fortmocks.web.mock.rest.model.project.service;
 
 import com.fortmocks.core.mock.rest.model.project.domain.*;
+import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
+import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.web.basis.model.AbstractService;
 import com.google.common.base.Preconditions;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Karl Dahlgren
@@ -207,4 +213,45 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         throw new IllegalArgumentException("Unable to find an method with id " + restMethodId);
     }
 
+    /**
+     * Count the method statuses
+     * @param restApplication The application which statuses will be counted
+     * @return The result of the status count
+     */
+    protected Map<RestMethodStatus, Integer> getRestMethodStatusCount(final RestApplicationDto restApplication){
+        Preconditions.checkNotNull(restApplication, "The REST application cannot be null");
+        final Map<RestMethodStatus, Integer> statuses = new HashMap<RestMethodStatus, Integer>();
+
+        for(RestMethodStatus restMethodStatus : RestMethodStatus.values()){
+            statuses.put(restMethodStatus, 0);
+        }
+        for(RestResourceDto restResource : restApplication.getRestResources()){
+            for(RestMethodDto restMethod : restResource.getRestMethods()){
+                RestMethodStatus restMethodStatus = restMethod.getRestMethodStatus();
+                statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
+            }
+
+        }
+        return statuses;
+    }
+
+    /**
+     * Count the method statuses
+     * @param restResource The resource which statuses will be counted
+     * @return The result of the status count
+     */
+    protected Map<RestMethodStatus, Integer> getRestMethodStatusCount(final RestResourceDto restResource){
+        Preconditions.checkNotNull(restResource, "The REST resource cannot be null");
+        final Map<RestMethodStatus, Integer> statuses = new HashMap<RestMethodStatus, Integer>();
+
+        for(RestMethodStatus restMethodStatus : RestMethodStatus.values()){
+            statuses.put(restMethodStatus, 0);
+        }
+
+        for(RestMethodDto restMethod : restResource.getRestMethods()){
+            RestMethodStatus restMethodStatus = restMethod.getRestMethodStatus();
+            statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
+        }
+        return statuses;
+    }
 }
