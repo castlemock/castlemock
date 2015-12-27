@@ -17,6 +17,7 @@
 package com.fortmocks.web.basis.manager;
 
 import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -88,8 +89,13 @@ public class FileManager {
         }
 
         final URL url = new URL(downloadURL);
-        final String fileName = url.getFile();
+        final String fileName = generateNewFileName();
         final File file = new File(fileDirectory.getAbsolutePath() + File.separator + fileName);
+
+        if(!file.exists()){
+            file.createNewFile();
+        }
+
         final Path targetPath = file.toPath();
         Files.copy(url.openStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
         final List<File> files = new ArrayList<>();
@@ -120,6 +126,10 @@ public class FileManager {
         if(file.exists() && file.isFile()) {
             file.delete();
         }
+    }
+
+    private String generateNewFileName(){
+        return "UploadedFile-" + RandomStringUtils.random(6, true, true);
     }
 
 }
