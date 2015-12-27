@@ -19,7 +19,7 @@
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks-core-basis</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
     <name>Fort mocks core - basis</name>
 	<url>http://www.fortmocks.com</url>
 	<description>The core module contains the core package for Fort Mocks</description>
@@ -34,7 +34,7 @@
 	<parent>
 		<groupId>com.fortmocks</groupId>
 		<artifactId>fortmocks-core</artifactId>
-		<version>0.2-SNAPSHOT</version>
+		<version>1.0-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 

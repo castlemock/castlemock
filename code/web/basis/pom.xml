@@ -19,7 +19,7 @@
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks-web-basis</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
     <name>Fort mocks web basis</name>
 	<url>http://www.fortmocks.com</url>
 	<description>The module that constitutes the main Fort Mocks web basis</description>
@@ -34,7 +34,7 @@
 	<parent>
 		<groupId>com.fortmocks</groupId>
 		<artifactId>fortmocks-web</artifactId>
-		<version>0.2-SNAPSHOT</version>
+		<version>1.0-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 

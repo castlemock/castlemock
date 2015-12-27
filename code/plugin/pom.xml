@@ -19,7 +19,7 @@
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks-plugin</artifactId>
 	<packaging>pom</packaging>
-	<version>0.2-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
     <name>Fort mocks plugin</name>
 	<url>http://www.fortmocks.com</url>
 	<description>The plugin module contains the plugin package for Fort Mocks</description>
@@ -34,7 +34,7 @@
 	<parent>
 		<groupId>com.fortmocks</groupId>
 		<artifactId>fortmocks-parent</artifactId>
-		<version>0.2-SNAPSHOT</version>
+		<version>1.0-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
