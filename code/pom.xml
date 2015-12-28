@@ -19,7 +19,7 @@
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0</version>
+	<version>1.1-SNAPSHOT</version>
     <name>Fort mocks parent</name>
 	<url>http://www.fortmocks.com</url>
 	<description>The parent module which all the Fort Mocks projects share</description>
