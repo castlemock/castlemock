@@ -78,7 +78,7 @@ public class CreateUserServiceTest {
         final UserDto returnedUser = output.getSavedUser();
         Assert.assertNotNull(returnedUser);
         Assert.assertEquals(returnedUser.getId(), createdUser.getId());
-        Assert.assertEquals(user.getPassword(), returnedUser.getPassword());
+        Assert.assertNotEquals(user.getPassword(), returnedUser.getPassword());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
         Assert.assertEquals(user.getRole(), returnedUser.getRole());
         Assert.assertEquals(user.getStatus(), returnedUser.getStatus());
