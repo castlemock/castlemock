@@ -14,7 +14,7 @@ Non-source downloads such as WAR files can be found on our website: [http://www.
 
 ## Source
 
-Our latest and greatest source of Fort Mocks can be found on [GitHub](https://github.com/arcanumsoftware/fort-mocks/). Fork us!
+Our latest and greatest source of Fort Mocks can be found on [GitHub](https://github.com/arcanumsoftware/fort-mocks/).
 
 ## Full Documentation
 
