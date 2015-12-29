@@ -1,5 +1,9 @@
 <p align="center"><img src="http://fortmocks.com/images/fm-logo-small.png"></div></p>
 
+# Fort Mocks: Mock RESTful APIs and SOAP web services
+
+[![][travis img]][travis]
+
 ## About
 
 Fort Mocks is a web application that provides the functionality to mock out RESTful APIs and SOAP web services. This functionality allows client-side developers to completely mimic a server side behaviour and shape the responses themselves.
@@ -14,7 +18,7 @@ Non-source downloads such as WAR files can be found on our website: [http://www.
 
 ## Source
 
-Our latest and greatest source of Fort Mocks can be found on [GitHub](https://github.com/arcanumsoftware/fort-mocks/).
+Our latest and greatest source of Fort Mocks can be found on [GitHub](https://github.com/fortmocks/fortmocks/).
 
 ## Full Documentation
 
@@ -30,7 +34,12 @@ Full documentation will be provided shortly.
 
 For bugs, questions and discussions please use the [GitHub Issues](https://github.com/fortmocks/fortmocks/issues)
 
+## Continuous integration
+
+Fort Mocks' continuous integration environment is publicly available and can be access on the following link: [Travis CI](https://travis-ci.org/fortmocks/fortmocks)
+
 ## News and Website
+
 All information about Fort Mocks can be found on our website. Follow us on Twitter: [FortMocks](http://twitter.com/FortMocks).
 
 ## License
@@ -52,3 +61,6 @@ Fort Mocks is **licensed** under the **[Apache License](https://github.com/fortm
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+[travis]:https://travis-ci.org/fortmocks/fortmocks
+[travis img]:https://travis-ci.org/fortmocks/fortmocks.svg?branch=develop
