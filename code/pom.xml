@@ -47,8 +47,8 @@
 	</scm>
 
 	<issueManagement>
-		<system>jira</system>
-		<url>https://fortmocks.atlassian.net/projects/FM</url>
+		<system>github</system>
+		<url>https://github.com/fortmocks/fortmocks/issues</url>
 	</issueManagement>
 
 	<modules>
