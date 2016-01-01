@@ -20,6 +20,23 @@ Fort Mocks is completely free and open source (Apache License). It is built with
 
 Non-source downloads such as WAR files can be found on our website: [http://www.fortmocks.com/](http://www.fortmocks.com/).
 
+## Usage
+
+Fort Mocks can be downloaded as Java Web Archive (.war) file and be deployed on a Apache Tomcat server (Apache Tomcat 7.0 or higher). Fort Mocks can also be deployed by using Docker. For more information go to the offical Fort Mocks Docker page: [https://hub.docker.com/r/fortmocks/fortmocks/](https://hub.docker.com/r/fortmocks/fortmocks/). 
+
+Upon successful installation and deployment, Fort Mocks can be accessed from the web browser:
+
+    http://localhost:8080/fortmocks
+    
+This will prompt you the login screen. When logging for the first time use the following credentials: 
+
+    Username: admin 
+    Password: admin 
+
+It is recommended that the administrator profile gets updated with a more secure password. This is accomplish by going to the user page and choosing to update the profile.
+
+Upon successful login, you will be able to create both SOAP and REST projects. SOAP and REST resources can either be created manually or created by importing resource descriptions, such as WSDL and WADL. All created resources can be mocked multiple times. Each resource can also be configured to have different response strategies, such as random and sequence
+
 ## Source
 
 Our latest and greatest source of Fort Mocks can be found on [GitHub](https://github.com/fortmocks/fortmocks/).
