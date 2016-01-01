@@ -67,7 +67,7 @@ Fort Mocks is **licensed** under the **[Apache License](https://github.com/fortm
 [travis]:https://travis-ci.org/fortmocks/fortmocks
 [travis img]:https://travis-ci.org/fortmocks/fortmocks.svg?branch=develop
 
-[release]:https://github.com/netflix/hystrix/releases
+[release]:https://github.com/fortmocks/fortmocks/releases
 [release img]:https://img.shields.io/github/release/fortmocks/fortmocks.svg
 
 [license]:LICENSE
