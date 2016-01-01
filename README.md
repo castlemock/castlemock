@@ -34,7 +34,7 @@ Full documentation will be provided shortly.
 - Twitter: [@FortMocks](http://twitter.com/FortMocks)
 - [GitHub Issues](https://github.com/fortmocks/fortmocks/issues)
 - [Docker](https://hub.docker.com/r/fortmocks/fortmocks/)
-- 
+
 ## Bugs and Feedback
 
 For bugs, questions and discussions please use the [GitHub Issues](https://github.com/fortmocks/fortmocks/issues)
