@@ -66,7 +66,7 @@ All information about Fort Mocks can be found on our website. Follow us on Twitt
 
 ## License
 
-Fort Mocks is **licensed** under the **[Apache License](https://github.com/fortmocks/fortmocks/blob/master/LICENSE.txt)**. The terms of the license are as follows:
+Fort Mocks is **licensed** under the **[Apache License](https://github.com/fortmocks/fortmocks/blob/master/LICENSE)**. The terms of the license are as follows:
 
     Apache License
 
