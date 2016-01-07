@@ -34,6 +34,7 @@ public class SoapMockResponse implements Saveable<String> {
     private String name;
     private String body;
     private Integer httpStatusCode;
+    private String httpContentType;
     private SoapMockResponseStatus soapMockResponseStatus;
 
     @XmlElement
@@ -80,6 +81,14 @@ public class SoapMockResponse implements Saveable<String> {
 
     public void setHttpStatusCode(Integer httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
+    }
+
+    public String getHttpContentType() {
+        return httpContentType;
+    }
+
+    public void setHttpContentType(String httpContentType) {
+        this.httpContentType = httpContentType;
     }
 
     @Override

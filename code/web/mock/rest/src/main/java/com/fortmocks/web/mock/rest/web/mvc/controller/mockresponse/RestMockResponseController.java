@@ -16,7 +16,6 @@
 
 package com.fortmocks.web.mock.rest.web.mvc.controller.mockresponse;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestContentType;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -50,7 +49,6 @@ public class RestMockResponseController extends AbstractRestViewController {
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restMethodId);
         model.addObject(REST_MOCK_RESPONSE, output.getRestMockResponse());
-        model.addObject(REST_CONTENT_TYPES, RestContentType.values());
         return model;
     }
 

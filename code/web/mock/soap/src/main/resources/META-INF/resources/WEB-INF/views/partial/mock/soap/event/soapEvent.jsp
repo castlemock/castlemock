@@ -52,6 +52,10 @@
             <td class="column1"><label path="name"><spring:message code="soap.event.column.response.statuscode"/></label></td>
             <td class="column2"><label path="name">${event.soapResponse.httpStatusCode}</label></td>
         </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="soap.event.column.response.contenttype"/></label></td>
+            <td class="column2"><label path="name">${event.soapResponse.httpContentType}</label></td>
+        </tr>
     </table>
     <div class="eventMessage">
         <textarea id="responseBody" readonly><c:out value="${event.soapResponse.body}"/></textarea>

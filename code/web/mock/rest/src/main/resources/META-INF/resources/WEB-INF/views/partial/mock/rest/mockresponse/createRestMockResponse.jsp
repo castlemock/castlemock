@@ -31,13 +31,7 @@
         </tr>
         <tr>
             <td class="column1"><spring:message code="rest.createrestmockresponse.label.restcontenttype"/></td>
-            <td>
-                <form:select path="restContentType">
-                    <c:forEach items="${restContentTypes}" var="restContentType">
-                        <option value="${restContentType}">${restContentType.contentType}</option>
-                    </c:forEach>
-                </form:select>
-            </td>
+            <td class="column2"><form:input path="restContentType" id="restMockResponseHttpContentTypeInput"/></td>
         </tr>
     </table>
     <div class="editor">
@@ -51,4 +45,5 @@
 <script>
     $("#restMockResponseNameInput").attr('required', '');
     $("#restMockResponseHttpResponseCodeInput").attr('required', '');
+    $("#restMockResponseHttpContentTypeInput").attr('required', '');
 </script>

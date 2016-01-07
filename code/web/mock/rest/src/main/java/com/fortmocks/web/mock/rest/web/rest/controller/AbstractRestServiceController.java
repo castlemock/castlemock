@@ -226,8 +226,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             response.setHttpStatusCode(connection.getResponseCode());
             String contentType = connection.getHeaderField(CONTENT_TYPE);
             if(contentType != null){
-                RestContentType restContentType = parseContentType(contentType);
-                response.setRestContentType(restContentType);
+                response.setRestContentType(contentType);
             }
 
             return response;
@@ -253,20 +252,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 }
             }
         }
-    }
-
-    /**
-     * Parse a raw content type and match it with a REST content type.
-     * @param rawContentType The raw content type
-     * @return The matched REST content type. Returns null if no REST content type is matched
-     */
-    protected RestContentType parseContentType(String rawContentType){
-        for(RestContentType restContentType : RestContentType.values()){
-            if(rawContentType.contains(restContentType.getContentType())){
-                return restContentType;
-            }
-        }
-        return RestContentType.TEXT_PLAIN;
     }
 
     /**
@@ -329,8 +314,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
         response.setRestContentType(mockResponse.getRestContentType());
         httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
-        httpServletResponse.setContentType(mockResponse.getRestContentType().getContentType());
-        httpServletResponse.setHeader(CONTENT_TYPE, mockResponse.getRestContentType().getContentType());
+        httpServletResponse.setContentType(mockResponse.getRestContentType());
+        httpServletResponse.setHeader(CONTENT_TYPE, mockResponse.getRestContentType());
         return response;
     }
 }

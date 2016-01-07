@@ -13,6 +13,10 @@
             <td class="column1"><form:label path="httpStatusCode"><spring:message code="soap.createsoapmockresponse.label.httpstatuscode"/></form:label></td>
             <td class="column2"><form:input path="httpStatusCode" id="soapMockResponseHttpStatusCodeInput"/></td>
         </tr>
+        <tr>
+            <td class="column1"><form:label path="httpContentType"><spring:message code="soap.createsoapmockresponse.label.httpcontenttype"/></form:label></td>
+            <td class="column2"><form:input path="httpContentType" id="soapMockResponseHttpContentTypeInput"/></td>
+        </tr>
     </table>
     <div class="editor">
         <form:textarea id="body" path="body"/>
@@ -25,4 +29,5 @@
 <script>
     $("#soapMockResponseNameInput").attr('required', '');
     $("#soapMockResponseHttpStatusCodeInput").attr('required', '');
+    $("#soapMockResponseHttpContentTypeInput").attr('required', '');
 </script>

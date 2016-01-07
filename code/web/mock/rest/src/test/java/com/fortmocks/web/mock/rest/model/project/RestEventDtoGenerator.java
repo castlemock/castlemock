@@ -19,7 +19,6 @@ package com.fortmocks.web.mock.rest.model.project;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
-import com.fortmocks.core.mock.rest.model.project.domain.RestContentType;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 
 import java.util.Date;
@@ -49,7 +48,7 @@ public class RestEventDtoGenerator {
 
         RestResponseDto restResponseDto = new RestResponseDto();
         restResponseDto.setHttpStatusCode(200);
-        restResponseDto.setRestContentType(RestContentType.APPLICATION_XML);
+        restResponseDto.setRestContentType("application/json");
         restResponseDto.setBody("REST response body");
         restResponseDto.setMockResponseName("Mock response name");
 

@@ -16,7 +16,6 @@
 
 package com.fortmocks.web.mock.rest.web.mvc.controller.mockresponse;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestContentType;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestMockResponseInput;
@@ -42,6 +41,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
 
     private static final String PAGE = "mock/rest/mockresponse/createRestMockResponse";
     private static final Integer DEFAULT_HTTP_STATUS_CODE = 200;
+    private static final String DEFAULT_HTTP_CONTENT_TYPE = "application/json";
 
 
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
@@ -52,13 +52,13 @@ public class CreateRestMockResponseController extends AbstractRestViewController
         final RestMockResponseDto mockResponse = new RestMockResponseDto();
         mockResponse.setBody(output.getRestMethod().getDefaultBody());
         mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
+        mockResponse.setRestContentType(DEFAULT_HTTP_CONTENT_TYPE);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restMethodId);
         model.addObject(REST_MOCK_RESPONSE, mockResponse);
-        model.addObject(REST_CONTENT_TYPES, RestContentType.values());
         return model;
     }
 

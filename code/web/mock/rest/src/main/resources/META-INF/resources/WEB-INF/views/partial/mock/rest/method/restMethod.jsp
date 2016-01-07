@@ -82,7 +82,7 @@
                                 <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
                                 <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.restMockResponseStatus}"/></td>
                                 <td>${restMockResponse.httpStatusCode}</td>
-                                <td>${restMockResponse.restContentType.contentType}</td>
+                                <td>${restMockResponse.restContentType}</td>
                             </tr>
                         </c:forEach>
                     </table>

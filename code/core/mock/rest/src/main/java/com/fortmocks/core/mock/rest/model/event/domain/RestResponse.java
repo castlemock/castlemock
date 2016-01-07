@@ -16,8 +16,6 @@
 
 package com.fortmocks.core.mock.rest.model.event.domain;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestContentType;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,7 +29,7 @@ public class RestResponse {
     private String body;
     private String mockResponseName;
     private Integer httpStatusCode;
-    private RestContentType restContentType;
+    private String restContentType;
 
     @XmlElement
     public String getBody() {
@@ -61,11 +59,11 @@ public class RestResponse {
     }
 
     @XmlElement
-    public RestContentType getRestContentType() {
+    public String getRestContentType() {
         return restContentType;
     }
 
-    public void setRestContentType(RestContentType restContentType) {
+    public void setRestContentType(String restContentType) {
         this.restContentType = restContentType;
     }
 }

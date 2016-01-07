@@ -190,6 +190,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         response.setMockResponseName(mockResponse.getName());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
         httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
+        httpServletResponse.setContentType(mockResponse.getHttpContentType());
         return response;
 
     }
@@ -209,6 +210,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         mockResponse.setSoapMockResponseStatus(SoapMockResponseStatus.ENABLED);
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
+        mockResponse.setHttpContentType(response.getHttpContentType());
         serviceProcessor.process(new CreateRecordedSoapMockResponseInput(soapOperationDto.getId(), mockResponse));
         return response;
     }
@@ -245,6 +247,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setBody(stringBuilder.toString());
             response.setHttpStatusCode(connection.getResponseCode());
+            response.setHttpContentType(connection.getContentType());
+
             return response;
         } catch (IOException exception) {
             LOGGER.error("Unable to forward request", exception);

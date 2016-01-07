@@ -46,6 +46,7 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
 
     private static final String PAGE = "mock/soap/mockresponse/createSoapMockResponse";
     private static final Integer DEFAULT_HTTP_STATUS_CODE = 200;
+    private static final String DEFAULT_HTTP_CONTENT_TYPE = "text/xml";
 
     /**
      * The method returns a view used for creating a new mocked response
@@ -62,6 +63,7 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
         final SoapMockResponseDto mockResponse = new SoapMockResponseDto();
         mockResponse.setBody(soapOperationDto.getDefaultBody());
         mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
+        mockResponse.setHttpContentType(DEFAULT_HTTP_CONTENT_TYPE);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_OPERATION, soapOperationDto);
         model.addObject(SOAP_PROJECT_ID, soapProjectId);

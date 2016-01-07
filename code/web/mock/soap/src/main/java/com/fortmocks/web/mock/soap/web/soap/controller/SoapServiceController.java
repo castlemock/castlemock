@@ -53,7 +53,7 @@ public class SoapServiceController extends AbstractSoapServiceController {
      * @see SoapMockResponse
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/**", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/**", produces = {MediaType.TEXT_XML_VALUE})
     public String postMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
         return process(projectId, request, response);
     }

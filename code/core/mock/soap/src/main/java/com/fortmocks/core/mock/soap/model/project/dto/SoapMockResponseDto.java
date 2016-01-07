@@ -40,6 +40,9 @@ public class SoapMockResponseDto {
     @Mapping("httpStatusCode")
     private Integer httpStatusCode;
 
+    @Mapping("httpContentType")
+    private String httpContentType;
+
     public String getId() {
         return id;
     }
@@ -78,5 +81,13 @@ public class SoapMockResponseDto {
 
     public void setHttpStatusCode(Integer httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
+    }
+
+    public String getHttpContentType() {
+        return httpContentType;
+    }
+
+    public void setHttpContentType(String httpContentType) {
+        this.httpContentType = httpContentType;
     }
 }

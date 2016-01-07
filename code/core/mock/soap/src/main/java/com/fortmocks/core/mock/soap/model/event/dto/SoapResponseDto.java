@@ -34,6 +34,9 @@ public class SoapResponseDto {
     @Mapping("httpStatusCode")
     private Integer httpStatusCode;
 
+    @Mapping("httpContentType")
+    private String httpContentType;
+
     public String getBody() {
         return body;
     }
@@ -56,5 +59,13 @@ public class SoapResponseDto {
 
     public void setHttpStatusCode(Integer httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
+    }
+
+    public String getHttpContentType() {
+        return httpContentType;
+    }
+
+    public void setHttpContentType(String httpContentType) {
+        this.httpContentType = httpContentType;
     }
 }

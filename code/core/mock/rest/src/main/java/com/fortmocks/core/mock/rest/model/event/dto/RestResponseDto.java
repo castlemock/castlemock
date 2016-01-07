@@ -16,7 +16,6 @@
 
 package com.fortmocks.core.mock.rest.model.event.dto;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestContentType;
 import org.dozer.Mapping;
 
 /**
@@ -36,7 +35,7 @@ public class RestResponseDto {
     private Integer httpStatusCode;
 
     @Mapping("restContentType")
-    private RestContentType restContentType;
+    private String restContentType;
 
     public String getBody() {
         return body;
@@ -62,11 +61,11 @@ public class RestResponseDto {
         this.httpStatusCode = httpStatusCode;
     }
 
-    public RestContentType getRestContentType() {
+    public String getRestContentType() {
         return restContentType;
     }
 
-    public void setRestContentType(RestContentType restContentType) {
+    public void setRestContentType(String restContentType) {
         this.restContentType = restContentType;
     }
 }

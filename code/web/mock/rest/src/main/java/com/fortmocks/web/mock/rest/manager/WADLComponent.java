@@ -50,6 +50,7 @@ public class WADLComponent {
     @Autowired
     private FileManager fileManager;
     private static final String AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME = "Auto-generated mocked response";
+    private static final String DEFAULT_CONTENT_TYPE = "application/json";
 
     /**
      * The method provides the functionality to download a WADL file from a specific URL, download it and generate
@@ -129,7 +130,7 @@ public class WADLComponent {
 
                             if(generateResponse){
                                 RestMockResponseDto restMockResponse = new RestMockResponseDto();
-                                restMockResponse.setRestContentType(RestContentType.APPLICATION_JSON);
+                                restMockResponse.setRestContentType(DEFAULT_CONTENT_TYPE);
                                 restMockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
                                 restMockResponse.setHttpStatusCode(200);
                                 restMockResponse.setRestMockResponseStatus(RestMockResponseStatus.ENABLED);
