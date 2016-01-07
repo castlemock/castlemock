@@ -90,6 +90,9 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+# Jacoco result
+./sonar
+
 code/fortmocks/.project
 
 code/parent/.project
