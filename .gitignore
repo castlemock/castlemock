@@ -92,6 +92,7 @@ local.properties
 
 # Jacoco result
 .sonar/
+*.exec
 
 code/fortmocks/.project
 
