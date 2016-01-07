@@ -91,7 +91,7 @@ local.properties
 .texlipse
 
 # Jacoco result
-./sonar
+.sonar/
 
 code/fortmocks/.project
 
