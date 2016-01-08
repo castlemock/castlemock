@@ -6,7 +6,7 @@
   src: url("../font/Roboto-Bold.ttf"); }
 @font-face {
   font-family: robotoItalicFont;
-  src: url("../font/Roboto-YhinItalic.ttf"); }
+  src: url("../font/Roboto-ThinItalic.ttf"); }
 footer {
   position: fixed;
   bottom: 0px;
@@ -150,7 +150,7 @@ a {
   src: url("../font/Roboto-Bold.ttf"); }
 @font-face {
   font-family: robotoItalicFont;
-  src: url("../font/Roboto-YhinItalic.ttf"); }
+  src: url("../font/Roboto-ThinItalic.ttf"); }
 body {
   background-color: #fbfbfb;
   font-family: robotoThinFont; }
