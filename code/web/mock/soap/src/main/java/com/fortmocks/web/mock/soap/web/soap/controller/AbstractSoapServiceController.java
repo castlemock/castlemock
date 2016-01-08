@@ -29,6 +29,7 @@ import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateCu
 import com.fortmocks.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.model.SoapException;
+import com.fortmocks.web.mock.soap.support.SoapMessageSupport;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -49,8 +50,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * The AbstractSoapServiceController provides functionality that are shared
- * for all the SOAP controllers
+ * The AbstractSoapServiceController provides functionality that are shared for all the SOAP controllers
  * @author Karl Dahlgren
  * @since 1.0
  */

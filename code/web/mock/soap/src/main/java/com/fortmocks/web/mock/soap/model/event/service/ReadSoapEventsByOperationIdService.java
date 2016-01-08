@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The service provides the functionality to retrieve all SOAP events for a specific SOAP operation.
  * @author Karl Dahlgren
  * @since 1.0
  */

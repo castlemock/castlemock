@@ -26,6 +26,7 @@ import com.fortmocks.core.mock.soap.model.event.service.message.output.CreateSoa
 import org.springframework.beans.factory.annotation.Value;
 
 /**
+ * The service provides the functionality to create new SOAP event and save it to the repository.
  * @author Karl Dahlgren
  * @since 1.0
  */

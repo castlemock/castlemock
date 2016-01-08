@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * The controller LogController provides functionality to retrieve logged information
- * and display it to the user
+ * The controller SoapEventController provides functionality to retrieve logged information and display it to the
+ * end user.
  * @author Karl Dahlgren
  * @since 1.0
  */
@@ -41,8 +41,8 @@ public class SoapEventController extends AbstractSoapViewController {
     private static final String PAGE = "mock/soap/event/soapEvent";
 
     /**
-     * The method creates a view that displays all the logged information to the user
-     * @return View with all the logged information
+     * The method creates a view that displays all the logged SOAP events to the user
+     * @return View with all the logged SOAP events
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "soap/event/{eventId}", method = RequestMethod.GET)

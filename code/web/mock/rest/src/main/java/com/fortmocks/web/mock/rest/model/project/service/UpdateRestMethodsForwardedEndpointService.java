@@ -19,13 +19,9 @@ package com.fortmocks.web.mock.rest.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
-import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
-import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsForwardedEndpointInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestMethodsForwardedEndpointInput;
-import com.fortmocks.core.mock.rest.model.project.service.message.output.UpdateRestApplicationsForwardedEndpointOutput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.UpdateRestMethodsForwardedEndpointOutput;
 
 /**

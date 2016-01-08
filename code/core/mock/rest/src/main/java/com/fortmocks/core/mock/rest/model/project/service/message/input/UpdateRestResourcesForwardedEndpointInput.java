@@ -18,7 +18,6 @@ package com.fortmocks.core.mock.rest.model.project.service.message.input;
 
 import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.validation.NotNull;
-import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 
 import java.util.List;

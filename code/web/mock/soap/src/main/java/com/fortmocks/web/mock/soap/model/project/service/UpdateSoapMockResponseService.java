@@ -25,8 +25,11 @@ import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSo
 import com.fortmocks.core.mock.soap.model.project.service.message.output.UpdateSoapMockResponseOutput;
 
 /**
+ * The service provides functionality to update a specific SOAP mock response.
  * @author Karl Dahlgren
  * @since 1.0
+ * @see UpdateSoapMockResponseInput
+ * @see UpdateSoapMockResponseOutput
  */
 @org.springframework.stereotype.Service
 public class UpdateSoapMockResponseService extends AbstractSoapProjectService implements Service<UpdateSoapMockResponseInput, UpdateSoapMockResponseOutput> {

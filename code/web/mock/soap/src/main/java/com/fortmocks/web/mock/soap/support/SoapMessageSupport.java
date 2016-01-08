@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.mock.soap.web.soap.controller;
+package com.fortmocks.web.mock.soap.support;
 
 import com.fortmocks.web.mock.soap.model.SoapException;
+import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -31,6 +32,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 /**
+ * The class provides functionality and support methods specifiably for SOAP messages.
  * @author Karl Dahlgren
  * @since 1.0
  */
@@ -41,8 +43,12 @@ public class SoapMessageSupport {
     private static final String BODY = "Body";
     private static final Logger LOGGER = Logger.getLogger(SoapMessageSupport.class);
 
+    /**
+     * The default constructor for SoapMessageSupport. It is marked as private
+     * to prohibit creation of instances of this class.
+     */
     private SoapMessageSupport(){
-
+        // The constructor should be empty
     }
 
     /**
@@ -92,7 +98,10 @@ public class SoapMessageSupport {
      * @return Either the element name or namespace
      */
     public static String getElement(String element, int index){
-        String[] elementDivided = element.split(DIVIDER);
+        Preconditions.checkArgument(index >= 0, "The index can't be less than zero");
+        Preconditions.checkArgument(index <= 1, "The index can't be more than one");
+
+        final String[] elementDivided = element.split(DIVIDER);
 
         if (elementDivided.length == 1) {
             return elementDivided[0];

@@ -27,18 +27,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
- * The GlobalControllerExceptionManager handles all the uncaught exceptions
+ * The SoapControllerAdvice handles all the uncaught SOAP exceptions and transform them into
+ * SOAP error messages (See {@link SoapErrorMessage})
  * @author Karl Dahlgren
  * @since 1.0
+ * @see SoapErrorMessage
  */
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SoapControllerAdvice extends AbstractViewController {
 
     /**
-     * Handles uncaught SoapException
+     * Handles uncaught SoapException and transforms them into {@link SoapErrorMessage}
      * @param exception The uncaught SoapException
-     * @return Returns a ErrorWebServiceMessage containing the message from the provided exception
+     * @return Returns a SoapErrorMessage containing the message from the provided exception
      */
     @ResponseBody
     @ExceptionHandler(value = SoapException.class)

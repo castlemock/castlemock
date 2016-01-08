@@ -39,7 +39,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * WSDLComponent provides functionality to parse a WSDL file
+ * WSDLComponent provides functionality to parse WSDL files and transform them to SOAP ports
  * @author Karl Dahlgren
  * @since 1.0
  */

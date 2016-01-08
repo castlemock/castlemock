@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * The MockResponseController controller provides functionality to display
+ * The SoapMockResponseController controller provides functionality to retrieve specific SOAP mock responses
  * @author Karl Dahlgren
  * @since 1.0
  */

@@ -24,6 +24,7 @@ import com.fortmocks.core.mock.soap.model.event.service.message.input.ReadSoapEv
 import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadSoapEventOutput;
 
 /**
+ * The service provides the functionality to retrieve a specific SOAP event from the repository.
  * @author Karl Dahlgren
  * @since 1.0
  */

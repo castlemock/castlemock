@@ -23,8 +23,6 @@ import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestProject;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
-import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestApplicationsInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestApplicationsOutput;
 

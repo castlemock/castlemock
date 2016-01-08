@@ -20,6 +20,12 @@ package com.fortmocks.web.mock.soap.model;
 import com.fortmocks.core.basis.model.TypeIdentifier;
 
 /**
+ * The SoapTypeIdentifier is used to identify a SOAP project on the certain shared project pages:
+ * <ul>
+ *  <li>Project overview page</li>
+ *  <li>Update project</li>
+ *  <li>Delete projects</li>
+ * </ul>
  * @author Karl Dahlgren
  * @since 1.0
  */
@@ -28,11 +34,19 @@ public class SoapTypeIdentifier implements TypeIdentifier {
     private static final String SOAP_TYPE = "SOAP";
     private static final String SOAP_TYPE_URL = "soap";
 
+    /**
+     * The type variable is used to identify a specific class by a type name.
+     * @return The identifier type
+     */
     @Override
     public String getType(){
         return SOAP_TYPE;
     }
 
+    /**
+     * The type URL variable is used to identify a specific class by a type URL
+     * @return The identifier type URL
+     */
     @Override
     public String getTypeUrl(){
         return SOAP_TYPE_URL;

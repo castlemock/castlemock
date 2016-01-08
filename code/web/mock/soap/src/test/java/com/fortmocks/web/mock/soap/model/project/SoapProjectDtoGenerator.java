@@ -16,6 +16,7 @@
 
 package com.fortmocks.web.mock.soap.model.project;
 
+import com.fortmocks.core.mock.soap.model.project.domain.SoapProject;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 
 import java.util.Date;
@@ -35,5 +36,15 @@ public class SoapProjectDtoGenerator {
         projectDto.setCreated(new Date());
         projectDto.setUpdated(new Date());
         return projectDto;
+    }
+
+    public static SoapProject convertDto(final SoapProjectDto soapProjectDto){
+        final SoapProject soapProject = new SoapProject();
+        soapProject.setId(soapProjectDto.getId());
+        soapProject.setName(soapProjectDto.getName());
+        soapProject.setDescription(soapProjectDto.getDescription());
+        soapProject.setCreated(soapProjectDto.getCreated());
+        soapProject.setUpdated(soapProjectDto.getUpdated());
+        return soapProject;
     }
 }

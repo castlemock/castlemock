@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * The UpdateMockResponseController controller provides functionality to update a specific mocked response
+ * The UpdateSoapMockResponseController controller provides functionality to update a specific SOAP mocked response
  * @author Karl Dahlgren
  * @since 1.0
  */

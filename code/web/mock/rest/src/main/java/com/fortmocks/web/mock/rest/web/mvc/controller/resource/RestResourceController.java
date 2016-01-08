@@ -25,7 +25,6 @@ import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRest
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestResourcesStatusInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
-import com.fortmocks.web.mock.rest.web.mvc.command.application.UpdateRestApplicationsEndpointCommand;
 import com.fortmocks.web.mock.rest.web.mvc.command.method.DeleteRestMethodsCommand;
 import com.fortmocks.web.mock.rest.web.mvc.command.method.RestMethodModifierCommand;
 import com.fortmocks.web.mock.rest.web.mvc.command.method.UpdateRestMethodsEndpointCommand;

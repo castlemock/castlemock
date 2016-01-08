@@ -29,7 +29,6 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-
 public class AbstractSoapEventService extends AbstractEventService<SoapEvent, SoapEventDto> {
 
 

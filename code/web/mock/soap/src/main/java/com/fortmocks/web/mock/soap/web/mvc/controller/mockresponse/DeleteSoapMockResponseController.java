@@ -32,8 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * The DeleteMockResponseController is the controller class responsible
- * for deleting mocked responses
+ * The DeleteMockResponseController is the controller class responsible for deleting mocked responses
  * @author Karl Dahlgren
  * @since 1.0
  */

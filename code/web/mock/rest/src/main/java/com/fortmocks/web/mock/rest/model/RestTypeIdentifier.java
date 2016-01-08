@@ -20,6 +20,12 @@ package com.fortmocks.web.mock.rest.model;
 import com.fortmocks.core.basis.model.TypeIdentifier;
 
 /**
+ * The RestTypeIdentifier is used to identify a REST project on the certain shared project pages:
+ * <ul>
+ *  <li>Project overview page</li>
+ *  <li>Update project</li>
+ *  <li>Delete projects</li>
+ * </ul>
  * @author Karl Dahlgren
  * @since 1.0
  */
@@ -28,11 +34,19 @@ public class RestTypeIdentifier implements TypeIdentifier {
     private static final String REST_TYPE = "REST";
     private static final String REST_TYPE_URL = "rest";
 
+    /**
+     * The type variable is used to identify a specific class by a type name.
+     * @return The identifier type
+     */
     @Override
     public String getType(){
         return REST_TYPE;
     }
 
+    /**
+     * The type URL variable is used to identify a specific class by a type URL
+     * @return The identifier type URL
+     */
     @Override
     public String getTypeUrl(){
         return REST_TYPE_URL;

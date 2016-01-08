@@ -32,8 +32,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * The REST project service adapter is responsible for providing the basic functionality for all the
+ * project services.
  * @author Karl Dahlgren
  * @since 1.0
+ * @see RestProjectDto
  */
 @Service
 public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProjectDto> {

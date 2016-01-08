@@ -21,10 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
- * The FileUploadForm is a class that represent a form which contains a
- * multipart file.
+ * The WSDLFileUploadForm is a class that represent a form which contains a multipart files, URL to a specific WSDL
+ * file and a boolean value used to indicate if SOAP mocked responses will be generated for each created
+ * SOAP operation
  * @author Karl Dahlgren
  * @since 1.0
+ * @see javax.wsdl.extensions.soap.SOAPOperation
+ * @see com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponse
  */
 public class WSDLFileUploadForm {
 
@@ -48,18 +51,38 @@ public class WSDLFileUploadForm {
         this.files = files;
     }
 
+    /**
+     * The value represent if one response will be generated upon operation creation.
+     * True will generate SOAP mock responses for each SOAP operation created. False will not
+     * create any mock responses
+     * @return The generate response value
+     * @see com.fortmocks.core.mock.soap.model.project.domain.SoapOperation
+     */
     public boolean isGenerateResponse() {
         return generateResponse;
     }
 
+    /**
+     * Set a new value to the generate response value
+     * @param generateResponse The new value of the generate response, which will response the old one.
+     */
     public void setGenerateResponse(boolean generateResponse) {
         this.generateResponse = generateResponse;
     }
 
+    /**
+     * The link to the WSDL. This option is used if the user does not upload a WSDL file, but links it instead
+     * to an external source
+     * @return The link to the WSDL file
+     */
     public String getLink() {
         return link;
     }
 
+    /**
+     * Set a new value to the link
+     * @param link The new value of the link, which will replace the old one
+     */
     public void setLink(String link) {
         this.link = link;
     }

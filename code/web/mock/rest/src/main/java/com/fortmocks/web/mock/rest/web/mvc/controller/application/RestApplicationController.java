@@ -17,15 +17,12 @@
 package com.fortmocks.web.mock.rest.web.mvc.controller.application;
 
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
-import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsStatusInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestResourcesStatusInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
-import com.fortmocks.web.mock.rest.web.mvc.command.application.UpdateRestApplicationsEndpointCommand;
 import com.fortmocks.web.mock.rest.web.mvc.command.resource.DeleteRestResourcesCommand;
 import com.fortmocks.web.mock.rest.web.mvc.command.resource.RestResourceModifierCommand;
 import com.fortmocks.web.mock.rest.web.mvc.command.resource.UpdateRestResourcesEndpointCommand;

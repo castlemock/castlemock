@@ -18,11 +18,9 @@ package com.fortmocks.web.mock.rest.web.mvc.controller.resource;
 
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
-import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsForwardedEndpointInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestResourceInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestResourcesForwardedEndpointInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
-import com.fortmocks.web.mock.rest.web.mvc.command.application.UpdateRestApplicationsEndpointCommand;
 import com.fortmocks.web.mock.rest.web.mvc.command.resource.UpdateRestResourcesEndpointCommand;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestViewController;
 import com.google.common.base.Preconditions;

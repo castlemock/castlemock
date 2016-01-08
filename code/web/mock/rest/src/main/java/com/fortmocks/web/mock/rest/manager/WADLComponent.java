@@ -16,7 +16,10 @@
 
 package com.fortmocks.web.mock.rest.manager;
 
-import com.fortmocks.core.mock.rest.model.project.domain.*;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponseStatus;
+import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
