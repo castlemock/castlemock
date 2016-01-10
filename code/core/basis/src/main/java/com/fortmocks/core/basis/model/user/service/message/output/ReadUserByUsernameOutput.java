@@ -28,6 +28,10 @@ public class ReadUserByUsernameOutput implements Output {
 
     private UserDto user;
 
+    public ReadUserByUsernameOutput(UserDto user) {
+        this.user = user;
+    }
+
     public UserDto getUser() {
         return user;
     }

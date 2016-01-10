@@ -103,7 +103,8 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
     @Override
     public D update(final String typeUrl, final I id, final D dto){
         final SA serviceAdapter = findByTypeUrl(typeUrl);
-        return serviceAdapter.update(id, serviceAdapter.convertType(dto));
+        final D convertedDto = serviceAdapter.convertType(dto);
+        return serviceAdapter.update(id, convertedDto);
     }
 
     /**
@@ -184,7 +185,7 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
      * If no service matches the provided type
      */
     protected SA findByType(final String type){
-        final SA serviceAdapter = services.get(type);
+        final SA serviceAdapter = services.get(type.toUpperCase());
 
         if(serviceAdapter == null){
             throw new IllegalArgumentException("Invalid type");

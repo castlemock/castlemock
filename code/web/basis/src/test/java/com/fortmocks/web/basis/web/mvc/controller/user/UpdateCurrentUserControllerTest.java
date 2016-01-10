@@ -70,9 +70,8 @@ public class UpdateCurrentUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDefaultPage() throws Exception {
-        final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput();
         final UserDto userDto = UserDtoGenerator.generateUserDto();
-        readUserByUsernameOutput.setUser(userDto);
+        final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput(userDto);
         when(serviceProcessor.process(any(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)

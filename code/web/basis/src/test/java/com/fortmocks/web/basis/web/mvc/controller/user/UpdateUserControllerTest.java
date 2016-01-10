@@ -96,9 +96,8 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
     @Test
     public void testUpdateUserConfirmWithValidId() throws Exception {
         final UserDto userDto = UserDtoGenerator.generateUserDto();
-        final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput();
+        final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput(userDto);
         final UpdateUserOutput updateUserOutput = new UpdateUserOutput(userDto);
-        readUserByUsernameOutput.setUser(userDto);
         updateUserOutput.setUpdatedUser(userDto);
 
         when(serviceProcessor.process(isA(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);
