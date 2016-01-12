@@ -26,6 +26,7 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.CreateRecordedSoapMockResponseInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.IdentifySoapOperationInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.model.SoapException;
@@ -140,6 +141,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 response = forwardRequest(request, soapOperationDto);
             } else if (SoapOperationStatus.RECORDING.equals(soapOperationDto.getSoapOperationStatus())) {
                 response = forwardRequestAndRecordResponse(request, soapOperationDto);
+            } else if (SoapOperationStatus.RECORD_ONCE.equals(soapOperationDto.getSoapOperationStatus())) {
+                response = forwardRequestAndRecordResponseOnce(request, soapProjectId, soapPortId, soapOperationDto);
             } else { // Status.MOCKED
                 response = mockResponse(soapOperationDto, httpServletResponse);
             }
@@ -212,6 +215,21 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
         mockResponse.setHttpContentType(response.getHttpContentType());
         serviceProcessor.process(new CreateRecordedSoapMockResponseInput(soapOperationDto.getId(), mockResponse));
+        return response;
+    }
+
+    /**
+     * The method provides the functionality to forward the incoming request, store the returned the response and
+     * return the response to the service consumer. The SOAP operation status will be updated
+     * to mocked.
+     * @param request The incoming request that will be forwarded
+     * @param soapOperationDto The SOAP operation that is being executed
+     * @return The response from the system that the request was forwarded to.
+     */
+    private SoapResponseDto forwardRequestAndRecordResponseOnce(final SoapRequestDto request, final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto){
+        final SoapResponseDto response = forwardRequestAndRecordResponse(request, soapOperationDto);
+        soapOperationDto.setSoapOperationStatus(SoapOperationStatus.MOCKED);
+        serviceProcessor.process(new UpdateSoapOperationInput(soapProjectId, soapPortId, soapOperationDto.getId(), soapOperationDto));
         return response;
     }
 

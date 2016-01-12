@@ -40,7 +40,7 @@
             <td>
                 <form:select path="restMethodStatus">
                     <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
-                        <option value="${restMethodStatus}">${restMethodStatus}</option>
+                        <option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></option>
                     </c:forEach>
                 </form:select>
             </td>
@@ -50,7 +50,7 @@
             <td>
                 <form:select path="restResponseStrategy">
                     <c:forEach items="${restResponsestrategies}" var="restResponseStrategy">
-                        <option value="${restResponseStrategy}">${restResponseStrategy}</option>
+                        <option value="${restResponseStrategy}"><spring:message code="rest.type.responsestrategy.${restResponseStrategy}"/></option>
                     </c:forEach>
                 </form:select>
             </td>

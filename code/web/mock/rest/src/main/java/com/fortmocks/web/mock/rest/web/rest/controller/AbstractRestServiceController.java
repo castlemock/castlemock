@@ -29,6 +29,7 @@ import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRecordedRestMockResponseInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.IdentifyRestMethodInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
+import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.rest.model.RestException;
@@ -179,6 +180,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 response = forwardRequest(restRequest, restMethod);
             } else if (RestMethodStatus.RECORDING.equals(restMethod.getRestMethodStatus())) {
                 response = forwardRequestAndRecordResponse(restRequest, restMethod);
+            } else if (RestMethodStatus.RECORDING.equals(restMethod.getRestMethodStatus())) {
+                response = forwardRequestAndRecordResponseOnce(restRequest, projectId, applicationId, resourceId, restMethod);
             } else { // Status.MOCKED
                 response = mockResponse(restMethod, httpServletResponse);
             }
@@ -277,6 +280,21 @@ public abstract class AbstractRestServiceController extends AbstractController {
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
         mockResponse.setRestContentType(response.getRestContentType());
         serviceProcessor.process(new CreateRecordedRestMockResponseInput(restMethod.getId(), mockResponse));
+        return response;
+    }
+
+    /**
+     * The method provides the functionality to forward a request to another endpoint. The response
+     * will be recorded and can later be used as a mocked response. The REST method status will be updated
+     * to mocked.
+     * @param restRequest The incoming request
+     * @param restMethod The REST method which the incoming request belongs to
+     * @return The response received from the external endpoint
+     */
+    protected RestResponseDto forwardRequestAndRecordResponseOnce(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
+        final RestResponseDto response = forwardRequestAndRecordResponse(restRequest, restMethod);
+        restMethod.setRestMethodStatus(RestMethodStatus.MOCKED);
+        serviceProcessor.process(new UpdateRestMethodInput(projectId, applicationId, resourceId, restMethod.getId(), restMethod));
         return response;
     }
 

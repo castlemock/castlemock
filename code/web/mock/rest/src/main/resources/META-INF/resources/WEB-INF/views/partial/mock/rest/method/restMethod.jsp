@@ -39,7 +39,7 @@
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.methodstatus"/></label></td>
-            <td class="column2"><label path="name">${restMethod.restMethodStatus}</label></td>
+            <td class="column2"><label path="name"><spring:message code="rest.type.restmethodstatus.${restMethod.restMethodStatus}"/></label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.address"/></label></td>
@@ -47,7 +47,7 @@
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.restResponsestrategy"/></label></td>
-            <td class="column2"><label path="name">${restMethod.restResponseStrategy}</label></td>
+            <td class="column2"><label path="name"><spring:message code="rest.type.responsestrategy.${restMethod.restResponseStrategy}"/></label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.forwardedendpoint"/></label></td>
