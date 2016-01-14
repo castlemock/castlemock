@@ -33,8 +33,9 @@ public class SoapRequest {
     private String contentType;
     private String uri;
     private SoapOperationMethod soapOperationMethod;
-    private String serviceName;
-    private SoapOperationType type;
+    private String soapOperationName;
+    private String soapOperationIdentifier;
+    private SoapOperationType soapOperationType;
 
     @XmlElement
     public String getBody() {
@@ -73,20 +74,29 @@ public class SoapRequest {
     }
 
     @XmlElement
-    public String getServiceName() {
-        return serviceName;
+    public String getSoapOperationName() {
+        return soapOperationName;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public void setSoapOperationName(String soapOperationName) {
+        this.soapOperationName = soapOperationName;
     }
 
     @XmlElement
-    public SoapOperationType getType() {
-        return type;
+    public String getSoapOperationIdentifier() {
+        return soapOperationIdentifier;
     }
 
-    public void setType(SoapOperationType type) {
-        this.type = type;
+    public void setSoapOperationIdentifier(String soapOperationIdentifier) {
+        this.soapOperationIdentifier = soapOperationIdentifier;
+    }
+
+    @XmlElement
+    public SoapOperationType getSoapOperationType() {
+        return soapOperationType;
+    }
+
+    public void setSoapOperationType(SoapOperationType soapOperationType) {
+        this.soapOperationType = soapOperationType;
     }
 }

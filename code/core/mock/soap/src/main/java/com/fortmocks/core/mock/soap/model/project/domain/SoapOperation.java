@@ -32,6 +32,7 @@ public class SoapOperation implements Saveable<String> {
 
     private String id;
     private String name;
+    private String identifier;
     private SoapResponseStrategy soapResponseStrategy;
     private List<SoapMockResponse> soapMockResponses;
     private SoapOperationStatus soapOperationStatus;
@@ -61,6 +62,16 @@ public class SoapOperation implements Saveable<String> {
     public void setName(String name) {
         this.name = name;
     }
+
+    @XmlElement
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
 
     @XmlElement
     public SoapResponseStrategy getSoapResponseStrategy() {

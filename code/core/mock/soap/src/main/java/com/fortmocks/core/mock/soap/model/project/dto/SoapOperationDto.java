@@ -37,6 +37,9 @@ public class SoapOperationDto {
     @Mapping("name")
     private String name;
 
+    @Mapping("identifier")
+    private String identifier;
+
     @Mapping("soapMockResponses")
     private List<SoapMockResponseDto> soapMockResponses = new LinkedList<SoapMockResponseDto>();
 
@@ -80,6 +83,14 @@ public class SoapOperationDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public SoapResponseStrategy getSoapResponseStrategy() {

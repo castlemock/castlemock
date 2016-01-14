@@ -41,9 +41,9 @@ public class SoapEventDtoGenerator {
         SoapRequestDto soapRequestDto = new SoapRequestDto();
         soapRequestDto.setBody("Soap request body");
         soapRequestDto.setContentType("application/json");
-        soapRequestDto.setServiceName("ServiceName");
+        soapRequestDto.setSoapOperationName("ServiceName");
         soapRequestDto.setSoapOperationMethod(SoapOperationMethod.POST);
-        soapRequestDto.setType(SoapOperationType.SOAP11);
+        soapRequestDto.setSoapOperationType(SoapOperationType.SOAP11);
 
         SoapResponseDto soapResponseDto = new SoapResponseDto();
         soapResponseDto.setHttpStatusCode(200);

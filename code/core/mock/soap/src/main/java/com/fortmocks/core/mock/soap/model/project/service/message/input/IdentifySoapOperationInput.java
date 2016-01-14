@@ -30,7 +30,7 @@ public class IdentifySoapOperationInput implements Input {
     @NotNull
     private String soapProjectId;
     @NotNull
-    private String name;
+    private String soapOperationIdentifier;
     @NotNull
     private String uri;
     @NotNull
@@ -38,9 +38,9 @@ public class IdentifySoapOperationInput implements Input {
     @NotNull
     private SoapOperationType type;
 
-    public IdentifySoapOperationInput(String soapProjectId, String name, String uri, SoapOperationMethod soapOperationMethod, SoapOperationType type) {
+    public IdentifySoapOperationInput(String soapProjectId, String soapOperationIdentifier, String uri, SoapOperationMethod soapOperationMethod, SoapOperationType type) {
         this.soapProjectId = soapProjectId;
-        this.name = name;
+        this.soapOperationIdentifier = soapOperationIdentifier;
         this.uri = uri;
         this.soapOperationMethod = soapOperationMethod;
         this.type = type;
@@ -54,12 +54,12 @@ public class IdentifySoapOperationInput implements Input {
         this.soapProjectId = soapProjectId;
     }
 
-    public String getName() {
-        return name;
+    public String getSoapOperationIdentifier() {
+        return soapOperationIdentifier;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSoapOperationIdentifier(String soapOperationIdentifier) {
+        this.soapOperationIdentifier = soapOperationIdentifier;
     }
 
     public String getUri() {

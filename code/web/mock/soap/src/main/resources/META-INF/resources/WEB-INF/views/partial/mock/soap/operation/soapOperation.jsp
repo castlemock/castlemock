@@ -17,6 +17,10 @@
             <td class="column2"><label path="name">${soapOperation.name}</label></td>
         </tr>
         <tr>
+            <td class="column1"><label path="name"><spring:message code="soap.soapoperation.label.identifier"/></label></td>
+            <td class="column2"><label path="name">${soapOperation.identifier}</label></td>
+        </tr>
+        <tr>
             <td class="column1"><label path="name"><spring:message code="soap.soapoperation.label.type"/></label></td>
             <td class="column2"><label path="name">${soapOperation.soapOperationType.name}</label></td>
         </tr>

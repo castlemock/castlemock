@@ -52,12 +52,6 @@
         <form:form action="${rest_resource_update_url}/" method="POST"  commandName="restApplicationModifierCommand">
             <div class="table-frame">
                 <table class="entityTable">
-                    <col width="10%">
-                    <col width="50%">
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="10%">
                     <tr>
                         <th><spring:message code="rest.restproject.column.selected"/></th>
                         <th><spring:message code="rest.restproject.column.application"/></th>

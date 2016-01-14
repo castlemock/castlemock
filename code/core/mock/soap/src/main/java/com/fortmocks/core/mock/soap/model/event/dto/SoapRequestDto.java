@@ -38,11 +38,14 @@ public class SoapRequestDto {
     @Mapping("soapOperationMethod")
     private SoapOperationMethod soapOperationMethod;
 
-    @Mapping("serviceName")
-    private String serviceName;
+    @Mapping("soapOperationName")
+    private String soapOperationName;
 
-    @Mapping("type")
-    private SoapOperationType type;
+    @Mapping("soapOperationIdentifier")
+    private String soapOperationIdentifier;
+
+    @Mapping("soapOperationType")
+    private SoapOperationType soapOperationType;
 
     public String getBody() {
         return body;
@@ -76,19 +79,27 @@ public class SoapRequestDto {
         this.soapOperationMethod = soapOperationMethod;
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public String getSoapOperationName() {
+        return soapOperationName;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public void setSoapOperationName(String soapOperationName) {
+        this.soapOperationName = soapOperationName;
     }
 
-    public SoapOperationType getType() {
-        return type;
+    public String getSoapOperationIdentifier() {
+        return soapOperationIdentifier;
     }
 
-    public void setType(SoapOperationType type) {
-        this.type = type;
+    public void setSoapOperationIdentifier(String soapOperationIdentifier) {
+        this.soapOperationIdentifier = soapOperationIdentifier;
+    }
+
+    public SoapOperationType getSoapOperationType() {
+        return soapOperationType;
+    }
+
+    public void setSoapOperationType(SoapOperationType soapOperationType) {
+        this.soapOperationType = soapOperationType;
     }
 }

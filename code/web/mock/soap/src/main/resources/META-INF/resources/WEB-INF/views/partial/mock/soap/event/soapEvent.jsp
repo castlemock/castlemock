@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="soap.event.column.request.type"/></label></td>
-            <td class="column2"><label path="name">${event.soapRequest.type}</label></td>
+            <td class="column2"><label path="name">${event.soapRequest.soapOperationType}</label></td>
         </tr>
     </table>
 </div>

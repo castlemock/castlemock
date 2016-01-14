@@ -212,11 +212,15 @@ public class WSDLComponent {
                 final String operationName = getAttribute(operationElement, "name");
                 final SoapOperationDto soapOperation = new SoapOperationDto();
                 final String defaultBody = generateDefaultBody(operationName, operationElement.getNamespaceURI());
+                final String inputMessageName = getInputMessageName(operationElement);
+                final String identifier = inputMessageName != null && !inputMessageName.isEmpty() ? inputMessageName : operationName;
+
                 soapOperation.setName(operationName);
+                soapOperation.setIdentifier(identifier);
                 soapOperation.setSoapOperationMethod(SoapOperationMethod.POST);
                 soapOperation.setSoapOperationStatus(SoapOperationStatus.MOCKED);
                 soapOperation.setSoapResponseStrategy(SoapResponseStrategy.RANDOM);
-                soapOperation.setForwardedEndpoint(new String());
+                soapOperation.setForwardedEndpoint(soapOperationAddress);
                 soapOperation.setOriginalEndpoint(soapOperationAddress);
                 soapOperation.setSoapOperationType(soapOperationType);
                 soapOperation.setSoapMockResponses(new ArrayList<SoapMockResponseDto>());
@@ -300,6 +304,19 @@ public class WSDLComponent {
             }
         }
         return null;
+    }
+
+    private String getInputMessageName(Element operationElement){
+        String inputMessageName = null;
+        final NodeList inputNodeList = operationElement.getElementsByTagNameNS(WSDL_NAMESPACE, "input");
+        for (int inputIndex = 0; inputIndex < inputNodeList.getLength(); inputIndex++) {
+            final Node inputNode = inputNodeList.item(inputIndex);
+            if (inputNode.getNodeType() == Node.ELEMENT_NODE) {
+                final Element inputElement = (Element) inputNode;
+                inputMessageName = getAttribute(inputElement, "name");
+            }
+        }
+        return inputMessageName;
     }
 
     /**

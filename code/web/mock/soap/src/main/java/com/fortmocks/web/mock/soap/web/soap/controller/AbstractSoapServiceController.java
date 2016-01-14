@@ -80,8 +80,9 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
             final SoapRequestDto request = prepareRequest(projectId, httpServletRequest);
-            final IdentifySoapOperationOutput output = serviceProcessor.process(new IdentifySoapOperationInput(projectId, request.getServiceName(), request.getUri(), request.getSoapOperationMethod(), request.getType()));
+            final IdentifySoapOperationOutput output = serviceProcessor.process(new IdentifySoapOperationInput(projectId, request.getSoapOperationIdentifier(), request.getUri(), request.getSoapOperationMethod(), request.getSoapOperationType()));
             final SoapOperationDto operation = output.getSoapOperation();
+            request.setSoapOperationName(operation.getName());
             return process(projectId, output.getSoapPortId(), operation, request, httpServletResponse);
         }catch(Exception exception){
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
@@ -98,7 +99,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     protected SoapRequestDto prepareRequest(final String projectId, final HttpServletRequest httpServletRequest) {
         SoapRequestDto request = new SoapRequestDto();
         final String body = SoapMessageSupport.getBody(httpServletRequest);
-        final String serviceName = SoapMessageSupport.extractSoapRequestName(body);
+        final String identifier = SoapMessageSupport.extractSoapRequestName(body);
         final String serviceUri = httpServletRequest.getRequestURI().replace(getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
 
         SoapOperationType type = SoapOperationType.SOAP11;
@@ -106,12 +107,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             type = SoapOperationType.SOAP12;
         }
 
-        request.setType(type);
+        request.setSoapOperationType(type);
         request.setContentType(httpServletRequest.getContentType());
         request.setUri(serviceUri);
         request.setSoapOperationMethod(SoapOperationMethod.valueOf(httpServletRequest.getMethod()));
         request.setBody(body);
-        request.setServiceName(serviceName);
+        request.setSoapOperationIdentifier(identifier);
         return request;
     }
 

@@ -48,7 +48,7 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
         for(SoapPort tempSoapPort : project.getSoapPorts()){
             if(tempSoapPort.getUrlPath().equals(input.getUri())){
                 soapPort = tempSoapPort;
-                soapOperationDto = findSoapOperation(tempSoapPort, input.getSoapOperationMethod(), input.getType(), input.getName());
+                soapOperationDto = findSoapOperation(tempSoapPort, input.getSoapOperationMethod(), input.getType(), input.getSoapOperationIdentifier());
                 break;
             }
         }
@@ -61,12 +61,12 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
      * @param soapPort The SOAP port that is responsible for the SOAP operation
      * @param soapOperationMethod The SOAP operation method
      * @param soapOperationType The SOAP operation type
-     * @param soapOperationName The SOAP operation name
+     * @param soapOperationInputMessageName The SOAP operation input message name. The identifier for the SOAP operation
      * @return The SOAP operation that matches the search criteria. Null otherwise
      */
-    private SoapOperationDto findSoapOperation(SoapPort soapPort, SoapOperationMethod soapOperationMethod, SoapOperationType soapOperationType, String soapOperationName){
+    private SoapOperationDto findSoapOperation(SoapPort soapPort, SoapOperationMethod soapOperationMethod, SoapOperationType soapOperationType, String soapOperationInputMessageName){
         for(SoapOperation soapOperation : soapPort.getSoapOperations()){
-            if(soapOperation.getSoapOperationMethod().equals(soapOperationMethod) && soapOperation.getSoapOperationType().equals(soapOperationType) && soapOperation.getName().equalsIgnoreCase(soapOperationName)){
+            if(soapOperation.getSoapOperationMethod().equals(soapOperationMethod) && soapOperation.getSoapOperationType().equals(soapOperationType) && soapOperation.getIdentifier().equalsIgnoreCase(soapOperationInputMessageName)){
                 return mapper.map(soapOperation, SoapOperationDto.class);
             }
         }
