@@ -47,7 +47,7 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
         SoapPort soapPort = null;
         SoapOperationDto soapOperationDto = null;
         for(SoapPort tempSoapPort : project.getPorts()){
-            if(tempSoapPort.getUrlPath().equals(input.getUri())){
+            if(tempSoapPort.getUri().equals(input.getUri())){
                 soapPort = tempSoapPort;
                 soapOperationDto = findSoapOperation(tempSoapPort, input.getHttpMethod(), input.getType(), input.getSoapOperationIdentifier());
                 break;

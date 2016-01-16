@@ -98,7 +98,7 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION, soapOperationDto));
         SoapOperationDto SoapOperationDtoResponse = (SoapOperationDto) result.andReturn().getModelAndView().getModel().get(SOAP_OPERATION);
         String hostAddress = serviceController.getHostAddress();
-        Assert.assertEquals(HTTP + hostAddress + COLON + DEFAULT_PORT + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + soapProjectDto.getId() + SLASH + soapPortDto.getUrlPath(), soapOperationDto.getInvokeAddress());
+        Assert.assertEquals(HTTP + hostAddress + COLON + DEFAULT_PORT + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + soapProjectDto.getId() + SLASH + soapPortDto.getUri(), soapOperationDto.getInvokeAddress());
     }
 
 }

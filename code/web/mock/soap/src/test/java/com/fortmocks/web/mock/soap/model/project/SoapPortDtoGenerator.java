@@ -28,7 +28,7 @@ public class SoapPortDtoGenerator {
         final SoapPortDto soapPortDto = new SoapPortDto();
         soapPortDto.setId("SOAP PORT");
         soapPortDto.setName("Soap port name");
-        soapPortDto.setUrlPath("UrlPath");
+        soapPortDto.setUri("UrlPath");
         return soapPortDto;
     }
 }

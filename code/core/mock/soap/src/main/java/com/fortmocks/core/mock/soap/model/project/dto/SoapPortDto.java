@@ -36,8 +36,8 @@ public class SoapPortDto {
     @Mapping("name")
     private String name;
 
-    @Mapping("urlPath")
-    private String urlPath;
+    @Mapping("uri")
+    private String uri;
 
     @Mapping("operations")
     private List<SoapOperationDto> operations = new LinkedList<SoapOperationDto>();
@@ -78,12 +78,12 @@ public class SoapPortDto {
         this.name = name;
     }
 
-    public String getUrlPath() {
-        return urlPath;
+    public String getUri() {
+        return uri;
     }
 
-    public void setUrlPath(String urlPath) {
-        this.urlPath = urlPath;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getInvokeAddress() {

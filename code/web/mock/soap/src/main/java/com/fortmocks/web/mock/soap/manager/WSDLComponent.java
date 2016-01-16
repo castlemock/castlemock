@@ -168,7 +168,7 @@ public class WSDLComponent {
                         final SoapPortDto soapPort = new SoapPortDto();
                         soapPort.setName(portName);
                         soapPort.setOperations(soapOperations);
-                        soapPort.setUrlPath(portName);
+                        soapPort.setUri(portName);
                         soapPorts.add(soapPort);
 
                     }

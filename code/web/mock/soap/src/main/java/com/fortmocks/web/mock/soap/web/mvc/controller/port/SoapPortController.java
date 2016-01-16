@@ -68,7 +68,7 @@ public class SoapPortController extends AbstractSoapViewController {
         final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
         final SoapPortDto soapPort = readSoapPortOutput.getSoapPort();
         final String protocol = getProtocol(request);
-        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUrlPath());
+        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUri());
 
         soapPort.setInvokeAddress(invokeAddress);
         final ModelAndView model = createPartialModelAndView(PAGE);

@@ -10,8 +10,8 @@
             <td class="column2"><label path="name">${soapPort.name}</label></td>
         </tr>
         <tr>
-            <td class="column1"><label path="urlPath"><spring:message code="soap.updatesoapport.label.urlpath"/></label></td>
-            <td class="column2"><form:input path="urlPath" value="${soapPort.urlPath}"/></td>
+            <td class="column1"><label path="uri"><spring:message code="soap.updatesoapport.label.urlpath"/></label></td>
+            <td class="column2"><form:input path="uri" value="${soapPort.uri}"/></td>
         </tr>
     </table>
     

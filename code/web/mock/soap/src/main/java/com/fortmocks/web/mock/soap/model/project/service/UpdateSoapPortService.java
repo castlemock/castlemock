@@ -44,7 +44,7 @@ public class UpdateSoapPortService extends AbstractSoapProjectService implements
         final UpdateSoapPortInput input = serviceTask.getInput();
         final SoapPortDto updatedSoapPort = input.getUpdatedSoapPort();
         final SoapPort soapPort = findSoapPortType(input.getSoapProjectId(), input.getSoapPortId());
-        soapPort.setUrlPath(updatedSoapPort.getUrlPath());
+        soapPort.setUri(updatedSoapPort.getUri());
         save(input.getSoapProjectId());
         return createServiceResult(new UpdateSoapPortOutput(updatedSoapPort));
     }

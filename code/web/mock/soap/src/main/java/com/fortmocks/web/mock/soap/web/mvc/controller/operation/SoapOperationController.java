@@ -80,7 +80,7 @@ public class SoapOperationController extends AbstractSoapViewController {
         final ReadSoapEventsByOperationIdOutput readSoapEventsByOperationIdOutput = serviceProcessor.process(new ReadSoapEventsByOperationIdInput(soapOperationId));
 
         final String protocol = getProtocol(request);
-        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUrlPath());
+        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUri());
         soapOperation.setInvokeAddress(invokeAddress);
 
         final ModelAndView model = createPartialModelAndView(PAGE);
