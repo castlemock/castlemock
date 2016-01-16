@@ -36,7 +36,7 @@ public class AbstractRestEventService extends AbstractEventService<RestEvent, Re
     public List<RestEventDto> findEventsByMethodId(String restMethodId) {
         final List<RestEvent> events = new ArrayList<RestEvent>();
         for(RestEvent event : findAllTypes()){
-            if(event.getRestMethodId().equals(restMethodId)){
+            if(event.getMethodId().equals(restMethodId)){
                 events.add(event);
             }
         }

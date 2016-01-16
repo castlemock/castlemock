@@ -153,7 +153,7 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
      */
     @Override
     public String generateResourceLink(RestEventDto restEventDto) {
-        return SLASH + WEB + SLASH + REST + SLASH + PROJECT + SLASH + restEventDto.getRestProjectId() + SLASH + APPLICATION + SLASH + restEventDto.getRestApplicationId() + SLASH + RESOURCE + SLASH + restEventDto.getRestResourceId() + SLASH + METHOD + SLASH + restEventDto.getRestMethodId();
+        return SLASH + WEB + SLASH + REST + SLASH + PROJECT + SLASH + restEventDto.getProjectId() + SLASH + APPLICATION + SLASH + restEventDto.getApplicationId() + SLASH + RESOURCE + SLASH + restEventDto.getResourceId() + SLASH + METHOD + SLASH + restEventDto.getMethodId();
     }
 
 }

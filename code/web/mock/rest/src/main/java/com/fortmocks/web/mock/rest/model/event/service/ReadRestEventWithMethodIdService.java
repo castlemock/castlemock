@@ -46,7 +46,7 @@ public class ReadRestEventWithMethodIdService extends AbstractRestEventService i
         final ReadRestEventWithMethodIdInput input = serviceTask.getInput();
         final List<RestEvent> events = new ArrayList<RestEvent>();
         for(RestEvent event : findAllTypes()){
-            if(event.getRestMethodId().equals(input.getRestMethodId())){
+            if(event.getMethodId().equals(input.getRestMethodId())){
                 events.add(event);
             }
         }

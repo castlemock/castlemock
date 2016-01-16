@@ -30,58 +30,58 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class RestEvent extends Event {
 
-    private RestRequestDto restRequest;
-    private RestResponseDto restResponse;
-    private String restProjectId;
-    private String restApplicationId;
-    private String restResourceId;
-    private String restMethodId;
+    private RestRequestDto request;
+    private RestResponseDto response;
+    private String projectId;
+    private String applicationId;
+    private String resourceId;
+    private String methodId;
 
-    public RestRequestDto getRestRequest() {
-        return restRequest;
+    public RestRequestDto getRequest() {
+        return request;
     }
 
-    public void setRestRequest(RestRequestDto restRequest) {
-        this.restRequest = restRequest;
+    public void setRequest(RestRequestDto request) {
+        this.request = request;
     }
 
-    public RestResponseDto getRestResponse() {
-        return restResponse;
+    public RestResponseDto getResponse() {
+        return response;
     }
 
-    public void setRestResponse(RestResponseDto restResponse) {
-        this.restResponse = restResponse;
+    public void setResponse(RestResponseDto response) {
+        this.response = response;
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 
-    public String getRestResourceId() {
-        return restResourceId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
     }
 
-    public String getRestMethodId() {
-        return restMethodId;
+    public String getMethodId() {
+        return methodId;
     }
 
-    public void setRestMethodId(String restMethodId) {
-        this.restMethodId = restMethodId;
+    public void setMethodId(String methodId) {
+        this.methodId = methodId;
     }
 }

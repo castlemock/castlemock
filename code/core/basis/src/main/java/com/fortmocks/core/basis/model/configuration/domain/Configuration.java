@@ -30,7 +30,7 @@ public class Configuration {
 
     private String key;
     private String value;
-    private ConfigurationType configurationType;
+    private ConfigurationType type;
 
     /**
      * Returns the identifier for the configuration
@@ -71,16 +71,16 @@ public class Configuration {
      * @return The configuration type
      */
     @XmlElement
-    public ConfigurationType getConfigurationType() {
-        return configurationType;
+    public ConfigurationType getType() {
+        return type;
     }
 
     /**
      * Sets the configuration type
-     * @param configurationType The new configuration type
+     * @param type The new configuration type
      */
-    public void setConfigurationType(ConfigurationType configurationType) {
-        this.configurationType = configurationType;
+    public void setType(ConfigurationType type) {
+        this.type = type;
     }
 
 }

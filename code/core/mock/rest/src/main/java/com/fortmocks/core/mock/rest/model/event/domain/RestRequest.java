@@ -32,7 +32,7 @@ public class RestRequest {
     private String body;
     private String contentType;
     private String uri;
-    private RestMethodType restMethodType;
+    private RestMethodType methodType;
     private String serviceName;
     private Map<String, String> parameters;
 
@@ -64,12 +64,12 @@ public class RestRequest {
     }
 
     @XmlElement
-    public RestMethodType getRestMethodType() {
-        return restMethodType;
+    public RestMethodType getMethodType() {
+        return methodType;
     }
 
-    public void setRestMethodType(RestMethodType restMethodType) {
-        this.restMethodType = restMethodType;
+    public void setMethodType(RestMethodType methodType) {
+        this.methodType = methodType;
     }
 
     @XmlElement

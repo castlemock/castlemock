@@ -31,7 +31,7 @@ public class ConfigurationDtoGenerator {
 
     public static ConfigurationDto generateConfigurationGroup(){
         final ConfigurationDto configurationDto = new ConfigurationDto();
-        configurationDto.setConfigurationType(ConfigurationType.STRING);
+        configurationDto.setType(ConfigurationType.STRING);
         configurationDto.setKey("Key");
         configurationDto.setValue("Value");
         return configurationDto;

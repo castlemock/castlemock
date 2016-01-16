@@ -35,8 +35,8 @@ public class ConfigurationDto {
     @Mapping("value")
     private String value;
 
-    @Mapping("configurationType")
-    private ConfigurationType configurationType;
+    @Mapping("type")
+    private ConfigurationType type;
 
     /**
      * Returns the identifier for the configuration
@@ -74,15 +74,15 @@ public class ConfigurationDto {
      * Returns the configuration type
      * @return The configuration type
      */
-    public ConfigurationType getConfigurationType() {
-        return configurationType;
+    public ConfigurationType getType() {
+        return type;
     }
 
     /**
      * Sets the configuration type
-     * @param configurationType The new configuration type
+     * @param type The new configuration type
      */
-    public void setConfigurationType(ConfigurationType configurationType) {
-        this.configurationType = configurationType;
+    public void setType(ConfigurationType type) {
+        this.type = type;
     }
 }

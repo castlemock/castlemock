@@ -65,7 +65,7 @@ public class ReadAllConfigurationGroupsServiceTest {
         Configuration configuration = new Configuration();
         configuration.setKey("Key");
         configuration.setValue("Value");
-        configuration.setConfigurationType(ConfigurationType.BOOLEAN);
+        configuration.setType(ConfigurationType.BOOLEAN);
         configurationGroup.getConfigurations().add(configuration);
         configurationGroups.add(configurationGroup);
 
@@ -83,7 +83,7 @@ public class ReadAllConfigurationGroupsServiceTest {
         Assert.assertEquals(returnedConfigurationGroup.getName(), configurationGroup.getName());
         Assert.assertEquals(returnedConfigurationGroup.getConfigurations().size(), configurationGroup.getConfigurations().size());
         final ConfigurationDto returnedConfiguration = returnedConfigurationGroup.getConfigurations().get(0);
-        Assert.assertEquals(returnedConfiguration.getConfigurationType(), configuration.getConfigurationType());
+        Assert.assertEquals(returnedConfiguration.getType(), configuration.getType());
         Assert.assertEquals(returnedConfiguration.getKey(), configuration.getKey());
         Assert.assertEquals(returnedConfiguration.getValue(), configuration.getValue());
     }

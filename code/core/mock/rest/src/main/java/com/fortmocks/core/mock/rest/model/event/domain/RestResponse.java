@@ -29,7 +29,7 @@ public class RestResponse {
     private String body;
     private String mockResponseName;
     private Integer httpStatusCode;
-    private String restContentType;
+    private String contentType;
 
     @XmlElement
     public String getBody() {
@@ -59,11 +59,11 @@ public class RestResponse {
     }
 
     @XmlElement
-    public String getRestContentType() {
-        return restContentType;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setRestContentType(String restContentType) {
-        this.restContentType = restContentType;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

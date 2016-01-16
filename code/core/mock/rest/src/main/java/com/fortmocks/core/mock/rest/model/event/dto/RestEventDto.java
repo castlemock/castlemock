@@ -27,23 +27,23 @@ import java.util.Date;
  */
 public class RestEventDto extends EventDto {
 
-    @Mapping("restRequest")
-    private RestRequestDto restRequest;
+    @Mapping("request")
+    private RestRequestDto request;
 
-    @Mapping("restResponse")
-    private RestResponseDto restResponse;
+    @Mapping("response")
+    private RestResponseDto response;
 
-    @Mapping("restProjectId")
-    private String restProjectId;
+    @Mapping("projectId")
+    private String projectId;
 
-    @Mapping("restApplicationId")
-    private String restApplicationId;
+    @Mapping("applicationId")
+    private String applicationId;
 
-    @Mapping("restResourceId")
-    private String restResourceId;
+    @Mapping("resourceId")
+    private String resourceId;
 
-    @Mapping("restMethodId")
-    private String restMethodId;
+    @Mapping("methodId")
+    private String methodId;
 
     /**
      * Default constructor for the REST event DTO
@@ -60,19 +60,19 @@ public class RestEventDto extends EventDto {
 
     /**
      * Constructor for the REST event DTO
-     * @param restRequest The REST request that the event is representing
-     * @param restProjectId The project id that the event belongs to
-     * @param restApplicationId The application id that the event belongs to
-     * @param restResourceId The resource id that the event belongs to
-     * @param restMethodId The id of the REST operation that is affected by the provided REST request
+     * @param request The REST request that the event is representing
+     * @param projectId The project id that the event belongs to
+     * @param applicationId The application id that the event belongs to
+     * @param resourceId The resource id that the event belongs to
+     * @param methodId The id of the REST operation that is affected by the provided REST request
      */
-    public RestEventDto(final String resourceName, final RestRequestDto restRequest, final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId) {
+    public RestEventDto(final String resourceName, final RestRequestDto request, final String projectId, final String applicationId, final String resourceId, final String methodId) {
         super(resourceName);
-        this.restRequest = restRequest;
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
-        this.restResourceId = restResourceId;
-        this.restMethodId = restMethodId;
+        this.request = request;
+        this.projectId = projectId;
+        this.applicationId = applicationId;
+        this.resourceId = resourceId;
+        this.methodId = methodId;
     }
 
     /**
@@ -81,55 +81,55 @@ public class RestEventDto extends EventDto {
      * @param restResponse
      */
     public void finish(final RestResponseDto restResponse) {
-        this.restResponse = restResponse;
+        this.response = restResponse;
         setEndDate(new Date());
     }
 
-    public RestRequestDto getRestRequest() {
-        return restRequest;
+    public RestRequestDto getRequest() {
+        return request;
     }
 
-    public void setRestRequest(RestRequestDto restRequest) {
-        this.restRequest = restRequest;
+    public void setRequest(RestRequestDto request) {
+        this.request = request;
     }
 
-    public RestResponseDto getRestResponse() {
-        return restResponse;
+    public RestResponseDto getResponse() {
+        return response;
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 
-    public void setRestResponse(RestResponseDto restResponse) {
-        this.restResponse = restResponse;
+    public void setResponse(RestResponseDto response) {
+        this.response = response;
     }
 
-    public String getRestResourceId() {
-        return restResourceId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
     }
 
-    public String getRestMethodId() {
-        return restMethodId;
+    public String getMethodId() {
+        return methodId;
     }
 
-    public void setRestMethodId(String restMethodId) {
-        this.restMethodId = restMethodId;
+    public void setMethodId(String methodId) {
+        this.methodId = methodId;
     }
 }

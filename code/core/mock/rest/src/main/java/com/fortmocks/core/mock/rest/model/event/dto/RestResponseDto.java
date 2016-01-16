@@ -34,8 +34,8 @@ public class RestResponseDto {
     @Mapping("httpStatusCode")
     private Integer httpStatusCode;
 
-    @Mapping("restContentType")
-    private String restContentType;
+    @Mapping("contentType")
+    private String contentType;
 
     public String getBody() {
         return body;
@@ -61,11 +61,11 @@ public class RestResponseDto {
         this.httpStatusCode = httpStatusCode;
     }
 
-    public String getRestContentType() {
-        return restContentType;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setRestContentType(String restContentType) {
-        this.restContentType = restContentType;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

@@ -83,7 +83,7 @@ public class ConfigurationRepositoryImpl extends RepositoryImpl<ConfigurationGro
         Preconditions.checkArgument(!configurationGroup.getName().isEmpty(), "Configuration group name cannot be empty");
 
         for(Configuration configuration : configurationGroup.getConfigurations()){
-            Preconditions.checkNotNull(configuration.getConfigurationType());
+            Preconditions.checkNotNull(configuration.getType());
             Preconditions.checkNotNull(configuration.getKey());
             Preconditions.checkNotNull(configuration.getValue());
 

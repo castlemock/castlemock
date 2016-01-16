@@ -34,7 +34,7 @@ public class RestEventDtoGenerator {
     public static RestEventDto generateRestEventDto(){
         final RestEventDto eventDto = new RestEventDto();
         eventDto.setId("REST PROJECT");
-        eventDto.setRestMethodId("REST method id");
+        eventDto.setMethodId("REST method id");
         eventDto.setEndDate(new Date());
         eventDto.setStartDate(new Date());
 
@@ -48,12 +48,12 @@ public class RestEventDtoGenerator {
 
         RestResponseDto restResponseDto = new RestResponseDto();
         restResponseDto.setHttpStatusCode(200);
-        restResponseDto.setRestContentType("application/json");
+        restResponseDto.setContentType("application/json");
         restResponseDto.setBody("REST response body");
         restResponseDto.setMockResponseName("Mock response name");
 
-        eventDto.setRestRequest(restRequestDto);
-        eventDto.setRestResponse(restResponseDto);
+        eventDto.setRequest(restRequestDto);
+        eventDto.setResponse(restResponseDto);
 
         return eventDto;
     }

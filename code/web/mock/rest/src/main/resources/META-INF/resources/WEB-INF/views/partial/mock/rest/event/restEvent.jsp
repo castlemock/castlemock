@@ -35,11 +35,11 @@
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.event.column.request.uri"/></label></td>
-            <td class="column2"><label path="name">${event.restRequest.uri}</label></td>
+            <td class="column2"><label path="name">${event.request.uri}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.event.column.request.methodtype"/></label></td>
-            <td class="column2"><label path="name">${event.restRequest.restMethodType}</label></td>
+            <td class="column2"><label path="name">${event.request.methodType}</label></td>
         </tr>
     </table>
 </div>
@@ -49,11 +49,11 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.event.column.request.contenttype"/></label></td>
-            <td class="column2"><label path="name">${event.restRequest.contentType}</label></td>
+            <td class="column2"><label path="name">${event.request.contentType}</label></td>
         </tr>
     </table>
     <div class="eventMessage">
-        <textarea id="requestBody" readonly><c:out value="${event.restRequest.body}"/></textarea>
+        <textarea id="requestBody" readonly><c:out value="${event.request.body}"/></textarea>
     </div>
 </div>
 
@@ -62,15 +62,15 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.event.column.response.statuscode"/></label></td>
-            <td class="column2"><label path="name">${event.restResponse.httpStatusCode}</label></td>
+            <td class="column2"><label path="name">${event.response.httpStatusCode}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.event.column.response.contenttype"/></label></td>
-            <td class="column2"><label path="name">${event.restResponse.restContentType.contentType}</label></td>
+            <td class="column2"><label path="name">${event.response.contentType.contentType}</label></td>
         </tr>
     </table>
     <div class="eventMessage">
-        <textarea id="responseBody" readonly><c:out value="${event.restResponse.body}"/></textarea>
+        <textarea id="responseBody" readonly><c:out value="${event.response.body}"/></textarea>
     </div>
 </div>
 

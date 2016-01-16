@@ -65,7 +65,7 @@ public class UpdateAllConfigurationGroupsServiceTest {
         final ConfigurationDto configuration = new ConfigurationDto();
         configuration.setKey("Key");
         configuration.setValue("New value");
-        configuration.setConfigurationType(ConfigurationType.BOOLEAN);
+        configuration.setType(ConfigurationType.BOOLEAN);
         configurationGroup.getConfigurations().add(configuration);
         configurationGroups.add(configurationGroup);
 
@@ -77,7 +77,7 @@ public class UpdateAllConfigurationGroupsServiceTest {
         final Configuration sourceConfiguration = new Configuration();
         sourceConfiguration.setKey("Key");
         sourceConfiguration.setValue("Old value");
-        sourceConfiguration.setConfigurationType(ConfigurationType.BOOLEAN);
+        sourceConfiguration.setType(ConfigurationType.BOOLEAN);
         sourceConfigurationGroup.getConfigurations().add(sourceConfiguration);
         sourceConfigurationGroups.add(sourceConfigurationGroup);
 
@@ -88,7 +88,7 @@ public class UpdateAllConfigurationGroupsServiceTest {
         final Configuration updatedConfiguration = new Configuration();
         updatedConfiguration.setKey("Key");
         updatedConfiguration.setValue("New value");
-        updatedConfiguration.setConfigurationType(ConfigurationType.BOOLEAN);
+        updatedConfiguration.setType(ConfigurationType.BOOLEAN);
         updatedConfigurationGroup.getConfigurations().add(updatedConfiguration);
 
         Mockito.when(repository.findAll()).thenReturn(sourceConfigurationGroups);
@@ -110,7 +110,7 @@ public class UpdateAllConfigurationGroupsServiceTest {
         Assert.assertEquals(updatedConfigurationGroup.getConfigurations().size(), returnedConfigurationGroup.getConfigurations().size());
         Assert.assertEquals(1, returnedConfigurationGroup.getConfigurations().size());
         ConfigurationDto returnedConfiguration = returnedConfigurationGroup.getConfigurations().get(0);
-        Assert.assertEquals(returnedConfiguration.getConfigurationType(), updatedConfiguration.getConfigurationType());
+        Assert.assertEquals(returnedConfiguration.getType(), updatedConfiguration.getType());
         Assert.assertEquals(returnedConfiguration.getKey(), updatedConfiguration.getKey());
         Assert.assertEquals(returnedConfiguration.getValue(), updatedConfiguration.getValue());
         Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(ConfigurationGroup.class));

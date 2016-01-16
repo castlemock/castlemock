@@ -235,7 +235,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             response.setHttpStatusCode(connection.getResponseCode());
             String contentType = connection.getHeaderField(CONTENT_TYPE);
             if(contentType != null){
-                response.setRestContentType(contentType);
+                response.setContentType(contentType);
             }
 
             return response;
@@ -278,7 +278,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         mockResponse.setRestMockResponseStatus(RestMockResponseStatus.ENABLED);
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
-        mockResponse.setRestContentType(response.getRestContentType());
+        mockResponse.setRestContentType(response.getContentType());
         serviceProcessor.process(new CreateRecordedRestMockResponseInput(restMethod.getId(), mockResponse));
         return response;
     }
@@ -336,7 +336,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
-        response.setRestContentType(mockResponse.getRestContentType());
+        response.setContentType(mockResponse.getRestContentType());
         httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
         httpServletResponse.setContentType(mockResponse.getRestContentType());
         httpServletResponse.setHeader(CONTENT_TYPE, mockResponse.getRestContentType());
