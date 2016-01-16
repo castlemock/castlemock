@@ -16,7 +16,7 @@
 
 package com.fortmocks.core.mock.soap.model.event.dto;
 
-import com.fortmocks.core.basis.model.http.HttpMethod;
+import com.fortmocks.core.basis.model.http.domain.HttpMethod;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;
 import org.dozer.Mapping;
 

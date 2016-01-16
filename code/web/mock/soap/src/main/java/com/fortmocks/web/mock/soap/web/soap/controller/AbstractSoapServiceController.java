@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.mock.soap.web.soap.controller;
 
-import com.fortmocks.core.basis.model.http.HttpMethod;
+import com.fortmocks.core.basis.model.http.domain.HttpMethod;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapRequestDto;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapResponseDto;
