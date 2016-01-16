@@ -30,10 +30,6 @@
                 <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.createrestmockresponse.label.httpstatuscode"/></form:label></td>
                 <td class="column2"><form:input path="httpStatusCode" id="restMockResponseHttpResponseCodeInput" /></td>
             </tr>
-            <tr>
-                <td class="column1"><spring:message code="rest.createrestmockresponse.label.restcontenttype"/></td>
-                <td class="column2"><form:input path="contentType" id="restMockResponseHttpContentTypeInput"/></td>
-            </tr>
         </table>
     </div>
 

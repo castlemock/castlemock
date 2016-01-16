@@ -34,23 +34,29 @@
 
 <div>
     <h2 class="decorated"><span><spring:message code="soap.event.header.request"/></span></h2>
+    <h3><span><spring:message code="soap.event.header.body"/></span></h3>
     <div class="eventMessage">
         <textarea id="requestBody" readonly><c:out value="${event.request.body}"/></textarea>
     </div>
-    <div class="table-frame">
-        <table class="entityTable">
-            <tr>
-                <th><spring:message code="soap.event.column.headername"/></th>
-                <th><spring:message code="soap.event.column.headervalue"/></th>
-            </tr>
-            <c:forEach items="${event.request.httpHeaders}" var="httpHeader" varStatus="loopStatus">
-                <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
-                    <td>${httpHeader.name}</td>
-                    <td>${httpHeader.value}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </div>
+    <c:choose>
+        <c:when test="${event.request.httpHeaders.size() > 0}">
+            <h3><span><spring:message code="soap.event.header.headers"/></span></h3>
+            <div class="table-frame">
+                <table class="entityTable">
+                    <tr>
+                        <th><spring:message code="soap.event.column.headername"/></th>
+                        <th><spring:message code="soap.event.column.headervalue"/></th>
+                    </tr>
+                    <c:forEach items="${event.request.httpHeaders}" var="httpHeader" varStatus="loopStatus">
+                        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                            <td>${httpHeader.name}</td>
+                            <td>${httpHeader.value}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </c:when>
+    </c:choose>
 </div>
 
 <div>
@@ -61,22 +67,29 @@
             <td class="column2"><label path="name">${event.response.httpStatusCode}</label></td>
         </tr>
     </table>
+    <h3><span><spring:message code="soap.event.header.body"/></span></h3>
     <div class="eventMessage">
         <textarea id="responseBody" readonly><c:out value="${event.response.body}"/></textarea>
     </div>
-    <div class="table-frame">
-        <table class="entityTable">
-            <tr>
-                <th><spring:message code="soap.event.column.headername"/></th>
-                <th><spring:message code="soap.event.column.headervalue"/></th>
-            </tr>
-            <c:forEach items="${event.response.httpHeaders}" var="httpHeader" varStatus="loopStatus">
-                <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
-                    <td>${httpHeader.name}</td>
-                    <td>${httpHeader.value}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </div>
+
+    <c:choose>
+        <c:when test="${event.response.httpHeaders.size() > 0}">
+            <h3><span><spring:message code="soap.event.header.headers"/></span></h3>
+            <div class="table-frame">
+                <table class="entityTable">
+                    <tr>
+                        <th><spring:message code="soap.event.column.headername"/></th>
+                        <th><spring:message code="soap.event.column.headervalue"/></th>
+                    </tr>
+                    <c:forEach items="${event.response.httpHeaders}" var="httpHeader" varStatus="loopStatus">
+                        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                            <td>${httpHeader.name}</td>
+                            <td>${httpHeader.value}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </c:when>
+    </c:choose>
 </div>
 
