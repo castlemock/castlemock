@@ -62,11 +62,11 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.event.column.response.statuscode"/></label></td>
-            <td class="column2"><label path="name">${event.response.httpStatusCode}</label></td>
+            <td class="column2"><label path="name">${event.response.statusCode}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.event.column.response.contenttype"/></label></td>
-            <td class="column2"><label path="name">${event.response.contentType.contentType}</label></td>
+            <td class="column2"><label path="name">${event.response.contentType}</label></td>
         </tr>
     </table>
     <div class="eventMessage">

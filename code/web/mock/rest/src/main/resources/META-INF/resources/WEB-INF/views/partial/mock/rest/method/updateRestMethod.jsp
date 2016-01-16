@@ -28,9 +28,9 @@
         <tr>
             <td class="column1"><spring:message code="rest.updatemethod.label.methodtype"/></td>
             <td>
-                <form:select path="restMethodType">
-                    <c:forEach items="${restMethodTypes}" var="restMethodType">
-                        <option value="${restMethodType}">${restMethodType}</option>
+                <form:select path="type">
+                    <c:forEach items="${restMethodTypes}" var="type">
+                        <option value="${type}">${type}</option>
                     </c:forEach>
                 </form:select>
             </td>
@@ -38,7 +38,7 @@
         <tr>
             <td class="column1"><spring:message code="rest.updatemethod.label.methodstatus"/></td>
             <td>
-                <form:select path="restMethodStatus">
+                <form:select path="status">
                     <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
                         <option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></option>
                     </c:forEach>
@@ -48,7 +48,7 @@
         <tr>
             <td class="column1"><spring:message code="rest.updatemethod.label.responsestrategy"/></td>
             <td>
-                <form:select path="restResponseStrategy">
+                <form:select path="responseStrategy">
                     <c:forEach items="${restResponsestrategies}" var="restResponseStrategy">
                         <option value="${restResponseStrategy}"><spring:message code="rest.type.responsestrategy.${restResponseStrategy}"/></option>
                     </c:forEach>

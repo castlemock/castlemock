@@ -68,31 +68,31 @@ public class SearchRestProjectServiceTest {
         restProject.setDescription("Project Description");
         restProject.setName("Rest project");
         restProject.setId("1");
-        restProject.setRestApplications(new ArrayList<RestApplication>());
+        restProject.setApplications(new ArrayList<RestApplication>());
 
         final RestApplication restApplication = new RestApplication();
         restApplication.setName("Rest application");
         restApplication.setId("2");
-        restApplication.setRestResources(new ArrayList<RestResource>());
+        restApplication.setResources(new ArrayList<RestResource>());
 
         final RestResource restResource = new RestResource();
         restResource.setName("Rest resource");
         restResource.setId("3");
-        restResource.setRestMethods(new ArrayList<RestMethod>());
+        restResource.setMethods(new ArrayList<RestMethod>());
 
         final RestMethod restMethod = new RestMethod();
         restMethod.setName("Rest method");
         restMethod.setId("4");
-        restMethod.setRestMockResponses(new ArrayList<RestMockResponse>());
+        restMethod.setMockResponses(new ArrayList<RestMockResponse>());
 
         final RestMockResponse restMockResponse = new RestMockResponse();
         restMockResponse.setName("Rest mock response");
         restMockResponse.setId("5");
 
-        restProject.getRestApplications().add(restApplication);
-        restApplication.getRestResources().add(restResource);
-        restResource.getRestMethods().add(restMethod);
-        restMethod.getRestMockResponses().add(restMockResponse);
+        restProject.getApplications().add(restApplication);
+        restApplication.getResources().add(restResource);
+        restResource.getMethods().add(restMethod);
+        restMethod.getMockResponses().add(restMockResponse);
 
         restProjects.add(restProject);
 

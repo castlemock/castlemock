@@ -108,7 +108,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final Map<String, String> parameters = extractParameters(httpServletRequest);
 
         request.setContentType(httpServletRequest.getContentType());
-        request.setRestMethodType(restMethodType);
+        request.setMethodType(restMethodType);
         request.setBody(body);
         request.setUri(restResourceUri);
         request.setParameters(parameters);
@@ -174,13 +174,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
         RestResponseDto response = null;
         try {
             event = new RestEventDto(restMethod.getName(), restRequest, projectId, applicationId, resourceId, restMethod.getId());
-            if (RestMethodStatus.DISABLED.equals(restMethod.getRestMethodStatus())) {
+            if (RestMethodStatus.DISABLED.equals(restMethod.getStatus())) {
                 throw new RestException("The requested REST method, " + restMethod.getName() + ", is disabled");
-            } else if (RestMethodStatus.FORWARDED.equals(restMethod.getRestMethodStatus())) {
+            } else if (RestMethodStatus.FORWARDED.equals(restMethod.getStatus())) {
                 response = forwardRequest(restRequest, restMethod);
-            } else if (RestMethodStatus.RECORDING.equals(restMethod.getRestMethodStatus())) {
+            } else if (RestMethodStatus.RECORDING.equals(restMethod.getStatus())) {
                 response = forwardRequestAndRecordResponse(restRequest, restMethod);
-            } else if (RestMethodStatus.RECORDING.equals(restMethod.getRestMethodStatus())) {
+            } else if (RestMethodStatus.RECORDING.equals(restMethod.getStatus())) {
                 response = forwardRequestAndRecordResponseOnce(restRequest, projectId, applicationId, resourceId, restMethod);
             } else { // Status.MOCKED
                 response = mockResponse(restMethod, httpServletResponse);
@@ -210,7 +210,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             final URL url = new URL(restMethod.getForwardedEndpoint() + restRequest.getUri() + parameterUri);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
-            connection.setRequestMethod(restRequest.getRestMethodType().name());
+            connection.setRequestMethod(restRequest.getMethodType().name());
             connection.setRequestProperty(CONTENT_TYPE, restRequest.getContentType());
             outputStream = connection.getOutputStream();
             outputStream.write(restRequest.getBody().getBytes());
@@ -232,7 +232,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             }
             response.setBody(stringBuilder.toString());
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
-            response.setHttpStatusCode(connection.getResponseCode());
+            response.setStatusCode(connection.getResponseCode());
             String contentType = connection.getHeaderField(CONTENT_TYPE);
             if(contentType != null){
                 response.setContentType(contentType);
@@ -275,10 +275,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final RestMockResponseDto mockResponse = new RestMockResponseDto();
         final Date date = new Date();
         mockResponse.setBody(response.getBody());
-        mockResponse.setRestMockResponseStatus(RestMockResponseStatus.ENABLED);
+        mockResponse.setStatus(RestMockResponseStatus.ENABLED);
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
-        mockResponse.setHttpStatusCode(response.getHttpStatusCode());
-        mockResponse.setRestContentType(response.getContentType());
+        mockResponse.setStatusCode(response.getStatusCode());
+        mockResponse.setContentType(response.getContentType());
         serviceProcessor.process(new CreateRecordedRestMockResponseInput(restMethod.getId(), mockResponse));
         return response;
     }
@@ -293,7 +293,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      */
     protected RestResponseDto forwardRequestAndRecordResponseOnce(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
         final RestResponseDto response = forwardRequestAndRecordResponse(restRequest, restMethod);
-        restMethod.setRestMethodStatus(RestMethodStatus.MOCKED);
+        restMethod.setStatus(RestMethodStatus.MOCKED);
         serviceProcessor.process(new UpdateRestMethodInput(projectId, applicationId, resourceId, restMethod.getId(), restMethod));
         return response;
     }
@@ -307,8 +307,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
      */
     protected RestResponseDto mockResponse(final RestMethodDto restMethod, final HttpServletResponse httpServletResponse){
         final List<RestMockResponseDto> mockResponses = new ArrayList<RestMockResponseDto>();
-        for(RestMockResponseDto mockResponse : restMethod.getRestMockResponses()){
-            if(mockResponse.getRestMockResponseStatus().equals(RestMockResponseStatus.ENABLED)){
+        for(RestMockResponseDto mockResponse : restMethod.getMockResponses()){
+            if(mockResponse.getStatus().equals(RestMockResponseStatus.ENABLED)){
                 mockResponses.add(mockResponse);
             }
         }
@@ -316,10 +316,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
         RestMockResponseDto mockResponse = null;
         if(mockResponses.isEmpty()){
             throw new RestException("No mocked response created for operation " + restMethod.getName());
-        } else if(restMethod.getRestResponseStrategy().equals(RestResponseStrategy.RANDOM)){
+        } else if(restMethod.getResponseStrategy().equals(RestResponseStrategy.RANDOM)){
             final Integer responseIndex = RANDOM.nextInt(mockResponses.size());
             mockResponse = mockResponses.get(responseIndex);
-        } else if(restMethod.getRestResponseStrategy().equals(RestResponseStrategy.SEQUENCE)){
+        } else if(restMethod.getResponseStrategy().equals(RestResponseStrategy.SEQUENCE)){
             Integer currentSequenceNumber = restMethod.getCurrentResponseSequenceIndex();
             if(currentSequenceNumber >= mockResponses.size()){
                 currentSequenceNumber = 0;
@@ -335,11 +335,11 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final RestResponseDto response = new RestResponseDto();
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
-        response.setHttpStatusCode(mockResponse.getHttpStatusCode());
-        response.setContentType(mockResponse.getRestContentType());
-        httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
-        httpServletResponse.setContentType(mockResponse.getRestContentType());
-        httpServletResponse.setHeader(CONTENT_TYPE, mockResponse.getRestContentType());
+        response.setStatusCode(mockResponse.getStatusCode());
+        response.setContentType(mockResponse.getContentType());
+        httpServletResponse.setStatus(mockResponse.getStatusCode());
+        httpServletResponse.setContentType(mockResponse.getContentType());
+        httpServletResponse.setHeader(CONTENT_TYPE, mockResponse.getContentType());
         return response;
     }
 }

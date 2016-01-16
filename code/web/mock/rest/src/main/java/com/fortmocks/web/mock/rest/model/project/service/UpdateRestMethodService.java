@@ -45,9 +45,9 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
         final RestMethodDto updatedRestMethod = input.getRestMethod();
         final RestMethod restMethod = findRestMethodType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId());
         restMethod.setName(updatedRestMethod.getName());
-        restMethod.setRestMethodType(updatedRestMethod.getRestMethodType());
-        restMethod.setRestResponseStrategy(updatedRestMethod.getRestResponseStrategy());
-        restMethod.setRestMethodStatus(updatedRestMethod.getRestMethodStatus());
+        restMethod.setType(updatedRestMethod.getType());
+        restMethod.setResponseStrategy(updatedRestMethod.getResponseStrategy());
+        restMethod.setStatus(updatedRestMethod.getStatus());
         restMethod.setForwardedEndpoint(updatedRestMethod.getForwardedEndpoint());
         save(input.getRestProjectId());
         return createServiceResult(new UpdateRestMethodOutput(updatedRestMethod));

@@ -46,7 +46,7 @@ public class ReadRestResourceWithUriService extends AbstractRestProjectService i
         final RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), input.getRestApplicationId());
         final String resourceUri = input.getRestResourceUri();
         RestResourceDto restResourceDto = null;
-        for(RestResource restResource : restApplication.getRestResources()){
+        for(RestResource restResource : restApplication.getResources()){
             if(resourceUri.equalsIgnoreCase(restResource.getUri())){
                 restResourceDto = restResource != null ? mapper.map(restResource, RestResourceDto.class) : null;
             }

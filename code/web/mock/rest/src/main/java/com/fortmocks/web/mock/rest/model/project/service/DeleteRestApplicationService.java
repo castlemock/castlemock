@@ -44,7 +44,7 @@ public class DeleteRestApplicationService extends AbstractRestProjectService imp
         final DeleteRestApplicationInput input = serviceTask.getInput();
         final RestProject restProject = findType(input.getRestProjectId());
         final RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), input.getRestApplicationId());
-        restProject.getRestApplications().remove(restApplication);
+        restProject.getApplications().remove(restApplication);
         save(input.getRestProjectId());
         return createServiceResult(new DeleteRestApplicationOutput());
     }

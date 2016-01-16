@@ -77,7 +77,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         Preconditions.checkNotNull(restProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(restApplicationId, "Application id cannot be null");
         final RestProject restProject = findType(restProjectId);
-        for(RestApplication restApplication : restProject.getRestApplications()){
+        for(RestApplication restApplication : restProject.getApplications()){
             if(restApplication.getId().equals(restApplicationId)){
                 return restApplication;
             }
@@ -88,7 +88,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected RestResource findRestResourceType(final String restProjectId, final String restApplicationId, final String restResourceId){
         Preconditions.checkNotNull(restResourceId, "Resource id cannot be null");
         final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
-        for(RestResource restResource : restApplication.getRestResources()){
+        for(RestResource restResource : restApplication.getResources()){
             if(restResource.getId().equals(restResourceId)){
                 return restResource;
             }
@@ -99,7 +99,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected RestMethod findRestMethodType(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId){
         Preconditions.checkNotNull(restMethodId, "Method id cannot be null");
         final RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
-        for(RestMethod restMethod : restResource.getRestMethods()){
+        for(RestMethod restMethod : restResource.getMethods()){
             if(restMethod.getId().equals(restMethodId)){
                 return restMethod;
             }
@@ -110,7 +110,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected RestMockResponse findRestMockResponseType(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId, final String restMockResponseId){
         Preconditions.checkNotNull(restMockResponseId, "Mock response id cannot be null");
         final RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
-        for(RestMockResponse restMockResponse : restMethod.getRestMockResponses()) {
+        for(RestMockResponse restMockResponse : restMethod.getMockResponses()) {
             if(restMockResponse.getId().equals(restMockResponseId)){
                 return restMockResponse;
             }
@@ -129,7 +129,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected RestResource findRestResourceType(final String restProjectId, final String restApplicationId, final String[] otherRestResourceUriParts) {
         final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
 
-        for(RestResource restResource : restApplication.getRestResources()){
+        for(RestResource restResource : restApplication.getResources()){
             final String[] restResourceUriParts = restResource.getUri().split(SLASH);
 
             if(compareRestResourceUri(restResourceUriParts, otherRestResourceUriParts)){
@@ -177,9 +177,9 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected RestMethod findRestMethodByRestMethodId(final String restMethodId) {
         Preconditions.checkNotNull(restMethodId, "REST method id cannot be null");
         for(RestProject restProject : findAllTypes()){
-            for(RestApplication restApplication : restProject.getRestApplications()){
-                for(RestResource restResource : restApplication.getRestResources()){
-                    for(RestMethod restMethod : restResource.getRestMethods())
+            for(RestApplication restApplication : restProject.getApplications()){
+                for(RestResource restResource : restApplication.getResources()){
+                    for(RestMethod restMethod : restResource.getMethods())
                         if(restMethod.getId().equals(restMethodId)){
                             return restMethod;
                         }
@@ -200,9 +200,9 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected String findRestProjectIdForRestMethod(final String restMethodId) {
         Preconditions.checkNotNull(restMethodId, "Method id cannot be null");
         for(RestProject restProject : findAllTypes()){
-            for(RestApplication restApplication : restProject.getRestApplications()){
-                for(RestResource restResource : restApplication.getRestResources()){
-                    for(RestMethod restMethod : restResource.getRestMethods())
+            for(RestApplication restApplication : restProject.getApplications()){
+                for(RestResource restResource : restApplication.getResources()){
+                    for(RestMethod restMethod : restResource.getMethods())
                         if(restMethod.getId().equals(restMethodId)){
                             return restProject.getId();
                         }
@@ -224,9 +224,9 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         for(RestMethodStatus restMethodStatus : RestMethodStatus.values()){
             statuses.put(restMethodStatus, 0);
         }
-        for(RestResourceDto restResource : restApplication.getRestResources()){
-            for(RestMethodDto restMethod : restResource.getRestMethods()){
-                RestMethodStatus restMethodStatus = restMethod.getRestMethodStatus();
+        for(RestResourceDto restResource : restApplication.getResources()){
+            for(RestMethodDto restMethod : restResource.getMethods()){
+                RestMethodStatus restMethodStatus = restMethod.getStatus();
                 statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
             }
 
@@ -247,8 +247,8 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
             statuses.put(restMethodStatus, 0);
         }
 
-        for(RestMethodDto restMethod : restResource.getRestMethods()){
-            RestMethodStatus restMethodStatus = restMethod.getRestMethodStatus();
+        for(RestMethodDto restMethod : restResource.getMethods()){
+            RestMethodStatus restMethodStatus = restMethod.getStatus();
             statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
         }
         return statuses;

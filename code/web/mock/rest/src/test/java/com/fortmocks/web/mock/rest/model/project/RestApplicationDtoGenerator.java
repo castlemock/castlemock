@@ -31,7 +31,7 @@ public class RestApplicationDtoGenerator {
         final RestApplicationDto restApplicationDto = new RestApplicationDto();
         restApplicationDto.setId("REST APPLICATION");
         restApplicationDto.setName("Rest application name");
-        restApplicationDto.setRestResources(new ArrayList<RestResourceDto>());
+        restApplicationDto.setResources(new ArrayList<RestResourceDto>());
         return restApplicationDto;
     }
 }

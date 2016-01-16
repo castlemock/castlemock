@@ -36,8 +36,8 @@ public class RestApplicationDto {
     @Mapping("name")
     private String name;
 
-    @Mapping("restResources")
-    private List<RestResourceDto> restResources = new LinkedList<RestResourceDto>();
+    @Mapping("resources")
+    private List<RestResourceDto> resources = new LinkedList<RestResourceDto>();
 
     private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
 
@@ -57,12 +57,12 @@ public class RestApplicationDto {
         this.name = name;
     }
 
-    public List<RestResourceDto> getRestResources() {
-        return restResources;
+    public List<RestResourceDto> getResources() {
+        return resources;
     }
 
-    public void setRestResources(List<RestResourceDto> restResources) {
-        this.restResources = restResources;
+    public void setResources(List<RestResourceDto> resources) {
+        this.resources = resources;
     }
 
     public Map<RestMethodStatus, Integer> getStatusCount() {

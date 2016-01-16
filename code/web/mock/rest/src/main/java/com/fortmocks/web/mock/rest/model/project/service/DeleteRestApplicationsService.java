@@ -46,7 +46,7 @@ public class DeleteRestApplicationsService extends AbstractRestProjectService im
         final RestProject restProject = findType(input.getRestProjectId());
         for(final RestApplicationDto restApplicationDto : input.getRestApplications()){
             final RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), restApplicationDto.getId());
-            restProject.getRestApplications().remove(restApplication);
+            restProject.getApplications().remove(restApplication);
         }
         save(input.getRestProjectId());
         return createServiceResult(new DeleteRestApplicationsOutput());

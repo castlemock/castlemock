@@ -46,7 +46,7 @@ public class CreateRestApplicationService extends AbstractRestProjectService imp
         final RestProject restProject = findType(input.getRestProjectId());
         final RestApplicationDto restApplication = input.getRestApplication();
         final RestApplication createdRestApplication = mapper.map(restApplication, RestApplication.class);
-        restProject.getRestApplications().add(createdRestApplication);
+        restProject.getApplications().add(createdRestApplication);
         save(input.getRestProjectId());
         return createServiceResult(new CreateRestApplicationOutput(mapper.map(createdRestApplication, RestApplicationDto.class)));
     }

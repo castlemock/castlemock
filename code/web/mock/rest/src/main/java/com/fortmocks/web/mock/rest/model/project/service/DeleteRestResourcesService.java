@@ -46,7 +46,7 @@ public class DeleteRestResourcesService extends AbstractRestProjectService imple
         final RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), input.getRestApplicationId());
         for(final RestResourceDto restResourceDto : input.getRestResources()){
             final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), restResourceDto.getId());
-            restApplication.getRestResources().remove(restResource);
+            restApplication.getResources().remove(restResource);
         }
 
         save(input.getRestProjectId());

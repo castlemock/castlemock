@@ -31,7 +31,7 @@ public class RestResourceDtoGenerator {
         final RestResourceDto restResourceDto = new RestResourceDto();
         restResourceDto.setId("REST Resource");
         restResourceDto.setName("Rest resource name");
-        restResourceDto.setRestMethods(new ArrayList<RestMethodDto>());
+        restResourceDto.setMethods(new ArrayList<RestMethodDto>());
         restResourceDto.setUri("URI");
         return restResourceDto;
     }

@@ -43,7 +43,7 @@ public class UpdateRestMethodsForwardedEndpointService extends AbstractRestProje
     public ServiceResult<UpdateRestMethodsForwardedEndpointOutput> process(final ServiceTask<UpdateRestMethodsForwardedEndpointInput> serviceTask) {
         final UpdateRestMethodsForwardedEndpointInput input = serviceTask.getInput();
         final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
-        for(RestMethod restMethod : restResource.getRestMethods()){
+        for(RestMethod restMethod : restResource.getMethods()){
             restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
         }
         save(input.getRestProjectId());

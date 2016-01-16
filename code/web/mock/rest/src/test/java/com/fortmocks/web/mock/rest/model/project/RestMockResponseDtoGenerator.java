@@ -31,8 +31,8 @@ public class RestMockResponseDtoGenerator {
         restMockResponseDto.setName("Rest mock response name");
         restMockResponseDto.setBody("Rest mock response body");
         restMockResponseDto.setId("REST MOCK RESPONSE");
-        restMockResponseDto.setRestMockResponseStatus(RestMockResponseStatus.ENABLED.ENABLED);
-        restMockResponseDto.setHttpStatusCode(200);
+        restMockResponseDto.setStatus(RestMockResponseStatus.ENABLED);
+        restMockResponseDto.setStatusCode(200);
         return restMockResponseDto;
     }
 }

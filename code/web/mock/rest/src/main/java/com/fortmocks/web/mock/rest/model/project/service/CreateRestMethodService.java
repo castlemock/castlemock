@@ -46,16 +46,16 @@ public class CreateRestMethodService extends AbstractRestProjectService implemen
     public ServiceResult<CreateRestMethodOutput> process(final ServiceTask<CreateRestMethodInput> serviceTask) {
         final CreateRestMethodInput input = serviceTask.getInput();
         final RestMethodDto restMethod = input.getRestMethod();
-        if(restMethod.getRestMethodStatus() == null){
-            restMethod.setRestMethodStatus(RestMethodStatus.MOCKED);
+        if(restMethod.getStatus() == null){
+            restMethod.setStatus(RestMethodStatus.MOCKED);
         }
-        if(restMethod.getRestResponseStrategy() == null){
-            restMethod.setRestResponseStrategy(RestResponseStrategy.RANDOM);
+        if(restMethod.getResponseStrategy() == null){
+            restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
         }
 
         final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
         final RestMethod createdRestMethod = mapper.map(restMethod, RestMethod.class);
-        restResource.getRestMethods().add(createdRestMethod);
+        restResource.getMethods().add(createdRestMethod);
         save(input.getRestProjectId());
         return createServiceResult(new CreateRestMethodOutput(mapper.map(createdRestMethod, RestMethodDto.class)));
     }

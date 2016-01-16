@@ -86,22 +86,22 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, Strin
      */
     @Override
     public RestProject save(final RestProject type) {
-        for(RestApplication restApplication : type.getRestApplications()){
+        for(RestApplication restApplication : type.getApplications()){
             if(restApplication.getId() == null){
                 String restApplicationId = generateId();
                 restApplication.setId(restApplicationId);
             }
-            for(RestResource restResource : restApplication.getRestResources()){
+            for(RestResource restResource : restApplication.getResources()){
                 if(restResource.getId() == null){
                     String restResourceId = generateId();
                     restResource.setId(restResourceId);
                 }
-                for(RestMethod restMethod : restResource.getRestMethods()){
+                for(RestMethod restMethod : restResource.getMethods()){
                     if(restMethod.getId() == null){
                         String restMethodId = generateId();
                         restMethod.setId(restMethodId);
                     }
-                    for(RestMockResponse restMockResponse : restMethod.getRestMockResponses()){
+                    for(RestMockResponse restMockResponse : restMethod.getMockResponses()){
                         if(restMockResponse.getId() == null){
                             String restMockResponseId = generateId();
                             restMockResponse.setId(restMockResponseId);

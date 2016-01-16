@@ -45,7 +45,7 @@ public class CreateRecordedRestMockResponseService extends AbstractRestProjectSe
         final RestMethod restMethod = findRestMethodByRestMethodId(input.getRestMethodId());
         final String restProjectId = findRestProjectIdForRestMethod(input.getRestMethodId());
         final RestMockResponse restMockResponse = mapper.map(input.getRestMockResponseDto(), RestMockResponse.class);
-        restMethod.getRestMockResponses().add(restMockResponse);
+        restMethod.getMockResponses().add(restMockResponse);
         save(restProjectId);
         return createServiceResult(new CreateRecordedRestMockResponseOutput());
     }

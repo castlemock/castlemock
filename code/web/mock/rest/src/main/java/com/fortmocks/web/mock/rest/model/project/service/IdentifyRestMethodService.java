@@ -47,8 +47,8 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
         final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), restResourceUriParts);
         RestMethodDto restMethodDto = null;
         if(restResource != null){
-            for(RestMethod restMethod : restResource.getRestMethods()){
-                if(input.getRestMethodType().equals(restMethod.getRestMethodType())) {
+            for(RestMethod restMethod : restResource.getMethods()){
+                if(input.getRestMethodType().equals(restMethod.getType())) {
                     restMethodDto = mapper.map(restMethod, RestMethodDto.class);
                 }
             }

@@ -37,10 +37,10 @@ public class RestMethodDtoGenerator {
         restMethodDto.setForwardedEndpoint("Forward endpoint");
         restMethodDto.setDefaultBody("Default body");
         restMethodDto.setCurrentResponseSequenceIndex(1);
-        restMethodDto.setRestMethodStatus(RestMethodStatus.MOCKED);
-        restMethodDto.setRestMethodType(RestMethodType.GET);
-        restMethodDto.setRestMockResponses(new ArrayList<RestMockResponseDto>());
-        restMethodDto.setRestResponseStrategy(RestResponseStrategy.RANDOM);
+        restMethodDto.setStatus(RestMethodStatus.MOCKED);
+        restMethodDto.setType(RestMethodType.GET);
+        restMethodDto.setMockResponses(new ArrayList<RestMockResponseDto>());
+        restMethodDto.setResponseStrategy(RestResponseStrategy.RANDOM);
         return restMethodDto;
     }
 }

@@ -46,8 +46,8 @@ public class UpdateRestApplicationsForwardedEndpointService extends AbstractRest
         final UpdateRestApplicationsForwardedEndpointInput input = serviceTask.getInput();
         for(RestApplicationDto restApplicationDto : input.getRestApplications()){
             RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), restApplicationDto.getId());
-            for(RestResource restResource : restApplication.getRestResources()){
-                for(RestMethod restMethod : restResource.getRestMethods()){
+            for(RestResource restResource : restApplication.getResources()){
+                for(RestMethod restMethod : restResource.getMethods()){
                     restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
                 }
             }

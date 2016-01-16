@@ -42,7 +42,7 @@ public class UpdateRestMethodsStatusService extends AbstractRestProjectService i
     public ServiceResult<UpdateRestMethodsStatusOutput> process(final ServiceTask<UpdateRestMethodsStatusInput> serviceTask) {
         final UpdateRestMethodsStatusInput input = serviceTask.getInput();
         final RestMethod restMethod = findRestMethodType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId());
-        restMethod.setRestMethodStatus(input.getRestMethodStatus());
+        restMethod.setStatus(input.getRestMethodStatus());
         save(input.getRestProjectId());
         return createServiceResult(new UpdateRestMethodsStatusOutput());
     }

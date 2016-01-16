@@ -36,8 +36,8 @@ public class RestRequestDto {
     @Mapping("uri")
     private String uri;
 
-    @Mapping("restMethodType")
-    private RestMethodType restMethodType;
+    @Mapping("methodType")
+    private RestMethodType methodType;
 
     @Mapping("serviceName")
     private String serviceName;
@@ -77,12 +77,12 @@ public class RestRequestDto {
         this.serviceName = serviceName;
     }
 
-    public RestMethodType getRestMethodType() {
-        return restMethodType;
+    public RestMethodType getMethodType() {
+        return methodType;
     }
 
-    public void setRestMethodType(RestMethodType restMethodType) {
-        this.restMethodType = restMethodType;
+    public void setMethodType(RestMethodType methodType) {
+        this.methodType = methodType;
     }
 
     public Map<String, String> getParameters() {

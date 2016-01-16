@@ -31,8 +31,8 @@ public class RestResponseDto {
     @Mapping("mockResponseName")
     private String mockResponseName;
 
-    @Mapping("httpStatusCode")
-    private Integer httpStatusCode;
+    @Mapping("statusCode")
+    private Integer statusCode;
 
     @Mapping("contentType")
     private String contentType;
@@ -53,12 +53,12 @@ public class RestResponseDto {
         this.mockResponseName = mockResponseName;
     }
 
-    public Integer getHttpStatusCode() {
-        return httpStatusCode;
+    public Integer getStatusCode() {
+        return statusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getContentType() {

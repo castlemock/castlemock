@@ -36,7 +36,7 @@ public class RestProjectDtoGenerator {
         projectDto.setDescription("Project description");
         projectDto.setCreated(new Date());
         projectDto.setUpdated(new Date());
-        projectDto.setRestApplications(new ArrayList<RestApplicationDto>());
+        projectDto.setApplications(new ArrayList<RestApplicationDto>());
         return projectDto;
     }
 }

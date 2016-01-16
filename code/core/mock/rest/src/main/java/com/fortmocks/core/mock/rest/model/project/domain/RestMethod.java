@@ -33,11 +33,11 @@ public class RestMethod implements Saveable<String> {
     private String id;
     private String name;
     private String defaultBody;
-    private RestMethodType restMethodType;
+    private RestMethodType type;
     private String forwardedEndpoint;
-    private RestMethodStatus restMethodStatus;
-    private RestResponseStrategy restResponseStrategy;
-    private List<RestMockResponse> restMockResponses;
+    private RestMethodStatus status;
+    private RestResponseStrategy responseStrategy;
+    private List<RestMockResponse> mockResponses;
     private Integer currentResponseSequenceIndex;
 
     @Override
@@ -69,22 +69,22 @@ public class RestMethod implements Saveable<String> {
     }
 
     @XmlElement
-    public RestMethodType getRestMethodType() {
-        return restMethodType;
+    public RestMethodType getType() {
+        return type;
     }
 
-    public void setRestMethodType(RestMethodType restMethodType) {
-        this.restMethodType = restMethodType;
+    public void setType(RestMethodType type) {
+        this.type = type;
     }
 
-    @XmlElementWrapper(name = "restMockResponses")
-    @XmlElement(name = "restMockResponse")
-    public List<RestMockResponse> getRestMockResponses() {
-        return restMockResponses;
+    @XmlElementWrapper(name = "mockResponses")
+    @XmlElement(name = "mockResponse")
+    public List<RestMockResponse> getMockResponses() {
+        return mockResponses;
     }
 
-    public void setRestMockResponses(List<RestMockResponse> restMockResponses) {
-        this.restMockResponses = restMockResponses;
+    public void setMockResponses(List<RestMockResponse> mockResponses) {
+        this.mockResponses = mockResponses;
     }
 
     @XmlElement
@@ -97,21 +97,21 @@ public class RestMethod implements Saveable<String> {
     }
 
     @XmlElement
-    public RestMethodStatus getRestMethodStatus() {
-        return restMethodStatus;
+    public RestMethodStatus getStatus() {
+        return status;
     }
 
-    public void setRestMethodStatus(RestMethodStatus restMethodStatus) {
-        this.restMethodStatus = restMethodStatus;
+    public void setStatus(RestMethodStatus status) {
+        this.status = status;
     }
 
     @XmlElement
-    public RestResponseStrategy getRestResponseStrategy() {
-        return restResponseStrategy;
+    public RestResponseStrategy getResponseStrategy() {
+        return responseStrategy;
     }
 
-    public void setRestResponseStrategy(RestResponseStrategy restResponseStrategy) {
-        this.restResponseStrategy = restResponseStrategy;
+    public void setResponseStrategy(RestResponseStrategy responseStrategy) {
+        this.responseStrategy = responseStrategy;
     }
 
     @XmlElement

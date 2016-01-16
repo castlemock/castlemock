@@ -38,14 +38,14 @@ public class CreateRecordedRestMockResponseServiceTest {
         final RestMethod restMethod = new RestMethod();
         restMethod.setId("REST METHOD");
 
-        restProject.setRestApplications(new ArrayList<RestApplication>());
-        restApplication.setRestResources(new ArrayList<RestResource>());
-        restResource.setRestMethods(new ArrayList<RestMethod>());
-        restMethod.setRestMockResponses(new ArrayList<RestMockResponse>());
+        restProject.setApplications(new ArrayList<RestApplication>());
+        restApplication.setResources(new ArrayList<RestResource>());
+        restResource.setMethods(new ArrayList<RestMethod>());
+        restMethod.setMockResponses(new ArrayList<RestMockResponse>());
 
-        restProject.getRestApplications().add(restApplication);
-        restApplication.getRestResources().add(restResource);
-        restResource.getRestMethods().add(restMethod);
+        restProject.getApplications().add(restApplication);
+        restApplication.getResources().add(restResource);
+        restResource.getMethods().add(restMethod);
 
         List<RestProject> restProjects = new ArrayList<RestProject>();
         restProjects.add(restProject);

@@ -46,7 +46,7 @@ public class ReadRestProjectService extends AbstractRestProjectService implement
     public ServiceResult<ReadRestProjectOutput> process(final ServiceTask<ReadRestProjectInput> serviceTask) {
         final ReadRestProjectInput input = serviceTask.getInput();
         final RestProjectDto restProject = find(input.getRestProjectId());
-        for(final RestApplicationDto restApplicationDto : restProject.getRestApplications()){
+        for(final RestApplicationDto restApplicationDto : restProject.getApplications()){
             final Map<RestMethodStatus, Integer> soapOperationStatusCount = getRestMethodStatusCount(restApplicationDto);
             restApplicationDto.setStatusCount(soapOperationStatusCount);
         }

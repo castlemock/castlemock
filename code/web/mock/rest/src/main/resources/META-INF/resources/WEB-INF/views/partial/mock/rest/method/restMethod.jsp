@@ -35,11 +35,11 @@
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.methodtype"/></label></td>
-            <td class="column2"><label path="name">${restMethod.restMethodType}</label></td>
+            <td class="column2"><label path="name">${restMethod.type}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.methodstatus"/></label></td>
-            <td class="column2"><label path="name"><spring:message code="rest.type.restmethodstatus.${restMethod.restMethodStatus}"/></label></td>
+            <td class="column2"><label path="name"><spring:message code="rest.type.restmethodstatus.${restMethod.status}"/></label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.address"/></label></td>
@@ -47,7 +47,7 @@
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.restResponsestrategy"/></label></td>
-            <td class="column2"><label path="name"><spring:message code="rest.type.responsestrategy.${restMethod.restResponseStrategy}"/></label></td>
+            <td class="column2"><label path="name"><spring:message code="rest.type.responsestrategy.${restMethod.responseStrategy}"/></label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.forwardedendpoint"/></label></td>
@@ -60,7 +60,7 @@
     <h2 class="decorated"><span><spring:message code="rest.restmethod.header.mockresponses"/></span></h2>
     <c:choose>
 
-        <c:when test="${restMethod.restMockResponses.size() > 0}">
+        <c:when test="${restMethod.mockResponses.size() > 0}">
             <form:form action="${rest_mock_response_update_url}" method="POST"  commandName="restMockResponseModifierCommand">
                 <div class="table-frame">
                     <table class="entityTable">
@@ -76,13 +76,13 @@
                             <th><spring:message code="rest.restmethod.column.httpstatuscode"/></th>
                             <th><spring:message code="rest.restmethod.column.contenttype"/></th>
                         </tr>
-                        <c:forEach items="${restMethod.restMockResponses}" var="restMockResponse" varStatus="loopStatus">
+                        <c:forEach items="${restMethod.mockResponses}" var="restMockResponse" varStatus="loopStatus">
                             <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                                 <td><form:checkbox path="restMockResponseIds" name="${restMockResponse.id}" value="${restMockResponse.id}"/></td>
                                 <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
-                                <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.restMockResponseStatus}"/></td>
-                                <td>${restMockResponse.httpStatusCode}</td>
-                                <td>${restMockResponse.restContentType}</td>
+                                <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.status}"/></td>
+                                <td>${restMockResponse.statusCode}</td>
+                                <td>${restMockResponse.contentType}</td>
                             </tr>
                         </c:forEach>
                     </table>
@@ -124,7 +124,7 @@
                     <c:forEach items="${restEvents}" var="event" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.id}</a></td>
-                            <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.restResponse.mockResponseName}</a></td>
+                            <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.response.mockResponseName}</a></td>
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.startDate}</a></td>
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.endDate}</a></td>
                         </tr>

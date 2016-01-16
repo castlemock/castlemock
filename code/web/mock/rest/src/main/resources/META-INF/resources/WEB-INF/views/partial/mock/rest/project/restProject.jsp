@@ -48,7 +48,7 @@
 
 <h2 class="decorated"><span><spring:message code="rest.restproject.header.applications"/></span></h2>
 <c:choose>
-    <c:when test="${restProject.restApplications.size() > 0}">
+    <c:when test="${restProject.applications.size() > 0}">
         <form:form action="${rest_resource_update_url}/" method="POST"  commandName="restApplicationModifierCommand">
             <div class="table-frame">
                 <table class="entityTable">
@@ -59,7 +59,7 @@
                             <th><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></th>
                         </c:forEach>
                     </tr>
-                    <c:forEach items="${restProject.restApplications}" var="restApplication" varStatus="loopStatus">
+                    <c:forEach items="${restProject.applications}" var="restApplication" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><form:checkbox path="restApplicationIds" name="${restApplication.id}" value="${restApplication.id}"/></td>
                             <td><a href="<c:url value="/web/rest/project/${restProject.id}/application/${restApplication.id}"/>">${restApplication.name}</a></td>

@@ -60,7 +60,7 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
             }
 
             List<RestResource> restResources = new ArrayList<RestResource>();
-            for(RestResource newRestResource : newRestApplication.getRestResources()){
+            for(RestResource newRestResource : newRestApplication.getResources()){
                 RestResource existingRestResource = findRestResource(existingRestApplication, newRestResource.getName());
 
                 if (existingRestResource == null) {
@@ -71,7 +71,7 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
                 existingRestResource.setUri(newRestResource.getUri());
 
                 List<RestMethod> restMethods = new ArrayList<RestMethod>();
-                for(RestMethod newRestMethod : newRestResource.getRestMethods()){
+                for(RestMethod newRestMethod : newRestResource.getMethods()){
                     RestMethod existingRestMethod = findRestMethod(existingRestResource, newRestMethod.getName());
 
                     if (existingRestMethod == null) {
@@ -79,16 +79,16 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
                         continue;
                     }
 
-                    existingRestMethod.setRestMethodType(newRestMethod.getRestMethodType());
+                    existingRestMethod.setType(newRestMethod.getType());
                     restMethods.add(newRestMethod);
                 }
-                existingRestResource.setRestMethods(restMethods);
+                existingRestResource.setMethods(restMethods);
                 restResources.add(existingRestResource);
             }
-            existingRestApplication.setRestResources(restResources);
+            existingRestApplication.setResources(restResources);
             restApplications.add(newRestApplication);
         }
-        restProject.setRestApplications(restApplications);
+        restProject.setApplications(restApplications);
 
         save(restProject);
         return createServiceResult(new CreateRestApplicationsOutput());
@@ -101,7 +101,7 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
      * @return A REST application that matches the search criteria. Null otherwise.
      */
     public RestApplication findRestApplication(RestProject restProject, String name){
-        for(RestApplication restApplication : restProject.getRestApplications()){
+        for(RestApplication restApplication : restProject.getApplications()){
             if(restApplication.getName().equals(name)){
                 return restApplication;
             }
@@ -116,7 +116,7 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
      * @return A REST resource that matches the search criteria. Null otherwise.
      */
     public RestResource findRestResource(RestApplication restApplication, String name){
-        for(RestResource restResource : restApplication.getRestResources()){
+        for(RestResource restResource : restApplication.getResources()){
             if(restResource.getName().equals(name)){
                 return restResource;
             }
@@ -131,7 +131,7 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
      * @return A REST method that matches the search criteria. Null otherwise.
      */
     public RestMethod findRestMethod(RestResource restResource, String name){
-        for(RestMethod restMethod : restResource.getRestMethods()){
+        for(RestMethod restMethod : restResource.getMethods()){
             if(restMethod.getName().equals(name)){
                 return restMethod;
             }

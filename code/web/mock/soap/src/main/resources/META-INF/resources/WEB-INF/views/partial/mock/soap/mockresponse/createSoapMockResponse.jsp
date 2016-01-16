@@ -10,8 +10,8 @@
             <td class="column2"><form:input path="name" id="soapMockResponseNameInput"/></td>
         </tr>
         <tr>
-            <td class="column1"><form:label path="httpStatusCode"><spring:message code="soap.createsoapmockresponse.label.httpstatuscode"/></form:label></td>
-            <td class="column2"><form:input path="httpStatusCode" id="soapMockResponseHttpStatusCodeInput"/></td>
+            <td class="column1"><form:label path="statusCode"><spring:message code="soap.createsoapmockresponse.label.httpstatuscode"/></form:label></td>
+            <td class="column2"><form:input path="statusCode" id="soapMockResponseHttpStatusCodeInput"/></td>
         </tr>
         <tr>
             <td class="column1"><form:label path="httpContentType"><spring:message code="soap.createsoapmockresponse.label.httpcontenttype"/></form:label></td>

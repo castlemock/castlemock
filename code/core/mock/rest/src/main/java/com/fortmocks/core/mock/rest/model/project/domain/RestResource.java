@@ -33,7 +33,7 @@ public class RestResource implements Saveable<String> {
     private String id;
     private String name;
     private String uri;
-    private List<RestMethod> restMethods;
+    private List<RestMethod> methods;
 
 
     @Override
@@ -65,11 +65,11 @@ public class RestResource implements Saveable<String> {
         this.uri = uri;
     }
 
-    public List<RestMethod> getRestMethods() {
-        return restMethods;
+    public List<RestMethod> getMethods() {
+        return methods;
     }
 
-    public void setRestMethods(List<RestMethod> restMethods) {
-        this.restMethods = restMethods;
+    public void setMethods(List<RestMethod> methods) {
+        this.methods = methods;
     }
 }

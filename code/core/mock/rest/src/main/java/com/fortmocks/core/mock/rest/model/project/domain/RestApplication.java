@@ -30,7 +30,7 @@ public class RestApplication implements Saveable<String> {
 
     private String id;
     private String name;
-    private List<RestResource> restResources;
+    private List<RestResource> resources;
 
     @Override
     @XmlElement
@@ -52,13 +52,13 @@ public class RestApplication implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElementWrapper(name = "restResources")
-    @XmlElement(name = "restResource")
-    public List<RestResource> getRestResources() {
-        return restResources;
+    @XmlElementWrapper(name = "resources")
+    @XmlElement(name = "resources")
+    public List<RestResource> getResources() {
+        return resources;
     }
 
-    public void setRestResources(List<RestResource> restResources) {
-        this.restResources = restResources;
+    public void setResources(List<RestResource> resources) {
+        this.resources = resources;
     }
 }

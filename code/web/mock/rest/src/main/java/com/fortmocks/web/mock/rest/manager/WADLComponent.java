@@ -116,7 +116,7 @@ public class WADLComponent {
                         final RestResourceDto restResourceDto = new RestResourceDto();
                         restResourceDto.setName(resourceName);
                         restResourceDto.setUri(baseUri + resourceName);
-                        restApplicationDto.getRestResources().add(restResourceDto);
+                        restApplicationDto.getResources().add(restResourceDto);
 
                         final List<Element> methodElements = getMethods(resourceElement);
                         for(Element methodElement : methodElements){
@@ -125,22 +125,22 @@ public class WADLComponent {
 
                             final RestMethodDto restMethodDto = new RestMethodDto();
                             restMethodDto.setName(methodName);
-                            restMethodDto.setRestMethodType(RestMethodType.valueOf(methodType));
-                            restMethodDto.setRestMethodStatus(RestMethodStatus.MOCKED);
-                            restMethodDto.setRestResponseStrategy(RestResponseStrategy.RANDOM);
-                            restMethodDto.setRestMockResponses(new ArrayList<RestMockResponseDto>());
+                            restMethodDto.setType(RestMethodType.valueOf(methodType));
+                            restMethodDto.setStatus(RestMethodStatus.MOCKED);
+                            restMethodDto.setResponseStrategy(RestResponseStrategy.RANDOM);
+                            restMethodDto.setMockResponses(new ArrayList<RestMockResponseDto>());
 
 
                             if(generateResponse){
                                 RestMockResponseDto restMockResponse = new RestMockResponseDto();
-                                restMockResponse.setRestContentType(DEFAULT_CONTENT_TYPE);
+                                restMockResponse.setContentType(DEFAULT_CONTENT_TYPE);
                                 restMockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
-                                restMockResponse.setHttpStatusCode(200);
-                                restMockResponse.setRestMockResponseStatus(RestMockResponseStatus.ENABLED);
-                                restMethodDto.getRestMockResponses().add(restMockResponse);
+                                restMockResponse.setStatusCode(200);
+                                restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
+                                restMethodDto.getMockResponses().add(restMockResponse);
                             }
 
-                            restResourceDto.getRestMethods().add(restMethodDto);
+                            restResourceDto.getMethods().add(restMethodDto);
                         }
                     }
                 }

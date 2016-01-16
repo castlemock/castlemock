@@ -39,8 +39,8 @@ public class RestResourceDto {
     @Mapping("uri")
     private String uri;
 
-    @Mapping("restMethods")
-    private List<RestMethodDto> restMethods = new LinkedList<RestMethodDto>();
+    @Mapping("methods")
+    private List<RestMethodDto> methods = new LinkedList<RestMethodDto>();
 
     private String invokeAddress;
 
@@ -70,12 +70,12 @@ public class RestResourceDto {
         this.uri = uri;
     }
 
-    public List<RestMethodDto> getRestMethods() {
-        return restMethods;
+    public List<RestMethodDto> getMethods() {
+        return methods;
     }
 
-    public void setRestMethods(List<RestMethodDto> restMethods) {
-        this.restMethods = restMethods;
+    public void setMethods(List<RestMethodDto> methods) {
+        this.methods = methods;
     }
 
     public String getInvokeAddress() {

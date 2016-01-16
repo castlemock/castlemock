@@ -40,20 +40,20 @@ public class RestMethodDto {
     @Mapping("defaultBody")
     private String defaultBody;
 
-    @Mapping("restMethodType")
-    private RestMethodType restMethodType;
+    @Mapping("type")
+    private RestMethodType type;
 
     @Mapping("forwardedEndpoint")
     private String forwardedEndpoint;
 
-    @Mapping("restMethodStatus")
-    private RestMethodStatus restMethodStatus;
+    @Mapping("status")
+    private RestMethodStatus status;
 
-    @Mapping("restResponseStrategy")
-    private RestResponseStrategy restResponseStrategy;
+    @Mapping("responseStrategy")
+    private RestResponseStrategy responseStrategy;
 
-    @Mapping("restMockResponses")
-    private List<RestMockResponseDto> restMockResponses = new LinkedList<RestMockResponseDto>();
+    @Mapping("mockResponses")
+    private List<RestMockResponseDto> mockResponses = new LinkedList<RestMockResponseDto>();
 
     @Mapping("currentResponseSequenceIndex")
     private Integer currentResponseSequenceIndex = 0;
@@ -84,20 +84,20 @@ public class RestMethodDto {
         this.defaultBody = defaultBody;
     }
 
-    public RestMethodType getRestMethodType() {
-        return restMethodType;
+    public RestMethodType getType() {
+        return type;
     }
 
-    public void setRestMethodType(RestMethodType restMethodType) {
-        this.restMethodType = restMethodType;
+    public void setType(RestMethodType type) {
+        this.type = type;
     }
 
-    public List<RestMockResponseDto> getRestMockResponses() {
-        return restMockResponses;
+    public List<RestMockResponseDto> getMockResponses() {
+        return mockResponses;
     }
 
-    public void setRestMockResponses(List<RestMockResponseDto> restMockResponses) {
-        this.restMockResponses = restMockResponses;
+    public void setMockResponses(List<RestMockResponseDto> mockResponses) {
+        this.mockResponses = mockResponses;
     }
 
     public String getForwardedEndpoint() {
@@ -108,20 +108,20 @@ public class RestMethodDto {
         this.forwardedEndpoint = forwardedEndpoint;
     }
 
-    public RestMethodStatus getRestMethodStatus() {
-        return restMethodStatus;
+    public RestMethodStatus getStatus() {
+        return status;
     }
 
-    public void setRestMethodStatus(RestMethodStatus restMethodStatus) {
-        this.restMethodStatus = restMethodStatus;
+    public void setStatus(RestMethodStatus status) {
+        this.status = status;
     }
 
-    public RestResponseStrategy getRestResponseStrategy() {
-        return restResponseStrategy;
+    public RestResponseStrategy getResponseStrategy() {
+        return responseStrategy;
     }
 
-    public void setRestResponseStrategy(RestResponseStrategy restResponseStrategy) {
-        this.restResponseStrategy = restResponseStrategy;
+    public void setResponseStrategy(RestResponseStrategy responseStrategy) {
+        this.responseStrategy = responseStrategy;
     }
 
     public Integer getCurrentResponseSequenceIndex() {

@@ -87,7 +87,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
             searchResults.add(searchResult);
         }
 
-        for(RestApplication restApplication : restProject.getRestApplications()){
+        for(RestApplication restApplication : restProject.getApplications()){
             List<SearchResult> restApplicationSearchResult = searchRestApplication(restProject, restApplication, query);
             searchResults.addAll(restApplicationSearchResult);
         }
@@ -112,7 +112,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
             searchResults.add(searchResult);
         }
 
-        for(RestResource restResource : restApplication.getRestResources()){
+        for(RestResource restResource : restApplication.getResources()){
             List<SearchResult> restResourceSearchResult = searchRestResource(restProject, restApplication, restResource, query);
             searchResults.addAll(restResourceSearchResult);
         }
@@ -139,7 +139,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
             searchResults.add(searchResult);
         }
 
-        for(RestMethod restMethod : restResource.getRestMethods()){
+        for(RestMethod restMethod : restResource.getMethods()){
             List<SearchResult> restMethodSearchResult = searchRestMethod(restProject, restApplication, restResource, restMethod, query);
             searchResults.addAll(restMethodSearchResult);
         }
@@ -167,7 +167,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
             searchResults.add(searchResult);
         }
 
-        for(RestMockResponse restMockResponse : restMethod.getRestMockResponses()){
+        for(RestMockResponse restMockResponse : restMethod.getMockResponses()){
             SearchResult restMockResponseSearchResult = searchRestMockResponse(restProject, restApplication, restResource, restMethod, restMockResponse, query);
             if(restMockResponseSearchResult != null){
                 searchResults.add(restMockResponseSearchResult);

@@ -43,8 +43,8 @@ public class UpdateRestResourcesStatusService extends AbstractRestProjectService
     public ServiceResult<UpdateRestResourcesStatusOutput> process(final ServiceTask<UpdateRestResourcesStatusInput> serviceTask) {
         final UpdateRestResourcesStatusInput input = serviceTask.getInput();
         final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
-        for(RestMethod restMethod : restResource.getRestMethods()){
-            restMethod.setRestMethodStatus(input.getRestMethodStatus());
+        for(RestMethod restMethod : restResource.getMethods()){
+            restMethod.setStatus(input.getRestMethodStatus());
         }
         save(input.getRestProjectId());
         return createServiceResult(new UpdateRestResourcesStatusOutput());

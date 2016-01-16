@@ -30,16 +30,15 @@ import java.util.List;
 @XmlRootElement
 public class RestProject extends Project {
 
-    private List<RestApplication> restApplications;
+    private List<RestApplication> applications;
 
-    @XmlElementWrapper(name = "restApplications")
-    @XmlElement(name = "restApplication")
-
-    public List<RestApplication> getRestApplications() {
-        return restApplications;
+    @XmlElementWrapper(name = "applications")
+    @XmlElement(name = "application")
+    public List<RestApplication> getApplications() {
+        return applications;
     }
 
-    public void setRestApplications(List<RestApplication> restApplications) {
-        this.restApplications = restApplications;
+    public void setApplications(List<RestApplication> applications) {
+        this.applications = applications;
     }
 }

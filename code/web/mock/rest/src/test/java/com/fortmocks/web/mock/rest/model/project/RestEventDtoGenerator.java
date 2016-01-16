@@ -39,7 +39,7 @@ public class RestEventDtoGenerator {
         eventDto.setStartDate(new Date());
 
         RestRequestDto restRequestDto = new RestRequestDto();
-        restRequestDto.setRestMethodType(RestMethodType.GET);
+        restRequestDto.setMethodType(RestMethodType.GET);
         restRequestDto.setBody("REST request body");
         restRequestDto.setContentType("application/json");
         restRequestDto.setParameters(new HashMap<String, String>());
@@ -47,7 +47,7 @@ public class RestEventDtoGenerator {
         restRequestDto.setUri("URI");
 
         RestResponseDto restResponseDto = new RestResponseDto();
-        restResponseDto.setHttpStatusCode(200);
+        restResponseDto.setStatusCode(200);
         restResponseDto.setContentType("application/json");
         restResponseDto.setBody("REST response body");
         restResponseDto.setMockResponseName("Mock response name");

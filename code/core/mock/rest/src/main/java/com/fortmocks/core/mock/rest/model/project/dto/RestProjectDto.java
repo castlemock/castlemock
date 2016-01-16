@@ -28,8 +28,8 @@ import java.util.List;
  */
 public class RestProjectDto extends ProjectDto {
 
-    @Mapping("restApplications")
-    private List<RestApplicationDto> restApplications = new LinkedList<RestApplicationDto>();
+    @Mapping("applications")
+    private List<RestApplicationDto> applications = new LinkedList<RestApplicationDto>();
 
     /**
      * The default REST project constructor
@@ -46,11 +46,11 @@ public class RestProjectDto extends ProjectDto {
         super(projectDto);
     }
 
-    public List<RestApplicationDto> getRestApplications() {
-        return restApplications;
+    public List<RestApplicationDto> getApplications() {
+        return applications;
     }
 
-    public void setRestApplications(List<RestApplicationDto> restApplications) {
-        this.restApplications = restApplications;
+    public void setApplications(List<RestApplicationDto> applications) {
+        this.applications = applications;
     }
 }
