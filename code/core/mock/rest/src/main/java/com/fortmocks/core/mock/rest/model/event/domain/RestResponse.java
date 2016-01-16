@@ -16,8 +16,12 @@
 
 package com.fortmocks.core.mock.rest.model.event.domain;
 
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
+
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -30,6 +34,7 @@ public class RestResponse {
     private String mockResponseName;
     private Integer httpStatusCode;
     private String contentType;
+    private List<HttpHeader> httpHeaders;
 
     @XmlElement
     public String getBody() {
@@ -65,5 +70,15 @@ public class RestResponse {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
+    public List<HttpHeader> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+        this.httpHeaders = httpHeaders;
     }
 }

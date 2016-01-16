@@ -35,10 +35,6 @@
                 <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.restmockresponse.label.httpstatuscode"/></form:label></td>
                 <td class="column2"><form:input path="httpStatusCode" id="restMockResponseHttpResponseCodeInput"/></td>
             </tr>
-            <tr>
-                <td class="column1"><spring:message code="rest.restmockresponse.label.restcontenttype"/></td>
-                <td class="column2"><form:input path="contentType" id="restMockResponseHttpContentTypeInput"/></td>
-            </tr>
         </table>
     </div>
     <div>
@@ -56,5 +52,4 @@
 <script>
     $("#restMockResponseNameInput").attr('required', '');
     $("#restMockResponseHttpResponseCodeInput").attr('required', '');
-    $("#restMockResponseHttpContentTypeInput").attr('required', '');
 </script>

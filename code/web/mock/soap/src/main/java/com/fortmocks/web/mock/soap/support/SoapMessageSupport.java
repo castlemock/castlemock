@@ -16,6 +16,8 @@
 
 package com.fortmocks.web.mock.soap.support;
 
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
+import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
 import com.fortmocks.web.mock.soap.model.SoapException;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
@@ -30,6 +32,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
  * The class provides functionality and support methods specifiably for SOAP messages.
@@ -118,7 +123,7 @@ public class SoapMessageSupport {
      * @param httpServletRequest The incoming request that contains the request body
      * @return The request body as a String
      */
-    public static String getBody(HttpServletRequest httpServletRequest) {
+    public static String getBody(final HttpServletRequest httpServletRequest) {
         try {
             final StringBuilder buffer = new StringBuilder();
             final BufferedReader reader = httpServletRequest.getReader();
@@ -131,5 +136,24 @@ public class SoapMessageSupport {
             LOGGER.error("Unable to read the incoming file", e);
             throw new SoapException("Unable to extract the request body");
         }
+    }
+
+    /**
+     * Extract HTTP headers from provided Http Servlet Request
+     * @param httpServletRequest Incoming Http Servlet Request that contains the headers which will be extracted
+     * @return A list of HTTP headers extracted from the provided httpServletRequest
+     */
+    public static List<HttpHeaderDto> extractHttpHeaders(final HttpServletRequest httpServletRequest){
+        final List<HttpHeaderDto> httpHeaders = new ArrayList<HttpHeaderDto>();
+        final Enumeration<String> headers = httpServletRequest.getHeaderNames();
+        while(headers.hasMoreElements()){
+            final String headerName = headers.nextElement();
+            final String headerValue = httpServletRequest.getHeader(headerName);
+            final HttpHeaderDto httpHeader = new HttpHeaderDto();
+            httpHeader.setName(headerName);
+            httpHeader.setValue(headerValue);
+            httpHeaders.add(httpHeader);
+        }
+        return httpHeaders;
     }
 }

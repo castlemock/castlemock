@@ -43,9 +43,6 @@ public class SoapMockResponseDto {
     @Mapping("httpStatusCode")
     private Integer httpStatusCode;
 
-    @Mapping("contentType")
-    private String contentType;
-
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders;
 
@@ -87,14 +84,6 @@ public class SoapMockResponseDto {
 
     public void setHttpStatusCode(Integer httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 
     public List<HttpHeaderDto> getHttpHeaders() {

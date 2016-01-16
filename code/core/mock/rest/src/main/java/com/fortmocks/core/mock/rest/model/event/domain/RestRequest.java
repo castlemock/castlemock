@@ -16,10 +16,13 @@
 
 package com.fortmocks.core.mock.rest.model.event.domain;
 
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +37,7 @@ public class RestRequest {
     private String uri;
     private HttpMethod httpMethod;
     private Map<String, String> parameters;
+    private List<HttpHeader> httpHeaders;
 
     @XmlElement
     public String getBody() {
@@ -71,7 +75,18 @@ public class RestRequest {
         this.httpMethod = httpMethod;
     }
 
-    @XmlElement
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
+    public List<HttpHeader> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+        this.httpHeaders = httpHeaders;
+    }
+
+    @XmlElementWrapper(name = "parameters")
+    @XmlElement(name = "parameter")
     public Map<String, String> getParameters() {
         return parameters;
     }

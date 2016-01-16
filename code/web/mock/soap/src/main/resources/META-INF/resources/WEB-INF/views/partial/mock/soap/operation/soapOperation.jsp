@@ -61,16 +61,14 @@
                 <div class="table-frame">
                     <table class="entityTable">
                         <col width="10%">
-                        <col width="45%">
-                        <col width="15%">
-                        <col width="15%">
-                        <col width="15%">
+                        <col width="50%">
+                        <col width="20%">
+                        <col width="20%">
                         <tr>
                             <th><spring:message code="soap.soapoperation.column.selected"/></th>
                             <th><spring:message code="soap.soapoperation.column.responsename"/></th>
                             <th><spring:message code="soap.soapoperation.column.status"/></th>
                             <th><spring:message code="soap.soapoperation.column.httpstatuscode"/></th>
-                            <th><spring:message code="soap.soapoperation.column.httpcontenttype"/></th>
                         </tr>
                         <c:forEach items="${soapOperation.mockResponses}" var="soapMockResponse" varStatus="loopStatus">
                             <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
@@ -78,7 +76,6 @@
                                 <td><a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/response/${soapMockResponse.id}"/>">${soapMockResponse.name}</a></td>
                                 <td><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponse.status}"/></td>
                                 <td>${soapMockResponse.httpStatusCode}</td>
-                                <td>${soapMockResponse.contentType}</td>
                             </tr>
                         </c:forEach>
                     </table>

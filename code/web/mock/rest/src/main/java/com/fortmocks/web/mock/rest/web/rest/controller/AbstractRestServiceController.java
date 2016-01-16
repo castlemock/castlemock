@@ -16,7 +16,9 @@
 
 package com.fortmocks.web.mock.rest.web.rest.controller;
 
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
+import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
@@ -106,12 +108,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final String incomingRequestUri = httpServletRequest.getRequestURI().toLowerCase();
         final String restResourceUri = incomingRequestUri.replace(getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId.toLowerCase() + SLASH + APPLICATION + SLASH + applicationId.toLowerCase(), EMPTY);
         final Map<String, String> parameters = extractParameters(httpServletRequest);
+        final List<HttpHeaderDto> httpHeaders = extractHttpHeaders(httpServletRequest);
 
-        request.setContentType(httpServletRequest.getContentType());
         request.setHttpMethod(httpMethod);
         request.setBody(body);
         request.setUri(restResourceUri);
         request.setParameters(parameters);
+        request.setHttpHeaders(httpHeaders);
         return request;
     }
 
@@ -132,6 +135,26 @@ public abstract class AbstractRestServiceController extends AbstractController {
         }
         return parameters;
     }
+
+    /**
+     * Extract HTTP headers from provided Http Servlet Request
+     * @param httpServletRequest Incoming Http Servlet Request that contains the headers which will be extracted
+     * @return A list of HTTP headers extracted from the provided httpServletRequest
+     */
+    public static List<HttpHeaderDto> extractHttpHeaders(final HttpServletRequest httpServletRequest){
+        final List<HttpHeaderDto> httpHeaders = new ArrayList<HttpHeaderDto>();
+        final Enumeration<String> headers = httpServletRequest.getHeaderNames();
+        while(headers.hasMoreElements()){
+            final String headerName = headers.nextElement();
+            final String headerValue = httpServletRequest.getHeader(headerName);
+            final HttpHeaderDto httpHeader = new HttpHeaderDto();
+            httpHeader.setName(headerName);
+            httpHeader.setValue(headerValue);
+            httpHeaders.add(httpHeader);
+        }
+        return httpHeaders;
+    }
+
 
     /**
      * Builds a parameter URL string passed on the provided parameter map.
@@ -180,7 +203,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 response = forwardRequest(restRequest, restMethod);
             } else if (RestMethodStatus.RECORDING.equals(restMethod.getStatus())) {
                 response = forwardRequestAndRecordResponse(restRequest, restMethod);
-            } else if (RestMethodStatus.RECORDING.equals(restMethod.getStatus())) {
+            } else if (RestMethodStatus.RECORD_ONCE.equals(restMethod.getStatus())) {
                 response = forwardRequestAndRecordResponseOnce(restRequest, projectId, applicationId, resourceId, restMethod);
             } else { // Status.MOCKED
                 response = mockResponse(restMethod, httpServletResponse);
@@ -211,7 +234,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod(restRequest.getHttpMethod().name());
-            connection.setRequestProperty(CONTENT_TYPE, restRequest.getContentType());
+            for(HttpHeaderDto httpHeader : restRequest.getHttpHeaders()){
+                connection.addRequestProperty(httpHeader.getName(), httpHeader.getValue());
+            }
+
             outputStream = connection.getOutputStream();
             outputStream.write(restRequest.getBody().getBytes());
             outputStream.flush();
@@ -230,14 +256,20 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 stringBuilder.append(buffer);
                 stringBuilder.append(NEW_LINE);
             }
-            response.setBody(stringBuilder.toString());
-            response.setMockResponseName(FORWARDED_RESPONSE_NAME);
-            response.setHttpStatusCode(connection.getResponseCode());
-            String contentType = connection.getHeaderField(CONTENT_TYPE);
-            if(contentType != null){
-                response.setContentType(contentType);
+
+            final List<HttpHeaderDto> responseHttpHeaders = new ArrayList<HttpHeaderDto>();
+            for(String headerName : connection.getHeaderFields().keySet()){
+                final String headerValue = connection.getHeaderField(headerName);
+                final HttpHeaderDto responseHttpHeader = new HttpHeaderDto();
+                responseHttpHeader.setName(headerName);
+                responseHttpHeader.setValue(headerValue);
+                responseHttpHeaders.add(responseHttpHeader);
             }
 
+            response.setBody(stringBuilder.toString());
+            response.setMockResponseName(FORWARDED_RESPONSE_NAME);
+            response.setHttpHeaders(responseHttpHeaders);
+            response.setHttpStatusCode(connection.getResponseCode());
             return response;
         } catch (IOException exception) {
             LOGGER.error("Unable to forward request", exception);
@@ -276,9 +308,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final Date date = new Date();
         mockResponse.setBody(response.getBody());
         mockResponse.setStatus(RestMockResponseStatus.ENABLED);
+        mockResponse.setHttpHeaders(response.getHttpHeaders());
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
-        mockResponse.setContentType(response.getContentType());
         serviceProcessor.process(new CreateRecordedRestMockResponseInput(restMethod.getId(), mockResponse));
         return response;
     }
@@ -336,10 +368,12 @@ public abstract class AbstractRestServiceController extends AbstractController {
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
-        response.setContentType(mockResponse.getContentType());
+        response.setHttpHeaders(mockResponse.getHttpHeaders());
         httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
-        httpServletResponse.setContentType(mockResponse.getContentType());
-        httpServletResponse.setHeader(CONTENT_TYPE, mockResponse.getContentType());
+        for(HttpHeaderDto httpHeader : mockResponse.getHttpHeaders()){
+            httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
+        }
+
         return response;
     }
 }

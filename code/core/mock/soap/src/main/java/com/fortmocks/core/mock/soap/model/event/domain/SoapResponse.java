@@ -16,8 +16,13 @@
 
 package com.fortmocks.core.mock.soap.model.event.domain;
 
+
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
+
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -30,6 +35,7 @@ public class SoapResponse {
     private String mockResponseName;
     private Integer httpStatusCode;
     private String contentType;
+    private List<HttpHeader> httpHeaders;
 
     @XmlElement
     public String getBody() {
@@ -58,11 +64,22 @@ public class SoapResponse {
         this.httpStatusCode = httpStatusCode;
     }
 
+    @XmlElement
     public String getContentType() {
         return contentType;
     }
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
+    public List<HttpHeader> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+        this.httpHeaders = httpHeaders;
     }
 }

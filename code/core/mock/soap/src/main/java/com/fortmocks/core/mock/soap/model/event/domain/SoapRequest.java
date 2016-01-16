@@ -16,11 +16,14 @@
 
 package com.fortmocks.core.mock.soap.model.event.domain;
 
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -36,6 +39,7 @@ public class SoapRequest {
     private String operationName;
     private String operationIdentifier;
     private SoapVersion soapVersion;
+    private List<HttpHeader> httpHeaders;
 
     @XmlElement
     public String getBody() {
@@ -98,5 +102,15 @@ public class SoapRequest {
 
     public void setSoapVersion(SoapVersion soapVersion) {
         this.soapVersion = soapVersion;
+    }
+
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
+    public List<HttpHeader> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+        this.httpHeaders = httpHeaders;
     }
 }

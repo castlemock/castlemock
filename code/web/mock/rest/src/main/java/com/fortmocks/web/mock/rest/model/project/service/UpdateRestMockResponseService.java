@@ -47,7 +47,6 @@ public class UpdateRestMockResponseService extends AbstractRestProjectService im
         restMockResponse.setName(updatedRestMockResponse.getName());
         restMockResponse.setBody(updatedRestMockResponse.getBody());
         restMockResponse.setHttpStatusCode(updatedRestMockResponse.getHttpStatusCode());
-        restMockResponse.setContentType(updatedRestMockResponse.getContentType());
         save(input.getRestProjectId());
         return createServiceResult(new UpdateRestMockResponseOutput(updatedRestMockResponse));
     }

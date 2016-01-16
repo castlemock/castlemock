@@ -16,7 +16,10 @@
 
 package com.fortmocks.core.mock.rest.model.event.dto;
 
+import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
 import org.dozer.Mapping;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -36,6 +39,9 @@ public class RestResponseDto {
 
     @Mapping("contentType")
     private String contentType;
+
+    @Mapping("httpHeaders")
+    private List<HttpHeaderDto> httpHeaders;
 
     public String getBody() {
         return body;
@@ -67,5 +73,13 @@ public class RestResponseDto {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public List<HttpHeaderDto> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeaderDto> httpHeaders) {
+        this.httpHeaders = httpHeaders;
     }
 }

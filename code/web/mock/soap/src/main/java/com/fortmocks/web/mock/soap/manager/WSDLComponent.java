@@ -52,7 +52,6 @@ public class WSDLComponent {
     private static final String AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME = "Auto-generated mocked response";
     private static final Integer DEFAULT_RESPONSE_SEQUENCE_INDEX = 0;
     private static final Integer DEFAULT_HTTP_STATUS_CODE = 200;
-    private static final String DEFAULT_CONTENT_TYPE = "text/xml";
     private static final Logger LOGGER = Logger.getLogger(WSDLComponent.class);
     private static final String WSDL_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/";
     private static final String SOAP_11_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/soap/";
@@ -234,7 +233,6 @@ public class WSDLComponent {
                     mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
                     mockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
                     mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
-                    mockResponse.setContentType(DEFAULT_CONTENT_TYPE);
                     soapOperation.getMockResponses().add(mockResponse);
                 }
 

@@ -17,8 +17,11 @@
 package com.fortmocks.core.mock.soap.model.event.dto;
 
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
+import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;
 import org.dozer.Mapping;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -46,6 +49,9 @@ public class SoapRequestDto {
 
     @Mapping("soapVersion")
     private SoapVersion soapVersion;
+
+    @Mapping("httpHeaders")
+    private List<HttpHeaderDto> httpHeaders;
 
     public String getBody() {
         return body;
@@ -101,5 +107,13 @@ public class SoapRequestDto {
 
     public void setSoapVersion(SoapVersion soapVersion) {
         this.soapVersion = soapVersion;
+    }
+
+    public List<HttpHeaderDto> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeaderDto> httpHeaders) {
+        this.httpHeaders = httpHeaders;
     }
 }

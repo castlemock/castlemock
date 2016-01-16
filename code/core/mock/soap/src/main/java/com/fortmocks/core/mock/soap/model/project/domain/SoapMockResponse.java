@@ -21,6 +21,7 @@ import com.fortmocks.core.basis.model.Saveable;
 import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -35,9 +36,8 @@ public class SoapMockResponse implements Saveable<String> {
     private String id;
     private String name;
     private String body;
-    private Integer httpStatusCode;
-    private String contentType;
     private SoapMockResponseStatus status;
+    private Integer httpStatusCode;
     private List<HttpHeader> httpHeaders;
 
     @XmlElement
@@ -78,6 +78,7 @@ public class SoapMockResponse implements Saveable<String> {
         this.status = status;
     }
 
+    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
@@ -86,14 +87,8 @@ public class SoapMockResponse implements Saveable<String> {
         this.httpStatusCode = httpStatusCode;
     }
 
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }

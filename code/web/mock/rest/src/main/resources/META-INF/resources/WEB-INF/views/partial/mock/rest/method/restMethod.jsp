@@ -65,16 +65,14 @@
                 <div class="table-frame">
                     <table class="entityTable">
                         <col width="10%">
-                        <col width="45%">
-                        <col width="15%">
-                        <col width="15%">
-                        <col width="15%">
+                        <col width="50%">
+                        <col width="20%">
+                        <col width="20%">
                         <tr>
                             <th><spring:message code="rest.restmethod.column.selected"/></th>
                             <th><spring:message code="rest.restmethod.column.responsename"/></th>
                             <th><spring:message code="rest.restmethod.column.status"/></th>
                             <th><spring:message code="rest.restmethod.column.httpstatuscode"/></th>
-                            <th><spring:message code="rest.restmethod.column.contenttype"/></th>
                         </tr>
                         <c:forEach items="${restMethod.mockResponses}" var="restMockResponse" varStatus="loopStatus">
                             <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
@@ -82,7 +80,6 @@
                                 <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
                                 <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.status}"/></td>
                                 <td>${restMockResponse.httpStatusCode}</td>
-                                <td>${restMockResponse.contentType}</td>
                             </tr>
                         </c:forEach>
                     </table>

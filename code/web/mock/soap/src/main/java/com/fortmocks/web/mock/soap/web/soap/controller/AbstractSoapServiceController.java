@@ -17,6 +17,7 @@
 package com.fortmocks.web.mock.soap.web.soap.controller;
 
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
+import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapRequestDto;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapResponseDto;
@@ -46,10 +47,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * The AbstractSoapServiceController provides functionality that are shared for all the SOAP controllers
@@ -98,10 +96,11 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @return A new created project
      */
     protected SoapRequestDto prepareRequest(final String projectId, final HttpServletRequest httpServletRequest) {
-        SoapRequestDto request = new SoapRequestDto();
+        final SoapRequestDto request = new SoapRequestDto();
         final String body = SoapMessageSupport.getBody(httpServletRequest);
         final String identifier = SoapMessageSupport.extractSoapRequestName(body);
         final String serviceUri = httpServletRequest.getRequestURI().replace(getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
+        final List<HttpHeaderDto> httpHeaders = SoapMessageSupport.extractHttpHeaders(httpServletRequest);
 
         SoapVersion type = SoapVersion.SOAP11;
         if(SoapVersion.SOAP12.getContextPath().equalsIgnoreCase(httpServletRequest.getContextPath())){
@@ -109,14 +108,13 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
 
         request.setSoapVersion(type);
-        request.setContentType(httpServletRequest.getContentType());
+        request.setHttpHeaders(httpHeaders);
         request.setUri(serviceUri);
         request.setHttpMethod(HttpMethod.valueOf(httpServletRequest.getMethod()));
         request.setBody(body);
         request.setOperationIdentifier(identifier);
         return request;
     }
-
 
     /**
      * The process method is responsible for processing the incoming request and
@@ -193,10 +191,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         final SoapResponseDto response = new SoapResponseDto();
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
+        response.setHttpHeaders(mockResponse.getHttpHeaders());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
-        response.setContentType(mockResponse.getContentType());
         httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
-        httpServletResponse.setContentType(mockResponse.getContentType());
+        for(HttpHeaderDto httpHeader : mockResponse.getHttpHeaders()){
+            httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
+        }
         return response;
 
     }
@@ -216,7 +216,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
-        mockResponse.setContentType(response.getContentType());
+        mockResponse.setHttpHeaders(response.getHttpHeaders());
         serviceProcessor.process(new CreateRecordedSoapMockResponseInput(soapOperationDto.getId(), mockResponse));
         return response;
     }
@@ -252,7 +252,10 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod(request.getHttpMethod().name());
-            connection.setRequestProperty(CONTENT_TYPE, request.getContentType());
+            for(HttpHeaderDto httpHeader : request.getHttpHeaders()){
+                connection.addRequestProperty(httpHeader.getName(), httpHeader.getValue());
+            }
+
             outputStream = connection.getOutputStream();
             outputStream.write(request.getBody().getBytes());
             outputStream.flush();
@@ -265,10 +268,20 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 stringBuilder.append(buffer);
                 stringBuilder.append(NEW_LINE);
             }
+
+            final List<HttpHeaderDto> responseHttpHeaders = new ArrayList<HttpHeaderDto>();
+            for(String headerName : connection.getHeaderFields().keySet()){
+                final String headerValue = connection.getHeaderField(headerName);
+                final HttpHeaderDto responseHttpHeader = new HttpHeaderDto();
+                responseHttpHeader.setName(headerName);
+                responseHttpHeader.setValue(headerValue);
+                responseHttpHeaders.add(responseHttpHeader);
+            }
+
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setBody(stringBuilder.toString());
+            response.setHttpHeaders(responseHttpHeaders);
             response.setHttpStatusCode(connection.getResponseCode());
-            response.setContentType(connection.getContentType());
 
             return response;
         } catch (IOException exception) {

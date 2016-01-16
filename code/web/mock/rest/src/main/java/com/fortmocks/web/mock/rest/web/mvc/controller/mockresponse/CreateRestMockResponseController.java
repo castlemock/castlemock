@@ -41,7 +41,6 @@ public class CreateRestMockResponseController extends AbstractRestViewController
 
     private static final String PAGE = "mock/rest/mockresponse/createRestMockResponse";
     private static final Integer DEFAULT_HTTP_STATUS_CODE = 200;
-    private static final String DEFAULT_HTTP_CONTENT_TYPE = "application/json";
 
 
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
@@ -52,7 +51,6 @@ public class CreateRestMockResponseController extends AbstractRestViewController
         final RestMockResponseDto mockResponse = new RestMockResponseDto();
         mockResponse.setBody(output.getRestMethod().getDefaultBody());
         mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
-        mockResponse.setContentType(DEFAULT_HTTP_CONTENT_TYPE);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
