@@ -16,7 +16,7 @@
 
 package com.fortmocks.core.mock.rest.model.event.domain;
 
-import com.fortmocks.core.basis.model.HttpMethod;
+import com.fortmocks.core.basis.model.http.HttpMethod;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

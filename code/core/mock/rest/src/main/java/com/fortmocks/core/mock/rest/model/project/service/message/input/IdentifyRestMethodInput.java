@@ -16,7 +16,7 @@
 
 package com.fortmocks.core.mock.rest.model.project.service.message.input;
 
-import com.fortmocks.core.basis.model.HttpMethod;
+import com.fortmocks.core.basis.model.http.HttpMethod;
 import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.validation.NotNull;
 

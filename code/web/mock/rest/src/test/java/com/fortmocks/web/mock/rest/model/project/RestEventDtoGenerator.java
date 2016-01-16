@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.mock.rest.model.project;
 
-import com.fortmocks.core.basis.model.HttpMethod;
+import com.fortmocks.core.basis.model.http.HttpMethod;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;

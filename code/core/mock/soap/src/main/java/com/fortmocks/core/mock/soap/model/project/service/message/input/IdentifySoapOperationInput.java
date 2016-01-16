@@ -16,7 +16,7 @@
 
 package com.fortmocks.core.mock.soap.model.project.service.message.input;
 
-import com.fortmocks.core.basis.model.HttpMethod;
+import com.fortmocks.core.basis.model.http.HttpMethod;
 import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.validation.NotNull;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;

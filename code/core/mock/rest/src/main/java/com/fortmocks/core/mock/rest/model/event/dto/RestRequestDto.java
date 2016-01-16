@@ -16,7 +16,7 @@
 
 package com.fortmocks.core.mock.rest.model.event.dto;
 
-import com.fortmocks.core.basis.model.HttpMethod;
+import com.fortmocks.core.basis.model.http.HttpMethod;
 import org.dozer.Mapping;
 
 import java.util.Map;

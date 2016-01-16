@@ -16,7 +16,7 @@
 
 package com.fortmocks.core.mock.soap.model.event.domain;
 
-import com.fortmocks.core.basis.model.HttpMethod;
+import com.fortmocks.core.basis.model.http.HttpMethod;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;
 
 import javax.xml.bind.annotation.XmlElement;

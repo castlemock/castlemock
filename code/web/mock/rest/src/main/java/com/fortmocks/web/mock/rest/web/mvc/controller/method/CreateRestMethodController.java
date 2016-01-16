@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.mock.rest.web.mvc.controller.method;
 
-import com.fortmocks.core.basis.model.HttpMethod;
+import com.fortmocks.core.basis.model.http.HttpMethod;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestMethodInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestMethodOutput;
 import com.fortmocks.web.mock.rest.web.mvc.command.method.CreateRestMethodCommand;

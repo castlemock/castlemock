@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.basis.model;
+package com.fortmocks.core.basis.model.http;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
