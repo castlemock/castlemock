@@ -46,7 +46,7 @@ public class SoapEventDtoGenerator {
         soapRequestDto.setSoapVersion(SoapVersion.SOAP11);
 
         SoapResponseDto soapResponseDto = new SoapResponseDto();
-        soapResponseDto.setStatusCode(200);
+        soapResponseDto.setHttpStatusCode(200);
         soapResponseDto.setBody("Soap response body");
         soapResponseDto.setMockResponseName("MockResponseName");
 

@@ -135,7 +135,7 @@ public class WADLComponent {
                                 RestMockResponseDto restMockResponse = new RestMockResponseDto();
                                 restMockResponse.setContentType(DEFAULT_CONTENT_TYPE);
                                 restMockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
-                                restMockResponse.setStatusCode(200);
+                                restMockResponse.setHttpStatusCode(200);
                                 restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
                                 restMethodDto.getMockResponses().add(restMockResponse);
                             }

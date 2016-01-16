@@ -47,7 +47,7 @@ public class RestEventDtoGenerator {
         restRequestDto.setUri("URI");
 
         RestResponseDto restResponseDto = new RestResponseDto();
-        restResponseDto.setStatusCode(200);
+        restResponseDto.setHttpStatusCode(200);
         restResponseDto.setContentType("application/json");
         restResponseDto.setBody("REST response body");
         restResponseDto.setMockResponseName("Mock response name");

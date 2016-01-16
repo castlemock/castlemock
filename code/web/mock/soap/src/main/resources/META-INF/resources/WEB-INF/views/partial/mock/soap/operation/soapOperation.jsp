@@ -77,7 +77,7 @@
                                 <td><form:checkbox path="soapMockResponseIds" name="${soapMockResponse.id}" value="${soapMockResponse.id}"/></td>
                                 <td><a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/response/${soapMockResponse.id}"/>">${soapMockResponse.name}</a></td>
                                 <td><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponse.status}"/></td>
-                                <td>${soapMockResponse.statusCode}</td>
+                                <td>${soapMockResponse.httpStatusCode}</td>
                                 <td>${soapMockResponse.contentType}</td>
                             </tr>
                         </c:forEach>

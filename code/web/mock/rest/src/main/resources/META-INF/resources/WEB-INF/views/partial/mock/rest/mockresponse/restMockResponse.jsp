@@ -31,8 +31,8 @@
             <td class="column2"><form:input path="name" id="restMockResponseNameInput" /></td>
         </tr>
         <tr>
-            <td class="column1"><form:label path="statusCode"><spring:message code="rest.restmockresponse.label.httpstatuscode"/></form:label></td>
-            <td class="column2"><form:input path="statusCode" id="restMockResponseHttpResponseCodeInput"/></td>
+            <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.restmockresponse.label.httpstatuscode"/></form:label></td>
+            <td class="column2"><form:input path="httpStatusCode" id="restMockResponseHttpResponseCodeInput"/></td>
         </tr>
         <tr>
             <td class="column1"><spring:message code="rest.restmockresponse.label.restcontenttype"/></td>

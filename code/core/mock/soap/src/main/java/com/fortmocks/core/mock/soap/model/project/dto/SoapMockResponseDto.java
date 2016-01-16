@@ -37,8 +37,8 @@ public class SoapMockResponseDto {
     @Mapping("status")
     private SoapMockResponseStatus status;
 
-    @Mapping("statusCode")
-    private Integer statusCode;
+    @Mapping("httpStatusCode")
+    private Integer httpStatusCode;
 
     @Mapping("contentType")
     private String contentType;
@@ -75,12 +75,12 @@ public class SoapMockResponseDto {
         this.status = status;
     }
 
-    public Integer getStatusCode() {
-        return statusCode;
+    public Integer getHttpStatusCode() {
+        return httpStatusCode;
     }
 
-    public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
+    public void setHttpStatusCode(Integer httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
     }
 
     public String getContentType() {

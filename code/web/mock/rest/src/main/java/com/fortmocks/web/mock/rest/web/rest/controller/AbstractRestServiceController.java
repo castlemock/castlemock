@@ -232,7 +232,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             }
             response.setBody(stringBuilder.toString());
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
-            response.setStatusCode(connection.getResponseCode());
+            response.setHttpStatusCode(connection.getResponseCode());
             String contentType = connection.getHeaderField(CONTENT_TYPE);
             if(contentType != null){
                 response.setContentType(contentType);
@@ -277,7 +277,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         mockResponse.setBody(response.getBody());
         mockResponse.setStatus(RestMockResponseStatus.ENABLED);
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
-        mockResponse.setStatusCode(response.getStatusCode());
+        mockResponse.setHttpStatusCode(response.getHttpStatusCode());
         mockResponse.setContentType(response.getContentType());
         serviceProcessor.process(new CreateRecordedRestMockResponseInput(restMethod.getId(), mockResponse));
         return response;
@@ -335,9 +335,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final RestResponseDto response = new RestResponseDto();
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
-        response.setStatusCode(mockResponse.getStatusCode());
+        response.setHttpStatusCode(mockResponse.getHttpStatusCode());
         response.setContentType(mockResponse.getContentType());
-        httpServletResponse.setStatus(mockResponse.getStatusCode());
+        httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
         httpServletResponse.setContentType(mockResponse.getContentType());
         httpServletResponse.setHeader(CONTENT_TYPE, mockResponse.getContentType());
         return response;

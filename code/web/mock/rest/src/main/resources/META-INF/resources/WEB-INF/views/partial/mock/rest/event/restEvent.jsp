@@ -39,7 +39,7 @@
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.event.column.request.methodtype"/></label></td>
-            <td class="column2"><label path="name">${event.request.methodType}</label></td>
+            <td class="column2"><label path="name">${event.request.httpMethod}</label></td>
         </tr>
     </table>
 </div>
@@ -62,7 +62,7 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.event.column.response.statuscode"/></label></td>
-            <td class="column2"><label path="name">${event.response.statusCode}</label></td>
+            <td class="column2"><label path="name">${event.response.httpStatusCode}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.event.column.response.contenttype"/></label></td>

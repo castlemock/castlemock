@@ -48,7 +48,7 @@ public class SoapPort implements Saveable<String> {
     }
 
     @XmlElementWrapper(name = "operations")
-    @XmlElement(name = "soapOperation")
+    @XmlElement(name = "operation")
     public List<SoapOperation> getOperations() {
         return operations;
     }

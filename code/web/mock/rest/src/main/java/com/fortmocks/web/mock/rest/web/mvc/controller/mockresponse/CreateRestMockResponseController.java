@@ -51,7 +51,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
 
         final RestMockResponseDto mockResponse = new RestMockResponseDto();
         mockResponse.setBody(output.getRestMethod().getDefaultBody());
-        mockResponse.setStatusCode(DEFAULT_HTTP_STATUS_CODE);
+        mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
         mockResponse.setContentType(DEFAULT_HTTP_CONTENT_TYPE);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);

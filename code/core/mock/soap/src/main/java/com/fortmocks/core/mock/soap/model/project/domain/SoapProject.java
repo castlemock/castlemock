@@ -33,7 +33,7 @@ public class SoapProject extends Project {
     private List<SoapPort> ports;
 
     @XmlElementWrapper(name = "ports")
-    @XmlElement(name = "soapPort")
+    @XmlElement(name = "port")
     public List<SoapPort> getPorts() {
         return ports;
     }

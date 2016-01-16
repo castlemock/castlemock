@@ -193,8 +193,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         final SoapResponseDto response = new SoapResponseDto();
         response.setBody(mockResponse.getBody());
         response.setMockResponseName(mockResponse.getName());
-        response.setStatusCode(mockResponse.getStatusCode());
-        httpServletResponse.setStatus(mockResponse.getStatusCode());
+        response.setHttpStatusCode(mockResponse.getHttpStatusCode());
+        httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
         httpServletResponse.setContentType(mockResponse.getContentType());
         return response;
 
@@ -214,7 +214,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         mockResponse.setBody(response.getBody());
         mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
-        mockResponse.setStatusCode(response.getStatusCode());
+        mockResponse.setHttpStatusCode(response.getHttpStatusCode());
         mockResponse.setContentType(response.getContentType());
         serviceProcessor.process(new CreateRecordedSoapMockResponseInput(soapOperationDto.getId(), mockResponse));
         return response;
@@ -266,7 +266,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             }
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setBody(stringBuilder.toString());
-            response.setStatusCode(connection.getResponseCode());
+            response.setHttpStatusCode(connection.getResponseCode());
             response.setContentType(connection.getContentType());
 
             return response;

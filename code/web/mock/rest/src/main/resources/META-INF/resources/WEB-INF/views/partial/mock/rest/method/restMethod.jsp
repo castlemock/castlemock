@@ -81,7 +81,7 @@
                                 <td><form:checkbox path="restMockResponseIds" name="${restMockResponse.id}" value="${restMockResponse.id}"/></td>
                                 <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
                                 <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.status}"/></td>
-                                <td>${restMockResponse.statusCode}</td>
+                                <td>${restMockResponse.httpStatusCode}</td>
                                 <td>${restMockResponse.contentType}</td>
                             </tr>
                         </c:forEach>

@@ -33,7 +33,7 @@ public class SoapMockResponse implements Saveable<String> {
     private String id;
     private String name;
     private String body;
-    private Integer statusCode;
+    private Integer httpStatusCode;
     private String contentType;
     private SoapMockResponseStatus status;
 
@@ -75,12 +75,12 @@ public class SoapMockResponse implements Saveable<String> {
         this.status = status;
     }
 
-    public Integer getStatusCode() {
-        return statusCode;
+    public Integer getHttpStatusCode() {
+        return httpStatusCode;
     }
 
-    public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
+    public void setHttpStatusCode(Integer httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
     }
 
     public String getContentType() {

@@ -53,7 +53,7 @@ public class RestApplication implements Saveable<String> {
     }
 
     @XmlElementWrapper(name = "resources")
-    @XmlElement(name = "resources")
+    @XmlElement(name = "resource")
     public List<RestResource> getResources() {
         return resources;
     }

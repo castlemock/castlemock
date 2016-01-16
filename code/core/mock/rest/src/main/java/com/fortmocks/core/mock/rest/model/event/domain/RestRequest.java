@@ -33,7 +33,6 @@ public class RestRequest {
     private String contentType;
     private String uri;
     private HttpMethod httpMethod;
-    private String serviceName;
     private Map<String, String> parameters;
 
     @XmlElement
@@ -70,15 +69,6 @@ public class RestRequest {
 
     public void setHttpMethod(HttpMethod httpMethod) {
         this.httpMethod = httpMethod;
-    }
-
-    @XmlElement
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
     }
 
     @XmlElement

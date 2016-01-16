@@ -49,7 +49,7 @@ public class UpdateSoapMockResponseService extends AbstractSoapProjectService im
         final SoapMockResponse soapMockResponse = findSoapMockResponseType(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId(), input.getSoapMockResponseId());
         soapMockResponse.setName(updatedSoapMockResponse.getName());
         soapMockResponse.setBody(updatedSoapMockResponse.getBody());
-        soapMockResponse.setStatusCode(updatedSoapMockResponse.getStatusCode());
+        soapMockResponse.setHttpStatusCode(updatedSoapMockResponse.getHttpStatusCode());
         soapMockResponse.setContentType(updatedSoapMockResponse.getContentType());
         return createServiceResult(new UpdateSoapMockResponseOutput(updatedSoapMockResponse));
     }
