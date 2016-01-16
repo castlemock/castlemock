@@ -18,6 +18,7 @@ package com.fortmocks.core.mock.rest.model.event.domain;
 
 import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
+import com.fortmocks.core.basis.model.http.domain.HttpParameter;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -36,7 +37,7 @@ public class RestRequest {
     private String contentType;
     private String uri;
     private HttpMethod httpMethod;
-    private Map<String, String> parameters;
+    private List<HttpParameter> httpParameters;
     private List<HttpHeader> httpHeaders;
 
     @XmlElement
@@ -85,13 +86,13 @@ public class RestRequest {
         this.httpHeaders = httpHeaders;
     }
 
-    @XmlElementWrapper(name = "parameters")
-    @XmlElement(name = "parameter")
-    public Map<String, String> getParameters() {
-        return parameters;
+    @XmlElementWrapper(name = "httpParameters")
+    @XmlElement(name = "httpParameter")
+    public List<HttpParameter> getHttpParameters() {
+        return httpParameters;
     }
 
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
+    public void setHttpParameters(List<HttpParameter> httpParameters) {
+        this.httpParameters = httpParameters;
     }
 }

@@ -17,12 +17,14 @@
 package com.fortmocks.web.mock.rest.model.project;
 
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
+import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
+import com.fortmocks.core.basis.model.http.dto.HttpParameterDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 
 /**
@@ -42,7 +44,8 @@ public class RestEventDtoGenerator {
         restRequestDto.setHttpMethod(HttpMethod.GET);
         restRequestDto.setBody("REST request body");
         restRequestDto.setContentType("application/json");
-        restRequestDto.setParameters(new HashMap<String, String>());
+        restRequestDto.setHttpHeaders(new ArrayList<HttpHeaderDto>());
+        restRequestDto.setHttpParameters(new ArrayList<HttpParameterDto>());
         restRequestDto.setServiceName("Service name");
         restRequestDto.setUri("URI");
 

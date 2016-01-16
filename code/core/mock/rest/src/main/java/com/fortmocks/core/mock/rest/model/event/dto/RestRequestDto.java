@@ -18,6 +18,7 @@ package com.fortmocks.core.mock.rest.model.event.dto;
 
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
 import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
+import com.fortmocks.core.basis.model.http.dto.HttpParameterDto;
 import org.dozer.Mapping;
 
 import java.util.List;
@@ -47,8 +48,8 @@ public class RestRequestDto {
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders;
 
-    @Mapping("parameters")
-    private Map<String, String> parameters;
+    @Mapping("httpParameters")
+    private List<HttpParameterDto> httpParameters;
 
     public String getBody() {
         return body;
@@ -98,11 +99,11 @@ public class RestRequestDto {
         this.httpHeaders = httpHeaders;
     }
 
-    public Map<String, String> getParameters() {
-        return parameters;
+    public List<HttpParameterDto> getHttpParameters() {
+        return httpParameters;
     }
 
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
+    public void setHttpParameters(List<HttpParameterDto> httpParameters) {
+        this.httpParameters = httpParameters;
     }
 }

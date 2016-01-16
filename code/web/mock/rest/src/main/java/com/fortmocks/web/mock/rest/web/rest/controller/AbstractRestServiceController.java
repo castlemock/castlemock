@@ -16,9 +16,9 @@
 
 package com.fortmocks.web.mock.rest.web.rest.controller;
 
-import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
 import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
+import com.fortmocks.core.basis.model.http.dto.HttpParameterDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
@@ -36,7 +36,6 @@ import com.fortmocks.core.mock.rest.model.project.service.message.output.Identif
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.rest.model.RestException;
 import com.google.common.base.Preconditions;
-import org.apache.commons.collections.iterators.IteratorEnumeration;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -107,13 +106,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final String body = RestMessageSupport.getBody(httpServletRequest);
         final String incomingRequestUri = httpServletRequest.getRequestURI().toLowerCase();
         final String restResourceUri = incomingRequestUri.replace(getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId.toLowerCase() + SLASH + APPLICATION + SLASH + applicationId.toLowerCase(), EMPTY);
-        final Map<String, String> parameters = extractParameters(httpServletRequest);
+        final List<HttpParameterDto> httpParameters = extractParameters(httpServletRequest);
         final List<HttpHeaderDto> httpHeaders = extractHttpHeaders(httpServletRequest);
 
         request.setHttpMethod(httpMethod);
         request.setBody(body);
         request.setUri(restResourceUri);
-        request.setParameters(parameters);
+        request.setHttpParameters(httpParameters);
         request.setHttpHeaders(httpHeaders);
         return request;
     }
@@ -124,16 +123,18 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param httpServletRequest The incoming request which contains all the parameters
      * @return A map with the extracted parameters
      */
-    protected Map<String, String> extractParameters(final HttpServletRequest httpServletRequest){
-        final Map<String, String> parameters = new HashMap<>();
+    protected List<HttpParameterDto> extractParameters(final HttpServletRequest httpServletRequest){
+        final List<HttpParameterDto> httpParameters = new ArrayList<HttpParameterDto>();
 
         final Enumeration<String> enumeration = httpServletRequest.getParameterNames();
         while(enumeration.hasMoreElements()){
-            String parameterName = enumeration.nextElement();
-            String parameterValue = httpServletRequest.getParameter(parameterName);
-            parameters.put(parameterName, parameterValue);
+            final HttpParameterDto httpParameter = new HttpParameterDto();
+            final String parameterName = enumeration.nextElement();
+            final String parameterValue = httpServletRequest.getParameter(parameterName);
+            httpParameter.setName(parameterName);
+            httpParameter.setValue(parameterValue);
         }
-        return parameters;
+        return httpParameters;
     }
 
     /**
@@ -159,22 +160,23 @@ public abstract class AbstractRestServiceController extends AbstractController {
     /**
      * Builds a parameter URL string passed on the provided parameter map.
      * Example on the output: ?name1=value1&name2=value2
-     * @param parameters The Map of parameters that will be used to build the parameter URI
+     * @param httpParameters The Map of parameters that will be used to build the parameter URI
      * @return A URI that contains the parameters from the provided Map
      */
-    protected String buildParameterUri(Map<String, String> parameters){
-        if(parameters.isEmpty()){
+    protected String buildParameterUri(List<HttpParameterDto> httpParameters){
+        if(httpParameters.isEmpty()){
             return EMPTY;
         }
-        final Enumeration<String> enumeration = new IteratorEnumeration(parameters.keySet().iterator());
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("?");
-        while(enumeration.hasMoreElements()){
-            String parameterName = enumeration.nextElement();
-            String parameterValue = parameters.get(parameterName);
+        for(int index = 0; index < httpParameters.size(); index++){
+            HttpParameterDto httpParameter = httpParameters.get(index);
+            String parameterName = httpParameter.getName();
+            String parameterValue = httpParameter.getValue();
             stringBuilder.append(parameterName + "=" + parameterValue);
 
-            if(enumeration.hasMoreElements()){
+            // Add a & (and) character if the Http parameter is not the last one
+            if(index < httpParameters.size() - 1){
                 stringBuilder.append("&");
             }
         }
@@ -229,7 +231,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         OutputStream outputStream = null;
         BufferedReader bufferedReader = null;
         try {
-            final String parameterUri = buildParameterUri(restRequest.getParameters());
+            final String parameterUri = buildParameterUri(restRequest.getHttpParameters());
             final URL url = new URL(restMethod.getForwardedEndpoint() + restRequest.getUri() + parameterUri);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
