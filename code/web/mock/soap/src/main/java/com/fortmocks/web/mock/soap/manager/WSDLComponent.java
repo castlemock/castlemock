@@ -16,6 +16,7 @@
 
 package com.fortmocks.web.mock.soap.manager;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.soap.model.project.domain.*;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
@@ -149,11 +150,11 @@ public class WSDLComponent {
                         final Element portElement = (Element) portNode;
 
                         String soapOperationAddress = extractSoapAddress(portElement, SOAP_11_NAMESPACE);
-                        SoapOperationType soapOperationType = SoapOperationType.SOAP11;
+                        SoapVersion soapOperationVersion = SoapVersion.SOAP11;
 
                         if(soapOperationAddress == null){
                             soapOperationAddress = extractSoapAddress(portElement, SOAP_12_NAMESPACE);
-                            soapOperationType = SoapOperationType.SOAP12;
+                            soapOperationVersion = SoapVersion.SOAP12;
                         }
                         if(soapOperationAddress == null){
                             // The port element is not a SOAP port
@@ -162,10 +163,10 @@ public class WSDLComponent {
 
                         final String portName = getAttribute(portElement, "name");
                         final String portBinding = getAttribute(portElement, "binding");
-                        final List<SoapOperationDto> soapOperations = getSoapOperations(document, portBinding, soapOperationAddress, soapOperationType, generateResponse);
+                        final List<SoapOperationDto> soapOperations = getSoapOperations(document, portBinding, soapOperationAddress, soapOperationVersion, generateResponse);
                         final SoapPortDto soapPort = new SoapPortDto();
                         soapPort.setName(portName);
-                        soapPort.setSoapOperations(soapOperations);
+                        soapPort.setOperations(soapOperations);
                         soapPort.setUrlPath(portName);
                         soapPorts.add(soapPort);
 
@@ -181,12 +182,12 @@ public class WSDLComponent {
      * @param document The document which will be parsed
      * @param soapPortBinding The SOAP port binding which the operations belongs to
      * @param soapOperationAddress The address that will be assigned as the default address to the operations
-     * @param soapOperationType The SOAP operation type (SOAP 11 or SOAP 12)
+     * @param soapVersion The SOAP operation version (SOAP 11 or SOAP 12)
      * @param generateResponse Boolean value determining if a response should be generated for each extracted
       *                         operation.
      * @return A list of extracted SOAP operations
      */
-    private List<SoapOperationDto> getSoapOperations(final Document document, final String soapPortBinding, final String soapOperationAddress, final SoapOperationType soapOperationType, final boolean generateResponse){
+    private List<SoapOperationDto> getSoapOperations(final Document document, final String soapPortBinding, final String soapOperationAddress, final SoapVersion soapVersion, final boolean generateResponse){
         final List<SoapOperationDto> soapOperations = new LinkedList<SoapOperationDto>();
         final Element bindingElement = findElement(document, WSDL_NAMESPACE, "binding", soapPortBinding);
         if(bindingElement == null){
@@ -217,22 +218,22 @@ public class WSDLComponent {
 
                 soapOperation.setName(operationName);
                 soapOperation.setIdentifier(identifier);
-                soapOperation.setSoapOperationMethod(SoapOperationMethod.POST);
-                soapOperation.setSoapOperationStatus(SoapOperationStatus.MOCKED);
-                soapOperation.setSoapResponseStrategy(SoapResponseStrategy.RANDOM);
+                soapOperation.setHttpMethod(HttpMethod.POST);
+                soapOperation.setStatus(SoapOperationStatus.MOCKED);
+                soapOperation.setResponseStrategy(SoapResponseStrategy.RANDOM);
                 soapOperation.setForwardedEndpoint(soapOperationAddress);
                 soapOperation.setOriginalEndpoint(soapOperationAddress);
-                soapOperation.setSoapOperationType(soapOperationType);
-                soapOperation.setSoapMockResponses(new ArrayList<SoapMockResponseDto>());
+                soapOperation.setSoapVersion(soapVersion);
+                soapOperation.setMockResponses(new ArrayList<SoapMockResponseDto>());
                 soapOperation.setDefaultBody(defaultBody);
                 soapOperation.setCurrentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX);
                 if(generateResponse){
                     final SoapMockResponseDto mockResponse = new SoapMockResponseDto();
                     mockResponse.setBody(soapOperation.getDefaultBody());
-                    mockResponse.setSoapMockResponseStatus(SoapMockResponseStatus.ENABLED);
+                    mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
                     mockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
-                    mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
-                    soapOperation.getSoapMockResponses().add(mockResponse);
+                    mockResponse.setStatusCode(DEFAULT_HTTP_STATUS_CODE);
+                    soapOperation.getMockResponses().add(mockResponse);
                 }
 
                 soapOperations.add(soapOperation);

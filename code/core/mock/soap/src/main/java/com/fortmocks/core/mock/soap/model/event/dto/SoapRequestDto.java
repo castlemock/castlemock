@@ -16,8 +16,8 @@
 
 package com.fortmocks.core.mock.soap.model.event.dto;
 
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationMethod;
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationType;
+import com.fortmocks.core.basis.model.HttpMethod;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;
 import org.dozer.Mapping;
 
 /**
@@ -35,17 +35,17 @@ public class SoapRequestDto {
     @Mapping("uri")
     private String uri;
 
-    @Mapping("soapOperationMethod")
-    private SoapOperationMethod soapOperationMethod;
+    @Mapping("httpMethod")
+    private HttpMethod httpMethod;
 
-    @Mapping("soapOperationName")
-    private String soapOperationName;
+    @Mapping("operationName")
+    private String operationName;
 
-    @Mapping("soapOperationIdentifier")
-    private String soapOperationIdentifier;
+    @Mapping("operationIdentifier")
+    private String operationIdentifier;
 
-    @Mapping("soapOperationType")
-    private SoapOperationType soapOperationType;
+    @Mapping("soapVersion")
+    private SoapVersion soapVersion;
 
     public String getBody() {
         return body;
@@ -71,35 +71,35 @@ public class SoapRequestDto {
         this.uri = uri;
     }
 
-    public SoapOperationMethod getSoapOperationMethod() {
-        return soapOperationMethod;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setSoapOperationMethod(SoapOperationMethod soapOperationMethod) {
-        this.soapOperationMethod = soapOperationMethod;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
-    public String getSoapOperationName() {
-        return soapOperationName;
+    public String getOperationName() {
+        return operationName;
     }
 
-    public void setSoapOperationName(String soapOperationName) {
-        this.soapOperationName = soapOperationName;
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
     }
 
-    public String getSoapOperationIdentifier() {
-        return soapOperationIdentifier;
+    public String getOperationIdentifier() {
+        return operationIdentifier;
     }
 
-    public void setSoapOperationIdentifier(String soapOperationIdentifier) {
-        this.soapOperationIdentifier = soapOperationIdentifier;
+    public void setOperationIdentifier(String operationIdentifier) {
+        this.operationIdentifier = operationIdentifier;
     }
 
-    public SoapOperationType getSoapOperationType() {
-        return soapOperationType;
+    public SoapVersion getSoapVersion() {
+        return soapVersion;
     }
 
-    public void setSoapOperationType(SoapOperationType soapOperationType) {
-        this.soapOperationType = soapOperationType;
+    public void setSoapVersion(SoapVersion soapVersion) {
+        this.soapVersion = soapVersion;
     }
 }

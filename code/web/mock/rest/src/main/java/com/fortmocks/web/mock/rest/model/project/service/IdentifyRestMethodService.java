@@ -48,7 +48,7 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
         RestMethodDto restMethodDto = null;
         if(restResource != null){
             for(RestMethod restMethod : restResource.getMethods()){
-                if(input.getRestMethodType().equals(restMethod.getType())) {
+                if(input.getHttpMethod().equals(restMethod.getHttpMethod())) {
                     restMethodDto = mapper.map(restMethod, RestMethodDto.class);
                 }
             }

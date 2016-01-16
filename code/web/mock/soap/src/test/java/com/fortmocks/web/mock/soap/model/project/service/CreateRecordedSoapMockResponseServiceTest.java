@@ -40,12 +40,12 @@ public class CreateRecordedSoapMockResponseServiceTest {
         final SoapOperation soapOperation = new SoapOperation();
         soapOperation.setId(new String());
 
-        soapProject.setSoapPorts(new ArrayList<SoapPort>());
-        soapPort.setSoapOperations(new ArrayList<SoapOperation>());
-        soapOperation.setSoapMockResponses(new ArrayList<SoapMockResponse>());
+        soapProject.setPorts(new ArrayList<SoapPort>());
+        soapPort.setOperations(new ArrayList<SoapOperation>());
+        soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
 
-        soapProject.getSoapPorts().add(soapPort);
-        soapPort.getSoapOperations().add(soapOperation);
+        soapProject.getPorts().add(soapPort);
+        soapPort.getOperations().add(soapOperation);
 
         List<SoapProject> soapProjects = new ArrayList<SoapProject>();
         soapProjects.add(soapProject);

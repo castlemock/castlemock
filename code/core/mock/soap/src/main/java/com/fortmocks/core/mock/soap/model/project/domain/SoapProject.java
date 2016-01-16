@@ -30,16 +30,16 @@ import java.util.List;
 @XmlRootElement
 public class SoapProject extends Project {
 
-    private List<SoapPort> soapPorts;
+    private List<SoapPort> ports;
 
-    @XmlElementWrapper(name = "soapPorts")
+    @XmlElementWrapper(name = "ports")
     @XmlElement(name = "soapPort")
-    public List<SoapPort> getSoapPorts() {
-        return soapPorts;
+    public List<SoapPort> getPorts() {
+        return ports;
     }
 
-    public void setSoapPorts(List<SoapPort> soapPorts) {
-        this.soapPorts = soapPorts;
+    public void setPorts(List<SoapPort> ports) {
+        this.ports = ports;
     }
 
 }

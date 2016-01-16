@@ -16,9 +16,9 @@
 
 package com.fortmocks.web.mock.soap.model.project;
 
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationMethod;
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationType;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 
 /**
@@ -36,9 +36,9 @@ public class SoapOperationDtoGenerator {
         soapOperationDto.setForwardedEndpoint("Forwarded event");
         soapOperationDto.setInvokeAddress("Invoke address");
         soapOperationDto.setOriginalEndpoint("Original endpoint");
-        soapOperationDto.setSoapOperationMethod(SoapOperationMethod.POST);
-        soapOperationDto.setSoapOperationStatus(SoapOperationStatus.MOCKED);
-        soapOperationDto.setSoapOperationType(SoapOperationType.SOAP11);
+        soapOperationDto.setHttpMethod(HttpMethod.POST);
+        soapOperationDto.setStatus(SoapOperationStatus.MOCKED);
+        soapOperationDto.setSoapVersion(SoapVersion.SOAP11);
         return soapOperationDto;
     }
 }

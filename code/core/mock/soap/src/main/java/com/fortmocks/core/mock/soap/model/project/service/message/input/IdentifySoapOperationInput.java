@@ -16,10 +16,10 @@
 
 package com.fortmocks.core.mock.soap.model.project.service.message.input;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.validation.NotNull;
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationMethod;
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationType;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;
 
 /**
  * @author Karl Dahlgren
@@ -34,15 +34,15 @@ public class IdentifySoapOperationInput implements Input {
     @NotNull
     private String uri;
     @NotNull
-    private SoapOperationMethod soapOperationMethod;
+    private HttpMethod httpMethod;
     @NotNull
-    private SoapOperationType type;
+    private SoapVersion type;
 
-    public IdentifySoapOperationInput(String soapProjectId, String soapOperationIdentifier, String uri, SoapOperationMethod soapOperationMethod, SoapOperationType type) {
+    public IdentifySoapOperationInput(String soapProjectId, String soapOperationIdentifier, String uri, HttpMethod httpMethod, SoapVersion type) {
         this.soapProjectId = soapProjectId;
         this.soapOperationIdentifier = soapOperationIdentifier;
         this.uri = uri;
-        this.soapOperationMethod = soapOperationMethod;
+        this.httpMethod = httpMethod;
         this.type = type;
     }
 
@@ -70,19 +70,19 @@ public class IdentifySoapOperationInput implements Input {
         this.uri = uri;
     }
 
-    public SoapOperationMethod getSoapOperationMethod() {
-        return soapOperationMethod;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setSoapOperationMethod(SoapOperationMethod soapOperationMethod) {
-        this.soapOperationMethod = soapOperationMethod;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
-    public SoapOperationType getType() {
+    public SoapVersion getType() {
         return type;
     }
 
-    public void setType(SoapOperationType type) {
+    public void setType(SoapVersion type) {
         this.type = type;
     }
 }

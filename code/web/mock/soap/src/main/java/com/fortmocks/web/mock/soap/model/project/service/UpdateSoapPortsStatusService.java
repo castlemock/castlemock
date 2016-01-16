@@ -45,7 +45,7 @@ public class UpdateSoapPortsStatusService extends AbstractSoapProjectService imp
         final UpdateSoapPortsStatusInput input = serviceTask.getInput();
         final List<SoapOperation> soapOperations = findSoapOperationType(input.getSoapProjectId(), input.getSoapPortId());
         for(SoapOperation soapOperation : soapOperations){
-            soapOperation.setSoapOperationStatus(input.getSoapOperationStatus());
+            soapOperation.setStatus(input.getSoapOperationStatus());
         }
         save(input.getSoapProjectId());
         return createServiceResult(new UpdateSoapPortsStatusOutput());

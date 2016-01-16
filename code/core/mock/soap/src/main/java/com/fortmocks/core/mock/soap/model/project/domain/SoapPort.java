@@ -34,7 +34,7 @@ public class SoapPort implements Saveable<String> {
     private String id;
     private String name;
     private String urlPath;
-    private List<SoapOperation> soapOperations;
+    private List<SoapOperation> operations;
 
     @XmlElement
     @Override
@@ -47,14 +47,14 @@ public class SoapPort implements Saveable<String> {
         this.id = id;
     }
 
-    @XmlElementWrapper(name = "soapOperations")
+    @XmlElementWrapper(name = "operations")
     @XmlElement(name = "soapOperation")
-    public List<SoapOperation> getSoapOperations() {
-        return soapOperations;
+    public List<SoapOperation> getOperations() {
+        return operations;
     }
 
-    public void setSoapOperations(List<SoapOperation> soapOperations) {
-        this.soapOperations = soapOperations;
+    public void setOperations(List<SoapOperation> operations) {
+        this.operations = operations;
     }
 
     @XmlElement

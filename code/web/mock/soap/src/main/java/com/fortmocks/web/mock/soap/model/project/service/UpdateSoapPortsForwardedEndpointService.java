@@ -45,7 +45,7 @@ public class UpdateSoapPortsForwardedEndpointService extends AbstractSoapProject
         final UpdateSoapPortsForwardedEndpointInput input = serviceTask.getInput();
         for(SoapPortDto soapPortDto : input.getSoapPorts()){
             SoapPort soapPort = findSoapPortType(input.getSoapProjectId(), soapPortDto.getId());
-            for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+            for(SoapOperation soapOperation : soapPort.getOperations()){
                 soapOperation.setForwardedEndpoint(input.getForwardedEndpoint());
             }
         }

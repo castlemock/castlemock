@@ -116,7 +116,7 @@ public abstract class AbstractViewController extends AbstractController {
      * @see ContentItem
      * @see ContentItemGroup
      */
-    private final ContentItemGroup createMainContentItemGroup(){
+    private ContentItemGroup createMainContentItemGroup(){
         final String mainTitle = messageSource.getMessage("general.menu.title.main", null, LocaleContextHolder.getLocale());
         final String homeTitle = messageSource.getMessage("general.menu.item.home", null, LocaleContextHolder.getLocale());
         final String userTitle = getLoggedInUsername();
@@ -151,7 +151,7 @@ public abstract class AbstractViewController extends AbstractController {
      * @see ContentItem
      * @see ContentItemGroup
      */
-    private final ContentItemGroup createPageContentItemGroup(final List<ContentItem> contentItems){
+    private ContentItemGroup createPageContentItemGroup(final List<ContentItem> contentItems){
         final String pageTitle = messageSource.getMessage("general.menu.title.page", null, LocaleContextHolder.getLocale());
         ContentItemGroup contentItemGroup = null;
 

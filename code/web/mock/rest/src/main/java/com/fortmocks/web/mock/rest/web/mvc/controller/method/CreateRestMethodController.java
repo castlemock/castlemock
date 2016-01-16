@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.mock.rest.web.mvc.controller.method;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.CreateRestMethodInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.CreateRestMethodOutput;
 import com.fortmocks.web.mock.rest.web.mvc.command.method.CreateRestMethodCommand;
@@ -48,7 +48,7 @@ public class CreateRestMethodController extends AbstractRestViewController {
         model.addObject(REST_APPLICATION_ID, applicationId);
         model.addObject(REST_RESOURCE_ID, resourceId);
         model.addObject(REST_METHOD, new CreateRestMethodCommand());
-        model.addObject(REST_METHOD_TYPES, RestMethodType.values());
+        model.addObject(REST_METHOD_TYPES, HttpMethod.values());
         return model;
     }
 

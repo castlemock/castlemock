@@ -79,7 +79,7 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
                         continue;
                     }
 
-                    existingRestMethod.setType(newRestMethod.getType());
+                    existingRestMethod.setHttpMethod(newRestMethod.getHttpMethod());
                     restMethods.add(newRestMethod);
                 }
                 existingRestResource.setMethods(restMethods);

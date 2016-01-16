@@ -16,8 +16,8 @@
 
 package com.fortmocks.core.mock.soap.model.event.domain;
 
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationMethod;
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationType;
+import com.fortmocks.core.basis.model.HttpMethod;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,10 +32,10 @@ public class SoapRequest {
     private String body;
     private String contentType;
     private String uri;
-    private SoapOperationMethod soapOperationMethod;
-    private String soapOperationName;
-    private String soapOperationIdentifier;
-    private SoapOperationType soapOperationType;
+    private HttpMethod httpMethod;
+    private String operationName;
+    private String operationIdentifier;
+    private SoapVersion soapVersion;
 
     @XmlElement
     public String getBody() {
@@ -65,38 +65,38 @@ public class SoapRequest {
     }
 
     @XmlElement
-    public SoapOperationMethod getSoapOperationMethod() {
-        return soapOperationMethod;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setSoapOperationMethod(SoapOperationMethod soapOperationMethod) {
-        this.soapOperationMethod = soapOperationMethod;
-    }
-
-    @XmlElement
-    public String getSoapOperationName() {
-        return soapOperationName;
-    }
-
-    public void setSoapOperationName(String soapOperationName) {
-        this.soapOperationName = soapOperationName;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
     @XmlElement
-    public String getSoapOperationIdentifier() {
-        return soapOperationIdentifier;
+    public String getOperationName() {
+        return operationName;
     }
 
-    public void setSoapOperationIdentifier(String soapOperationIdentifier) {
-        this.soapOperationIdentifier = soapOperationIdentifier;
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
     }
 
     @XmlElement
-    public SoapOperationType getSoapOperationType() {
-        return soapOperationType;
+    public String getOperationIdentifier() {
+        return operationIdentifier;
     }
 
-    public void setSoapOperationType(SoapOperationType soapOperationType) {
-        this.soapOperationType = soapOperationType;
+    public void setOperationIdentifier(String operationIdentifier) {
+        this.operationIdentifier = operationIdentifier;
+    }
+
+    @XmlElement
+    public SoapVersion getSoapVersion() {
+        return soapVersion;
+    }
+
+    public void setSoapVersion(SoapVersion soapVersion) {
+        this.soapVersion = soapVersion;
     }
 }

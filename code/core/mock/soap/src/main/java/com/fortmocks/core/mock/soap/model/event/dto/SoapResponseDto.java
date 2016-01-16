@@ -31,11 +31,11 @@ public class SoapResponseDto {
     @Mapping("mockResponseName")
     private String mockResponseName;
 
-    @Mapping("httpStatusCode")
-    private Integer httpStatusCode;
+    @Mapping("statusCode")
+    private Integer statusCode;
 
-    @Mapping("httpContentType")
-    private String httpContentType;
+    @Mapping("contentType")
+    private String contentType;
 
     public String getBody() {
         return body;
@@ -53,19 +53,19 @@ public class SoapResponseDto {
         this.mockResponseName = mockResponseName;
     }
 
-    public Integer getHttpStatusCode() {
-        return httpStatusCode;
+    public Integer getStatusCode() {
+        return statusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public String getHttpContentType() {
-        return httpContentType;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setHttpContentType(String httpContentType) {
-        this.httpContentType = httpContentType;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

@@ -90,7 +90,7 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
         }
 
 
-        for(SoapPort soapPort : soapProject.getSoapPorts()){
+        for(SoapPort soapPort : soapProject.getPorts()){
             List<SearchResult> soapOperationSearchResult = searchSoapPort(soapProject, soapPort, query);
             searchResults.addAll(soapOperationSearchResult);
         }
@@ -115,7 +115,7 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
             searchResults.add(searchResult);
         }
 
-        for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+        for(SoapOperation soapOperation : soapPort.getOperations()){
             List<SearchResult> soapOperationSearchResult = searchSoapOperation(soapProject, soapPort, soapOperation, query);
             searchResults.addAll(soapOperationSearchResult);
         }
@@ -141,7 +141,7 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
             searchResults.add(searchResult);
         }
 
-        for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
+        for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
             SearchResult soapMockResponseSearchResult = searchSoapMockResponse(soapProject, soapPort, soapOperation, soapMockResponse, query);
             if(soapMockResponseSearchResult != null){
                 searchResults.add(soapMockResponseSearchResult);

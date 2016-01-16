@@ -28,7 +28,7 @@
         <tr>
             <td class="column1"><spring:message code="rest.updatemethod.label.methodtype"/></td>
             <td>
-                <form:select path="type">
+                <form:select path="httpMethod">
                     <c:forEach items="${restMethodTypes}" var="type">
                         <option value="${type}">${type}</option>
                     </c:forEach>

@@ -87,17 +87,17 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Strin
      */
     @Override
     public SoapProject save(final SoapProject type) {
-        for(SoapPort soapPort : type.getSoapPorts()){
+        for(SoapPort soapPort : type.getPorts()){
             if(soapPort.getId() == null){
                 String soapPortId = generateId();
                 soapPort.setId(soapPortId);
             }
-            for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+            for(SoapOperation soapOperation : soapPort.getOperations()){
                 if(soapOperation.getId() == null){
                     String soapOperationId = generateId();
                     soapOperation.setId(soapOperationId);
                 }
-                for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
+                for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
                     if(soapMockResponse.getId() == null){
                         String soapMockResponseId = generateId();
                         soapMockResponse.setId(soapMockResponseId);

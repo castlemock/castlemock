@@ -8,7 +8,7 @@
         <tr>
             <td class="column1"><spring:message code="soap.updatesoapoperation.label.status"/></td>
             <td>
-                <form:select path="soapOperationStatus">
+                <form:select path="status">
                     <c:forEach items="${soapOperationStatuses}" var="soapOperationStatus">
                         <option value="${soapOperationStatus}"><spring:message code="soap.type.soapoperationstatus.${soapOperationStatus}"/></option>
                     </c:forEach>
@@ -18,7 +18,7 @@
         <tr>
             <td class="column1"><spring:message code="soap.updatesoapoperation.label.responsestrategy"/></td>
             <td>
-                <form:select path="soapResponseStrategy">
+                <form:select path="responseStrategy">
                     <c:forEach items="${soapMockResponseStrategies}" var="soapMockResponseStrategy">
                         <option value="${soapMockResponseStrategy}"><spring:message code="soap.type.responsestrategy.${soapMockResponseStrategy}"/></option>
                     </c:forEach>

@@ -28,8 +28,8 @@ public class SoapResponse {
 
     private String body;
     private String mockResponseName;
-    private Integer httpStatusCode;
-    private String httpContentType;
+    private Integer statusCode;
+    private String contentType;
 
     @XmlElement
     public String getBody() {
@@ -50,19 +50,19 @@ public class SoapResponse {
     }
 
     @XmlElement
-    public Integer getHttpStatusCode() {
-        return httpStatusCode;
+    public Integer getStatusCode() {
+        return statusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public String getHttpContentType() {
-        return httpContentType;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setHttpContentType(String httpContentType) {
-        this.httpContentType = httpContentType;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

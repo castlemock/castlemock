@@ -31,7 +31,7 @@
 
 <h2 class="decorated"><span><spring:message code="soap.soapproject.header.ports"/></span></h2>
 <c:choose>
-    <c:when test="${soapProject.soapPorts.size() > 0}">
+    <c:when test="${soapProject.ports.size() > 0}">
         <form:form action="${soap_port_update_url}/" method="POST"  commandName="soapPortModifierCommand">
             <div class="table-frame">
                 <table class="entityTable">
@@ -42,7 +42,7 @@
                             <th><spring:message code="soap.type.soapoperationstatus.${soapOperationStatus}"/></th>
                         </c:forEach>
                     </tr>
-                    <c:forEach items="${soapProject.soapPorts}" var="soapPort" varStatus="loopStatus">
+                    <c:forEach items="${soapProject.ports}" var="soapPort" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><form:checkbox path="soapPortIds" name="${soapPort.id}" value="${soapPort.id}"/></td>
                             <td><a href="<c:url value="/web/soap/project/${soapProject.id}/port/${soapPort.id}"/>">${soapPort.name}</a></td>

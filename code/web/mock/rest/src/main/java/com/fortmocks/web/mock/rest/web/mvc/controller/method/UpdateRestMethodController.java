@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.mock.rest.web.mvc.controller.method;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
@@ -57,7 +57,7 @@ public class UpdateRestMethodController extends AbstractRestViewController {
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restResourceId);
-        model.addObject(REST_METHOD_TYPES, RestMethodType.values());
+        model.addObject(REST_METHOD_TYPES, HttpMethod.values());
         model.addObject(REST_METHOD_STATUSES, RestMethodStatus.values());
         model.addObject(REST_RESPONSE_STRATEGIES, RestResponseStrategy.values());
         return model;

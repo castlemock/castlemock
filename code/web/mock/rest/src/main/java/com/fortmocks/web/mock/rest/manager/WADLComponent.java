@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.mock.rest.manager;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
@@ -125,7 +125,7 @@ public class WADLComponent {
 
                             final RestMethodDto restMethodDto = new RestMethodDto();
                             restMethodDto.setName(methodName);
-                            restMethodDto.setType(RestMethodType.valueOf(methodType));
+                            restMethodDto.setHttpMethod(HttpMethod.valueOf(methodType));
                             restMethodDto.setStatus(RestMethodStatus.MOCKED);
                             restMethodDto.setResponseStrategy(RestResponseStrategy.RANDOM);
                             restMethodDto.setMockResponses(new ArrayList<RestMockResponseDto>());

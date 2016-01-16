@@ -40,7 +40,7 @@ public class ReadSoapEventsByOperationIdService extends AbstractSoapEventService
         final ReadSoapEventsByOperationIdInput input = serviceTask.getInput();
         final List<SoapEventDto> events = new ArrayList<SoapEventDto>();
         for(SoapEvent event : findAllTypes()){
-            if(event.getSoapOperationId().equals(input.getOperationId())){
+            if(event.getOperationId().equals(input.getOperationId())){
                 SoapEventDto soapEventDto = mapper.map(event, SoapEventDto.class);
                 events.add(soapEventDto);
             }

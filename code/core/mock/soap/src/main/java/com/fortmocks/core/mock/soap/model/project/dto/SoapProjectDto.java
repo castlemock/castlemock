@@ -32,8 +32,8 @@ import java.util.Map;
  */
 public class SoapProjectDto extends ProjectDto {
 
-    @Mapping("soapPorts")
-    private List<SoapPortDto> soapPorts = new LinkedList<SoapPortDto>();
+    @Mapping("ports")
+    private List<SoapPortDto> ports = new LinkedList<SoapPortDto>();
     private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
 
     /**
@@ -55,16 +55,16 @@ public class SoapProjectDto extends ProjectDto {
      * Returns all the SOAP ports
      * @return The SOAP ports for the SOAP project
      */
-    public List<SoapPortDto> getSoapPorts() {
-        return soapPorts;
+    public List<SoapPortDto> getPorts() {
+        return ports;
     }
 
     /**
-     * Set new value to the variable soapPorts
-     * @param soapPorts The new value to soapPorts
+     * Set new value to the variable ports
+     * @param ports The new value to ports
      */
-    public void setSoapPorts(List<SoapPortDto> soapPorts) {
-        this.soapPorts = soapPorts;
+    public void setPorts(List<SoapPortDto> ports) {
+        this.ports = ports;
     }
 
     /**

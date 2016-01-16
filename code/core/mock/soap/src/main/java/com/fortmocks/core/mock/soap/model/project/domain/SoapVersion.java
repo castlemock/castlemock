@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.mock.rest.model.project.domain;
+package com.fortmocks.core.mock.soap.model.project.domain;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
@@ -25,6 +25,31 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType
 @XmlEnum(String.class)
-public enum RestMethodType {
-    GET, POST, PUT, HEAD, DELETE, OPTIONS, PATCH, TRACE
+public enum SoapVersion {
+
+    SOAP11("SOAP 1.1", "application/xml"), SOAP12("SOAP 1.2", "application/soap+xml");
+
+    private String name;
+    private String contextPath;
+
+    private SoapVersion(final String name, final String contextPath){
+        this.name = name;
+        this.contextPath = contextPath;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContextPath() {
+        return contextPath;
+    }
+
+    public void setContextPath(String contextPath) {
+        this.contextPath = contextPath;
+    }
 }

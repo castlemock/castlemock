@@ -40,7 +40,7 @@ public class AbstractSoapEventService extends AbstractEventService<SoapEvent, So
     protected List<SoapEventDto> findEventsByOperationId(final String operationId){
         final List<SoapEvent> events = new ArrayList<SoapEvent>();
         for(SoapEvent event : findAllTypes()){
-            if(event.getSoapOperationId().equals(operationId)){
+            if(event.getOperationId().equals(operationId)){
                 events.add(event);
             }
         }

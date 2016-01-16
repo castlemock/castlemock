@@ -21,20 +21,20 @@
             <td class="column2"><label path="name">${soapOperation.identifier}</label></td>
         </tr>
         <tr>
-            <td class="column1"><label path="name"><spring:message code="soap.soapoperation.label.type"/></label></td>
-            <td class="column2"><label path="name">${soapOperation.soapOperationType.name}</label></td>
+            <td class="column1"><label path="name"><spring:message code="soap.soapoperation.label.soapversion"/></label></td>
+            <td class="column2"><label path="name">${soapOperation.soapVersion.name}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="status"><spring:message code="soap.soapoperation.label.status"/></label></td>
-            <td class="column2"><label path="status"><spring:message code="soap.type.soapoperationstatus.${soapOperation.soapOperationStatus}"/></label></td>
+            <td class="column2"><label path="status"><spring:message code="soap.type.soapoperationstatus.${soapOperation.status}"/></label></td>
         </tr>
         <tr>
             <td class="column1"><label path="soapResponseStrategy"><spring:message code="soap.soapoperation.label.responsestrategy"/></label></td>
-            <td class="column2"><label path="soapResponseStrategy"><spring:message code="soap.type.responsestrategy.${soapOperation.soapResponseStrategy}"/></label></td>
+            <td class="column2"><label path="soapResponseStrategy"><spring:message code="soap.type.responsestrategy.${soapOperation.responseStrategy}"/></label></td>
         </tr>
         <tr>
             <td class="column1"><label path="invokeAddress"><spring:message code="soap.soapoperation.label.method"/></label></td>
-            <td class="column2"><label path="invokeAddress">${soapOperation.soapOperationMethod}</label></td>
+            <td class="column2"><label path="invokeAddress">${soapOperation.httpMethod}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="invokeAddress"><spring:message code="soap.soapoperation.label.address"/></label></td>
@@ -56,7 +56,7 @@
     <h2 class="decorated"><span><spring:message code="soap.soapoperation.header.mockresponses"/></span></h2>
     <c:choose>
 
-        <c:when test="${soapOperation.soapMockResponses.size() > 0}">
+        <c:when test="${soapOperation.mockResponses.size() > 0}">
             <form:form action="${soap_mock_response_update_url}" method="POST"  commandName="soapMockResponseModifierCommand">
                 <div class="table-frame">
                     <table class="entityTable">
@@ -72,13 +72,13 @@
                             <th><spring:message code="soap.soapoperation.column.httpstatuscode"/></th>
                             <th><spring:message code="soap.soapoperation.column.httpcontenttype"/></th>
                         </tr>
-                        <c:forEach items="${soapOperation.soapMockResponses}" var="soapMockResponse" varStatus="loopStatus">
+                        <c:forEach items="${soapOperation.mockResponses}" var="soapMockResponse" varStatus="loopStatus">
                             <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                                 <td><form:checkbox path="soapMockResponseIds" name="${soapMockResponse.id}" value="${soapMockResponse.id}"/></td>
                                 <td><a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/response/${soapMockResponse.id}"/>">${soapMockResponse.name}</a></td>
-                                <td><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponse.soapMockResponseStatus}"/></td>
-                                <td>${soapMockResponse.httpStatusCode}</td>
-                                <td>${soapMockResponse.httpContentType}</td>
+                                <td><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponse.status}"/></td>
+                                <td>${soapMockResponse.statusCode}</td>
+                                <td>${soapMockResponse.contentType}</td>
                             </tr>
                         </c:forEach>
                     </table>
@@ -120,7 +120,7 @@
                     <c:forEach items="${soapEvents}" var="event" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.id}</a></td>
-                            <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.soapResponse.mockResponseName}</a></td>
+                            <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.response.mockResponseName}</a></td>
                             <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.startDate}</a></td>
                             <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.endDate}</a></td>
                         </tr>

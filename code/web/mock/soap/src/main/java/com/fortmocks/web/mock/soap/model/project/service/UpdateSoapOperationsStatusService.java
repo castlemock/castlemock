@@ -42,7 +42,7 @@ public class UpdateSoapOperationsStatusService extends AbstractSoapProjectServic
     public ServiceResult<UpdateSoapOperationsStatusOutput> process(final ServiceTask<UpdateSoapOperationsStatusInput> serviceTask) {
         final UpdateSoapOperationsStatusInput input = serviceTask.getInput();
         final SoapOperation soapOperation = findSoapOperationType(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId());
-        soapOperation.setSoapOperationStatus(input.getSoapOperationStatus());
+        soapOperation.setStatus(input.getSoapOperationStatus());
         save(input.getSoapProjectId());
         return createServiceResult(new UpdateSoapOperationsStatusOutput());
     }

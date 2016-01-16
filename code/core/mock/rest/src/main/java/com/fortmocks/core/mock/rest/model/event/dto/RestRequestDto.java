@@ -16,7 +16,7 @@
 
 package com.fortmocks.core.mock.rest.model.event.dto;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.core.basis.model.HttpMethod;
 import org.dozer.Mapping;
 
 import java.util.Map;
@@ -36,8 +36,8 @@ public class RestRequestDto {
     @Mapping("uri")
     private String uri;
 
-    @Mapping("methodType")
-    private RestMethodType methodType;
+    @Mapping("httpMethod")
+    private HttpMethod httpMethod;
 
     @Mapping("serviceName")
     private String serviceName;
@@ -77,12 +77,12 @@ public class RestRequestDto {
         this.serviceName = serviceName;
     }
 
-    public RestMethodType getMethodType() {
-        return methodType;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setMethodType(RestMethodType methodType) {
-        this.methodType = methodType;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
     public Map<String, String> getParameters() {

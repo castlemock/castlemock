@@ -16,10 +16,10 @@
 
 package com.fortmocks.web.mock.rest.model.project;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -39,7 +39,7 @@ public class RestEventDtoGenerator {
         eventDto.setStartDate(new Date());
 
         RestRequestDto restRequestDto = new RestRequestDto();
-        restRequestDto.setMethodType(RestMethodType.GET);
+        restRequestDto.setHttpMethod(HttpMethod.GET);
         restRequestDto.setBody("REST request body");
         restRequestDto.setContentType("application/json");
         restRequestDto.setParameters(new HashMap<String, String>());

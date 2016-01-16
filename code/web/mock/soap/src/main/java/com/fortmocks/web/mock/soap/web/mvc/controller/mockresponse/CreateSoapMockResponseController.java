@@ -62,8 +62,8 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
         final SoapOperationDto soapOperationDto = output.getSoapOperation();
         final SoapMockResponseDto mockResponse = new SoapMockResponseDto();
         mockResponse.setBody(soapOperationDto.getDefaultBody());
-        mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
-        mockResponse.setHttpContentType(DEFAULT_HTTP_CONTENT_TYPE);
+        mockResponse.setStatusCode(DEFAULT_HTTP_STATUS_CODE);
+        mockResponse.setContentType(DEFAULT_HTTP_CONTENT_TYPE);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_OPERATION, soapOperationDto);
         model.addObject(SOAP_PROJECT_ID, soapProjectId);
@@ -83,7 +83,7 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/create/response", method = RequestMethod.POST)
     public ModelAndView createResponse(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @ModelAttribute final SoapMockResponseDto soapMockResponseDto) {
-        soapMockResponseDto.setSoapMockResponseStatus(SoapMockResponseStatus.ENABLED);
+        soapMockResponseDto.setStatus(SoapMockResponseStatus.ENABLED);
         serviceProcessor.process(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseDto));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }

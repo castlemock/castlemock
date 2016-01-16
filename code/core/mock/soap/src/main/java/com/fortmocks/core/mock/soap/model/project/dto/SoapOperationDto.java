@@ -16,9 +16,9 @@
 
 package com.fortmocks.core.mock.soap.model.project.dto;
 
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationMethod;
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationType;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import org.dozer.Mapping;
 
@@ -40,20 +40,20 @@ public class SoapOperationDto {
     @Mapping("identifier")
     private String identifier;
 
-    @Mapping("soapMockResponses")
-    private List<SoapMockResponseDto> soapMockResponses = new LinkedList<SoapMockResponseDto>();
+    @Mapping("mockResponses")
+    private List<SoapMockResponseDto> mockResponses = new LinkedList<SoapMockResponseDto>();
 
-    @Mapping("soapResponseStrategy")
-    private SoapResponseStrategy soapResponseStrategy;
+    @Mapping("responseStrategy")
+    private SoapResponseStrategy responseStrategy;
 
-    @Mapping("soapOperationStatus")
-    private SoapOperationStatus soapOperationStatus;
+    @Mapping("status")
+    private SoapOperationStatus status;
 
-    @Mapping("soapOperationMethod")
-    private SoapOperationMethod soapOperationMethod;
+    @Mapping("httpMethod")
+    private HttpMethod httpMethod;
 
-    @Mapping("soapOperationType")
-    private SoapOperationType soapOperationType;
+    @Mapping("soapVersion")
+    private SoapVersion soapVersion;
 
     @Mapping("defaultBody")
     private String defaultBody;
@@ -93,28 +93,28 @@ public class SoapOperationDto {
         this.identifier = identifier;
     }
 
-    public SoapResponseStrategy getSoapResponseStrategy() {
-        return soapResponseStrategy;
+    public SoapResponseStrategy getResponseStrategy() {
+        return responseStrategy;
     }
 
-    public void setSoapResponseStrategy(SoapResponseStrategy soapResponseStrategy) {
-        this.soapResponseStrategy = soapResponseStrategy;
+    public void setResponseStrategy(SoapResponseStrategy responseStrategy) {
+        this.responseStrategy = responseStrategy;
     }
 
-    public SoapOperationStatus getSoapOperationStatus() {
-        return soapOperationStatus;
+    public SoapOperationStatus getStatus() {
+        return status;
     }
 
-    public void setSoapOperationStatus(SoapOperationStatus soapOperationStatus) {
-        this.soapOperationStatus = soapOperationStatus;
+    public void setStatus(SoapOperationStatus status) {
+        this.status = status;
     }
 
-    public List<SoapMockResponseDto> getSoapMockResponses() {
-        return soapMockResponses;
+    public List<SoapMockResponseDto> getMockResponses() {
+        return mockResponses;
     }
 
-    public void setSoapMockResponses(List<SoapMockResponseDto> soapMockResponses) {
-        this.soapMockResponses = soapMockResponses;
+    public void setMockResponses(List<SoapMockResponseDto> mockResponses) {
+        this.mockResponses = mockResponses;
     }
 
     public String getInvokeAddress() {
@@ -133,20 +133,20 @@ public class SoapOperationDto {
         this.defaultBody = defaultBody;
     }
 
-    public SoapOperationMethod getSoapOperationMethod() {
-        return soapOperationMethod;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setSoapOperationMethod(SoapOperationMethod soapOperationMethod) {
-        this.soapOperationMethod = soapOperationMethod;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
-    public SoapOperationType getSoapOperationType() {
-        return soapOperationType;
+    public SoapVersion getSoapVersion() {
+        return soapVersion;
     }
 
-    public void setSoapOperationType(SoapOperationType soapOperationType) {
-        this.soapOperationType = soapOperationType;
+    public void setSoapVersion(SoapVersion soapVersion) {
+        this.soapVersion = soapVersion;
     }
 
     public Integer getCurrentResponseSequenceIndex() {

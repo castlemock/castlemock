@@ -16,12 +16,12 @@
 
 package com.fortmocks.web.mock.rest.web.rest.controller;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
 import com.fortmocks.core.mock.rest.model.event.service.message.input.CreateRestEventInput;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
@@ -68,21 +68,21 @@ public abstract class AbstractRestServiceController extends AbstractController {
     /**
      *
      * @param projectId The id of the project which the incoming request and mocked response belongs to
-     * @param restMethodType The request method
+     * @param httpMethod The request method
      * @param httpServletRequest The incoming request
      * @param httpServletResponse The outgoing response
      * @return Returns the response as an String
      */
-    protected String process(final String projectId, final String applicationId, final RestMethodType restMethodType, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected String process(final String projectId, final String applicationId, final HttpMethod httpMethod, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "The project id cannot be null");
-            Preconditions.checkNotNull(applicationId, "The application id cannot be null");
-            Preconditions.checkNotNull(restMethodType, "The REST method cannot be null");
+            Preconditions.checkNotNull(applicationId, "The application id cannot be null");
+            Preconditions.checkNotNull(httpMethod, "The REST method cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
             Preconditions.checkNotNull(httpServletResponse, "The HTTP Servlet Response cannot be null");
 
-            final RestRequestDto restRequest = prepareRequest(projectId, applicationId, restMethodType, httpServletRequest);
-            final IdentifyRestMethodOutput output = serviceProcessor.process(new IdentifyRestMethodInput(projectId, applicationId, restRequest.getUri(), restMethodType));
+            final RestRequestDto restRequest = prepareRequest(projectId, applicationId, httpMethod, httpServletRequest);
+            final IdentifyRestMethodOutput output = serviceProcessor.process(new IdentifyRestMethodInput(projectId, applicationId, restRequest.getUri(), httpMethod));
             final String resourceId = output.getRestResourceId();
 
             return process(restRequest, projectId, applicationId, resourceId, output.getRestMethod(), httpServletResponse);
@@ -100,7 +100,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param httpServletRequest The incoming request
      * @return A new created project
      */
-    protected RestRequestDto prepareRequest(final String projectId, final String applicationId, final RestMethodType restMethodType, final HttpServletRequest httpServletRequest) {
+    protected RestRequestDto prepareRequest(final String projectId, final String applicationId, final HttpMethod httpMethod, final HttpServletRequest httpServletRequest) {
         final RestRequestDto request = new RestRequestDto();
         final String body = RestMessageSupport.getBody(httpServletRequest);
         final String incomingRequestUri = httpServletRequest.getRequestURI().toLowerCase();
@@ -108,7 +108,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final Map<String, String> parameters = extractParameters(httpServletRequest);
 
         request.setContentType(httpServletRequest.getContentType());
-        request.setMethodType(restMethodType);
+        request.setHttpMethod(httpMethod);
         request.setBody(body);
         request.setUri(restResourceUri);
         request.setParameters(parameters);
@@ -210,7 +210,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             final URL url = new URL(restMethod.getForwardedEndpoint() + restRequest.getUri() + parameterUri);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
-            connection.setRequestMethod(restRequest.getMethodType().name());
+            connection.setRequestMethod(restRequest.getHttpMethod().name());
             connection.setRequestProperty(CONTENT_TYPE, restRequest.getContentType());
             outputStream = connection.getOutputStream();
             outputStream.write(restRequest.getBody().getBytes());

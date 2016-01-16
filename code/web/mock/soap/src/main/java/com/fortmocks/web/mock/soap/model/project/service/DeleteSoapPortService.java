@@ -44,7 +44,7 @@ public class DeleteSoapPortService extends AbstractSoapProjectService implements
         final DeleteSoapPortInput input = serviceTask.getInput();
         final SoapProject soapProject = findType(input.getSoapProjectId());
         final SoapPort soapPort = findSoapPortType(input.getSoapProjectId(), input.getSoapPortId());
-        soapProject.getSoapPorts().remove(soapPort);
+        soapProject.getPorts().remove(soapPort);
         save(input.getSoapProjectId());
         return createServiceResult(new DeleteSoapPortOutput());
     }

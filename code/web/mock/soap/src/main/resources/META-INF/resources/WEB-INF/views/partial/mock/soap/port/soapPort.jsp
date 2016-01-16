@@ -28,7 +28,7 @@
 
 <h2 class="decorated"><span><spring:message code="soap.soapport.header.operations"/></span></h2>
 <c:choose>
-    <c:when test="${soapPort.soapOperations.size() > 0}">
+    <c:when test="${soapPort.operations.size() > 0}">
         <form:form action="${operation_update_url}" method="POST"  commandName="soapOperationModifierCommand">
             <div class="table-frame">
                 <table class="entityTable">
@@ -44,13 +44,13 @@
                         <th><spring:message code="soap.soapport.column.responsestrategy"/></th>
                         <th><spring:message code="soap.soapport.column.soapMockResponseStatus"/></th>
                     </tr>
-                    <c:forEach items="${soapPort.soapOperations}" var="soapOperation" varStatus="loopStatus">
+                    <c:forEach items="${soapPort.operations}" var="soapOperation" varStatus="loopStatus">
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td><form:checkbox path="soapOperationIds" name="${soapOperation.id}" value="${soapOperation.id}"/></td>
                             <td><a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/operation/${soapOperation.id}"/>">${soapOperation.name}</a></td>
-                            <td>${soapOperation.soapOperationMethod}</td>
-                            <td><spring:message code="soap.type.responsestrategy.${soapOperation.soapResponseStrategy}"/></td>
-                            <td><spring:message code="soap.type.soapoperationstatus.${soapOperation.soapOperationStatus}"/></td>
+                            <td>${soapOperation.httpMethod}</td>
+                            <td><spring:message code="soap.type.responsestrategy.${soapOperation.responseStrategy}"/></td>
+                            <td><spring:message code="soap.type.soapoperationstatus.${soapOperation.status}"/></td>
                         </tr>
                     </c:forEach>
                 </table>

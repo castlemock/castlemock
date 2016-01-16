@@ -39,8 +39,8 @@ public class SoapPortDto {
     @Mapping("urlPath")
     private String urlPath;
 
-    @Mapping("soapOperations")
-    private List<SoapOperationDto> soapOperations = new LinkedList<SoapOperationDto>();
+    @Mapping("operations")
+    private List<SoapOperationDto> operations = new LinkedList<SoapOperationDto>();
 
     private String invokeAddress;
 
@@ -54,12 +54,12 @@ public class SoapPortDto {
         this.id = id;
     }
 
-    public List<SoapOperationDto> getSoapOperations() {
-        return soapOperations;
+    public List<SoapOperationDto> getOperations() {
+        return operations;
     }
 
-    public void setSoapOperations(List<SoapOperationDto> soapOperations) {
-        this.soapOperations = soapOperations;
+    public void setOperations(List<SoapOperationDto> operations) {
+        this.operations = operations;
     }
 
     public Map<SoapOperationStatus, Integer> getStatusCount() {

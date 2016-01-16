@@ -16,7 +16,7 @@
 
 package com.fortmocks.core.mock.rest.model.event.domain;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.core.basis.model.HttpMethod;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +32,7 @@ public class RestRequest {
     private String body;
     private String contentType;
     private String uri;
-    private RestMethodType methodType;
+    private HttpMethod httpMethod;
     private String serviceName;
     private Map<String, String> parameters;
 
@@ -64,12 +64,12 @@ public class RestRequest {
     }
 
     @XmlElement
-    public RestMethodType getMethodType() {
-        return methodType;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setMethodType(RestMethodType methodType) {
-        this.methodType = methodType;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
     @XmlElement

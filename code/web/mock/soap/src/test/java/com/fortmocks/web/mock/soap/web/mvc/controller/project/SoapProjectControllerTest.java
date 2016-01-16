@@ -71,7 +71,7 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
         final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
         final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
         soapPortDtos.add(soapPortDto);
-        soapProjectDto.setSoapPorts(soapPortDtos);
+        soapProjectDto.setPorts(soapPortDtos);
         when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProjectDto));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH);
         mockMvc.perform(message)

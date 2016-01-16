@@ -35,7 +35,7 @@
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.methodtype"/></label></td>
-            <td class="column2"><label path="name">${restMethod.type}</label></td>
+            <td class="column2"><label path="name">${restMethod.httpMethod}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.methodstatus"/></label></td>

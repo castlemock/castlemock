@@ -16,8 +16,8 @@
 
 package com.fortmocks.web.mock.rest.model.project;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
@@ -38,7 +38,7 @@ public class RestMethodDtoGenerator {
         restMethodDto.setDefaultBody("Default body");
         restMethodDto.setCurrentResponseSequenceIndex(1);
         restMethodDto.setStatus(RestMethodStatus.MOCKED);
-        restMethodDto.setType(RestMethodType.GET);
+        restMethodDto.setHttpMethod(HttpMethod.GET);
         restMethodDto.setMockResponses(new ArrayList<RestMockResponseDto>());
         restMethodDto.setResponseStrategy(RestResponseStrategy.RANDOM);
         return restMethodDto;

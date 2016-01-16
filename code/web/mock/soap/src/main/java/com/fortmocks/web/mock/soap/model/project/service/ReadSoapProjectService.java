@@ -46,8 +46,8 @@ public class ReadSoapProjectService extends AbstractSoapProjectService implement
     public ServiceResult<ReadSoapProjectOutput> process(final ServiceTask<ReadSoapProjectInput> serviceTask) {
         final ReadSoapProjectInput input = serviceTask.getInput();
         final SoapProjectDto soapProject = find(input.getSoapProjectId());
-        for(final SoapPortDto soapPortDto : soapProject.getSoapPorts()){
-            final Map<SoapOperationStatus, Integer> soapOperationStatusCount = getSoapOperationStatusCount(soapPortDto.getSoapOperations());
+        for(final SoapPortDto soapPortDto : soapProject.getPorts()){
+            final Map<SoapOperationStatus, Integer> soapOperationStatusCount = getSoapOperationStatusCount(soapPortDto.getOperations());
             soapPortDto.setStatusCount(soapOperationStatusCount);
         }
         return createServiceResult(new ReadSoapProjectOutput(soapProject));

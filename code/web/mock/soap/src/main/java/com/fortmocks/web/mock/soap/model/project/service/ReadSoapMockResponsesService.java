@@ -48,8 +48,8 @@ public class ReadSoapMockResponsesService extends AbstractSoapProjectService imp
         final ReadSoapMockResponsesInput input = serviceTask.getInput();
         final SoapOperation soapOperation = findSoapOperationType(input.getSoapOperationId());
         final List<SoapMockResponseDto> soapMockResponses = new ArrayList<SoapMockResponseDto>();
-        for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
-            if(soapMockResponse.getSoapMockResponseStatus().equals(input.getStatus())){
+        for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
+            if(soapMockResponse.getStatus().equals(input.getStatus())){
                 final SoapMockResponseDto soapMockResponseDto = mapper.map(soapMockResponse, SoapMockResponseDto.class);
                 soapMockResponses.add(soapMockResponseDto);
             }

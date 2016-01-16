@@ -16,9 +16,9 @@
 
 package com.fortmocks.core.mock.rest.model.project.service.message.input;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.basis.model.Input;
 import com.fortmocks.core.basis.model.validation.NotNull;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 
 /**
  * @author Karl Dahlgren
@@ -33,13 +33,13 @@ public class IdentifyRestMethodInput implements Input {
     @NotNull
     private String restResourceUri;
     @NotNull
-    private RestMethodType restMethodType;
+    private HttpMethod httpMethod;
 
-    public IdentifyRestMethodInput(String restProjectId, String restApplicationId, String restResourceUri, RestMethodType restMethodType) {
+    public IdentifyRestMethodInput(String restProjectId, String restApplicationId, String restResourceUri, HttpMethod httpMethod) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceUri = restResourceUri;
-        this.restMethodType = restMethodType;
+        this.httpMethod = httpMethod;
     }
 
     public String getRestProjectId() {
@@ -66,11 +66,11 @@ public class IdentifyRestMethodInput implements Input {
         this.restResourceUri = restResourceUri;
     }
 
-    public RestMethodType getRestMethodType() {
-        return restMethodType;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setRestMethodType(RestMethodType restMethodType) {
-        this.restMethodType = restMethodType;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 }

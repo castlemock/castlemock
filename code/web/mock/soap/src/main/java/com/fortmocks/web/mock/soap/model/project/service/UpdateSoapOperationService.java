@@ -44,9 +44,9 @@ public class UpdateSoapOperationService extends AbstractSoapProjectService imple
         final UpdateSoapOperationInput input = serviceTask.getInput();
         final SoapOperationDto updatedSoapOperation = input.getUpdatedSoapOperation();
         final SoapOperation soapOperation = findSoapOperationType(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId());
-        soapOperation.setSoapOperationStatus(updatedSoapOperation.getSoapOperationStatus());
+        soapOperation.setStatus(updatedSoapOperation.getStatus());
         soapOperation.setForwardedEndpoint(updatedSoapOperation.getForwardedEndpoint());
-        soapOperation.setSoapResponseStrategy(updatedSoapOperation.getSoapResponseStrategy());
+        soapOperation.setResponseStrategy(updatedSoapOperation.getResponseStrategy());
         save(input.getSoapProjectId());
         return createServiceResult(new UpdateSoapOperationOutput(updatedSoapOperation));
     }

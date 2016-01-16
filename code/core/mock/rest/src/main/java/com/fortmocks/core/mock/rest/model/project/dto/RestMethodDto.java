@@ -16,8 +16,8 @@
 
 package com.fortmocks.core.mock.rest.model.project.dto;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResponseStrategy;
 import org.dozer.Mapping;
 
@@ -40,8 +40,8 @@ public class RestMethodDto {
     @Mapping("defaultBody")
     private String defaultBody;
 
-    @Mapping("type")
-    private RestMethodType type;
+    @Mapping("httpMethod")
+    private HttpMethod httpMethod;
 
     @Mapping("forwardedEndpoint")
     private String forwardedEndpoint;
@@ -84,12 +84,12 @@ public class RestMethodDto {
         this.defaultBody = defaultBody;
     }
 
-    public RestMethodType getType() {
-        return type;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setType(RestMethodType type) {
-        this.type = type;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
     public List<RestMockResponseDto> getMockResponses() {

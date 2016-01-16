@@ -19,8 +19,8 @@
             <td class="column2"><form:input path="statusCode" id="soapMockResponseHttpStatusCodeInput" /></td>
         </tr>
         <tr>
-            <td class="column1"><form:label path="httpContentType"><spring:message code="soap.soapmockresponse.label.httpcontenttype"/></form:label></td>
-            <td class="column2"><form:input path="httpContentType" id="soapMockResponseHttpContentTypeInput"/></td>
+            <td class="column1"><form:label path="contentType"><spring:message code="soap.soapmockresponse.label.httpcontenttype"/></form:label></td>
+            <td class="column2"><form:input path="contentType" id="soapMockResponseHttpContentTypeInput"/></td>
         </tr>
     </table>
     <div class="editor">

@@ -28,20 +28,20 @@ import java.util.Date;
  */
 public class SoapEventDto extends EventDto {
 
-    @Mapping("soapRequest")
-    private SoapRequestDto soapRequest;
+    @Mapping("request")
+    private SoapRequestDto request;
 
-    @Mapping("soapResponse")
-    private SoapResponseDto soapResponse;
+    @Mapping("response")
+    private SoapResponseDto response;
 
-    @Mapping("soapProjectId")
-    private String soapProjectId;
+    @Mapping("projectId")
+    private String projectId;
 
-    @Mapping("soapPortId")
-    private String soapPortId;
+    @Mapping("portId")
+    private String portId;
 
-    @Mapping("soapOperationId")
-    private String soapOperationId;
+    @Mapping("operationId")
+    private String operationId;
 
     /**
      * Default constructor for the SOAP event DTO
@@ -58,18 +58,18 @@ public class SoapEventDto extends EventDto {
 
     /**
      * Constructor for the SOAP event DTO
-     * @param soapRequest The SOAP request that the event is representing
-     * @param soapProjectId The id of the SOAP project that is affected by the provided SOAP request
-     * @param soapPortId The id of the SOAP port that is affected by the provided SOAP request
-     * @param soapOperationId The id of the SOAP operation that is affected by the provided SOAP request
+     * @param request The SOAP request that the event is representing
+     * @param projectId The id of the SOAP project that is affected by the provided SOAP request
+     * @param portId The id of the SOAP port that is affected by the provided SOAP request
+     * @param operationId The id of the SOAP operation that is affected by the provided SOAP request
      * @see SoapOperation
      */
-    public SoapEventDto(final String resourceName, final SoapRequestDto soapRequest, final String soapProjectId, final String soapPortId, final String soapOperationId) {
+    public SoapEventDto(final String resourceName, final SoapRequestDto request, final String projectId, final String portId, final String operationId) {
         super(resourceName);
-        this.soapRequest = soapRequest;
-        this.soapProjectId = soapProjectId;
-        this.soapPortId = soapPortId;
-        this.soapOperationId = soapOperationId;
+        this.request = request;
+        this.projectId = projectId;
+        this.portId = portId;
+        this.operationId = operationId;
     }
 
     /**
@@ -78,7 +78,7 @@ public class SoapEventDto extends EventDto {
      * @param soapResponse
      */
     public void finish(final SoapResponseDto soapResponse) {
-        this.soapResponse = soapResponse;
+        this.response = soapResponse;
         setEndDate(new Date());
     }
 
@@ -86,48 +86,48 @@ public class SoapEventDto extends EventDto {
      * Returns the SOAP request
      * @return The SOAP request
      */
-    public SoapRequestDto getSoapRequest() {
-        return soapRequest;
+    public SoapRequestDto getRequest() {
+        return request;
     }
 
     /**
      * Sets a new value to the SOAP request variable
-     * @param soapRequest The new SOAP request variable
+     * @param request The new SOAP request variable
      */
-    public void setSoapRequest(SoapRequestDto soapRequest) {
-        this.soapRequest = soapRequest;
+    public void setRequest(SoapRequestDto request) {
+        this.request = request;
     }
 
     /**
      * Returns the SOAP response variable
      * @return The SOAP response variable. The SOAP response will be null if the event has not yet finished
      */
-    public SoapResponseDto getSoapResponse() {
-        return soapResponse;
+    public SoapResponseDto getResponse() {
+        return response;
     }
 
     /**
      * Set a new value to the Soap response variable
-     * @param soapResponse The new SOAP response value
+     * @param response The new SOAP response value
      */
-    public void setSoapResponse(SoapResponseDto soapResponse) {
-        this.soapResponse = soapResponse;
+    public void setResponse(SoapResponseDto response) {
+        this.response = response;
     }
 
     /**
      * Returns the SOAP operation id
      * @return The SOAP operation id
      */
-    public String getSoapOperationId() {
-        return soapOperationId;
+    public String getOperationId() {
+        return operationId;
     }
 
     /**
      * Set a new value to the SOAP operation id
-     * @param soapOperationId The new value to the SOAP operation id
+     * @param operationId The new value to the SOAP operation id
      */
-    public void setSoapOperationId(String soapOperationId) {
-        this.soapOperationId = soapOperationId;
+    public void setOperationId(String operationId) {
+        this.operationId = operationId;
     }
 
     /**
@@ -135,16 +135,16 @@ public class SoapEventDto extends EventDto {
      * event spans from
      * @return The id of the project which the event affected
      */
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
     /**
      * Set a new value to the SOAP project id
-     * @param soapProjectId The new SOAP project id
+     * @param projectId The new SOAP project id
      */
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     /**
@@ -152,15 +152,15 @@ public class SoapEventDto extends EventDto {
      * event spans from
      * @return The id of the port which the event affected
      */
-    public String getSoapPortId() {
-        return soapPortId;
+    public String getPortId() {
+        return portId;
     }
 
     /**
      * Sets a new value to the SOAP port id
-     * @param soapPortId The new SOAP port id
+     * @param portId The new SOAP port id
      */
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
+    public void setPortId(String portId) {
+        this.portId = portId;
     }
 }

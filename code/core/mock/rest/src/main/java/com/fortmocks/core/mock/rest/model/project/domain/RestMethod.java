@@ -16,6 +16,7 @@
 
 package com.fortmocks.core.mock.rest.model.project.domain;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.basis.model.Saveable;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -33,7 +34,7 @@ public class RestMethod implements Saveable<String> {
     private String id;
     private String name;
     private String defaultBody;
-    private RestMethodType type;
+    private HttpMethod httpMethod;
     private String forwardedEndpoint;
     private RestMethodStatus status;
     private RestResponseStrategy responseStrategy;
@@ -69,12 +70,12 @@ public class RestMethod implements Saveable<String> {
     }
 
     @XmlElement
-    public RestMethodType getType() {
-        return type;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setType(RestMethodType type) {
-        this.type = type;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
     @XmlElementWrapper(name = "mockResponses")

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.core.mock.soap.model.project.domain;
+package com.fortmocks.core.basis.model;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
@@ -25,31 +25,6 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType
 @XmlEnum(String.class)
-public enum SoapOperationType {
-
-    SOAP11("SOAP 1.1", "application/xml"), SOAP12("SOAP 1.2", "application/soap+xml");
-
-    private String name;
-    private String contextPath;
-
-    private SoapOperationType(final String name, final String contextPath){
-        this.name = name;
-        this.contextPath = contextPath;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContextPath() {
-        return contextPath;
-    }
-
-    public void setContextPath(String contextPath) {
-        this.contextPath = contextPath;
-    }
+public enum HttpMethod {
+    GET, POST, PUT, HEAD, DELETE, OPTIONS, PATCH, TRACE
 }

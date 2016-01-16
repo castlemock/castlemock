@@ -16,7 +16,7 @@
 
 package com.fortmocks.web.mock.rest.web.rest.controller;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestMethodType;
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponse;
 import com.fortmocks.core.mock.rest.model.project.domain.RestProject;
 import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
@@ -56,7 +56,7 @@ public class RestServiceController extends AbstractRestServiceController  {
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/application/{applicationId}/**")
     public String getMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-        return process(projectId, applicationId, RestMethodType.GET, httpServletRequest, httpServletResponse);
+        return process(projectId, applicationId, HttpMethod.GET, httpServletRequest, httpServletResponse);
     }
 
     /**
@@ -73,7 +73,7 @@ public class RestServiceController extends AbstractRestServiceController  {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/application/{applicationId}/**")
     public String postMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-        return process(projectId, applicationId, RestMethodType.POST, httpServletRequest, httpServletResponse);
+        return process(projectId, applicationId, HttpMethod.POST, httpServletRequest, httpServletResponse);
     }
 
     /**
@@ -90,7 +90,7 @@ public class RestServiceController extends AbstractRestServiceController  {
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT, value = "/{projectId}/application/{applicationId}/**")
     public String putMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-        return process(projectId, applicationId, RestMethodType.PUT, httpServletRequest, httpServletResponse);
+        return process(projectId, applicationId, HttpMethod.PUT, httpServletRequest, httpServletResponse);
     }
 
     /**
@@ -107,7 +107,7 @@ public class RestServiceController extends AbstractRestServiceController  {
     @ResponseBody
     @RequestMapping(method = RequestMethod.DELETE, value = "/{projectId}/application/{applicationId}/**")
     public String deleteMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-        return process(projectId, applicationId, RestMethodType.DELETE, httpServletRequest, httpServletResponse);
+        return process(projectId, applicationId, HttpMethod.DELETE, httpServletRequest, httpServletResponse);
     }
 
     /**
@@ -124,7 +124,7 @@ public class RestServiceController extends AbstractRestServiceController  {
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, value = "/{projectId}/application/{applicationId}/**")
     public String patchMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-        return process(projectId, applicationId, RestMethodType.PATCH, httpServletRequest, httpServletResponse);
+        return process(projectId, applicationId, HttpMethod.PATCH, httpServletRequest, httpServletResponse);
     }
 
     /**
@@ -141,7 +141,7 @@ public class RestServiceController extends AbstractRestServiceController  {
     @ResponseBody
     @RequestMapping(method = RequestMethod.HEAD, value = "/{projectId}/application/{applicationId}/**")
     public String headMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-        return process(projectId, applicationId, RestMethodType.HEAD, httpServletRequest, httpServletResponse);
+        return process(projectId, applicationId, HttpMethod.HEAD, httpServletRequest, httpServletResponse);
     }
 
     /**
@@ -158,7 +158,7 @@ public class RestServiceController extends AbstractRestServiceController  {
     @ResponseBody
     @RequestMapping(method = RequestMethod.OPTIONS, value = "/{projectId}/application/{applicationId}/**")
     public String optionsMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-        return process(projectId, applicationId, RestMethodType.OPTIONS, httpServletRequest, httpServletResponse);
+        return process(projectId, applicationId, HttpMethod.OPTIONS, httpServletRequest, httpServletResponse);
     }
 
     /**
@@ -175,6 +175,6 @@ public class RestServiceController extends AbstractRestServiceController  {
     @ResponseBody
     @RequestMapping(method = RequestMethod.TRACE, value = "/{projectId}/application/{applicationId}/**")
     public String traceMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-        return process(projectId, applicationId, RestMethodType.TRACE, httpServletRequest, httpServletResponse);
+        return process(projectId, applicationId, HttpMethod.TRACE, httpServletRequest, httpServletResponse);
     }
 }

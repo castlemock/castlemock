@@ -53,23 +53,23 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
             SoapPort existingSoapPort = findSoapPortWithName(soapProject, newSoapPort.getName());
 
             if(existingSoapPort == null){
-                soapProject.getSoapPorts().add(newSoapPort);
+                soapProject.getPorts().add(newSoapPort);
                 continue;
             }
 
             final List<SoapOperation> soapOperations = new LinkedList<SoapOperation>();
-            for(SoapOperation newSoapOperation : newSoapPort.getSoapOperations()){
+            for(SoapOperation newSoapOperation : newSoapPort.getOperations()){
                 SoapOperation existingSoapOperation = findSoapOperationWithName(existingSoapPort, newSoapOperation.getName());
 
                 if(existingSoapOperation != null){
                     existingSoapOperation.setOriginalEndpoint(newSoapOperation.getOriginalEndpoint());
-                    existingSoapOperation.setSoapOperationType(newSoapOperation.getSoapOperationType());
+                    existingSoapOperation.setSoapVersion(newSoapOperation.getSoapVersion());
                     soapOperations.add(existingSoapOperation);
                 } else {
                     soapOperations.add(newSoapOperation);
                 }
             }
-            existingSoapPort.setSoapOperations(soapOperations);
+            existingSoapPort.setOperations(soapOperations);
         }
 
         save(soapProject);

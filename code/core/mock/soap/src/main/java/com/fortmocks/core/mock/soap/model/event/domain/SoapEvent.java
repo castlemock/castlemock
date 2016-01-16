@@ -29,56 +29,56 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class SoapEvent extends Event {
 
-    private SoapRequest soapRequest;
-    private SoapResponse soapResponse;
-    private String soapProjectId;
-    private String soapPortId;
-    private String soapOperationId;
+    private SoapRequest request;
+    private SoapResponse response;
+    private String projectId;
+    private String portId;
+    private String operationId;
 
 
     @XmlElement
-    public SoapRequest getSoapRequest() {
-        return soapRequest;
+    public SoapRequest getRequest() {
+        return request;
     }
 
-    public void setSoapRequest(SoapRequest soapRequest) {
-        this.soapRequest = soapRequest;
-    }
-
-    @XmlElement
-    public SoapResponse getSoapResponse() {
-        return soapResponse;
-    }
-
-    public void setSoapResponse(SoapResponse soapResponse) {
-        this.soapResponse = soapResponse;
+    public void setRequest(SoapRequest request) {
+        this.request = request;
     }
 
     @XmlElement
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public SoapResponse getResponse() {
+        return response;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
-    @XmlElement
-    public String getSoapPortId() {
-        return soapPortId;
-    }
-
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
+    public void setResponse(SoapResponse response) {
+        this.response = response;
     }
 
     @XmlElement
-    public String getSoapOperationId() {
-        return soapOperationId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public void setSoapOperationId(String soapOperationId) {
-        this.soapOperationId = soapOperationId;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    @XmlElement
+    public String getPortId() {
+        return portId;
+    }
+
+    public void setPortId(String portId) {
+        this.portId = portId;
+    }
+
+    @XmlElement
+    public String getOperationId() {
+        return operationId;
+    }
+
+    public void setOperationId(String operationId) {
+        this.operationId = operationId;
     }
 
 

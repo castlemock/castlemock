@@ -19,15 +19,15 @@
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="soap.event.column.request.uri"/></label></td>
-            <td class="column2"><label path="name">${event.soapRequest.uri}</label></td>
+            <td class="column2"><label path="name">${event.request.uri}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="soap.event.column.request.methodtype"/></label></td>
-            <td class="column2"><label path="name">${event.soapRequest.soapOperationMethod}</label></td>
+            <td class="column2"><label path="name">${event.request.httpMethod}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="soap.event.column.request.type"/></label></td>
-            <td class="column2"><label path="name">${event.soapRequest.soapOperationType}</label></td>
+            <td class="column2"><label path="name">${event.request.soapVersion}</label></td>
         </tr>
     </table>
 </div>
@@ -37,11 +37,11 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label path="name"><spring:message code="soap.event.column.request.contenttype"/></label></td>
-            <td class="column2"><label path="name">${event.soapRequest.contentType}</label></td>
+            <td class="column2"><label path="name">${event.request.contentType}</label></td>
         </tr>
     </table>
     <div class="eventMessage">
-        <textarea id="requestBody" readonly><c:out value="${event.soapRequest.body}"/></textarea>
+        <textarea id="requestBody" readonly><c:out value="${event.request.body}"/></textarea>
     </div>
 </div>
 
@@ -50,15 +50,15 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label path="name"><spring:message code="soap.event.column.response.statuscode"/></label></td>
-            <td class="column2"><label path="name">${event.soapResponse.httpStatusCode}</label></td>
+            <td class="column2"><label path="name">${event.response.statusCode}</label></td>
         </tr>
         <tr>
             <td class="column1"><label path="name"><spring:message code="soap.event.column.response.contenttype"/></label></td>
-            <td class="column2"><label path="name">${event.soapResponse.httpContentType}</label></td>
+            <td class="column2"><label path="name">${event.response.contentType}</label></td>
         </tr>
     </table>
     <div class="eventMessage">
-        <textarea id="responseBody" readonly><c:out value="${event.soapResponse.body}"/></textarea>
+        <textarea id="responseBody" readonly><c:out value="${event.response.body}"/></textarea>
     </div>
 </div>
 

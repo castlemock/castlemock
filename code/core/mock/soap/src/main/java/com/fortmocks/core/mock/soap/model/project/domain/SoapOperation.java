@@ -16,6 +16,7 @@
 
 package com.fortmocks.core.mock.soap.model.project.domain;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.basis.model.Saveable;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -33,11 +34,11 @@ public class SoapOperation implements Saveable<String> {
     private String id;
     private String name;
     private String identifier;
-    private SoapResponseStrategy soapResponseStrategy;
-    private List<SoapMockResponse> soapMockResponses;
-    private SoapOperationStatus soapOperationStatus;
-    private SoapOperationMethod soapOperationMethod;
-    private SoapOperationType soapOperationType;
+    private SoapResponseStrategy responseStrategy;
+    private List<SoapMockResponse> mockResponses;
+    private SoapOperationStatus status;
+    private HttpMethod httpMethod;
+    private SoapVersion soapVersion;
     private String defaultBody;
     private Integer currentResponseSequenceIndex;
     private String forwardedEndpoint;
@@ -74,49 +75,49 @@ public class SoapOperation implements Saveable<String> {
 
 
     @XmlElement
-    public SoapResponseStrategy getSoapResponseStrategy() {
-        return soapResponseStrategy;
+    public SoapResponseStrategy getResponseStrategy() {
+        return responseStrategy;
     }
 
-    public void setSoapResponseStrategy(SoapResponseStrategy soapResponseStrategy) {
-        this.soapResponseStrategy = soapResponseStrategy;
+    public void setResponseStrategy(SoapResponseStrategy responseStrategy) {
+        this.responseStrategy = responseStrategy;
     }
 
     @XmlElement
-    public SoapOperationStatus getSoapOperationStatus() {
-        return soapOperationStatus;
+    public SoapOperationStatus getStatus() {
+        return status;
     }
 
-    public void setSoapOperationStatus(SoapOperationStatus soapOperationStatus) {
-        this.soapOperationStatus = soapOperationStatus;
+    public void setStatus(SoapOperationStatus status) {
+        this.status = status;
     }
 
     @XmlElementWrapper(name = "mockResponses")
     @XmlElement(name = "mockResponse")
-    public List<SoapMockResponse> getSoapMockResponses() {
-        return soapMockResponses;
+    public List<SoapMockResponse> getMockResponses() {
+        return mockResponses;
     }
 
-    public void setSoapMockResponses(List<SoapMockResponse> soapMockResponses) {
-        this.soapMockResponses = soapMockResponses;
-    }
-
-    @XmlElement
-    public SoapOperationMethod getSoapOperationMethod() {
-        return soapOperationMethod;
-    }
-
-    public void setSoapOperationMethod(SoapOperationMethod soapOperationMethod) {
-        this.soapOperationMethod = soapOperationMethod;
+    public void setMockResponses(List<SoapMockResponse> mockResponses) {
+        this.mockResponses = mockResponses;
     }
 
     @XmlElement
-    public SoapOperationType getSoapOperationType() {
-        return soapOperationType;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setSoapOperationType(SoapOperationType soapOperationType) {
-        this.soapOperationType = soapOperationType;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
+    }
+
+    @XmlElement
+    public SoapVersion getSoapVersion() {
+        return soapVersion;
+    }
+
+    public void setSoapVersion(SoapVersion soapVersion) {
+        this.soapVersion = soapVersion;
     }
 
     @XmlElement

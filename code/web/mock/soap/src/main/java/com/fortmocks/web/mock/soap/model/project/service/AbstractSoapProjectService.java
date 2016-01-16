@@ -45,7 +45,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
             statuses.put(soapOperationStatus, 0);
         }
         for(SoapOperationDto soapOperation : soapOperations){
-            SoapOperationStatus soapOperationStatus = soapOperation.getSoapOperationStatus();
+            SoapOperationStatus soapOperationStatus = soapOperation.getStatus();
             statuses.put(soapOperationStatus, statuses.get(soapOperationStatus)+1);
         }
         return statuses;
@@ -122,7 +122,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(soapPortId, "Port id cannot be null");
         final SoapProject soapProject = findType(soapProjectId);
-        for(SoapPort soapPort : soapProject.getSoapPorts()){
+        for(SoapPort soapPort : soapProject.getPorts()){
             if(soapPort.getId().equals(soapPortId)){
                 return soapPort;
             }
@@ -147,7 +147,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
     protected SoapOperation findSoapOperationType(final String soapProjectId, final String soapPortId, final String soapOperationId){
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
-        for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+        for(SoapOperation soapOperation : soapPort.getOperations()){
             if(soapOperation.getId().equals(soapOperationId)){
                 return soapOperation;
             }
@@ -167,7 +167,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      */
     protected List<SoapOperation> findSoapOperationType(final String soapProjectId, final String soapPortId) {
         final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
-        return soapPort != null ? soapPort.getSoapOperations() : null;
+        return soapPort != null ? soapPort.getOperations() : null;
     }
 
     /**
@@ -181,8 +181,8 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
     protected SoapOperation findSoapOperationType(final String soapOperationId) {
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         for(SoapProject soapProject : findAllTypes()){
-            for(SoapPort soapPort : soapProject.getSoapPorts()){
-                for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+            for(SoapPort soapPort : soapProject.getPorts()){
+                for(SoapOperation soapOperation : soapPort.getOperations()){
                     if(soapOperation.getId().equals(soapOperationId)){
                         return soapOperation;
                     }
@@ -203,8 +203,8 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
     protected String findSoapProjectType(final String soapOperationId) {
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         for(SoapProject soapProject : findAllTypes()){
-            for(SoapPort soapPort : soapProject.getSoapPorts()){
-                for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+            for(SoapPort soapPort : soapProject.getPorts()){
+                for(SoapOperation soapOperation : soapPort.getOperations()){
                     if(soapOperation.getId().equals(soapOperationId)){
                         return soapProject.getId();
                     }
@@ -229,8 +229,8 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
         }
 
         final List<SoapOperation> soapOperations = new ArrayList<SoapOperation>();
-        for(SoapPort soapPort : soapProject.getSoapPorts()){
-            soapOperations.addAll(soapPort.getSoapOperations());
+        for(SoapPort soapPort : soapProject.getPorts()){
+            soapOperations.addAll(soapPort.getOperations());
         }
         return soapOperations;
     }
@@ -255,7 +255,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      */
     protected SoapMockResponse findSoapMockResponseType(final String soapProjectId, final String soapPortId, final String soapOperationId, final String soapMockResponseId) {
         final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
-        for(SoapMockResponse soapMockResponse : soapOperation.getSoapMockResponses()){
+        for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
             if(soapMockResponse.getId().equals(soapMockResponseId)){
                 return soapMockResponse;
             }
@@ -271,7 +271,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * name then null will be returned.
      */
     protected SoapPort findSoapPortWithName(final SoapProject soapProject, final String soapPortName){
-        for(SoapPort soapPort : soapProject.getSoapPorts()){
+        for(SoapPort soapPort : soapProject.getPorts()){
             if(soapPort.getName().equals(soapPortName)){
                 return soapPort;
             }
@@ -287,7 +287,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * name then null will be returned.
      */
     protected SoapOperation findSoapOperationWithName(final SoapPort soapPort, final String soapOperationName){
-        for(SoapOperation soapOperation : soapPort.getSoapOperations()){
+        for(SoapOperation soapOperation : soapPort.getOperations()){
             if(soapOperation.getName().equals(soapOperationName)){
                 return soapOperation;
             }

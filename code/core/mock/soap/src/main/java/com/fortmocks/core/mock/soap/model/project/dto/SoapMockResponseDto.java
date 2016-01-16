@@ -34,14 +34,14 @@ public class SoapMockResponseDto {
     @Mapping("body")
     private String body;
 
-    @Mapping("soapMockResponseStatus")
-    private SoapMockResponseStatus soapMockResponseStatus;
+    @Mapping("status")
+    private SoapMockResponseStatus status;
 
-    @Mapping("httpStatusCode")
-    private Integer httpStatusCode;
+    @Mapping("statusCode")
+    private Integer statusCode;
 
-    @Mapping("httpContentType")
-    private String httpContentType;
+    @Mapping("contentType")
+    private String contentType;
 
     public String getId() {
         return id;
@@ -67,27 +67,27 @@ public class SoapMockResponseDto {
         this.body = body;
     }
 
-    public SoapMockResponseStatus getSoapMockResponseStatus() {
-        return soapMockResponseStatus;
+    public SoapMockResponseStatus getStatus() {
+        return status;
     }
 
-    public void setSoapMockResponseStatus(SoapMockResponseStatus soapMockResponseStatus) {
-        this.soapMockResponseStatus = soapMockResponseStatus;
+    public void setStatus(SoapMockResponseStatus status) {
+        this.status = status;
     }
 
-    public Integer getHttpStatusCode() {
-        return httpStatusCode;
+    public Integer getStatusCode() {
+        return statusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public String getHttpContentType() {
-        return httpContentType;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setHttpContentType(String httpContentType) {
-        this.httpContentType = httpContentType;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

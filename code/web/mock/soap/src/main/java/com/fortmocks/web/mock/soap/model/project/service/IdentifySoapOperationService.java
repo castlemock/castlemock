@@ -16,6 +16,7 @@
 
 package com.fortmocks.web.mock.soap.model.project.service;
 
+import com.fortmocks.core.basis.model.HttpMethod;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
@@ -45,10 +46,10 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
         final SoapProject project= findType(input.getSoapProjectId());
         SoapPort soapPort = null;
         SoapOperationDto soapOperationDto = null;
-        for(SoapPort tempSoapPort : project.getSoapPorts()){
+        for(SoapPort tempSoapPort : project.getPorts()){
             if(tempSoapPort.getUrlPath().equals(input.getUri())){
                 soapPort = tempSoapPort;
-                soapOperationDto = findSoapOperation(tempSoapPort, input.getSoapOperationMethod(), input.getType(), input.getSoapOperationIdentifier());
+                soapOperationDto = findSoapOperation(tempSoapPort, input.getHttpMethod(), input.getType(), input.getSoapOperationIdentifier());
                 break;
             }
         }
@@ -59,14 +60,14 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
     /**
      * The method finds a specific SOAP operation in a SOAP port and with specific attributes
      * @param soapPort The SOAP port that is responsible for the SOAP operation
-     * @param soapOperationMethod The SOAP operation method
-     * @param soapOperationType The SOAP operation type
+     * @param httpMethod The SOAP operation method
+     * @param soapOperationVersion The SOAP operation type
      * @param soapOperationInputMessageName The SOAP operation input message name. The identifier for the SOAP operation
      * @return The SOAP operation that matches the search criteria. Null otherwise
      */
-    private SoapOperationDto findSoapOperation(SoapPort soapPort, SoapOperationMethod soapOperationMethod, SoapOperationType soapOperationType, String soapOperationInputMessageName){
-        for(SoapOperation soapOperation : soapPort.getSoapOperations()){
-            if(soapOperation.getSoapOperationMethod().equals(soapOperationMethod) && soapOperation.getSoapOperationType().equals(soapOperationType) && soapOperation.getIdentifier().equalsIgnoreCase(soapOperationInputMessageName)){
+    private SoapOperationDto findSoapOperation(SoapPort soapPort, HttpMethod httpMethod, SoapVersion soapOperationVersion, String soapOperationInputMessageName){
+        for(SoapOperation soapOperation : soapPort.getOperations()){
+            if(soapOperation.getHttpMethod().equals(httpMethod) && soapOperation.getSoapVersion().equals(soapOperationVersion) && soapOperation.getIdentifier().equalsIgnoreCase(soapOperationInputMessageName)){
                 return mapper.map(soapOperation, SoapOperationDto.class);
             }
         }

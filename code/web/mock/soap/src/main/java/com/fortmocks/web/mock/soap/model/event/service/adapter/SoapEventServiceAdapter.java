@@ -154,6 +154,6 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
      */
     @Override
     public String generateResourceLink(SoapEventDto soapEventDto) {
-        return SLASH + WEB + SLASH + SOAP + SLASH + PROJECT + SLASH + soapEventDto.getSoapProjectId() + SLASH + PORT + SLASH + soapEventDto.getSoapPortId() + SLASH + OPERATION + SLASH + soapEventDto.getSoapOperationId();
+        return SLASH + WEB + SLASH + SOAP + SLASH + PROJECT + SLASH + soapEventDto.getProjectId() + SLASH + PORT + SLASH + soapEventDto.getPortId() + SLASH + OPERATION + SLASH + soapEventDto.getOperationId();
     }
 }
