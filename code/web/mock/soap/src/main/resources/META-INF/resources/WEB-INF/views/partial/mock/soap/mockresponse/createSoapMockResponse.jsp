@@ -4,22 +4,27 @@
     <h1><spring:message code="soap.createsoapmockresponse.header.createmockresponse"/></h1>
 </div>
 <form:form action="${create_soap_mock_response_url}" method="POST">
-    <table class="formTable">
-        <tr>
-            <td class="column1"><form:label path="name"><spring:message code="soap.createsoapmockresponse.label.name"/></form:label></td>
-            <td class="column2"><form:input path="name" id="soapMockResponseNameInput"/></td>
-        </tr>
-        <tr>
-            <td class="column1"><form:label path="httpStatusCode"><spring:message code="soap.createsoapmockresponse.label.httpstatuscode"/></form:label></td>
-            <td class="column2"><form:input path="httpStatusCode" id="soapMockResponseHttpStatusCodeInput"/></td>
-        </tr>
-        <tr>
-            <td class="column1"><form:label path="httpContentType"><spring:message code="soap.createsoapmockresponse.label.httpcontenttype"/></form:label></td>
-            <td class="column2"><form:input path="httpContentType" id="soapMockResponseHttpContentTypeInput"/></td>
-        </tr>
-    </table>
-    <div class="editor">
-        <form:textarea id="body" path="body"/>
+    <div class="content-summary">
+        <table class="formTable">
+            <tr>
+                <td class="column1"><form:label path="name"><spring:message code="soap.createsoapmockresponse.label.name"/></form:label></td>
+                <td class="column2"><form:input path="name" id="soapMockResponseNameInput"/></td>
+            </tr>
+            <tr>
+                <td class="column1"><form:label path="httpStatusCode"><spring:message code="soap.createsoapmockresponse.label.httpstatuscode"/></form:label></td>
+                <td class="column2"><form:input path="httpStatusCode" id="soapMockResponseHttpStatusCodeInput"/></td>
+            </tr>
+            <tr>
+                <td class="column1"><form:label path="contentType"><spring:message code="soap.createsoapmockresponse.label.httpcontenttype"/></form:label></td>
+                <td class="column2"><form:input path="contentType" id="soapMockResponseHttpContentTypeInput"/></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h2 class="decorated"><span><spring:message code="soap.createsoapmockresponse.header.body"/></span></h2>
+        <div class="editor">
+            <form:textarea id="body" path="body"/>
+        </div>
     </div>
 
     <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.createsoapmockresponse.button.createmockresponse"/></span></button>

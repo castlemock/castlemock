@@ -18,9 +18,11 @@ package com.fortmocks.core.mock.soap.model.project.domain;
 
 
 import com.fortmocks.core.basis.model.Saveable;
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * Mock response represent a mocked response for a operation
@@ -36,6 +38,7 @@ public class SoapMockResponse implements Saveable<String> {
     private Integer httpStatusCode;
     private String contentType;
     private SoapMockResponseStatus status;
+    private List<HttpHeader> httpHeaders;
 
     @XmlElement
     @Override
@@ -89,6 +92,14 @@ public class SoapMockResponse implements Saveable<String> {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public List<HttpHeader> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+        this.httpHeaders = httpHeaders;
     }
 
     @Override

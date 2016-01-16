@@ -16,8 +16,11 @@
 
 package com.fortmocks.core.mock.soap.model.project.dto;
 
+import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import org.dozer.Mapping;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -42,6 +45,9 @@ public class SoapMockResponseDto {
 
     @Mapping("contentType")
     private String contentType;
+
+    @Mapping("httpHeaders")
+    private List<HttpHeaderDto> httpHeaders;
 
     public String getId() {
         return id;
@@ -89,5 +95,13 @@ public class SoapMockResponseDto {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public List<HttpHeaderDto> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeaderDto> httpHeaders) {
+        this.httpHeaders = httpHeaders;
     }
 }

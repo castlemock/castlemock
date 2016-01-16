@@ -17,9 +17,11 @@
 package com.fortmocks.core.mock.rest.model.project.domain;
 
 import com.fortmocks.core.basis.model.Saveable;
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -34,6 +36,7 @@ public class RestMockResponse implements Saveable<String> {
     private Integer httpStatusCode;
     private RestMockResponseStatus status;
     private String contentType;
+    private List<HttpHeader> httpHeaders;
 
     @Override
     @XmlElement
@@ -88,5 +91,13 @@ public class RestMockResponse implements Saveable<String> {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public List<HttpHeader> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+        this.httpHeaders = httpHeaders;
     }
 }

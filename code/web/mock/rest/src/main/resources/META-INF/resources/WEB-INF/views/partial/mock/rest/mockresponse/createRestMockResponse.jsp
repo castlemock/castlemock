@@ -20,22 +20,28 @@
     <h1><spring:message code="rest.createrestmockresponse.header.createmockresponse"/></h1>
 </div>
 <form:form action="${create_rest_mock_response_url}" method="POST" commandName="restMockResponse">
-    <table class="formTable">
-        <tr>
-            <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.name"/></form:label></td>
-            <td class="column2"><form:input path="name" id="restMockResponseNameInput" /></td>
-        </tr>
-        <tr>
-            <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.createrestmockresponse.label.httpstatuscode"/></form:label></td>
-            <td class="column2"><form:input path="httpStatusCode" id="restMockResponseHttpResponseCodeInput" /></td>
-        </tr>
-        <tr>
-            <td class="column1"><spring:message code="rest.createrestmockresponse.label.restcontenttype"/></td>
-            <td class="column2"><form:input path="contentType" id="restMockResponseHttpContentTypeInput"/></td>
-        </tr>
-    </table>
-    <div class="editor">
-        <form:textarea id="body" path="body"/>
+    <div class="content-summary">
+        <table class="formTable">
+            <tr>
+                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.name"/></form:label></td>
+                <td class="column2"><form:input path="name" id="restMockResponseNameInput" /></td>
+            </tr>
+            <tr>
+                <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.createrestmockresponse.label.httpstatuscode"/></form:label></td>
+                <td class="column2"><form:input path="httpStatusCode" id="restMockResponseHttpResponseCodeInput" /></td>
+            </tr>
+            <tr>
+                <td class="column1"><spring:message code="rest.createrestmockresponse.label.restcontenttype"/></td>
+                <td class="column2"><form:input path="contentType" id="restMockResponseHttpContentTypeInput"/></td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.header.body"/></span></h2>
+        <div class="editor">
+            <form:textarea id="body" path="body"/>
+        </div>
     </div>
 
     <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="rest.createrestmockresponse.button.createmockresponse"/></span></button>
