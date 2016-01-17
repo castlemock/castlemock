@@ -19,7 +19,7 @@
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks</artifactId>
 	<packaging>pom</packaging>
-	<version>1.1-SNAPSHOT</version>
+	<version>1.2-SNAPSHOT</version>
     <name>Fort mocks</name>
 	<url>http://www.fortmocks.com</url>
 	<description>This is the root Maven project file which all the Fort Mocks projects share</description>
