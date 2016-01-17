@@ -33,6 +33,7 @@ import com.fortmocks.core.mock.rest.model.project.service.message.input.Identify
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
+import com.fortmocks.web.basis.manager.HttpMessageSupport;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.rest.model.RestException;
 import com.google.common.base.Preconditions;
@@ -106,8 +107,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final String body = RestMessageSupport.getBody(httpServletRequest);
         final String incomingRequestUri = httpServletRequest.getRequestURI().toLowerCase();
         final String restResourceUri = incomingRequestUri.replace(getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId.toLowerCase() + SLASH + APPLICATION + SLASH + applicationId.toLowerCase(), EMPTY);
-        final List<HttpParameterDto> httpParameters = extractParameters(httpServletRequest);
-        final List<HttpHeaderDto> httpHeaders = extractHttpHeaders(httpServletRequest);
+        final List<HttpParameterDto> httpParameters = HttpMessageSupport.extractParameters(httpServletRequest);
+        final List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 
         request.setHttpMethod(httpMethod);
         request.setBody(body);
@@ -116,74 +117,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
         request.setHttpHeaders(httpHeaders);
         return request;
     }
-
-    /**
-     * Extract all the incoming parameters and stores them in a Map. The parameter name will
-     * act as the key and the parameter value will be the Map value
-     * @param httpServletRequest The incoming request which contains all the parameters
-     * @return A map with the extracted parameters
-     */
-    protected List<HttpParameterDto> extractParameters(final HttpServletRequest httpServletRequest){
-        final List<HttpParameterDto> httpParameters = new ArrayList<HttpParameterDto>();
-
-        final Enumeration<String> enumeration = httpServletRequest.getParameterNames();
-        while(enumeration.hasMoreElements()){
-            final HttpParameterDto httpParameter = new HttpParameterDto();
-            final String parameterName = enumeration.nextElement();
-            final String parameterValue = httpServletRequest.getParameter(parameterName);
-            httpParameter.setName(parameterName);
-            httpParameter.setValue(parameterValue);
-            httpParameters.add(httpParameter);
-        }
-        return httpParameters;
-    }
-
-    /**
-     * Extract HTTP headers from provided Http Servlet Request
-     * @param httpServletRequest Incoming Http Servlet Request that contains the headers which will be extracted
-     * @return A list of HTTP headers extracted from the provided httpServletRequest
-     */
-    public static List<HttpHeaderDto> extractHttpHeaders(final HttpServletRequest httpServletRequest){
-        final List<HttpHeaderDto> httpHeaders = new ArrayList<HttpHeaderDto>();
-        final Enumeration<String> headers = httpServletRequest.getHeaderNames();
-        while(headers.hasMoreElements()){
-            final String headerName = headers.nextElement();
-            final String headerValue = httpServletRequest.getHeader(headerName);
-            final HttpHeaderDto httpHeader = new HttpHeaderDto();
-            httpHeader.setName(headerName);
-            httpHeader.setValue(headerValue);
-            httpHeaders.add(httpHeader);
-        }
-        return httpHeaders;
-    }
-
-
-    /**
-     * Builds a parameter URL string passed on the provided parameter map.
-     * Example on the output: ?name1=value1&name2=value2
-     * @param httpParameters The Map of parameters that will be used to build the parameter URI
-     * @return A URI that contains the parameters from the provided Map
-     */
-    protected String buildParameterUri(List<HttpParameterDto> httpParameters){
-        if(httpParameters.isEmpty()){
-            return EMPTY;
-        }
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("?");
-        for(int index = 0; index < httpParameters.size(); index++){
-            HttpParameterDto httpParameter = httpParameters.get(index);
-            String parameterName = httpParameter.getName();
-            String parameterValue = httpParameter.getValue();
-            stringBuilder.append(parameterName + "=" + parameterValue);
-
-            // Add a & (and) character if the Http parameter is not the last one
-            if(index < httpParameters.size() - 1){
-                stringBuilder.append("&");
-            }
-        }
-        return stringBuilder.toString();
-    }
-
 
     /**
      * The process method provides the functionality to process an incoming request. The request will be identified
@@ -236,7 +169,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         OutputStream outputStream = null;
         BufferedReader bufferedReader = null;
         try {
-            final String parameterUri = buildParameterUri(restRequest.getHttpParameters());
+            final String parameterUri = HttpMessageSupport.buildParameterUri(restRequest.getHttpParameters());
             final URL url = new URL(restMethod.getForwardedEndpoint() + restRequest.getUri() + parameterUri);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
@@ -264,15 +197,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 stringBuilder.append(NEW_LINE);
             }
 
-            final List<HttpHeaderDto> responseHttpHeaders = new ArrayList<HttpHeaderDto>();
-            for(String headerName : connection.getHeaderFields().keySet()){
-                final String headerValue = connection.getHeaderField(headerName);
-                final HttpHeaderDto responseHttpHeader = new HttpHeaderDto();
-                responseHttpHeader.setName(headerName);
-                responseHttpHeader.setValue(headerValue);
-                responseHttpHeaders.add(responseHttpHeader);
-            }
-
+            final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
             response.setBody(stringBuilder.toString());
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setHttpHeaders(responseHttpHeaders);
@@ -341,7 +266,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * The method is responsible for mocking a REST service. The method will identify which mocked response
      * will be returned.
      * @param restMethod The REST method which the incoming request belongs to
-     * @param httpServletResponse The HTTP servlet response
      * @return Returns a selected mocked response which will be returned to the service consumer
      */
     protected RestResponseDto mockResponse(final RestMethodDto restMethod){
