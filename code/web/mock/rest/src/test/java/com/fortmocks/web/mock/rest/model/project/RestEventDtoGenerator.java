@@ -46,7 +46,6 @@ public class RestEventDtoGenerator {
         restRequestDto.setContentType("application/json");
         restRequestDto.setHttpHeaders(new ArrayList<HttpHeaderDto>());
         restRequestDto.setHttpParameters(new ArrayList<HttpParameterDto>());
-        restRequestDto.setServiceName("Service name");
         restRequestDto.setUri("URI");
 
         RestResponseDto restResponseDto = new RestResponseDto();

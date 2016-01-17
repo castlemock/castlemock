@@ -42,9 +42,6 @@ public class RestRequestDto {
     @Mapping("httpMethod")
     private HttpMethod httpMethod;
 
-    @Mapping("serviceName")
-    private String serviceName;
-
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders;
 
@@ -73,14 +70,6 @@ public class RestRequestDto {
 
     public void setUri(String uri) {
         this.uri = uri;
-    }
-
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
     }
 
     public HttpMethod getHttpMethod() {
