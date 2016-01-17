@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.mock.soap.support;
+package com.fortmocks.web.basis.support;
 
-import com.fortmocks.web.basis.manager.HttpMessageSupport;
-import com.fortmocks.web.mock.soap.model.SoapException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -54,7 +52,7 @@ public class HttpMessageSupportTest {
         Assert.assertEquals(readerOutput, output);
     }
 
-    @Test(expected = SoapException.class)
+    @Test(expected = IllegalStateException.class)
     public void testGetBodyRequestIOError(){
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
@@ -66,7 +64,7 @@ public class HttpMessageSupportTest {
         HttpMessageSupport.getBody(httpServletRequest);
     }
 
-    @Test(expected = SoapException.class)
+    @Test(expected = IllegalStateException.class)
     public void testGetBodyReaderIOError(){
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         final BufferedReader reader = Mockito.mock(BufferedReader.class);
@@ -129,7 +127,7 @@ public class HttpMessageSupportTest {
         Assert.assertEquals("GetPrice", requestName);
     }
 
-    @Test(expected = SoapException.class)
+    @Test(expected = IllegalStateException.class)
     public void testExtractSoapRequestNameInvalidRequestBody(){
         HttpMessageSupport.extractSoapRequestName(new String());
     }

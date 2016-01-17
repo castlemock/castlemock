@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.basis.manager;
+package com.fortmocks.web.basis.support;
 
 import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
 import com.fortmocks.core.basis.model.http.dto.HttpParameterDto;
@@ -78,7 +78,7 @@ public class HttpMessageSupport {
             final NodeList bodyChildren = bodyNode.getChildNodes();
 
             if (bodyChildren.getLength() == 0) {
-                throw new IllegalArgumentException("Invalid count of body children");
+                throw new IllegalStateException("Invalid count of body children");
             }
 
             String serviceNameWithPrefix = null;

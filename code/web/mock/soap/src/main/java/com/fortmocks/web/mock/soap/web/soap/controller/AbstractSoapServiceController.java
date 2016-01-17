@@ -30,7 +30,7 @@ import com.fortmocks.core.mock.soap.model.project.service.message.input.Identify
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
-import com.fortmocks.web.basis.manager.HttpMessageSupport;
+import com.fortmocks.web.basis.support.HttpMessageSupport;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.model.SoapException;
 import com.google.common.base.Preconditions;

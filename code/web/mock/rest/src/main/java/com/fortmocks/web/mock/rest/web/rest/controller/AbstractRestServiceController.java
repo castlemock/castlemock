@@ -33,7 +33,7 @@ import com.fortmocks.core.mock.rest.model.project.service.message.input.Identify
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
-import com.fortmocks.web.basis.manager.HttpMessageSupport;
+import com.fortmocks.web.basis.support.HttpMessageSupport;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.rest.model.RestException;
 import com.google.common.base.Preconditions;
