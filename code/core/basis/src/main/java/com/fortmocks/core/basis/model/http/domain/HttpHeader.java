@@ -17,11 +17,13 @@
 package com.fortmocks.core.basis.model.http.domain;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class HttpHeader {
 
     private String name;
