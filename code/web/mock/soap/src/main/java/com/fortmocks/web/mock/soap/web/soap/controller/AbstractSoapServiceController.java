@@ -144,7 +144,11 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             } else if (SoapOperationStatus.RECORD_ONCE.equals(soapOperationDto.getStatus())) {
                 response = forwardRequestAndRecordResponseOnce(request, soapProjectId, soapPortId, soapOperationDto);
             } else { // Status.MOCKED
-                response = mockResponse(soapOperationDto, httpServletResponse);
+                response = mockResponse(soapOperationDto);
+            }
+            httpServletResponse.setStatus(response.getHttpStatusCode());
+            for(HttpHeaderDto httpHeader : response.getHttpHeaders()){
+                httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
             }
             return response.getBody();
         } finally{
@@ -161,7 +165,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      *                         the provided SOAP operation.
      * @return A mocked response based on the provided SOAP operation
      */
-    private SoapResponseDto mockResponse(final SoapOperationDto soapOperationDto, final HttpServletResponse httpServletResponse){
+    private SoapResponseDto mockResponse(final SoapOperationDto soapOperationDto){
         final List<SoapMockResponseDto> mockResponses = new ArrayList<SoapMockResponseDto>();
         for(SoapMockResponseDto mockResponse : soapOperationDto.getMockResponses()){
             if(mockResponse.getStatus().equals(SoapMockResponseStatus.ENABLED)){
@@ -193,10 +197,6 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         response.setMockResponseName(mockResponse.getName());
         response.setHttpHeaders(mockResponse.getHttpHeaders());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
-        httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
-        for(HttpHeaderDto httpHeader : mockResponse.getHttpHeaders()){
-            httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
-        }
         return response;
 
     }
