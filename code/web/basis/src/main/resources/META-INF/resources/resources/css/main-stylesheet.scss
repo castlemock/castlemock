@@ -325,6 +325,23 @@ section{
     }
 }
 
+.delete {
+    cursor: pointer;
+
+  &:before {
+    font-family: FontAwesome;
+    content: "\f014";
+  }
+
+  &:hover {
+
+    &:before {
+      font-family: FontAwesome;
+      content: "\f1f8";
+    }
+  }
+}
+
 .question {
     cursor: pointer;
     border-top: 1px solid #ddd;
