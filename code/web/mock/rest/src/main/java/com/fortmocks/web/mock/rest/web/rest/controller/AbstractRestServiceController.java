@@ -133,6 +133,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             final String parameterValue = httpServletRequest.getParameter(parameterName);
             httpParameter.setName(parameterName);
             httpParameter.setValue(parameterValue);
+            httpParameters.add(httpParameter);
         }
         return httpParameters;
     }
