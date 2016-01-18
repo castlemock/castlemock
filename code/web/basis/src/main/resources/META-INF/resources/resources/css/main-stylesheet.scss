@@ -40,48 +40,54 @@ body {
         margin-top: 10px;
         margin-right: 40px;
 
-        form {
+        .search  {
             float: left;
-        }
 
-        input[type=text] {
-            width: 200px;
-            padding: 5px;
-            outline: none;
-            border: 2px solid #9EA1A6;
-            background-color: #9EA1A6;
-            font-size: 12px;
-            border-radius: 5px;
-            float: left;
-            position: relative;
-            top: -4px;
-            color: #fff;
-
-            &::-webkit-input-placeholder {
-                color: #fff;
+            form {
+                float: left;
             }
-           
+
+            input[type=text] {
+                width: 200px;
+                padding: 5px;
+                outline: none;
+                border: 2px solid #9EA1A6;
+                background-color: #9EA1A6;
+                font-size: 12px;
+                border-radius: 5px;
+                float: left;
+                position: relative;
+                top: -4px;
+                color: #fff;
+
+                &::-webkit-input-placeholder {
+                    color: #fff;
+                }
+
+            }
         }
-        
-        
-        a {
-            text-decoration: none;
+        .links {
+            float: right;
+            a {
+                text-decoration: none;
+
+                i {
+                    margin: 0 10px;
+                }
+            }
+
+            .fa-2x {
+                font-size: 1.6em;
+
+            }
 
             i {
-                margin: 0 10px;
+                &:hover {
+                    color: #ddd;
+                }
             }
         }
 
-        .fa-2x {
-            font-size: 1.6em;
-            
-        }
-        
-        i {
-            &:hover {
-                color: #ddd;
-            }
-        }
     }
 }
 
