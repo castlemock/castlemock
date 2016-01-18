@@ -1,4 +1,4 @@
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
     .container {
         width: 100%;
 
@@ -18,12 +18,7 @@
         display: none;
     }
 
-    .header-nav {
-        visibility: hidden;
-        clear: both;
-        float: left;
-        display: none;
-    }
+
 }
 
 @media screen and (max-width: 720px) {
@@ -71,14 +66,7 @@
             float: none !important;
         }
     }
-    
-    .header-nav {
-        position: relative;
-        top: 0;
-        background: #f0f0f0;
-        text-align: center;
-    }
-    
+
     .pure-button {
         i {
             font-size: 1.3em;

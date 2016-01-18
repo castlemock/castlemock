@@ -13,9 +13,9 @@
   </head>
     <body>
         <jsp:include page="header.jsp" />
+        <jsp:include page="navigation.jsp" />
 
         <div class="container">
-            <jsp:include page="navigation.jsp" />
             <jsp:include page="aside.jsp" />
             <section>
                     <jsp:include page="${partial}" />

@@ -78,7 +78,7 @@ a {
 .pure-button:hover {
   text-decoration: none !important; }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
   .container {
     width: 100%; }
     .container section {
@@ -88,12 +88,6 @@ a {
     border-bottom: 0px solid #f0f0f0; }
 
   aside {
-    visibility: hidden;
-    clear: both;
-    float: left;
-    display: none; }
-
-  .header-nav {
     visibility: hidden;
     clear: both;
     float: left;
@@ -128,12 +122,6 @@ a {
       left: 0;
       float: none !important; }
 
-  .header-nav {
-    position: relative;
-    top: 0;
-    background: #f0f0f0;
-    text-align: center; }
-
   .pure-button i {
     font-size: 1.3em;
     padding: 2px 3px; }
@@ -162,8 +150,7 @@ body {
   color: #fff;
   border: 0px solid #000;
   top: 0px;
-  font-size: 13px;
-  border-bottom: 35px solid #f0f0f0; }
+  font-size: 13px; }
   .main-header a {
     color: #fff; }
   .main-header .logo {
@@ -203,16 +190,20 @@ body {
 
 .container {
   width: 85%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  margin-top: 40px; }
 
 .header-nav {
   font-size: 13px;
   text-decoration: none;
   color: #343434;
   position: absolute;
-  width: 500px;
-  height: 35px;
-  top: 42px; }
+  width: 100%;
+  background-color: #f0f0f0;
+  height: 35px; }
+  .header-nav .content {
+    width: 85%;
+    margin: 0 auto; }
   .header-nav ul {
     position: absolute;
     margin: 0;
