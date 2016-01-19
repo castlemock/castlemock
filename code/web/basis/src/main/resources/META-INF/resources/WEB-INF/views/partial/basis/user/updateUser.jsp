@@ -22,7 +22,8 @@
             <td>
                 <form:select path="status">
                     <c:forEach items="${userStatuses}" var="userStatus">
-                        <option value="${userStatus}" ${userStatus == command.status ? 'selected="selected"' : ''} ><spring:message code="general.type.status.${userStatus}"/></option>
+                        <spring:message var="label" code="general.type.status.${userStatus}"/>
+                        <form:option value="${userStatus}" label="${label}"/>
                     </c:forEach>
                 </form:select>
             </td>
@@ -32,7 +33,8 @@
             <td>
                 <form:select path="role">
                     <c:forEach items="${roles}" var="role">
-                        <option value="${role}" ${role == command.role ? 'selected="selected"' : ''} ><spring:message code="general.type.role.${role}"/></option>
+                        <spring:message var="label" code="general.type.role.${role}"/>
+                        <form:option value="${role}" label="${label}"/>
                     </c:forEach>
                 </form:select>
             </td>

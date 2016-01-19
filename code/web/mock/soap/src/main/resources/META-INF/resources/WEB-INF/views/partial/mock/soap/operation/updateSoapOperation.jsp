@@ -10,7 +10,8 @@
             <td>
                 <form:select path="status">
                     <c:forEach items="${soapOperationStatuses}" var="soapOperationStatus">
-                        <option value="${soapOperationStatus}"><spring:message code="soap.type.soapoperationstatus.${soapOperationStatus}"/></option>
+                        <spring:message var="label" code="soap.type.soapoperationstatus.${soapOperationStatus}"/>
+                        <form:option value="${soapOperationStatus}" label="${label}"/>
                     </c:forEach>
                 </form:select>
             </td>
@@ -20,7 +21,8 @@
             <td>
                 <form:select path="responseStrategy">
                     <c:forEach items="${soapMockResponseStrategies}" var="soapMockResponseStrategy">
-                        <option value="${soapMockResponseStrategy}"><spring:message code="soap.type.responsestrategy.${soapMockResponseStrategy}"/></option>
+                        <spring:message var="label" code="soap.type.responsestrategy.${soapMockResponseStrategy}"/>
+                        <form:option value="${soapMockResponseStrategy}" label="${label}"/>
                     </c:forEach>
                 </form:select>
             </td>
