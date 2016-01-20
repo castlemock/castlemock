@@ -26,7 +26,7 @@
                     <br/>
                 </c:forEach>
             <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="general.configuration.button.save"/></span></button>
-            <a href="<c:url value="/web"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="general.configuration.button.discard"/></a>
+            <a href="<c:url value="/web"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="general.configuration.button.discard"/></a>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
         </form:form>

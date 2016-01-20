@@ -94,7 +94,8 @@ public class RestResourceController extends AbstractRestViewController {
         } if(DELETE_REST_METHODS.equalsIgnoreCase(action)) {
             final List<RestMethodDto> restMethods = new ArrayList<RestMethodDto>();
             for(String restMethodId : restMethodModifierCommand.getRestMethodIds()){
-                final RestMethodDto restResourceDto = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
+                final ReadRestMethodOutput restMethodOutput = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
+                final RestMethodDto restResourceDto = restMethodOutput.getRestMethod();
                 restMethods.add(restResourceDto);
             }
             final ModelAndView model = createPartialModelAndView(DELETE_REST_METHODS_PAGE);

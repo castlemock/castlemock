@@ -15,7 +15,7 @@
         </tr>
     </table>
     
-    <button class="button-success pure-button" type="submit" name="submit"><spring:message code="soap.updatesoapport.button.updateport"/></button>
-    <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}"/>" class="button-error pure-button"><i class="fa fa-check-circle"></i> <spring:message code="soap.updatesoapport.button.cancel"/></a>
+    <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="soap.updatesoapport.button.updateport"/></button>
+    <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <spring:message code="soap.updatesoapport.button.cancel"/></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>

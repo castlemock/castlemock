@@ -6,5 +6,5 @@
 
 <p>
 <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/delete/confirm"/>" class="button-error pure-button"><i class="fa fa-trash"></i> <spring:message code="soap.deletesoapport.button.deleteport"/></a>
-<a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="soap.deletesoapport.button.cancel"/></a>
+<a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="soap.deletesoapport.button.cancel"/></a>
 </p>

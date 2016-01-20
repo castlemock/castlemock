@@ -16,13 +16,13 @@
             </ul>
 
             <button class="button-error pure-button" type="submit"><i class="fa fa-trash"></i> <span><spring:message code="general.deleteprojects.button.deleteproject"/></span></button>
-            <a href="<c:url value="/web"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="general.deleteprojects.button.cancel"/></a>
+            <a href="<c:url value="/web"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="general.deleteprojects.button.cancel"/></a>
         </form:form>
     </c:when>
     <c:otherwise>
         <spring:message code="general.deleteprojects.label.noprojects"/>
         <p>
-        <a href="<c:url value="/web"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="general.deleteprojects.button.cancel"/></a>
+        <a href="<c:url value="/web"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="general.deleteprojects.button.cancel"/></a>
         </p>
     </c:otherwise>
 </c:choose>

@@ -25,7 +25,7 @@
         <br/>
 
         <button class="button-success pure-button" name="type" value="file"><i class="fa fa-upload"></i> <span><spring:message code="general.importproject.button.uploadfiles"/></span></button>
-        <a href="<c:url value="/web"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="general.importproject.button.cancel"/></a>
+        <a href="<c:url value="/web"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="general.importproject.button.cancel"/></a>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>
 </div>

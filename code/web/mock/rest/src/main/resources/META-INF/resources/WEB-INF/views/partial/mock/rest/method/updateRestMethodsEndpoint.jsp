@@ -20,11 +20,11 @@
                 </tr>
             </table>
             <button class="button-success pure-button"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.updaterestmethodsendpoint.button.updatemethods"/></span></button>
-            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.updaterestmethodsendpoint.button.cancel"/></a>
+            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.updaterestmethodsendpoint.button.cancel"/></a>
         </form:form>
     </c:when>
     <c:otherwise>
         <p><spring:message code="rest.updaterestmethodsendpoint.label.nomethods"/></p>
-        <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.updaterestmethodsendpoint.button.cancel"/></a>
+        <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.updaterestmethodsendpoint.button.cancel"/></a>
     </c:otherwise>
 </c:choose>

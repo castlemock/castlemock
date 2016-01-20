@@ -15,8 +15,7 @@
         </tr>
     </table>
     <button class="button-success pure-button"><i class="fa fa-check-circle"></i> <spring:message code="general.updateproject.button.updateproject"/></button>
-
-    <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="general.updateproject.button.discardchanges"/></a>
+    <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="general.updateproject.button.discardchanges"/></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
 <script>

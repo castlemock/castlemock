@@ -6,5 +6,5 @@
 
 <p>
     <a href="<c:url value="/web/user/${user.id}/delete/confirm"/>" class="button-error pure-button"><i class="fa fa-trash"></i> <spring:message code="general.deleteuser.button.deleteuser"/></a>
-    <a href="<c:url value="/web/user/${user.id}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="general.deleteuser.button.cancel"/></a>
+    <a href="<c:url value="/web/user/${user.id}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="general.deleteuser.button.cancel"/></a>
 </p>
