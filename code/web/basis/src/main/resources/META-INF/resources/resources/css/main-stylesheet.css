@@ -373,3 +373,6 @@ select {
     display: inline; }
   .content-top div {
     float: right; }
+
+.pure-button {
+  margin-top: 5px; }
