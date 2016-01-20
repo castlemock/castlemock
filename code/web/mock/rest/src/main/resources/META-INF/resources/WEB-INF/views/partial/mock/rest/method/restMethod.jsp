@@ -18,8 +18,10 @@
 
 <c:url var="rest_mock_response_update_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}" />
 <div class="content-top">
-    <h1><spring:message code="rest.restmethod.header.method" arguments="${restMethod.name}"/></h1>
-    <div align="right">
+    <div class="title">
+        <h1><spring:message code="rest.restmethod.header.method" arguments="${restMethod.name}"/></h1>
+    </div>
+    <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
             <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
             <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/create/response"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.createresponse"/></span></a>

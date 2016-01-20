@@ -1,8 +1,10 @@
 <%@ include file="../../../../includes.jspf"%>
 <c:url var="soap_mock_response_update_url"  value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}" />
 <div class="content-top">
-    <h1><spring:message code="soap.soapoperation.header.operation" arguments="${soapOperation.name}"/></h1>
-    <div align="right">
+    <div class="title">
+        <h1><spring:message code="soap.soapoperation.header.operation" arguments="${soapOperation.name}"/></h1>
+    </div>
+    <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
         <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapoperation.button.updateoperation"/></span></a>
         <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/create/response"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapoperation.button.createresponse"/></span></a>

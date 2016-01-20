@@ -365,17 +365,16 @@ select {
 }
 
 .content-top {
-    border-bottom: 1px solid #ddd !important;
-    display: block;
-    margin: 20px 0 20px 0 ;
-    padding: 0 0 20px 0;
-    
-    h1, div {
-        display: inline;
+
+    .title {
+
     }
-    
-    div {
-        float: right;
+
+    .menu {
+        border-bottom: 1px solid #ddd !important;
+        display: block;
+        padding: 0 0 10px 0;
+        min-width: 100%;
     }
 }
 

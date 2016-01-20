@@ -364,15 +364,11 @@ select {
   border: 1px solid #999;
   height: 32px; }
 
-.content-top {
+.content-top .menu {
   border-bottom: 1px solid #ddd !important;
   display: block;
-  margin: 20px 0 20px 0;
-  padding: 0 0 20px 0; }
-  .content-top h1, .content-top div {
-    display: inline; }
-  .content-top div {
-    float: right; }
+  padding: 0 0 10px 0;
+  min-width: 100%; }
 
 .pure-button {
   margin-top: 3px; }

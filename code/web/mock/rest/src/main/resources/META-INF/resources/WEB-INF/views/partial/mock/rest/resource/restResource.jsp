@@ -18,8 +18,10 @@
 
 <c:url var="rest_method_update_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}" />
 <div class="content-top">
-    <h1><spring:message code="rest.restresource.header.resource" arguments="${restResource.name}"/></h1>
-    <div align="right">
+    <div class="title">
+        <h1><spring:message code="rest.restresource.header.resource" arguments="${restResource.name}"/></h1>
+    </div>
+    <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
             <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restresource.button.updateresource"/></span></a>
             <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/create/method"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restresource.button.createmethod"/></span></a>

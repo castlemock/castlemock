@@ -1,8 +1,10 @@
 <%@ include file="../../../../includes.jspf"%>
 <c:url var="operation_update_url"  value="/web/soap/project/${soapProjectId}/port/${soapPort.id}" />
 <div class="content-top">
-    <h1><spring:message code="soap.soapport.header.port" arguments="${soapPort.name}"/></h1>
-    <div align="right">
+    <div class="title">
+        <h1><spring:message code="soap.soapport.header.port" arguments="${soapPort.name}"/></h1>
+    </div>
+    <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
             <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapport.button.updateport"/></span></a>
             <a class="button-error pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapport.button.deleteport"/></span></a>

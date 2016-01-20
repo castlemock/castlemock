@@ -2,8 +2,10 @@
 
 <c:url var="soap_port_update_url"  value="/web/soap/project/${soapProject.id}" />
 <div class="content-top">
-    <h1><spring:message code="soap.soapproject.header.project" arguments="${soapProject.name}"/></h1>
-    <div align="right">
+    <div class="title">
+        <h1><spring:message code="soap.soapproject.header.project" arguments="${soapProject.name}"/></h1>
+    </div>
+    <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
         <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapproject.button.updateproject"/></span></a>
         <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/add/wsdl"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapproject.button.upload" arguments="wsdl"/></span></a>

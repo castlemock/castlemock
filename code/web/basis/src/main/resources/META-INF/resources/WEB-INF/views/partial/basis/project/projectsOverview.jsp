@@ -1,9 +1,11 @@
 <%@ include file="../../../includes.jspf"%>
 <c:url var="project_update_url"  value="/web/project" />
-<div class="content-top">
-    <h1><spring:message code="general.projectoverview.header.projects"/></h1>
 
-    <div align="right">
+<div class="content-top">
+    <div class="title">
+        <h1><spring:message code="general.projectoverview.header.projects"/></h1>
+    </div>
+    <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')"><a class="button-success pure-button" href="<c:url value="/web/project/create"/>"><i class="fa fa-file"></i> <span><spring:message code="general.projectoverview.button.newproject"/></span></a></sec:authorize>
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')"><a class="button-secondary pure-button" href="<c:url value="/web/project/import"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a></sec:authorize>
     </div>
