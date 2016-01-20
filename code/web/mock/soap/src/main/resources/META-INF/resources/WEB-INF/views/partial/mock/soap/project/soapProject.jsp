@@ -8,7 +8,7 @@
     <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
         <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapproject.button.updateproject"/></span></a>
-        <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/add/wsdl"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapproject.button.upload" arguments="wsdl"/></span></a>
+        <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/add/wsdl"/>"><i class="fa fa-upload"></i> <span><spring:message code="soap.soapproject.button.upload" arguments="wsdl"/></span></a>
         <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="soap.soapproject.button.export"/></span></a>
         <a class="button-error pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapproject.button.delete"/></span></a>
         </sec:authorize>
