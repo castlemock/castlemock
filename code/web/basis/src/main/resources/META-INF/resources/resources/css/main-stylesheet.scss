@@ -20,6 +20,8 @@ body {
     border: 0px solid #000;
     top: 0px;
     font-size: 13px;
+    position: fixed;
+    z-index: 1;
 
     a {
         color: #fff;
@@ -95,16 +97,19 @@ body {
     width: 85%;
     margin: 0 auto;
     margin-top: 40px;
+    padding-top: 50px;
+    absolute: relative;
 }
 
 .header-nav {
     font-size: 13px;
     text-decoration: none;
     color: #343434;
-    position: absolute;
+    position: fixed;
     width: 100%;
     background-color: #f0f0f0;
     height: 35px;
+    z-index: 1;
 
     .content {
         width: 85%;

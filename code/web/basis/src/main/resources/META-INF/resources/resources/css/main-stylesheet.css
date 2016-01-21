@@ -150,7 +150,9 @@ body {
   color: #fff;
   border: 0px solid #000;
   top: 0px;
-  font-size: 13px; }
+  font-size: 13px;
+  position: fixed;
+  z-index: 1; }
   .main-header a {
     color: #fff; }
   .main-header .logo {
@@ -195,16 +197,19 @@ body {
 .container {
   width: 85%;
   margin: 0 auto;
-  margin-top: 40px; }
+  margin-top: 40px;
+  padding-top: 50px;
+  absolute: relative; }
 
 .header-nav {
   font-size: 13px;
   text-decoration: none;
   color: #343434;
-  position: absolute;
+  position: fixed;
   width: 100%;
   background-color: #f0f0f0;
-  height: 35px; }
+  height: 35px;
+  z-index: 1; }
   .header-nav .content {
     width: 85%;
     margin: 0 auto; }
