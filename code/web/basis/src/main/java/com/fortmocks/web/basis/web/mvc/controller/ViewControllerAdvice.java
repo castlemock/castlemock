@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ViewControllerAdvice extends AbstractViewController {
 
-    private static final String PAGE = "basis/error";
+    private static final String PAGE = "basis/error/error";
     private static final String TITLE = "title";
     private static final String MESSAGE = "message";
     private static final Logger LOGGER = Logger.getLogger(ViewControllerAdvice.class);
