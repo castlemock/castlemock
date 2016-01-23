@@ -34,11 +34,11 @@
     </tr>
     <tr>
         <td class="column1"><label path="status"><spring:message code="general.currentuser.label.status"/></label></td>
-        <td class="column2"><label path="status">${user.status}</label></td>
+        <td class="column2"><label path="status"><spring:message code="general.type.status.${user.status}"/></label></td>
     </tr>
     <tr>
         <td class="column1"><label path="role"><spring:message code="general.currentuser.label.role"/></label></td>
-        <td class="column2"><label path="role">${user.role}</label></td>
+        <td class="column2"><label path="role"><spring:message code="general.type.role.${user.role}"/></label></td>
     </tr>
     <tr>
         <td class="column1"><label path="username"><spring:message code="general.currentuser.label.created"/></label></td>

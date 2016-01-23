@@ -65,7 +65,7 @@
             <td><a href="<c:url value="/web/user/${user.id}"/>">${user.username}</a></td>
             <td><a href="<c:url value="/web/user/${user.id}"/>">${user.email}</a></td>
             <td><spring:message code="general.type.role.${user.role}"/></td>
-            <td>${user.status}</td>
+            <td><spring:message code="general.type.status.${user.status}"/></td>
             <td>${user.created}</td>
             <td>${user.updated}</td>
         </tr>
