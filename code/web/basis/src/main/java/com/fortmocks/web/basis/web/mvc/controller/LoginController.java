@@ -22,6 +22,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -104,6 +105,9 @@ public class LoginController extends AbstractViewController {
         } else if (exception instanceof LockedException) {
             LOGGER.debug("User has been locked");
             error = messageSource.getMessage("general.login.label.userlocked", null ,LocaleContextHolder.getLocale());
+        } else if(exception instanceof CredentialsExpiredException){
+            LOGGER.debug("User has been inactive");
+            error = messageSource.getMessage("general.login.label.userinactive", null ,LocaleContextHolder.getLocale());
         } else {
             LOGGER.error("Unable to login due to unknown reasons");
             LOGGER.error(exception.getMessage(), exception);

@@ -18,6 +18,7 @@ package com.fortmocks.web.basis.model.user.service;
 
 import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.user.domain.Role;
+import com.fortmocks.core.basis.model.user.domain.Status;
 import com.fortmocks.core.basis.model.user.dto.UserDto;
 import com.fortmocks.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 import com.fortmocks.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
@@ -81,7 +82,9 @@ public class UserDetailSecurityService implements UserDetailsService {
     private User buildUserForAuthentication(final UserDto user, final List<GrantedAuthority> authorities) {
         Preconditions.checkNotNull(user, "Username cannot be null");
         Preconditions.checkNotNull(authorities, "Authorities cannot be null");
-        return new User(user.getUsername(), user.getPassword(), true, true, true, true, authorities);
+        boolean locked = user.getStatus().equals(Status.LOCKED);
+        boolean inactive = user.getStatus().equals(Status.INACTIVE);
+        return new User(user.getUsername(), user.getPassword(), true, true, !inactive, !locked, authorities);
     }
 
     /**
