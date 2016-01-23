@@ -30,7 +30,7 @@
             <td>
                 <form:select path="httpMethod">
                     <c:forEach items="${restMethodTypes}" var="type">
-                        <option value="${type}">${type}</option>
+                        <form:option value="${type}" label="${type}"/>
                     </c:forEach>
                 </form:select>
             </td>
@@ -40,7 +40,8 @@
             <td>
                 <form:select path="status">
                     <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
-                        <option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></option>
+                        <spring:message var="label" code="rest.type.restmethodstatus.${restMethodStatus}"/>
+                        <form:option value="${restMethodStatus}" label="${label}"/>
                     </c:forEach>
                 </form:select>
             </td>
@@ -50,7 +51,8 @@
             <td>
                 <form:select path="responseStrategy">
                     <c:forEach items="${restResponsestrategies}" var="restResponseStrategy">
-                        <option value="${restResponseStrategy}"><spring:message code="rest.type.responsestrategy.${restResponseStrategy}"/></option>
+                        <spring:message var="label" code="rest.type.responsestrategy.${restResponseStrategy}"/>
+                        <form:option value="${restResponseStrategy}" label="${label}"/>
                     </c:forEach>
                 </form:select>
             </td>
@@ -61,8 +63,8 @@
         </tr>
     </table>
     
-    <button class="button-success pure-button" type="submit" name="submit"><spring:message code="rest.updatemethod.button.updatemethod"/></button>
-    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}"/>" class="button-error pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.updatemethod.button.cancel"/></a>
+    <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="rest.updatemethod.button.updatemethod"/></button>
+    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <spring:message code="rest.updatemethod.button.cancel"/></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
 <script>

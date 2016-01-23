@@ -1,8 +1,26 @@
+<%--
+ Copyright 2016 Karl Dahlgren
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+--%>
+
 <%@ include file="../../../../includes.jspf"%>
 <c:url var="operation_update_url"  value="/web/soap/project/${soapProjectId}/port/${soapPort.id}" />
 <div class="content-top">
-    <h1><spring:message code="soap.soapport.header.port" arguments="${soapPort.name}"/></h1>
-    <div align="right">
+    <div class="title">
+        <h1><spring:message code="soap.soapport.header.port" arguments="${soapPort.name}"/></h1>
+    </div>
+    <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
             <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapport.button.updateport"/></span></a>
             <a class="button-error pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapport.button.deleteport"/></span></a>

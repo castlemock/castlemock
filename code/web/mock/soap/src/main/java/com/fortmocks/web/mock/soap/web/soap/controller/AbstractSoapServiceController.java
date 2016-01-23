@@ -30,9 +30,9 @@ import com.fortmocks.core.mock.soap.model.project.service.message.input.Identify
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
+import com.fortmocks.web.basis.support.HttpMessageSupport;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.model.SoapException;
-import com.fortmocks.web.mock.soap.support.SoapMessageSupport;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -97,10 +97,10 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      */
     protected SoapRequestDto prepareRequest(final String projectId, final HttpServletRequest httpServletRequest) {
         final SoapRequestDto request = new SoapRequestDto();
-        final String body = SoapMessageSupport.getBody(httpServletRequest);
-        final String identifier = SoapMessageSupport.extractSoapRequestName(body);
+        final String body = HttpMessageSupport.getBody(httpServletRequest);
+        final String identifier = HttpMessageSupport.extractSoapRequestName(body);
         final String serviceUri = httpServletRequest.getRequestURI().replace(getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
-        final List<HttpHeaderDto> httpHeaders = SoapMessageSupport.extractHttpHeaders(httpServletRequest);
+        final List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 
         SoapVersion type = SoapVersion.SOAP11;
         if(SoapVersion.SOAP12.getContextPath().equalsIgnoreCase(httpServletRequest.getContextPath())){
@@ -144,7 +144,11 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             } else if (SoapOperationStatus.RECORD_ONCE.equals(soapOperationDto.getStatus())) {
                 response = forwardRequestAndRecordResponseOnce(request, soapProjectId, soapPortId, soapOperationDto);
             } else { // Status.MOCKED
-                response = mockResponse(soapOperationDto, httpServletResponse);
+                response = mockResponse(soapOperationDto);
+            }
+            httpServletResponse.setStatus(response.getHttpStatusCode());
+            for(HttpHeaderDto httpHeader : response.getHttpHeaders()){
+                httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
             }
             return response.getBody();
         } finally{
@@ -161,7 +165,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      *                         the provided SOAP operation.
      * @return A mocked response based on the provided SOAP operation
      */
-    private SoapResponseDto mockResponse(final SoapOperationDto soapOperationDto, final HttpServletResponse httpServletResponse){
+    private SoapResponseDto mockResponse(final SoapOperationDto soapOperationDto){
         final List<SoapMockResponseDto> mockResponses = new ArrayList<SoapMockResponseDto>();
         for(SoapMockResponseDto mockResponse : soapOperationDto.getMockResponses()){
             if(mockResponse.getStatus().equals(SoapMockResponseStatus.ENABLED)){
@@ -193,10 +197,6 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         response.setMockResponseName(mockResponse.getName());
         response.setHttpHeaders(mockResponse.getHttpHeaders());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
-        httpServletResponse.setStatus(mockResponse.getHttpStatusCode());
-        for(HttpHeaderDto httpHeader : mockResponse.getHttpHeaders()){
-            httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
-        }
         return response;
 
     }
@@ -269,20 +269,11 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 stringBuilder.append(NEW_LINE);
             }
 
-            final List<HttpHeaderDto> responseHttpHeaders = new ArrayList<HttpHeaderDto>();
-            for(String headerName : connection.getHeaderFields().keySet()){
-                final String headerValue = connection.getHeaderField(headerName);
-                final HttpHeaderDto responseHttpHeader = new HttpHeaderDto();
-                responseHttpHeader.setName(headerName);
-                responseHttpHeader.setValue(headerValue);
-                responseHttpHeaders.add(responseHttpHeader);
-            }
-
+            final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setBody(stringBuilder.toString());
             response.setHttpHeaders(responseHttpHeaders);
             response.setHttpStatusCode(connection.getResponseCode());
-
             return response;
         } catch (IOException exception) {
             LOGGER.error("Unable to forward request", exception);

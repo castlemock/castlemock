@@ -30,26 +30,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class RestEvent extends Event {
 
-    private RestRequestDto request;
-    private RestResponseDto response;
+    private RestRequest request;
+    private RestResponse response;
     private String projectId;
     private String applicationId;
     private String resourceId;
     private String methodId;
 
-    public RestRequestDto getRequest() {
+    public RestRequest getRequest() {
         return request;
     }
 
-    public void setRequest(RestRequestDto request) {
+    public void setRequest(RestRequest request) {
         this.request = request;
     }
 
-    public RestResponseDto getResponse() {
+    public RestResponse getResponse() {
         return response;
     }
 
-    public void setResponse(RestResponseDto response) {
+    public void setResponse(RestResponse response) {
         this.response = response;
     }
 

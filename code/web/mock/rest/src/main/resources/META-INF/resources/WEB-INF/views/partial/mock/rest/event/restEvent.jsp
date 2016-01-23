@@ -51,6 +51,25 @@
         <textarea id="requestBody" readonly><c:out value="${event.request.body}"/></textarea>
     </div>
     <c:choose>
+        <c:when test="${event.request.httpParameters.size() > 0}">
+            <h3><span><spring:message code="rest.event.header.parameters"/></span></h3>
+            <div class="table-frame">
+                <table class="entityTable">
+                    <tr>
+                        <th><spring:message code="rest.event.column.parameterName"/></th>
+                        <th><spring:message code="rest.event.column.parameterValue"/></th>
+                    </tr>
+                    <c:forEach items="${event.request.httpParameters}" var="httpParameter" varStatus="loopStatus">
+                        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                            <td>${httpParameter.name}</td>
+                            <td>${httpParameter.value}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </c:when>
+    </c:choose>
+    <c:choose>
         <c:when test="${event.request.httpHeaders.size() > 0}">
             <h3><span><spring:message code="rest.event.header.headers"/></span></h3>
             <div class="table-frame">

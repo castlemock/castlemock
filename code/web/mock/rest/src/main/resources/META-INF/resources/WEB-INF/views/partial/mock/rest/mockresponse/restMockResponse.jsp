@@ -17,8 +17,10 @@
 
 <c:url var="update_response_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}/update" />
 <div class="content-top">
-    <h1><spring:message code="rest.restmockresponse.header.response" arguments="${restMockResponse.name}"/></h1>
-    <div align="right">
+    <div class="title">
+        <h1><spring:message code="rest.restmockresponse.header.response" arguments="${restMockResponse.name}"/></h1>
+    </div>
+    <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
             <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmockresponse.button.delete"/></span></a>
         </sec:authorize>

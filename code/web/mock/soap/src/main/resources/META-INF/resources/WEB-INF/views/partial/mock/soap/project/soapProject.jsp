@@ -1,12 +1,30 @@
+<%--
+ Copyright 2016 Karl Dahlgren
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+--%>
+
 <%@ include file="../../../../includes.jspf"%>
 
 <c:url var="soap_port_update_url"  value="/web/soap/project/${soapProject.id}" />
 <div class="content-top">
-    <h1><spring:message code="soap.soapproject.header.project" arguments="${soapProject.name}"/></h1>
-    <div align="right">
+    <div class="title">
+        <h1><spring:message code="soap.soapproject.header.project" arguments="${soapProject.name}"/></h1>
+    </div>
+    <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
         <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapproject.button.updateproject"/></span></a>
-        <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/add/wsdl"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapproject.button.upload" arguments="wsdl"/></span></a>
+        <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/add/wsdl"/>"><i class="fa fa-upload"></i> <span><spring:message code="soap.soapproject.button.upload" arguments="wsdl"/></span></a>
         <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="soap.soapproject.button.export"/></span></a>
         <a class="button-error pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapproject.button.delete"/></span></a>
         </sec:authorize>

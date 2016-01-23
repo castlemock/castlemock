@@ -1,3 +1,19 @@
+<%--
+ Copyright 2016 Karl Dahlgren
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+--%>
+
 <%@ include file="../../../includes.jspf"%>
 <c:url var="update_current_user_url"  value="/web/me/update" />
 <div class="content-top">
@@ -22,8 +38,8 @@
             <td class="column2"><form:password path="verifiedPassword" />
         </tr>
     </table>
-    <button class="button-success pure-button" type="submit" name="submit"><spring:message code="general.updatecurrentuser.button.updateuser"/></button>
-    <a href="<c:url value="/web/me"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="general.updatecurrentuser.button.discardchanges"/></a>
+    <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="general.updatecurrentuser.button.updateuser"/></button>
+    <a href="<c:url value="/web/me"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="general.updatecurrentuser.button.discardchanges"/></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
 <script>

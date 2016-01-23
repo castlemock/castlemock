@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.mock.soap.support;
+package com.fortmocks.web.basis.support;
 
-import com.fortmocks.web.mock.soap.model.SoapException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -28,9 +27,9 @@ import java.io.IOException;
 /**
  * @author Karl Dahlgren
  * @since 1.1
- * @see SoapMessageSupport
+ * @see HttpMessageSupport
  */
-public class SoapMessageSupportTest {
+public class HttpMessageSupportTest {
 
     @Test
     public void testGetBody(){
@@ -49,11 +48,11 @@ public class SoapMessageSupportTest {
             Assert.fail("Unable to mock readLine method for BufferedReader");
         }
 
-        final String output = SoapMessageSupport.getBody(httpServletRequest);
+        final String output = HttpMessageSupport.getBody(httpServletRequest);
         Assert.assertEquals(readerOutput, output);
     }
 
-    @Test(expected = SoapException.class)
+    @Test(expected = IllegalStateException.class)
     public void testGetBodyRequestIOError(){
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
@@ -62,10 +61,10 @@ public class SoapMessageSupportTest {
         } catch (IOException e) {
             Assert.fail("Unable to mock getReader method for HttpServletRequest");
         }
-        SoapMessageSupport.getBody(httpServletRequest);
+        HttpMessageSupport.getBody(httpServletRequest);
     }
 
-    @Test(expected = SoapException.class)
+    @Test(expected = IllegalStateException.class)
     public void testGetBodyReaderIOError(){
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         final BufferedReader reader = Mockito.mock(BufferedReader.class);
@@ -80,7 +79,7 @@ public class SoapMessageSupportTest {
         } catch (IOException e) {
             Assert.fail("Unable to mock readLine method for BufferedReader");
         }
-        SoapMessageSupport.getBody(httpServletRequest);
+        HttpMessageSupport.getBody(httpServletRequest);
     }
 
     @Test
@@ -88,26 +87,26 @@ public class SoapMessageSupportTest {
         final String oneInput = "First";
         final String twoInput = "First:Second";
 
-        Assert.assertEquals("First", SoapMessageSupport.getElement(oneInput, 0));
-        Assert.assertEquals("First", SoapMessageSupport.getElement(oneInput, 1));
-        Assert.assertEquals("First", SoapMessageSupport.getElement(twoInput, 0));
-        Assert.assertEquals("Second", SoapMessageSupport.getElement(twoInput, 1));
+        Assert.assertEquals("First", HttpMessageSupport.getElement(oneInput, 0));
+        Assert.assertEquals("First", HttpMessageSupport.getElement(oneInput, 1));
+        Assert.assertEquals("First", HttpMessageSupport.getElement(twoInput, 0));
+        Assert.assertEquals("Second", HttpMessageSupport.getElement(twoInput, 1));
     }
 
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetElementInvalidIndexLessThanZero(){
-        Assert.assertEquals("First", SoapMessageSupport.getElement("First", -1));
+        Assert.assertEquals("First", HttpMessageSupport.getElement("First", -1));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetElementInvalidIndexMoreThanOne(){
-        Assert.assertEquals("First", SoapMessageSupport.getElement("First", 2));
+        Assert.assertEquals("First", HttpMessageSupport.getElement("First", 2));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetElementInvalidElement(){
-        Assert.assertEquals("First", SoapMessageSupport.getElement("First:Second:Third", 1));
+        Assert.assertEquals("First", HttpMessageSupport.getElement("First:Second:Third", 1));
     }
 
     @Test
@@ -124,12 +123,12 @@ public class SoapMessageSupportTest {
                 "</soap:Body>\n" +
                 "</soap:Envelope> ";
 
-        final String requestName = SoapMessageSupport.extractSoapRequestName(requestBody);
+        final String requestName = HttpMessageSupport.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", requestName);
     }
 
-    @Test(expected = SoapException.class)
+    @Test(expected = IllegalStateException.class)
     public void testExtractSoapRequestNameInvalidRequestBody(){
-        SoapMessageSupport.extractSoapRequestName(new String());
+        HttpMessageSupport.extractSoapRequestName(new String());
     }
 }

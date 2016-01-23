@@ -59,7 +59,7 @@ public class UserRepositoryImpl extends RepositoryImpl<User, String> implements 
     protected void postInitiate() {
         if(collection.isEmpty()){
             final User user = new User();
-            user.setId(new String());
+            user.setId(generateId());
             user.setUsername("admin");
             user.setPassword(PASSWORD_ENCODER.encode("admin"));
             user.setStatus(Status.ACTIVE);
@@ -68,6 +68,16 @@ public class UserRepositoryImpl extends RepositoryImpl<User, String> implements 
             user.setUpdated(new Date());
             user.setEmail(new String());
             save(user);
+        }
+
+        // [Version < v1.2] The following code is to fix users with invalid ids, such as the default admin
+        // The code should be removed in later updates.
+        for(User user : collection.values()){
+            if(user.getId().isEmpty()){
+                delete(user.getId());
+                user.setId(generateId());
+                save(user);
+            }
         }
     }
 

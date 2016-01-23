@@ -77,6 +77,11 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         Preconditions.checkNotNull(restProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(restApplicationId, "Application id cannot be null");
         final RestProject restProject = findType(restProjectId);
+
+        if(restProject == null){
+            throw new IllegalArgumentException("Unable to find a REST project with id " + restProjectId);
+        }
+
         for(RestApplication restApplication : restProject.getApplications()){
             if(restApplication.getId().equals(restApplicationId)){
                 return restApplication;

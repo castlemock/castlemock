@@ -1,11 +1,29 @@
+<%--
+ Copyright 2016 Karl Dahlgren
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+--%>
+
 <%@ include file="../../../../includes.jspf"%>
 <c:url var="soap_mock_response_update_url"  value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}" />
 <div class="content-top">
-    <h1><spring:message code="soap.soapoperation.header.operation" arguments="${soapOperation.name}"/></h1>
-    <div align="right">
+    <div class="title">
+        <h1><spring:message code="soap.soapoperation.header.operation" arguments="${soapOperation.name}"/></h1>
+    </div>
+    <div class="menu" align="right">
         <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
         <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapoperation.button.updateoperation"/></span></a>
-        <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/create/response"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapoperation.button.createresponse"/></span></a>
+        <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/create/response"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapoperation.button.createresponse"/></span></a>
         </sec:authorize>
     </div>
 </div>

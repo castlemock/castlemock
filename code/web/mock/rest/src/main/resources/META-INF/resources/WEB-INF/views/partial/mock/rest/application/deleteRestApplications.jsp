@@ -31,13 +31,13 @@
             </ul>
 
             <button class="button-error pure-button" type="submit"><i class="fa fa-trash"></i> <span><spring:message code="rest.deleteapplications.button.deleteapplications"/></span></button>
-            <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.deleteapplications.button.cancel"/></a>
+            <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.deleteapplications.button.cancel"/></a>
         </form:form>
     </c:when>
     <c:otherwise>
         <spring:message code="rest.deleteapplications.label.noapplications"/>
         <p>
-        <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.deleteapplications.button.cancel"/></a>
+        <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.deleteapplications.button.cancel"/></a>
         </p>
     </c:otherwise>
 </c:choose>

@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.mock.soap.support;
+package com.fortmocks.web.basis.support;
 
-import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
-import com.fortmocks.web.mock.soap.model.SoapException;
+import com.fortmocks.core.basis.model.http.dto.HttpParameterDto;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -32,6 +31,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -41,18 +41,20 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class SoapMessageSupport {
+public class HttpMessageSupport {
 
     protected static final String DIVIDER = ":";
     protected static final String VARIABLE = "#";
     private static final String BODY = "Body";
-    private static final Logger LOGGER = Logger.getLogger(SoapMessageSupport.class);
+    private static final String TRANSFER_ENCODING = "Transfer-Encoding";
+    private static final Logger LOGGER = Logger.getLogger(HttpMessageSupport.class);
+    protected static final String EMPTY = "";
 
     /**
      * The default constructor for SoapMessageSupport. It is marked as private
      * to prohibit creation of instances of this class.
      */
-    private SoapMessageSupport(){
+    private HttpMessageSupport(){
         // The constructor should be empty
     }
 
@@ -76,7 +78,7 @@ public class SoapMessageSupport {
             final NodeList bodyChildren = bodyNode.getChildNodes();
 
             if (bodyChildren.getLength() == 0) {
-                throw new SoapException("Invalid count of body children");
+                throw new IllegalStateException("Invalid count of body children");
             }
 
             String serviceNameWithPrefix = null;
@@ -86,13 +88,13 @@ public class SoapMessageSupport {
                 }
             }
             if (serviceNameWithPrefix == null) {
-                throw new SoapException("Unable to extract the service name");
+                throw new IllegalStateException("Unable to extract the service name");
             }
 
             return getElement(serviceNameWithPrefix, 1);
         }catch(Exception exception){
             LOGGER.error("Unable to extract SOAP request name", exception);
-            throw new SoapException(exception.getMessage());
+            throw new IllegalStateException(exception.getMessage());
         }
     }
 
@@ -134,7 +136,7 @@ public class SoapMessageSupport {
             return buffer.toString();
         } catch (IOException e) {
             LOGGER.error("Unable to read the incoming file", e);
-            throw new SoapException("Unable to extract the request body");
+            throw new IllegalStateException("Unable to extract the request body");
         }
     }
 
@@ -155,5 +157,76 @@ public class SoapMessageSupport {
             httpHeaders.add(httpHeader);
         }
         return httpHeaders;
+    }
+
+    /**
+     * Extract HTTP headers from provided Http URL connection
+     * @param connection Incoming Http URL connection that contains the headers which will be extracted
+     * @return A list of HTTP headers extracted from the provided connection
+     */
+    public static List<HttpHeaderDto> extractHttpHeaders(final HttpURLConnection connection){
+        final List<HttpHeaderDto> httpHeaders = new ArrayList<HttpHeaderDto>();
+        for(String headerName : connection.getHeaderFields().keySet()){
+            if(headerName == null){
+                continue;
+            }
+            if(headerName.equalsIgnoreCase(TRANSFER_ENCODING)){
+                continue;
+            }
+            final String headerValue = connection.getHeaderField(headerName);
+            final HttpHeaderDto httpHeader = new HttpHeaderDto();
+            httpHeader.setName(headerName);
+            httpHeader.setValue(headerValue);
+            httpHeaders.add(httpHeader);
+        }
+        return httpHeaders;
+    }
+
+    /**
+     * Extract all the incoming parameters and stores them in a Map. The parameter name will
+     * act as the key and the parameter value will be the Map value
+     * @param httpServletRequest The incoming request which contains all the parameters
+     * @return A map with the extracted parameters
+     */
+    public static List<HttpParameterDto> extractParameters(final HttpServletRequest httpServletRequest){
+        final List<HttpParameterDto> httpParameters = new ArrayList<HttpParameterDto>();
+
+        final Enumeration<String> enumeration = httpServletRequest.getParameterNames();
+        while(enumeration.hasMoreElements()){
+            final HttpParameterDto httpParameter = new HttpParameterDto();
+            final String parameterName = enumeration.nextElement();
+            final String parameterValue = httpServletRequest.getParameter(parameterName);
+            httpParameter.setName(parameterName);
+            httpParameter.setValue(parameterValue);
+            httpParameters.add(httpParameter);
+        }
+        return httpParameters;
+    }
+
+
+    /**
+     * Builds a parameter URL string passed on the provided parameter map.
+     * Example on the output: ?name1=value1&name2=value2
+     * @param httpParameters The Map of parameters that will be used to build the parameter URI
+     * @return A URI that contains the parameters from the provided Map
+     */
+    public static String buildParameterUri(List<HttpParameterDto> httpParameters){
+        if(httpParameters.isEmpty()){
+            return EMPTY;
+        }
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("?");
+        for(int index = 0; index < httpParameters.size(); index++){
+            HttpParameterDto httpParameter = httpParameters.get(index);
+            String parameterName = httpParameter.getName();
+            String parameterValue = httpParameter.getValue();
+            stringBuilder.append(parameterName + "=" + parameterValue);
+
+            // Add a & (and) character if the Http parameter is not the last one
+            if(index < httpParameters.size() - 1){
+                stringBuilder.append("&");
+            }
+        }
+        return stringBuilder.toString();
     }
 }

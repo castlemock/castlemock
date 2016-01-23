@@ -55,6 +55,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private UserDetailSecurityService userDetailSecurityService;
     private static final Logger LOGGER = Logger.getLogger(SecurityInterceptor.class);
+    private static final String ANONYMOUS_USER = "anonymousUser";
 
     /**
      * The method will check if the logged in user is still valid.
@@ -72,7 +73,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         }
 
         final String loggedInUsername = authentication.getName();
-        if("anonymousUser".equals(loggedInUsername)) {
+        if(ANONYMOUS_USER.equals(loggedInUsername)) {
             return true;
         }
 

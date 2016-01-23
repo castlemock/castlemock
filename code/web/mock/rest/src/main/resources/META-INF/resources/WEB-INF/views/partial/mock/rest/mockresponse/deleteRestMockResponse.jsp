@@ -22,5 +22,5 @@
 
 <p>
 <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}/delete/confirm"/>" class="button-error pure-button"><i class="fa fa-trash"></i> <spring:message code="rest.deleterestmockresponse.button.deleteresponse"/></a>
-<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}"/>" class="button-secondary pure-button"><i class="fa fa-check-circle"></i> <spring:message code="rest.deleterestmockresponse.button.cancel"/></a>
+<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.deleterestmockresponse.button.cancel"/></a>
 </p>

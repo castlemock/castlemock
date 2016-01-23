@@ -14,14 +14,14 @@ body {
 }
 .main-header {
     width: 100%;
-    height: 41px;
+    min-height: 41px;
     background: #3E444D;
     color: #fff;
     border: 0px solid #000;
     top: 0px;
     font-size: 13px;
-    
-    border-bottom: 35px solid #f0f0f0;
+    position: fixed;
+    z-index: 1;
 
     a {
         color: #fff;
@@ -42,69 +42,85 @@ body {
         margin-top: 10px;
         margin-right: 40px;
 
-        form {
+        .search  {
             float: left;
-        }
 
-        input[type=text] {
-            width: 200px;
-            padding: 5px;
-            outline: none;
-            border: 2px solid #9EA1A6;
-            background-color: #9EA1A6;
-            font-size: 12px;
-            border-radius: 5px;
-            float: left;
-            position: relative;
-            top: -4px;
-            color: #fff;
-
-            &::-webkit-input-placeholder {
-                color: #fff;
+            form {
+                float: left;
             }
-           
+
+            input[type=text] {
+                width: 200px;
+                padding: 5px;
+                outline: none;
+                border: 2px solid #9EA1A6;
+                background-color: #9EA1A6;
+                font-size: 12px;
+                border-radius: 5px;
+                float: left;
+                position: relative;
+                top: -4px;
+                color: #fff;
+
+                &::-webkit-input-placeholder {
+                    color: #fff;
+                }
+
+            }
         }
-        
-        
-        a {
-            text-decoration: none;
+        .links {
+            float: right;
+            a {
+                text-decoration: none;
+
+                i {
+                    margin: 0 10px;
+                }
+            }
+
+            .fa-2x {
+                font-size: 1.6em;
+
+            }
 
             i {
-                margin: 0 10px;
+                &:hover {
+                    color: #ddd;
+                }
             }
         }
 
-        .fa-2x {
-            font-size: 1.6em;
-            
-        }
-        
-        i {
-            &:hover {
-                color: #ddd;
-            }
-        }
     }
 }
 
 .container {
     width: 85%;
+    height: 75%;
     margin: 0 auto;
+    margin-top: 40px;
+    padding-top: 50px;
+    absolute: relative;
 }
 
 .header-nav {
     font-size: 13px;
     text-decoration: none;
     color: #343434;
-    position: absolute;
-    width: 500px;
+    position: fixed;
+    width: 100%;
+    background-color: #f0f0f0;
     height: 35px;
-    top: 42px;
+    z-index: 1;
+
+    .content {
+        width: 85%;
+        margin: 0 auto;
+    }
     
     ul {
         position: absolute;
         margin: 0;
-        margin-top: 2;
+        margin-top: 2px;
         padding: 0;
         
         li {
@@ -372,17 +388,19 @@ select {
 }
 
 .content-top {
-    border-bottom: 1px solid #ddd !important;
-    display: block;
-    margin: 20px 0 20px 0 ;
-    padding: 0 0 20px 0;
-    
-    h1, div {
-        display: inline;
+
+    .title {
+
     }
-    
-    div {
-        float: right;
+
+    .menu {
+        border-bottom: 1px solid #ddd !important;
+        display: block;
+        padding: 0 0 10px 0;
+        min-width: 100%;
     }
 }
 
+.pure-button {
+    margin-top: 3px;
+}

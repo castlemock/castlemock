@@ -122,12 +122,17 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(soapPortId, "Port id cannot be null");
         final SoapProject soapProject = findType(soapProjectId);
+
+        if(soapProject == null){
+            throw new IllegalArgumentException("Unable to find a SOAP project with id " + soapProjectId);
+        }
+
         for(SoapPort soapPort : soapProject.getPorts()){
             if(soapPort.getId().equals(soapPortId)){
                 return soapPort;
             }
         }
-        throw new IllegalArgumentException("Unable to find a soap port with id " + soapPortId);
+        throw new IllegalArgumentException("Unable to find a SOAP port with id " + soapPortId);
     }
 
     /**
@@ -152,7 +157,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
                 return soapOperation;
             }
         }
-        throw new IllegalArgumentException("Unable to find a soap operation with id " + soapOperationId);
+        throw new IllegalArgumentException("Unable to find a SOAP operation with id " + soapOperationId);
     }
 
     /**
@@ -189,7 +194,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
                 }
             }
         }
-        throw new IllegalArgumentException("Unable to find a soap operation with id " + soapOperationId);
+        throw new IllegalArgumentException("Unable to find a SOAP operation with id " + soapOperationId);
     }
 
     /**
@@ -260,7 +265,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
                 return soapMockResponse;
             }
         }
-        throw new IllegalArgumentException("Unable to find a soap mock response with id " + soapMockResponseId);
+        throw new IllegalArgumentException("Unable to find a SOAP mock response with id " + soapMockResponseId);
     }
 
     /**
