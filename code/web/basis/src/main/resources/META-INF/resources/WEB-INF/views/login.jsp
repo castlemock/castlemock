@@ -24,8 +24,8 @@
             </c:if>
 
             <form name='loginForm' action="<c:url value='/login' />" method='POST'>
-                <input type="text" name="username" id="username" placeholder="<spring:message code="general.login.input.alias"/>" size="40"/>
-                <input type="password" name="password" id="password" placeholder="<spring:message code="general.login.input.password"/>" size="40"/>
+                <input type="text" name="username" id="username" placeholder="<spring:message code="general.login.input.alias"/>"/>
+                <input type="password" name="password" id="password" placeholder="<spring:message code="general.login.input.password"/>"/>
                 <p><spring:message code="general.login.label.rememberme"/> <input type="checkbox" name="remember-me" /></p>
                 <p><button class="button-success pure-button" type="submit" name="submit"><spring:message code="general.login.button.login"/> <i class="fa fa-sign-in"></i></button></p>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

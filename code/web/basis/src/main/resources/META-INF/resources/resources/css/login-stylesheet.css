@@ -153,7 +153,8 @@ body {
     text-align: center; }
   #login-box input[type=text], #login-box input[type=password] {
     padding: 5px;
-    margin: 3px 0; }
+    margin: 3px 0;
+    width: 100%; }
   #login-box .error {
     padding: 15px;
     margin-bottom: 20px;
