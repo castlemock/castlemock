@@ -19,7 +19,7 @@
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks-plugin-mock-rest</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2</version>
+	<version>1.3-SNAPSHOT</version>
     <name>Fort mocks plugin mock rest</name>
 	<url>http://www.fortmocks.com</url>
 	<description>The plugin module contains the plugin package for Fort Mocks</description>
@@ -34,7 +34,7 @@
 	<parent>
 		<groupId>com.fortmocks</groupId>
 		<artifactId>fortmocks-plugin-mock</artifactId>
-		<version>1.2</version>
+		<version>1.3-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
