@@ -19,10 +19,13 @@ package com.fortmocks.web.mock.soap.model.project.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.UpdateSoapMockResponseOutput;
+
+import java.util.List;
 
 /**
  * The service provides functionality to update a specific SOAP mock response.
@@ -46,10 +49,12 @@ public class UpdateSoapMockResponseService extends AbstractSoapProjectService im
     public ServiceResult<UpdateSoapMockResponseOutput> process(final ServiceTask<UpdateSoapMockResponseInput> serviceTask) {
         final UpdateSoapMockResponseInput input = serviceTask.getInput();
         final SoapMockResponseDto updatedSoapMockResponse = input.getSoapMockResponseDto();
+        final List<HttpHeader> headers = toDtoList(updatedSoapMockResponse.getHttpHeaders(), HttpHeader.class);
         final SoapMockResponse soapMockResponse = findSoapMockResponseType(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId(), input.getSoapMockResponseId());
         soapMockResponse.setName(updatedSoapMockResponse.getName());
         soapMockResponse.setBody(updatedSoapMockResponse.getBody());
         soapMockResponse.setHttpStatusCode(updatedSoapMockResponse.getHttpStatusCode());
+        soapMockResponse.setHttpHeaders(headers);
         save(input.getSoapProjectId());
         return createServiceResult(new UpdateSoapMockResponseOutput(updatedSoapMockResponse));
     }

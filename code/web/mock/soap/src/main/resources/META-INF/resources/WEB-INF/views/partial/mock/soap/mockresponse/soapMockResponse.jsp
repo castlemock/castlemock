@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
  Copyright 2016 Karl Dahlgren
 
@@ -71,11 +72,10 @@
                     <th><spring:message code="soap.soapmockresponse.column.headervalue"/></th>
                 </tr>
                 <c:forEach items="${soapMockResponse.httpHeaders}" var="httpHeader" varStatus="loopStatus">
-                    <form:hidden path="httpHeaders"/>
                     <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                         <td><div class="delete" onclick="removeHeader('${httpHeader.name}')"></div></td>
-                        <td>${httpHeader.name}</td>
-                        <td>${httpHeader.value}</td>
+                        <td><input name="httpHeaders[${loopStatus.index}].name" id="httpHeaders[${loopStatus.index}].name" value="${httpHeader.name}" disabled/></td>
+                        <td><input name="httpHeaders[${loopStatus.index}].value" id="httpHeaders[${loopStatus.index}].value" value="${httpHeader.value}" disabled/></td>
                     </tr>
                 </c:forEach>
             </table>
@@ -93,12 +93,28 @@
     function findHeader(headerName){
         headerTable = document.getElementById("headerTable");
         for (var index = 1, row; row = headerTable.rows[index]; index++) {
-            var tempHeaderName = row.cells[1].innerHTML;
-            if(tempHeaderName == headerName){
-                return index;
+            var tempHeader = document.getElementById("httpHeaders[" + (index - 1) + "].name");
+
+            if(tempHeader != null){
+                tempHeaderName = tempHeader.value;
+                console.log(tempHeaderName)
+                if(tempHeaderName == headerName){
+                    return index;
+                }
             }
         }
         return -1;
+    }
+
+    function alignTableRowValues(){
+        headerTable = document.getElementById("headerTable");
+        for (var index = 1, row; row = headerTable.rows[index]; index++) {
+            var rowItem = document.getElementById("httpHeaders[" + index - 1 + "].name");
+            if(rowItem != null){
+                rowItem.id = "httpHeaders[" + index - 1 + "].name";
+                rowItem.name = "httpHeaders[" + index - 1 + "].name";
+            }
+        }
     }
 
     function addHeader() {
@@ -111,18 +127,21 @@
             return;
         }
 
+        insertIndex = headerTable.rows.length - 1;
         row = headerTable.insertRow(-1);
         headerSelected = row.insertCell(0);
         headerNameColumn = row.insertCell(1);
         headerValueColumn = row.insertCell(2);
         headerSelected.innerHTML = "<div class=\"delete\" onclick=\"removeHeader(\'' + headerName + '\')\">";
-        headerNameColumn.innerHTML = headerName;
-        headerValueColumn.innerHTML = headerValue;
+        headerNameColumn.innerHTML = "<input name=\"httpHeaders[" + insertIndex + "].name\" value=" + headerName + " disabled\>";
+        headerValueColumn.innerHTML = "<input name=\"httpHeaders[" + insertIndex + "].value\" value=" + headerValue + "disabled\>";
+        alignTableRowValues();
     }
 
     function removeHeader(deleteHeaderName) {
         index = findHeader(deleteHeaderName);
         headerTable.deleteRow(index);
+        alignTableRowValues();
     }
 
 </script>
