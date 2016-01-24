@@ -151,7 +151,7 @@ body {
   .main-header .logo {
     float: left;
     margin-top: 5px;
-    margin-left: 50px; }
+    margin-left: 5%; }
   .main-header #header-logo {
     height: 27px; }
   .main-header .meta {
