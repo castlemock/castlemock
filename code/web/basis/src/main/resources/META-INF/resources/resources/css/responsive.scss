@@ -61,7 +61,10 @@
             float: left;
 
             .links {
-                float: left;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
             }
 
         }

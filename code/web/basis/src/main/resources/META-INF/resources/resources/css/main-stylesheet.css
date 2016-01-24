@@ -116,7 +116,10 @@ a {
       width: 100%;
       float: left; }
       .main-header .meta .links {
-        float: left; }
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center; }
 
   .header-nav {
     visibility: hidden;
@@ -151,13 +154,13 @@ body {
   .main-header .logo {
     float: left;
     margin-top: 5px;
-    margin-left: 50px; }
+    margin-left: 5%; }
   .main-header #header-logo {
     height: 27px; }
   .main-header .meta {
     float: right;
     margin-top: 10px;
-    margin-right: 40px; }
+    margin-right: 5%; }
     .main-header .meta .search {
       float: left; }
       .main-header .meta .search form {
