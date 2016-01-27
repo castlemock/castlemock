@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
  Copyright 2016 Karl Dahlgren
 
@@ -26,7 +27,7 @@
         </sec:authorize>
     </div>
 </div>
-<form:form action="${update_response_url}" method="POST" commandName="soapMockResponse">
+<form:form action="${update_response_url}" method="POST" commandName="soapMockResponse" name="soapMockResponseForm">
     <div class="content-summary">
         <table class="formTable">
             <tr>
@@ -45,12 +46,51 @@
             <form:textarea id="body" path="body"/>
         </div>
     </div>
-  <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
-      <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></button>
-  </sec:authorize>
+    <div>
+        <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.header.headers"/></span></h2>
+
+        <fieldset>
+            <legend><spring:message code="soap.soapmockresponse.field.addheader"/></legend>
+            <table class="formTable">
+                <tr>
+                    <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headername"/></form:label></td>
+                    <td class="column2"><input type="text" name="headerName" id="headerNameInput"></td>
+                </tr>
+                <tr>
+                    <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headervalue"/></form:label></td>
+                    <td class="column2"><input type="text" name="headerValue" id="headerValueInput"></td>
+                </tr>
+            </table>
+            <button class="button-success pure-button" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.addheader"/></span></button>
+        </fieldset>
+
+        <div class="table-frame">
+            <table class="entityTable" id="headerTable">
+                <col width="4%">
+                <col width="48%">
+                <col width="48%">
+                <tr>
+                    <th></th>
+                    <th><spring:message code="soap.soapmockresponse.column.headername"/></th>
+                    <th><spring:message code="soap.soapmockresponse.column.headervalue"/></th>
+                </tr>
+                <c:forEach items="${soapMockResponse.httpHeaders}" var="httpHeader" varStatus="loopStatus">
+                    <tr class="even">
+                        <td><div class="delete" onclick="removeHeader('${httpHeader.name}')"></div></td>
+                        <td><input name="httpHeaders[${loopStatus.index}].name" id="httpHeaders[${loopStatus.index}].name" value="${httpHeader.name}" type="hidden" />${httpHeader.name}</td>
+                        <td><input name="httpHeaders[${loopStatus.index}].value" id="httpHeaders[${loopStatus.index}].value" value="${httpHeader.value}" type="hidden"/>${httpHeader.value}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+    </div>
+    <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+        <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></button>
+    </sec:authorize>
     <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="soap.soapmockresponse.button.discardchanges"/></span></a>
-  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script src=<c:url value="/resources/js/headerTable.js"/>></script>
 <script>
     $("#soapMockResponseNameInput").attr('required', '');
     $("#soapMockResponseHttpStatusCodeInput").attr('required', '');

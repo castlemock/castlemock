@@ -348,6 +348,15 @@ section {
   position: relative;
   display: block; }
 
+.delete {
+  cursor: pointer; }
+  .delete:before {
+    font-family: FontAwesome;
+    content: "\f014"; }
+  .delete:hover:before {
+    font-family: FontAwesome;
+    content: "\f1f8"; }
+
 .question {
   cursor: pointer;
   border-top: 1px solid #ddd;

@@ -39,10 +39,43 @@
         </div>
     </div>
 
+    <div>
+        <h2 class="decorated"><span><spring:message code="soap.createsoapmockresponse.header.headers"/></span></h2>
+
+        <fieldset>
+            <legend><spring:message code="soap.createsoapmockresponse.field.addheader"/></legend>
+            <table class="formTable">
+                <tr>
+                    <td class="column1"><form:label path="name"><spring:message code="soap.createsoapmockresponse.label.headername"/></form:label></td>
+                    <td class="column2"><input type="text" name="headerName" id="headerNameInput"></td>
+                </tr>
+                <tr>
+                    <td class="column1"><form:label path="name"><spring:message code="soap.createsoapmockresponse.label.headervalue"/></form:label></td>
+                    <td class="column2"><input type="text" name="headerValue" id="headerValueInput"></td>
+                </tr>
+            </table>
+            <button class="button-success pure-button" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="soap.createsoapmockresponse.button.addheader"/></span></button>
+        </fieldset>
+
+        <div class="table-frame">
+            <table class="entityTable" id="headerTable">
+                <col width="4%">
+                <col width="48%">
+                <col width="48%">
+                <tr>
+                    <th></th>
+                    <th><spring:message code="soap.createsoapmockresponse.column.headername"/></th>
+                    <th><spring:message code="soap.createsoapmockresponse.column.headervalue"/></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
     <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.createsoapmockresponse.button.createmockresponse"/></span></button>
     <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="soap.createsoapmockresponse.button.cancel"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script src=<c:url value="/resources/js/headerTable.js"/>></script>
 <script>
     $("#soapMockResponseNameInput").attr('required', '');
     $("#soapMockResponseHttpStatusCodeInput").attr('required', '');
