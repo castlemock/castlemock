@@ -66,16 +66,19 @@
 
         <div class="table-frame">
             <table class="entityTable" id="headerTable">
+                <col width="4%">
+                <col width="48%">
+                <col width="48%">
                 <tr>
                     <th></th>
                     <th><spring:message code="soap.soapmockresponse.column.headername"/></th>
                     <th><spring:message code="soap.soapmockresponse.column.headervalue"/></th>
                 </tr>
                 <c:forEach items="${soapMockResponse.httpHeaders}" var="httpHeader" varStatus="loopStatus">
-                    <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                    <tr class="even">
                         <td><div class="delete" onclick="removeHeader('${httpHeader.name}')"></div></td>
-                        <td><input name="httpHeaders[${loopStatus.index}].name" id="httpHeaders[${loopStatus.index}].name" value="${httpHeader.name}" disabled/></td>
-                        <td><input name="httpHeaders[${loopStatus.index}].value" id="httpHeaders[${loopStatus.index}].value" value="${httpHeader.value}" disabled/></td>
+                        <td><input name="httpHeaders[${loopStatus.index}].name" id="httpHeaders[${loopStatus.index}].name" value="${httpHeader.name}" type="hidden" />${httpHeader.name}</td>
+                        <td><input name="httpHeaders[${loopStatus.index}].value" id="httpHeaders[${loopStatus.index}].value" value="${httpHeader.value}" type="hidden"/>${httpHeader.value}</td>
                     </tr>
                 </c:forEach>
             </table>
@@ -87,61 +90,8 @@
     <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="soap.soapmockresponse.button.discardchanges"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
+<script src=<c:url value="/resources/js/headerTable.js"/>></script>
 <script>
     $("#soapMockResponseNameInput").attr('required', '');
     $("#soapMockResponseHttpStatusCodeInput").attr('required', '');
-    function findHeader(headerName){
-        headerTable = document.getElementById("headerTable");
-        for (var index = 1, row; row = headerTable.rows[index]; index++) {
-            var tempHeader = document.getElementById("httpHeaders[" + (index - 1) + "].name");
-
-            if(tempHeader != null){
-                tempHeaderName = tempHeader.value;
-                console.log(tempHeaderName)
-                if(tempHeaderName == headerName){
-                    return index;
-                }
-            }
-        }
-        return -1;
-    }
-
-    function alignTableRowValues(){
-        headerTable = document.getElementById("headerTable");
-        for (var index = 1, row; row = headerTable.rows[index]; index++) {
-            var rowItem = document.getElementById("httpHeaders[" + index - 1 + "].name");
-            if(rowItem != null){
-                rowItem.id = "httpHeaders[" + index - 1 + "].name";
-                rowItem.name = "httpHeaders[" + index - 1 + "].name";
-            }
-        }
-    }
-
-    function addHeader() {
-        headerTable = document.getElementById("headerTable");
-        headerName = document.getElementById("headerNameInput").value;
-        headerValue = document.getElementById("headerValueInput").value;
-
-        index = findHeader(headerName);
-        if(index != -1){
-            return;
-        }
-
-        insertIndex = headerTable.rows.length - 1;
-        row = headerTable.insertRow(-1);
-        headerSelected = row.insertCell(0);
-        headerNameColumn = row.insertCell(1);
-        headerValueColumn = row.insertCell(2);
-        headerSelected.innerHTML = "<div class=\"delete\" onclick=\"removeHeader(\'' + headerName + '\')\">";
-        headerNameColumn.innerHTML = "<input name=\"httpHeaders[" + insertIndex + "].name\" value=" + headerName + " disabled\>";
-        headerValueColumn.innerHTML = "<input name=\"httpHeaders[" + insertIndex + "].value\" value=" + headerValue + "disabled\>";
-        alignTableRowValues();
-    }
-
-    function removeHeader(deleteHeaderName) {
-        index = findHeader(deleteHeaderName);
-        headerTable.deleteRow(index);
-        alignTableRowValues();
-    }
-
 </script>
