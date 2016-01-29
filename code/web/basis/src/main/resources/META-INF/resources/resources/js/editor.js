@@ -100,6 +100,52 @@ function enableTab(id) {
     };
 }
 
+function registerXmlFormat(buttonId, textAreaId){
+    var buttonElement = document.getElementById(buttonId);
+    buttonElement.onclick = function(e) {
+        var textAreaElement = document.getElementById(textAreaId);
+        var xml = textAreaElement.value;
+        var formatted = '';
+        var reg = /(>)(<)(\/*)/g;
+        xml = xml.replace(reg, '$1\r\n$2$3');
+        var pad = 0;
+        jQuery.each(xml.split('\r\n'), function(index, node) {
+            var indent = 0;
+            if (node.match( /.+<\/\w[^>]*>$/ )) {
+                indent = 0;
+            } else if (node.match( /^<\/\w/ )) {
+                if (pad != 0) {
+                    pad -= 1;
+                }
+            } else if (node.match( /^<\w[^>]*[^\/]>.*$/ )) {
+                indent = 1;
+            } else {
+                indent = 0;
+            }
+
+            var padding = '';
+            for (var i = 0; i < pad; i++) {
+                padding += '\t';
+            }
+
+            formatted += padding + node + '\r\n';
+            pad += indent;
+        });
+
+        textAreaElement.value = formatted;
+    };
+}
+
+function registerJsonFormat(buttonId, textAreaId){
+    var buttonElement = document.getElementById(buttonId);
+    buttonElement.onclick = function(e) {
+        var textAreaElement = document.getElementById(textAreaId);
+        var json = textAreaElement.value;
+        var formatted = JSON.stringify(JSON.parse(json), null, "\t");
+        textAreaElement.value = formatted;
+    };
+}
+
 function initiateHttpResponseCode(textField, label, labelDefinition){
     setHttpResponseCodeDefinition(textField, label, labelDefinition);
     enableHttpResponseCodeLookup(textField, label, labelDefinition);

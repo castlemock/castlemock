@@ -45,6 +45,10 @@
         <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.header.body"/></span></h2>
         <div class="editor">
             <form:textarea id="body" path="body"/>
+            <div>
+                <button id="formatXmlButton" type="button"><spring:message code="soap.soapmockresponse.button.formatxml"/></button>
+                <button id="formatJsonButton" type="button"><spring:message code="soap.soapmockresponse.button.formatjson"/></button>
+            </div>
         </div>
     </div>
     <div>
@@ -98,4 +102,6 @@
     $("#soapMockResponseHttpStatusCodeInput").attr('required', '');
     enableTab('body');
     initiateHttpResponseCode('soapMockResponseHttpStatusCodeInput','httpCodeLabel', 'httpCodeDefinitionLabel');
+    registerXmlFormat('formatXmlButton','body');
+    registerJsonFormat('formatJsonButton','body');
 </script>
