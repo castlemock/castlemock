@@ -37,6 +37,7 @@
             <tr>
                 <td class="column1"><form:label path="httpStatusCode"><spring:message code="soap.soapmockresponse.label.httpstatuscode"/></form:label></td>
                 <td class="column2"><form:input path="httpStatusCode" id="soapMockResponseHttpStatusCodeInput" /></td>
+                <td><label id="httpCodeDefinitionLabel"><spring:message code="soap.soapmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
             </tr>
         </table>
     </div>
@@ -96,4 +97,5 @@
     $("#soapMockResponseNameInput").attr('required', '');
     $("#soapMockResponseHttpStatusCodeInput").attr('required', '');
     enableTab('body');
+    initiateHttpResponseCode('soapMockResponseHttpStatusCodeInput','httpCodeLabel', 'httpCodeDefinitionLabel');
 </script>
