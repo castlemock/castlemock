@@ -91,7 +91,9 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
 <script src=<c:url value="/resources/js/headerTable.js"/>></script>
+<script src=<c:url value="/resources/js/editor.js"/>></script>
 <script>
     $("#soapMockResponseNameInput").attr('required', '');
     $("#soapMockResponseHttpStatusCodeInput").attr('required', '');
+    enableTab('body');
 </script>
