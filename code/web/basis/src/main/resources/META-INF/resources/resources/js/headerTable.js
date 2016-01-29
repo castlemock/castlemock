@@ -16,12 +16,11 @@
 
 
 function findHeader(headerName){
-    headerTable = document.getElementById("headerTable");
+    var headerTable = document.getElementById("headerTable");
     for (var index = 1, row; row = headerTable.rows[index]; index++) {
-        cell = row.cells[1];
-        headerNameInputValue = cell.getElementsByTagName("input")[0].value;
-        console.log(headerName + " == " + headerNameInputValue)
-        if(headerNameInputValue == headerName){
+        var cell = row.cells[1];
+        var headerNameInputValue = cell.getElementsByTagName("input")[0].value;
+        if(headerNameInputValue === headerName){
             return index;
         }
 
@@ -30,14 +29,14 @@ function findHeader(headerName){
 }
 
 function alignTableRowValues(){
-    headerTable = document.getElementById("headerTable");
+    var headerTable = document.getElementById("headerTable");
     for (var index = 1, row; row = headerTable.rows[index]; index++) {
-        nameCell = row.cells[1];
-        valueCell = row.cells[2];
-        headerNameInputValue = nameCell.getElementsByTagName("input")[0];
-        headerValueInputValue = valueCell.getElementsByTagName("input")[0];
+        var nameCell = row.cells[1];
+        var valueCell = row.cells[2];
+        var headerNameInputValue = nameCell.getElementsByTagName("input")[0];
+        var headerValueInputValue = valueCell.getElementsByTagName("input")[0];
 
-        rowIndex = index - 1;
+        var rowIndex = index - 1;
         headerNameInputValue.id = "httpHeaders[" + rowIndex + "].name";
         headerNameInputValue.name = "httpHeaders[" + rowIndex + "].name";
 
@@ -47,29 +46,30 @@ function alignTableRowValues(){
 }
 
 function addHeader() {
-    headerTable = document.getElementById("headerTable");
-    headerName = document.getElementById("headerNameInput").value;
-    headerValue = document.getElementById("headerValueInput").value;
+    var headerTable = document.getElementById("headerTable");
+    var headerName = document.getElementById("headerNameInput").value;
+    var headerValue = document.getElementById("headerValueInput").value;
 
-    index = findHeader(headerName);
+    var index = findHeader(headerName);
     if(index != -1){
         return;
     }
 
-    insertIndex = headerTable.rows.length - 1;
-    row = headerTable.insertRow(-1);
-    headerSelected = row.insertCell(0);
-    headerNameColumn = row.insertCell(1);
-    headerValueColumn = row.insertCell(2);
+    var insertIndex = headerTable.rows.length - 1;
+    var row = headerTable.insertRow(-1);
+    var headerSelected = row.insertCell(0);
+    var headerNameColumn = row.insertCell(1);
+    var headerValueColumn = row.insertCell(2);
 
-    headerSelected.innerHTML = "<div class=\"delete\" onclick=\"removeHeader(\'' + headerName + '\')\">";
-    headerNameColumn.innerHTML = "<input name=\"httpHeaders[" + insertIndex + "].name\" value=" + headerName + " type=\"hidden\" \> " + headerName;
-    headerValueColumn.innerHTML = "<input name=\"httpHeaders[" + insertIndex + "].value\" value=" + headerValue + " type=\"hidden\" \> " + headerValue;
+    headerSelected.innerHTML = "<div class=\"delete\" onclick=\"removeHeader(\'" + headerName + "')\" \>";
+    headerNameColumn.innerHTML = "<input name=\"httpHeaders[" + insertIndex + "].name\" value=\"" + headerName + "\" type=\"hidden\" \> " + headerName;
+    headerValueColumn.innerHTML = "<input name=\"httpHeaders[" + insertIndex + "].value\" value=\"" + headerValue + "\" type=\"hidden\" \> " + headerValue;
     alignTableRowValues();
 }
 
 function removeHeader(deleteHeaderName) {
-    index = findHeader(deleteHeaderName);
+    var headerTable = document.getElementById("headerTable");
+    var index = findHeader(deleteHeaderName);
     headerTable.deleteRow(index);
     alignTableRowValues();
 }
