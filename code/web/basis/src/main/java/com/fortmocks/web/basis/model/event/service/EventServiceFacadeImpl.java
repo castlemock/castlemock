@@ -25,10 +25,7 @@ import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
 import com.fortmocks.core.basis.model.event.service.EventServiceFacade;
 import com.fortmocks.web.basis.model.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
-
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The Event service component is used to assembly all the events service layers and interact with them
@@ -54,8 +51,11 @@ public class EventServiceFacadeImpl extends ServiceFacadeImpl<EventDto, String, 
     }
 
     /**
-     * The method is responsible for retrieving all instances of events and its subclasses
+     * The method is responsible for retrieving all instances of events and its subclasses. The events
+     * will be sorted based on their start date. The newest will be the first object in the list and the
+     * oldest will be in the end of the list.
      * @return A list containing all the event instances
+     * @since 1.3
      */
     @Override
     public List<EventDto> findAll(){

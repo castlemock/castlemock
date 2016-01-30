@@ -19,6 +19,7 @@ package com.fortmocks.web.basis.model.event.service;
 import com.fortmocks.core.basis.model.TypeIdentifier;
 import com.fortmocks.core.basis.model.event.dto.EventDto;
 import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
+import com.fortmocks.web.basis.model.event.dto.EventDtoGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,10 +29,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.ApplicationContext;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Karl Dahlgren
@@ -92,17 +90,24 @@ public class EventServiceFacadeImplTest {
 
     @Test
     public void testFindAll(){
-        final EventDto eventDto = new EventDto();
+        final EventDto oldEvent = EventDtoGenerator.generateEventDto();
+        oldEvent.setStartDate(new Date(2016, 1, 1));
+        final EventDto newEvent = EventDtoGenerator.generateEventDto();
+        newEvent.setStartDate(new Date(2016, 1, 2));
         final List<EventDto> eventDtos = new ArrayList<EventDto>();
-        eventDtos.add(eventDto);
+        eventDtos.add(oldEvent);
+        eventDtos.add(newEvent);
         Mockito.when(eventServiceAdapter.readAll()).thenReturn(eventDtos);
 
         final List<EventDto> returnedEventDtos = serviceFacade.findAll();
-        Assert.assertEquals(1, returnedEventDtos.size());
+        Assert.assertEquals(2, returnedEventDtos.size());
 
         for(EventDto returnedEventDto : returnedEventDtos){
             Assert.assertEquals(TYPE, returnedEventDto.getTypeIdentifier().getType());
         }
+
+        Assert.assertEquals(returnedEventDtos.get(0).getId(), newEvent.getId());
+        Assert.assertEquals(returnedEventDtos.get(1).getId(), oldEvent.getId());
     }
 
     @Test

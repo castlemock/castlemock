@@ -20,6 +20,7 @@ import com.fortmocks.core.basis.model.event.domain.Event;
 import com.fortmocks.core.basis.model.event.dto.EventDto;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author Karl Dahlgren
@@ -31,7 +32,7 @@ public class EventDtoGenerator {
 
     public static EventDto generateEventDto(){
         EventDto eventDto = new EventDto();
-        eventDto.setId(new String());
+        eventDto.setId(UUID.randomUUID().toString());
         eventDto.setStartDate(new Date());
         eventDto.setEndDate(new Date());
         return eventDto;
