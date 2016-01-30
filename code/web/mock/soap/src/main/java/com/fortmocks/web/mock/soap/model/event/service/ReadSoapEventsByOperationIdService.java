@@ -19,6 +19,7 @@ package com.fortmocks.web.mock.soap.model.event.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
+import com.fortmocks.core.basis.model.event.dto.EventDtoStartDateComparator;
 import com.fortmocks.core.mock.soap.model.event.domain.SoapEvent;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.core.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
@@ -31,10 +32,19 @@ import java.util.List;
  * The service provides the functionality to retrieve all SOAP events for a specific SOAP operation.
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.mock.soap.model.project.domain.SoapOperation
  */
 @org.springframework.stereotype.Service
 public class ReadSoapEventsByOperationIdService extends AbstractSoapEventService implements Service<ReadSoapEventsByOperationIdInput, ReadSoapEventsByOperationIdOutput> {
 
+    /**
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
+     */
     @Override
     public ServiceResult<ReadSoapEventsByOperationIdOutput> process(ServiceTask<ReadSoapEventsByOperationIdInput> serviceTask) {
         final ReadSoapEventsByOperationIdInput input = serviceTask.getInput();
@@ -45,6 +55,9 @@ public class ReadSoapEventsByOperationIdService extends AbstractSoapEventService
                 events.add(soapEventDto);
             }
         }
+
+        events.sort(new EventDtoStartDateComparator());
+
         return createServiceResult(new ReadSoapEventsByOperationIdOutput(events));
     }
 }

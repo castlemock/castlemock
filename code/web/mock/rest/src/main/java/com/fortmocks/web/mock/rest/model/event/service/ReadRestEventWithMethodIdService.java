@@ -19,7 +19,9 @@ package com.fortmocks.web.mock.rest.model.event.service;
 import com.fortmocks.core.basis.model.Service;
 import com.fortmocks.core.basis.model.ServiceResult;
 import com.fortmocks.core.basis.model.ServiceTask;
+import com.fortmocks.core.basis.model.event.dto.EventDtoStartDateComparator;
 import com.fortmocks.core.mock.rest.model.event.domain.RestEvent;
+import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
 import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
 
@@ -27,8 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The service provides the functionality to retrieve a list of events that belongs to a specific REST method.
  * @author Karl Dahlgren
  * @since 1.0
+ * @see com.fortmocks.core.mock.rest.model.project.domain.RestMethod
  */
 @org.springframework.stereotype.Service
 public class ReadRestEventWithMethodIdService extends AbstractRestEventService implements Service<ReadRestEventWithMethodIdInput, ReadRestEventWithMethodIdOutput> {
@@ -44,12 +48,16 @@ public class ReadRestEventWithMethodIdService extends AbstractRestEventService i
     @Override
     public ServiceResult<ReadRestEventWithMethodIdOutput> process(ServiceTask<ReadRestEventWithMethodIdInput> serviceTask) {
         final ReadRestEventWithMethodIdInput input = serviceTask.getInput();
-        final List<RestEvent> events = new ArrayList<RestEvent>();
+        final List<RestEventDto> events = new ArrayList<RestEventDto>();
         for(RestEvent event : findAllTypes()){
             if(event.getMethodId().equals(input.getRestMethodId())){
-                events.add(event);
+                RestEventDto restEventDto = mapper.map(event, RestEventDto.class);
+                events.add(restEventDto);
             }
         }
-        return createServiceResult(new ReadRestEventWithMethodIdOutput(toDtoList(events)));
+
+        events.sort(new EventDtoStartDateComparator());
+
+        return createServiceResult(new ReadRestEventWithMethodIdOutput(events));
     }
 }

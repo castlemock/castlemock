@@ -20,10 +20,15 @@ import com.fortmocks.core.basis.model.TypeIdentifiable;
 import com.fortmocks.core.basis.model.TypeIdentifier;
 import com.fortmocks.core.basis.model.event.domain.Event;
 import com.fortmocks.core.basis.model.event.dto.EventDto;
+import com.fortmocks.core.basis.model.event.dto.EventDtoStartDateComparator;
 import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
 import com.fortmocks.core.basis.model.event.service.EventServiceFacade;
 import com.fortmocks.web.basis.model.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Event service component is used to assembly all the events service layers and interact with them
@@ -46,5 +51,16 @@ public class EventServiceFacadeImpl extends ServiceFacadeImpl<EventDto, String, 
     @Override
     public void initiate(){
         initiate(EventServiceAdapter.class);
+    }
+
+    /**
+     * The method is responsible for retrieving all instances of events and its subclasses
+     * @return A list containing all the event instances
+     */
+    @Override
+    public List<EventDto> findAll(){
+        final List<EventDto> events = super.findAll();
+        events.sort(new EventDtoStartDateComparator());
+        return events;
     }
 }
