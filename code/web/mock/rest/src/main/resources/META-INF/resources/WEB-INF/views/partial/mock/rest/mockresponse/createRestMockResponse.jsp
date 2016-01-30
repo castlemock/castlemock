@@ -38,7 +38,7 @@
         <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.header.body"/></span></h2>
         <div class="editor">
             <form:textarea id="body" path="body"/>
-            <div>
+            <div class="editorButtons">
                 <button id="formatXmlButton" type="button"><spring:message code="rest.createrestmockresponse.button.formatxml"/></button>
                 <button id="formatJsonButton" type="button"><spring:message code="rest.createrestmockresponse.button.formatjson"/></button>
             </div>

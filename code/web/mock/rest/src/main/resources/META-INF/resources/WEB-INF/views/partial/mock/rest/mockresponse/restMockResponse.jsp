@@ -44,7 +44,7 @@
         <h2 class="decorated"><span><spring:message code="rest.restmockresponse.header.body"/></span></h2>
         <div class="editor">
             <form:textarea id="body" path="body"/>
-            <div>
+            <div class="editorButtons">
                 <button id="formatXmlButton" type="button"><spring:message code="rest.restmockresponse.button.formatxml"/></button>
                 <button id="formatJsonButton" type="button"><spring:message code="rest.restmockresponse.button.formatjson"/></button>
             </div>
