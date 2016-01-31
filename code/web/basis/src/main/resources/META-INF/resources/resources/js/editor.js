@@ -106,7 +106,7 @@ function registerXmlFormat(buttonId, textAreaId){
         var textAreaElement = document.getElementById(textAreaId);
         var xml = textAreaElement.value;
         var formatted = '';
-        var reg = /(>)(<)(\/*)/g;
+        var reg = /(>)\s*(<)(\/*)/g;;
         xml = xml.replace(reg, '$1\r\n$2$3');
         var pad = 0;
         jQuery.each(xml.split('\r\n'), function(index, node) {
@@ -132,7 +132,7 @@ function registerXmlFormat(buttonId, textAreaId){
             pad += indent;
         });
 
-        textAreaElement.value = formatted;
+        textAreaElement.value = formatted.trim();
     };
 }
 
