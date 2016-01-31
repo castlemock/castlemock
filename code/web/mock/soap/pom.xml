@@ -19,7 +19,7 @@
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks-web-mock-soap</artifactId>
 	<packaging>jar</packaging>
-	<version>1.3</version>
+	<version>1.4-SNAPSHOT</version>
     <name>Fort mocks web mock soap</name>
 	<url>http://www.fortmocks.com</url>
 	<description>The module that constitutes the main Fort Mocks soap</description>
@@ -34,7 +34,7 @@
 	<parent>
 		<groupId>com.fortmocks</groupId>
 		<artifactId>fortmocks-web-mock</artifactId>
-		<version>1.3</version>
+		<version>1.4-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
