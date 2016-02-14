@@ -16,6 +16,7 @@
 
 package com.fortmocks.web.mock.soap.model.project;
 
+import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 
@@ -32,5 +33,14 @@ public class SoapMockResponseDtoGenerator {
         soapMockResponseDto.setId("SOAP MOCK RESPONSE");
         soapMockResponseDto.setStatus(SoapMockResponseStatus.ENABLED);
         return soapMockResponseDto;
+    }
+
+    public static SoapMockResponse generateSoapMockResponse(){
+        final SoapMockResponse soapMockResponse = new SoapMockResponse();
+        soapMockResponse.setName("Soap mock response name");
+        soapMockResponse.setBody("Soap mock response body");
+        soapMockResponse.setId("SOAP MOCK RESPONSE");
+        soapMockResponse.setStatus(SoapMockResponseStatus.ENABLED);
+        return soapMockResponse;
     }
 }

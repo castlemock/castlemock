@@ -16,6 +16,7 @@
 
 package com.fortmocks.web.mock.soap.model.project;
 
+import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 
 /**
@@ -30,5 +31,13 @@ public class SoapPortDtoGenerator {
         soapPortDto.setName("Soap port name");
         soapPortDto.setUri("UrlPath");
         return soapPortDto;
+    }
+
+    public static SoapPort generateSoapPort(){
+        final SoapPort soapPort = new SoapPort();
+        soapPort.setId("SOAP PORT");
+        soapPort.setName("Soap port name");
+        soapPort.setUri("UrlPath");
+        return soapPort;
     }
 }

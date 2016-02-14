@@ -67,7 +67,7 @@ public class ConfigurationControllerTest extends AbstractControllerTest {
     @Test
     public void testConfigurationValid() throws Exception {
         final List<ConfigurationGroupDto> configurationGroups = new ArrayList<ConfigurationGroupDto>();
-        final ConfigurationGroupDto configurationGroupDto = ConfigurationGroupDtoGenerator.generateConfigurationGroup();
+        final ConfigurationGroupDto configurationGroupDto = ConfigurationGroupDtoGenerator.generateConfigurationGroupDto();
         configurationGroups.add(configurationGroupDto);
 
         final ReadAllConfigurationGroupsOutput readAllConfigurationGroupsOutput = new ReadAllConfigurationGroupsOutput();

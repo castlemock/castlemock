@@ -16,9 +16,14 @@
 
 package com.fortmocks.web.mock.soap.model.project;
 
+import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapProject;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -47,4 +52,37 @@ public class SoapProjectDtoGenerator {
         soapProject.setUpdated(soapProjectDto.getUpdated());
         return soapProject;
     }
+
+    public static SoapProject generateFullSoapProject(){
+        final SoapProject soapProject = new SoapProject();
+        soapProject.setId("SOAP PROJECT");
+        soapProject.setName("Project name");
+        soapProject.setDescription("Project description");
+        soapProject.setCreated(new Date());
+        soapProject.setUpdated(new Date());
+        soapProject.setPorts(new ArrayList<SoapPort>());
+
+        for(int portIndex = 0; portIndex < 3; portIndex++){
+            final SoapPort soapPort = SoapPortDtoGenerator.generateSoapPort();
+            soapPort.setOperations(new ArrayList<SoapOperation>());
+            soapProject.getPorts().add(soapPort);
+
+            for(int operationIndex = 0; operationIndex < 3; operationIndex++){
+                final SoapOperation soapOperation = SoapOperationDtoGenerator.generateSoapOperation();
+                soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
+                soapPort.getOperations().add(soapOperation);
+
+                for(int responseIndex = 0; responseIndex < 3; responseIndex++){
+                    final SoapMockResponse soapMockResponse = SoapMockResponseDtoGenerator.generateSoapMockResponse();
+                    soapOperation.getMockResponses().add(soapMockResponse);
+                }
+
+            }
+        }
+
+
+
+        return soapProject;
+    }
+
 }

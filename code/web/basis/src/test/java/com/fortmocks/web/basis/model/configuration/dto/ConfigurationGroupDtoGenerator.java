@@ -16,6 +16,8 @@
 
 package com.fortmocks.web.basis.model.configuration.dto;
 
+import com.fortmocks.core.basis.model.configuration.domain.Configuration;
+import com.fortmocks.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.fortmocks.core.basis.model.configuration.dto.ConfigurationDto;
 import com.fortmocks.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.fortmocks.core.basis.model.event.domain.Event;
@@ -31,21 +33,40 @@ import java.util.List;
  */
 public class ConfigurationGroupDtoGenerator {
 
-    public static ConfigurationGroupDto generateConfigurationGroup(){
+    public static ConfigurationGroupDto generateConfigurationGroupDto(){
+        return generateConfigurationGroupDto(1);
+    }
+
+
+    public static ConfigurationGroup generateConfigurationGroup(){
         return generateConfigurationGroup(1);
     }
 
-    public static ConfigurationGroupDto generateConfigurationGroup(final int count){
+    public static ConfigurationGroupDto generateConfigurationGroupDto(final int count){
         final ConfigurationGroupDto configurationGroupDto = new ConfigurationGroupDto();
         final List<ConfigurationDto> configurationDtos = new ArrayList<ConfigurationDto>();
         for(int index = 0; index < count; index++){
-            ConfigurationDto configurationDto = ConfigurationDtoGenerator.generateConfigurationGroup();
+            ConfigurationDto configurationDto = ConfigurationDtoGenerator.generateConfigurationDto();
             configurationDtos.add(configurationDto);
         }
 
         configurationGroupDto.setName("COnfiguration group name");
-        configurationGroupDto.setId(new String());
+        configurationGroupDto.setId("ConfigurationGroupId");
         configurationGroupDto.setConfigurations(configurationDtos);
         return configurationGroupDto;
+    }
+
+    public static ConfigurationGroup generateConfigurationGroup(final int count){
+        final ConfigurationGroup configurationGroup = new ConfigurationGroup();
+        final List<Configuration> configurations = new ArrayList<Configuration>();
+        for(int index = 0; index < count; index++){
+            Configuration configurationDto = ConfigurationDtoGenerator.generateConfiguration();
+            configurations.add(configurationDto);
+        }
+
+        configurationGroup.setName("COnfiguration group name");
+        configurationGroup.setId("ConfigurationGroupId");
+        configurationGroup.setConfigurations(configurations);
+        return configurationGroup;
     }
 }

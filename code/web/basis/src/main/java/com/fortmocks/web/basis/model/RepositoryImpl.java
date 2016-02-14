@@ -18,9 +18,11 @@ package com.fortmocks.web.basis.model;
 
 import com.fortmocks.core.basis.model.Repository;
 import com.fortmocks.core.basis.model.Saveable;
+import com.fortmocks.web.basis.support.FileRepositorySupport;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -53,6 +55,9 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
     protected Class<I> idClass;
 
     protected Map<I, T> collection = new ConcurrentHashMap<I, T>();
+
+    @Autowired
+    private FileRepositorySupport fileRepositorySupport;
 
     private static final Logger LOGGER = Logger.getLogger(RepositoryImpl.class);
 
@@ -123,30 +128,9 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
             type.setId(id);
         }
         checkType(type);
-        Writer writer = null;
         final String filename = getFilename(id);
-        try {
-            JAXBContext context = JAXBContext.newInstance(entityClass);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            writer = new FileWriter(filename);
-            marshaller.marshal(type, writer);
-            collection.put(id, type);
-        } catch (JAXBException e) {
-            LOGGER.error("Unable to parse file: " + filename, e);
-            throw new IllegalStateException("Unable to parse the following file: " + filename);
-        } catch (IOException e) {
-            LOGGER.error("Unable to read file: " + filename, e);
-            throw new IllegalStateException("Unable to read the following file: " + filename);
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException e) {
-                    LOGGER.error("Unable to close file writer for type " + entityClass.getSimpleName(), e);
-                }
-            }
-        }
+        fileRepositorySupport.save(type, filename);
+        collection.put(id, type);
         return type;
     }
 
@@ -168,11 +152,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         final String filename = getFilename(id);
         LOGGER.debug("Start the deletion of " + entityClass.getSimpleName() + " with id " + id);
-        File file = new File(filename);
-        if(!file.delete()){
-            LOGGER.error("Unable to delete file with id " + id);
-            throw new IllegalStateException("Unable to delete file with id " + id);
-        }
+        fileRepositorySupport.delete(filename);
         collection.remove(id);
         LOGGER.debug("Deletion of " + entityClass.getSimpleName() + " with id " + id + " was successfully completed");
     }
@@ -237,37 +217,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
     protected Collection<T> loadFiles(){
         final String directory = getFileDirectory();
         final String postfix = getFileExtension();
-        final Path path = FileSystems.getDefault().getPath(directory);
-        final Collection<T> loadedTypes = new ArrayList<T>();
-
-        if(!Files.exists(path)){
-            try {
-                LOGGER.debug("Creating the following directory: " + path);
-                Files.createDirectories(path);
-            } catch (IOException e) {
-                LOGGER.error("Unable to create the following directory: " + path, e);
-                throw new IllegalStateException("Unable to create the following folder: " + directory);
-            }
-        }
-        if(!Files.isDirectory(path)){
-            throw new IllegalStateException("The provided path is not a directory: " + path);
-        }
-
-        final File folder = new File(directory);
-        try {
-            LOGGER.debug("Start loading files for the following type: " + entityClass.getSimpleName());
-            for (final File file : folder.listFiles()) {
-                if (file.isFile() && file.getName().endsWith(postfix)) {
-                    JAXBContext jaxbContext = JAXBContext.newInstance(entityClass);
-                    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-                    T type = (T) jaxbUnmarshaller.unmarshal(file);
-                    loadedTypes.add(type);
-                    LOGGER.debug("\tLoaded " + file.getName());
-                }
-            }
-        } catch (JAXBException e) {
-            LOGGER.error("Unable to parse files for type " + entityClass.getSimpleName(), e);
-        }
+        final Collection<T> loadedTypes = fileRepositorySupport.load(entityClass, directory, postfix);
         return loadedTypes;
     }
 

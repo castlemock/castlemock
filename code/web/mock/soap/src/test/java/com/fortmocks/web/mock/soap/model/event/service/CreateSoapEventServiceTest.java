@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.mock.soap.model.event;
+package com.fortmocks.web.mock.soap.model.event.service;
 
 import com.fortmocks.core.basis.model.Repository;
 import com.fortmocks.core.basis.model.ServiceResult;
@@ -23,7 +23,7 @@ import com.fortmocks.core.mock.soap.model.event.domain.SoapEvent;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.core.mock.soap.model.event.service.message.input.CreateSoapEventInput;
 import com.fortmocks.core.mock.soap.model.event.service.message.output.CreateSoapEventOutput;
-import com.fortmocks.web.mock.soap.model.event.service.CreateSoapEventService;
+import com.fortmocks.web.mock.soap.model.event.SoapEventDtoGenerator;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,8 +54,8 @@ public class CreateSoapEventServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapProjectDto();
-        Mockito.when(repository.save(Mockito.any(SoapEvent.class))).thenReturn(SoapEventDtoGenerator.generateSoapProject());
+        final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapEventDto();
+        Mockito.when(repository.save(Mockito.any(SoapEvent.class))).thenReturn(SoapEventDtoGenerator.generateSoapEvent());
 
         final CreateSoapEventInput input = new CreateSoapEventInput(soapEventDto);
         input.setSoapEvent(soapEventDto);

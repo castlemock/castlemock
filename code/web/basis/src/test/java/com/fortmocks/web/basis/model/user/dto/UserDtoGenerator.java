@@ -44,4 +44,17 @@ public class UserDtoGenerator {
         userDto.setUsername("admin");
         return userDto;
     }
+
+    public static User generateUser(){
+        final User user = new User();
+        user.setUpdated(new Timestamp(new Date().getTime()));
+        user.setCreated(new Timestamp(new Date().getTime()));
+        user.setRole(Role.ADMIN);
+        user.setStatus(Status.ACTIVE);
+        user.setEmail("test@test.com");
+        user.setId("User");
+        user.setPassword("password");
+        user.setUsername("admin");
+        return user;
+    }
 }

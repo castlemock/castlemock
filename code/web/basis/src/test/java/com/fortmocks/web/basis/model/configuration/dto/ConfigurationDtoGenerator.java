@@ -17,6 +17,7 @@
 package com.fortmocks.web.basis.model.configuration.dto;
 
 
+import com.fortmocks.core.basis.model.configuration.domain.Configuration;
 import com.fortmocks.core.basis.model.configuration.domain.ConfigurationType;
 import com.fortmocks.core.basis.model.configuration.dto.ConfigurationDto;
 import com.fortmocks.core.basis.model.event.domain.Event;
@@ -29,12 +30,20 @@ import com.fortmocks.core.basis.model.event.domain.Event;
  */
 public class ConfigurationDtoGenerator {
 
-    public static ConfigurationDto generateConfigurationGroup(){
+    public static ConfigurationDto generateConfigurationDto(){
         final ConfigurationDto configurationDto = new ConfigurationDto();
         configurationDto.setType(ConfigurationType.STRING);
         configurationDto.setKey("Key");
         configurationDto.setValue("Value");
         return configurationDto;
+    }
+
+    public static Configuration generateConfiguration(){
+        final Configuration configuration = new Configuration();
+        configuration.setType(ConfigurationType.STRING);
+        configuration.setKey("Key");
+        configuration.setValue("Value");
+        return configuration;
     }
 
 }

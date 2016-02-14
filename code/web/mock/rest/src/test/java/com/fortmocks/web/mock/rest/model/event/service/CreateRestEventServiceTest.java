@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortmocks.web.mock.rest.model.project.service;
+package com.fortmocks.web.mock.rest.model.event.service;
 
 import com.fortmocks.core.basis.model.Repository;
 import com.fortmocks.core.basis.model.ServiceResult;

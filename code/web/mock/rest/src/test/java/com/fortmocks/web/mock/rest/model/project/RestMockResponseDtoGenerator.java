@@ -17,6 +17,7 @@
 package com.fortmocks.web.mock.rest.model.project;
 
 
+import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponse;
 import com.fortmocks.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMockResponseDto;
 
@@ -34,5 +35,15 @@ public class RestMockResponseDtoGenerator {
         restMockResponseDto.setStatus(RestMockResponseStatus.ENABLED);
         restMockResponseDto.setHttpStatusCode(200);
         return restMockResponseDto;
+    }
+
+    public static RestMockResponse generateRestMockResponse(){
+        final RestMockResponse restMockResponse = new RestMockResponse();
+        restMockResponse.setName("Rest mock response name");
+        restMockResponse.setBody("Rest mock response body");
+        restMockResponse.setId("REST MOCK RESPONSE");
+        restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
+        restMockResponse.setHttpStatusCode(200);
+        return restMockResponse;
     }
 }

@@ -16,8 +16,7 @@
 
 package com.fortmocks.web.mock.rest.model.project;
 
-import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
-import com.fortmocks.core.mock.rest.model.project.domain.RestProject;
+import com.fortmocks.core.mock.rest.model.project.domain.*;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestProjectDto;
 
@@ -52,4 +51,41 @@ public class RestProjectDtoGenerator {
         projectDto.setApplications(new ArrayList<RestApplication>());
         return projectDto;
     }
+
+    public static RestProject generateFullRestProject(){
+        final RestProject projectDto = new RestProject();
+        projectDto.setId("REST PROJECT");
+        projectDto.setName("Project name");
+        projectDto.setDescription("Project description");
+        projectDto.setCreated(new Date());
+        projectDto.setUpdated(new Date());
+        projectDto.setApplications(new ArrayList<RestApplication>());
+
+        for(int applicationIndex = 0; applicationIndex < 3; applicationIndex++){
+            final RestApplication restApplication = RestApplicationDtoGenerator.generateRestApplication();
+            restApplication.setResources(new ArrayList<RestResource>());
+            projectDto.getApplications().add(restApplication);
+
+            for(int resourceIndex = 0; resourceIndex < 3; resourceIndex++){
+                final RestResource restResource = RestResourceDtoGenerator.generateRestResource();
+                restResource.setMethods(new ArrayList<RestMethod>());
+                restApplication.getResources().add(restResource);
+
+                for(int methodIndex = 0; methodIndex < 3; methodIndex++){
+                    final RestMethod restMethod = RestMethodDtoGenerator.generateRestMethod();
+                    restMethod.setMockResponses(new ArrayList<RestMockResponse>());
+                    restResource.getMethods().add(restMethod);
+
+                    for(int responseIndex = 0; responseIndex < 3; responseIndex++){
+                        final RestMockResponse restMockResponse = RestMockResponseDtoGenerator.generateRestMockResponse();
+                        restMethod.getMockResponses().add(restMockResponse);
+                    }
+                }
+
+            }
+        }
+
+        return projectDto;
+    }
+
 }

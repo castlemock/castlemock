@@ -62,7 +62,7 @@ public class SoapEventControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testGetServiceValid() throws Exception {
-        final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapProjectDto();
+        final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapEventDto();
         when(serviceProcessor.process(any(ReadSoapEventInput.class))).thenReturn(new ReadSoapEventOutput(soapEventDto));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + EVENT + SLASH + soapEventDto.getId());
         mockMvc.perform(message)

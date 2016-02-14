@@ -34,7 +34,7 @@ import java.util.Date;
  */
 public class SoapEventDtoGenerator {
 
-    public static SoapEventDto generateSoapProjectDto(){
+    public static SoapEventDto generateSoapEventDto(){
         final SoapEventDto soapEventDto = new SoapEventDto();
         soapEventDto.setId("SOAP EVENT");
         soapEventDto.setStartDate(new Date());
@@ -58,7 +58,7 @@ public class SoapEventDtoGenerator {
         return soapEventDto;
     }
 
-    public static SoapEvent generateSoapProject(){
+    public static SoapEvent generateSoapEvent(){
         final SoapEvent soapEvent = new SoapEvent();
         soapEvent.setId("SOAP EVENT");
         soapEvent.setStartDate(new Date());
