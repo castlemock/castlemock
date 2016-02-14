@@ -16,6 +16,8 @@
 
 package com.fortmocks.web.mock.rest.model.project;
 
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethod;
+import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
 import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 
@@ -34,5 +36,14 @@ public class RestResourceDtoGenerator {
         restResourceDto.setMethods(new ArrayList<RestMethodDto>());
         restResourceDto.setUri("URI");
         return restResourceDto;
+    }
+
+    public static RestResource generateRestResource(){
+        final RestResource restResource = new RestResource();
+        restResource.setId("REST Resource");
+        restResource.setName("Rest resource name");
+        restResource.setMethods(new ArrayList<RestMethod>());
+        restResource.setUri("URI");
+        return restResource;
     }
 }

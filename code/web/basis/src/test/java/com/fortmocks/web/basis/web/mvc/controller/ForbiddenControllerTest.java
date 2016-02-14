@@ -20,6 +20,8 @@ import com.fortmocks.web.basis.config.TestApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -37,8 +39,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 public class ForbiddenControllerTest extends AbstractControllerTest {
 
     private static final String SERVICE_URL = "/web/forbidden";
+    private static final String FORWARDED_URL = "redirect:/web";
     private static final String PAGE = "forbidden.jsp";
 
+    @Spy
     @InjectMocks
     private ForbiddenController forbiddenController;
 
@@ -50,10 +54,11 @@ public class ForbiddenControllerTest extends AbstractControllerTest {
 
     @Test
     public void testForbiddenNotLoggedIn() throws Exception {
+        Mockito.when(forbiddenController.isLoggedIn()).thenReturn(false);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(1));
+                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.model().size(0));
     }
 
     @Test

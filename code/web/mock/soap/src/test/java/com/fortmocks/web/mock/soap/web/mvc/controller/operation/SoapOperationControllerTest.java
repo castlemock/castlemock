@@ -25,15 +25,19 @@ import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
+import com.fortmocks.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseStatusInput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.fortmocks.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
+import com.fortmocks.core.mock.soap.model.project.service.message.output.UpdateSoapMockResponseStatusOutput;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.config.TestApplication;
 import com.fortmocks.web.mock.soap.model.project.SoapOperationDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.fortmocks.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.fortmocks.web.mock.soap.web.mvc.command.mockresponse.SoapMockResponseModifierCommand;
 import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -67,6 +71,8 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
     private static final String COLON = ":";
     private static final String SOAP = "soap";
     private static final Integer DEFAULT_PORT = 80;
+    private static final String UPDATE_STATUS = "update";
+    private static final String DELETE_MOCK_RESPONSES = "delete";
 
     @InjectMocks
     private SoapOperationController serviceController;
@@ -80,7 +86,7 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
     }
 
     @Test
-    public void testGetServiceValid() throws Exception {
+    public void testDefaultPage() throws Exception {
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
         final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
         final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
@@ -100,5 +106,37 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
         String hostAddress = serviceController.getHostAddress();
         Assert.assertEquals(HTTP + hostAddress + COLON + DEFAULT_PORT + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + soapProjectDto.getId() + SLASH + soapPortDto.getUri(), soapOperationDto.getInvokeAddress());
     }
+
+
+    @Test
+    @Ignore
+    public void testServiceFunctionalityUpdate() throws Exception {
+        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
+        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
+        final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
+
+        final SoapMockResponseModifierCommand soapMockResponseModifierCommand = new SoapMockResponseModifierCommand();
+        final String[] idString = {"1","2","3"};
+        soapMockResponseModifierCommand.setSoapMockResponseStatus("ENABLED");
+        soapMockResponseModifierCommand.setSoapMockResponseIds(idString);
+
+        when(serviceProcessor.process(isA(UpdateSoapMockResponseStatusInput.class))).thenReturn(new UpdateSoapMockResponseStatusOutput());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH);
+        message.param("action", UPDATE_STATUS);
+
+
+        ResultActions result = mockMvc.perform(message)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(10))
+                .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
+                .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, soapProjectDto.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, soapPortDto.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION, soapOperationDto));
+        String hostAddress = serviceController.getHostAddress();
+        Assert.assertEquals(HTTP + hostAddress + COLON + DEFAULT_PORT + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + soapProjectDto.getId() + SLASH + soapPortDto.getUri(), soapOperationDto.getInvokeAddress());
+
+    }
+
 
 }

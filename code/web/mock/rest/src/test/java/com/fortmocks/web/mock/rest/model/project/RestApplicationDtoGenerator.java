@@ -16,6 +16,8 @@
 
 package com.fortmocks.web.mock.rest.model.project;
 
+import com.fortmocks.core.mock.rest.model.project.domain.RestApplication;
+import com.fortmocks.core.mock.rest.model.project.domain.RestResource;
 import com.fortmocks.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 
@@ -33,5 +35,13 @@ public class RestApplicationDtoGenerator {
         restApplicationDto.setName("Rest application name");
         restApplicationDto.setResources(new ArrayList<RestResourceDto>());
         return restApplicationDto;
+    }
+
+    public static RestApplication generateRestApplication(){
+        final RestApplication restApplication = new RestApplication();
+        restApplication.setId("REST APPLICATION");
+        restApplication.setName("Rest application name");
+        restApplication.setResources(new ArrayList<RestResource>());
+        return restApplication;
     }
 }

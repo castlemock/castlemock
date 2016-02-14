@@ -55,7 +55,7 @@ public class ServiceRegistryTest {
     }
 
     @Test
-    public void getService(){
+    public void testGetService(){
         final ReadUserInput readUserInput = new ReadUserInput("Username");
 
         // Get registered service
@@ -64,12 +64,17 @@ public class ServiceRegistryTest {
     }
 
     @Test
-    public void getServiceInvalid(){
+    public void testServiceInvalid(){
         final DeleteUserInput deleteUserInput = new DeleteUserInput("Username");
 
         // Try to get a non-registered service
         final DeleteUserService deleteUserService = (DeleteUserService) serviceRegistry.getService(deleteUserInput);
         Assert.assertNull(deleteUserService);
+    }
+
+    @Test
+    public void testInitialize(){
+        serviceRegistry.initialize();
     }
 
 }

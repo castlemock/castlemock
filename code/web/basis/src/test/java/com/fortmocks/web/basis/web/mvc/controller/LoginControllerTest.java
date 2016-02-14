@@ -17,11 +17,23 @@
 package com.fortmocks.web.basis.web.mvc.controller;
 
 
+import com.fortmocks.web.basis.config.TestApplication;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
@@ -29,97 +41,39 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  * @author Karl Dahlgren
  * @since 1.0
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@RunWith(SpringJUnit4ClassRunner.class) @SpringApplicationConfiguration(classes = TestApplication.class) @WebAppConfiguration
-//@PrepareForTest( { LoginControllerTest.class })
-@Ignore
-public class LoginControllerTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = TestApplication.class)
+@WebAppConfiguration
+public class LoginControllerTest extends AbstractControllerTest {
 
     private static final String PAGE = "login";
-    private static final String REDIRECT = "redirect:/web";
-    private static final String IS_LOGGED_IN_METHOD = "isLoggedIn";
-    private static final String CONTEXT_VALUE = "fortmocks";
-    private static final String CONTEXT = "context";
-    private static final String INVALID_CREDENTAILS_KEY_EXCEPTION = "SPRING_SECURITY_LAST_EXCEPTION";
-    private static final String ERROR_INPUT = "Invalid credentials";
-    private static final String LOCKED_INPUT = "User locked";
-    private static final String LOGOUT_INPUT = "Logging out";
-    private static final String ERROR = "error";
-    private static final String MSG = "msg";
-
     private static final String SERVICE_URL = "/login";
 
+    @Spy
     @InjectMocks
     private LoginController loginController;
 
-    private MockMvc mockMvc;
-
-    @Before
-    public void initiateTest() {
-
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(loginController).build();
+    @Override
+    protected AbstractController getController() {
+        return loginController;
     }
 
-
-     /*
     @Test
-    public void testLoginNotLoggedIn() throws Exception {
-        MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
-        mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().size(0));
+    @Ignore
+    public void testLogin() throws Exception {
+        Mockito.when(loginController.isLoggedIn()).thenReturn(false);
+
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
+        ResultActions result = mockMvc.perform(message)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(2))
+                .andExpect(MockMvcResultMatchers.forwardedUrl(PAGE));
     }
 
     @Test
     public void testLoginLoggedIn() throws Exception {
-        MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
-        mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().size(0));
+        Mockito.when(loginController.isLoggedIn()).thenReturn(true);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
+        mockMvc.perform(message).andExpect(MockMvcResultMatchers.status().isFound());
     }
-
-    @Test
-    public void testLoginInvalidCredentials() throws Exception {
-        MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL).sessionAttr(INVALID_CREDENTAILS_KEY_EXCEPTION, new BadCredentialsException(ERROR_INPUT));
-        mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().size(0));
-    }
-
-    @Test
-    public void testLoginLockedException() throws Exception {
-        MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL).sessionAttr(INVALID_CREDENTAILS_KEY_EXCEPTION, new LockedException(LOCKED_INPUT));
-        mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().size(0));
-    }
-    */
-     /*
-    @Test
-    public void testLoginUnknowError() throws Exception {
-
-        PowerMockito.doReturn(true).when(loginController, method(LoginController.class, "isLoggedIn"));
-        MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
-        mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().size(0));
-    }
-    */
-
-     /*
-    @Test
-    public void testLogout() throws Exception {
-        PowerMockito.verifyPrivate(loginController, Mockito.times(0)).invoke(IS_LOGGED_IN_METHOD);
-        MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL).param(LOGOUT_INPUT)
-        mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().size(0));
-    }
-    */
-
-
-
-
-
 }

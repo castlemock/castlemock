@@ -46,10 +46,9 @@ public class CreateRestEventService extends AbstractRestEventService implements 
     @Override
     public ServiceResult<CreateRestEventOutput> process(ServiceTask<CreateRestEventInput> serviceTask) {
         final CreateRestEventInput input = serviceTask.getInput();
-        final RestEventDto restEventDto = input.getRestEvent();
         if(count() >= restMaxEventCount){
             EventDto eventDto = getOldestEvent();
-            restEventDto.setId(eventDto.getId());
+            delete(eventDto.getId());
         }
         final RestEventDto createdRestEvent = save(input.getRestEvent());
         return createServiceResult(new CreateRestEventOutput(createdRestEvent));

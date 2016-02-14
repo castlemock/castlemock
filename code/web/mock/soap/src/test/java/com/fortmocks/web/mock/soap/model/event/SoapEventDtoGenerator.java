@@ -17,6 +17,9 @@
 package com.fortmocks.web.mock.soap.model.event;
 
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
+import com.fortmocks.core.mock.soap.model.event.domain.SoapEvent;
+import com.fortmocks.core.mock.soap.model.event.domain.SoapRequest;
+import com.fortmocks.core.mock.soap.model.event.domain.SoapResponse;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapEventDto;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapRequestDto;
 import com.fortmocks.core.mock.soap.model.event.dto.SoapResponseDto;
@@ -53,5 +56,29 @@ public class SoapEventDtoGenerator {
         soapEventDto.setRequest(soapRequestDto);
         soapEventDto.setResponse(soapResponseDto);
         return soapEventDto;
+    }
+
+    public static SoapEvent generateSoapProject(){
+        final SoapEvent soapEvent = new SoapEvent();
+        soapEvent.setId("SOAP EVENT");
+        soapEvent.setStartDate(new Date());
+        soapEvent.setEndDate(new Date());
+        soapEvent.setOperationId("OperationId");
+
+        SoapRequest soapRequest = new SoapRequest();
+        soapRequest.setBody("Soap request body");
+        soapRequest.setContentType("application/json");
+        soapRequest.setOperationName("ServiceName");
+        soapRequest.setHttpMethod(HttpMethod.POST);
+        soapRequest.setSoapVersion(SoapVersion.SOAP11);
+
+        SoapResponse soapResponse = new SoapResponse();
+        soapResponse.setHttpStatusCode(200);
+        soapResponse.setBody("Soap response body");
+        soapResponse.setMockResponseName("MockResponseName");
+
+        soapEvent.setRequest(soapRequest);
+        soapEvent.setResponse(soapResponse);
+        return soapEvent;
     }
 }

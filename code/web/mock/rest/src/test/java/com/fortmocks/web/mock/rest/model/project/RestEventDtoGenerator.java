@@ -16,9 +16,14 @@
 
 package com.fortmocks.web.mock.rest.model.project;
 
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
+import com.fortmocks.core.basis.model.http.domain.HttpParameter;
 import com.fortmocks.core.basis.model.http.dto.HttpHeaderDto;
 import com.fortmocks.core.basis.model.http.dto.HttpParameterDto;
+import com.fortmocks.core.mock.rest.model.event.domain.RestEvent;
+import com.fortmocks.core.mock.rest.model.event.domain.RestRequest;
+import com.fortmocks.core.mock.rest.model.event.domain.RestResponse;
 import com.fortmocks.core.mock.rest.model.event.dto.RestEventDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestRequestDto;
 import com.fortmocks.core.mock.rest.model.event.dto.RestResponseDto;
@@ -39,6 +44,9 @@ public class RestEventDtoGenerator {
         eventDto.setMethodId("REST method id");
         eventDto.setEndDate(new Date());
         eventDto.setStartDate(new Date());
+        eventDto.setProjectId("ProjectId");
+        eventDto.setResourceId("ResourceId");
+        eventDto.setApplicationId("ApplicationId");
 
         RestRequestDto restRequestDto = new RestRequestDto();
         restRequestDto.setHttpMethod(HttpMethod.GET);
@@ -58,5 +66,35 @@ public class RestEventDtoGenerator {
         eventDto.setResponse(restResponseDto);
 
         return eventDto;
+    }
+
+    public static RestEvent generateRestEvent(){
+        final RestEvent restEvent = new RestEvent();
+        restEvent.setId("REST PROJECT");
+        restEvent.setMethodId("REST method id");
+        restEvent.setEndDate(new Date());
+        restEvent.setStartDate(new Date());
+        restEvent.setProjectId("ProjectId");
+        restEvent.setResourceId("ResourceId");
+        restEvent.setApplicationId("ApplicationId");
+
+        RestRequest restRequest = new RestRequest();
+        restRequest.setHttpMethod(HttpMethod.GET);
+        restRequest.setBody("REST request body");
+        restRequest.setContentType("application/json");
+        restRequest.setHttpHeaders(new ArrayList<HttpHeader>());
+        restRequest.setHttpParameters(new ArrayList<HttpParameter>());
+        restRequest.setUri("URI");
+
+        RestResponse restResponse = new RestResponse();
+        restResponse.setHttpStatusCode(200);
+        restResponse.setContentType("application/json");
+        restResponse.setBody("REST response body");
+        restResponse.setMockResponseName("Mock response name");
+
+        restEvent.setRequest(restRequest);
+        restEvent.setResponse(restResponse);
+
+        return restEvent;
     }
 }
