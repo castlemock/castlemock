@@ -3,6 +3,7 @@ package com.fortmocks.web.mock.soap.web.soap.controller;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.soap.config.TestApplication;
 import com.fortmocks.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -24,5 +25,11 @@ public class SoapServiceControllerTest extends AbstractSoapControllerTest {
     @Override
     protected AbstractController getController() {
         return soapServiceController;
+    }
+
+
+    @Test
+    public void testProcess(){
+
     }
 }
