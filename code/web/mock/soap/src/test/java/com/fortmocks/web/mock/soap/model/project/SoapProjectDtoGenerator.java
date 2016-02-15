@@ -40,7 +40,19 @@ public class SoapProjectDtoGenerator {
         projectDto.setDescription("Project description");
         projectDto.setCreated(new Date());
         projectDto.setUpdated(new Date());
+        projectDto.setPorts(new ArrayList<SoapPortDto>());
         return projectDto;
+    }
+
+    public static SoapProject generateSoapProject(){
+        final SoapProject project = new SoapProject();
+        project.setId("SOAP PROJECT");
+        project.setName("Project name");
+        project.setDescription("Project description");
+        project.setCreated(new Date());
+        project.setUpdated(new Date());
+        project.setPorts(new ArrayList<SoapPort>());
+        return project;
     }
 
     public static SoapProject convertDto(final SoapProjectDto soapProjectDto){

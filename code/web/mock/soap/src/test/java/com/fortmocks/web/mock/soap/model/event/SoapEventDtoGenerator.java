@@ -40,6 +40,8 @@ public class SoapEventDtoGenerator {
         soapEventDto.setStartDate(new Date());
         soapEventDto.setEndDate(new Date());
         soapEventDto.setOperationId("OperationId");
+        soapEventDto.setPortId("PortId");
+        soapEventDto.setProjectId("Project id");
 
         SoapRequestDto soapRequestDto = new SoapRequestDto();
         soapRequestDto.setBody("Soap request body");
@@ -64,6 +66,8 @@ public class SoapEventDtoGenerator {
         soapEvent.setStartDate(new Date());
         soapEvent.setEndDate(new Date());
         soapEvent.setOperationId("OperationId");
+        soapEvent.setPortId("PortId");
+        soapEvent.setProjectId("Project id");
 
         SoapRequest soapRequest = new SoapRequest();
         soapRequest.setBody("Soap request body");

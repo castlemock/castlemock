@@ -17,10 +17,14 @@
 package com.fortmocks.web.mock.soap.model.project;
 
 import com.fortmocks.core.basis.model.http.domain.HttpMethod;
+import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapVersion;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
+
+import java.util.ArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -40,6 +44,7 @@ public class SoapOperationDtoGenerator {
         soapOperationDto.setHttpMethod(HttpMethod.POST);
         soapOperationDto.setStatus(SoapOperationStatus.MOCKED);
         soapOperationDto.setSoapVersion(SoapVersion.SOAP11);
+        soapOperationDto.setMockResponses(new ArrayList<SoapMockResponseDto>());
         return soapOperationDto;
     }
 
@@ -54,6 +59,7 @@ public class SoapOperationDtoGenerator {
         soapOperation.setHttpMethod(HttpMethod.POST);
         soapOperation.setStatus(SoapOperationStatus.MOCKED);
         soapOperation.setSoapVersion(SoapVersion.SOAP11);
+        soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
         return soapOperation;
     }
 }

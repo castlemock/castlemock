@@ -16,8 +16,12 @@
 
 package com.fortmocks.web.mock.soap.model.project;
 
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
+import com.fortmocks.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.fortmocks.core.mock.soap.model.project.dto.SoapPortDto;
+
+import java.util.ArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -30,6 +34,7 @@ public class SoapPortDtoGenerator {
         soapPortDto.setId("SOAP PORT");
         soapPortDto.setName("Soap port name");
         soapPortDto.setUri("UrlPath");
+        soapPortDto.setOperations(new ArrayList<SoapOperationDto>());
         return soapPortDto;
     }
 
@@ -38,6 +43,7 @@ public class SoapPortDtoGenerator {
         soapPort.setId("SOAP PORT");
         soapPort.setName("Soap port name");
         soapPort.setUri("UrlPath");
+        soapPort.setOperations(new ArrayList<SoapOperation>());
         return soapPort;
     }
 }
