@@ -93,6 +93,28 @@ body {
     }
 }
 
+.information {
+    padding: 0px;
+    .fa-1x {
+        font-size: 1.5em;
+
+    }
+    &:hover {
+        cursor: default;
+    }
+}
+
+.tooltip {
+    display:none;
+    position:absolute;
+    border:1px solid #333;
+    background-color:#161616;
+    border-radius:5px;
+    padding:10px;
+    color:#fff;
+    font-size:10px;
+}
+
 .container {
     width: 85%;
     height: 75%;
@@ -264,16 +286,18 @@ section{
     }
 
     .formTable td {
-        padding: 10px;
+
     }
 
     .formTable .column1 {
         text-align: left;
         font-family: robotoBoldFont;
+        padding: 10px;
     }
 
     .formTable .column2 * {
         width: 100%;
+        
     }
 
     .entityTable {

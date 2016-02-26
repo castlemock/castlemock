@@ -23,7 +23,7 @@
     <table class="formTable">
         <tr>
             <td class="column1"><label><spring:message code="rest.createapplication.label.name"/></label></td>
-            <td class="column2"><form:input id="restApplicationNameInput" path="name" />
+            <td class="column2"><form:input id="restApplicationNameInput" path="name" /></td>
         </tr>
     </table>
  

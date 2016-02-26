@@ -190,6 +190,23 @@ body {
       .main-header .meta .links i:hover {
         color: #ddd; }
 
+.information {
+  padding: 0px; }
+  .information .fa-1x {
+    font-size: 1.5em; }
+  .information:hover {
+    cursor: default; }
+
+.tooltip {
+  display: none;
+  position: absolute;
+  border: 1px solid #333;
+  background-color: #161616;
+  border-radius: 5px;
+  padding: 10px;
+  color: #fff;
+  font-size: 10px; }
+
 .container {
   width: 85%;
   height: 75%;
@@ -304,11 +321,10 @@ section {
   section .formTable {
     margin: 10px 0 30px 0;
     border-color: black; }
-  section .formTable td {
-    padding: 10px; }
   section .formTable .column1 {
     text-align: left;
-    font-family: robotoBoldFont; }
+    font-family: robotoBoldFont;
+    padding: 10px; }
   section .formTable .column2 * {
     width: 100%; }
   section .entityTable {
