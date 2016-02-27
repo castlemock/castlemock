@@ -38,6 +38,9 @@ import com.fortmocks.web.basis.web.mvc.controller.AbstractController;
 import com.fortmocks.web.mock.rest.model.RestException;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,7 +78,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param httpServletResponse The outgoing response
      * @return Returns the response as an String
      */
-    protected String process(final String projectId, final String applicationId, final HttpMethod httpMethod, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity<String> process(final String projectId, final String applicationId, final HttpMethod httpMethod, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "The project id cannot be null");
             Preconditions.checkNotNull(applicationId, "The application id cannot be null");
@@ -127,7 +130,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param httpServletResponse The HTTP servlet response
      * @return A response in String format
      */
-    protected String process(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity<String> process(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(restRequest, "Rest request cannot be null");
         RestEventDto event = null;
         RestResponseDto response = null;
@@ -144,11 +147,15 @@ public abstract class AbstractRestServiceController extends AbstractController {
             } else { // Status.MOCKED
                 response = mockResponse(restMethod);
             }
-            httpServletResponse.setStatus(response.getHttpStatusCode());
+
+            HttpHeaders responseHeaders = new HttpHeaders();
             for(HttpHeaderDto httpHeader : response.getHttpHeaders()){
-                httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
+                List<String> headerValues = new LinkedList<String>();
+                headerValues.add(httpHeader.getValue());
+                responseHeaders.put(httpHeader.getName(), headerValues);
             }
-            return response.getBody();
+
+            return new ResponseEntity<String>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
         } finally{
             if(event != null){
                 event.finish(response);
@@ -178,9 +185,12 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 connection.addRequestProperty(httpHeader.getName(), httpHeader.getValue());
             }
 
-            outputStream = connection.getOutputStream();
-            outputStream.write(restRequest.getBody().getBytes());
-            outputStream.flush();
+            if(HttpMethod.POST.equals(restRequest.getHttpMethod()) || HttpMethod.PUT.equals(restRequest.getHttpMethod()) || HttpMethod.DELETE.equals(restRequest.getHttpMethod())){
+                outputStream = connection.getOutputStream();
+                outputStream.write(restRequest.getBody().getBytes());
+                outputStream.flush();
+            }
+
             InputStreamReader inputStreamReader = null;
             if(connection.getResponseCode() == OK_RESPONSE){
                 inputStreamReader = new InputStreamReader(connection.getInputStream());
