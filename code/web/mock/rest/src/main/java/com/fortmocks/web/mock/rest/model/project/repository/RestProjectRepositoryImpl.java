@@ -16,10 +16,13 @@
 
 package com.fortmocks.web.mock.rest.model.project.repository;
 
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
 import com.fortmocks.core.mock.rest.model.project.domain.*;
 import com.fortmocks.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+
+import java.util.LinkedList;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -59,6 +62,49 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, Strin
         return restProjectFileExtension;
     }
 
+    /**
+     * The post initialize method can be used to run functionality for a specific service. The method is called when
+     * the method {@link #initialize} has finished successful.
+     *
+     * The method is responsible to validate the imported types and make certain that all the collections are
+     * initialized.
+     * @see #initialize
+     * @see RestProject
+     * @since 1.4
+     */
+    @Override
+    protected void postInitiate() {
+        for(RestProject restProject : collection.values()){
+            if(restProject.getApplications() == null){
+                restProject.setApplications(new LinkedList<RestApplication>());
+            }
+
+            for(RestApplication restApplication : restProject.getApplications()){
+                if(restApplication.getResources() == null){
+                    restApplication.setResources(new LinkedList<RestResource>());
+                }
+
+                for(RestResource restResource : restApplication.getResources()){
+                    if(restResource.getMethods() == null){
+                        restResource.setMethods(new LinkedList<RestMethod>());
+                    }
+
+                    for(RestMethod restMethod : restResource.getMethods()){
+                        if(restMethod.getMockResponses() == null){
+                            restMethod.setMockResponses(new LinkedList<RestMockResponse>());
+                        }
+
+                        for(RestMockResponse restMockResponse : restMethod.getMockResponses()){
+                            if(restMockResponse.getHttpHeaders() == null){
+                                restMockResponse.setHttpHeaders(new LinkedList<HttpHeader>());
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
 
 
     /**

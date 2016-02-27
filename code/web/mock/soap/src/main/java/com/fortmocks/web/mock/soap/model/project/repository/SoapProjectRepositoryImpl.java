@@ -16,6 +16,10 @@
 
 package com.fortmocks.web.mock.soap.model.project.repository;
 
+import com.fortmocks.core.basis.model.http.domain.HttpHeader;
+import com.fortmocks.core.basis.model.user.domain.Role;
+import com.fortmocks.core.basis.model.user.domain.Status;
+import com.fortmocks.core.basis.model.user.domain.User;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapOperation;
 import com.fortmocks.core.mock.soap.model.project.domain.SoapPort;
@@ -23,6 +27,9 @@ import com.fortmocks.core.mock.soap.model.project.domain.SoapProject;
 import com.fortmocks.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.LinkedList;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -59,6 +66,44 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Strin
     @Override
     protected String getFileExtension() {
         return soapProjectFileExtension;
+    }
+
+    /**
+     * The post initialize method can be used to run functionality for a specific service. The method is called when
+     * the method {@link #initialize} has finished successful.
+     *
+     * The method is responsible to validate the imported types and make certain that all the collections are
+     * initialized.
+     * @see #initialize
+     * @see SoapProject
+     * @since 1.4
+     */
+    @Override
+    protected void postInitiate() {
+        for(SoapProject soapProject : collection.values()){
+            if(soapProject.getPorts() == null){
+                soapProject.setPorts(new LinkedList<SoapPort>());
+            }
+
+            for(SoapPort soapPort : soapProject.getPorts()){
+                if(soapPort.getOperations() == null){
+                    soapPort.setOperations(new LinkedList<SoapOperation>());
+                }
+
+                for(SoapOperation soapOperation : soapPort.getOperations()){
+                    if(soapOperation.getMockResponses() == null){
+                        soapOperation.setMockResponses(new LinkedList<SoapMockResponse>());
+                    }
+
+                    for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
+                        if(soapMockResponse.getHttpHeaders() == null){
+                            soapMockResponse.setHttpHeaders(new LinkedList<HttpHeader>());
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
     /**

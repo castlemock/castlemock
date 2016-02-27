@@ -20,6 +20,7 @@ package com.fortmocks.core.mock.rest.model.project.domain;
 import com.fortmocks.core.basis.model.Saveable;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -65,6 +66,8 @@ public class RestResource implements Saveable<String> {
         this.uri = uri;
     }
 
+    @XmlElementWrapper(name = "methods")
+    @XmlElement(name = "method")
     public List<RestMethod> getMethods() {
         return methods;
     }

@@ -52,6 +52,7 @@ public class RestMethod implements Saveable<String> {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
