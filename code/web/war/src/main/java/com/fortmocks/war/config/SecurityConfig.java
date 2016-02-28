@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(final AuthenticationManagerBuilder authenticationManagerBuilder) {
         try {
-            authenticationManagerBuilder.inMemoryAuthentication().withUser("user").password("password").authorities("ROLE_USER");
+            //authenticationManagerBuilder.inMemoryAuthentication().withUser("user").password("password").authorities("ROLE_USER");
             authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
         } catch (Exception exception) {
             LOGGER.error("Unable to configure the authentication manager builder", exception);
@@ -78,15 +78,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().antMatchers("/web/**")
-                .access("hasRole('READER') or hasRole('MODIFIER') or hasRole('ADMIN')").and().formLogin()
-                .loginPage("/login").failureUrl("/login?error")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .and().logout().logoutSuccessUrl("/login?logout")
+        httpSecurity
+                .authorizeRequests()
+                    .antMatchers("/web/**")
+                    .authenticated()
+                    .and()
+                .formLogin()
+                    .loginPage("/login").failureUrl("/login?error")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .and()
+                .logout()
+                    .logoutSuccessUrl("/login?logout")
                 .and().csrf().and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(tokenValiditySeconds)
                 .and().exceptionHandling().accessDeniedPage("/forbidden");
         httpSecurity.authorizeRequests().antMatchers("/mock/**").permitAll().and().csrf().disable();
+
     }
 
     /**

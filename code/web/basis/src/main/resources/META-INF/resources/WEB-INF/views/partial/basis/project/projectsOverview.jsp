@@ -22,8 +22,8 @@
         <h1><spring:message code="general.projectoverview.header.projects"/></h1>
     </div>
     <div class="menu" align="right">
-        <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')"><a class="button-success pure-button" href="<c:url value="/web/project/create"/>"><i class="fa fa-file"></i> <span><spring:message code="general.projectoverview.button.newproject"/></span></a></sec:authorize>
-        <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')"><a class="button-secondary pure-button" href="<c:url value="/web/project/import"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a></sec:authorize>
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')"><a class="button-success pure-button" href="<c:url value="/web/project/create"/>"><i class="fa fa-file"></i> <span><spring:message code="general.projectoverview.button.newproject"/></span></a></sec:authorize>
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')"><a class="button-secondary pure-button" href="<c:url value="/web/project/import"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a></sec:authorize>
     </div>
 </div>
 <c:choose>
@@ -51,13 +51,13 @@
                     </c:forEach>
                 </table>
             </div>
-            <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
                 <button class="button-secondary pure-button" type="submit" name="action" value="export"><i class="fa fa-cloud-download"></i> <span><spring:message code="general.projectoverview.button.exportprojects"/></span></button>
                 <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="general.projectoverview.button.deleteprojects"/></span></button>
             </sec:authorize>
         </form:form>
     </c:when>
     <c:otherwise>
-        <spring:message code="general.projectoverview.label.noprojects"/><sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')"><spring:message code="general.projectoverview.label.createnewproject"/></sec:authorize>
+        <spring:message code="general.projectoverview.label.noprojects"/><sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')"><spring:message code="general.projectoverview.label.createnewproject"/></sec:authorize>
     </c:otherwise>
 </c:choose>

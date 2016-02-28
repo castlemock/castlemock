@@ -152,15 +152,4 @@ public class Application extends SpringBootServletInitializer {
         serviceRegistry.initialize();
     }
 
-    /**
-     * The will be executed on startup and configure the default dispatcher to not react upon incoming
-     * OPTIONS REST requests, since they can be mocked and should therefore not be handled by Spring.
-     * @param servletContext The servlet context
-     * @throws ServletException
-     */
-    @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        super.onStartup(servletContext);
-        servletContext.getServletRegistration(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_BEAN_NAME).setInitParameter("dispatchOptionsRequest", "true");
-    }
 }

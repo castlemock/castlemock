@@ -21,7 +21,7 @@
         <h1><spring:message code="soap.soapport.header.port" arguments="${soapPort.name}"/></h1>
     </div>
     <div class="menu" align="right">
-        <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
             <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapport.button.updateport"/></span></a>
             <a class="button-error pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapport.button.deleteport"/></span></a>
         </sec:authorize>
@@ -73,7 +73,7 @@
                     </c:forEach>
                 </table>
             </div>
-            <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
                 <form:select path="soapOperationStatus">
                     <c:forEach items="${soapOperationStatuses}" var="operationStatus">
                         <form:option value="${operationStatus}"><spring:message code="soap.type.soapoperationstatus.${operationStatus}"/></form:option>

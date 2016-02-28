@@ -22,7 +22,7 @@
         <h1><spring:message code="soap.soapproject.header.project" arguments="${soapProject.name}"/></h1>
     </div>
     <div class="menu" align="right">
-        <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
         <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapproject.button.updateproject"/></span></a>
         <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/add/wsdl"/>"><i class="fa fa-upload"></i> <span><spring:message code="soap.soapproject.button.upload" arguments="wsdl"/></span></a>
         <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="soap.soapproject.button.export"/></span></a>
@@ -71,7 +71,7 @@
                     </c:forEach>
                 </table>
             </div>
-            <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
                 <form:select path="soapPortStatus">
                     <c:forEach items="${soapOperationStatuses}" var="soapOperationStatus">
                         <form:option value="${soapOperationStatus}"><spring:message code="soap.type.soapoperationstatus.${soapOperationStatus}"/></form:option>

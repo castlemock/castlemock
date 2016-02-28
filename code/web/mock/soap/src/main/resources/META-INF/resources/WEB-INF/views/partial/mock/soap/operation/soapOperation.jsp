@@ -21,7 +21,7 @@
         <h1><spring:message code="soap.soapoperation.header.operation" arguments="${soapOperation.name}"/></h1>
     </div>
     <div class="menu" align="right">
-        <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
         <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapoperation.button.updateoperation"/></span></a>
         <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/create/response"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapoperation.button.createresponse"/></span></a>
         </sec:authorize>
@@ -98,7 +98,7 @@
                         </c:forEach>
                     </table>
                 </div>
-                <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+                <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
                     <form:select path="soapMockResponseStatus">
                         <c:forEach items="${soapMockResponseStatuses}" var="soapMockResponseStatus">
                             <form:option value="${soapMockResponseStatus}"><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponseStatus}"/></form:option>

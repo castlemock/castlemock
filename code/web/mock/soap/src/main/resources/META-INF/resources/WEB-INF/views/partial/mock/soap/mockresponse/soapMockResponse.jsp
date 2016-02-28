@@ -22,7 +22,7 @@
         <h1><spring:message code="soap.soapmockresponse.header.response" arguments="${soapMockResponse.name}"/></h1>
     </div>
     <div class="menu" align="right">
-        <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
             <a class="button-error pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponse.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapmockresponse.button.delete"/></span></a>
         </sec:authorize>
     </div>
@@ -89,7 +89,7 @@
             </table>
         </div>
     </div>
-    <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+    <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
         <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></button>
     </sec:authorize>
     <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="soap.soapmockresponse.button.discardchanges"/></span></a>

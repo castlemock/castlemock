@@ -34,14 +34,14 @@
                     </div>
                   </c:when>
                   <c:when test="${contentItem.role eq 'MODIFIER'}">
-                    <sec:authorize access="hasRole('MODIFIER') or hasRole('ADMIN')">
+                    <sec:authorize access="hasAuthority('MODIFIER') or hasAuthority('ADMIN')">
                       <div class="content-item">
                         <a href="${contentItem.url}"><i class="${contentItem.icon}"></i> ${contentItem.title}</a>
                       </div>
                     </sec:authorize>
                   </c:when>
                   <c:when test="${contentItem.role eq 'ADMIN'}">
-                    <sec:authorize access="hasRole('ADMIN')">
+                    <sec:authorize access="hasAuthority('ADMIN')">
                       <div class="content-item">
                         <a href="${contentItem.url}"><i class="${contentItem.icon}"></i> ${contentItem.title}</a>
                       </div>

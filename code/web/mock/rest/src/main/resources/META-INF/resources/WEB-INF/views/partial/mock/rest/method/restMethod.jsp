@@ -22,7 +22,7 @@
         <h1><spring:message code="rest.restmethod.header.method" arguments="${restMethod.name}"/></h1>
     </div>
     <div class="menu" align="right">
-        <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
             <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
             <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/create/response"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restmethod.button.createresponse"/></span></a>
             <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.delete"/></span></a>
@@ -86,7 +86,7 @@
                         </c:forEach>
                     </table>
                 </div>
-                <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+                <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
                     <form:select path="restMockResponseStatus">
                         <c:forEach items="${restMockResponseStatuses}" var="restMockResponseStatus">
                             <form:option value="${restMockResponseStatus}"><spring:message code="rest.type.restmockresponsestatus.${restMockResponseStatus}"/></form:option>

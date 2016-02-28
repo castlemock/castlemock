@@ -22,7 +22,7 @@
         <h1><spring:message code="rest.restproject.header.project" arguments="${restProject.name}"/></h1>
     </div>
     <div class="menu" align="right">
-        <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
             <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restproject.button.updateproject"/></span></a>
             <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/create/application"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restproject.button.createapplication"/></span></a>
             <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/add/wadl"/>"><i class="fa fa-upload"></i> <span><spring:message code="rest.restproject.button.upload" arguments="wadl"/></span></a>
@@ -72,7 +72,7 @@
                     </c:forEach>
                 </table>
             </div>
-            <sec:authorize access="hasRole('ADMIN') or hasRole('MODIFIER')">
+            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
                 <form:select path="restMethodStatus">
                     <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
                         <form:option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></form:option>
