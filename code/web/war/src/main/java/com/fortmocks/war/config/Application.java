@@ -26,12 +26,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import java.util.Map;
 
 /**
@@ -146,6 +149,18 @@ public class Application extends SpringBootServletInitializer {
      * @see Repository
      */
     protected void initializeProcessRegistry(){
-        serviceRegistry.initialize();;
+        serviceRegistry.initialize();
+    }
+
+    /**
+     * The will be executed on startup and configure the default dispatcher to not react upon incoming
+     * OPTIONS REST requests, since they can be mocked and should therefore not be handled by Spring.
+     * @param servletContext The servlet context
+     * @throws ServletException
+     */
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        super.onStartup(servletContext);
+        servletContext.getServletRegistration(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_BEAN_NAME).setInitParameter("dispatchOptionsRequest", "true");
     }
 }
