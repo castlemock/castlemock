@@ -92,7 +92,7 @@ Fort Mocks is **licensed** under the **[Apache License](https://github.com/fortm
 [release img]:https://img.shields.io/github/release/fortmocks/fortmocks.svg
 
 [license]:LICENSE
-[license img]:https://img.shields.io/badge/License-Apache%202-blue.svg
+[license img]:https://img.shields.io/badge/license-Apache%202-blue.svg
 
 [codecov]:https://codecov.io/github/fortmocks/fortmocks
 [codecov img]:https://img.shields.io/codecov/c/github/fortmocks/fortmocks/develop.svg
