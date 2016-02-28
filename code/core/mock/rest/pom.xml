@@ -19,7 +19,7 @@
 	<groupId>com.fortmocks</groupId>
 	<artifactId>fortmocks-core-mock-rest</artifactId>
 	<packaging>jar</packaging>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.4</version>
     <name>Fort mocks core - mock soap</name>
 	<url>http://www.fortmocks.com</url>
 	<description>The core module contains the core package for Fort Mocks</description>
@@ -34,7 +34,7 @@
 	<parent>
 		<groupId>com.fortmocks</groupId>
 		<artifactId>fortmocks-core-mock</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4</version>
 		<relativePath>../</relativePath>
 	</parent>
 
