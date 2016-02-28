@@ -26,5 +26,5 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @XmlEnum(String.class)
 public enum HttpMethod {
-    GET, POST, PUT, HEAD, DELETE, OPTIONS, PATCH, TRACE
+    GET, POST, PUT, HEAD, DELETE, OPTIONS, TRACE
 }

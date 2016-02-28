@@ -123,23 +123,6 @@ public class RestServiceController extends AbstractRestServiceController  {
      * @see RestMockResponse
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.PATCH, value = "/{projectId}/application/{applicationId}/**")
-    public ResponseEntity patchMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-        return process(projectId, applicationId, HttpMethod.PATCH, httpServletRequest, httpServletResponse);
-    }
-
-    /**
-     * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
-     * and a response will be generated and returned to the service consumer.
-     * @param projectId The id of the project that the request belongs to
-     * @param httpServletRequest The incoming request that will be processed
-     * @param httpServletResponse The outgoing response
-     * @return Returns a mocked response
-     * @see RestProject
-     * @see RestResource
-     * @see RestMockResponse
-     */
-    @ResponseBody
     @RequestMapping(method = RequestMethod.HEAD, value = "/{projectId}/application/{applicationId}/**")
     public ResponseEntity headMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, HttpMethod.HEAD, httpServletRequest, httpServletResponse);
