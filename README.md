@@ -3,6 +3,7 @@
 # Fort Mocks: Mock RESTful APIs and SOAP web services
 
 [![][travis img]][travis]
+[![][codecov img]][codecov]
 [![][release img]][release]
 [![][license img]][license]
 [![][docker stars img]][docker stars]
@@ -92,6 +93,9 @@ Fort Mocks is **licensed** under the **[Apache License](https://github.com/fortm
 
 [license]:LICENSE
 [license img]:https://img.shields.io/badge/License-Apache%202-blue.svg
+
+[codecov]:https://codecov.io/github/fortmocks/fortmocks
+[codecov img]:https://img.shields.io/codecov/c/github/fortmocks/fortmocks/develop.svg
 
 [docker stars]:https://hub.docker.com/r/fortmocks/fortmocks/
 [docker stars img]:https://img.shields.io/docker/stars/fortmocks/fortmocks.svg
