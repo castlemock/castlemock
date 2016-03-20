@@ -102,6 +102,8 @@ code/parent/.project
 
 target/
 
+build/
+
 code/fortmocks/.classpath
 
 code/fortmocks/src/main/webapp/META-INF/context.xml
