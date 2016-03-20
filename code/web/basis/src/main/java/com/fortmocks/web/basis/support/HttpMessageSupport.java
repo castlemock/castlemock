@@ -206,7 +206,7 @@ public class HttpMessageSupport {
 
     /**
      * Builds a parameter URL string passed on the provided parameter map.
-     * Example on the output: ?name1=value1&name2=value2
+     * Example on the output: ?name1=value1{@literal &}name2=value2
      * @param httpParameters The Map of parameters that will be used to build the parameter URI
      * @return A URI that contains the parameters from the provided Map
      */

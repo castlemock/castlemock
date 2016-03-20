@@ -64,6 +64,8 @@ public class RestAddWADLController extends AbstractRestViewController {
      * The method provides functionality to upload a new WADL file. Resources will be created
      * based on the uploaded WADL file.
      * @param projectId The id of the project that will get the new WADL
+     * @param type The upload type. It is used to determine if a WADL file should be uploaded or downloaded from a
+     *             provided URL.
      * @param uploadForm The file upload form that contains the WADL file
      * @return A view that redirects the user to the main page for the project.
      */

@@ -64,6 +64,8 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
      * The method provides functionality to upload a new WSDL file. Ports and operations will be created
      * based on the uploaded WSDL file.
      * @param projectId The id of the project that will get the new WSDL
+     * @param type The upload type. It is used to determine if a WSDL file should be uploaded or downloaded from a
+     *             provided URL.
      * @param uploadForm The file upload form that contains the WSDL file
      * @return A view that redirects the user to the main page for the project.
      */

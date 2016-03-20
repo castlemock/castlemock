@@ -48,6 +48,8 @@ public class ExportProjectController extends AbstractViewController {
     /**
      * Creates and return a view that provides the required functionality
      * to export a project.
+     * @param projectType The type of the project that should be exported
+     * @param projectId The id of the project that should be exported
      * @return A view that provides the required functionality to export a project
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")

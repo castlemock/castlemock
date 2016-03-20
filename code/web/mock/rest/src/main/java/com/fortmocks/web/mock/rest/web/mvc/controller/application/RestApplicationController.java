@@ -17,6 +17,7 @@
 package com.fortmocks.web.mock.rest.web.mvc.controller.application;
 
 import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.fortmocks.core.mock.rest.model.project.dto.RestMethodDto;
 import com.fortmocks.core.mock.rest.model.project.dto.RestResourceDto;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.fortmocks.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
@@ -37,7 +38,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The project controller provides functionality to retrieve a specific project
+ * The REST resource controller provides functionality to retrieve a specific {@link RestResourceDto}.
+ * The controller is also responsible for executing actions on {@link RestMethodDto} related to
+ * the REST resource.
  * @author Karl Dahlgren
  * @since 1.0
  */
@@ -58,8 +61,9 @@ public class RestApplicationController extends AbstractRestViewController {
 
     /**
      * Retrieves a specific project with a project id
-     * @param restProjectId The id of the project that will be retrieved
-     * @return Project that matches the provided project id
+     * @param restProjectId The id of the project that the application belongs to
+     * @param restApplicationId The id of the application that should be retrieved
+     * @return Application that matches the provided project id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}", method = RequestMethod.GET)
@@ -74,9 +78,23 @@ public class RestApplicationController extends AbstractRestViewController {
         return model;
     }
 
+    /**
+     * The method is responsible for executing a specific action for {@link com.fortmocks.core.mock.rest.model.project.domain.RestResource}.
+     * The following actions is supported:
+     * <ul>
+     *  <li>Update status: Updates a method status</li>
+     *  <li>Delete REST resource: Deletes one or more REST resources ({@link com.fortmocks.core.mock.rest.model.project.domain.RestResource})</li>
+     *  <li>Update endpoint: Change the endpoint for certain REST methods</li>
+     * </ul>
+     * @param restProjectId The id of the project responsible for the REST application
+     * @param restApplicationId The id of the application that the action should be invoked upon
+     * @param action The requested action
+     * @param restResourceModifierCommand The command object contains meta data required for certain actions
+     * @return Either a model related to the action or redirects the user to the REST application page
+     */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}", method = RequestMethod.POST)
-    public ModelAndView projectFunctionality(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @RequestParam final String action, @ModelAttribute final RestResourceModifierCommand restResourceModifierCommand) {
+    public ModelAndView applicationFunctionality(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @RequestParam final String action, @ModelAttribute final RestResourceModifierCommand restResourceModifierCommand) {
         LOGGER.debug("Requested REST project action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final RestMethodStatus restMethodStatus = RestMethodStatus.valueOf(restResourceModifierCommand.getRestMethodStatus());

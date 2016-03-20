@@ -47,11 +47,10 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
      * @param response The outgoing response
      * @param handler The handler contains information about the method and controller that will process the incoming request
      * @return Always returns true
-     * @throws Exception
      * @see AbstractController
      */
     @Override
-    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
+    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
         if(LOGGER.isDebugEnabled()){
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("Start processing the following request: " + request.getRequestURI() + " (" + request.getMethod() + ").");
@@ -74,11 +73,10 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
      * @param response The outgoing response
      * @param handler The handler contains information about the method and controller that has processed the incoming request
      * @param exception Outgoing exception
-     * @throws Exception
      * @see AbstractController
      */
     @Override
-    public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response, final Object handler, final Exception exception) throws Exception {
+    public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response, final Object handler, final Exception exception) {
         if(LOGGER.isDebugEnabled()){
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("Finished processing the following request: " + request.getRequestURI() + " (" + request.getMethod() + ").");

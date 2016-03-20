@@ -58,8 +58,9 @@ public class SoapPortController extends AbstractSoapViewController {
 
     /**
      * Returns an port that matches the incoming parameters (soapProjectId and soapPortId)
-     * @param soapPortId The id of the project which the port belongs to
+     * @param soapProjectId The id of the project which the port belongs to
      * @param soapPortId The id of the port that should be returned
+     * @param request The incoming servlet request. Used to extract the address used to invoke the SOAP operation
      * @return Returns an port that matches the incoming parameters (projectId and soapPortId)
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")

@@ -47,6 +47,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
      * and a response will be generated and returned to the service consumer.
      * @param projectId The id of the project that the request belongs to
+     * @param applicationId The id of the application that the request belongs to
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
@@ -64,6 +65,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
      * and a response will be generated and returned to the service consumer.
      * @param projectId The id of the project that the request belongs to
+     * @param applicationId The id of the application that the request belongs to
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
@@ -81,6 +83,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
      * and a response will be generated and returned to the service consumer.
      * @param projectId The id of the project that the request belongs to
+     * @param applicationId The id of the application that the request belongs to
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
@@ -98,6 +101,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
      * and a response will be generated and returned to the service consumer.
      * @param projectId The id of the project that the request belongs to
+     * @param applicationId The id of the application that the request belongs to
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
@@ -115,6 +119,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
      * and a response will be generated and returned to the service consumer.
      * @param projectId The id of the project that the request belongs to
+     * @param applicationId The id of the application that the request belongs to
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
@@ -132,6 +137,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
      * and a response will be generated and returned to the service consumer.
      * @param projectId The id of the project that the request belongs to
+     * @param applicationId The id of the application that the request belongs to
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response
@@ -149,6 +155,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      * The service is responsible for handling all the incoming REST requests. The REST requests will be processed
      * and a response will be generated and returned to the service consumer.
      * @param projectId The id of the project that the request belongs to
+     * @param applicationId The id of the application that the request belongs to
      * @param httpServletRequest The incoming request that will be processed
      * @param httpServletResponse The outgoing response
      * @return Returns a mocked response

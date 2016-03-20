@@ -48,6 +48,7 @@ public class DeleteProjectController extends AbstractViewController {
 
     /**
      * The method creates a confirmation page that displays the project that should be deleted
+     * @param projectType The type of the project that should be deleted
      * @param projectId The id of the project that should be deleted
      * @return A confirmation view that displays the project that has been requested to be deleted.
      */
@@ -67,12 +68,13 @@ public class DeleteProjectController extends AbstractViewController {
 
     /**
      * The method deleteProject provides functionality to delete a project with a specific id.
+     * @param projectType The type of the project that should be deleted
      * @param projectId The id of the project that will be deleted
      * @return A view that redirects the user to the main page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "{projectType}/project/{projectId}/delete/confirm", method = RequestMethod.GET)
-    public ModelAndView deleteProject(@PathVariable final String projectType, @PathVariable String projectId) {
+    public ModelAndView deleteProject(@PathVariable final String projectType, @PathVariable final String projectId) {
         projectServiceComponent.delete(projectType, projectId);
         return redirect();
     }

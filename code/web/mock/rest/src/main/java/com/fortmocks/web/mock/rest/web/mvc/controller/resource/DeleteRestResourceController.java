@@ -30,8 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * The project controller provides functionality to retrieve a specific project
+/**e
+ * The Delete REST resource controller provides functionality to delete a specific REST resource.
  * @author Karl Dahlgren
  * @since 1.0
  */
@@ -41,9 +41,11 @@ public class DeleteRestResourceController extends AbstractRestViewController {
 
     private static final String PAGE = "mock/rest/resource/deleteRestResource";
     /**
-     * Retrieves a specific project with a project id
-     * @param restProjectId The id of the project that will be retrieved
-     * @return Project that matches the provided project id
+     * Retrieves a specific REST resource with a project id, application id and a resource id
+     * @param restProjectId The id of the project that the REST resource belongs to
+     * @param restApplicationId The id of the application that the REST resource belongs to
+     * @param restResourceId The id of the REST resource that should be retrieve
+     * @return REST resource that matches the provided resource id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/delete", method = RequestMethod.GET)
@@ -57,6 +59,13 @@ public class DeleteRestResourceController extends AbstractRestViewController {
         return model;
     }
 
+    /**
+     * The method provides the functionality to delete a REST resource
+     * @param restProjectId The id of the project that the REST resource belongs to
+     * @param restApplicationId The id of the application that the REST resource belongs to
+     * @param restResourceId The id of the REST resource that should be deleted
+     * @return Redirects the user to the REST application page
+     */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/delete/confirm", method = RequestMethod.GET)
     public ModelAndView confirm(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId) {
@@ -64,6 +73,13 @@ public class DeleteRestResourceController extends AbstractRestViewController {
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);
     }
 
+    /**
+     * The method provides the functionality to delete a list REST resources
+     * @param restProjectId The id of the project that the REST resources belongs to
+     * @param restApplicationId The id of the application that the REST resources belongs to
+     * @param deleteRestResourcesCommand The command object contains the REST resources that should be deleted
+     * @return Redirects the user to the REST application page
+     */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/delete/confirm", method = RequestMethod.POST)
     public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @ModelAttribute final DeleteRestResourcesCommand deleteRestResourcesCommand) {

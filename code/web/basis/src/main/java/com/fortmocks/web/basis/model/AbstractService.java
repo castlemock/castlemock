@@ -168,7 +168,7 @@ public abstract class AbstractService<T extends Saveable<I>, D, I extends Serial
      * @param clazz CLass of the DTO type (D)
      * @param <T> The type that the operation is managing
      * @param <D> The DTO (Data transfer object) version of the type (TYPE)
-     * @return
+     * @return The provided collection but converted into the DTO class
      */
     protected <T, D> List toDtoList(final Collection<T> types, Class<D> clazz) {
         final List<D> dtos = new ArrayList<D>();

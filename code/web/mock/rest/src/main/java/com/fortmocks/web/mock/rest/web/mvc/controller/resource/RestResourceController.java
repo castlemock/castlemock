@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The project controller provides functionality to retrieve a specific project
+ * The REST resource controller provides functionality to retrieve a specific REST resource
  * @author Karl Dahlgren
  * @since 1.0
  */
@@ -60,9 +60,12 @@ public class RestResourceController extends AbstractRestViewController {
     private static final String UPDATE_REST_METHODS_ENDPOINT_COMMAND = "updateRestMethodsEndpointCommand";
 
     /**
-     * Retrieves a specific project with a project id
-     * @param restProjectId The id of the project that will be retrieved
-     * @return Project that matches the provided project id
+     * Retrieves a specific REST resource with a project id, application and resource id
+     * @param restProjectId The id of the project that the REST resource belongs to
+     * @param restApplicationId The id of the application that the REST resource belongs to
+     * @param restResourceId The id of the REST resource that should be retrieve
+     * @param request The incoming servlet request. Used to extract the address used to invoke the REST methods
+     * @return REST resource that matches the provided resource id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}", method = RequestMethod.GET)
@@ -82,6 +85,21 @@ public class RestResourceController extends AbstractRestViewController {
         return model;
     }
 
+    /**
+     * The method is responsible for executing a specific action for {@link com.fortmocks.core.mock.rest.model.project.domain.RestMethod}.
+     * The following actions is supported:
+     * <ul>
+     *  <li>Update status: Updates a method status</li>
+     *  <li>Delete REST method: Deletes one or more REST methods ({@link com.fortmocks.core.mock.rest.model.project.domain.RestMethod})</li>
+     *  <li>Update endpoint: Change the endpoint for certain REST methods</li>
+     * </ul>
+     * @param restProjectId The id of the project responsible for the REST resource
+     * @param restApplicationId The id of the application responsible for the REST resource
+     * @param restResourceId The id of the resource that the action should be invoked upon
+     * @param action The requested action
+     * @param restMethodModifierCommand The command object contains meta data required for certain actions
+     * @return Either a model related to the action or redirects the user to the REST application page
+     */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}", method = RequestMethod.POST)
     public ModelAndView projectFunctionality(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @RequestParam final String action, @ModelAttribute final RestMethodModifierCommand restMethodModifierCommand) {

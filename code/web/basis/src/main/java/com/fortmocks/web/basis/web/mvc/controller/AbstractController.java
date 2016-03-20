@@ -90,7 +90,7 @@ public abstract class AbstractController {
      * If the method does not find any INet4Address that is neither link local address and loopback address, the method
      * will return the the address 127.0.0.1
      * @return Returns the local address or 127.0.0.1 if no address was found
-     * @throws SocketException
+     * @throws SocketException Upon failing to extract network interfaces
      */
     public String getHostAddress() throws SocketException {
 

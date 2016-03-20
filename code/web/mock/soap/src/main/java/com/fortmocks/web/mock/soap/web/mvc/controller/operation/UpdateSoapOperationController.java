@@ -74,7 +74,7 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
      * @param soapPortId The id of the port that the operation belongs to
      * @param soapOperationId The id of the operation that will be updated
      * @param soapOperationDto The updated version of the operation that will be updated
-     * @return Redirects the user to the main page of the user that was updated
+     * @return Redirects the user to the SOAP operation page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/update", method = RequestMethod.POST)
@@ -89,7 +89,7 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
      * @param soapPortId The id of the port that the operations belongs to
      * @param updateSoapOperationsEndpointCommand The command object contains the operations that will be updated.
      *                                      The command also contains the updated forwarded address.
-     * @return
+     * @return Redirect the user to the SOAP port page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/update/confirm", method = RequestMethod.POST)

@@ -141,8 +141,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Creates a new Logging intercepter
-     * @return
+     * Creates a new {@link LoggingInterceptor}
+     * @return A new {@link LoggingInterceptor} instance
      */
     @Bean
     public LoggingInterceptor loggingInterceptor(){

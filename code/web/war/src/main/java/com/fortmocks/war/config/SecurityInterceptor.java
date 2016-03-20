@@ -34,8 +34,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * The Security Interceptor provides the functionality to check all the incoming request and verify that the logged
@@ -63,10 +65,11 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      * @param response The outgoing response
      * @param handler The handler contains information about the method and controller that will process the incoming request
      * @return Returns true if the logged in users information is still valid. Returns false if the user is not valid
-     * @throws Exception
+     * @throws IOException Upon unable to send a redirect as a response
+     * @throws ServletException Upon unable to logout the user
      */
     @Override
-    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
+    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws IOException, ServletException {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null || !authentication.isAuthenticated()){
             return true;

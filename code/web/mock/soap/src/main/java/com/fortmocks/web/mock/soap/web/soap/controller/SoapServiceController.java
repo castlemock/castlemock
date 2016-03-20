@@ -47,6 +47,7 @@ public class SoapServiceController extends AbstractSoapServiceController {
      * and a response will be generated and returned to the service consumer.
      * @param projectId The id of the project that the request belongs to
      * @param request The incoming request that will be processed
+     * @param response The outgoing response
      * @return Returns a mocked response
      * @see SoapProject
      * @see SoapOperation

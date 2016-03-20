@@ -72,6 +72,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * to indicate the type of the incoming request
      * @param projectId The id of the project which the incoming request and mocked response belongs to
      * @param httpServletRequest The incoming request
+     * @param httpServletResponse The outgoing response
      * @return Returns the response as an String
      */
     protected String process(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
@@ -124,6 +125,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param soapPortId The id of the port that the incoming request belong to
      * @param soapOperationDto The operation that contain the appropriate mocked response
      * @param request The incoming request
+     * @param httpServletResponse The outgoing HTTP servlet response
      * @return Returns the response as an String
      */
     protected String process(final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto, final SoapRequestDto request, final HttpServletResponse httpServletResponse){

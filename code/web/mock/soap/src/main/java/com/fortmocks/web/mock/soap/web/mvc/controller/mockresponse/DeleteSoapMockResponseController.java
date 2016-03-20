@@ -85,6 +85,7 @@ public class DeleteSoapMockResponseController extends AbstractSoapViewController
      * @param soapProjectId The id of the project which the mocked response belongs to
      * @param soapPortId The id of the port which the mocked response belongs to
      * @param soapOperationId The id of the operation that the mocked response belongs to
+     * @param deleteSoapMockResponsesCommand The command instance contains the list of mock responses that should be deleted.
      * @return Redirect to the operation page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")

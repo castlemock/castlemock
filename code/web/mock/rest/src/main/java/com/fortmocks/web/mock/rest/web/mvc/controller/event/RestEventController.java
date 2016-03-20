@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * The controller LogController provides functionality to retrieve logged information
+ * The controller RestEventController provides functionality to retrieve REST event
  * and display it to the user
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,8 +41,9 @@ public class RestEventController extends AbstractRestViewController {
     private static final String PAGE = "mock/rest/event/restEvent";
 
     /**
-     * The method creates a view that displays all the logged information to the user
-     * @return View with all the logged information
+     * The method provides the functionality to retrieve a REST event.
+     * @param eventId The id of the event that should be retrieved
+     * @return View with the specific REST event
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "rest/event/{eventId}", method = RequestMethod.GET)

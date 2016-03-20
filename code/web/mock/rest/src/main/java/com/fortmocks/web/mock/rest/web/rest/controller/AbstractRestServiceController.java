@@ -55,6 +55,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
+ * The abstract REST controller is a base class shared among all the REST service classes.
  * @author Karl Dahlgren
  * @since 1.0
  */
@@ -73,6 +74,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
     /**
      *
      * @param projectId The id of the project which the incoming request and mocked response belongs to
+     * @param applicationId The id of the application which the incoming and mocked response belongs to
      * @param httpMethod The request method
      * @param httpServletRequest The incoming request
      * @param httpServletResponse The outgoing response
@@ -102,6 +104,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
     /**
      * The method prepares an request
      * @param projectId The id of the project that the incoming request belongs to
+     * @param applicationId The id of the application that the incoming request belongs to
+     * @param httpMethod The HTTP method that should be mocked, such as GET or POST
      * @param httpServletRequest The incoming request
      * @return A new created project
      */
@@ -126,6 +130,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * and a corresponding action will be applied for the request. The following actions are support:
      * Forward, record, mock or disable.
      * @param restRequest The incoming request
+     * @param projectId The id of the project that the incoming request belongs to
+     * @param applicationId The id of the application that the incoming request belongs to
+     * @param resourceId The id of the resource that the incoming request belongs to
      * @param restMethod The REST method which the incoming request belongs to
      * @param httpServletResponse The HTTP servlet response
      * @return A response in String format
@@ -262,6 +269,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * will be recorded and can later be used as a mocked response. The REST method status will be updated
      * to mocked.
      * @param restRequest The incoming request
+     * @param projectId The id of the project that the incoming request belongs to
+     * @param applicationId The id of the application that the incoming request belongs to
+     * @param resourceId The id of the resource that the incoming request belongs to
      * @param restMethod The REST method which the incoming request belongs to
      * @return The response received from the external endpoint
      */

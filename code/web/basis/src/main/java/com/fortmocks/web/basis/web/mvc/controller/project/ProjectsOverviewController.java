@@ -94,6 +94,7 @@ public class ProjectsOverviewController extends AbstractViewController {
      * on the provided action.
      * @param action The action is used to determined which action/functionality the perform.
      * @param projectModifierCommand The project overview command contains which ids going to be updated, deleted or exported.
+     * @param response The HTTP servlet response
      * @return The model depending in which action was requested.
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")

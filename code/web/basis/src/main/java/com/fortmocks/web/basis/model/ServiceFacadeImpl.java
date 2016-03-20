@@ -44,6 +44,7 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
     /**
      * The initialize method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
+     * @param clazz The class of the {@link ServiceAdapter} that the facade is managing
      * @see Service
      * @see TypeIdentifier
      * @see TypeIdentifiable

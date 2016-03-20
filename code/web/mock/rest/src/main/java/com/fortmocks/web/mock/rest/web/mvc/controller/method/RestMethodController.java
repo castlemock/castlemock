@@ -43,7 +43,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The project controller provides functionality to retrieve a specific project
+ * The REST method controller provides functionality to retrieve a specific {@link RestMethodDto}.
+ * The controller is also responsible for executing actions on {@link RestMockResponseDto} related to
+ * the REST method.
  * @author Karl Dahlgren
  * @since 1.0
  */
@@ -62,9 +64,13 @@ public class RestMethodController extends AbstractRestViewController {
     protected static final String REST_MOCK_RESPONSE_STATUSES = "restMockResponseStatuses";
 
     /**
-     * Retrieves a specific project with a project id
-     * @param restProjectId The id of the project that will be retrieved
-     * @return Project that matches the provided project id
+     * Retrieves a specific method with a method id
+     * @param restProjectId The id of the project responsible for the REST method
+     * @param restApplicationId The id of the application responsible for the REST method
+     * @param restResourceId The id of the resource responsible for the REST method
+     * @param restMethodId The id of the method that should be retrieved
+     * @param request The incoming servlet request. Used to extract the address used to invoke the REST methods
+     * @return REST Method that matches the provided project id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}", method = RequestMethod.GET)
@@ -90,9 +96,24 @@ public class RestMethodController extends AbstractRestViewController {
         return model;
     }
 
+    /**
+     * The method is responsible for executing a specific action for a {@link com.fortmocks.core.mock.rest.model.project.domain.RestMockResponse}.
+     * The following actions is supported:
+     * <ul>
+     *  <li>Update status: Updates an mock response status</li>
+     *  <li>Delete REST mock response: Deletes one or more REST mock response ({@link com.fortmocks.core.mock.rest.model.project.domain.RestMockResponse})</li>
+     * </ul>
+     * @param restProjectId The id of the project responsible for the REST method
+     * @param restApplicationId The id of the application responsible for the REST method
+     * @param restResourceId The id of the resource responsible for the REST method
+     * @param restMethodId The id of the method that the action should be invoked upon
+     * @param action The requested action
+     * @param restMockResponseModifierCommand The command object contains meta data required for certain actions
+     * @return Either a model related to the action or redirects the user to the REST method page
+     */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}", method = RequestMethod.POST)
-    public ModelAndView serviceFunctionality(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @RequestParam final String action, @ModelAttribute final RestMockResponseModifierCommand restMockResponseModifierCommand) {
+    public ModelAndView methodFunctionality(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @RequestParam final String action, @ModelAttribute final RestMockResponseModifierCommand restMockResponseModifierCommand) {
         LOGGER.debug("REST operation action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final RestMockResponseStatus status = RestMockResponseStatus.valueOf(restMockResponseModifierCommand.getRestMockResponseStatus());
