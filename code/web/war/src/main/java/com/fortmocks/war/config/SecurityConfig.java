@@ -57,10 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * Configure which attributes will be used for when doing authentication
      *
      * @param authenticationManagerBuilder The authentication manager builder
-     * @throws Exception Throws an exception if the configuration fails
+     * @throws IllegalStateException Throws an exception if the configuration fails
      */
     @Autowired
-    public void configureGlobal(final AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public void configureGlobal(final AuthenticationManagerBuilder authenticationManagerBuilder) throws IllegalStateException {
         try {
             //authenticationManagerBuilder.inMemoryAuthentication().withUser("user").password("password").authorities("ROLE_USER");
             authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
