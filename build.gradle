@@ -1,0 +1,194 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE")
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: "jacoco"
+    group = "com.fortmocks"
+    version = '1.5-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+
+    ext.junitVersion = "4.11"
+    ext.log4jVersion = "1.2.17"
+    ext.guavaVersion = "17.0"
+    ext.mockitoVersion = "1.10.19"
+    ext.dozerVersion = "5.4.0"
+    ext.springSecurityVersion = "4.0.4.RELEASE"
+    ext.springFrameworkVersion = "4.2.5.RELEASE"
+    ext.wsdl4jVersion = "1.6.3"
+    ext.jacksonVersion = "1.9.13"
+    ext.tomcatEmbedVersion = "8.0.28"
+    ext.jstlVersion = "1.2"
+    ext.servletApiVersion = "3.1.0"
+    ext.servletJspVersion = "2.2"
+
+	compileJava {
+		sourceCompatibility = 1.8
+		targetCompatibility = 1.8
+	}
+
+	compileTestJava {
+		sourceCompatibility = 1.8
+		targetCompatibility = 1.8
+		options.compilerArgs += "-parameters"
+	}
+
+	dependencies {
+        compile(group: 'com.google.guava', name: 'guava', version: guavaVersion)
+        compile(group: 'log4j', name: 'log4j', version: log4jVersion)
+        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
+            exclude(group:'org.slf4j', module:'slf4j-log4j12')
+            exclude(group:'log4j', module:'log4j')
+        }
+        testCompile(group: 'org.mockito', name: 'mockito-all', version: mockitoVersion)
+        testCompile(group: 'junit', name: 'junit', version: junitVersion) {
+            exclude(group:'org.hamcrest', module:'hamcrest-core')
+        }
+	}
+
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+            }
+            resources {
+                srcDir 'src/main/resources'
+            }
+        }
+    }
+}
+
+
+
+project(':code:core:basis') {
+    description = "Fort mocks core: Basis"
+    group = "com.fortmocks.core"
+}
+
+project(':code:core:mock:rest') {
+    description = "Fort mocks core: Mock REST"
+    group = "com.fortmocks.core"
+    dependencies {
+        compile(project(":code:core:basis"))
+    }
+}
+
+project(':code:core:mock:soap') {
+    description = "Fort mocks core: Mock SOAP"
+    group = "com.fortmocks.core"
+    dependencies {
+        compile(project(":code:core:basis"))
+    }
+}
+
+
+project(':code:web:basis') {
+    description = "Fort Mocks web: Basis"
+    apply plugin: 'spring-boot'
+    group = "com.fortmocks.web"
+
+    bootRepackage {
+        enabled = false
+    }
+
+    bootRun {
+        enabled = false
+    }
+
+    configurations {
+        providedRuntime
+    }
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
+        providedRuntime(group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat')
+        compile(group: 'org.springframework', name: 'spring-tx', version: springFrameworkVersion)
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security')
+        compile(group: 'org.springframework.security', name: 'spring-security-taglibs', version: springSecurityVersion)
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+project(':code:web:mock:rest') {
+    description = "Fort Mocks web: Mock REST"
+    apply plugin: 'spring-boot'
+    group = "com.fortmocks.web"
+
+    bootRepackage {
+        enabled = false
+    }
+
+    bootRun {
+        enabled = false
+    }
+
+    dependencies {
+        compile(project(":code:web:basis"))
+        compile(project(":code:core:mock:rest"))
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+project(':code:web:mock:soap') {
+    description = "Fort Mocks web: Mock SOAP"
+    apply plugin: 'spring-boot'
+    group = "com.fortmocks.web"
+
+    bootRepackage {
+        enabled = false
+    }
+
+    bootRun {
+        enabled = false
+    }
+    
+    dependencies {
+        compile(project(":code:web:basis"))
+        compile(project(":code:core:mock:soap"))
+        compile(group: 'wsdl4j', name: 'wsdl4j', version: wsdl4jVersion)
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+project(':code:web:war') {
+    description = "Fort Mocks web: WAR"
+    apply plugin: 'spring-boot'
+    apply plugin: 'war'
+    group = "com.fortmocks.web"
+
+    war {
+      baseName = 'fortmocks'
+      rootSpec.eachFile {
+        if (it.name == 'application.properties') {
+          ant.replace(file: it.file, token: "\${project.version}", value: version)
+        }
+      }
+    }
+
+    dependencies {
+        compile(project(":code:web:basis"))
+        compile(project(":code:web:mock:rest"))
+        compile(project(":code:web:mock:soap"))
+
+        compile(group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', 'version': tomcatEmbedVersion)
+        compile(group: 'javax.servlet', name: 'javax.servlet-api', 'version': servletApiVersion)
+        compile(group: 'javax.servlet.jsp', name: 'jsp-api', 'version': servletJspVersion)
+        compile(group: 'javax.servlet', name: 'jstl', 'version': jstlVersion)
+        compile(group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', 'version': jacksonVersion)
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}

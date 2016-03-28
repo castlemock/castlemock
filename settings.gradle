@@ -1,0 +1,7 @@
+include 'code:core:basis',
+        'code:core:mock:rest',
+        'code:core:mock:soap',
+        'code:web:basis',
+        'code:web:mock:rest',
+        'code:web:mock:soap',
+        'code:web:war'
