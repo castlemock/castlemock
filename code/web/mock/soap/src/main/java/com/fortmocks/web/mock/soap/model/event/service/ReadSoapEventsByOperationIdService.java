@@ -26,6 +26,7 @@ import com.fortmocks.core.mock.soap.model.event.service.message.input.ReadSoapEv
 import com.fortmocks.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class ReadSoapEventsByOperationIdService extends AbstractSoapEventService
             }
         }
 
-        events.sort(new EventDtoStartDateComparator());
+        Collections.sort(events, new EventDtoStartDateComparator());
 
         return createServiceResult(new ReadSoapEventsByOperationIdOutput(events));
     }

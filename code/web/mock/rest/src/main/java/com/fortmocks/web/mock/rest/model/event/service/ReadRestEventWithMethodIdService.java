@@ -26,6 +26,7 @@ import com.fortmocks.core.mock.rest.model.event.service.message.input.ReadRestEv
 import com.fortmocks.core.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class ReadRestEventWithMethodIdService extends AbstractRestEventService i
             }
         }
 
-        events.sort(new EventDtoStartDateComparator());
+        Collections.sort(events, new EventDtoStartDateComparator());
 
         return createServiceResult(new ReadRestEventWithMethodIdOutput(events));
     }

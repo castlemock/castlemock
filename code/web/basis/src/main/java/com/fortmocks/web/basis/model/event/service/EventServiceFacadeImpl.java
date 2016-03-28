@@ -25,6 +25,8 @@ import com.fortmocks.core.basis.model.event.service.EventServiceAdapter;
 import com.fortmocks.core.basis.model.event.service.EventServiceFacade;
 import com.fortmocks.web.basis.model.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -60,7 +62,7 @@ public class EventServiceFacadeImpl extends ServiceFacadeImpl<EventDto, String, 
     @Override
     public List<EventDto> findAll(){
         final List<EventDto> events = super.findAll();
-        events.sort(new EventDtoStartDateComparator());
+        Collections.sort(events, new EventDtoStartDateComparator());
         return events;
     }
 }
