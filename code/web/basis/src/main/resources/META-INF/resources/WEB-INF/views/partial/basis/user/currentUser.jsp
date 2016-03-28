@@ -20,7 +20,16 @@
         <h1><spring:message code="general.currentuser.header.user" arguments="${user.username}"/></h1>
     </div>
     <div class="menu" align="right">
-        <a class="button-success pure-button" href="<c:url value="/web/me/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
+        <div class="menu" align="right">
+            <c:choose>
+                <c:when test="${demoMode}">
+                    <a class="button-success pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
+                </c:when>
+                <c:otherwise>
+                    <a class="button-success pure-button" href="<c:url value="/web/me/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </div>
 </div>
 <table class="entityTable">

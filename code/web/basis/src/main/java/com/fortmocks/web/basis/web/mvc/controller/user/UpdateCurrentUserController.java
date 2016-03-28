@@ -26,6 +26,7 @@ import com.fortmocks.web.basis.web.mvc.command.user.UpdateCurrentUserCommand;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractViewController;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -43,6 +44,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @Scope("request")
 @RequestMapping("/web/me/update")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class UpdateCurrentUserController extends AbstractViewController {
 
     private static final String PAGE = "basis/user/updateCurrentUser";

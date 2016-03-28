@@ -20,8 +20,16 @@
         <h1><spring:message code="general.user.header.user" arguments="${user.username}"/></h1>
     </div>
     <div class="menu" align="right">
-        <a class="button-success pure-button" href="<c:url value="/web/user/${user.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.user.button.updateuser"/></span></a>
-        <a class="button-error pure-button" href="<c:url value="/web/user/${user.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.user.button.deleteuser"/></span></a>
+        <c:choose>
+            <c:when test="${demoMode}">
+                <a class="button-success pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-file"></i> <span><spring:message code="general.user.button.updateuser"/></span></a>
+                <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.user.button.deleteuser"/></span></a>
+            </c:when>
+            <c:otherwise>
+                <a class="button-success pure-button" href="<c:url value="/web/user/${user.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.user.button.updateuser"/></span></a>
+                <a class="button-error pure-button" href="<c:url value="/web/user/${user.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.user.button.deleteuser"/></span></a>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 <table class="entityTable">
