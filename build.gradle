@@ -45,7 +45,6 @@ subprojects {
 	compileTestJava {
 		sourceCompatibility = 1.8
 		targetCompatibility = 1.8
-    options.compilerArgs += "-parameters"
 	}
 
 	dependencies {
@@ -171,6 +170,10 @@ project(':code:web:war') {
     apply plugin: 'spring-boot'
     apply plugin: 'war'
     group = "com.fortmocks.web"
+
+    bootRepackage {
+      mainClass = "com.fortmocks.war.config.Application"
+    }
 
     war {
       baseName = 'fortmocks'
