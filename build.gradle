@@ -36,13 +36,13 @@ subprojects {
     ext.servletJspVersion = "2.2"
 
 	compileJava {
-		sourceCompatibility = 1.8
-		targetCompatibility = 1.8
+		sourceCompatibility = 1.7
+		targetCompatibility = 1.7
 	}
 
 	compileTestJava {
-		sourceCompatibility = 1.8
-		targetCompatibility = 1.8
+		sourceCompatibility = 1.7
+		targetCompatibility = 1.7
 		options.compilerArgs += "-parameters"
 	}
 
@@ -155,7 +155,7 @@ project(':code:web:mock:soap') {
     bootRun {
         enabled = false
     }
-    
+
     dependencies {
         compile(project(":code:web:basis"))
         compile(project(":code:core:mock:soap"))
