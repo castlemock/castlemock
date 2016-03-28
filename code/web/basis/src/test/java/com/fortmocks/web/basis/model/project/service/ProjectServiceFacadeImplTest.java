@@ -62,7 +62,7 @@ public class ProjectServiceFacadeImplTest {
         Mockito.when(typeIdentifier.getTypeUrl()).thenReturn(TYPE_URL);
         Mockito.when(projectServiceAdapter.getTypeIdentifier()).thenReturn(typeIdentifier);
 
-        final Map<String, ProjectServiceAdapter> projectServiceAdapters = new HashMap<String, ProjectServiceAdapter>();
+        final Map<String, Object> projectServiceAdapters = new HashMap<String, Object>();
         projectServiceAdapters.put("ProjectServiceAdapter", projectServiceAdapter);
         Mockito.when(applicationContext.getBeansWithAnnotation(Mockito.any(Class.class))).thenReturn(projectServiceAdapters);
 

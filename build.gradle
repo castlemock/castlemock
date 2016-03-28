@@ -1,5 +1,3 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 buildscript {
     repositories {
         mavenCentral()
@@ -7,6 +5,10 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE")
     }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
 }
 
 subprojects {
@@ -36,13 +38,14 @@ subprojects {
     ext.servletJspVersion = "2.2"
 
 	compileJava {
-		sourceCompatibility = 1.7
-		targetCompatibility = 1.7
+		sourceCompatibility = 1.8
+		targetCompatibility = 1.8
 	}
 
 	compileTestJava {
-		sourceCompatibility = 1.7
-		targetCompatibility = 1.7
+		sourceCompatibility = 1.8
+		targetCompatibility = 1.8
+    options.compilerArgs += "-parameters"
 	}
 
 	dependencies {

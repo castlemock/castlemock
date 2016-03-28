@@ -58,7 +58,7 @@ public class EventServiceFacadeImplTest {
         Mockito.when(typeIdentifier.getTypeUrl()).thenReturn(TYPE_URL);
         Mockito.when(eventServiceAdapter.getTypeIdentifier()).thenReturn(typeIdentifier);
 
-        final Map<String, EventServiceAdapter> eventServiceAdapters = new HashMap<String, EventServiceAdapter>();
+        final Map<String, Object> eventServiceAdapters = new HashMap<String, Object>();
         eventServiceAdapters.put("EventServiceAdapter", eventServiceAdapter);
         Mockito.when(applicationContext.getBeansWithAnnotation(Mockito.any(Class.class))).thenReturn(eventServiceAdapters);
 
