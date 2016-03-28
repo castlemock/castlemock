@@ -22,6 +22,7 @@ import com.fortmocks.web.basis.web.mvc.command.ProjectFileUploadForm;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractViewController;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,7 @@ import java.util.List;
 @Controller
 @Scope("request")
 @RequestMapping("/web/project/import")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class ImportProjectController extends AbstractViewController {
 
     @Autowired

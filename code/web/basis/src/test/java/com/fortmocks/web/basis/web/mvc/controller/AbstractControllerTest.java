@@ -50,6 +50,7 @@ public abstract class AbstractControllerTest {
     protected static final String PROJECT = "project";
     protected static final String PROJECT_ID = "projectId";
     protected static final String PROJECT_TYPES = "projectTypes";
+    protected static final Integer GLOBAL_VIEW_MODEL_COUNT = 4;
 
     @Before
     public void initiateTest() {

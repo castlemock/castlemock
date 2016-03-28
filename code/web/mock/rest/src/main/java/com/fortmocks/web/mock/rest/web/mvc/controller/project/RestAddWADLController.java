@@ -22,6 +22,7 @@ import com.fortmocks.web.mock.rest.manager.WADLComponent;
 import com.fortmocks.web.mock.rest.web.mvc.command.project.WADLFileUploadForm;
 import com.fortmocks.web.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/web/rest/project")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class RestAddWADLController extends AbstractRestViewController {
 
     private static final String PAGE = "mock/rest/project/restAddWADL";

@@ -23,7 +23,7 @@
     </div>
     <div class="menu" align="right">
         <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')"><a class="button-success pure-button" href="<c:url value="/web/project/create"/>"><i class="fa fa-file"></i> <span><spring:message code="general.projectoverview.button.newproject"/></span></a></sec:authorize>
-        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')"><a class="button-secondary pure-button" href="<c:url value="/web/project/import"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a></sec:authorize>
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')"><a class="button-secondary pure-button <c:if test="${demoMode}">pure-button-disabled</c:if>" <c:if test="${demoMode}">title="<spring:message code="general.mode.demo.disabled"/>"</c:if> href="<c:url value="/web/project/import"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a></sec:authorize>
     </div>
 </div>
 <c:choose>

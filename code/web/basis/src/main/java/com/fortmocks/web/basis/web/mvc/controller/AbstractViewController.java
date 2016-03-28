@@ -54,7 +54,6 @@ public abstract class AbstractViewController extends AbstractController {
     private static final String CONTENT_ITEM_GROUPS = "contentItemGroups";
     private static final String SEARCH_COMMAND = "searchCommand";
 
-
     /**
      * The method create a ModelAndView instance with the index page set as the view name
      * @return A new ModelAndView instance with index as view name

@@ -78,7 +78,7 @@ public class ConfigurationControllerTest extends AbstractControllerTest {
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
-                .andExpect(MockMvcResultMatchers.model().size(5))
+                .andExpect(MockMvcResultMatchers.model().size(1 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE));
     }
 }

@@ -70,6 +70,7 @@ public class RestProjectController extends AbstractRestViewController {
         model.addObject(REST_PROJECT, output.getRestProject());
         model.addObject(REST_METHOD_STATUSES, RestMethodStatus.values());
         model.addObject(REST_APPLICATION_MODIFIER_COMMAND, new RestApplicationModifierCommand());
+        model.addObject(DEMO_MODE, demoMode);
         return model;
     }
 

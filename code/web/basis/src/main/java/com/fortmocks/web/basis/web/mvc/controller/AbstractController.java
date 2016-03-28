@@ -19,6 +19,7 @@ package com.fortmocks.web.basis.web.mvc.controller;
 import com.fortmocks.core.basis.model.ServiceProcessor;
 import com.fortmocks.core.basis.model.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -36,11 +37,14 @@ import java.util.Enumeration;
  */
 public abstract class AbstractController {
 
+    @Value("${server.mode.demo}")
+    protected boolean demoMode;
     @Autowired
     private ServletContext servletContext;
     @Autowired
     protected ServiceProcessor serviceProcessor;
 
+    protected static final String DEMO_MODE = "demoMode";
     protected static final String CONTENT_TYPE = "Content-Type";
     protected static final String COMMAND = "command";
     protected static final String DIVIDER = ":";
