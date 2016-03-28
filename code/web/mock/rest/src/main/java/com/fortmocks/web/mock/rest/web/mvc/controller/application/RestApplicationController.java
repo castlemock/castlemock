@@ -73,7 +73,7 @@ public class RestApplicationController extends AbstractRestViewController {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION, output.getRestApplication());
-        model.addObject(REST_METHOD_STATUSES, RestMethodStatus.values());
+        model.addObject(REST_METHOD_STATUSES, getRestMethodStatuses());
         model.addObject(REST_RESOURCE_MODIFIER_COMMAND, new RestResourceModifierCommand());
         return model;
     }

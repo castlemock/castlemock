@@ -245,6 +245,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @return The response from the system that the request was forwarded to.
      */
     private SoapResponseDto forwardRequest(final SoapRequestDto request, final SoapOperationDto soapOperationDto){
+        if(demoMode){
+            // If the application is configured to run in demo mode, then use mocked response instead
+            return mockResponse(soapOperationDto);
+        }
+
+
         final SoapResponseDto response = new SoapResponseDto();
         HttpURLConnection connection = null;
         OutputStream outputStream = null;

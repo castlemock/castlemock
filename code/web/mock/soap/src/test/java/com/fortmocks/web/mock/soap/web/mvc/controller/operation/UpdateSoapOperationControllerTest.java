@@ -40,6 +40,10 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -74,6 +78,7 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
         final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
         final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
+        final List<SoapOperationStatus> soapOperationStatuses = Arrays.asList(SoapOperationStatus.values());
         when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapOperationOutput(soapOperationDto));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + UPDATE + SLASH);
         mockMvc.perform(message)
@@ -85,7 +90,7 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, soapPortDto.getId()))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_ID, soapOperationDto.getId()))
                 .andExpect(MockMvcResultMatchers.model().attribute(COMMAND, soapOperationDto))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_STATUSES, SoapOperationStatus.values()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_STATUSES, soapOperationStatuses))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_MOCK_RESPONSE_STRATEGIES, SoapResponseStrategy.values()));
     }
 

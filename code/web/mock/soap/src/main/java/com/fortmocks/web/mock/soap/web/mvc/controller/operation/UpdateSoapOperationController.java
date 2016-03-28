@@ -64,7 +64,7 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(SOAP_OPERATION_ID, soapOperationId);
         model.addObject(SOAP_MOCK_RESPONSE_STRATEGIES, SoapResponseStrategy.values());
-        model.addObject(SOAP_OPERATION_STATUSES, SoapOperationStatus.values());
+        model.addObject(SOAP_OPERATION_STATUSES, getSoapOperationStatuses());
         return model;
     }
 

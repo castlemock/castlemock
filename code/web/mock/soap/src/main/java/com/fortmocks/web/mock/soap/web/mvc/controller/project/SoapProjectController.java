@@ -69,7 +69,7 @@ public class SoapProjectController extends AbstractSoapViewController {
         final SoapProjectDto project = readSoapProjectOutput.getSoapProject();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT, project);
-        model.addObject(SOAP_OPERATION_STATUSES, SoapOperationStatus.values());
+        model.addObject(SOAP_OPERATION_STATUSES, getSoapOperationStatuses());
         model.addObject(SOAP_PORT_MODIFIER_COMMAND, new SoapPortModifierCommand());
         model.addObject(DEMO_MODE, demoMode);
         return model;

@@ -16,8 +16,12 @@
 
 package com.fortmocks.web.mock.rest.web.mvc.controller;
 
+import com.fortmocks.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractViewController;
 import org.apache.log4j.Logger;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The class operates as a shared base for all the view related to the REST module
@@ -76,6 +80,25 @@ public class AbstractRestViewController extends AbstractViewController {
             LOGGER.error("Unable to generate invoke URL", exception);
             throw new IllegalStateException("Unable to generate invoke URL for " + projectId);
         }
+    }
+
+    /**
+     * The method returns a list of REST methods statuses. The method will only return DISABLED and MOCKED
+     * if the server is configured to run on demo mode. If not configured to run on demo mode,
+     * all the REST method statuses will be returned.
+     * @return A list of REST method statuses
+     */
+    protected List<RestMethodStatus> getRestMethodStatuses(){
+        List<RestMethodStatus> restMethodStatuses = new LinkedList<RestMethodStatus>();
+        restMethodStatuses.add(RestMethodStatus.MOCKED);
+        restMethodStatuses.add(RestMethodStatus.DISABLED);
+
+        if(!demoMode) {
+            restMethodStatuses.add(RestMethodStatus.FORWARDED);
+            restMethodStatuses.add(RestMethodStatus.RECORDING);
+            restMethodStatuses.add(RestMethodStatus.RECORD_ONCE);
+        }
+        return restMethodStatuses;
     }
 
 }

@@ -80,7 +80,7 @@ public class RestResourceController extends AbstractRestViewController {
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
         model.addObject(REST_RESOURCE, restResource);
-        model.addObject(REST_METHOD_STATUSES, RestMethodStatus.values());
+        model.addObject(REST_METHOD_STATUSES, getRestMethodStatuses());
         model.addObject(REST_METHOD_MODIFIER_COMMAND, new RestMethodModifierCommand());
         return model;
     }

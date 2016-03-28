@@ -178,6 +178,12 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @return The response received from the external endpoint
      */
     protected RestResponseDto forwardRequest(final RestRequestDto restRequest, final RestMethodDto restMethod){
+        if(demoMode){
+            // If the application is configured to run in demo mode, then use mocked response instead
+            return mockResponse(restMethod);
+        }
+
+
         final RestResponseDto response = new RestResponseDto();
         HttpURLConnection connection = null;
         OutputStream outputStream = null;

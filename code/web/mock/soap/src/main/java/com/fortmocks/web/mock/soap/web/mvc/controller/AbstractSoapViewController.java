@@ -16,8 +16,12 @@
 
 package com.fortmocks.web.mock.soap.web.mvc.controller;
 
+import com.fortmocks.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.fortmocks.web.basis.web.mvc.controller.AbstractViewController;
 import org.apache.log4j.Logger;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The class operates as a shared base for all the view related to the SOAP module
@@ -61,6 +65,26 @@ public class AbstractSoapViewController extends AbstractViewController {
             LOGGER.error("Unable to generate invoke URL", exception);
             throw new IllegalStateException("Unable to generate invoke URL for " + projectId);
         }
+    }
+
+
+    /**
+     * The method returns a list of SOAP operation statuses. The method will only return DISABLED and MOCKED
+     * if the server is configured to run on demo mode. If not configured to run on demo mode,
+     * all the SOAP operation statuses will be returned.
+     * @return A list of SOAP operation statuses
+     */
+    protected List<SoapOperationStatus> getSoapOperationStatuses(){
+        List<SoapOperationStatus> soapOperationStatuses = new LinkedList<SoapOperationStatus>();
+        soapOperationStatuses.add(SoapOperationStatus.MOCKED);
+        soapOperationStatuses.add(SoapOperationStatus.DISABLED);
+
+        if(!demoMode) {
+            soapOperationStatuses.add(SoapOperationStatus.FORWARDED);
+            soapOperationStatuses.add(SoapOperationStatus.RECORDING);
+            soapOperationStatuses.add(SoapOperationStatus.RECORD_ONCE);
+        }
+        return soapOperationStatuses;
     }
 
 }

@@ -58,7 +58,7 @@ public class UpdateRestMethodController extends AbstractRestViewController {
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restResourceId);
         model.addObject(REST_METHOD_TYPES, HttpMethod.values());
-        model.addObject(REST_METHOD_STATUSES, RestMethodStatus.values());
+        model.addObject(REST_METHOD_STATUSES, getRestMethodStatuses());
         model.addObject(REST_RESPONSE_STRATEGIES, RestResponseStrategy.values());
         return model;
     }
