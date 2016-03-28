@@ -47,10 +47,6 @@
                     <col width="10%">
                     <col width="20%">
                     <col width="30%">
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="10%">
                     <tr>
                         <th><spring:message code="rest.restapplication.column.selected"/></th>
                         <th><spring:message code="rest.restapplication.column.resource"/></th>
