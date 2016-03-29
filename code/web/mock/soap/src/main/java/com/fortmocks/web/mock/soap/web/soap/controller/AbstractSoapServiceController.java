@@ -156,7 +156,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         } finally{
             if(event != null){
                 event.finish(response);
-                serviceProcessor.process(new CreateSoapEventInput(event));
+                serviceProcessor.processAsync(new CreateSoapEventInput(event));
             }
         }
     }

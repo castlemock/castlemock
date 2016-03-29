@@ -166,7 +166,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         } finally{
             if(event != null){
                 event.finish(response);
-                serviceProcessor.process(new CreateRestEventInput(event));
+                serviceProcessor.processAsync(new CreateRestEventInput(event));
             }
         }
     }

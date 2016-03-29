@@ -30,6 +30,7 @@ import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfigura
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -46,6 +47,7 @@ import java.util.Map;
  * @since 1.0
  */
 @SpringBootApplication
+@EnableAsync
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class Application extends SpringBootServletInitializer {
 
