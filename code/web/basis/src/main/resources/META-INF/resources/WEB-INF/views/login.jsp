@@ -30,7 +30,8 @@
 
         <section id="login-box">
 
-            <img src="<c:url value="/resources/images/fm-logo.png"/>" id="logo"/>
+            <img src="<c:url value="/resources/images/cm-logo.png"/>" id="logo"/>
+            <div id="logo-text">Castle Mock</div>
 
             <c:if test="${not empty error}">
                 <div class="error">${error}</div>

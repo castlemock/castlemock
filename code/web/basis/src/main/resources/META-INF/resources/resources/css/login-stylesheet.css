@@ -154,6 +154,11 @@ body {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     text-align: center; }
+  #login-box #logo-text {
+    font-size: 35px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px; }
   #login-box input[type=text], #login-box input[type=password] {
     padding: 5px;
     margin: 3px 0;

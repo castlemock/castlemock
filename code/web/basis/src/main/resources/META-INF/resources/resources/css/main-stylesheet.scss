@@ -31,6 +31,13 @@ body {
         float: left;
         margin-top: 5px;
         margin-left: 5%;
+        font-size: 25px;
+        font-weight: bold;
+        a {
+            &:hover {
+                text-decoration: none;
+            }
+        }
     }
 
     #header-logo {

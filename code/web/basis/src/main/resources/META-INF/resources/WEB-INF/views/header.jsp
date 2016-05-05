@@ -20,7 +20,7 @@
 <spring:message code="general.header.input.search" var="searchPlaceholder"/>
 <header class="main-header">
     <div class="logo">
-        <a href="${context}/web"><img src="${context}/resources/images/logo-landscape-white.png" id="header-logo"/></a>
+        <a href="${context}/web">Castle Mock <img src="${context}/resources/images/logo-landscape-white.png" id="header-logo"/></a>
     </div>
 
     <div class="meta">
