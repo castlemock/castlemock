@@ -94,7 +94,7 @@ local.properties
 .sonar/
 *.exec
 
-code/fortmocks/.project
+code/castlemock/.project
 
 code/parent/.project
 
@@ -102,8 +102,8 @@ code/parent/.project
 
 target/
 
-code/fortmocks/.classpath
+code/castlemock/.classpath
 
-code/fortmocks/src/main/webapp/META-INF/context.xml
+code/castlemock/src/main/webapp/META-INF/context.xml
 
-code/fortmocks/nb-configuration.xml
+code/castlemock/nb-configuration.xml

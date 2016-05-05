@@ -16,26 +16,26 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.fortmocks</groupId>
-	<artifactId>fortmocks-web-mock</artifactId>
+	<groupId>com.castlemock</groupId>
+	<artifactId>castlemock-web-mock</artifactId>
 	<packaging>pom</packaging>
 	<version>1.4</version>
-    <name>Fort mocks web mock</name>
-	<url>http://www.fortmocks.com</url>
-	<description>The module that constitutes the main Fort Mocks mock</description>
+    <name>Castle mock web mock</name>
+	<url>http://www.castlemock.com</url>
+	<description>The module that constitutes the main Castle Mock</description>
 
 	<developers>
 		<developer>
 			<name>Karl Dahlgren</name>
-			<email>karl.dahlgren@fortmocks.com</email>
+			<email>karl.dahlgren@castlemock.com</email>
 		</developer>
 	</developers>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.fortmocks</groupId>
-				<artifactId>fortmocks-web-basis</artifactId>
+				<groupId>com.castlemock</groupId>
+				<artifactId>castlemock-web-basis</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
@@ -47,8 +47,8 @@
 	</modules>
 
 	<parent>
-		<groupId>com.fortmocks</groupId>
-		<artifactId>fortmocks-web</artifactId>
+		<groupId>com.castlemock</groupId>
+		<artifactId>castlemock-web</artifactId>
 		<version>1.4</version>
 		<relativePath>../</relativePath>
 	</parent>

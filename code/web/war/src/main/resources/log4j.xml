@@ -13,7 +13,7 @@
 
 	
 	<!-- Application Loggers -->
-	<logger name="com.fortmocks">
+	<logger name="com.castlemock">
 		<level value="warn" />
 	</logger>
 	

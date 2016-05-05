@@ -16,32 +16,32 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.fortmocks</groupId>
-	<artifactId>fortmocks-plugin-basis</artifactId>
+	<groupId>com.castlemock</groupId>
+	<artifactId>castlemock-plugin-basis</artifactId>
 	<packaging>jar</packaging>
 	<version>1.4</version>
-    <name>Fort mocks plugin basis</name>
-	<url>http://www.fortmocks.com</url>
-	<description>The plugin module contains the plugin package for Fort Mocks</description>
+    <name>Castle mock plugin basis</name>
+	<url>http://www.castlemock.com</url>
+	<description>The plugin module contains the plugin package for Castle Mock</description>
 
 	<developers>
 		<developer>
 			<name>Karl Dahlgren</name>
-			<email>karl.dahlgren@fortmocks.com</email>
+			<email>karl.dahlgren@castlemock.com</email>
 		</developer>
 	</developers>
 
 	<parent>
-		<groupId>com.fortmocks</groupId>
-		<artifactId>fortmocks-plugin</artifactId>
+		<groupId>com.castlemock</groupId>
+		<artifactId>castlemock-plugin</artifactId>
 		<version>1.4</version>
 		<relativePath>../</relativePath>
 	</parent>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-core-basis</artifactId>
+			<groupId>com.castlemock</groupId>
+			<artifactId>castlemock-core-basis</artifactId>
 		</dependency>
 	</dependencies>
 

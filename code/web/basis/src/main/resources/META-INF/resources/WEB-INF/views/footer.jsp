@@ -21,6 +21,6 @@
     </div>
 
     <div class="info">
-        <a href="http://www.fortmocks.com" target="_blank">Fort Mocks version. ${appVersion}</a>
+        <a href="http://www.castlemock.com" target="_blank">Castle Mock version. ${appVersion}</a>
     </div>
 </footer>

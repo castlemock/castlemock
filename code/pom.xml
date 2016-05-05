@@ -16,18 +16,18 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.fortmocks</groupId>
-	<artifactId>fortmocks-parent</artifactId>
+	<groupId>com.castlemock</groupId>
+	<artifactId>castlemock-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>1.4</version>
-    <name>Fort mocks parent</name>
-	<url>http://www.fortmocks.com</url>
-	<description>The parent module which all the Fort Mocks projects share</description>
+    <name>Castle mock parent</name>
+	<url>http://www.castlemock.com</url>
+	<description>The parent module which all the Castle Mock projects share</description>
 
 	<developers>
 		<developer>
 			<name>Karl Dahlgren</name>
-			<email>karl.dahlgren@fortmocks.com</email>
+			<email>karl.dahlgren@castlemock.com</email>
 		</developer>
 	</developers>
 
@@ -40,15 +40,15 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:git://github.com/fortmocks/fortmocks.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/fortmocks/fortmocks.git</developerConnection>
-		<url>https://github.com/fortmocks/fortmocks</url>
-		<tag>fortmocks-1.0</tag>
+		<connection>scm:git:git://github.com/castlemock/castlemock.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/castlemock/castlemock.git</developerConnection>
+		<url>https://github.com/castlemock/castlemock</url>
+		<tag>castlemock-1.0</tag>
 	</scm>
 
 	<issueManagement>
 		<system>github</system>
-		<url>https://github.com/fortmocks/fortmocks/issues</url>
+		<url>https://github.com/castlemock/castlemock/issues</url>
 	</issueManagement>
 
 	<modules>
@@ -157,7 +157,7 @@
 						</goals>
 						<phase>package</phase>
 						<configuration>
-							<finalName>fortmocks-${project.version}</finalName>
+							<finalName>castlemock-${project.version}</finalName>
 							<descriptors>
 								<descriptor>support/assembly-src.xml</descriptor>
 							</descriptors>
@@ -192,7 +192,7 @@
 					<goals>-DskipTests javadoc:javadoc deploy javadoc:aggregate</goals>
 					<pushChanges>false</pushChanges>
 					<localCheckout>true</localCheckout>
-					<tagNameFormat>fortmocks-@{project.version}</tagNameFormat>
+					<tagNameFormat>castlemock-@{project.version}</tagNameFormat>
 				</configuration>
 			</plugin>
 			<plugin>
