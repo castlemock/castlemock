@@ -16,25 +16,25 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.fortmocks</groupId>
-	<artifactId>fortmocks-web-mock-rest</artifactId>
+	<groupId>com.castlemock</groupId>
+	<artifactId>castlemock-web-mock-rest</artifactId>
 	<packaging>jar</packaging>
-	<version>1.5-SNAPSHOT</version>
-    <name>Fort mocks web mock rest</name>
-	<url>http://www.fortmocks.com</url>
-	<description>The module that constitutes the main Fort Mocks rest</description>
+	<version>1.5</version>
+    <name>Castle Mock web mock rest</name>
+	<url>http://www.castlemock.com</url>
+	<description>The module that constitutes the main Castle Mock rest</description>
 
 	<developers>
 		<developer>
 			<name>Karl Dahlgren</name>
-			<email>karl.dahlgren@fortmocks.com</email>
+			<email>karl.dahlgren@castlemock.com</email>
 		</developer>
 	</developers>
 
 	<parent>
-		<groupId>com.fortmocks</groupId>
-		<artifactId>fortmocks-web-mock</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<groupId>com.castlemock</groupId>
+		<artifactId>castlemock-web-mock</artifactId>
+		<version>1.5</version>
 		<relativePath>../</relativePath>
 	</parent>
 
@@ -42,19 +42,19 @@
 
 
 		<dependency>
-			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-core-mock-rest</artifactId>
+			<groupId>com.castlemock</groupId>
+			<artifactId>castlemock-core-mock-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-core-basis</artifactId>
+			<groupId>com.castlemock</groupId>
+			<artifactId>castlemock-core-basis</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>com.fortmocks</groupId>
-			<artifactId>fortmocks-web-basis</artifactId>
+			<groupId>com.castlemock</groupId>
+			<artifactId>castlemock-web-basis</artifactId>
 		</dependency>
 
 		<!-- Spring framework -->

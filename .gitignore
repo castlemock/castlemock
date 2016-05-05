@@ -94,18 +94,18 @@ local.properties
 .sonar/
 *.exec
 
-code/fortmocks/.project
+code/castlemock/.project
 
 code/parent/.project
 
 *.scssc
 
-target/
-
 build/
 
-code/fortmocks/.classpath
+target/
 
-code/fortmocks/src/main/webapp/META-INF/context.xml
+code/castlemock/.classpath
 
-code/fortmocks/nb-configuration.xml
+code/castlemock/src/main/webapp/META-INF/context.xml
+
+code/castlemock/nb-configuration.xml

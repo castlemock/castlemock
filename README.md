@@ -1,6 +1,6 @@
-<p align="center"><img src="http://fortmocks.com/images/fm-logo-small.png"></div></p>
+<p align="center"><img src="http://castlemock.com/images/fm-logo-small.png"></div></p>
 
-# Fort Mocks: Mock RESTful APIs and SOAP web services
+# Castle Mock: Mock RESTful APIs and SOAP web services
 
 [![][travis img]][travis]
 [![][codecov img]][codecov]
@@ -11,23 +11,23 @@
 
 ## About
 
-Fort Mocks is a web application that provides the functionality to mock out RESTful APIs and SOAP web services. This functionality allows client-side developers to completely mimic a server side behaviour and shape the responses themselves.
+Castle Mock is a web application that provides the functionality to mock out RESTful APIs and SOAP web services. This functionality allows client-side developers to completely mimic a server side behaviour and shape the responses themselves.
 
-Fort Mocks enables you to upload both WSDL or WADL files. The web services defined within the files will be mocked automatically by Fort Mocks. Once the mocks for the web services are created, they can be configured to mock the service or forward the request to the original endpoint. The response from the forwarded requests can be recorded automatically and used to create new mocked responses.
+Castle Mock enables you to upload both WSDL or WADL files. The web services defined within the files will be mocked automatically by Castle Mock. Once the mocks for the web services are created, they can be configured to mock the service or forward the request to the original endpoint. The response from the forwarded requests can be recorded automatically and used to create new mocked responses.
 
-Fort Mocks is completely free and open source (Apache License). It is built with Java and the application itself is deployed to an Apache Tomcat server.
+Castle Mock is completely free and open source (Apache License). It is built with Java and the application itself is deployed to an Apache Tomcat server.
 
 ## Downloads
 
-Non-source downloads such as WAR files can be found on our website: [http://www.fortmocks.com/](http://www.fortmocks.com/).
+Non-source downloads such as WAR files can be found on our website: [http://www.castlemock.com/](http://www.castlemock.com/).
 
 ## Usage
 
-Fort Mocks can be downloaded as Java Web Archive (.war) file and be deployed on a Apache Tomcat server (Apache Tomcat 7.0 or higher). Fort Mocks can also be deployed by using Docker. For more information go to the offical Fort Mocks Docker page: [https://hub.docker.com/r/fortmocks/fortmocks/](https://hub.docker.com/r/fortmocks/fortmocks/). 
+Castle Mock can be downloaded as Java Web Archive (.war) file and be deployed on a Apache Tomcat server (Apache Tomcat 7.0 or higher). Castle Mock can also be deployed by using Docker. For more information go to the offical Castle Mock Docker page: [https://hub.docker.com/r/castlemock/castlemock/](https://hub.docker.com/r/castlemock/castlemock/).
 
-Upon successful installation and deployment, Fort Mocks can be accessed from the web browser:
+Upon successful installation and deployment, Castle Mock can be accessed from the web browser:
 
-    http://localhost:8080/fortmocks
+    http://localhost:8080/castlemock
     
 This will prompt you the login screen. When logging for the first time use the following credentials: 
 
@@ -40,34 +40,34 @@ Upon successful login, you will be able to create both SOAP and REST projects. S
 
 ## Source
 
-Our latest and greatest source of Fort Mocks can be found on [GitHub](https://github.com/fortmocks/fortmocks/).
+Our latest and greatest source of Castle Mock can be found on [GitHub](https://github.com/castlemock/castlemock/).
 
 ## Full Documentation
 
 Full documentation will be provided shortly.
 
 ## Communication
-- Website: [http://www.fortmocks.com/](http://www.fortmocks.com/)
-- Google Group: [FortMocks](http://groups.google.com/d/forum/fortmocks)
-- Twitter: [@FortMocks](http://twitter.com/FortMocks)
-- [GitHub Issues](https://github.com/fortmocks/fortmocks/issues)
-- [Docker](https://hub.docker.com/r/fortmocks/fortmocks/)
+- Website: [http://www.castlemock.com/](http://www.castlemock.com/)
+- Google Group: [CastleMock](http://groups.google.com/d/forum/castlemock)
+- Twitter: [@CastleMock](http://twitter.com/CastleMock)
+- [GitHub Issues](https://github.com/castlemock/castlemock/issues)
+- [Docker](https://hub.docker.com/r/castlemock/castlemock/)
 
 ## Bugs and Feedback
 
-For bugs, questions and discussions please use the [GitHub Issues](https://github.com/fortmocks/fortmocks/issues)
+For bugs, questions and discussions please use the [GitHub Issues](https://github.com/castlemock/castlemock/issues)
 
 ## Continuous integration
 
-Fort Mocks' continuous integration environment is publicly available and can be access on the following link: [Travis CI](https://travis-ci.org/fortmocks/fortmocks)
+Castle Mock's continuous integration environment is publicly available and can be access on the following link: [Travis CI](https://travis-ci.org/castlemock/castlemock)
 
 ## News and Website
 
-All information about Fort Mocks can be found on our website. Follow us on Twitter: [FortMocks](http://twitter.com/FortMocks).
+All information about Castle Mock can be found on our website. Follow us on Twitter: [CastleMock](http://twitter.com/CastleMock).
 
 ## License
 
-Fort Mocks is **licensed** under the **[Apache License](https://github.com/fortmocks/fortmocks/blob/master/LICENSE)**. The terms of the license are as follows:
+Castle Mock is **licensed** under the **[Apache License](https://github.com/castlemock/castlemock/blob/master/LICENSE)**. The terms of the license are as follows:
 
     Apache License
 
@@ -85,11 +85,11 @@ Fort Mocks is **licensed** under the **[Apache License](https://github.com/fortm
     See the License for the specific language governing permissions and
     limitations under the License.
 
-[travis]:https://travis-ci.org/fortmocks/fortmocks
-[travis img]:https://travis-ci.org/fortmocks/fortmocks.svg?branch=develop
+[travis]:https://travis-ci.org/castlemock/castlemock
+[travis img]:https://travis-ci.org/castlemock/castlemock.svg?branch=develop
 
-[release]:https://github.com/fortmocks/fortmocks/releases
-[release img]:https://img.shields.io/github/release/fortmocks/fortmocks.svg
+[release]:https://github.com/castlemock/castlemock/releases
+[release img]:https://img.shields.io/github/release/castlemock/castlemock.svg
 
 [license]:LICENSE
 [license img]:https://img.shields.io/badge/license-Apache%202-blue.svg
@@ -97,8 +97,8 @@ Fort Mocks is **licensed** under the **[Apache License](https://github.com/fortm
 [codecov]:https://codecov.io/github/fortmocks/fortmocks
 [codecov img]:https://img.shields.io/codecov/c/github/fortmocks/fortmocks/develop.svg
 
-[docker stars]:https://hub.docker.com/r/fortmocks/fortmocks/
-[docker stars img]:https://img.shields.io/docker/stars/fortmocks/fortmocks.svg
+[docker stars]:https://hub.docker.com/r/castlemock/castlemock/
+[docker stars img]:https://img.shields.io/docker/stars/castlemock/castlemock.svg
 
-[docker pulls]:https://hub.docker.com/r/fortmocks/fortmocks/
-[docker pulls img]:https://img.shields.io/docker/pulls/fortmocks/fortmocks.svg
+[docker pulls]:https://hub.docker.com/r/castlemock/castlemock/
+[docker pulls img]:https://img.shields.io/docker/pulls/castlemock/castlemock.svg

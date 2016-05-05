@@ -4,7 +4,7 @@ jdk:
   - oraclejdk8
 
 notifications:
-  slack: fortmocks:JxIkhf3PnSkUO0nVa470kedQ
+  slack: castlemock:JxIkhf3PnSkUO0nVa470kedQ
 
 before_install:
   - pip install --user codecov
