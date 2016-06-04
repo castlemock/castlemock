@@ -17,8 +17,7 @@
 package com.castlemock.web.mock.rest.model.project;
 
 import com.castlemock.core.mock.rest.model.project.domain.*;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.dto.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,6 +77,42 @@ public class RestProjectDtoGenerator {
 
                     for(int responseIndex = 0; responseIndex < 3; responseIndex++){
                         final RestMockResponse restMockResponse = RestMockResponseDtoGenerator.generateRestMockResponse();
+                        restMethod.getMockResponses().add(restMockResponse);
+                    }
+                }
+
+            }
+        }
+
+        return projectDto;
+    }
+
+    public static RestProjectDto generateFullRestProjectDto(){
+        final RestProjectDto projectDto = new RestProjectDto();
+        projectDto.setId("REST PROJECT");
+        projectDto.setName("Project name");
+        projectDto.setDescription("Project description");
+        projectDto.setCreated(new Date());
+        projectDto.setUpdated(new Date());
+        projectDto.setApplications(new ArrayList<RestApplicationDto>());
+
+        for(int applicationIndex = 0; applicationIndex < 3; applicationIndex++){
+            final RestApplicationDto restApplication = RestApplicationDtoGenerator.generateRestApplicationDto();
+            restApplication.setResources(new ArrayList<RestResourceDto>());
+            projectDto.getApplications().add(restApplication);
+
+            for(int resourceIndex = 0; resourceIndex < 3; resourceIndex++){
+                final RestResourceDto restResource = RestResourceDtoGenerator.generateRestResourceDto();
+                restResource.setMethods(new ArrayList<RestMethodDto>());
+                restApplication.getResources().add(restResource);
+
+                for(int methodIndex = 0; methodIndex < 3; methodIndex++){
+                    final RestMethodDto restMethod = RestMethodDtoGenerator.generateRestMethodDto();
+                    restMethod.setMockResponses(new ArrayList<RestMockResponseDto>());
+                    restResource.getMethods().add(restMethod);
+
+                    for(int responseIndex = 0; responseIndex < 3; responseIndex++){
+                        final RestMockResponseDto restMockResponse = RestMockResponseDtoGenerator.generateRestMockResponseDto();
                         restMethod.getMockResponses().add(restMockResponse);
                     }
                 }

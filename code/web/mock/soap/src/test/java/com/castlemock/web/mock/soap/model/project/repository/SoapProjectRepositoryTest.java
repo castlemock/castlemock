@@ -2,6 +2,7 @@ package com.castlemock.web.mock.soap.model.project.repository;
 
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import org.junit.Assert;
@@ -50,41 +51,41 @@ public class SoapProjectRepositoryTest {
 
     @Test
     public void testFindOne(){
-        final SoapProject soapProject = save();
-        final SoapProject returnedSoapEvent = repository.findOne(soapProject.getId());
+        final SoapProjectDto soapProject = save();
+        final SoapProjectDto returnedSoapEvent = repository.findOne(soapProject.getId());
         Assert.assertEquals(soapProject, returnedSoapEvent);
     }
 
     @Test
     public void testFindAll(){
-        final SoapProject soapProject = save();
-        final List<SoapProject> soapProjects = repository.findAll();
+        final SoapProjectDto soapProject = save();
+        final List<SoapProjectDto> soapProjects = repository.findAll();
         Assert.assertEquals(soapProjects.size(), 1);
         Assert.assertEquals(soapProjects.get(0), soapProject);
     }
 
     @Test
     public void testSave(){
-        final SoapProject soapProject = save();
+        final SoapProjectDto soapProject = save();
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(soapProject, DIRECTORY + File.separator + soapProject.getId() + EXTENSION);
     }
 
     @Test
     public void testDelete(){
-        final SoapProject soapProject = save();
+        final SoapProjectDto soapProject = save();
         repository.delete(soapProject.getId());
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).delete(DIRECTORY + File.separator + soapProject.getId() + EXTENSION);
     }
 
     @Test
     public void testCount(){
-        final SoapProject soapProject = save();
+        final SoapProjectDto soapProject = save();
         final Integer count = repository.count();
         Assert.assertEquals(new Integer(1), count);
     }
 
-    private SoapProject save(){
-        SoapProject soapProject = SoapProjectDtoGenerator.generateFullSoapProject();
+    private SoapProjectDto save(){
+        SoapProjectDto soapProject = SoapProjectDtoGenerator.generateFullSoapProjectDto();
         repository.save(soapProject);
         return soapProject;
     }

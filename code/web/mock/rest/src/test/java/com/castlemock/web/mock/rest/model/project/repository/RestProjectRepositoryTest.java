@@ -2,6 +2,7 @@ package com.castlemock.web.mock.rest.model.project.repository;
 
 
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.castlemock.web.mock.rest.model.project.RestProjectDtoGenerator;
 import org.junit.Assert;
@@ -50,41 +51,41 @@ public class RestProjectRepositoryTest {
 
     @Test
     public void testFindOne(){
-        final RestProject restProject = save();
-        final RestProject returnedRestEvent = repository.findOne(restProject.getId());
+        final RestProjectDto restProject = save();
+        final RestProjectDto returnedRestEvent = repository.findOne(restProject.getId());
         Assert.assertEquals(restProject, returnedRestEvent);
     }
 
     @Test
     public void testFindAll(){
-        final RestProject restProject = save();
-        final List<RestProject> restProjects = repository.findAll();
+        final RestProjectDto restProject = save();
+        final List<RestProjectDto> restProjects = repository.findAll();
         Assert.assertEquals(restProjects.size(), 1);
         Assert.assertEquals(restProjects.get(0), restProject);
     }
 
     @Test
     public void testSave(){
-        final RestProject restProject = save();
+        final RestProjectDto restProject = save();
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(restProject, DIRECTORY + File.separator + restProject.getId() + EXTENSION);
     }
 
     @Test
     public void testDelete(){
-        final RestProject restProject = save();
+        final RestProjectDto restProject = save();
         repository.delete(restProject.getId());
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).delete(DIRECTORY + File.separator + restProject.getId() + EXTENSION);
     }
 
     @Test
     public void testCount(){
-        final RestProject restProject = save();
+        final RestProjectDto restProject = save();
         final Integer count = repository.count();
         Assert.assertEquals(new Integer(1), count);
     }
 
-    private RestProject save(){
-        RestProject restProject = RestProjectDtoGenerator.generateFullRestProject();
+    private RestProjectDto save(){
+        RestProjectDto restProject = RestProjectDtoGenerator.generateFullRestProjectDto();
         repository.save(restProject);
         return restProject;
     }

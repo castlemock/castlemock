@@ -2,6 +2,7 @@ package com.castlemock.web.basis.model.user.repository;
 
 
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.dto.UserDto;
 import com.castlemock.web.basis.model.user.dto.UserDtoGenerator;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import org.junit.Assert;
@@ -50,41 +51,41 @@ public class UserRepositoryTest {
 
     @Test
     public void testFindOne(){
-        final User user = save();
-        final User returnedUser = repository.findOne(user.getId());
+        final UserDto user = save();
+        final UserDto returnedUser = repository.findOne(user.getId());
         Assert.assertEquals(user, returnedUser);
     }
 
     @Test
     public void testFindAll(){
-        final User user = save();
-        final List<User> users = repository.findAll();
+        final UserDto user = save();
+        final List<UserDto> users = repository.findAll();
         Assert.assertEquals(users.size(), 1);
         Assert.assertEquals(users.get(0), user);
     }
 
     @Test
     public void testSave(){
-        final User user = save();
+        final UserDto user = save();
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(user, DIRECTORY + File.separator + user.getId() + EXTENSION);
     }
 
     @Test
     public void testDelete(){
-        final User user = save();
+        final UserDto user = save();
         repository.delete(user.getId());
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).delete(DIRECTORY + File.separator + user.getId() + EXTENSION);
     }
 
     @Test
     public void testCount(){
-        final User user = save();
+        final UserDto user = save();
         final Integer count = repository.count();
         Assert.assertEquals(new Integer(1), count);
     }
 
-    private User save(){
-        final User user = UserDtoGenerator.generateUser();
+    private UserDto save(){
+        final UserDto user = UserDtoGenerator.generateUserDto();
         repository.save(user);
         return user;
     }

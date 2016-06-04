@@ -20,13 +20,16 @@ import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
+import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
+import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
+import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapMockResponseOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
 import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
@@ -40,6 +43,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -118,7 +122,7 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
         soapMockResponseModifierCommand.setSoapMockResponseStatus("ENABLED");
         soapMockResponseModifierCommand.setSoapMockResponseIds(idString);
 
-        when(serviceProcessor.process(isA(UpdateSoapMockResponseStatusInput.class))).thenReturn(new UpdateSoapMockResponseStatusOutput());
+        when(serviceProcessor.process(isA(UpdateSoapMockResponseInput.class))).thenReturn(new UpdateSoapMockResponseOutput(Mockito.mock(SoapMockResponseDto.class)));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH);
         message.param("action", UPDATE_STATUS);
 

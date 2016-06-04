@@ -1,6 +1,7 @@
 package com.castlemock.web.mock.soap.model.event.repository;
 
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
+import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.castlemock.web.mock.soap.model.event.SoapEventDtoGenerator;
 import org.junit.Assert;
@@ -49,41 +50,41 @@ public class SoapEventRepositoryTest {
 
     @Test
     public void testFindOne(){
-        final SoapEvent soapEvent = save();
-        final SoapEvent returnedSoapEvent = repository.findOne(soapEvent.getId());
+        final SoapEventDto soapEvent = save();
+        final SoapEventDto returnedSoapEvent = repository.findOne(soapEvent.getId());
         Assert.assertEquals(soapEvent, returnedSoapEvent);
     }
 
     @Test
     public void testFindAll(){
-        final SoapEvent soapEvent = save();
-        final List<SoapEvent> soapEvents = repository.findAll();
+        final SoapEventDto soapEvent = save();
+        final List<SoapEventDto> soapEvents = repository.findAll();
         Assert.assertEquals(soapEvents.size(), 1);
         Assert.assertEquals(soapEvents.get(0), soapEvent);
     }
 
     @Test
     public void testSave(){
-        final SoapEvent soapEvent = save();
+        final SoapEventDto soapEvent = save();
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(soapEvent, DIRECTORY + File.separator + soapEvent.getId() + EXTENSION);
     }
 
     @Test
     public void testDelete(){
-        final SoapEvent soapEvent = save();
+        final SoapEventDto soapEvent = save();
         repository.delete(soapEvent.getId());
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).delete(DIRECTORY + File.separator + soapEvent.getId() + EXTENSION);
     }
 
     @Test
     public void testCount(){
-        final SoapEvent soapEvent = save();
+        final SoapEventDto soapEvent = save();
         final Integer count = repository.count();
         Assert.assertEquals(new Integer(1), count);
     }
 
-    private SoapEvent save(){
-        final SoapEvent soapEvent = SoapEventDtoGenerator.generateSoapEvent();
+    private SoapEventDto save(){
+        final SoapEventDto soapEvent = SoapEventDtoGenerator.generateSoapEventDto();
         repository.save(soapEvent);
         return soapEvent;
     }

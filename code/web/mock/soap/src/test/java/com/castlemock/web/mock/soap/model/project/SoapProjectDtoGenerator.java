@@ -20,6 +20,8 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 
@@ -86,6 +88,38 @@ public class SoapProjectDtoGenerator {
 
                 for(int responseIndex = 0; responseIndex < 3; responseIndex++){
                     final SoapMockResponse soapMockResponse = SoapMockResponseDtoGenerator.generateSoapMockResponse();
+                    soapOperation.getMockResponses().add(soapMockResponse);
+                }
+
+            }
+        }
+
+
+
+        return soapProject;
+    }
+
+    public static SoapProjectDto generateFullSoapProjectDto(){
+        final SoapProjectDto soapProject = new SoapProjectDto();
+        soapProject.setId("SOAP PROJECT");
+        soapProject.setName("Project name");
+        soapProject.setDescription("Project description");
+        soapProject.setCreated(new Date());
+        soapProject.setUpdated(new Date());
+        soapProject.setPorts(new ArrayList<SoapPortDto>());
+
+        for(int portIndex = 0; portIndex < 3; portIndex++){
+            final SoapPortDto soapPort = SoapPortDtoGenerator.generateSoapPortDto();
+            soapPort.setOperations(new ArrayList<SoapOperationDto>());
+            soapProject.getPorts().add(soapPort);
+
+            for(int operationIndex = 0; operationIndex < 3; operationIndex++){
+                final SoapOperationDto soapOperation = SoapOperationDtoGenerator.generateSoapOperationDto();
+                soapOperation.setMockResponses(new ArrayList<SoapMockResponseDto>());
+                soapPort.getOperations().add(soapOperation);
+
+                for(int responseIndex = 0; responseIndex < 3; responseIndex++){
+                    final SoapMockResponseDto soapMockResponse = SoapMockResponseDtoGenerator.generateSoapMockResponseDto();
                     soapOperation.getMockResponses().add(soapMockResponse);
                 }
 
