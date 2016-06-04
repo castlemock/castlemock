@@ -22,6 +22,9 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.CreateSoapPortsInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.CreateSoapPortsOutput;
 
@@ -46,33 +49,29 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
     @Override
     public ServiceResult<CreateSoapPortsOutput> process(final ServiceTask<CreateSoapPortsInput> serviceTask) {
         final CreateSoapPortsInput input = serviceTask.getInput();
-        final SoapProject soapProject = findType(input.getSoapProjectId());
-        final List<SoapPort> soapPortTypes = toDtoList(input.getSoapPorts(), SoapPort.class);
+        final String soapProjectId = input.getSoapProjectId();
 
-        for(SoapPort newSoapPort : soapPortTypes){
-            SoapPort existingSoapPort = findSoapPortWithName(soapProject, newSoapPort.getName());
+        for(SoapPortDto newSoapPort : input.getSoapPorts()){
+            SoapPortDto existingSoapPort = repository.findSoapPortWithName(soapProjectId, newSoapPort.getName());
 
             if(existingSoapPort == null){
-                soapProject.getPorts().add(newSoapPort);
+                repository.saveSoapPort(soapProjectId, newSoapPort);
                 continue;
             }
 
             final List<SoapOperation> soapOperations = new LinkedList<SoapOperation>();
-            for(SoapOperation newSoapOperation : newSoapPort.getOperations()){
-                SoapOperation existingSoapOperation = findSoapOperationWithName(existingSoapPort, newSoapOperation.getName());
+            for(SoapOperationDto newSoapOperation : newSoapPort.getOperations()){
+                SoapOperationDto existingSoapOperation = repository.findSoapOperationWithName(soapProjectId, existingSoapPort.getId(), newSoapOperation.getName());
 
                 if(existingSoapOperation != null){
                     existingSoapOperation.setOriginalEndpoint(newSoapOperation.getOriginalEndpoint());
                     existingSoapOperation.setSoapVersion(newSoapOperation.getSoapVersion());
-                    soapOperations.add(existingSoapOperation);
+                    repository.updateSoapOperation(soapProjectId, existingSoapPort.getId(), existingSoapOperation.getId(), existingSoapOperation);
                 } else {
-                    soapOperations.add(newSoapOperation);
+                    repository.saveSoapOperation(soapProjectId, existingSoapPort.getId(), newSoapOperation);
                 }
             }
-            existingSoapPort.setOperations(soapOperations);
         }
-
-        save(soapProject);
         return createServiceResult(new CreateSoapPortsOutput());
     }
 }

@@ -28,7 +28,7 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
-import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRecordedRestMockResponseInput;
+import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestMockResponseInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.IdentifyRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
@@ -146,13 +146,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
             if (RestMethodStatus.DISABLED.equals(restMethod.getStatus())) {
                 throw new RestException("The requested REST method, " + restMethod.getName() + ", is disabled");
             } else if (RestMethodStatus.FORWARDED.equals(restMethod.getStatus())) {
-                response = forwardRequest(restRequest, restMethod);
+                response = forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod);
             } else if (RestMethodStatus.RECORDING.equals(restMethod.getStatus())) {
-                response = forwardRequestAndRecordResponse(restRequest, restMethod);
+                response = forwardRequestAndRecordResponse(restRequest, projectId, applicationId, resourceId, restMethod);
             } else if (RestMethodStatus.RECORD_ONCE.equals(restMethod.getStatus())) {
                 response = forwardRequestAndRecordResponseOnce(restRequest, projectId, applicationId, resourceId, restMethod);
             } else { // Status.MOCKED
-                response = mockResponse(restMethod);
+                response = mockResponse(projectId, applicationId, resourceId, restMethod);
             }
 
             HttpHeaders responseHeaders = new HttpHeaders();
@@ -177,10 +177,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param restMethod The REST method which the incoming request belongs to
      * @return The response received from the external endpoint
      */
-    protected RestResponseDto forwardRequest(final RestRequestDto restRequest, final RestMethodDto restMethod){
+    protected RestResponseDto forwardRequest(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
         if(demoMode){
             // If the application is configured to run in demo mode, then use mocked response instead
-            return mockResponse(restMethod);
+            return mockResponse(projectId, applicationId, resourceId, restMethod);
         }
 
 
@@ -257,8 +257,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param restMethod The REST method which the incoming request belongs to
      * @return The response received from the external endpoint
      */
-    protected RestResponseDto forwardRequestAndRecordResponse(final RestRequestDto restRequest, final RestMethodDto restMethod){
-        final RestResponseDto response = forwardRequest(restRequest, restMethod);
+    protected RestResponseDto forwardRequestAndRecordResponse(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
+        final RestResponseDto response = forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod);
         final RestMockResponseDto mockResponse = new RestMockResponseDto();
         final Date date = new Date();
         mockResponse.setBody(response.getBody());
@@ -266,7 +266,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         mockResponse.setHttpHeaders(response.getHttpHeaders());
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
-        serviceProcessor.process(new CreateRecordedRestMockResponseInput(restMethod.getId(), mockResponse));
+        serviceProcessor.process(new CreateRestMockResponseInput(projectId, applicationId, resourceId, restMethod.getId(), mockResponse));
         return response;
     }
 
@@ -282,7 +282,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @return The response received from the external endpoint
      */
     protected RestResponseDto forwardRequestAndRecordResponseOnce(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
-        final RestResponseDto response = forwardRequestAndRecordResponse(restRequest, restMethod);
+        final RestResponseDto response = forwardRequestAndRecordResponse(restRequest, projectId, applicationId, resourceId, restMethod);
         restMethod.setStatus(RestMethodStatus.MOCKED);
         serviceProcessor.process(new UpdateRestMethodInput(projectId, applicationId, resourceId, restMethod.getId(), restMethod));
         return response;
@@ -294,7 +294,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param restMethod The REST method which the incoming request belongs to
      * @return Returns a selected mocked response which will be returned to the service consumer
      */
-    protected RestResponseDto mockResponse(final RestMethodDto restMethod){
+    protected RestResponseDto mockResponse(final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
         final List<RestMockResponseDto> mockResponses = new ArrayList<RestMockResponseDto>();
         for(RestMockResponseDto mockResponse : restMethod.getMockResponses()){
             if(mockResponse.getStatus().equals(RestMockResponseStatus.ENABLED)){
@@ -314,7 +314,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 currentSequenceNumber = 0;
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
-            serviceProcessor.process(new UpdateCurrentRestMockResponseSequenceIndexInput(restMethod.getId(), currentSequenceNumber + 1));
+            serviceProcessor.process(new UpdateCurrentRestMockResponseSequenceIndexInput(projectId, applicationId, resourceId, restMethod.getId(), currentSequenceNumber + 1));
         }
 
         if(mockResponse == null){

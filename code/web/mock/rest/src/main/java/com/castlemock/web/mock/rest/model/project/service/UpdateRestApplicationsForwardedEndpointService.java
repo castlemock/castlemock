@@ -23,6 +23,8 @@ import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsForwardedEndpointInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestApplicationsForwardedEndpointOutput;
 
@@ -45,14 +47,14 @@ public class UpdateRestApplicationsForwardedEndpointService extends AbstractRest
     public ServiceResult<UpdateRestApplicationsForwardedEndpointOutput> process(final ServiceTask<UpdateRestApplicationsForwardedEndpointInput> serviceTask) {
         final UpdateRestApplicationsForwardedEndpointInput input = serviceTask.getInput();
         for(RestApplicationDto restApplicationDto : input.getRestApplications()){
-            RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), restApplicationDto.getId());
-            for(RestResource restResource : restApplication.getResources()){
-                for(RestMethod restMethod : restResource.getMethods()){
+            RestApplicationDto restApplication = repository.findRestApplication(input.getRestProjectId(), restApplicationDto.getId());
+            for(RestResourceDto restResource : restApplication.getResources()){
+                for(RestMethodDto restMethod : restResource.getMethods()){
                     restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
+                    repository.updateRestMethod(input.getRestProjectId(), restApplication.getId(), restResource.getId(), restMethod.getId(), restMethod);
                 }
             }
         }
-        save(input.getRestProjectId());
         return createServiceResult(new UpdateRestApplicationsForwardedEndpointOutput());
     }
 }

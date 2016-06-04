@@ -19,6 +19,9 @@ package com.castlemock.web.mock.rest.model.event.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
+import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+
+import java.util.List;
 
 /**
  * The rest event repository provides the functionality to interact with the file system.
@@ -29,5 +32,19 @@ import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
  * @see RestEvent
  * @see Repository
  */
-public interface RestEventRepository extends Repository<RestEvent, String> {
+public interface RestEventRepository extends Repository<RestEvent, RestEventDto, String> {
+
+    /**
+     * Find events by REST method ID
+     * @param restMethodId The id of the REST method
+     * @return A list of {@link RestEventDto} that matches the provided <code>restMethodId</code>
+     */
+    List<RestEventDto> findEventsByMethodId(String restMethodId);
+
+    /**
+     * The service finds the oldest event
+     * @return The oldest event
+     */
+    RestEventDto getOldestEvent();
+
 }

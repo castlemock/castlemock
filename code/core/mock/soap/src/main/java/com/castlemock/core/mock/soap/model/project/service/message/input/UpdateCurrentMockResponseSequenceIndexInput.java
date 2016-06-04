@@ -26,11 +26,17 @@ import com.castlemock.core.basis.model.validation.NotNull;
 public class UpdateCurrentMockResponseSequenceIndexInput implements Input {
 
     @NotNull
+    private String soapProjectId;
+    @NotNull
+    private String soapPortId;
+    @NotNull
     private String soapOperationId;
     @NotNull
     private Integer currentResponseSequenceIndex;
 
-    public UpdateCurrentMockResponseSequenceIndexInput(String soapOperationId, Integer currentResponseSequenceIndex) {
+    public UpdateCurrentMockResponseSequenceIndexInput(String soapProjectId, String soapPortId, String soapOperationId, Integer currentResponseSequenceIndex) {
+        this.soapProjectId = soapProjectId;
+        this.soapPortId = soapPortId;
         this.soapOperationId = soapOperationId;
         this.currentResponseSequenceIndex = currentResponseSequenceIndex;
     }
@@ -49,5 +55,21 @@ public class UpdateCurrentMockResponseSequenceIndexInput implements Input {
 
     public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
         this.currentResponseSequenceIndex = currentResponseSequenceIndex;
+    }
+
+    public String getSoapProjectId() {
+        return soapProjectId;
+    }
+
+    public void setSoapProjectId(String soapProjectId) {
+        this.soapProjectId = soapProjectId;
+    }
+
+    public String getSoapPortId() {
+        return soapPortId;
+    }
+
+    public void setSoapPortId(String soapPortId) {
+        this.soapPortId = soapPortId;
     }
 }

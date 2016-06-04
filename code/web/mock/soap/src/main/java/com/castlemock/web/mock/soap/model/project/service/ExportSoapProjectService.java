@@ -40,7 +40,7 @@ public class ExportSoapProjectService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ExportSoapProjectOutput> process(final ServiceTask<ExportSoapProjectInput> serviceTask) {
         final ExportSoapProjectInput input = serviceTask.getInput();
-        final String rawProjet = exportType(input.getRestProjectId());
+        final String rawProjet = repository.exportOne(input.getRestProjectId());
         return createServiceResult(new ExportSoapProjectOutput(rawProjet));
     }
 }

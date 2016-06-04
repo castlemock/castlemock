@@ -16,14 +16,19 @@
 
 package com.castlemock.web.basis.model.configuration.repository;
 
+import com.castlemock.core.basis.model.SearchQuery;
+import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.configuration.domain.Configuration;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
+import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.castlemock.core.basis.model.configuration.repository.ConfigurationRepository;
 import com.castlemock.core.basis.model.user.repository.UserRepository;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -35,9 +40,10 @@ import org.springframework.stereotype.Repository;
  * @see UserRepository
  * @see RepositoryImpl
  * @see ConfigurationGroup
+ * @see ConfigurationGroupDto
  */
 @Repository
-public class ConfigurationRepositoryImpl extends RepositoryImpl<ConfigurationGroup, String> implements ConfigurationRepository {
+public class ConfigurationRepositoryImpl extends RepositoryImpl<ConfigurationGroup, ConfigurationGroupDto, String> implements ConfigurationRepository {
 
     @Value(value = "${configuration.file.directory}")
     private String configurationFileDirectory;
@@ -90,5 +96,10 @@ public class ConfigurationRepositoryImpl extends RepositoryImpl<ConfigurationGro
             Preconditions.checkArgument(!configuration.getKey().isEmpty(), "Configuration key cannot be empty");
             Preconditions.checkArgument(!configuration.getValue().isEmpty(), "Configuration value cannot be empty");
         }
+    }
+
+    @Override
+    public List<SearchResult> search(SearchQuery query) {
+        throw new UnsupportedOperationException("Search method is not supported in the Configuration repository");
     }
 }

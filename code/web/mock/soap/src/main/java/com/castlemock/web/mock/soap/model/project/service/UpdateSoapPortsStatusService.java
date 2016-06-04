@@ -20,6 +20,10 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsStatusInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapPortsStatusOutput;
 
@@ -43,11 +47,12 @@ public class UpdateSoapPortsStatusService extends AbstractSoapProjectService imp
     @Override
     public ServiceResult<UpdateSoapPortsStatusOutput> process(final ServiceTask<UpdateSoapPortsStatusInput> serviceTask) {
         final UpdateSoapPortsStatusInput input = serviceTask.getInput();
-        final List<SoapOperation> soapOperations = findSoapOperationType(input.getSoapProjectId(), input.getSoapPortId());
-        for(SoapOperation soapOperation : soapOperations){
-            soapOperation.setStatus(input.getSoapOperationStatus());
+        final SoapPortDto soapPort = repository.findSoapPort(input.getSoapProjectId(), input.getSoapPortId());
+        final SoapOperationStatus soapOperationStatus = input.getSoapOperationStatus();
+        for(SoapOperationDto soapOperation : soapPort.getOperations()){
+            soapOperation.setStatus(soapOperationStatus);
+            repository.updateSoapOperation(input.getSoapProjectId(), input.getSoapPortId(), soapOperation.getId(), soapOperation);
         }
-        save(input.getSoapProjectId());
         return createServiceResult(new UpdateSoapPortsStatusOutput());
     }
 }

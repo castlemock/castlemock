@@ -50,16 +50,8 @@ public class ReadRestEventWithMethodIdService extends AbstractRestEventService i
     @Override
     public ServiceResult<ReadRestEventWithMethodIdOutput> process(ServiceTask<ReadRestEventWithMethodIdInput> serviceTask) {
         final ReadRestEventWithMethodIdInput input = serviceTask.getInput();
-        final List<RestEventDto> events = new ArrayList<RestEventDto>();
-        for(RestEvent event : findAllTypes()){
-            if(event.getMethodId().equals(input.getRestMethodId())){
-                RestEventDto restEventDto = mapper.map(event, RestEventDto.class);
-                events.add(restEventDto);
-            }
-        }
-
+        final List<RestEventDto> events = repository.findEventsByMethodId(input.getRestMethodId());
         Collections.sort(events, new EventDtoStartDateComparator());
-
         return createServiceResult(new ReadRestEventWithMethodIdOutput(events));
     }
 }

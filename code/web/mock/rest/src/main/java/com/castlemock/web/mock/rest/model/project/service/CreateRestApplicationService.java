@@ -22,6 +22,7 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestApplicationOutput;
 
@@ -43,11 +44,7 @@ public class CreateRestApplicationService extends AbstractRestProjectService imp
     @Override
     public ServiceResult<CreateRestApplicationOutput> process(final ServiceTask<CreateRestApplicationInput> serviceTask) {
         final CreateRestApplicationInput input = serviceTask.getInput();
-        final RestProject restProject = findType(input.getRestProjectId());
-        final RestApplicationDto restApplication = input.getRestApplication();
-        final RestApplication createdRestApplication = mapper.map(restApplication, RestApplication.class);
-        restProject.getApplications().add(createdRestApplication);
-        save(input.getRestProjectId());
-        return createServiceResult(new CreateRestApplicationOutput(mapper.map(createdRestApplication, RestApplicationDto.class)));
+        final RestApplicationDto createdRestApplication = repository.saveRestApplication(input.getRestProjectId(), input.getRestApplication());
+        return createServiceResult(new CreateRestApplicationOutput(createdRestApplication));
     }
 }

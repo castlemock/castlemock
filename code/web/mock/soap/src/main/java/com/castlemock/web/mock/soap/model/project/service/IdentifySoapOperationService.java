@@ -25,6 +25,8 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.IdentifySoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
 
@@ -46,15 +48,18 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
     @Override
     public ServiceResult<IdentifySoapOperationOutput> process(final ServiceTask<IdentifySoapOperationInput> serviceTask) {
         final IdentifySoapOperationInput input = serviceTask.getInput();
-        final SoapProject project= findType(input.getSoapProjectId());
-        SoapPort soapPort = null;
+        final SoapProjectDto project = repository.findOne(input.getSoapProjectId());
+        SoapPortDto soapPort = null;
         SoapOperationDto soapOperationDto = null;
-        for(SoapPort tempSoapPort : project.getPorts()){
+        for(SoapPortDto tempSoapPort : project.getPorts()){
             if(tempSoapPort.getUri().equals(input.getUri())){
                 soapPort = tempSoapPort;
                 soapOperationDto = findSoapOperation(tempSoapPort, input.getHttpMethod(), input.getType(), input.getSoapOperationIdentifier());
                 break;
             }
+        }
+        if(soapOperationDto == null){
+            throw new IllegalArgumentException("Unable to identify SOAP operation: " + input.getUri());
         }
 
         return createServiceResult(new IdentifySoapOperationOutput(project.getId(), soapPort.getId(), soapOperationDto.getId(), soapOperationDto));
@@ -68,10 +73,10 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
      * @param soapOperationInputMessageName The SOAP operation input message name. The identifier for the SOAP operation
      * @return The SOAP operation that matches the search criteria. Null otherwise
      */
-    private SoapOperationDto findSoapOperation(SoapPort soapPort, HttpMethod httpMethod, SoapVersion soapOperationVersion, String soapOperationInputMessageName){
-        for(SoapOperation soapOperation : soapPort.getOperations()){
+    private SoapOperationDto findSoapOperation(SoapPortDto soapPort, HttpMethod httpMethod, SoapVersion soapOperationVersion, String soapOperationInputMessageName){
+        for(SoapOperationDto soapOperation : soapPort.getOperations()){
             if(soapOperation.getHttpMethod().equals(httpMethod) && soapOperation.getSoapVersion().equals(soapOperationVersion) && soapOperation.getIdentifier().equalsIgnoreCase(soapOperationInputMessageName)){
-                return mapper.map(soapOperation, SoapOperationDto.class);
+                return soapOperation;
             }
         }
         return null;

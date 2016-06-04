@@ -50,16 +50,8 @@ public class ReadSoapEventsByOperationIdService extends AbstractSoapEventService
     @Override
     public ServiceResult<ReadSoapEventsByOperationIdOutput> process(ServiceTask<ReadSoapEventsByOperationIdInput> serviceTask) {
         final ReadSoapEventsByOperationIdInput input = serviceTask.getInput();
-        final List<SoapEventDto> events = new ArrayList<SoapEventDto>();
-        for(SoapEvent event : findAllTypes()){
-            if(event.getOperationId().equals(input.getOperationId())){
-                SoapEventDto soapEventDto = mapper.map(event, SoapEventDto.class);
-                events.add(soapEventDto);
-            }
-        }
-
+        final List<SoapEventDto> events = repository.findEventsByOperationId(input.getOperationId());
         Collections.sort(events, new EventDtoStartDateComparator());
-
         return createServiceResult(new ReadSoapEventsByOperationIdOutput(events));
     }
 }

@@ -23,7 +23,6 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.service.message.input.CreateRecordedSoapMockResponseInput;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;

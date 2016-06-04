@@ -23,6 +23,10 @@ import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestApplicationsInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestApplicationsOutput;
 
@@ -47,21 +51,20 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
     @Override
     public ServiceResult<CreateRestApplicationsOutput> process(final ServiceTask<CreateRestApplicationsInput> serviceTask) {
         final CreateRestApplicationsInput input = serviceTask.getInput();
-        final RestProject restProject = findType(input.getRestProjectId());
-        final List<RestApplication> providedRestApplication = toDtoList(input.getRestApplications(), RestApplication.class);
+        final RestProjectDto restProject = repository.findOne(input.getRestProjectId());
 
-        List<RestApplication> restApplications = new ArrayList<RestApplication>();
-        for(RestApplication newRestApplication : providedRestApplication){
-            RestApplication existingRestApplication = findRestApplication(restProject, newRestApplication.getName());
+        List<RestApplicationDto> restApplications = new ArrayList<RestApplicationDto>();
+        for(RestApplicationDto newRestApplication : input.getRestApplications()){
+            RestApplicationDto existingRestApplication = findRestApplication(restProject, newRestApplication.getName());
 
             if(existingRestApplication == null){
                 restApplications.add(newRestApplication);
                 continue;
             }
 
-            List<RestResource> restResources = new ArrayList<RestResource>();
-            for(RestResource newRestResource : newRestApplication.getResources()){
-                RestResource existingRestResource = findRestResource(existingRestApplication, newRestResource.getName());
+            List<RestResourceDto> restResources = new ArrayList<RestResourceDto>();
+            for(RestResourceDto newRestResource : newRestApplication.getResources()){
+                RestResourceDto existingRestResource = findRestResource(existingRestApplication, newRestResource.getName());
 
                 if (existingRestResource == null) {
                     restResources.add(newRestResource);
@@ -70,9 +73,9 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
 
                 existingRestResource.setUri(newRestResource.getUri());
 
-                List<RestMethod> restMethods = new ArrayList<RestMethod>();
-                for(RestMethod newRestMethod : newRestResource.getMethods()){
-                    RestMethod existingRestMethod = findRestMethod(existingRestResource, newRestMethod.getName());
+                List<RestMethodDto> restMethods = new ArrayList<RestMethodDto>();
+                for(RestMethodDto newRestMethod : newRestResource.getMethods()){
+                    RestMethodDto existingRestMethod = findRestMethod(existingRestResource, newRestMethod.getName());
 
                     if (existingRestMethod == null) {
                         restMethods.add(newRestMethod);
@@ -100,8 +103,8 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
      * @param name The name of the REST application
      * @return A REST application that matches the search criteria. Null otherwise.
      */
-    public RestApplication findRestApplication(RestProject restProject, String name){
-        for(RestApplication restApplication : restProject.getApplications()){
+    public RestApplicationDto findRestApplication(RestProjectDto restProject, String name){
+        for(RestApplicationDto restApplication : restProject.getApplications()){
             if(restApplication.getName().equals(name)){
                 return restApplication;
             }
@@ -115,8 +118,8 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
      * @param name The name of the REST resource
      * @return A REST resource that matches the search criteria. Null otherwise.
      */
-    public RestResource findRestResource(RestApplication restApplication, String name){
-        for(RestResource restResource : restApplication.getResources()){
+    public RestResourceDto findRestResource(RestApplicationDto restApplication, String name){
+        for(RestResourceDto restResource : restApplication.getResources()){
             if(restResource.getName().equals(name)){
                 return restResource;
             }
@@ -130,8 +133,8 @@ public class CreateRestApplicationsService extends AbstractRestProjectService im
      * @param name The name of the REST method
      * @return A REST method that matches the search criteria. Null otherwise.
      */
-    public RestMethod findRestMethod(RestResource restResource, String name){
-        for(RestMethod restMethod : restResource.getMethods()){
+    public RestMethodDto findRestMethod(RestResourceDto restResource, String name){
+        for(RestMethodDto restMethod : restResource.getMethods()){
             if(restMethod.getName().equals(name)){
                 return restMethod;
             }

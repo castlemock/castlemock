@@ -43,13 +43,7 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
     public ServiceResult<UpdateRestMethodOutput> process(final ServiceTask<UpdateRestMethodInput> serviceTask) {
         final UpdateRestMethodInput input = serviceTask.getInput();
         final RestMethodDto updatedRestMethod = input.getRestMethod();
-        final RestMethod restMethod = findRestMethodType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId());
-        restMethod.setName(updatedRestMethod.getName());
-        restMethod.setHttpMethod(updatedRestMethod.getHttpMethod());
-        restMethod.setResponseStrategy(updatedRestMethod.getResponseStrategy());
-        restMethod.setStatus(updatedRestMethod.getStatus());
-        restMethod.setForwardedEndpoint(updatedRestMethod.getForwardedEndpoint());
-        save(input.getRestProjectId());
+        repository.updateRestMethod(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId(), input.getRestMethod());
         return createServiceResult(new UpdateRestMethodOutput(updatedRestMethod));
     }
 }

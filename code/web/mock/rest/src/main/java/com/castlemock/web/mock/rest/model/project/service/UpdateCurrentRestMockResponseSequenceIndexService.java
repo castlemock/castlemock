@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateCurrentRestMockResponseSequenceIndexOutput;
 
@@ -41,10 +43,9 @@ public class UpdateCurrentRestMockResponseSequenceIndexService extends AbstractR
     @Override
     public ServiceResult<UpdateCurrentRestMockResponseSequenceIndexOutput> process(final ServiceTask<UpdateCurrentRestMockResponseSequenceIndexInput> serviceTask) {
         final UpdateCurrentRestMockResponseSequenceIndexInput input = serviceTask.getInput();
-        final RestMethod restMethod = findRestMethodByRestMethodId(input.getRestMethodId());
-        final String restProjectId = findRestProjectIdForRestMethod(input.getRestMethodId());
-        restMethod.setCurrentResponseSequenceIndex(input.getCurrentRestMockResponseSequenceIndex());
-        save(restProjectId);
+        final RestMethodDto restMethodDto = repository.findRestMethod(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId());
+        restMethodDto.setCurrentResponseSequenceIndex(input.getCurrentRestMockResponseSequenceIndex());
+        repository.updateRestMethod(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId(), restMethodDto);
         return createServiceResult(new UpdateCurrentRestMockResponseSequenceIndexOutput());
     }
 }

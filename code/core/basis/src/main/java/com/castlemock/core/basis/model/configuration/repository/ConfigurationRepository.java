@@ -18,6 +18,7 @@ package com.castlemock.core.basis.model.configuration.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
+import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
 
 /**
  * The configuration file repository provides the functionality to interact with the file system.
@@ -26,7 +27,8 @@ import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
  * @author Karl Dahlgren
  * @since 1.0
  * @see ConfigurationGroup
+ * @see ConfigurationGroupDto
  * @see Repository
  */
-public interface ConfigurationRepository extends Repository<ConfigurationGroup, String> {
+public interface ConfigurationRepository extends Repository<ConfigurationGroup, ConfigurationGroupDto, String> {
 }

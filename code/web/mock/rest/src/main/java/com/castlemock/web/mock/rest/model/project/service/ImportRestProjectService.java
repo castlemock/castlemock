@@ -40,7 +40,7 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
     @Override
     public ServiceResult<ImportRestProjectOutput> process(final ServiceTask<ImportRestProjectInput> serviceTask) {
         final ImportRestProjectInput input = serviceTask.getInput();
-        importType(input.getProjectRaw());
+        repository.importOne(input.getProjectRaw());
         return createServiceResult(new ImportRestProjectOutput());
     }
 }

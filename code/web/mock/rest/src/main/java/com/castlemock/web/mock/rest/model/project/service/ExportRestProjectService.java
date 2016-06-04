@@ -40,7 +40,7 @@ public class ExportRestProjectService extends AbstractRestProjectService impleme
     @Override
     public ServiceResult<ExportRestProjectOutput> process(final ServiceTask<ExportRestProjectInput> serviceTask) {
         final ExportRestProjectInput input = serviceTask.getInput();
-        final String rawProjet = exportType(input.getRestProjectId());
+        final String rawProjet = repository.exportOne(input.getRestProjectId());
         return createServiceResult(new ExportRestProjectOutput(rawProjet));
     }
 }

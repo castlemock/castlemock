@@ -16,11 +16,27 @@
 
 package com.castlemock.web.mock.soap.model.event.repository;
 
+import com.castlemock.core.basis.model.SearchQuery;
+import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.core.basis.model.event.dto.EventDto;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
+import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -33,7 +49,7 @@ import org.springframework.stereotype.Repository;
  * @see SoapEvent
  */
 @Repository
-public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, String> implements SoapEventRepository {
+public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEventDto, String> implements SoapEventRepository {
 
     @Value(value = "${soap.event.file.directory}")
     private String soapEventFileDirectory;
@@ -78,4 +94,47 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, String> i
         Preconditions.checkNotNull(soapEvent.getStartDate(), "Event start date cannot be null");
     }
 
+    /**
+     * The events for a specific operation id
+     * @param operationId The id of the operation that the event belongs to
+     * @return Returns a list of events
+     */
+    @Override
+    public List<SoapEventDto> findEventsByOperationId(String operationId) {
+        final List<SoapEvent> events = new ArrayList<SoapEvent>();
+        for(SoapEvent event : collection.values()){
+            if(event.getOperationId().equals(operationId)){
+                events.add(event);
+            }
+        }
+        return toDtoList(events, SoapEventDto.class);
+    }
+
+    /**
+     * The service finds the oldest event
+     * @return The oldest event
+     */
+    @Override
+    public SoapEventDto getOldestEvent() {
+        Event oldestEvent = null;
+        for(Event event : collection.values()){
+            if(oldestEvent == null){
+                oldestEvent = event;
+            } else if(event.getStartDate().before(oldestEvent.getStartDate())){
+                oldestEvent = event;
+            }
+        }
+
+        return oldestEvent == null ? null : mapper.map(oldestEvent, SoapEventDto.class);
+    }
+
+    /**
+     * The method provides the functionality to search in the repository with a {@link SearchQuery}
+     * @param query The search query
+     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
+     */
+    @Override
+    public List<SearchResult> search(SearchQuery query) {
+        throw new UnsupportedOperationException();
+    }
 }

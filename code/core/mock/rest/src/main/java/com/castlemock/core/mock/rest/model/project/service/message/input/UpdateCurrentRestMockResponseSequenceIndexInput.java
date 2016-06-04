@@ -26,13 +26,46 @@ import com.castlemock.core.basis.model.validation.NotNull;
 public class UpdateCurrentRestMockResponseSequenceIndexInput implements Input {
 
     @NotNull
+    private String restProjectId;
+    @NotNull
+    private String restApplicationId;
+    @NotNull
+    private String restResourceId;
+    @NotNull
     private String restMethodId;
     @NotNull
     private Integer currentRestMockResponseSequenceIndex;
 
-    public UpdateCurrentRestMockResponseSequenceIndexInput(String restMethodId, Integer currentRestMockResponseSequenceIndex) {
+    public UpdateCurrentRestMockResponseSequenceIndexInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, Integer currentRestMockResponseSequenceIndex) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceId = restResourceId;
         this.restMethodId = restMethodId;
         this.currentRestMockResponseSequenceIndex = currentRestMockResponseSequenceIndex;
+    }
+
+    public String getRestProjectId() {
+        return restProjectId;
+    }
+
+    public void setRestProjectId(String restProjectId) {
+        this.restProjectId = restProjectId;
+    }
+
+    public String getRestApplicationId() {
+        return restApplicationId;
+    }
+
+    public void setRestApplicationId(String restApplicationId) {
+        this.restApplicationId = restApplicationId;
+    }
+
+    public String getRestResourceId() {
+        return restResourceId;
+    }
+
+    public void setRestResourceId(String restResourceId) {
+        this.restResourceId = restResourceId;
     }
 
     public String getRestMethodId() {

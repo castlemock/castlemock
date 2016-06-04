@@ -42,8 +42,7 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ReadSoapOperationOutput> process(final ServiceTask<ReadSoapOperationInput> serviceTask) {
         final ReadSoapOperationInput input = serviceTask.getInput();
-        final SoapOperation soapOperation = findSoapOperationType(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId());
-        final SoapOperationDto soapOperationDto = soapOperation != null ? mapper.map(soapOperation, SoapOperationDto.class) : null;
+        final SoapOperationDto soapOperationDto = repository.findSoapOperation(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId());
         return createServiceResult(new ReadSoapOperationOutput(soapOperationDto));
     }
 }

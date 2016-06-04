@@ -42,8 +42,7 @@ public class ReadRestResourceService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<ReadRestResourceOutput> process(final ServiceTask<ReadRestResourceInput> serviceTask) {
         final ReadRestResourceInput input = serviceTask.getInput();
-        final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
-        final RestResourceDto restResourceDto = restResource != null ? mapper.map(restResource, RestResourceDto.class) : null;
+        final RestResourceDto restResourceDto = repository.findRestResource(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
         return createServiceResult(new ReadRestResourceOutput(restResourceDto));
     }
 }

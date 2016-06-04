@@ -22,8 +22,13 @@ import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
@@ -41,14 +46,19 @@ import java.util.concurrent.ConcurrentHashMap;
  * @see Saveable
  */
 @org.springframework.stereotype.Repository
-public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializable> implements Repository<T, I> {
+public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Serializable> implements Repository<T, D, I> {
 
     protected Class<T> entityClass;
 
     protected Class<I> idClass;
 
+    protected Class<D> dtoClass;
+
     protected Map<I, T> collection = new ConcurrentHashMap<I, T>();
 
+
+    @Autowired
+    protected DozerBeanMapper mapper;
     @Autowired
     private FileRepositorySupport fileRepositorySupport;
 
@@ -62,7 +72,8 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
     public RepositoryImpl() {
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-        this.idClass = (Class<I>) genericSuperclass.getActualTypeArguments()[1];
+        this.dtoClass = (Class<D>) genericSuperclass.getActualTypeArguments()[1];
+        this.idClass = (Class<I>) genericSuperclass.getActualTypeArguments()[2];
     }
 
 
@@ -89,10 +100,11 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
      * @return Returns an instance that matches the provided id
      */
     @Override
-    public T findOne(final I id) {
+    public D findOne(final I id) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         LOGGER.debug("Retrieving " + entityClass.getSimpleName() + " with id " + id);
-        return collection.get(id);
+        T type = collection.get(id);
+        return type != null ? mapper.map(type, dtoClass) : null;
     }
 
     /**
@@ -100,20 +112,21 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
      * @return A list that contains all the instances of the type that is managed by the operation
      */
     @Override
-    public List<T> findAll() {
+    public List<D> findAll() {
         LOGGER.debug("Retrieving all instances for " + entityClass.getSimpleName());
-        return new LinkedList<>(collection.values());
+        return toDtoList(collection.values(), dtoClass);
     }
 
     /**
      * The save method provides the functionality to save an instance to the file system.
-     * @param type The type that will be saved to the file system.
+     * @param dto The type that will be saved to the file system.
      * @return The type that was saved to the file system. The main reason for it is being returned is because
      *         there could be modifications of the object during the save process. For example, if the type does not
      *         have an identifier, then the method will generate a new identifier for the type.
      */
     @Override
-    public T save(final T type) {
+    public D save(final D dto) {
+        T type = mapper.map(dto, entityClass);
         I id = type.getId();
 
         if(id == null){
@@ -124,7 +137,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
         final String filename = getFilename(id);
         fileRepositorySupport.save(type, filename);
         collection.put(id, type);
-        return type;
+        return mapper.map(type, dtoClass);
     }
 
     /**
@@ -213,6 +226,63 @@ public abstract class RepositoryImpl<T extends Saveable<I>, I extends Serializab
         final Collection<T> loadedTypes = fileRepositorySupport.load(entityClass, directory, postfix);
         return loadedTypes;
     }
+
+    /**
+     * The method provides the functionality to convert a Collection of TYPE instances into a list of DTO instances
+     * @param types The collection that will be converted into a list of DTO
+     * @param clazz CLass of the DTO type (D)
+     * @param <T> The type that the operation is managing
+     * @param <D> The DTO (Data transfer object) version of the type (TYPE)
+     * @return The provided collection but converted into the DTO class
+     */
+    protected <T, D> List toDtoList(final Collection<T> types, Class<D> clazz) {
+        final List<D> dtos = new ArrayList<D>();
+        for (T type : types) {
+            dtos.add(mapper.map(type, clazz));
+        }
+        return dtos;
+    }
+
+    /**
+     * The method provides the functionality to export an entity and convert it to a String
+     * @param id The id of the entityy that will be converted and exported
+     * @return The entity with the provided id as a String
+     */
+    public String exportOne(final I id){
+        try {
+            final T type = collection.get(id);
+            final JAXBContext context = JAXBContext.newInstance(entityClass);
+            final Marshaller marshaller = context.createMarshaller();
+            final StringWriter writer = new StringWriter();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.marshal(type, writer);
+            return writer.toString();
+        }
+        catch (JAXBException e) {
+            throw new IllegalStateException("Unable to export type", e);
+        }
+    }
+
+    /**
+     * The method provides the functionality to import a enity as a String
+     * @param raw The entity as a String
+     */
+    public void importOne(final String raw){
+
+        try {
+            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream (raw.getBytes());
+            final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass);
+            final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            final T type = (T) jaxbUnmarshaller.unmarshal(byteArrayInputStream);
+            type.setId(null);
+            D dto = mapper.map(type, dtoClass);
+            save(dto);
+        } catch (JAXBException e) {
+            throw new IllegalStateException("Unable to import type", e);
+        }
+    }
+
+
 
     protected String generateId(){
         return RandomStringUtils.random(6, true, true);

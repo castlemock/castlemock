@@ -4,7 +4,6 @@ import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
-import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRecordedRestMockResponseInput;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;

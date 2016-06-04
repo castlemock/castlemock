@@ -42,10 +42,8 @@ public class DeleteRestMockResponseService extends AbstractRestProjectService im
     @Override
     public ServiceResult<DeleteRestMockResponseOutput> process(final ServiceTask<DeleteRestMockResponseInput> serviceTask) {
         final DeleteRestMockResponseInput input = serviceTask.getInput();
-        final RestMockResponse restMockResponse = findRestMockResponseType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId(), input.getRestMockResponseId());
-        final RestMethod restMethod = findRestMethodType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId());
-        restMethod.getMockResponses().remove(restMockResponse);
-        save(input.getRestProjectId());
+        repository.deleteRestMockResponse(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(),
+                input.getRestMethodId(), input.getRestMockResponseId());
         return createServiceResult(new DeleteRestMockResponseOutput());
     }
 }

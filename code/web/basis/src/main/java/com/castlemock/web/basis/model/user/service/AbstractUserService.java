@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.repository.UserRepository;
 import com.castlemock.web.basis.model.session.token.repository.SessionTokenRepository;
 import com.castlemock.web.basis.model.AbstractService;
 import com.google.common.base.Preconditions;
@@ -36,7 +37,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractUserService extends AbstractService<User, UserDto, String> {
+public abstract class AbstractUserService extends AbstractService<User, UserDto, String, UserRepository> {
 
     @Autowired
     private SessionTokenRepository sessionTokenRepository;
@@ -55,9 +56,9 @@ public abstract class AbstractUserService extends AbstractService<User, UserDto,
         LOGGER.debug("Finding user with role " + role);
         final List<UserDto> result = new ArrayList<UserDto>();
 
-        for (User user : findAllTypes()) {
+        for (UserDto user : findAll()) {
             if(role.equals(user.getRole())){
-                result.add(mapper.map(user, dtoClass));
+                result.add(user);
             }
         }
         LOGGER.debug("User found with role " + role + ": " + result.size());
@@ -75,9 +76,9 @@ public abstract class AbstractUserService extends AbstractService<User, UserDto,
     protected UserDto findByUsername(final String username) {
         Preconditions.checkNotNull(username, "Username cannot be null");
         Preconditions.checkArgument(!username.isEmpty(), "Username cannot be empty");
-        for (User user : findAllTypes()) {
+        for (UserDto user : findAll()) {
             if(username.equalsIgnoreCase(user.getUsername())){
-                return mapper.map(user, dtoClass);
+                return user;
             }
         }
         return null;

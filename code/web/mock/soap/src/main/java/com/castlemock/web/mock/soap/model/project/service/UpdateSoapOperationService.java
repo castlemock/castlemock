@@ -42,12 +42,7 @@ public class UpdateSoapOperationService extends AbstractSoapProjectService imple
     @Override
     public ServiceResult<UpdateSoapOperationOutput> process(final ServiceTask<UpdateSoapOperationInput> serviceTask) {
         final UpdateSoapOperationInput input = serviceTask.getInput();
-        final SoapOperationDto updatedSoapOperation = input.getUpdatedSoapOperation();
-        final SoapOperation soapOperation = findSoapOperationType(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId());
-        soapOperation.setStatus(updatedSoapOperation.getStatus());
-        soapOperation.setForwardedEndpoint(updatedSoapOperation.getForwardedEndpoint());
-        soapOperation.setResponseStrategy(updatedSoapOperation.getResponseStrategy());
-        save(input.getSoapProjectId());
+        final SoapOperationDto updatedSoapOperation = repository.updateSoapOperation(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId(), input.getUpdatedSoapOperation());
         return createServiceResult(new UpdateSoapOperationOutput(updatedSoapOperation));
     }
 }

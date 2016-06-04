@@ -47,7 +47,7 @@ public class CreateRestEventService extends AbstractRestEventService implements 
     public ServiceResult<CreateRestEventOutput> process(ServiceTask<CreateRestEventInput> serviceTask) {
         final CreateRestEventInput input = serviceTask.getInput();
         if(count() >= restMaxEventCount){
-            EventDto eventDto = getOldestEvent();
+            EventDto eventDto = repository.getOldestEvent();
             delete(eventDto.getId());
         }
         final RestEventDto createdRestEvent = save(input.getRestEvent());

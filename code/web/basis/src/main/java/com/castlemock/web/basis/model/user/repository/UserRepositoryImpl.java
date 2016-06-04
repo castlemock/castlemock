@@ -16,9 +16,12 @@
 
 package com.castlemock.web.basis.model.user.repository;
 
+import com.castlemock.core.basis.model.SearchQuery;
+import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.dto.UserDto;
 import com.castlemock.core.basis.model.user.repository.UserRepository;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
@@ -28,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -38,9 +42,10 @@ import java.util.Date;
  * @see UserRepository
  * @see RepositoryImpl
  * @see User
+ * @see UserDto
  */
 @Repository
-public class UserRepositoryImpl extends RepositoryImpl<User, String> implements UserRepository {
+public class UserRepositoryImpl extends RepositoryImpl<User, UserDto, String> implements UserRepository {
 
     @Value(value = "${user.file.directory}")
     private String userFileDirectory;
@@ -58,7 +63,7 @@ public class UserRepositoryImpl extends RepositoryImpl<User, String> implements 
     @Override
     protected void postInitiate() {
         if(collection.isEmpty()){
-            final User user = new User();
+            final UserDto user = new UserDto();
             user.setId(generateId());
             user.setUsername("admin");
             user.setPassword(PASSWORD_ENCODER.encode("admin"));
@@ -68,16 +73,6 @@ public class UserRepositoryImpl extends RepositoryImpl<User, String> implements 
             user.setUpdated(new Date());
             user.setEmail(new String());
             save(user);
-        }
-
-        // [Version < v1.2] The following code is to fix users with invalid ids, such as the default admin
-        // The code should be removed in later updates.
-        for(User user : collection.values()){
-            if(user.getId().isEmpty()){
-                delete(user.getId());
-                user.setId(generateId());
-                save(user);
-            }
         }
     }
 
@@ -124,5 +119,10 @@ public class UserRepositoryImpl extends RepositoryImpl<User, String> implements 
         Preconditions.checkNotNull(user.getUsername());
         Preconditions.checkArgument(!user.getPassword().isEmpty(), "User password cannot be empty");
         Preconditions.checkArgument(!user.getUsername().isEmpty(), "User username cannot be empty");
+    }
+
+    @Override
+    public List<SearchResult> search(SearchQuery query) {
+        throw new UnsupportedOperationException("Search method is not supported in the User repository");
     }
 }

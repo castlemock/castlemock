@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.DeleteRestResourcesInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.DeleteRestResourcesOutput;
@@ -43,13 +44,9 @@ public class DeleteRestResourcesService extends AbstractRestProjectService imple
     @Override
     public ServiceResult<DeleteRestResourcesOutput> process(final ServiceTask<DeleteRestResourcesInput> serviceTask) {
         final DeleteRestResourcesInput input = serviceTask.getInput();
-        final RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), input.getRestApplicationId());
-        for(final RestResourceDto restResourceDto : input.getRestResources()){
-            final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), restResourceDto.getId());
-            restApplication.getResources().remove(restResource);
+        for(RestResourceDto restResourceDto : input.getRestResources()){
+            repository.deleteRestResource(input.getRestProjectId(), input.getRestApplicationId(), restResourceDto.getId());
         }
-
-        save(input.getRestProjectId());
         return createServiceResult(new DeleteRestResourcesOutput());
     }
 }

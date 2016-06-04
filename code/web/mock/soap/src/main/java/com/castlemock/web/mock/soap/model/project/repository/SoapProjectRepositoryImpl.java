@@ -16,16 +16,26 @@
 
 package com.castlemock.web.mock.soap.model.project.repository;
 
+import com.castlemock.core.basis.model.SearchQuery;
+import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.*;
+import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import com.google.common.base.Preconditions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -38,8 +48,19 @@ import java.util.LinkedList;
  * @see SoapProject
  */
 @Repository
-public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, String> implements SoapProjectRepository {
+public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapProjectDto, String> implements SoapProjectRepository {
 
+    private static final String SLASH = "/";
+    private static final String SOAP = "soap";
+    private static final String PROJECT = "project";
+    private static final String PORT = "port";
+    private static final String OPERATION = "operation";
+    private static final String RESPONSE = "response";
+    private static final String COMMA = ", ";
+    private static final String SOAP_TYPE = "SOAP";
+
+    @Autowired
+    private MessageSource messageSource;
     @Value(value = "${soap.project.file.directory}")
     private String soapProjectFileDirectory;
     @Value(value = "${soap.project.file.extension}")
@@ -118,27 +139,26 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Strin
 
     }
 
-
     /**
      * The save method provides the functionality to save an instance to the file system.
-     * @param type The type that will be saved to the file system.
+     * @param dto The type that will be saved to the file system.
      * @return The type that was saved to the file system. The main reason for it is being returned is because
      *         there could be modifications of the object during the save process. For example, if the type does not
      *         have an identifier, then the method will generate a new identifier for the type.
      */
     @Override
-    public SoapProject save(final SoapProject type) {
-        for(SoapPort soapPort : type.getPorts()){
+    public SoapProjectDto save(final SoapProjectDto dto) {
+        for(SoapPortDto soapPort : dto.getPorts()){
             if(soapPort.getId() == null){
                 String soapPortId = generateId();
                 soapPort.setId(soapPortId);
             }
-            for(SoapOperation soapOperation : soapPort.getOperations()){
+            for(SoapOperationDto soapOperation : soapPort.getOperations()){
                 if(soapOperation.getId() == null){
                     String soapOperationId = generateId();
                     soapOperation.setId(soapOperationId);
                 }
-                for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
+                for(SoapMockResponseDto soapMockResponse : soapOperation.getMockResponses()){
                     if(soapMockResponse.getId() == null){
                         String soapMockResponseId = generateId();
                         soapMockResponse.setId(soapMockResponseId);
@@ -146,7 +166,474 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, Strin
                 }
             }
         }
-        return super.save(type);
+        return super.save(dto);
+    }
+
+    /**
+     * The method provides the functionality to search in the repository with a {@link SearchQuery}
+     * @param query The search query
+     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
+     */
+    @Override
+    public List<SearchResult> search(final SearchQuery query) {
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        for(SoapProject soapProject : collection.values()){
+            List<SearchResult> soapProjectSearchResult = searchSoapProject(soapProject, query);
+            searchResults.addAll(soapProjectSearchResult);
+        }
+        return searchResults;
+    }
+
+    /**
+     * The method find an port with project id and port id
+     * @param soapProjectId The id of the project which the port belongs to
+     * @param soapPortId The id of the port that will be retrieved
+     * @return Returns an port that matches the search criteria. Returns null if no port matches.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP port was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     */
+    private SoapPort findSoapPortType(final String soapProjectId, final String soapPortId) {
+        Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
+        Preconditions.checkNotNull(soapPortId, "Port id cannot be null");
+        final SoapProject soapProject = collection.get(soapProjectId);
+
+        if(soapProject == null){
+            throw new IllegalArgumentException("Unable to find a SOAP project with id " + soapProjectId);
+        }
+
+        for(SoapPort soapPort : soapProject.getPorts()){
+            if(soapPort.getId().equals(soapPortId)){
+                return soapPort;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a SOAP port with id " + soapPortId);
+    }
+
+
+    /**
+     * The method finds a operation that matching the search criteria and returns the result
+     * @param soapProjectId The id of the project which the operation belongs to
+     * @param soapPortId The id of the port which the operation belongs to
+     * @param soapOperationId The id of the operation that will be retrieved
+     * @return Returns an operation that matches the search criteria. Returns null if no operation matches.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     */
+    private SoapOperation findSoapOperationType(final String soapProjectId, final String soapPortId, final String soapOperationId){
+        Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
+        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
+        for(SoapOperation soapOperation : soapPort.getOperations()){
+            if(soapOperation.getId().equals(soapOperationId)){
+                return soapOperation;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a SOAP operation with id " + soapOperationId);
+    }
+
+
+
+    /**
+     * The method provides the functionality to retrieve a mocked response with project id, port id,
+     * operation id and mock response id
+     * @param soapProjectId The id of the project that the mocked response belongs to
+     * @param soapPortId The id of the port that the mocked response belongs to
+     * @param soapOperationId The id of the operation that the mocked response belongs to
+     * @param soapMockResponseId The id of the mocked response that will be retrieved
+     * @return Mocked response that match the provided parameters
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     * @see SoapMockResponse
+     * @see SoapMockResponseDto
+     */
+    private SoapMockResponse findSoapMockResponseType(final String soapProjectId, final String soapPortId, final String soapOperationId, final String soapMockResponseId) {
+        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
+        for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
+            if(soapMockResponse.getId().equals(soapMockResponseId)){
+                return soapMockResponse;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a SOAP mock response with id " + soapMockResponseId);
+    }
+
+
+
+
+
+    /**
+     * The method find an port with project id and port id
+     * @param soapProjectId The id of the project which the port belongs to
+     * @param soapPortId The id of the port that will be retrieved
+     * @return Returns an port that matches the search criteria. Returns null if no port matches.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP port was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     */
+    @Override
+    public SoapPortDto findSoapPort(final String soapProjectId, final String soapPortId) {
+        Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
+        Preconditions.checkNotNull(soapPortId, "Port id cannot be null");
+        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
+        return mapper.map(soapPort, SoapPortDto.class);
+    }
+
+    /**
+     * The method finds a operation that matching the search criteria and returns the result
+     * @param soapProjectId The id of the project which the operation belongs to
+     * @param soapPortId The id of the port which the operation belongs to
+     * @param soapOperationId The id of the operation that will be retrieved
+     * @return Returns an operation that matches the search criteria. Returns null if no operation matches.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     */
+    @Override
+    public SoapOperationDto findSoapOperation(final String soapProjectId, final String soapPortId, final String soapOperationId){
+        Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
+        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
+        return mapper.map(soapOperation, SoapOperationDto.class);
+    }
+
+    /**
+     * The method provides the functionality to retrieve a mocked response with project id, port id,
+     * operation id and mock response id
+     * @param soapProjectId The id of the project that the mocked response belongs to
+     * @param soapPortId The id of the port that the mocked response belongs to
+     * @param soapOperationId The id of the operation that the mocked response belongs to
+     * @param soapMockResponseId The id of the mocked response that will be retrieved
+     * @return Mocked response that match the provided parameters
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     * @see SoapMockResponse
+     * @see SoapMockResponseDto
+     */
+    @Override
+    public SoapMockResponseDto findSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, String soapMockResponseId) {
+        Preconditions.checkNotNull(soapOperationId, "Mock response id cannot be null");
+        final SoapMockResponse soapMockResponse = findSoapMockResponseType(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
+        return mapper.map(soapMockResponse, SoapMockResponseDto.class);
+    }
+
+    @Override
+    public SoapPortDto saveSoapPort(String soapProjectId, SoapPortDto soapPortDto) {
+        return null;
+    }
+
+    @Override
+    public SoapOperationDto saveSoapOperation(String soapProjectId, String soapPortId, SoapOperationDto soapOperationDto) {
+        return null;
+    }
+
+    @Override
+    public SoapMockResponseDto saveSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, SoapMockResponseDto soapMockResponseDto) {
+        return null;
+    }
+
+    @Override
+    public SoapPortDto updateSoapPort(final String soapProjectId, final String soapPortId, final SoapPortDto soapPortDto) {
+        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
+        soapPort.setUri(soapPortDto.getUri());
+        return null;
+    }
+
+    @Override
+    public SoapOperationDto updateSoapOperation(final String soapProjectId, final String soapPortId,
+                                                final String soapOperationId, final SoapOperationDto soapOperationDto) {
+        SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
+        soapOperation.setStatus(soapOperationDto.getStatus());
+        soapOperation.setForwardedEndpoint(soapOperationDto.getForwardedEndpoint());
+        soapOperation.setResponseStrategy(soapOperationDto.getResponseStrategy());
+        return null;
+    }
+
+    @Override
+    public SoapMockResponseDto updateSoapMockResponse(final String soapProjectId, final String soapPortId,
+                                                      final String soapOperationId, final String soapMockResponseId,
+                                                      final SoapMockResponseDto soapMockResponseDto) {
+        SoapMockResponse soapMockResponse = findSoapMockResponseType(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
+        Preconditions.checkNotNull(soapMockResponse, "Unable to find SOAP mock response with id " + soapMockResponse.getId());
+        final List<HttpHeader> headers = toDtoList(soapMockResponseDto.getHttpHeaders(), HttpHeader.class);
+        soapMockResponse.setName(soapMockResponseDto.getName());
+        soapMockResponse.setBody(soapMockResponseDto.getBody());
+        soapMockResponse.setHttpStatusCode(soapMockResponseDto.getHttpStatusCode());
+        soapMockResponse.setHttpHeaders(headers);
+
+        return null;
+    }
+
+    @Override
+    public SoapPortDto deleteSoapPort(String soapProjectId, String soapPortId) {
+        return null;
+    }
+
+    @Override
+    public SoapOperationDto deleteSoapOperation(String soapProjectId, String soapPortId, String soapOperationId) {
+        return null;
+    }
+
+    @Override
+    public SoapMockResponseDto deleteSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, String soapMockResponseId) {
+        return null;
+    }
+
+
+    /**
+     * Finds a operation with the provided operation id
+     * @param soapOperationId The id of the operation that should be retrieved
+     * @return A operation with the provided id. Null will be returned if no operation has the matching value
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
+     * @see SoapOperation
+     * @see SoapOperationDto
+     */
+    protected SoapOperationDto findSoapOperation(final String soapOperationId) {
+        Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
+        for(SoapProject soapProject : collection.values()){
+            for(SoapPort soapPort : soapProject.getPorts()){
+                for(SoapOperation soapOperation : soapPort.getOperations()){
+                    if(soapOperation.getId().equals(soapOperationId)){
+                        return mapper.map(soapOperation, SoapOperationDto.class);
+                    }
+                }
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a SOAP operation with id " + soapOperationId);
+    }
+
+    /**
+     * The method provides the functionality to find a SOAP operation with a specific id
+     * @param soapOperationId The identifier for the SOAP operation
+     * @return A SOAP operation with a matching identifier
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
+     * @see SoapOperation
+     * @see SoapOperationDto
+     */
+    protected String findSoapProject(final String soapOperationId) {
+        Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
+        for(SoapProject soapProject : collection.values()){
+            for(SoapPort soapPort : soapProject.getPorts()){
+                for(SoapOperation soapOperation : soapPort.getOperations()){
+                    if(soapOperation.getId().equals(soapOperationId)){
+                        return soapProject.getId();
+                    }
+                }
+            }
+        }
+        throw new IllegalArgumentException("Unable to find an operation with id " + soapOperationId);
+    }
+
+    /**
+     * Retrieve a list of operations with a specific project id and port id
+     * @param soapProjectId The id of the project that the operations belongs to
+     * @return A list of operations that matches the search criteria.
+     * @see SoapProject
+     * @see SoapProjectDto
+     */
+    protected List<SoapOperationDto> findSoapOperationTypeWithSoapProjectId(final String soapProjectId) {
+        final SoapProject soapProject = collection.get(soapProjectId);
+
+        if(soapProject == null){
+            throw new IllegalArgumentException("Unable to find a project with id " + soapProjectId);
+        }
+
+        final List<SoapOperation> soapOperations = new ArrayList<SoapOperation>();
+        for(SoapPort soapPort : soapProject.getPorts()){
+            soapOperations.addAll(soapPort.getOperations());
+        }
+        return toDtoList(soapOperations, SoapOperationDto.class);
+    }
+
+
+    /**
+     * The method provides the functionality to find a SOAP port with a specific name
+     * @param soapProject The SOAP project that will be searched for the SOAP port
+     * @param soapPortName The name of the SOAP port that should be retrieved
+     * @return A SOAP port that matches the search criteria. If no SOAP ports matches the provided
+     * name then null will be returned.
+     */
+    protected SoapPortDto findSoapPortWithName(final SoapProject soapProject, final String soapPortName){
+        for(SoapPort soapPort : soapProject.getPorts()){
+            if(soapPort.getName().equals(soapPortName)){
+                return mapper.map(soapPort, SoapPortDto.class);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * The method provides the functionality to find a SOAP operation with a specific name
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationName The name of the SOAP operation that should be retrieved
+     * @return A SOAP operation that matches the search criteria. If no SOAP operation matches the provided
+     * name then null will be returned.
+     */
+    @Override
+    public SoapOperationDto findSoapOperationWithName(final String soapProjectId, final String soapPortId, final String soapOperationName){
+        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
+        for(SoapOperation soapOperation : soapPort.getOperations()){
+            if(soapOperation.getName().equals(soapOperationName)){
+                return mapper.map(soapOperation, SoapOperationDto.class);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * The method finds a {@link SoapPortDto} with the provided name
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortName The name of the {@link SoapPort}
+     * @return A {@link SoapPort} that matches the provided search criteria.
+     */
+    @Override
+    public SoapPortDto findSoapPortWithName(String soapProjectId, String soapPortName) {
+        final SoapProject soapProject = collection.get(soapProjectId);
+        for(SoapPort soapPort : soapProject.getPorts()){
+            if(soapPort.getName().equals(soapPortName)){
+                return mapper.map(soapPort, SoapPortDto.class);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Finds a project by a given name
+     * @param name The name of the project that should be retrieved
+     * @return Returns a project with the provided name
+     * @see SoapProject
+     */
+    @Override
+    public SoapProjectDto findSoapProjectWithName(final String name) {
+        Preconditions.checkNotNull(name, "Project name cannot be null");
+        Preconditions.checkArgument(!name.isEmpty(), "Project name cannot be empty");
+        for(SoapProject soapProject : collection.values()){
+            if(soapProject.getName().equalsIgnoreCase(name)) {
+                return mapper.map(soapProject, SoapProjectDto.class);
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * Search through a SOAP project and all its resources
+     * @param soapProject The SOAP project which will be searched
+     * @param query The provided search query
+     * @return A list of search results that matches the provided query
+     */
+    private List<SearchResult> searchSoapProject(final SoapProject soapProject, final SearchQuery query){
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        if(SearchValidator.validate(soapProject.getName(), query.getQuery())){
+            final String projectType = messageSource.getMessage("general.type.project", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
+            searchResult.setTitle(soapProject.getName());
+            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId());
+            searchResult.setDescription(SOAP_TYPE + COMMA + projectType);
+            searchResults.add(searchResult);
+        }
+
+
+        for(SoapPort soapPort : soapProject.getPorts()){
+            List<SearchResult> soapOperationSearchResult = searchSoapPort(soapProject, soapPort, query);
+            searchResults.addAll(soapOperationSearchResult);
+        }
+        return searchResults;
+    }
+
+    /**
+     * Search through a SOAP port and all its resources
+     * @param soapProject The SOAP project which will be searched
+     * @param soapPort The SOAP port which will be searched
+     * @param query The provided search query
+     * @return A list of search results that matches the provided query
+     */
+    private List<SearchResult> searchSoapPort(final SoapProject soapProject, final SoapPort soapPort, final SearchQuery query){
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        if(SearchValidator.validate(soapPort.getName(), query.getQuery())){
+            final String portType = messageSource.getMessage("soap.type.port", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
+            searchResult.setTitle(soapPort.getName());
+            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId());
+            searchResult.setDescription(SOAP_TYPE + COMMA + portType);
+            searchResults.add(searchResult);
+        }
+
+        for(SoapOperation soapOperation : soapPort.getOperations()){
+            List<SearchResult> soapOperationSearchResult = searchSoapOperation(soapProject, soapPort, soapOperation, query);
+            searchResults.addAll(soapOperationSearchResult);
+        }
+        return searchResults;
+    }
+
+    /**
+     * Search through a SOAP operation and all its resources
+     * @param soapProject The SOAP project which will be searched
+     * @param soapPort The SOAP port which will be searched
+     * @param soapOperation The SOAP operation which will be searched
+     * @param query The provided search query
+     * @return A list of search results that matches the provided query
+     */
+    private List<SearchResult> searchSoapOperation(final SoapProject soapProject, final SoapPort soapPort, final SoapOperation soapOperation, final SearchQuery query){
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        if(SearchValidator.validate(soapOperation.getName(), query.getQuery())){
+            final String operationType = messageSource.getMessage("soap.type.operation", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
+            searchResult.setTitle(soapOperation.getName());
+            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId());
+            searchResult.setDescription(SOAP_TYPE + COMMA + operationType);
+            searchResults.add(searchResult);
+        }
+
+        for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
+            SearchResult soapMockResponseSearchResult = searchSoapMockResponse(soapProject, soapPort, soapOperation, soapMockResponse, query);
+            if(soapMockResponseSearchResult != null){
+                searchResults.add(soapMockResponseSearchResult);
+            }
+        }
+        return searchResults;
+    }
+
+    /**
+     * Search through a SOAP response
+     * @param soapProject The SOAP project which will be searched
+     * @param soapPort The SOAP port which will be searched
+     * @param soapOperation The SOAP operation which will be searched
+     * @param soapMockResponse The SOAP response that will be searched
+     * @param query The provided search query
+     * @return A list of search results that matches the provided query
+     */
+    private SearchResult searchSoapMockResponse(final SoapProject soapProject, final SoapPort soapPort, final SoapOperation soapOperation, final SoapMockResponse soapMockResponse, final SearchQuery query){
+        SearchResult searchResult = null;
+
+        if(SearchValidator.validate(soapMockResponse.getName(), query.getQuery())){
+            final String mockResponseType = messageSource.getMessage("soap.type.mockresponse", null , LocaleContextHolder.getLocale());
+            searchResult = new SearchResult();
+            searchResult.setTitle(soapMockResponse.getName());
+            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + RESPONSE + SLASH + soapMockResponse.getId());
+            searchResult.setDescription(SOAP_TYPE + COMMA + mockResponseType);
+        }
+
+        return searchResult;
     }
 
 }

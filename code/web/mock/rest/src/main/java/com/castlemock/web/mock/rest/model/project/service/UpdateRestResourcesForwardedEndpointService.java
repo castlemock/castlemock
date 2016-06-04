@@ -22,6 +22,9 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesForwardedEndpointInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestResourcesForwardedEndpointOutput;
 
@@ -43,13 +46,13 @@ public class UpdateRestResourcesForwardedEndpointService extends AbstractRestPro
     @Override
     public ServiceResult<UpdateRestResourcesForwardedEndpointOutput> process(final ServiceTask<UpdateRestResourcesForwardedEndpointInput> serviceTask) {
         final UpdateRestResourcesForwardedEndpointInput input = serviceTask.getInput();
-        final RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), input.getRestApplicationId());
-        for(RestResource restResource : restApplication.getResources()){
-            for(RestMethod restMethod : restResource.getMethods()){
+        final RestApplicationDto restApplication = repository.findRestApplication(input.getRestProjectId(), input.getRestApplicationId());
+        for(RestResourceDto restResource : restApplication.getResources()){
+            for(RestMethodDto restMethod : restResource.getMethods()){
                 restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
+                repository.updateRestMethod(input.getRestProjectId(), input.getRestApplicationId(), restResource.getId(), restMethod.getId(), restMethod);
             }
         }
-        save(input.getRestProjectId());
         return createServiceResult(new UpdateRestResourcesForwardedEndpointOutput());
     }
 }

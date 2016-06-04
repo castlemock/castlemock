@@ -27,10 +27,11 @@ import java.util.List;
  * @since 1.0
  * @param <T> The type that is being managed by the file repository. This file will both be saved and loaded from the
  *              file system.
+ * @param <D> The date transfer class of the type class
  * @param <I> The id is used as an identifier for the type.
  * @see Saveable
  */
-public interface Repository<T extends Saveable<I>, I extends Serializable> {
+public interface Repository<T extends Saveable<I>, D, I extends Serializable> {
 
 
     /**
@@ -46,7 +47,7 @@ public interface Repository<T extends Saveable<I>, I extends Serializable> {
      * @see T
      * @see I
      */
-    T findOne(I id);
+    D findOne(I id);
 
     /**
      * Retrieves a list of all the instances of the specific type
@@ -54,7 +55,7 @@ public interface Repository<T extends Saveable<I>, I extends Serializable> {
      * @see T
      * @see I
      */
-    List<T> findAll();
+    List<D> findAll();
 
     /**
      * The save method provides the functionality to save an instance to the file system.
@@ -63,7 +64,7 @@ public interface Repository<T extends Saveable<I>, I extends Serializable> {
      *         there could be modifications of the object during the save process. For example, if the type does not
      *         have an identifier, then the method will generate a new identifier for the type.
      */
-    T save(T type);
+    D save(D type);
 
     /**
      * Delete an instance that match the provided id
@@ -76,4 +77,25 @@ public interface Repository<T extends Saveable<I>, I extends Serializable> {
      * @return The count of entities
      */
     Integer count();
+
+    /**
+     * The method provides the functionality to search in the repository with a {@link SearchQuery}
+     * @param query The search query
+     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
+     */
+    List<SearchResult> search(SearchQuery query);
+
+    /**
+     * The method provides the functionality to export an entity and convert it to a String
+     * @param id The id of the entityy that will be converted and exported
+     * @return The entity with the provided id as a String
+     */
+    String exportOne(I id);
+
+    /**
+     * The method provides the functionality to import a enity as a String
+     * @param raw The entity as a String
+     */
+    void importOne(String raw);
+
 }

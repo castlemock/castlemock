@@ -16,11 +16,18 @@
 
 package com.castlemock.web.mock.rest.model.event.repository;
 
+import com.castlemock.core.basis.model.SearchQuery;
+import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
+import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The class is an implementation of the REST event repository and provides the functionality to interact with the file system.
@@ -33,7 +40,7 @@ import org.springframework.stereotype.Repository;
  * @see RestEvent
  */
 @Repository
-public class RestEventRepositoryImpl extends RepositoryImpl<RestEvent, String> implements RestEventRepository {
+public class RestEventRepositoryImpl extends RepositoryImpl<RestEvent, RestEventDto, String> implements RestEventRepository {
 
     @Value(value = "${rest.event.file.directory}")
     private String restEventFileDirectory;
@@ -78,4 +85,47 @@ public class RestEventRepositoryImpl extends RepositoryImpl<RestEvent, String> i
         Preconditions.checkNotNull(restEvent.getStartDate(), "Event start date cannot be null");
     }
 
+    /**
+     * The service finds the oldest event
+     * @return The oldest event
+     */
+    @Override
+    public RestEventDto getOldestEvent() {
+        Event oldestEvent = null;
+        for(Event event : collection.values()){
+            if(oldestEvent == null){
+                oldestEvent = event;
+            } else if(event.getStartDate().before(oldestEvent.getStartDate())){
+                oldestEvent = event;
+            }
+        }
+
+        return oldestEvent == null ? null : mapper.map(oldestEvent, RestEventDto.class);
+    }
+
+    /**
+     * Find events by REST method ID
+     * @param restMethodId The id of the REST method
+     * @return A list of {@link RestEventDto} that matches the provided <code>restMethodId</code>
+     */
+    @Override
+    public List<RestEventDto> findEventsByMethodId(final String restMethodId) {
+        final List<RestEvent> events = new ArrayList<RestEvent>();
+        for(RestEvent event : collection.values()){
+            if(event.getMethodId().equals(restMethodId)){
+                events.add(event);
+            }
+        }
+        return toDtoList(events, RestEventDto.class);
+    }
+
+    /**
+     * The method provides the functionality to search in the repository with a {@link SearchQuery}
+     * @param query The search query
+     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
+     */
+    @Override
+    public List<SearchResult> search(SearchQuery query) {
+        throw new UnsupportedOperationException();
+    }
 }

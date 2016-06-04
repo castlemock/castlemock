@@ -42,10 +42,7 @@ public class DeleteRestResourceService extends AbstractRestProjectService implem
     @Override
     public ServiceResult<DeleteRestResourceOutput> process(final ServiceTask<DeleteRestResourceInput> serviceTask) {
         final DeleteRestResourceInput input = serviceTask.getInput();
-        final RestApplication restApplication = findRestApplicationType(input.getRestProjectId(), input.getRestApplicationId());
-        final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
-        restApplication.getResources().remove(restResource);
-        save(input.getRestProjectId());
+        repository.deleteRestResource(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
         return createServiceResult(new DeleteRestResourceOutput());
     }
 }

@@ -20,6 +20,7 @@ package com.castlemock.web.mock.soap.model.event.service;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
 import com.castlemock.web.basis.model.event.service.AbstractEventService;
+import com.castlemock.web.mock.soap.model.event.repository.SoapEventRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class AbstractSoapEventService extends AbstractEventService<SoapEvent, SoapEventDto> {
-
+public class AbstractSoapEventService extends AbstractEventService<SoapEvent, SoapEventDto, SoapEventRepository> {
 
     /**
      * The events for a specific operation id
@@ -38,13 +38,7 @@ public class AbstractSoapEventService extends AbstractEventService<SoapEvent, So
      * @return Returns a list of events
      */
     protected List<SoapEventDto> findEventsByOperationId(final String operationId){
-        final List<SoapEvent> events = new ArrayList<SoapEvent>();
-        for(SoapEvent event : findAllTypes()){
-            if(event.getOperationId().equals(operationId)){
-                events.add(event);
-            }
-        }
-        return toDtoList(events);
+        return repository.findEventsByOperationId(operationId);
     }
 
 }

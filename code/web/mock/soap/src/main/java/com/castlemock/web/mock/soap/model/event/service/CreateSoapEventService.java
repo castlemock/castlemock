@@ -49,7 +49,7 @@ public class CreateSoapEventService extends AbstractSoapEventService implements 
         final CreateSoapEventInput input = serviceTask.getInput();
         final SoapEventDto soapEventDto = input.getSoapEvent();
         if(count() >= soapMaxEventCount){
-            EventDto eventDto = getOldestEvent();
+            EventDto eventDto = repository.getOldestEvent();
             delete(eventDto.getId());
 
         }

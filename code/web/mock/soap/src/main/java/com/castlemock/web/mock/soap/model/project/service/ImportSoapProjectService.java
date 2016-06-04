@@ -40,7 +40,7 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ImportSoapProjectOutput> process(final ServiceTask<ImportSoapProjectInput> serviceTask) {
         final ImportSoapProjectInput input = serviceTask.getInput();
-        importType(input.getProjectRaw());
+        repository.importOne(input.getProjectRaw());
         return createServiceResult(new ImportSoapProjectOutput());
     }
 }

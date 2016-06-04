@@ -25,7 +25,7 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseStatusInput;
+import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
@@ -109,7 +109,10 @@ public class SoapOperationController extends AbstractSoapViewController {
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final SoapMockResponseStatus status = SoapMockResponseStatus.valueOf(soapMockResponseModifierCommand.getSoapMockResponseStatus());
             for(String mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()){
-                serviceProcessor.process(new UpdateSoapMockResponseStatusInput(soapProjectId, soapPortId, soapOperationId, mockResponseId, status));
+                ReadSoapMockResponseOutput readSoapMockResponseOutput = serviceProcessor.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, mockResponseId));
+                SoapMockResponseDto soapMockResponseDto = readSoapMockResponseOutput.getSoapMockResponse();
+                soapMockResponseDto.setStatus(status);
+                serviceProcessor.process(new UpdateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, mockResponseId, soapMockResponseDto));
             }
         } else if(DELETE_MOCK_RESPONSES.equalsIgnoreCase(action)) {
             final List<SoapMockResponseDto> mockResponses = new ArrayList<SoapMockResponseDto>();

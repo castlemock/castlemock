@@ -18,7 +18,11 @@ package com.castlemock.web.mock.soap.model.event.repository;
 
 
 import com.castlemock.core.basis.model.Repository;
+import com.castlemock.core.basis.model.event.dto.EventDto;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
+import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+
+import java.util.List;
 
 /**
  * The soap event file repository provides the functionality to interact with the file system.
@@ -29,5 +33,19 @@ import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
  * @see SoapEvent
  * @see Repository
  */
-public interface SoapEventRepository extends Repository<SoapEvent, String> {
+public interface SoapEventRepository extends Repository<SoapEvent, SoapEventDto, String> {
+
+    /**
+     * The events for a specific operation id
+     * @param operationId The id of the operation that the event belongs to
+     * @return Returns a list of events
+     */
+    List<SoapEventDto> findEventsByOperationId(String operationId);
+
+    /**
+     * The service finds the oldest event
+     * @return The oldest event
+     */
+    SoapEventDto getOldestEvent();
+
 }

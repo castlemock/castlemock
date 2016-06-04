@@ -25,7 +25,7 @@ import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseStatusInput;
+import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
@@ -118,7 +118,10 @@ public class RestMethodController extends AbstractRestViewController {
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final RestMockResponseStatus status = RestMockResponseStatus.valueOf(restMockResponseModifierCommand.getRestMockResponseStatus());
             for(String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
-                serviceProcessor.process(new UpdateRestMockResponseStatusInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId, status));
+                ReadRestMockResponseOutput readRestMockResponseOutput = serviceProcessor.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId));
+                RestMockResponseDto restMockResponseDto = readRestMockResponseOutput.getRestMockResponse();
+                restMockResponseDto.setStatus(status);
+                serviceProcessor.process(new UpdateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId, restMockResponseDto));
             }
         } else if(DELETE_MOCK_RESPONSES.equalsIgnoreCase(action)) {
             final List<RestMockResponseDto> mockResponses = new ArrayList<RestMockResponseDto>();

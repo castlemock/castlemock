@@ -42,8 +42,7 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
     @Override
     public ServiceResult<ReadRestMethodOutput> process(final ServiceTask<ReadRestMethodInput> serviceTask) {
         final ReadRestMethodInput input = serviceTask.getInput();
-        final RestMethod restMethod = findRestMethodType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId());
-        final RestMethodDto restMethodDto = restMethod != null ? mapper.map(restMethod, RestMethodDto.class) : null;
+        final RestMethodDto restMethodDto = repository.findRestMethod(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethodId());
         return createServiceResult(new ReadRestMethodOutput(restMethodDto));
     }
 }

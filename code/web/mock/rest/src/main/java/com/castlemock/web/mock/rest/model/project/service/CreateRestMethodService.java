@@ -53,10 +53,8 @@ public class CreateRestMethodService extends AbstractRestProjectService implemen
             restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
         }
 
-        final RestResource restResource = findRestResourceType(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
-        final RestMethod createdRestMethod = mapper.map(restMethod, RestMethod.class);
-        restResource.getMethods().add(createdRestMethod);
-        save(input.getRestProjectId());
-        return createServiceResult(new CreateRestMethodOutput(mapper.map(createdRestMethod, RestMethodDto.class)));
+        final RestMethodDto createdRestMethod = repository.saveRestMethod(input.getRestProjectId(),
+                input.getRestApplicationId(), input.getRestResourceId(), input.getRestMethod());
+        return createServiceResult(new CreateRestMethodOutput(createdRestMethod));
     }
 }

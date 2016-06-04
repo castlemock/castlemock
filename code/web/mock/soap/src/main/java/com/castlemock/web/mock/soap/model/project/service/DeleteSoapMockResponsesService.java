@@ -43,14 +43,10 @@ public class DeleteSoapMockResponsesService extends AbstractSoapProjectService i
     @Override
     public ServiceResult<DeleteSoapMockResponsesOutput> process(final ServiceTask<DeleteSoapMockResponsesInput> serviceTask) {
         final DeleteSoapMockResponsesInput input = serviceTask.getInput();
-        final SoapOperation soapOperation = findSoapOperationType(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId());
         for(SoapMockResponseDto soapMockResponseDto : input.getMockResponses()){
-            final SoapMockResponse soapMockResponse = new SoapMockResponse();
-            soapMockResponse.setId(soapMockResponseDto.getId());
-            soapOperation.getMockResponses().remove(soapMockResponse);
+
         }
 
-        save(input.getSoapProjectId());
         return createServiceResult(new DeleteSoapMockResponsesOutput());
     }
 }

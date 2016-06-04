@@ -19,6 +19,7 @@ package com.castlemock.core.basis.model.user.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.dto.UserDto;
 
 /**
  * The user file repository provides the functionality to interact with the file system.
@@ -27,7 +28,8 @@ import com.castlemock.core.basis.model.user.domain.User;
  * @author Karl Dahlgren
  * @since 1.0
  * @see User
+ * @see UserDto
  * @see Repository
  */
-public interface UserRepository extends Repository<User, String> {
+public interface UserRepository extends Repository<User, UserDto, String> {
 }
