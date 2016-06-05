@@ -176,7 +176,7 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
     /**
      * The method updates an already existing {@link SoapPort}
      * @param soapProjectId The id of the {@link SoapProject}
-     * @parma soapPortId The id of the {@link SoapPort} that will be updated
+     * @param soapPortId The id of the {@link SoapPort} that will be updated
      * @param soapPortDto The updated {@link SoapPortDto}
      * @return The updated version of the {@link SoapPortDto}
      * @see SoapProject

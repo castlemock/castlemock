@@ -66,23 +66,6 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
     private String restProjectFileExtension;
 
     /**
-     * Finds a project by a given name
-     * @param name The name of the project that should be retrieved
-     * @return Returns a project with the provided name
-     */
-    @Override
-    public RestProjectDto findRestProjectWithName(final String name) {
-        Preconditions.checkNotNull(name, "Project name cannot be null");
-        Preconditions.checkArgument(!name.isEmpty(), "Project name cannot be empty");
-        for(RestProject restProject : collection.values()){
-            if(restProject.getName().equalsIgnoreCase(name)) {
-                return mapper.map(restProject, RestProjectDto.class);
-            }
-        }
-        return null;
-    }
-
-    /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
      * where files should be saved and loaded from.
      * @return The file directory where the files for the specific file repository could be saved and loaded from.
@@ -211,6 +194,562 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
             searchResults.addAll(restProjectSearchResult);
         }
         return searchResults;
+    }
+
+    /*
+     * FIND OPERATIONS
+     */
+
+    /**
+     * Finds a {@link RestProjectDto} with a provided REST project name.
+     * @param restProjectName The name of the REST project that will be retrieved.
+     * @return A {@link RestProjectDto} that matches the provided name.
+     * @see RestProject
+     * @see RestProjectDto
+     */
+    @Override
+    public RestProjectDto findRestProjectWithName(final String restProjectName) {
+        Preconditions.checkNotNull(restProjectName, "Project name cannot be null");
+        Preconditions.checkArgument(!restProjectName.isEmpty(), "Project name cannot be empty");
+        for(RestProject restProject : collection.values()){
+            if(restProject.getName().equalsIgnoreCase(restProjectName)) {
+                return mapper.map(restProject, RestProjectDto.class);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Finds a {@link RestApplicationDto} with the provided ids.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @return A {@link RestApplicationDto} that matches the search criteria.
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     */
+    @Override
+    public RestApplicationDto findRestApplication(final String restProjectId, final String restApplicationId) {
+        final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
+        return mapper.map(restApplication, RestApplicationDto.class);
+    }
+
+    /**
+     * Finds a {@link RestResourceDto} with the provided ids.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @return A {@link RestResourceDto} that matches the search criteria.
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     */
+    @Override
+    public RestResourceDto findRestResource(final String restProjectId, final String restApplicationId, final String restResourceId) {
+        final RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
+        return mapper.map(restResource, RestResourceDto.class);
+    }
+
+    /**
+     * Finds a {@link RestResourceDto} with the provided ids.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @param restMethodId The id of the {@link RestMethod}
+     * @return A {@link RestMethod} that matches the search criteria.
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     * @see RestMethod
+     * @see RestMethodDto
+     */
+    @Override
+    public RestMethodDto findRestMethod(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId) {
+        final RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
+        return mapper.map(restMethod, RestMethodDto.class);
+    }
+
+    /**
+     * Finds a {@link RestMockResponseDto} with the provided ids.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @param restMethodId The id of the {@link RestMethod}
+     * @param restMockResponseId The id of the {@link RestMockResponse}
+     * @return A {@link RestMockResponseDto} that matches the search criteria.
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     * @see RestMethod
+     * @see RestMethodDto
+     * @see RestMockResponse
+     * @see RestMockResponseDto
+     */
+    @Override
+    public RestMockResponseDto findRestMockResponse(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId, final String restMockResponseId) {
+        final RestMockResponse restMockResponse = findRestMockResponseType(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        return mapper.map(restMockResponse, RestMockResponseDto.class);
+    }
+
+    /**
+     * Finds a {@link RestResourceDto} with a URI
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceUri The URI of a {@link RestResource}
+     * @return A {@link RestResourceDto} that matches the search criteria.
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     */
+    @Override
+    public RestResourceDto findRestResourceByUri(final String restProjectId, final String restApplicationId, final String restResourceUri) {
+        RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
+        RestResourceDto restResourceDto = null;
+        for(RestResource restResource : restApplication.getResources()){
+            if(restResourceUri.equalsIgnoreCase(restResource.getUri())){
+                restResourceDto = mapper.map(restResource, RestResourceDto.class);
+                break;
+            }
+        }
+        return restResourceDto;
+    }
+
+    /*
+     * SAVE OPERATIONS
+     */
+
+    /**
+     * The method adds a new {@link RestApplication} to a {@link RestProject} and then saves
+     * the {@link RestProject} to the file system.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationDto The dto instance of {@link RestApplication} that will be added to the {@link RestProject}
+     * @return The saved {@link RestApplicationDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     */
+    @Override
+    public RestApplicationDto saveRestApplication(String restProjectId, RestApplicationDto restApplicationDto) {
+        RestProject restProject = collection.get(restProjectId);
+        RestApplication restApplication = mapper.map(restApplicationDto, RestApplication.class);
+        restProject.getApplications().add(restApplication);
+        save(restProjectId);
+        return restApplicationDto;
+    }
+
+    /**
+     * The method adds a new {@link RestResource} to a {@link RestApplication} and then saves
+     * the {@link RestProject} to the file system.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceDto The dto instance of {@link RestApplication} that will be added to the {@link RestApplication}
+     * @return The saved {@link RestResourceDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     */
+    @Override
+    public RestResourceDto saveRestResource(String restProjectId, String restApplicationId, RestResourceDto restResourceDto) {
+        RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
+        RestResource restResource = mapper.map(restResourceDto, RestResource.class);
+        restApplication.getResources().add(restResource);
+        save(restProjectId);
+        return restResourceDto;
+    }
+
+    /**
+     * The method adds a new {@link RestMethod} to a {@link RestResource} and then saves
+     * the {@link RestProject} to the file system.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @param restMethodDto The dto instance of {@link RestMethod} that will be added to the {@link RestResource}
+     * @return The saved {@link RestMethodDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     * @see RestMethod
+     * @see RestMethodDto
+     */
+    @Override
+    public RestMethodDto saveRestMethod(String restProjectId, String restApplicationId, String restResourceId, RestMethodDto restMethodDto) {
+        RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
+        RestMethod restMethod = mapper.map(restMethodDto, RestMethod.class);
+        restResource.getMethods().add(restMethod);
+        save(restProjectId);
+        return restMethodDto;
+    }
+
+    /**
+     * The method adds a new {@link RestMockResponse} to a {@link RestMethod} and then saves
+     * the {@link RestProject} to the file system.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @param restMethodId The id of the {@link RestMethod}
+     * @param restMockResponseDto The dto instance of {@link RestMockResponse} that will be added to the {@link RestMethod}
+     * @return The saved {@link RestMockResponseDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     * @see RestMethod
+     * @see RestMethodDto
+     * @see RestMockResponse
+     * @see RestMockResponseDto
+     */
+    @Override
+    public RestMockResponseDto saveRestMockResponse(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, RestMockResponseDto restMockResponseDto) {
+        RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
+        RestMockResponse restMockResponse = mapper.map(restMockResponseDto, RestMockResponse.class);
+        restMethod.getMockResponses().add(restMockResponse);
+        save(restProjectId);
+        return restMockResponseDto;
+    }
+
+    /*
+     * UPDATE OPERATIONS
+     */
+
+    /**
+     * The method updates an already existing {@link RestApplication}
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication} that will be updated
+     * @param restApplicationDto The updated {@link RestApplicationDto}
+     * @return The updated version of the {@link RestApplicationDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     */
+    @Override
+    public RestApplicationDto updateRestApplication(String restProjectId, String restApplicationId, RestApplicationDto restApplicationDto) {
+        RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
+        restApplication.setName(restApplicationDto.getName());
+        return mapper.map(restApplication, RestApplicationDto.class);
+    }
+
+    /**
+     * The method updates an already existing {@link RestResource}
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource} that will be updated
+     * @param restResourceDto The updated {@link RestResourceDto}
+     * @return The updated version of the {@link RestResourceDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     */
+    @Override
+    public RestResourceDto updateRestResource(String restProjectId, String restApplicationId, String restResourceId, RestResourceDto restResourceDto) {
+        RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
+        restResource.setName(restResourceDto.getName());
+        restResource.setUri(restResourceDto.getUri());
+        return mapper.map(restResource, RestResourceDto.class);
+    }
+
+    /**
+     * The method updates an already existing {@link RestMethod}
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @param restMethodId The id of the {@link RestMethod} that will be updated
+     * @param restMethodDto The updated {@link RestMethodDto}
+     * @return The updated version of the {@link RestMethodDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     * @see RestMethod
+     * @see RestMethodDto
+     */
+    @Override
+    public RestMethodDto updateRestMethod(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, RestMethodDto restMethodDto) {
+        RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
+        restMethod.setCurrentResponseSequenceIndex(restMethodDto.getCurrentResponseSequenceIndex());
+        restMethod.setName(restMethodDto.getName());
+        restMethod.setHttpMethod(restMethodDto.getHttpMethod());
+        restMethod.setResponseStrategy(restMethodDto.getResponseStrategy());
+        restMethod.setStatus(restMethodDto.getStatus());
+        restMethod.setForwardedEndpoint(restMethodDto.getForwardedEndpoint());
+        return mapper.map(restMethod, RestMethodDto.class);
+    }
+
+    /**
+     * The method updates an already existing {@link RestMockResponse}
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @param restMethodId The id of the {@link RestMethod}
+     * @param restMockResponseId The id of the {@link RestMockResponse} that will be updated
+     * @param restMockResponseDto The updated {@link RestMockResponseDto}
+     * @return The updated version of the {@link RestMockResponseDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     * @see RestMethod
+     * @see RestMethodDto
+     */
+    @Override
+    public RestMockResponseDto updateRestMockResponse(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponseId, RestMockResponseDto restMockResponseDto) {
+        RestMockResponse restMockResponse = findRestMockResponseType(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        final List<HttpHeader> headers = toDtoList(restMockResponseDto.getHttpHeaders(), HttpHeader.class);
+        restMockResponse.setName(restMockResponseDto.getName());
+        restMockResponse.setBody(restMockResponseDto.getBody());
+        restMockResponse.setHttpStatusCode(restMockResponseDto.getHttpStatusCode());
+        restMockResponse.setHttpHeaders(headers);
+        return mapper.map(restMockResponse, RestMockResponseDto.class);
+    }
+
+    /*
+     * DELETE OPERATIONS
+     */
+
+    /**
+     * The method deletes a {@link RestApplication}
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication} that will be deleted
+     * @return The deleted {@link RestApplicationDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     */
+    @Override
+    public RestApplicationDto deleteRestApplication(final String restProjectId, final String restApplicationId) {
+        RestProject restProject = collection.get(restProjectId);
+        Iterator<RestApplication> restApplicationIterator = restProject.getApplications().iterator();
+        RestApplication deletedRestApplication = null;
+        while(restApplicationIterator.hasNext()){
+            deletedRestApplication = restApplicationIterator.next();
+            if(restApplicationId.equals(deletedRestApplication.getId())){
+                restApplicationIterator.remove();
+                break;
+            }
+        }
+
+        return deletedRestApplication != null ? mapper.map(deletedRestApplication, RestApplicationDto.class) : null;
+    }
+
+    /**
+     * The method deletes a {@link RestResource}
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource} that will be deleted
+     * @return The deleted {@link RestResourceDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     */
+    @Override
+    public RestResourceDto deleteRestResource(String restProjectId, String restApplicationId, String restResourceId) {
+        RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
+        Iterator<RestResource> restResourceIterator = restApplication.getResources().iterator();
+        RestResource deletedRestResource = null;
+        while(restResourceIterator.hasNext()){
+            deletedRestResource = restResourceIterator.next();
+            if(restResourceId.equals(deletedRestResource.getId())){
+                restResourceIterator.remove();
+                break;
+            }
+        }
+
+        return deletedRestResource != null ? mapper.map(deletedRestResource, RestResourceDto.class) : null;
+    }
+
+    /**
+     * The method deletes a {@link RestMethod}
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @param restMethodId The id of the {@link RestMethod} that will be deleted
+     * @return The deleted {@link RestMethodDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     * @see RestMethod
+     * @see RestMethodDto
+     */
+    @Override
+    public RestMethodDto deleteRestMethod(String restProjectId, String restApplicationId, String restResourceId, String restMethodId) {
+        RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
+        Iterator<RestMethod> restMethodIterator = restResource.getMethods().iterator();
+        RestMethod deletedRestMethod = null;
+        while(restMethodIterator.hasNext()){
+            deletedRestMethod = restMethodIterator.next();
+            if(restResourceId.equals(deletedRestMethod.getId())){
+                restMethodIterator.remove();
+                break;
+            }
+        }
+
+        return deletedRestMethod != null ? mapper.map(deletedRestMethod, RestMethodDto.class) : null;
+    }
+
+    /**
+     * The method deletes a {@link RestMockResponse}
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @param restMethodId The id of the {@link RestMethod}
+     * @param restMockResponseId The id of the {@link RestMockResponse} that will be deleted
+     * @return The deleted {@link RestMockResponseDto}
+     * @see RestProject
+     * @see RestProjectDto
+     * @see RestApplication
+     * @see RestApplicationDto
+     * @see RestResource
+     * @see RestResourceDto
+     * @see RestMethod
+     * @see RestMethodDto
+     * @see RestMockResponse
+     * @see RestMockResponseDto
+     */
+    @Override
+    public RestMockResponseDto deleteRestMockResponse(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponseId) {
+        RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
+        Iterator<RestMockResponse> restMockResponseIterator = restMethod.getMockResponses().iterator();
+        RestMockResponse deletedRestMockResponse = null;
+        while(restMockResponseIterator.hasNext()){
+            deletedRestMockResponse = restMockResponseIterator.next();
+            if(restResourceId.equals(deletedRestMockResponse.getId())){
+                restMockResponseIterator.remove();
+                break;
+            }
+        }
+
+        return deletedRestMockResponse != null ? mapper.map(deletedRestMockResponse, RestMockResponseDto.class) : null;
+    }
+
+
+    /**
+     * Finds a {@link RestApplication} with the provided ids.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @return A {@link RestApplication} that matches the search criteria.
+     * @see RestProject
+     * @see RestApplication
+     */
+    private RestApplication findRestApplicationType(final String restProjectId, final String restApplicationId) {
+        Preconditions.checkNotNull(restProjectId, "Project id cannot be null");
+        Preconditions.checkNotNull(restApplicationId, "Application id cannot be null");
+        final RestProject restProject = collection.get(restProjectId);
+
+        if(restProject == null){
+            throw new IllegalArgumentException("Unable to find a REST project with id " + restProjectId);
+        }
+
+        for(RestApplication restApplication : restProject.getApplications()){
+            if(restApplication.getId().equals(restApplicationId)){
+                return restApplication;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a REST application with id " + restApplicationId);
+    }
+
+    /**
+     * Finds a {@link RestResource} with the provided ids.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @return A {@link RestResource} that matches the search criteria.
+     * @see RestProject
+     * @see RestApplication
+     * @see RestResource
+     */
+    private RestResource findRestResourceType(final String restProjectId, final String restApplicationId, final String restResourceId){
+        Preconditions.checkNotNull(restResourceId, "Resource id cannot be null");
+        final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
+        for(RestResource restResource : restApplication.getResources()){
+            if(restResource.getId().equals(restResourceId)){
+                return restResource;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a REST resource with id " + restResourceId);
+    }
+
+    /**
+     * Finds a {@link RestMethod} with the provided ids.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @param restMethodId The id of the {@link RestMethod}
+     * @return A {@link RestMethod} that matches the search criteria.
+     * @see RestProject
+     * @see RestApplication
+     * @see RestResource
+     * @see RestMethod
+     */
+    private RestMethod findRestMethodType(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId){
+        Preconditions.checkNotNull(restMethodId, "Method id cannot be null");
+        final RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
+        for(RestMethod restMethod : restResource.getMethods()){
+            if(restMethod.getId().equals(restMethodId)){
+                return restMethod;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a REST method with id " + restMethodId);
+    }
+
+    /**
+     * Finds a {@link RestMockResponse} with the provided ids.
+     * @param restProjectId The id of the {@link RestProject}
+     * @param restApplicationId The id of the {@link RestApplication}
+     * @param restResourceId The id of the {@link RestResource}
+     * @param restMethodId The id of the {@link RestMethod}
+     * @param restMockResponseId The id of the {@link RestMockResponse}
+     * @return A {@link RestMockResponse} that matches the search criteria.
+     * @see RestProject
+     * @see RestApplication
+     * @see RestResource
+     * @see RestMethod
+     * @see RestMockResponse
+     */
+    private RestMockResponse findRestMockResponseType(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId, final String restMockResponseId){
+        Preconditions.checkNotNull(restMockResponseId, "Mock response id cannot be null");
+        final RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
+        for(RestMockResponse restMockResponse : restMethod.getMockResponses()) {
+            if(restMockResponse.getId().equals(restMockResponseId)){
+                return restMockResponse;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a REST mock response with id " + restMockResponseId);
     }
 
 
@@ -343,233 +882,6 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         }
 
         return searchResult;
-    }
-
-    @Override
-    public RestApplicationDto findRestApplication(final String restProjectId, final String restApplicationId) {
-        final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
-        return mapper.map(restApplication, RestApplicationDto.class);
-    }
-
-    @Override
-    public RestResourceDto findRestResource(final String restProjectId, final String restApplicationId, final String restResourceId) {
-        final RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
-        return mapper.map(restResource, RestResourceDto.class);
-    }
-
-    @Override
-    public RestMethodDto findRestMethod(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId) {
-        final RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
-        return mapper.map(restMethod, RestMethodDto.class);
-    }
-
-    @Override
-    public RestMockResponseDto findRestMockResponse(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId, final String restMockResponseId) {
-        final RestMockResponse restMockResponse = findRestMockResponseType(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
-        return mapper.map(restMockResponse, RestMockResponseDto.class);
-    }
-
-    @Override
-    public RestResourceDto findRestResourceByUri(final String restProjectId, final String restApplicationId, final String restResourceUri) {
-        RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
-        RestResourceDto restResourceDto = null;
-        for(RestResource restResource : restApplication.getResources()){
-            if(restResourceUri.equalsIgnoreCase(restResource.getUri())){
-                restResourceDto = mapper.map(restResource, RestResourceDto.class);
-                break;
-            }
-        }
-        return restResourceDto;
-    }
-
-    @Override
-    public RestApplicationDto saveRestApplication(String restProjectId, RestApplicationDto restApplicationDto) {
-        RestProject restProject = collection.get(restProjectId);
-        RestApplication restApplication = mapper.map(restApplicationDto, RestApplication.class);
-        restProject.getApplications().add(restApplication);
-        save(restProjectId);
-        return restApplicationDto;
-    }
-
-    @Override
-    public RestResourceDto saveRestResource(String restProjectId, String restApplicationId, RestResourceDto restResourceDto) {
-        RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
-        RestResource restResource = mapper.map(restResourceDto, RestResource.class);
-        restApplication.getResources().add(restResource);
-        save(restProjectId);
-        return restResourceDto;
-    }
-
-    @Override
-    public RestMethodDto saveRestMethod(String restProjectId, String restApplicationId, String restResourceId, RestMethodDto restMethodDto) {
-        RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
-        RestMethod restMethod = mapper.map(restMethodDto, RestMethod.class);
-        restResource.getMethods().add(restMethod);
-        save(restProjectId);
-        return restMethodDto;
-    }
-
-    @Override
-    public RestMockResponseDto saveRestMockResponse(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, RestMockResponseDto restMockResponseDto) {
-        RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
-        RestMockResponse restMockResponse = mapper.map(restMockResponseDto, RestMockResponse.class);
-        restMethod.getMockResponses().add(restMockResponse);
-        save(restProjectId);
-        return restMockResponseDto;
-    }
-
-    @Override
-    public RestApplicationDto updateRestApplication(String restProjectId, String restApplicationId, RestApplicationDto restApplicationDto) {
-        RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
-        restApplication.setName(restApplicationDto.getName());
-        return mapper.map(restApplication, RestApplicationDto.class);
-    }
-
-    @Override
-    public RestResourceDto updateRestResource(String restProjectId, String restApplicationId, String restResourceId, RestResourceDto updatedRestResource) {
-        RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
-        restResource.setName(updatedRestResource.getName());
-        restResource.setUri(updatedRestResource.getUri());
-        return mapper.map(restResource, RestResourceDto.class);
-    }
-
-    @Override
-    public RestMethodDto updateRestMethod(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, RestMethodDto updatedRestMethod) {
-        RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
-        restMethod.setCurrentResponseSequenceIndex(updatedRestMethod.getCurrentResponseSequenceIndex());
-        restMethod.setName(updatedRestMethod.getName());
-        restMethod.setHttpMethod(updatedRestMethod.getHttpMethod());
-        restMethod.setResponseStrategy(updatedRestMethod.getResponseStrategy());
-        restMethod.setStatus(updatedRestMethod.getStatus());
-        restMethod.setForwardedEndpoint(updatedRestMethod.getForwardedEndpoint());
-        return mapper.map(restMethod, RestMethodDto.class);
-    }
-
-    @Override
-    public RestMockResponseDto updateRestMockResponse(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponseId, RestMockResponseDto updatedRestMockResponseDto) {
-        RestMockResponse restMockResponse = findRestMockResponseType(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
-        final List<HttpHeader> headers = toDtoList(updatedRestMockResponseDto.getHttpHeaders(), HttpHeader.class);
-        restMockResponse.setName(updatedRestMockResponseDto.getName());
-        restMockResponse.setBody(updatedRestMockResponseDto.getBody());
-        restMockResponse.setHttpStatusCode(updatedRestMockResponseDto.getHttpStatusCode());
-        restMockResponse.setHttpHeaders(headers);
-        return mapper.map(restMockResponse, RestMockResponseDto.class);
-    }
-
-    @Override
-    public RestApplicationDto deleteRestApplication(final String restProjectId, final String restApplicationId) {
-        RestProject restProject = collection.get(restProjectId);
-        Iterator<RestApplication> restApplicationIterator = restProject.getApplications().iterator();
-        RestApplication deletedRestApplication = null;
-        while(restApplicationIterator.hasNext()){
-            deletedRestApplication = restApplicationIterator.next();
-            if(restApplicationId.equals(deletedRestApplication.getId())){
-                restApplicationIterator.remove();
-                break;
-            }
-        }
-
-        return deletedRestApplication != null ? mapper.map(deletedRestApplication, RestApplicationDto.class) : null;
-    }
-
-    @Override
-    public RestResourceDto deleteRestResource(String restProjectId, String restApplicationId, String restResourceId) {
-        RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
-        Iterator<RestResource> restResourceIterator = restApplication.getResources().iterator();
-        RestResource deletedRestResource = null;
-        while(restResourceIterator.hasNext()){
-            deletedRestResource = restResourceIterator.next();
-            if(restResourceId.equals(deletedRestResource.getId())){
-                restResourceIterator.remove();
-                break;
-            }
-        }
-
-        return deletedRestResource != null ? mapper.map(deletedRestResource, RestResourceDto.class) : null;
-    }
-
-    @Override
-    public RestMethodDto deleteRestMethod(String restProjectId, String restApplicationId, String restResourceId, String restMethodId) {
-        RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
-        Iterator<RestMethod> restMethodIterator = restResource.getMethods().iterator();
-        RestMethod deletedRestMethod = null;
-        while(restMethodIterator.hasNext()){
-            deletedRestMethod = restMethodIterator.next();
-            if(restResourceId.equals(deletedRestMethod.getId())){
-                restMethodIterator.remove();
-                break;
-            }
-        }
-
-        return deletedRestMethod != null ? mapper.map(deletedRestMethod, RestMethodDto.class) : null;
-    }
-
-    @Override
-    public RestMockResponseDto deleteRestMockResponse(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponseId) {
-        RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
-        Iterator<RestMockResponse> restMockResponseIterator = restMethod.getMockResponses().iterator();
-        RestMockResponse deletedRestMockResponse = null;
-        while(restMockResponseIterator.hasNext()){
-            deletedRestMockResponse = restMockResponseIterator.next();
-            if(restResourceId.equals(deletedRestMockResponse.getId())){
-                restMockResponseIterator.remove();
-                break;
-            }
-        }
-
-        return deletedRestMockResponse != null ? mapper.map(deletedRestMockResponse, RestMockResponseDto.class) : null;
-    }
-
-
-
-    protected RestApplication findRestApplicationType(final String restProjectId, final String restApplicationId) {
-        Preconditions.checkNotNull(restProjectId, "Project id cannot be null");
-        Preconditions.checkNotNull(restApplicationId, "Application id cannot be null");
-        final RestProject restProject = collection.get(restProjectId);
-
-        if(restProject == null){
-            throw new IllegalArgumentException("Unable to find a REST project with id " + restProjectId);
-        }
-
-        for(RestApplication restApplication : restProject.getApplications()){
-            if(restApplication.getId().equals(restApplicationId)){
-                return restApplication;
-            }
-        }
-        throw new IllegalArgumentException("Unable to find a REST application with id " + restApplicationId);
-    }
-
-    protected RestResource findRestResourceType(final String restProjectId, final String restApplicationId, final String restResourceId){
-        Preconditions.checkNotNull(restResourceId, "Resource id cannot be null");
-        final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
-        for(RestResource restResource : restApplication.getResources()){
-            if(restResource.getId().equals(restResourceId)){
-                return restResource;
-            }
-        }
-        throw new IllegalArgumentException("Unable to find a REST resource with id " + restResourceId);
-    }
-
-    protected RestMethod findRestMethodType(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId){
-        Preconditions.checkNotNull(restMethodId, "Method id cannot be null");
-        final RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
-        for(RestMethod restMethod : restResource.getMethods()){
-            if(restMethod.getId().equals(restMethodId)){
-                return restMethod;
-            }
-        }
-        throw new IllegalArgumentException("Unable to find a REST method with id " + restMethodId);
-    }
-
-    protected RestMockResponse findRestMockResponseType(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId, final String restMockResponseId){
-        Preconditions.checkNotNull(restMockResponseId, "Mock response id cannot be null");
-        final RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
-        for(RestMockResponse restMockResponse : restMethod.getMockResponses()) {
-            if(restMockResponse.getId().equals(restMockResponseId)){
-                return restMockResponse;
-            }
-        }
-        throw new IllegalArgumentException("Unable to find a REST mock response with id " + restMockResponseId);
     }
 
 }
