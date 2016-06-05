@@ -34,6 +34,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -337,24 +338,36 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
 
     @Override
     public SoapPortDto saveSoapPort(String soapProjectId, SoapPortDto soapPortDto) {
-        return null;
+        SoapProject soapProject = collection.get(soapProjectId);
+        SoapPort soapPort = mapper.map(soapPortDto, SoapPort.class);
+        soapProject.getPorts().add(soapPort);
+        save(soapProjectId);
+        return soapPortDto;
     }
 
     @Override
     public SoapOperationDto saveSoapOperation(String soapProjectId, String soapPortId, SoapOperationDto soapOperationDto) {
-        return null;
+        SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
+        SoapOperation soapOperation = mapper.map(soapOperationDto, SoapOperation.class);
+        soapPort.getOperations().add(soapOperation);
+        save(soapProjectId);
+        return soapOperationDto;
     }
 
     @Override
     public SoapMockResponseDto saveSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, SoapMockResponseDto soapMockResponseDto) {
-        return null;
+        SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
+        SoapMockResponse soapMockResponse = mapper.map(soapMockResponseDto, SoapMockResponse.class);
+        soapOperation.getMockResponses().add(soapMockResponse);
+        save(soapProjectId);
+        return soapMockResponseDto;
     }
 
     @Override
     public SoapPortDto updateSoapPort(final String soapProjectId, final String soapPortId, final SoapPortDto soapPortDto) {
         final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         soapPort.setUri(soapPortDto.getUri());
-        return null;
+        return soapPortDto;
     }
 
     @Override
@@ -364,7 +377,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapOperation.setStatus(soapOperationDto.getStatus());
         soapOperation.setForwardedEndpoint(soapOperationDto.getForwardedEndpoint());
         soapOperation.setResponseStrategy(soapOperationDto.getResponseStrategy());
-        return null;
+        return soapOperationDto;
     }
 
     @Override
@@ -378,23 +391,53 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapMockResponse.setBody(soapMockResponseDto.getBody());
         soapMockResponse.setHttpStatusCode(soapMockResponseDto.getHttpStatusCode());
         soapMockResponse.setHttpHeaders(headers);
-
-        return null;
+        return soapMockResponseDto;
     }
 
     @Override
     public SoapPortDto deleteSoapPort(String soapProjectId, String soapPortId) {
-        return null;
+        SoapProject soapProject = collection.get(soapProjectId);
+        Iterator<SoapPort> soapPortIterator = soapProject.getPorts().iterator();
+        SoapPort deletedSoapPort = null;
+        while(soapPortIterator.hasNext()){
+            deletedSoapPort = soapPortIterator.next();
+            if(soapPortId.equals(deletedSoapPort.getId())){
+                soapPortIterator.remove();
+                break;
+            }
+        }
+
+        return deletedSoapPort != null ? mapper.map(deletedSoapPort, SoapPortDto.class) : null;
     }
 
     @Override
     public SoapOperationDto deleteSoapOperation(String soapProjectId, String soapPortId, String soapOperationId) {
-        return null;
+        SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
+        Iterator<SoapOperation> soapOperationIterator = soapPort.getOperations().iterator();
+        SoapOperation deletedSoapOperation = null;
+        while(soapOperationIterator.hasNext()){
+            deletedSoapOperation = soapOperationIterator.next();
+            if(soapPortId.equals(deletedSoapOperation.getId())){
+                soapOperationIterator.remove();
+                break;
+            }
+        }
+        return deletedSoapOperation != null ? mapper.map(deletedSoapOperation, SoapOperationDto.class) : null;
     }
 
     @Override
     public SoapMockResponseDto deleteSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, String soapMockResponseId) {
-        return null;
+        SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
+        Iterator<SoapMockResponse> soapMockResponseIterator = soapOperation.getMockResponses().iterator();
+        SoapMockResponse deleteSoapMockResponse = null;
+        while(soapMockResponseIterator.hasNext()){
+            deleteSoapMockResponse = soapMockResponseIterator.next();
+            if(soapPortId.equals(deleteSoapMockResponse.getId())){
+                soapMockResponseIterator.remove();
+                break;
+            }
+        }
+        return deleteSoapMockResponse != null ? mapper.map(deleteSoapMockResponse, SoapMockResponseDto.class) : null;
     }
 
 

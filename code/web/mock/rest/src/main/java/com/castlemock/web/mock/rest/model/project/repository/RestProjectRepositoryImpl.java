@@ -30,6 +30,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -345,27 +346,31 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
     }
 
     @Override
-    public RestApplicationDto findRestApplication(String restProjectId, String restApplicationId) {
-        return null;
+    public RestApplicationDto findRestApplication(final String restProjectId, final String restApplicationId) {
+        final RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
+        return mapper.map(restApplication, RestApplicationDto.class);
     }
 
     @Override
-    public RestResourceDto findRestResource(String restProjectId, String restApplicationId, String restResourceId) {
-        return null;
+    public RestResourceDto findRestResource(final String restProjectId, final String restApplicationId, final String restResourceId) {
+        final RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
+        return mapper.map(restResource, RestResourceDto.class);
     }
 
     @Override
-    public RestMethodDto findRestMethod(String restProjectId, String restApplicationId, String restResourceId, String restMethodId) {
-        return null;
+    public RestMethodDto findRestMethod(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId) {
+        final RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
+        return mapper.map(restMethod, RestMethodDto.class);
     }
 
     @Override
-    public RestMockResponseDto findRestMockResponse(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponseId) {
-        return null;
+    public RestMockResponseDto findRestMockResponse(final String restProjectId, final String restApplicationId, final String restResourceId, final String restMethodId, final String restMockResponseId) {
+        final RestMockResponse restMockResponse = findRestMockResponseType(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId);
+        return mapper.map(restMockResponse, RestMockResponseDto.class);
     }
 
     @Override
-    public RestResourceDto findRestResourceByUri(String restProjectId, String restApplicationId, String restResourceUri) {
+    public RestResourceDto findRestResourceByUri(final String restProjectId, final String restApplicationId, final String restResourceUri) {
         RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
         RestResourceDto restResourceDto = null;
         for(RestResource restResource : restApplication.getResources()){
@@ -379,22 +384,38 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
 
     @Override
     public RestApplicationDto saveRestApplication(String restProjectId, RestApplicationDto restApplicationDto) {
-        return null;
+        RestProject restProject = collection.get(restProjectId);
+        RestApplication restApplication = mapper.map(restApplicationDto, RestApplication.class);
+        restProject.getApplications().add(restApplication);
+        save(restProjectId);
+        return restApplicationDto;
     }
 
     @Override
     public RestResourceDto saveRestResource(String restProjectId, String restApplicationId, RestResourceDto restResourceDto) {
-        return null;
+        RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
+        RestResource restResource = mapper.map(restResourceDto, RestResource.class);
+        restApplication.getResources().add(restResource);
+        save(restProjectId);
+        return restResourceDto;
     }
 
     @Override
     public RestMethodDto saveRestMethod(String restProjectId, String restApplicationId, String restResourceId, RestMethodDto restMethodDto) {
-        return null;
+        RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
+        RestMethod restMethod = mapper.map(restMethodDto, RestMethod.class);
+        restResource.getMethods().add(restMethod);
+        save(restProjectId);
+        return restMethodDto;
     }
 
     @Override
     public RestMockResponseDto saveRestMockResponse(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, RestMockResponseDto restMockResponseDto) {
-        return null;
+        RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
+        RestMockResponse restMockResponse = mapper.map(restMockResponseDto, RestMockResponse.class);
+        restMethod.getMockResponses().add(restMockResponse);
+        save(restProjectId);
+        return restMockResponseDto;
     }
 
     @Override
@@ -436,23 +457,67 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
     }
 
     @Override
-    public RestApplicationDto deleteRestApplication(String restProjectId, String restApplicationId) {
-        return null;
+    public RestApplicationDto deleteRestApplication(final String restProjectId, final String restApplicationId) {
+        RestProject restProject = collection.get(restProjectId);
+        Iterator<RestApplication> restApplicationIterator = restProject.getApplications().iterator();
+        RestApplication deletedRestApplication = null;
+        while(restApplicationIterator.hasNext()){
+            deletedRestApplication = restApplicationIterator.next();
+            if(restApplicationId.equals(deletedRestApplication.getId())){
+                restApplicationIterator.remove();
+                break;
+            }
+        }
+
+        return deletedRestApplication != null ? mapper.map(deletedRestApplication, RestApplicationDto.class) : null;
     }
 
     @Override
     public RestResourceDto deleteRestResource(String restProjectId, String restApplicationId, String restResourceId) {
-        return null;
+        RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
+        Iterator<RestResource> restResourceIterator = restApplication.getResources().iterator();
+        RestResource deletedRestResource = null;
+        while(restResourceIterator.hasNext()){
+            deletedRestResource = restResourceIterator.next();
+            if(restResourceId.equals(deletedRestResource.getId())){
+                restResourceIterator.remove();
+                break;
+            }
+        }
+
+        return deletedRestResource != null ? mapper.map(deletedRestResource, RestResourceDto.class) : null;
     }
 
     @Override
     public RestMethodDto deleteRestMethod(String restProjectId, String restApplicationId, String restResourceId, String restMethodId) {
-        return null;
+        RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
+        Iterator<RestMethod> restMethodIterator = restResource.getMethods().iterator();
+        RestMethod deletedRestMethod = null;
+        while(restMethodIterator.hasNext()){
+            deletedRestMethod = restMethodIterator.next();
+            if(restResourceId.equals(deletedRestMethod.getId())){
+                restMethodIterator.remove();
+                break;
+            }
+        }
+
+        return deletedRestMethod != null ? mapper.map(deletedRestMethod, RestMethodDto.class) : null;
     }
 
     @Override
     public RestMockResponseDto deleteRestMockResponse(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponseId) {
-        return null;
+        RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
+        Iterator<RestMockResponse> restMockResponseIterator = restMethod.getMockResponses().iterator();
+        RestMockResponse deletedRestMockResponse = null;
+        while(restMockResponseIterator.hasNext()){
+            deletedRestMockResponse = restMockResponseIterator.next();
+            if(restResourceId.equals(deletedRestMockResponse.getId())){
+                restMockResponseIterator.remove();
+                break;
+            }
+        }
+
+        return deletedRestMockResponse != null ? mapper.map(deletedRestMockResponse, RestMockResponseDto.class) : null;
     }
 
 

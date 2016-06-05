@@ -127,6 +127,10 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
     @Override
     public D save(final D dto) {
         T type = mapper.map(dto, entityClass);
+        return save(type);
+    }
+
+    private D save(final T type){
         I id = type.getId();
 
         if(id == null){
@@ -139,6 +143,13 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         collection.put(id, type);
         return mapper.map(type, dtoClass);
     }
+
+
+    public D save(final I id){
+        final T type = collection.get(id);
+        return save(type);
+    }
+
 
     /**
      * Count all the stored entities for the repository
