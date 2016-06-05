@@ -47,6 +47,8 @@ public class ReadRestApplicationService extends AbstractRestProjectService imple
     public ServiceResult<ReadRestApplicationOutput> process(final ServiceTask<ReadRestApplicationInput> serviceTask) {
         final ReadRestApplicationInput input = serviceTask.getInput();
         final RestApplicationDto restApplicationDto = repository.findRestApplication(input.getRestProjectId(), input.getRestApplicationId());
+        final Map<RestMethodStatus, Integer> soapOperationStatusCount = getRestMethodStatusCount(restApplicationDto);
+        restApplicationDto.setStatusCount(soapOperationStatusCount);
         return createServiceResult(new ReadRestApplicationOutput(restApplicationDto));
     }
 }
