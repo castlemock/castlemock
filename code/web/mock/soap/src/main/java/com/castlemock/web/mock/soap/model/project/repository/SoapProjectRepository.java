@@ -121,10 +121,11 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
      */
 
     /**
-     *
-     * @param soapProjectId
-     * @param soapPortDto
-     * @return
+     * The method adds a new {@link SoapPort} to a {@link SoapProject} and then saves
+     * the {@link SoapProject} to the file system.
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortDto The dto instance of {@link SoapPort} that will be added to the {@link SoapProject}
+     * @return The saved {@link SoapPortDto}
      * @see SoapProject
      * @see SoapProjectDto
      * @see SoapPort
@@ -133,11 +134,12 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
     SoapPortDto saveSoapPort(String soapProjectId, SoapPortDto soapPortDto);
 
     /**
-     *
-     * @param soapProjectId
-     * @param soapPortId
-     * @param soapOperationDto
-     * @return
+     * The method adds a new {@link SoapOperation} to a {@link SoapPort} and then saves
+     * the {@link SoapProject} to the file system.
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationDto The dto instance of {@link SoapOperation} that will be added to the {@link SoapPort}
+     * @return The saved {@link SoapOperationDto}
      * @see SoapProject
      * @see SoapProjectDto
      * @see SoapPort
@@ -149,12 +151,21 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
 
 
     /**
-     *
-     * @param soapProjectId
-     * @param soapPortId
-     * @param soapOperationId
-     * @param soapMockResponseDto
-     * @return
+     * The method adds a new {@link SoapMockResponse} to a {@link SoapOperation} and then saves
+     * the {@link SoapProject} to the file system.
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationId The id of the {@link SoapOperation}
+     * @param soapMockResponseDto The dto instance of {@link SoapMockResponse} that will be added to the {@link SoapOperation}
+     * @return The saved {@link SoapMockResponseDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     * @see SoapMockResponse
+     * @see SoapMockResponseDto
      */
     SoapMockResponseDto saveSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, SoapMockResponseDto soapMockResponseDto);
 
@@ -163,11 +174,11 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
      */
 
     /**
-     *
-     * @param soapProjectId
-     * @parma soapPortId
-     * @param soapPortDto
-     * @return
+     * The method updates an already existing {@link SoapPort}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @parma soapPortId The id of the {@link SoapPort} that will be updated
+     * @param soapPortDto The updated {@link SoapPortDto}
+     * @return The updated version of the {@link SoapPortDto}
      * @see SoapProject
      * @see SoapProjectDto
      * @see SoapPort
@@ -176,12 +187,12 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
     SoapPortDto updateSoapPort(String soapProjectId, String soapPortId, SoapPortDto soapPortDto);
 
     /**
-     *
-     * @param soapProjectId
-     * @param soapPortId
-     * @param soapOperationId
-     * @param soapOperationDto
-     * @return
+     * The method updates an already existing {@link SoapOperation}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationId The id of the {@link SoapOperation} that will be updated
+     * @param soapOperationDto The updated {@link SoapOperationDto}
+     * @return The updated version of the {@link SoapOperationDto}
      * @see SoapProject
      * @see SoapProjectDto
      * @see SoapPort
@@ -193,13 +204,21 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
 
 
     /**
-     *
-     * @param soapProjectId
-     * @param soapPortId
-     * @param soapOperationId
-     * @param soapMockResponseId
-     * @param soapMockResponseDto
-     * @return
+     * The method updates an already existing {@link SoapOperation}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationId The id of the {@link SoapOperation}
+     * @param soapMockResponseId The id of the {@link SoapMockResponse} that will be updated
+     * @param soapMockResponseDto The updated {@link SoapMockResponseDto)
+     * @return The updated version of the {@link SoapMockResponseDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     * @see SoapMockResponse
+     * @see SoapMockResponseDto
      */
     SoapMockResponseDto updateSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, String soapMockResponseId, SoapMockResponseDto soapMockResponseDto);
 
@@ -208,10 +227,10 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
      */
 
     /**
-     *
-     * @param soapProjectId
-     * @param soapPortId
-     * @return
+     * The method deletes a {@link SoapPort}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @return The deleted {@link SoapPortDto}
      * @see SoapProject
      * @see SoapProjectDto
      * @see SoapPort
@@ -220,11 +239,11 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
     SoapPortDto deleteSoapPort(String soapProjectId, String soapPortId);
 
     /**
-     *
-     * @param soapProjectId
-     * @param soapPortId
-     * @param soapOperationId
-     * @return
+     * The method deletes a {@link SoapOperation}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationId The id of the {@link SoapOperation}
+     * @return The deleted {@link SoapOperationDto}
      * @see SoapProject
      * @see SoapProjectDto
      * @see SoapPort
@@ -236,18 +255,20 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
 
 
     /**
-     *
-     * @param soapProjectId
-     * @param soapPortId
-     * @param soapOperationId
-     * @param soapMockResponseId
-     * @return
+     * The method deletes a {@link SoapMockResponse}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationId The id of the {@link SoapOperation}
+     * @param soapMockResponseId The id of the {@link SoapMockResponse}
+     * @return The deleted {@link SoapMockResponseDto}
      * @see SoapProject
      * @see SoapProjectDto
      * @see SoapPort
      * @see SoapPortDto
      * @see SoapOperation
      * @see SoapOperationDto
+     * @see SoapMockResponse
+     * @see SoapMockResponseDto
      */
     SoapMockResponseDto deleteSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, String soapMockResponseId);
 

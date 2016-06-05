@@ -196,93 +196,6 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
      * @see SoapPort
      * @see SoapPortDto
      */
-    private SoapPort findSoapPortType(final String soapProjectId, final String soapPortId) {
-        Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
-        Preconditions.checkNotNull(soapPortId, "Port id cannot be null");
-        final SoapProject soapProject = collection.get(soapProjectId);
-
-        if(soapProject == null){
-            throw new IllegalArgumentException("Unable to find a SOAP project with id " + soapProjectId);
-        }
-
-        for(SoapPort soapPort : soapProject.getPorts()){
-            if(soapPort.getId().equals(soapPortId)){
-                return soapPort;
-            }
-        }
-        throw new IllegalArgumentException("Unable to find a SOAP port with id " + soapPortId);
-    }
-
-
-    /**
-     * The method finds a operation that matching the search criteria and returns the result
-     * @param soapProjectId The id of the project which the operation belongs to
-     * @param soapPortId The id of the port which the operation belongs to
-     * @param soapOperationId The id of the operation that will be retrieved
-     * @return Returns an operation that matches the search criteria. Returns null if no operation matches.
-     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
-     * @see SoapProject
-     * @see SoapProjectDto
-     * @see SoapPort
-     * @see SoapPortDto
-     * @see SoapOperation
-     * @see SoapOperationDto
-     */
-    private SoapOperation findSoapOperationType(final String soapProjectId, final String soapPortId, final String soapOperationId){
-        Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
-        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
-        for(SoapOperation soapOperation : soapPort.getOperations()){
-            if(soapOperation.getId().equals(soapOperationId)){
-                return soapOperation;
-            }
-        }
-        throw new IllegalArgumentException("Unable to find a SOAP operation with id " + soapOperationId);
-    }
-
-
-
-    /**
-     * The method provides the functionality to retrieve a mocked response with project id, port id,
-     * operation id and mock response id
-     * @param soapProjectId The id of the project that the mocked response belongs to
-     * @param soapPortId The id of the port that the mocked response belongs to
-     * @param soapOperationId The id of the operation that the mocked response belongs to
-     * @param soapMockResponseId The id of the mocked response that will be retrieved
-     * @return Mocked response that match the provided parameters
-     * @see SoapProject
-     * @see SoapProjectDto
-     * @see SoapPort
-     * @see SoapPortDto
-     * @see SoapOperation
-     * @see SoapOperationDto
-     * @see SoapMockResponse
-     * @see SoapMockResponseDto
-     */
-    private SoapMockResponse findSoapMockResponseType(final String soapProjectId, final String soapPortId, final String soapOperationId, final String soapMockResponseId) {
-        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
-        for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
-            if(soapMockResponse.getId().equals(soapMockResponseId)){
-                return soapMockResponse;
-            }
-        }
-        throw new IllegalArgumentException("Unable to find a SOAP mock response with id " + soapMockResponseId);
-    }
-
-
-
-
-
-    /**
-     * The method find an port with project id and port id
-     * @param soapProjectId The id of the project which the port belongs to
-     * @param soapPortId The id of the port that will be retrieved
-     * @return Returns an port that matches the search criteria. Returns null if no port matches.
-     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP port was found
-     * @see SoapProject
-     * @see SoapProjectDto
-     * @see SoapPort
-     * @see SoapPortDto
-     */
     @Override
     public SoapPortDto findSoapPort(final String soapProjectId, final String soapPortId) {
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
@@ -330,14 +243,25 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
      * @see SoapMockResponseDto
      */
     @Override
-    public SoapMockResponseDto findSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, String soapMockResponseId) {
+    public SoapMockResponseDto findSoapMockResponse(final String soapProjectId, final String soapPortId, final String soapOperationId, final String soapMockResponseId) {
         Preconditions.checkNotNull(soapOperationId, "Mock response id cannot be null");
         final SoapMockResponse soapMockResponse = findSoapMockResponseType(soapProjectId, soapPortId, soapOperationId, soapMockResponseId);
         return mapper.map(soapMockResponse, SoapMockResponseDto.class);
     }
 
+    /**
+     * The method adds a new {@link SoapPort} to a {@link SoapProject} and then saves
+     * the {@link SoapProject} to the file system.
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortDto The dto instance of {@link SoapPort} that will be added to the {@link SoapProject}
+     * @return The saved {@link SoapPortDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     */
     @Override
-    public SoapPortDto saveSoapPort(String soapProjectId, SoapPortDto soapPortDto) {
+    public SoapPortDto saveSoapPort(final String soapProjectId, final SoapPortDto soapPortDto) {
         SoapProject soapProject = collection.get(soapProjectId);
         SoapPort soapPort = mapper.map(soapPortDto, SoapPort.class);
         soapProject.getPorts().add(soapPort);
@@ -345,8 +269,22 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         return soapPortDto;
     }
 
+    /**
+     * The method adds a new {@link SoapOperation} to a {@link SoapPort} and then saves
+     * the {@link SoapProject} to the file system.
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationDto The dto instance of {@link SoapOperation} that will be added to the {@link SoapPort}
+     * @return The saved {@link SoapOperationDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     */
     @Override
-    public SoapOperationDto saveSoapOperation(String soapProjectId, String soapPortId, SoapOperationDto soapOperationDto) {
+    public SoapOperationDto saveSoapOperation(final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto) {
         SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         SoapOperation soapOperation = mapper.map(soapOperationDto, SoapOperation.class);
         soapPort.getOperations().add(soapOperation);
@@ -354,8 +292,25 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         return soapOperationDto;
     }
 
+    /**
+     * The method adds a new {@link SoapMockResponse} to a {@link SoapOperation} and then saves
+     * the {@link SoapProject} to the file system.
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationId The id of the {@link SoapOperation}
+     * @param soapMockResponseDto The dto instance of {@link SoapMockResponse} that will be added to the {@link SoapOperation}
+     * @return The saved {@link SoapMockResponseDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     * @see SoapMockResponse
+     * @see SoapMockResponseDto
+     */
     @Override
-    public SoapMockResponseDto saveSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, SoapMockResponseDto soapMockResponseDto) {
+    public SoapMockResponseDto saveSoapMockResponse(final String soapProjectId, final String soapPortId, final String soapOperationId, final SoapMockResponseDto soapMockResponseDto) {
         SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         SoapMockResponse soapMockResponse = mapper.map(soapMockResponseDto, SoapMockResponse.class);
         soapOperation.getMockResponses().add(soapMockResponse);
@@ -363,6 +318,17 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         return soapMockResponseDto;
     }
 
+    /**
+     * The method updates an already existing {@link SoapPort}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @parma soapPortId The id of the {@link SoapPort} that will be updated
+     * @param soapPortDto The updated {@link SoapPortDto}
+     * @return The updated version of the {@link SoapPortDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     */
     @Override
     public SoapPortDto updateSoapPort(final String soapProjectId, final String soapPortId, final SoapPortDto soapPortDto) {
         final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
@@ -370,6 +336,20 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         return soapPortDto;
     }
 
+    /**
+     * The method updates an already existing {@link SoapOperation}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationId The id of the {@link SoapOperation} that will be updated
+     * @param soapOperationDto The updated {@link SoapOperationDto}
+     * @return The updated version of the {@link SoapOperationDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     */
     @Override
     public SoapOperationDto updateSoapOperation(final String soapProjectId, final String soapPortId,
                                                 final String soapOperationId, final SoapOperationDto soapOperationDto) {
@@ -380,6 +360,23 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         return soapOperationDto;
     }
 
+    /**
+     * The method updates an already existing {@link SoapOperation}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationId The id of the {@link SoapOperation}
+     * @param soapMockResponseId The id of the {@link SoapMockResponse} that will be updated
+     * @param soapMockResponseDto The updated {@link SoapMockResponseDto)
+     * @return The updated version of the {@link SoapMockResponseDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     * @see SoapMockResponse
+     * @see SoapMockResponseDto
+     */
     @Override
     public SoapMockResponseDto updateSoapMockResponse(final String soapProjectId, final String soapPortId,
                                                       final String soapOperationId, final String soapMockResponseId,
@@ -394,8 +391,18 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         return soapMockResponseDto;
     }
 
+    /**
+     * The method deletes a {@link SoapPort}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @return The deleted {@link SoapPortDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     */
     @Override
-    public SoapPortDto deleteSoapPort(String soapProjectId, String soapPortId) {
+    public SoapPortDto deleteSoapPort(final String soapProjectId, final String soapPortId) {
         SoapProject soapProject = collection.get(soapProjectId);
         Iterator<SoapPort> soapPortIterator = soapProject.getPorts().iterator();
         SoapPort deletedSoapPort = null;
@@ -410,8 +417,21 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         return deletedSoapPort != null ? mapper.map(deletedSoapPort, SoapPortDto.class) : null;
     }
 
+    /**
+     * The method deletes a {@link SoapOperation}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationId The id of the {@link SoapOperation}
+     * @return The deleted {@link SoapOperationDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     */
     @Override
-    public SoapOperationDto deleteSoapOperation(String soapProjectId, String soapPortId, String soapOperationId) {
+    public SoapOperationDto deleteSoapOperation(final String soapProjectId, final String soapPortId, final String soapOperationId) {
         SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         Iterator<SoapOperation> soapOperationIterator = soapPort.getOperations().iterator();
         SoapOperation deletedSoapOperation = null;
@@ -425,8 +445,24 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         return deletedSoapOperation != null ? mapper.map(deletedSoapOperation, SoapOperationDto.class) : null;
     }
 
+    /**
+     * The method deletes a {@link SoapMockResponse}
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapPortId The id of the {@link SoapPort}
+     * @param soapOperationId The id of the {@link SoapOperation}
+     * @param soapMockResponseId The id of the {@link SoapMockResponse}
+     * @return The deleted {@link SoapMockResponseDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     * @see SoapMockResponse
+     * @see SoapMockResponseDto
+     */
     @Override
-    public SoapMockResponseDto deleteSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, String soapMockResponseId) {
+    public SoapMockResponseDto deleteSoapMockResponse(final String soapProjectId, final String soapPortId, final String soapOperationId, final String soapMockResponseId) {
         SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
         Iterator<SoapMockResponse> soapMockResponseIterator = soapOperation.getMockResponses().iterator();
         SoapMockResponse deleteSoapMockResponse = null;
@@ -438,89 +474,6 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
             }
         }
         return deleteSoapMockResponse != null ? mapper.map(deleteSoapMockResponse, SoapMockResponseDto.class) : null;
-    }
-
-
-    /**
-     * Finds a operation with the provided operation id
-     * @param soapOperationId The id of the operation that should be retrieved
-     * @return A operation with the provided id. Null will be returned if no operation has the matching value
-     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
-     * @see SoapOperation
-     * @see SoapOperationDto
-     */
-    protected SoapOperationDto findSoapOperation(final String soapOperationId) {
-        Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
-        for(SoapProject soapProject : collection.values()){
-            for(SoapPort soapPort : soapProject.getPorts()){
-                for(SoapOperation soapOperation : soapPort.getOperations()){
-                    if(soapOperation.getId().equals(soapOperationId)){
-                        return mapper.map(soapOperation, SoapOperationDto.class);
-                    }
-                }
-            }
-        }
-        throw new IllegalArgumentException("Unable to find a SOAP operation with id " + soapOperationId);
-    }
-
-    /**
-     * The method provides the functionality to find a SOAP operation with a specific id
-     * @param soapOperationId The identifier for the SOAP operation
-     * @return A SOAP operation with a matching identifier
-     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
-     * @see SoapOperation
-     * @see SoapOperationDto
-     */
-    protected String findSoapProject(final String soapOperationId) {
-        Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
-        for(SoapProject soapProject : collection.values()){
-            for(SoapPort soapPort : soapProject.getPorts()){
-                for(SoapOperation soapOperation : soapPort.getOperations()){
-                    if(soapOperation.getId().equals(soapOperationId)){
-                        return soapProject.getId();
-                    }
-                }
-            }
-        }
-        throw new IllegalArgumentException("Unable to find an operation with id " + soapOperationId);
-    }
-
-    /**
-     * Retrieve a list of operations with a specific project id and port id
-     * @param soapProjectId The id of the project that the operations belongs to
-     * @return A list of operations that matches the search criteria.
-     * @see SoapProject
-     * @see SoapProjectDto
-     */
-    protected List<SoapOperationDto> findSoapOperationTypeWithSoapProjectId(final String soapProjectId) {
-        final SoapProject soapProject = collection.get(soapProjectId);
-
-        if(soapProject == null){
-            throw new IllegalArgumentException("Unable to find a project with id " + soapProjectId);
-        }
-
-        final List<SoapOperation> soapOperations = new ArrayList<SoapOperation>();
-        for(SoapPort soapPort : soapProject.getPorts()){
-            soapOperations.addAll(soapPort.getOperations());
-        }
-        return toDtoList(soapOperations, SoapOperationDto.class);
-    }
-
-
-    /**
-     * The method provides the functionality to find a SOAP port with a specific name
-     * @param soapProject The SOAP project that will be searched for the SOAP port
-     * @param soapPortName The name of the SOAP port that should be retrieved
-     * @return A SOAP port that matches the search criteria. If no SOAP ports matches the provided
-     * name then null will be returned.
-     */
-    protected SoapPortDto findSoapPortWithName(final SoapProject soapProject, final String soapPortName){
-        for(SoapPort soapPort : soapProject.getPorts()){
-            if(soapPort.getName().equals(soapPortName)){
-                return mapper.map(soapPort, SoapPortDto.class);
-            }
-        }
-        return null;
     }
 
     /**
@@ -549,7 +502,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
     @Override
-    public SoapPortDto findSoapPortWithName(String soapProjectId, String soapPortName) {
+    public SoapPortDto findSoapPortWithName(final String soapProjectId, final String soapPortName) {
         final SoapProject soapProject = collection.get(soapProjectId);
         for(SoapPort soapPort : soapProject.getPorts()){
             if(soapPort.getName().equals(soapPortName)){
@@ -576,6 +529,90 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         }
         return null;
     }
+
+
+
+    /**
+     * The method find an port with project id and port id
+     * @param soapProjectId The id of the project which the port belongs to
+     * @param soapPortId The id of the port that will be retrieved
+     * @return Returns an port that matches the search criteria. Returns null if no port matches.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP port was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     */
+    private SoapPort findSoapPortType(final String soapProjectId, final String soapPortId) {
+        Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
+        Preconditions.checkNotNull(soapPortId, "Port id cannot be null");
+        final SoapProject soapProject = collection.get(soapProjectId);
+
+        if(soapProject == null){
+            throw new IllegalArgumentException("Unable to find a SOAP project with id " + soapProjectId);
+        }
+
+        for(SoapPort soapPort : soapProject.getPorts()){
+            if(soapPort.getId().equals(soapPortId)){
+                return soapPort;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a SOAP port with id " + soapPortId);
+    }
+
+
+    /**
+     * The method finds a operation that matching the search criteria and returns the result
+     * @param soapProjectId The id of the project which the operation belongs to
+     * @param soapPortId The id of the port which the operation belongs to
+     * @param soapOperationId The id of the operation that will be retrieved
+     * @return Returns an operation that matches the search criteria. Returns null if no operation matches.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     */
+    private SoapOperation findSoapOperationType(final String soapProjectId, final String soapPortId, final String soapOperationId){
+        Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
+        final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
+        for(SoapOperation soapOperation : soapPort.getOperations()){
+            if(soapOperation.getId().equals(soapOperationId)){
+                return soapOperation;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a SOAP operation with id " + soapOperationId);
+    }
+
+    /**
+     * The method provides the functionality to retrieve a mocked response with project id, port id,
+     * operation id and mock response id
+     * @param soapProjectId The id of the project that the mocked response belongs to
+     * @param soapPortId The id of the port that the mocked response belongs to
+     * @param soapOperationId The id of the operation that the mocked response belongs to
+     * @param soapMockResponseId The id of the mocked response that will be retrieved
+     * @return Mocked response that match the provided parameters
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapPort
+     * @see SoapPortDto
+     * @see SoapOperation
+     * @see SoapOperationDto
+     * @see SoapMockResponse
+     * @see SoapMockResponseDto
+     */
+    private SoapMockResponse findSoapMockResponseType(final String soapProjectId, final String soapPortId, final String soapOperationId, final String soapMockResponseId) {
+        final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
+        for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
+            if(soapMockResponse.getId().equals(soapMockResponseId)){
+                return soapMockResponse;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a SOAP mock response with id " + soapMockResponseId);
+    }
+
 
 
     /**
