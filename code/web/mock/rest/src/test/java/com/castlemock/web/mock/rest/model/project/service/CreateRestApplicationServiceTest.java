@@ -16,15 +16,16 @@
 
 package com.castlemock.web.mock.rest.model.project.service;
 
-import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestApplicationOutput;
 import com.castlemock.web.mock.rest.model.project.RestApplicationDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.repository.RestProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,7 +44,7 @@ public class CreateRestApplicationServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private Repository repository;
+    private RestProjectRepository repository;
 
     @InjectMocks
     private CreateRestApplicationService service;
@@ -55,11 +56,12 @@ public class CreateRestApplicationServiceTest {
 
     @Test
     public void testProcess(){
-        final RestProject restProject = new RestProject();
-        restProject.setApplications(new ArrayList<RestApplication>());
+        final RestProjectDto restProject = new RestProjectDto();
+        restProject.setApplications(new ArrayList<RestApplicationDto>());
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(restProject);
         final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
         restApplicationDto.setId(null);
+        Mockito.when(repository.saveRestApplication(Mockito.anyString(), Mockito.any(RestApplicationDto.class))).thenReturn(restApplicationDto);
 
         final CreateRestApplicationInput input = new CreateRestApplicationInput("ProjectId", restApplicationDto);
         input.setRestApplication(restApplicationDto);

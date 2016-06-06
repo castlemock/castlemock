@@ -4,13 +4,11 @@ import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.castlemock.web.mock.soap.model.event.SoapEventDtoGenerator;
+import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -25,7 +23,8 @@ public class SoapEventRepositoryTest {
 
     @Mock
     private FileRepositorySupport fileRepositorySupport;
-
+    @Spy
+    private DozerBeanMapper mapper;
     @InjectMocks
     private SoapEventRepositoryImpl repository;
     private static final String DIRECTORY = "/directory";
@@ -52,7 +51,14 @@ public class SoapEventRepositoryTest {
     public void testFindOne(){
         final SoapEventDto soapEvent = save();
         final SoapEventDto returnedSoapEvent = repository.findOne(soapEvent.getId());
-        Assert.assertEquals(soapEvent, returnedSoapEvent);
+        Assert.assertEquals(returnedSoapEvent.getProjectId(), soapEvent.getProjectId());
+        Assert.assertEquals(returnedSoapEvent.getId(), soapEvent.getId());
+        Assert.assertEquals(returnedSoapEvent.getResourceName(), soapEvent.getResourceName());
+        Assert.assertEquals(returnedSoapEvent.getTypeIdentifier(), soapEvent.getTypeIdentifier());
+        Assert.assertEquals(returnedSoapEvent.getOperationId(), soapEvent.getOperationId());
+        Assert.assertEquals(returnedSoapEvent.getPortId(), soapEvent.getPortId());
+        Assert.assertEquals(returnedSoapEvent.getResourceName(), soapEvent.getResourceName());
+        Assert.assertEquals(returnedSoapEvent.getResourceLink(), soapEvent.getResourceLink());
     }
 
     @Test
@@ -60,13 +66,20 @@ public class SoapEventRepositoryTest {
         final SoapEventDto soapEvent = save();
         final List<SoapEventDto> soapEvents = repository.findAll();
         Assert.assertEquals(soapEvents.size(), 1);
-        Assert.assertEquals(soapEvents.get(0), soapEvent);
+        Assert.assertEquals(soapEvents.get(0).getProjectId(), soapEvent.getProjectId());
+        Assert.assertEquals(soapEvents.get(0).getId(), soapEvent.getId());
+        Assert.assertEquals(soapEvents.get(0).getResourceName(), soapEvent.getResourceName());
+        Assert.assertEquals(soapEvents.get(0).getTypeIdentifier(), soapEvent.getTypeIdentifier());
+        Assert.assertEquals(soapEvents.get(0).getOperationId(), soapEvent.getOperationId());
+        Assert.assertEquals(soapEvents.get(0).getPortId(), soapEvent.getPortId());
+        Assert.assertEquals(soapEvents.get(0).getResourceName(), soapEvent.getResourceName());
+        Assert.assertEquals(soapEvents.get(0).getResourceLink(), soapEvent.getResourceLink());
     }
 
     @Test
     public void testSave(){
         final SoapEventDto soapEvent = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(soapEvent, DIRECTORY + File.separator + soapEvent.getId() + EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapEvent.class), Mockito.anyString());
     }
 
     @Test

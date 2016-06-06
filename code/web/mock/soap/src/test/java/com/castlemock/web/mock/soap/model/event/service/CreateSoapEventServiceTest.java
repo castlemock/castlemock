@@ -55,7 +55,7 @@ public class CreateSoapEventServiceTest {
     @Test
     public void testProcess(){
         final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapEventDto();
-        Mockito.when(repository.save(Mockito.any(SoapEvent.class))).thenReturn(SoapEventDtoGenerator.generateSoapEvent());
+        Mockito.when(repository.save(Mockito.any(SoapEventDto.class))).thenReturn(soapEventDto);
 
         final CreateSoapEventInput input = new CreateSoapEventInput(soapEventDto);
         input.setSoapEvent(soapEventDto);

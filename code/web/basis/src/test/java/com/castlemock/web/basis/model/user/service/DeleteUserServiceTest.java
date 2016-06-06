@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.dto.UserDto;
 import com.castlemock.core.basis.model.user.service.message.input.DeleteUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.DeleteUserOutput;
 import org.dozer.DozerBeanMapper;
@@ -53,7 +54,7 @@ public class DeleteUserServiceTest {
 
     @Test
     public void testProcess(){
-        User user = new User();
+        UserDto user = new UserDto();
         user.setRole(Role.MODIFIER);
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
@@ -68,10 +69,10 @@ public class DeleteUserServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessDeleteLastAdmin(){
-        User user = new User();
+        UserDto user = new UserDto();
         user.setRole(Role.ADMIN);
 
-        List<User> users = new ArrayList<>();
+        List<UserDto> users = new ArrayList<>();
         users.add(user);
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);

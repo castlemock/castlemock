@@ -53,7 +53,7 @@ public class ReadUserServiceTest {
 
     @Test
     public void testProcess(){
-        User user = new User();
+        UserDto user = new UserDto();
         user.setId("UserId");
         user.setUsername("Username");
         user.setStatus(Status.ACTIVE);

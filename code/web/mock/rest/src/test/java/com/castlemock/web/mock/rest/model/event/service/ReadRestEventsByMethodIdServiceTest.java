@@ -16,13 +16,12 @@
 
 package com.castlemock.web.mock.rest.model.event.service;
 
-import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
+import com.castlemock.web.mock.rest.model.event.repository.RestEventRepository;
 import com.castlemock.web.mock.rest.model.project.RestEventDtoGenerator;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -44,7 +43,7 @@ public class ReadRestEventsByMethodIdServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private Repository repository;
+    private RestEventRepository repository;
 
     @InjectMocks
     private ReadRestEventWithMethodIdService service;
@@ -56,17 +55,16 @@ public class ReadRestEventsByMethodIdServiceTest {
 
     @Test
     public void testProcess(){
-        final List<RestEvent> restEvents = new ArrayList<RestEvent>();
-        for(int index = 0; index < 3; index++){
-            final RestEvent restEvent = RestEventDtoGenerator.generateRestEvent();
+        final List<RestEventDto> restEvents = new ArrayList<RestEventDto>();
+        for(int index = 0; index < 2; index++){
+            final RestEventDto restEvent = RestEventDtoGenerator.generateRestEventDto();
             restEvents.add(restEvent);
         }
 
         restEvents.get(0).setMethodId("OperationId");
         restEvents.get(1).setMethodId("OperationId");
-        restEvents.get(2).setMethodId("InvalidOperationId");
 
-        Mockito.when(repository.findAll()).thenReturn(restEvents);
+        Mockito.when(repository.findEventsByMethodId(Mockito.anyString())).thenReturn(restEvents);
 
         final ReadRestEventWithMethodIdInput input = new ReadRestEventWithMethodIdInput("OperationId");
         final ServiceTask<ReadRestEventWithMethodIdInput> serviceTask = new ServiceTask<ReadRestEventWithMethodIdInput>(input);
@@ -77,7 +75,7 @@ public class ReadRestEventsByMethodIdServiceTest {
         Assert.assertEquals(2, output.getRestEvents().size());
 
         for(int index = 0; index < 2; index++){
-            final RestEvent restEvent = restEvents.get(index);
+            final RestEventDto restEvent = restEvents.get(index);
             final RestEventDto returnedRestEvent = output.getRestEvents().get(index);
 
             Assert.assertEquals(restEvent.getId(), returnedRestEvent.getId());

@@ -69,23 +69,23 @@ public class UpdateAllConfigurationGroupsServiceTest {
         configurationGroup.getConfigurations().add(configuration);
         configurationGroups.add(configurationGroup);
 
-        final List<ConfigurationGroup> sourceConfigurationGroups = new ArrayList<ConfigurationGroup>();
-        final ConfigurationGroup sourceConfigurationGroup = new ConfigurationGroup();
+        final List<ConfigurationGroupDto> sourceConfigurationGroups = new ArrayList<ConfigurationGroupDto>();
+        final ConfigurationGroupDto sourceConfigurationGroup = new ConfigurationGroupDto();
         sourceConfigurationGroup.setId(new String());
         sourceConfigurationGroup.setName("Configuration group");
-        sourceConfigurationGroup.setConfigurations(new ArrayList<Configuration>());
-        final Configuration sourceConfiguration = new Configuration();
+        sourceConfigurationGroup.setConfigurations(new ArrayList<ConfigurationDto>());
+        final ConfigurationDto sourceConfiguration = new ConfigurationDto();
         sourceConfiguration.setKey("Key");
         sourceConfiguration.setValue("Old value");
         sourceConfiguration.setType(ConfigurationType.BOOLEAN);
         sourceConfigurationGroup.getConfigurations().add(sourceConfiguration);
         sourceConfigurationGroups.add(sourceConfigurationGroup);
 
-        final ConfigurationGroup updatedConfigurationGroup = new ConfigurationGroup();
+        final ConfigurationGroupDto updatedConfigurationGroup = new ConfigurationGroupDto();
         updatedConfigurationGroup.setId(new String());
         updatedConfigurationGroup.setName("Configuration group");
-        updatedConfigurationGroup.setConfigurations(new ArrayList<Configuration>());
-        final Configuration updatedConfiguration = new Configuration();
+        updatedConfigurationGroup.setConfigurations(new ArrayList<ConfigurationDto>());
+        final ConfigurationDto updatedConfiguration = new ConfigurationDto();
         updatedConfiguration.setKey("Key");
         updatedConfiguration.setValue("New value");
         updatedConfiguration.setType(ConfigurationType.BOOLEAN);

@@ -53,7 +53,7 @@ public class ReadRestEventServiceTest {
 
     @Test
     public void testProcess(){
-        final RestEvent restEvent = RestEventDtoGenerator.generateRestEvent();
+        final RestEventDto restEvent = RestEventDtoGenerator.generateRestEventDto();
         Mockito.when(repository.findOne(restEvent.getId())).thenReturn(restEvent);
 
         final ReadRestEventInput input = new ReadRestEventInput(restEvent.getId());

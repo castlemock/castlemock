@@ -21,10 +21,13 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapPortInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.DeleteSoapPortOutput;
 import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +43,7 @@ public class DeleteSoapPortServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private Repository repository;
+    private SoapProjectRepository repository;
 
     @InjectMocks
     private DeleteSoapPortService service;
@@ -52,8 +55,8 @@ public class DeleteSoapPortServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapProject soapProject = SoapProjectDtoGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortDtoGenerator.generateSoapPort();
+        final SoapProjectDto soapProject = SoapProjectDtoGenerator.generateSoapProjectDto();
+        final SoapPortDto soapPort = SoapPortDtoGenerator.generateSoapPortDto();
 
         soapProject.getPorts().add(soapPort);
         Mockito.when(repository.findOne(soapProject.getId())).thenReturn(soapProject);
@@ -63,6 +66,6 @@ public class DeleteSoapPortServiceTest {
         final ServiceResult<DeleteSoapPortOutput> serviceResult = service.process(serviceTask);
         serviceResult.getOutput();
 
-        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapProject.class));
+        Mockito.verify(repository, Mockito.times(1)).deleteSoapPort(Mockito.anyString(), Mockito.anyString());
     }
 }

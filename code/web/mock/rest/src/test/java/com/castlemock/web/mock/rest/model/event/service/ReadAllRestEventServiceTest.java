@@ -56,9 +56,9 @@ public class ReadAllRestEventServiceTest {
 
     @Test
     public void testProcess(){
-        final List<RestEvent> restEvents = new ArrayList<RestEvent>();
+        final List<RestEventDto> restEvents = new ArrayList<RestEventDto>();
         for(int index = 0; index < 3; index++){
-            final RestEvent restEvent = RestEventDtoGenerator.generateRestEvent();
+            final RestEventDto restEvent = RestEventDtoGenerator.generateRestEventDto();
             restEvents.add(restEvent);
         }
 
@@ -72,7 +72,7 @@ public class ReadAllRestEventServiceTest {
         Assert.assertEquals(restEvents.size(), output.getRestEvents().size());
 
         for(int index = 0; index < 3; index++){
-            final RestEvent restEvent = restEvents.get(index);
+            final RestEventDto restEvent = restEvents.get(index);
             final RestEventDto returnedRestEvent = output.getRestEvents().get(index);
 
             Assert.assertEquals(restEvent.getId(), returnedRestEvent.getId());

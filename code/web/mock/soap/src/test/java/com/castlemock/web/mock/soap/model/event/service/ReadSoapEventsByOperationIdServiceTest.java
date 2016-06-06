@@ -16,14 +16,13 @@
 
 package com.castlemock.web.mock.soap.model.event.service;
 
-import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
 import com.castlemock.web.mock.soap.model.event.SoapEventDtoGenerator;
+import com.castlemock.web.mock.soap.model.event.repository.SoapEventRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,7 +43,7 @@ public class ReadSoapEventsByOperationIdServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private Repository repository;
+    private SoapEventRepository repository;
 
     @InjectMocks
     private ReadSoapEventsByOperationIdService service;
@@ -56,17 +55,16 @@ public class ReadSoapEventsByOperationIdServiceTest {
 
     @Test
     public void testProcess(){
-        final List<SoapEvent> soapEvents = new ArrayList<SoapEvent>();
-        for(int index = 0; index < 3; index++){
-            final SoapEvent soapEvent = SoapEventDtoGenerator.generateSoapEvent();
+        final List<SoapEventDto> soapEvents = new ArrayList<SoapEventDto>();
+        for(int index = 0; index < 2; index++){
+            final SoapEventDto soapEvent = SoapEventDtoGenerator.generateSoapEventDto();
             soapEvents.add(soapEvent);
         }
 
         soapEvents.get(0).setOperationId("OperationId");
         soapEvents.get(1).setOperationId("OperationId");
-        soapEvents.get(2).setOperationId("InvalidOperationId");
 
-        Mockito.when(repository.findAll()).thenReturn(soapEvents);
+        Mockito.when(repository.findEventsByOperationId(Mockito.anyString())).thenReturn(soapEvents);
 
         final ReadSoapEventsByOperationIdInput input = new ReadSoapEventsByOperationIdInput("OperationId");
         final ServiceTask<ReadSoapEventsByOperationIdInput> serviceTask = new ServiceTask<ReadSoapEventsByOperationIdInput>(input);
@@ -77,7 +75,7 @@ public class ReadSoapEventsByOperationIdServiceTest {
         Assert.assertEquals(2, output.getSoapEvents().size());
 
         for(int index = 0; index < 2; index++){
-            final SoapEvent soapEvent = soapEvents.get(index);
+            final SoapEventDto soapEvent = soapEvents.get(index);
             final SoapEventDto returnedSoapEvent = output.getSoapEvents().get(index);
 
             Assert.assertEquals(soapEvent.getId(), returnedSoapEvent.getId());

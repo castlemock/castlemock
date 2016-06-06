@@ -56,8 +56,8 @@ public class ReadAllUsersServiceTest {
 
     @Test
     public void testProcess(){
-        List<User> users = new ArrayList<User>();
-        User user = new User();
+        List<UserDto> users = new ArrayList<UserDto>();
+        UserDto user = new UserDto();
         user.setId(new String());
         user.setUsername("Username");
         user.setStatus(Status.ACTIVE);

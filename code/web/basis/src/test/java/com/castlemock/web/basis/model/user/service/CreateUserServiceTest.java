@@ -60,7 +60,7 @@ public class CreateUserServiceTest {
         user.setRole(Role.ADMIN);
         user.setEmail("email@email.com");
 
-        User createdUser = new User();
+        UserDto createdUser = new UserDto();
         createdUser.setId(new String());
         createdUser.setPassword("Password");
         createdUser.setUsername("Username");
@@ -68,7 +68,7 @@ public class CreateUserServiceTest {
         createdUser.setRole(Role.ADMIN);
         createdUser.setEmail("email@email.com");
 
-        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(createdUser);
+        Mockito.when(repository.save(Mockito.any(UserDto.class))).thenReturn(createdUser);
         final CreateUserInput input = new CreateUserInput(user);
         final ServiceTask<CreateUserInput> serviceTask = new ServiceTask<CreateUserInput>();
         serviceTask.setInput(input);

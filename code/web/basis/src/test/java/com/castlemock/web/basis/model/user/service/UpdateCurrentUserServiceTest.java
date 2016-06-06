@@ -31,6 +31,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,8 @@ public class UpdateCurrentUserServiceTest {
     @InjectMocks
     private UpdateCurrentUserService service;
 
+    private static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -60,8 +64,8 @@ public class UpdateCurrentUserServiceTest {
 
     @Test
     public void testProcess(){
-        List<User> users = new ArrayList<User>();
-        User user = new User();
+        List<UserDto> users = new ArrayList<UserDto>();
+        UserDto user = new UserDto();
         user.setId(new String());
         user.setPassword("Password");
         user.setUsername("Username");
@@ -80,7 +84,7 @@ public class UpdateCurrentUserServiceTest {
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         Mockito.when(repository.findAll()).thenReturn(users);
-        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
+        Mockito.when(repository.save(Mockito.any(UserDto.class))).thenReturn(user);
         final UpdateCurrentUserInput input = new UpdateCurrentUserInput(updatedUser);
         final ServiceTask<UpdateCurrentUserInput> serviceTask = new ServiceTask<UpdateCurrentUserInput>();
         serviceTask.setServiceConsumer("Username");
@@ -88,15 +92,17 @@ public class UpdateCurrentUserServiceTest {
         final ServiceResult<UpdateCurrentUserOutput> serviceResult = service.process(serviceTask);
         final UpdateCurrentUserOutput output = serviceResult.getOutput();
 
+        final String encodedPassword = PASSWORD_ENCODER.encode(user.getPassword());
         final UserDto returnedUser = output.getUpdatedUser();
         Assert.assertNotNull(returnedUser);
         Assert.assertEquals(updatedUser.getId(), returnedUser.getId());
-        Assert.assertEquals(updatedUser.getPassword(), returnedUser.getPassword());
+        Assert.assertNotEquals(updatedUser.getPassword(), returnedUser.getPassword());
+        Assert.assertNotEquals(encodedPassword, returnedUser.getPassword());
         Assert.assertEquals(updatedUser.getEmail(), returnedUser.getEmail());
         Assert.assertEquals(updatedUser.getRole(), returnedUser.getRole());
         Assert.assertEquals(updatedUser.getStatus(), returnedUser.getStatus());
         Assert.assertEquals(updatedUser.getUsername(), returnedUser.getUsername());
-        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(User.class));
+        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(UserDto.class));
     }
 
 

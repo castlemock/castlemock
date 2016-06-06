@@ -55,7 +55,7 @@ public class CreateRestEventServiceTest {
     @Test
     public void testProcess(){
         final RestEventDto restEventDto = RestEventDtoGenerator.generateRestEventDto();
-        Mockito.when(repository.save(Mockito.any(RestEvent.class))).thenReturn(RestEventDtoGenerator.generateRestEvent());
+        Mockito.when(repository.save(Mockito.any(RestEventDto.class))).thenReturn(RestEventDtoGenerator.generateRestEventDto());
 
         final CreateRestEventInput input = new CreateRestEventInput(restEventDto);
         input.setRestEvent(restEventDto);

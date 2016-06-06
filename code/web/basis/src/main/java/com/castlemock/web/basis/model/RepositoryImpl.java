@@ -145,7 +145,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
     }
 
 
-    public D save(final I id){
+    protected D save(final I id){
         final T type = collection.get(id);
         return save(type);
     }

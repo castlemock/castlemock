@@ -21,8 +21,10 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestApplicationsInput;
 import com.castlemock.web.mock.rest.model.project.RestApplicationDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.repository.RestProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +43,7 @@ public class CreateRestApplicationsServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private Repository repository;
+    private RestProjectRepository repository;
 
     @InjectMocks
     private CreateRestApplicationsService service;
@@ -53,8 +55,8 @@ public class CreateRestApplicationsServiceTest {
 
     @Test
     public void testProcess(){
-        final RestProject restProject = new RestProject();
-        restProject.setApplications(new ArrayList<RestApplication>());
+        final RestProjectDto restProject = new RestProjectDto();
+        restProject.setApplications(new ArrayList<RestApplicationDto>());
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(restProject);
 
         final List<RestApplicationDto> restApplications = new ArrayList<RestApplicationDto>();
@@ -67,7 +69,7 @@ public class CreateRestApplicationsServiceTest {
         final ServiceTask<CreateRestApplicationsInput> serviceTask = new ServiceTask<CreateRestApplicationsInput>(input);
         service.process(serviceTask);
 
-        Mockito.verify(repository, Mockito.timeout(1)).save(Mockito.any(RestProject.class));
+        Mockito.verify(repository, Mockito.timeout(1)).save(Mockito.any(RestProjectDto.class));
     }
 
 }

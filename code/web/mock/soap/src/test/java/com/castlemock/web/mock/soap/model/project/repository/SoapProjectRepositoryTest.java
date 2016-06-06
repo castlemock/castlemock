@@ -5,13 +5,11 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -26,7 +24,8 @@ public class SoapProjectRepositoryTest {
 
     @Mock
     private FileRepositorySupport fileRepositorySupport;
-
+    @Spy
+    private DozerBeanMapper mapper;
     @InjectMocks
     private SoapProjectRepositoryImpl repository;
     private static final String DIRECTORY = "/directory";
@@ -53,7 +52,10 @@ public class SoapProjectRepositoryTest {
     public void testFindOne(){
         final SoapProjectDto soapProject = save();
         final SoapProjectDto returnedSoapEvent = repository.findOne(soapProject.getId());
-        Assert.assertEquals(soapProject, returnedSoapEvent);
+        Assert.assertEquals(returnedSoapEvent.getId(), soapProject.getId());
+        Assert.assertEquals(returnedSoapEvent.getName(), soapProject.getName());
+        Assert.assertEquals(returnedSoapEvent.getDescription(), soapProject.getDescription());
+        Assert.assertEquals(returnedSoapEvent.getTypeIdentifier(), soapProject.getTypeIdentifier());
     }
 
     @Test
@@ -61,13 +63,16 @@ public class SoapProjectRepositoryTest {
         final SoapProjectDto soapProject = save();
         final List<SoapProjectDto> soapProjects = repository.findAll();
         Assert.assertEquals(soapProjects.size(), 1);
-        Assert.assertEquals(soapProjects.get(0), soapProject);
+        Assert.assertEquals(soapProjects.get(0).getId(), soapProject.getId());
+        Assert.assertEquals(soapProjects.get(0).getName(), soapProject.getName());
+        Assert.assertEquals(soapProjects.get(0).getDescription(), soapProject.getDescription());
+        Assert.assertEquals(soapProjects.get(0).getTypeIdentifier(), soapProject.getTypeIdentifier());
     }
 
     @Test
     public void testSave(){
         final SoapProjectDto soapProject = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(soapProject, DIRECTORY + File.separator + soapProject.getId() + EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapProject.class), Mockito.anyString());
     }
 
     @Test

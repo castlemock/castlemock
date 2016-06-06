@@ -59,7 +59,6 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                 continue;
             }
 
-            final List<SoapOperation> soapOperations = new LinkedList<SoapOperation>();
             for(SoapOperationDto newSoapOperation : newSoapPort.getOperations()){
                 SoapOperationDto existingSoapOperation = repository.findSoapOperationWithName(soapProjectId, existingSoapPort.getId(), newSoapOperation.getName());
 

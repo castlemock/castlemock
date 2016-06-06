@@ -53,7 +53,7 @@ public class ReadSoapEventServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapEvent soapEvent = SoapEventDtoGenerator.generateSoapEvent();
+        final SoapEventDto soapEvent = SoapEventDtoGenerator.generateSoapEventDto();
         Mockito.when(repository.findOne(soapEvent.getId())).thenReturn(soapEvent);
 
         final ReadSoapEventInput input = new ReadSoapEventInput(soapEvent.getId());

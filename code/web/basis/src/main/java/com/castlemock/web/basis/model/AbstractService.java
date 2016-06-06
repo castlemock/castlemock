@@ -87,7 +87,7 @@ public abstract class AbstractService<T extends Saveable<I>, D, I extends Serial
      */
     protected D save(D dto) {
         Preconditions.checkNotNull(dto, "Unable to save due to invalid " + dto.getClass().getName() + " instance. Instance cannot be null");
-        return save(dto);
+        return repository.save(dto);
     }
 
 

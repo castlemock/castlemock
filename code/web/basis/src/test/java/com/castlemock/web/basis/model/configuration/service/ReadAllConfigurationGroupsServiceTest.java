@@ -57,12 +57,12 @@ public class ReadAllConfigurationGroupsServiceTest {
 
     @Test
     public void testProcess(){
-        List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
-        ConfigurationGroup configurationGroup = new ConfigurationGroup();
+        List<ConfigurationGroupDto> configurationGroups = new ArrayList<ConfigurationGroupDto>();
+        ConfigurationGroupDto configurationGroup = new ConfigurationGroupDto();
         configurationGroup.setId(new String());
         configurationGroup.setName("Configuration group");
-        configurationGroup.setConfigurations(new ArrayList<Configuration>());
-        Configuration configuration = new Configuration();
+        configurationGroup.setConfigurations(new ArrayList<ConfigurationDto>());
+        ConfigurationDto configuration = new ConfigurationDto();
         configuration.setKey("Key");
         configuration.setValue("Value");
         configuration.setType(ConfigurationType.BOOLEAN);

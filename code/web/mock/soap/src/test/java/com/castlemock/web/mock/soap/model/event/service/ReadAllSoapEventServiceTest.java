@@ -56,9 +56,9 @@ public class ReadAllSoapEventServiceTest {
 
     @Test
     public void testProcess(){
-        final List<SoapEvent> soapEvents = new ArrayList<SoapEvent>();
+        final List<SoapEventDto> soapEvents = new ArrayList<SoapEventDto>();
         for(int index = 0; index < 3; index++){
-            final SoapEvent soapEvent = SoapEventDtoGenerator.generateSoapEvent();
+            final SoapEventDto soapEvent = SoapEventDtoGenerator.generateSoapEventDto();
             soapEvents.add(soapEvent);
         }
 
@@ -72,7 +72,7 @@ public class ReadAllSoapEventServiceTest {
         Assert.assertEquals(soapEvents.size(), output.getSoapEvents().size());
 
         for(int index = 0; index < 3; index++){
-            final SoapEvent soapEvent = soapEvents.get(index);
+            final SoapEventDto soapEvent = soapEvents.get(index);
             final SoapEventDto returnedSoapEvent = output.getSoapEvents().get(index);
 
             Assert.assertEquals(soapEvent.getId(), returnedSoapEvent.getId());

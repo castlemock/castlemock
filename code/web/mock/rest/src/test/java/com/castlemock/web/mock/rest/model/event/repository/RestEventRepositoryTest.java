@@ -5,13 +5,11 @@ import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.castlemock.web.mock.rest.model.project.RestEventDtoGenerator;
+import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -26,7 +24,8 @@ public class RestEventRepositoryTest {
 
     @Mock
     private FileRepositorySupport fileRepositorySupport;
-
+    @Spy
+    private DozerBeanMapper mapper;
     @InjectMocks
     private RestEventRepositoryImpl repository;
     private static final String DIRECTORY = "/directory";
@@ -53,7 +52,11 @@ public class RestEventRepositoryTest {
     public void testFindOne(){
         final RestEventDto restEvent = save();
         final RestEventDto returnedRestEvent = repository.findOne(restEvent.getId());
-        Assert.assertEquals(restEvent, returnedRestEvent);
+        Assert.assertEquals(returnedRestEvent.getResourceId(), restEvent.getResourceId());
+        Assert.assertEquals(returnedRestEvent.getApplicationId(), restEvent.getApplicationId());
+        Assert.assertEquals(returnedRestEvent.getMethodId(), restEvent.getMethodId());
+        Assert.assertEquals(returnedRestEvent.getProjectId(), restEvent.getProjectId());
+        Assert.assertEquals(returnedRestEvent.getResourceName(), restEvent.getResourceName());
     }
 
     @Test
@@ -61,13 +64,17 @@ public class RestEventRepositoryTest {
         final RestEventDto restEvent = save();
         final List<RestEventDto> restEvents = repository.findAll();
         Assert.assertEquals(restEvents.size(), 1);
-        Assert.assertEquals(restEvents.get(0), restEvent);
+        Assert.assertEquals(restEvents.get(0).getResourceId(), restEvent.getResourceId());
+        Assert.assertEquals(restEvents.get(0).getApplicationId(), restEvent.getApplicationId());
+        Assert.assertEquals(restEvents.get(0).getMethodId(), restEvent.getMethodId());
+        Assert.assertEquals(restEvents.get(0).getProjectId(), restEvent.getProjectId());
+        Assert.assertEquals(restEvents.get(0).getResourceName(), restEvent.getResourceName());
     }
 
     @Test
     public void testSave(){
         final RestEventDto restEvent = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(restEvent, DIRECTORY + File.separator + restEvent.getId() + EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(RestEvent.class), Mockito.anyString());
     }
 
     @Test

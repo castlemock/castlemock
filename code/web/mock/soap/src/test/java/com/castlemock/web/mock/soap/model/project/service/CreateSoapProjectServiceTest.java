@@ -24,6 +24,7 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.CreateSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.CreateSoapProjectOutput;
 import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,7 +41,7 @@ public class CreateSoapProjectServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private Repository repository;
+    private SoapProjectRepository repository;
 
     @InjectMocks
     private CreateSoapProjectService service;
@@ -53,9 +54,9 @@ public class CreateSoapProjectServiceTest {
     @Test
     public void testProcess(){
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapProject soapProject = SoapProjectDtoGenerator.generateSoapProject();
+        final SoapProjectDto soapProject = SoapProjectDtoGenerator.generateSoapProjectDto();
 
-        Mockito.when(repository.save(Mockito.any(SoapProject.class))).thenReturn(soapProject);
+        Mockito.when(repository.save(Mockito.any(SoapProjectDto.class))).thenReturn(soapProject);
 
         final CreateSoapProjectInput input = new CreateSoapProjectInput(soapProjectDto);
         final ServiceTask<CreateSoapProjectInput> serviceTask = new ServiceTask<CreateSoapProjectInput>(input);
@@ -66,6 +67,6 @@ public class CreateSoapProjectServiceTest {
         Assert.assertEquals(soapProjectDto.getName(), returnedSoapProjectDto.getName());
         Assert.assertEquals(soapProjectDto.getDescription(), returnedSoapProjectDto.getDescription());
 
-        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapProject.class));
+        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapProjectDto.class));
     }
 }
