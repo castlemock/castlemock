@@ -90,7 +90,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
 
 
     /**
-     * Count the method statuses
+     * Count the method statuses for {@link RestApplicationDto}
      * @param restApplication The application which statuses will be counted
      * @return The result of the status count
      */
@@ -107,6 +107,25 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
                 statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
             }
 
+        }
+        return statuses;
+    }
+
+    /**
+     * Count the method statuses for a {@link RestResourceDto}
+     * @param restResource The resource which statuses will be counted
+     * @return The result of the status count
+     */
+    protected Map<RestMethodStatus, Integer> getRestMethodStatusCount(final RestResourceDto restResource){
+        Preconditions.checkNotNull(restResource, "The REST resource cannot be null");
+        final Map<RestMethodStatus, Integer> statuses = new HashMap<RestMethodStatus, Integer>();
+
+        for(RestMethodStatus restMethodStatus : RestMethodStatus.values()){
+            statuses.put(restMethodStatus, 0);
+        }
+        for(RestMethodDto restMethod : restResource.getMethods()){
+            RestMethodStatus restMethodStatus = restMethod.getStatus();
+            statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
         }
         return statuses;
     }
