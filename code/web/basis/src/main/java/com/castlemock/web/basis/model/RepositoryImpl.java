@@ -48,11 +48,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @org.springframework.stereotype.Repository
 public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Serializable> implements Repository<T, D, I> {
 
-    protected Class<T> entityClass;
+    private Class<T> entityClass;
 
-    protected Class<I> idClass;
+    private Class<I> idClass;
 
-    protected Class<D> dtoClass;
+    private Class<D> dtoClass;
 
     protected Map<I, T> collection = new ConcurrentHashMap<I, T>();
 
@@ -130,7 +130,12 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         return save(type);
     }
 
-    private D save(final T type){
+    protected D save(final I id){
+        final T type = collection.get(id);
+        return save(type);
+    }
+
+    protected D save(final T type){
         I id = type.getId();
 
         if(id == null){
@@ -143,13 +148,6 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         collection.put(id, type);
         return mapper.map(type, dtoClass);
     }
-
-
-    protected D save(final I id){
-        final T type = collection.get(id);
-        return save(type);
-    }
-
 
     /**
      * Count all the stored entities for the repository
@@ -172,6 +170,48 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         fileRepositorySupport.delete(filename);
         collection.remove(id);
         LOGGER.debug("Deletion of " + entityClass.getSimpleName() + " with id " + id + " was successfully completed");
+    }
+
+
+    /**
+     * The method provides the functionality to export an entity and convert it to a String
+     * @param id The id of the entityy that will be converted and exported
+     * @return The entity with the provided id as a String
+     */
+    @Override
+    public String exportOne(final I id){
+        try {
+            final T type = collection.get(id);
+            final JAXBContext context = JAXBContext.newInstance(entityClass);
+            final Marshaller marshaller = context.createMarshaller();
+            final StringWriter writer = new StringWriter();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.marshal(type, writer);
+            return writer.toString();
+        }
+        catch (JAXBException e) {
+            throw new IllegalStateException("Unable to export type", e);
+        }
+    }
+
+    /**
+     * The method provides the functionality to import a enity as a String
+     * @param raw The entity as a String
+     */
+    @Override
+    public void importOne(final String raw){
+
+        try {
+            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream (raw.getBytes());
+            final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass);
+            final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            final T type = (T) jaxbUnmarshaller.unmarshal(byteArrayInputStream);
+            type.setId(null);
+            D dto = mapper.map(type, dtoClass);
+            save(dto);
+        } catch (JAXBException e) {
+            throw new IllegalStateException("Unable to import type", e);
+        }
     }
 
     private String getFilename(I id){
@@ -231,11 +271,10 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
      * @see #getFileDirectory()
      * @see #getFileExtension()
      */
-    protected Collection<T> loadFiles(){
+    private Collection<T> loadFiles(){
         final String directory = getFileDirectory();
         final String postfix = getFileExtension();
-        final Collection<T> loadedTypes = fileRepositorySupport.load(entityClass, directory, postfix);
-        return loadedTypes;
+        return fileRepositorySupport.load(entityClass, directory, postfix);
     }
 
     /**
@@ -255,46 +294,10 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
     }
 
     /**
-     * The method provides the functionality to export an entity and convert it to a String
-     * @param id The id of the entityy that will be converted and exported
-     * @return The entity with the provided id as a String
+     * The method is responsible for generating new ID for the entity. The
+     * ID will be six character and contain both characters and numbers.
+     * @return A generated ID
      */
-    public String exportOne(final I id){
-        try {
-            final T type = collection.get(id);
-            final JAXBContext context = JAXBContext.newInstance(entityClass);
-            final Marshaller marshaller = context.createMarshaller();
-            final StringWriter writer = new StringWriter();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(type, writer);
-            return writer.toString();
-        }
-        catch (JAXBException e) {
-            throw new IllegalStateException("Unable to export type", e);
-        }
-    }
-
-    /**
-     * The method provides the functionality to import a enity as a String
-     * @param raw The entity as a String
-     */
-    public void importOne(final String raw){
-
-        try {
-            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream (raw.getBytes());
-            final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass);
-            final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            final T type = (T) jaxbUnmarshaller.unmarshal(byteArrayInputStream);
-            type.setId(null);
-            D dto = mapper.map(type, dtoClass);
-            save(dto);
-        } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to import type", e);
-        }
-    }
-
-
-
     protected String generateId(){
         return RandomStringUtils.random(6, true, true);
     }

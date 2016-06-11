@@ -33,10 +33,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -99,24 +96,32 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     @Override
     protected void postInitiate() {
         for(SoapProject soapProject : collection.values()){
-            if(soapProject.getPorts() == null){
-                soapProject.setPorts(new LinkedList<SoapPort>());
+            List<SoapPort> soapPorts = Collections.synchronizedList(new LinkedList<SoapPort>());
+            if(soapProject.getPorts() != null){
+                soapPorts.addAll(soapProject.getPorts());
             }
+            soapProject.setPorts(soapPorts);
 
             for(SoapPort soapPort : soapProject.getPorts()){
-                if(soapPort.getOperations() == null){
-                    soapPort.setOperations(new LinkedList<SoapOperation>());
+                List<SoapOperation> soapOperations = Collections.synchronizedList(new LinkedList<SoapOperation>());
+                if(soapPort.getOperations() != null){
+                    soapOperations.addAll(soapPort.getOperations());
                 }
+                soapPort.setOperations(soapOperations);
 
                 for(SoapOperation soapOperation : soapPort.getOperations()){
-                    if(soapOperation.getMockResponses() == null){
-                        soapOperation.setMockResponses(new LinkedList<SoapMockResponse>());
+                    List<SoapMockResponse> soapMockResponses = Collections.synchronizedList(new LinkedList<SoapMockResponse>());
+                    if(soapOperation.getMockResponses() != null){
+                        soapMockResponses.addAll(soapOperation.getMockResponses());
                     }
+                    soapOperation.setMockResponses(soapMockResponses);
 
                     for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
-                        if(soapMockResponse.getHttpHeaders() == null){
-                            soapMockResponse.setHttpHeaders(new LinkedList<HttpHeader>());
+                        List<HttpHeader> httpHeaders = Collections.synchronizedList(new LinkedList<HttpHeader>());
+                        if(soapMockResponse.getHttpHeaders() != null){
+                            httpHeaders.addAll(soapMockResponse.getHttpHeaders());
                         }
+                        soapMockResponse.setHttpHeaders(httpHeaders);
                     }
                 }
 
@@ -142,24 +147,24 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
 
     /**
      * The save method provides the functionality to save an instance to the file system.
-     * @param dto The type that will be saved to the file system.
+     * @param soapProject The type that will be saved to the file system.
      * @return The type that was saved to the file system. The main reason for it is being returned is because
      *         there could be modifications of the object during the save process. For example, if the type does not
      *         have an identifier, then the method will generate a new identifier for the type.
      */
     @Override
-    public SoapProjectDto save(final SoapProjectDto dto) {
-        for(SoapPortDto soapPort : dto.getPorts()){
+    public SoapProjectDto save(final SoapProject soapProject) {
+        for(SoapPort soapPort : soapProject.getPorts()){
             if(soapPort.getId() == null){
                 String soapPortId = generateId();
                 soapPort.setId(soapPortId);
             }
-            for(SoapOperationDto soapOperation : soapPort.getOperations()){
+            for(SoapOperation soapOperation : soapPort.getOperations()){
                 if(soapOperation.getId() == null){
                     String soapOperationId = generateId();
                     soapOperation.setId(soapOperationId);
                 }
-                for(SoapMockResponseDto soapMockResponse : soapOperation.getMockResponses()){
+                for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
                     if(soapMockResponse.getId() == null){
                         String soapMockResponseId = generateId();
                         soapMockResponse.setId(soapMockResponseId);
@@ -167,7 +172,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
                 }
             }
         }
-        return super.save(dto);
+        return super.save(soapProject);
     }
 
     /**
@@ -387,6 +392,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapMockResponse.setName(soapMockResponseDto.getName());
         soapMockResponse.setBody(soapMockResponseDto.getBody());
         soapMockResponse.setHttpStatusCode(soapMockResponseDto.getHttpStatusCode());
+        soapMockResponse.setStatus(soapMockResponseDto.getStatus());
         soapMockResponse.setHttpHeaders(headers);
         return soapMockResponseDto;
     }

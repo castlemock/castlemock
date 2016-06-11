@@ -30,6 +30,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,29 +98,39 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
     @Override
     protected void postInitiate() {
         for(RestProject restProject : collection.values()){
-            if(restProject.getApplications() == null){
-                restProject.setApplications(new LinkedList<RestApplication>());
+            List<RestApplication> restApplications = Collections.synchronizedList(new LinkedList<RestApplication>());
+            if(restProject.getApplications() != null){
+                restApplications.addAll(restProject.getApplications());
             }
+            restProject.setApplications(restApplications);
 
             for(RestApplication restApplication : restProject.getApplications()){
-                if(restApplication.getResources() == null){
-                    restApplication.setResources(new LinkedList<RestResource>());
+                List<RestResource> restResources = Collections.synchronizedList(new LinkedList<RestResource>());
+                if(restApplication.getResources() != null){
+                    restResources.addAll(restApplication.getResources());
                 }
+                restApplication.setResources(restResources);
 
                 for(RestResource restResource : restApplication.getResources()){
-                    if(restResource.getMethods() == null){
-                        restResource.setMethods(new LinkedList<RestMethod>());
+                    List<RestMethod> restMethods = Collections.synchronizedList(new LinkedList<RestMethod>());
+                    if(restResource.getMethods() != null){
+                        restMethods.addAll(restResource.getMethods());
                     }
+                    restResource.setMethods(restMethods);
 
                     for(RestMethod restMethod : restResource.getMethods()){
-                        if(restMethod.getMockResponses() == null){
-                            restMethod.setMockResponses(new LinkedList<RestMockResponse>());
+                        List<RestMockResponse> restMockResponses = Collections.synchronizedList(new LinkedList<RestMockResponse>());
+                        if(restMethod.getMockResponses() != null){
+                            restMockResponses.addAll(restMethod.getMockResponses());
                         }
+                        restMethod.setMockResponses(restMockResponses);
 
                         for(RestMockResponse restMockResponse : restMethod.getMockResponses()){
-                            if(restMockResponse.getHttpHeaders() == null){
-                                restMockResponse.setHttpHeaders(new LinkedList<HttpHeader>());
+                            List<HttpHeader> httpHeaders = Collections.synchronizedList(new LinkedList<HttpHeader>());
+                            if(restMockResponse.getHttpHeaders() != null){
+                                httpHeaders.addAll(restMockResponse.getHttpHeaders());
                             }
+                            restMockResponse.setHttpHeaders(httpHeaders);
                         }
                     }
                 }
@@ -153,23 +164,23 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
      *         have an identifier, then the method will generate a new identifier for the type.
      */
     @Override
-    public RestProjectDto save(final RestProjectDto dto) {
-        for(RestApplicationDto restApplication : dto.getApplications()){
+    public RestProjectDto save(final RestProject dto) {
+        for(RestApplication restApplication : dto.getApplications()){
             if(restApplication.getId() == null){
                 String restApplicationId = generateId();
                 restApplication.setId(restApplicationId);
             }
-            for(RestResourceDto restResource : restApplication.getResources()){
+            for(RestResource restResource : restApplication.getResources()){
                 if(restResource.getId() == null){
                     String restResourceId = generateId();
                     restResource.setId(restResourceId);
                 }
-                for(RestMethodDto restMethod : restResource.getMethods()){
+                for(RestMethod restMethod : restResource.getMethods()){
                     if(restMethod.getId() == null){
                         String restMethodId = generateId();
                         restMethod.setId(restMethodId);
                     }
-                    for(RestMockResponseDto restMockResponse : restMethod.getMockResponses()){
+                    for(RestMockResponse restMockResponse : restMethod.getMockResponses()){
                         if(restMockResponse.getId() == null){
                             String restMockResponseId = generateId();
                             restMockResponse.setId(restMockResponseId);
