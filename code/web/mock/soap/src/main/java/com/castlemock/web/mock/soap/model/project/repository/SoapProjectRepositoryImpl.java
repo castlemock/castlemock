@@ -271,7 +271,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         SoapPort soapPort = mapper.map(soapPortDto, SoapPort.class);
         soapProject.getPorts().add(soapPort);
         save(soapProjectId);
-        return soapPortDto;
+        return mapper.map(soapPort, SoapPortDto.class);
     }
 
     /**
@@ -294,7 +294,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         SoapOperation soapOperation = mapper.map(soapOperationDto, SoapOperation.class);
         soapPort.getOperations().add(soapOperation);
         save(soapProjectId);
-        return soapOperationDto;
+        return mapper.map(soapOperation, SoapOperationDto.class);
     }
 
     /**
@@ -320,7 +320,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         SoapMockResponse soapMockResponse = mapper.map(soapMockResponseDto, SoapMockResponse.class);
         soapOperation.getMockResponses().add(soapMockResponse);
         save(soapProjectId);
-        return soapMockResponseDto;
+        return mapper.map(soapMockResponse, SoapMockResponseDto.class);
     }
 
     /**

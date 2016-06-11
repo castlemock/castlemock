@@ -359,7 +359,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         RestApplication restApplication = mapper.map(restApplicationDto, RestApplication.class);
         restProject.getApplications().add(restApplication);
         save(restProjectId);
-        return restApplicationDto;
+        return mapper.map(restApplication, RestApplicationDto.class);
     }
 
     /**
@@ -382,7 +382,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         RestResource restResource = mapper.map(restResourceDto, RestResource.class);
         restApplication.getResources().add(restResource);
         save(restProjectId);
-        return restResourceDto;
+        return mapper.map(restResource, RestResourceDto.class);
     }
 
     /**
@@ -408,7 +408,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         RestMethod restMethod = mapper.map(restMethodDto, RestMethod.class);
         restResource.getMethods().add(restMethod);
         save(restProjectId);
-        return restMethodDto;
+        return mapper.map(restMethod, RestMethodDto.class);
     }
 
     /**
@@ -437,7 +437,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         RestMockResponse restMockResponse = mapper.map(restMockResponseDto, RestMockResponse.class);
         restMethod.getMockResponses().add(restMockResponse);
         save(restProjectId);
-        return restMockResponseDto;
+        return mapper.map(restMockResponse, RestMockResponseDto.class);
     }
 
     /*
