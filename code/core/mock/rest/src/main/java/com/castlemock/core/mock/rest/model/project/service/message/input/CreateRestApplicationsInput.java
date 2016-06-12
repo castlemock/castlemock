@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -31,11 +32,14 @@ public class CreateRestApplicationsInput implements Input {
     @NotNull
     private String restProjectId;
     @NotNull
-    private List<RestApplicationDto> restApplications;
+    private List<File> files;
+    @NotNull
+    private boolean generateResponse;
 
-    public CreateRestApplicationsInput(String restProjectId, List<RestApplicationDto> restApplications) {
+    public CreateRestApplicationsInput(String restProjectId, List<File> files, boolean generateResponse) {
         this.restProjectId = restProjectId;
-        this.restApplications = restApplications;
+        this.files = files;
+        this.generateResponse = generateResponse;
     }
 
     public String getRestProjectId() {
@@ -46,11 +50,19 @@ public class CreateRestApplicationsInput implements Input {
         this.restProjectId = restProjectId;
     }
 
-    public List<RestApplicationDto> getRestApplications() {
-        return restApplications;
+    public List<File> getFiles() {
+        return files;
     }
 
-    public void setRestApplications(List<RestApplicationDto> restApplications) {
-        this.restApplications = restApplications;
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
+
+    public boolean isGenerateResponse() {
+        return generateResponse;
+    }
+
+    public void setGenerateResponse(boolean generateResponse) {
+        this.generateResponse = generateResponse;
     }
 }
