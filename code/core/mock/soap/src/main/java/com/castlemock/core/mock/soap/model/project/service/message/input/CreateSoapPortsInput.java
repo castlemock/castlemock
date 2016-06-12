@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -31,11 +32,14 @@ public class CreateSoapPortsInput implements Input {
     @NotNull
     private String soapProjectId;
     @NotNull
-    private List<SoapPortDto> soapPorts;
+    private boolean generateResponse;
+    @NotNull
+    private List<File> files;
 
-    public CreateSoapPortsInput(String soapProjectId, List<SoapPortDto> soapPorts) {
+    public CreateSoapPortsInput(String soapProjectId, boolean generateResponse, List<File> files) {
         this.soapProjectId = soapProjectId;
-        this.soapPorts = soapPorts;
+        this.generateResponse = generateResponse;
+        this.files = files;
     }
 
     public String getSoapProjectId() {
@@ -46,11 +50,20 @@ public class CreateSoapPortsInput implements Input {
         this.soapProjectId = soapProjectId;
     }
 
-    public List<SoapPortDto> getSoapPorts() {
-        return soapPorts;
+    public boolean isGenerateResponse() {
+        return generateResponse;
     }
 
-    public void setSoapPorts(List<SoapPortDto> soapPorts) {
-        this.soapPorts = soapPorts;
+    public void setGenerateResponse(boolean generateResponse) {
+        this.generateResponse = generateResponse;
     }
+
+    public List<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
+
 }

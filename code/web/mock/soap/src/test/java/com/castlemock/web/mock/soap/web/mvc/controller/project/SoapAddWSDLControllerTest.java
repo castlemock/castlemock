@@ -17,16 +17,14 @@
 package com.castlemock.web.mock.soap.web.mvc.controller.project;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.web.mock.soap.manager.WSDLComponent;
 import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import com.castlemock.web.mock.soap.web.mvc.command.project.WSDLFileUploadForm;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,6 +39,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +68,7 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
     private ServiceProcessor serviceProcessor;
 
     @Mock
-    private WSDLComponent wsdlComponent;
+    private FileManager fileManager;
 
     @Override
     protected AbstractController getController() {
@@ -92,45 +91,36 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
     @Test
     public void testAddWSDLPostFile() throws Exception {
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final List<SoapPortDto> soapPortDtos = new ArrayList<>();
+        final List<File> files = new ArrayList<>();
         final WSDLFileUploadForm uploadForm = new WSDLFileUploadForm();
         final List<MultipartFile> uploadedFiles = new ArrayList<>();
         uploadForm.setFiles(uploadedFiles);
 
-        for(int index = 0; index < MAX_SOAP_PORT_COUNT; index++){
-            final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-            soapPortDtos.add(soapPortDto);
-        }
-
         when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(new ReadSoapProjectOutput(soapProjectDto));
-        when(wsdlComponent.createSoapPorts(anyListOf(MultipartFile.class), anyBoolean())).thenReturn(soapPortDtos);
+        when(fileManager.uploadFiles(anyListOf(MultipartFile.class))).thenReturn(files);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + soapProjectDto.getId() + SLASH + ADD + SLASH + WSDL).param("type", "file").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
-        Mockito.verify(wsdlComponent, times(1)).createSoapPorts(anyListOf(MultipartFile.class), anyBoolean());
+        Mockito.verify(fileManager, times(1)).uploadFiles(anyListOf(MultipartFile.class));
     }
 
     @Test
     public void testAddWSDLPostLink() throws Exception {
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final List<SoapPortDto> soapPortDtos = new ArrayList<>();
+        final List<File> files = new ArrayList<>();
         final WSDLFileUploadForm uploadForm = new WSDLFileUploadForm();
         final List<MultipartFile> uploadedFiles = new ArrayList<>();
         uploadForm.setFiles(uploadedFiles);
 
-        for(int index = 0; index < MAX_SOAP_PORT_COUNT; index++){
-            final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-            soapPortDtos.add(soapPortDto);
-        }
 
         when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(new ReadSoapProjectOutput(soapProjectDto));
-        when(wsdlComponent.createSoapPorts(anyListOf(MultipartFile.class), anyBoolean())).thenReturn(soapPortDtos);
+        when(fileManager.uploadFiles(anyString())).thenReturn(files);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + soapProjectDto.getId() + SLASH + ADD + SLASH + WSDL).param("type", "link").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
-        Mockito.verify(wsdlComponent, times(1)).createSoapPorts(anyString(), anyBoolean());
+        Mockito.verify(fileManager, times(1)).uploadFiles(anyString());
     }
 
 
