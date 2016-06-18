@@ -128,6 +128,25 @@ public class FileManager {
         }
     }
 
+    /**
+     * The method provides the functionality to rename a directory from one name to another.
+     * @param oldFolderPath The path to the directory that should receive the new name. Note that the path contains
+     *                      the old directory name.
+     * @param newFolderPath The new path to the directory that should be renamed. Note that the path contains
+     *                      the new directory name.
+     * @return Returns the result of the rename operation.
+     */
+    public boolean renameDirectory(final String oldFolderPath, final String newFolderPath){
+        File oldFileDirectory = new File(oldFolderPath);
+        if (!oldFileDirectory.exists() || !oldFileDirectory.isDirectory()) {
+            // The directory was not found and therefore no rename operation was accomplished.
+            return false;
+        }
+
+        File newFileDirectory = new File(newFolderPath);
+        return oldFileDirectory.renameTo(newFileDirectory);
+    }
+
     private String generateNewFileName(){
         return "UploadedFile-" + RandomStringUtils.random(6, true, true);
     }

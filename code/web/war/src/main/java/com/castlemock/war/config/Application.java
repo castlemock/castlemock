@@ -18,6 +18,7 @@ package com.castlemock.war.config;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceFacade;
+import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.model.session.token.repository.SessionTokenRepository;
 import com.castlemock.web.basis.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +51,16 @@ public class Application extends SpringBootServletInitializer {
 
     @Value("${app.version}")
     private String version;
+    @Value("${base.file.directory}")
+    private String baseFileDirectory;
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
     private ServiceRegistry serviceRegistry;
     @Autowired
     private SessionTokenRepository tokenRepository;
+    @Autowired
+    private FileManager fileManager;
 
     /**
      * The configure method for Castle Mock. The method is responsible for mark all the configuration classes
@@ -87,6 +92,7 @@ public class Application extends SpringBootServletInitializer {
     @PostConstruct
     protected void initiate(){
         printLogo();
+        updateBaseFileDirectory(); // This is required to change the base folder name from .fortmocks to .castlemock
         initializeProcessRegistry();
         initializeRepository();
         initializeServiceFacade();
@@ -149,6 +155,17 @@ public class Application extends SpringBootServletInitializer {
      */
     protected void initializeProcessRegistry(){
         serviceRegistry.initialize();
+    }
+
+    /**
+     * The method is only a temporary method used to change the the base file directory name for
+     * .fortmocks to .castlemock. This method can later be removed when users have had the change
+     * to update the version of Castle mock to a newer version.
+     * @since 1.5
+     */
+    private void updateBaseFileDirectory(){
+        String previousBaseFolderDirectory = baseFileDirectory.replace(".castlemock", ".fortmocks");
+        fileManager.renameDirectory(previousBaseFolderDirectory, baseFileDirectory);
     }
 
 }
