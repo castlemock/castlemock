@@ -38,6 +38,17 @@
                 <td class="column2"><form:input path="httpStatusCode" id="restMockResponseHttpResponseCodeInput"/></td>
                 <td><label id="httpCodeDefinitionLabel"><spring:message code="soap.restmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
             </tr>
+            <tr>
+                <td class="column1"><form:label path="status"><spring:message code="rest.restmockresponse.label.status"/></form:label></td>
+                <td>
+                    <form:select path="status">
+                        <c:forEach items="${restMockResponseStatuses}" var="restMockResponseStatus">
+                            <spring:message var="label" code="rest.type.restmockresponsestatus.${restMockResponseStatus}"/>
+                            <form:option value="${restMockResponseStatus}" label="${label}"/>
+                        </c:forEach>
+                    </form:select>
+                </td>
+            </tr>
         </table>
     </div>
     <div>

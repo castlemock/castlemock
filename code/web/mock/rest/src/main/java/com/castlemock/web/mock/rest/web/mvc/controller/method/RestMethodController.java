@@ -61,7 +61,7 @@ public class RestMethodController extends AbstractRestViewController {
     private static final String DELETE_REST_MOCK_RESPONSES_COMMAND = "deleteRestMockResponsesCommand";
     private static final String REST_MOCK_RESPONSE_MODIFIER_COMMAND = "restMockResponseModifierCommand";
     private static final String DELETE_MOCK_RESPONSES_PAGE = "mock/rest/mockresponse/deleteRestMockResponses";
-    protected static final String REST_MOCK_RESPONSE_STATUSES = "restMockResponseStatuses";
+
 
     /**
      * Retrieves a specific method with a method id

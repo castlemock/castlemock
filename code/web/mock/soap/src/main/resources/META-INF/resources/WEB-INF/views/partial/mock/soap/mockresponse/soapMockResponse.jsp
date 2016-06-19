@@ -39,6 +39,17 @@
                 <td class="column2"><form:input path="httpStatusCode" id="soapMockResponseHttpStatusCodeInput" /></td>
                 <td><label id="httpCodeDefinitionLabel"><spring:message code="soap.soapmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
             </tr>
+            <tr>
+                <td class="column1"><form:label path="status"><spring:message code="soap.soapmockresponse.label.status"/></form:label></td>
+                <td>
+                    <form:select path="status">
+                        <c:forEach items="${soapMockResponseStatuses}" var="soapMockResponseStatus">
+                            <spring:message var="label" code="soap.type.soapmockresponsestatus.${soapMockResponseStatus}"/>
+                            <form:option value="${soapMockResponseStatus}" label="${label}"/>
+                        </c:forEach>
+                    </form:select>
+                </td>
+            </tr>
         </table>
     </div>
     <div>

@@ -61,6 +61,8 @@ public class AbstractRestViewController extends AbstractViewController {
 
     protected static final String REST_CONTENT_TYPES = "restContentTypes";
 
+    protected static final String REST_MOCK_RESPONSE_STATUSES = "restMockResponseStatuses";
+
     private static final Logger LOGGER = Logger.getLogger(AbstractRestViewController.class);
 
     /**

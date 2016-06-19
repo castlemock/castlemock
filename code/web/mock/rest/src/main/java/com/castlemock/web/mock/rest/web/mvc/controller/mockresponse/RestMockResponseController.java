@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.rest.web.mvc.controller.mockresponse;
 
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -49,6 +50,7 @@ public class RestMockResponseController extends AbstractRestViewController {
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restMethodId);
         model.addObject(REST_MOCK_RESPONSE, output.getRestMockResponse());
+        model.addObject(REST_MOCK_RESPONSE_STATUSES, RestMockResponseStatus.values());
         return model;
     }
 

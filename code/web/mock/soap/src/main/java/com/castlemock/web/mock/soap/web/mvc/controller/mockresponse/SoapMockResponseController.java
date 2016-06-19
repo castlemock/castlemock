@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.mvc.controller.mockresponse;
 
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
@@ -56,6 +57,7 @@ public class SoapMockResponseController extends AbstractSoapViewController {
         model.addObject(SOAP_PROJECT_ID, soapProjectId);
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(SOAP_OPERATION_ID, soapOperationId);
+        model.addObject(SOAP_MOCK_RESPONSE_STATUSES, SoapMockResponseStatus.values());
         return model;
     }
 }
