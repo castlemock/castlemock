@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.google.common.base.Preconditions;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
@@ -33,6 +34,7 @@ import java.io.*;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Semaphore;
 
 /**
  * The abstract repository provides functionality to interact with the file system in order to manage a specific type.
@@ -48,6 +50,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @org.springframework.stereotype.Repository
 public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Serializable> implements Repository<T, D, I> {
 
+    @Autowired
+    protected DozerBeanMapper mapper;
+    @Autowired
+    private FileRepositorySupport fileRepositorySupport;
+
     private Class<T> entityClass;
 
     private Class<I> idClass;
@@ -56,11 +63,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
 
     protected Map<I, T> collection = new ConcurrentHashMap<I, T>();
 
-
-    @Autowired
-    protected DozerBeanMapper mapper;
-    @Autowired
-    private FileRepositorySupport fileRepositorySupport;
+    private Map<I, Semaphore> writeLocks = new ConcurrentHashMap();
 
     private static final Logger LOGGER = Logger.getLogger(RepositoryImpl.class);
 
@@ -144,9 +147,29 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         }
         checkType(type);
         final String filename = getFilename(id);
-        fileRepositorySupport.save(type, filename);
-        collection.put(id, type);
-        return mapper.map(type, dtoClass);
+
+        final Semaphore writeLock = getWriteLock(id);
+
+        try {
+            writeLock.acquire();
+            fileRepositorySupport.save(type, filename);
+            collection.put(id, type);
+            return mapper.map(type, dtoClass);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException("Unable to accuire the write lock", e);
+        } finally {
+            writeLock.release();
+        }
+    }
+
+    private Semaphore getWriteLock(final I id){
+        Semaphore writeLock = writeLocks.get(id);
+        if(writeLock == null){
+            // Create a new write lock and only one is allowed to write to the file at a time.
+            writeLock = new Semaphore(1);
+            writeLocks.put(id, writeLock);
+        }
+        return writeLock;
     }
 
     /**
@@ -167,9 +190,17 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         final String filename = getFilename(id);
         LOGGER.debug("Start the deletion of " + entityClass.getSimpleName() + " with id " + id);
-        fileRepositorySupport.delete(filename);
-        collection.remove(id);
-        LOGGER.debug("Deletion of " + entityClass.getSimpleName() + " with id " + id + " was successfully completed");
+        Semaphore writeLock = getWriteLock(id);
+        try {
+            writeLock.acquire();
+            fileRepositorySupport.delete(filename);
+            collection.remove(id);
+            LOGGER.debug("Deletion of " + entityClass.getSimpleName() + " with id " + id + " was successfully completed");
+        } catch (InterruptedException e) {
+            throw new IllegalStateException("Unable to accuire the write lock", e);
+        } finally {
+            writeLock.release();
+        }
     }
 
 
