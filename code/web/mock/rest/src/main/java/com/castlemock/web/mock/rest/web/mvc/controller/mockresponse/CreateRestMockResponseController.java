@@ -57,6 +57,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
         model.addObject(REST_RESOURCE_ID, restResourceId);
         model.addObject(REST_METHOD_ID, restMethodId);
         model.addObject(REST_MOCK_RESPONSE, mockResponse);
+        model.addObject(REST_MOCK_RESPONSE_STATUSES, RestMockResponseStatus.values());
         return model;
     }
 
@@ -64,7 +65,6 @@ public class CreateRestMockResponseController extends AbstractRestViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/create/response", method = RequestMethod.POST)
     public ModelAndView createResponse(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @ModelAttribute final RestMockResponseDto restMockResponseDto) {
-        restMockResponseDto.setStatus(RestMockResponseStatus.ENABLED);
         serviceProcessor.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseDto));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
