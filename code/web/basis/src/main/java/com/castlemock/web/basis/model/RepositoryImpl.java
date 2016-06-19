@@ -133,11 +133,26 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         return save(type);
     }
 
+    /**
+     * The save method provides the functionality to save an instance to the file system. The instance
+     * should already exist on the file system and should be identified with the provided <code>id</code>.
+     * @param id The id of the type that will be re-saved to the file system.
+     * @return The type that was saved to the file system. The main reason for it is being returned is because
+     *         there could be modifications of the object during the save process. For example, if the type does not
+     *         have an identifier, then the method will generate a new identifier for the type.
+     */
     protected D save(final I id){
         final T type = collection.get(id);
         return save(type);
     }
 
+    /**
+     * The save method provides the functionality to save an instance to the file system.
+     * @param type The type that will be saved to the file system.
+     * @return The type that was saved to the file system. The main reason for it is being returned is because
+     *         there could be modifications of the object during the save process. For example, if the type does not
+     *         have an identifier, then the method will generate a new identifier for the type.
+     */
     protected D save(final T type){
         I id = type.getId();
 
@@ -162,6 +177,14 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         }
     }
 
+    /**
+     * The method is responsible for retrieving a new write lock.
+     * A new write lock will be created if a write lock already doesn't exist and is associated
+     * with the provided <code>id</code>.
+     * @param id The id is used as an identifier for the write lock
+     * @return Either a new write lock or an already existing write lock associated with the <code>id</code>.
+     * @since 1.5
+     */
     private Semaphore getWriteLock(final I id){
         Semaphore writeLock = writeLocks.get(id);
         if(writeLock == null){
@@ -245,6 +268,11 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         }
     }
 
+    /**
+     * The method creates a new file name based on the provided <code>id</code>.
+     * @param id The id will be the foundation of the generated file name.
+     * @return A file name based on the provided id.
+     */
     private String getFilename(I id){
         final String directory = getFileDirectory();
         final String postfix = getFileExtension();
