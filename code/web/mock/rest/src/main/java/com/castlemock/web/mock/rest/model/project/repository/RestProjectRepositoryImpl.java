@@ -635,7 +635,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         RestMethod deletedRestMethod = null;
         while(restMethodIterator.hasNext()){
             deletedRestMethod = restMethodIterator.next();
-            if(restResourceId.equals(deletedRestMethod.getId())){
+            if(restMethodId.equals(deletedRestMethod.getId())){
                 restMethodIterator.remove();
                 break;
             }

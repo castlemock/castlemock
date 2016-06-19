@@ -449,7 +449,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         SoapOperation deletedSoapOperation = null;
         while(soapOperationIterator.hasNext()){
             deletedSoapOperation = soapOperationIterator.next();
-            if(soapPortId.equals(deletedSoapOperation.getId())){
+            if(soapOperationId.equals(deletedSoapOperation.getId())){
                 soapOperationIterator.remove();
                 break;
             }
@@ -484,7 +484,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         SoapMockResponse deleteSoapMockResponse = null;
         while(soapMockResponseIterator.hasNext()){
             deleteSoapMockResponse = soapMockResponseIterator.next();
-            if(soapPortId.equals(deleteSoapMockResponse.getId())){
+            if(soapMockResponseId.equals(deleteSoapMockResponse.getId())){
                 soapMockResponseIterator.remove();
                 break;
             }
