@@ -20,6 +20,7 @@ import com.castlemock.core.mock.soap.model.project.service.message.input.CreateS
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.soap.web.mvc.command.project.WSDLFileUploadForm;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,6 +46,7 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
     private static final String PAGE = "mock/soap/project/soapAddWSDL";
     private static final String TYPE_LINK = "link";
     private static final String TYPE_FILE = "file";
+    private static final Logger LOGGER = Logger.getLogger(SoapAddWSDLController.class);
 
     @Autowired
     private FileManager fileManager;
@@ -86,6 +88,17 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
         }
 
         serviceProcessor.process(new CreateSoapPortsInput(projectId, uploadForm.isGenerateResponse(), uploadedFiles));
+
+        for(File uploadedFile : uploadedFiles){
+            boolean deletionResult = fileManager.deleteFile(uploadedFile);
+            if(deletionResult){
+                LOGGER.debug("Deleted the following WSDL file: " + uploadedFile.getName());
+            } else {
+                LOGGER.warn("Unable to delete the following WSDL file: " + uploadedFile.getName());
+            }
+
+        }
+
         return redirect("/soap/project/" + projectId);
     }
 

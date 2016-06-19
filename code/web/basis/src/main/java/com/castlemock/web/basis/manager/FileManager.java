@@ -129,6 +129,15 @@ public class FileManager {
     }
 
     /**
+     * The method provides the functionality to delete a file from the file system.
+     * @param file The file that will be deleted.
+     * @return The result of the deletion.
+     */
+    public boolean deleteFile(File file){
+        return file.delete();
+    }
+
+    /**
      * The method provides the functionality to rename a directory from one name to another.
      * @param oldFolderPath The path to the directory that should receive the new name. Note that the path contains
      *                      the old directory name.
@@ -147,8 +156,13 @@ public class FileManager {
         return oldFileDirectory.renameTo(newFileDirectory);
     }
 
+
+
     private String generateNewFileName(){
         return "UploadedFile-" + RandomStringUtils.random(6, true, true);
     }
+
+
+
 
 }

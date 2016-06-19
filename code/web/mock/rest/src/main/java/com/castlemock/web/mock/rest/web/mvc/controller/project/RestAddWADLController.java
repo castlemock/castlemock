@@ -20,6 +20,7 @@ import com.castlemock.core.mock.rest.model.project.service.message.input.CreateR
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.rest.web.mvc.command.project.WADLFileUploadForm;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,6 +46,7 @@ public class RestAddWADLController extends AbstractRestViewController {
     private static final String PAGE = "mock/rest/project/restAddWADL";
     private static final String TYPE_LINK = "link";
     private static final String TYPE_FILE = "file";
+    private static final Logger LOGGER = Logger.getLogger(RestAddWADLController.class);
 
     @Autowired
     private FileManager fileManager;
@@ -86,6 +88,18 @@ public class RestAddWADLController extends AbstractRestViewController {
         }
 
         serviceProcessor.process(new CreateRestApplicationsInput(projectId, files, uploadForm.isGenerateResponse()));
+
+
+        for(File uploadedFile : files){
+            boolean deletionResult = fileManager.deleteFile(uploadedFile);
+            if(deletionResult){
+                LOGGER.debug("Deleted the following WADL file: " + uploadedFile.getName());
+            } else {
+                LOGGER.warn("Unable to delete the following WADL file: " + uploadedFile.getName());
+            }
+
+        }
+
         return redirect("/rest/project/" + projectId);
     }
 }
