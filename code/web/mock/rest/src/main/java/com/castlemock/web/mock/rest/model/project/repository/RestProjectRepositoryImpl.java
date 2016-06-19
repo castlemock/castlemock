@@ -459,6 +459,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
     public RestApplicationDto updateRestApplication(String restProjectId, String restApplicationId, RestApplicationDto restApplicationDto) {
         RestApplication restApplication = findRestApplicationType(restProjectId, restApplicationId);
         restApplication.setName(restApplicationDto.getName());
+        save(restProjectId);
         return mapper.map(restApplication, RestApplicationDto.class);
     }
 
@@ -481,6 +482,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         RestResource restResource = findRestResourceType(restProjectId, restApplicationId, restResourceId);
         restResource.setName(restResourceDto.getName());
         restResource.setUri(restResourceDto.getUri());
+        save(restProjectId);
         return mapper.map(restResource, RestResourceDto.class);
     }
 
@@ -510,6 +512,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         restMethod.setResponseStrategy(restMethodDto.getResponseStrategy());
         restMethod.setStatus(restMethodDto.getStatus());
         restMethod.setForwardedEndpoint(restMethodDto.getForwardedEndpoint());
+        save(restProjectId);
         return mapper.map(restMethod, RestMethodDto.class);
     }
 
@@ -540,6 +543,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         restMockResponse.setHttpStatusCode(restMockResponseDto.getHttpStatusCode());
         restMockResponse.setHttpHeaders(headers);
         restMockResponse.setStatus(restMockResponseDto.getStatus());
+        save(restProjectId);
         return mapper.map(restMockResponse, RestMockResponseDto.class);
     }
 
@@ -570,6 +574,9 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
             }
         }
 
+        if(deletedRestApplication != null){
+            save(restProjectId);
+        }
         return deletedRestApplication != null ? mapper.map(deletedRestApplication, RestApplicationDto.class) : null;
     }
 
@@ -599,6 +606,9 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
             }
         }
 
+        if(deletedRestResource != null){
+            save(restProjectId);
+        }
         return deletedRestResource != null ? mapper.map(deletedRestResource, RestResourceDto.class) : null;
     }
 
@@ -631,6 +641,9 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
             }
         }
 
+        if(deletedRestMethod != null){
+            save(restProjectId);
+        }
         return deletedRestMethod != null ? mapper.map(deletedRestMethod, RestMethodDto.class) : null;
     }
 
@@ -660,12 +673,15 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         RestMockResponse deletedRestMockResponse = null;
         while(restMockResponseIterator.hasNext()){
             deletedRestMockResponse = restMockResponseIterator.next();
-            if(restResourceId.equals(deletedRestMockResponse.getId())){
+            if(restMockResponseId.equals(deletedRestMockResponse.getId())){
                 restMockResponseIterator.remove();
                 break;
             }
         }
 
+        if(deletedRestMockResponse != null){
+            save(restProjectId);
+        }
         return deletedRestMockResponse != null ? mapper.map(deletedRestMockResponse, RestMockResponseDto.class) : null;
     }
 

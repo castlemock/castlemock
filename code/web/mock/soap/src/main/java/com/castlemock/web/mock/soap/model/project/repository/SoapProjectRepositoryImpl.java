@@ -338,6 +338,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     public SoapPortDto updateSoapPort(final String soapProjectId, final String soapPortId, final SoapPortDto soapPortDto) {
         final SoapPort soapPort = findSoapPortType(soapProjectId, soapPortId);
         soapPort.setUri(soapPortDto.getUri());
+        save(soapProjectId);
         return soapPortDto;
     }
 
@@ -362,6 +363,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapOperation.setStatus(soapOperationDto.getStatus());
         soapOperation.setForwardedEndpoint(soapOperationDto.getForwardedEndpoint());
         soapOperation.setResponseStrategy(soapOperationDto.getResponseStrategy());
+        save(soapProjectId);
         return soapOperationDto;
     }
 
@@ -394,6 +396,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapMockResponse.setHttpStatusCode(soapMockResponseDto.getHttpStatusCode());
         soapMockResponse.setStatus(soapMockResponseDto.getStatus());
         soapMockResponse.setHttpHeaders(headers);
+        save(soapProjectId);
         return soapMockResponseDto;
     }
 
@@ -420,6 +423,9 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
             }
         }
 
+        if(deletedSoapPort != null){
+            save(soapProjectId);
+        }
         return deletedSoapPort != null ? mapper.map(deletedSoapPort, SoapPortDto.class) : null;
     }
 
@@ -447,6 +453,10 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
                 soapOperationIterator.remove();
                 break;
             }
+        }
+
+        if(deletedSoapOperation != null){
+            save(soapProjectId);
         }
         return deletedSoapOperation != null ? mapper.map(deletedSoapOperation, SoapOperationDto.class) : null;
     }
@@ -478,6 +488,10 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
                 soapMockResponseIterator.remove();
                 break;
             }
+        }
+
+        if(deleteSoapMockResponse != null){
+            save(soapProjectId);
         }
         return deleteSoapMockResponse != null ? mapper.map(deleteSoapMockResponse, SoapMockResponseDto.class) : null;
     }
