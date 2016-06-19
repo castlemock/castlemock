@@ -266,7 +266,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         mockResponse.setHttpHeaders(response.getHttpHeaders());
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
-        serviceProcessor.process(new CreateRestMockResponseInput(projectId, applicationId, resourceId, restMethod.getId(), mockResponse));
+        serviceProcessor.processAsync(new CreateRestMockResponseInput(projectId, applicationId, resourceId, restMethod.getId(), mockResponse));
         return response;
     }
 

@@ -223,7 +223,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
         mockResponse.setHttpHeaders(response.getHttpHeaders());
-        serviceProcessor.process(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationDto.getId(), mockResponse));
+        serviceProcessor.processAsync(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationDto.getId(), mockResponse));
         return response;
     }
 
