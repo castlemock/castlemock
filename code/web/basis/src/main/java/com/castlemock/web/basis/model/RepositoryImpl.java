@@ -171,7 +171,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
             collection.put(id, type);
             return mapper.map(type, dtoClass);
         } catch (InterruptedException e) {
-            throw new IllegalStateException("Unable to accuire the write lock", e);
+            throw new IllegalStateException("Unable to acquire the write lock", e);
         } finally {
             writeLock.release();
         }
@@ -185,7 +185,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
      * @return Either a new write lock or an already existing write lock associated with the <code>id</code>.
      * @since 1.5
      */
-    private Semaphore getWriteLock(final I id){
+    private synchronized Semaphore getWriteLock(final I id){
         Semaphore writeLock = writeLocks.get(id);
         if(writeLock == null){
             // Create a new write lock and only one is allowed to write to the file at a time.
