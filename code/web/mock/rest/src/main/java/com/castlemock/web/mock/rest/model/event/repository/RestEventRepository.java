@@ -47,4 +47,11 @@ public interface RestEventRepository extends Repository<RestEvent, RestEventDto,
      */
     RestEventDto getOldestEvent();
 
+    /**
+     * The method finds and deletes the oldest event.
+     * @return The event that was deleted.
+     * @since 1.5
+     */
+    RestEventDto deleteOldestEvent();
+
 }

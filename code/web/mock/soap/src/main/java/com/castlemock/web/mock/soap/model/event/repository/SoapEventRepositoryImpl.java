@@ -137,4 +137,16 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEvent
     public List<SearchResult> search(SearchQuery query) {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * The method finds and deletes the oldest event.
+     * @return The event that was deleted.
+     * @since 1.5
+     */
+    @Override
+    public synchronized SoapEventDto deleteOldestEvent(){
+        SoapEventDto eventDto = getOldestEvent();
+        delete(eventDto.getId());
+        return eventDto;
+    }
 }

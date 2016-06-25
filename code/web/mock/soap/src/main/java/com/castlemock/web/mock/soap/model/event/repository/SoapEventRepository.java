@@ -48,4 +48,11 @@ public interface SoapEventRepository extends Repository<SoapEvent, SoapEventDto,
      */
     SoapEventDto getOldestEvent();
 
+    /**
+     * The method finds and deletes the oldest event.
+     * @return The event that was deleted.
+     * @since 1.5
+     */
+    SoapEventDto deleteOldestEvent();
+
 }

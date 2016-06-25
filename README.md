@@ -94,8 +94,8 @@ Castle Mock is **licensed** under the **[Apache License](https://github.com/cast
 [license]:LICENSE
 [license img]:https://img.shields.io/badge/license-Apache%202-blue.svg
 
-[codecov]:https://codecov.io/github/fortmocks/fortmocks
-[codecov img]:https://img.shields.io/codecov/c/github/fortmocks/fortmocks/develop.svg
+[codecov]:https://codecov.io/github/castlemock/castlemock
+[codecov img]:https://img.shields.io/codecov/c/github/castlemock/castlemock/develop.svg
 
 [docker stars]:https://hub.docker.com/r/castlemock/castlemock/
 [docker stars img]:https://img.shields.io/docker/stars/castlemock/castlemock.svg

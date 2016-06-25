@@ -128,4 +128,16 @@ public class RestEventRepositoryImpl extends RepositoryImpl<RestEvent, RestEvent
     public List<SearchResult> search(SearchQuery query) {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * The method finds and deletes the oldest event.
+     * @return The event that was deleted.
+     * @since 1.5
+     */
+    @Override
+    public synchronized RestEventDto deleteOldestEvent(){
+        RestEventDto eventDto = getOldestEvent();
+        delete(eventDto.getId());
+        return eventDto;
+    }
 }
