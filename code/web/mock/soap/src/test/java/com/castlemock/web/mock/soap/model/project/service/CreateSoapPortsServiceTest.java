@@ -16,17 +16,12 @@
 
 package com.castlemock.web.mock.soap.model.project.service;
 
-import com.castlemock.core.basis.model.ServiceResult;
-import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.castlemock.core.mock.soap.model.project.service.message.input.CreateSoapPortsInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.CreateSoapPortsOutput;
 import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
 import org.dozer.DozerBeanMapper;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

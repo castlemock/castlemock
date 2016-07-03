@@ -16,8 +16,8 @@
 
 package com.castlemock.core.basis.model.user.service.message.output;
 
-import com.castlemock.core.basis.model.user.service.message.input.DeleteUserInput;
 import com.castlemock.core.basis.model.Output;
+import com.castlemock.core.basis.model.user.service.message.input.DeleteUserInput;
 
 /**
  * @author Karl Dahlgren

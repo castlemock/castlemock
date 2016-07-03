@@ -16,8 +16,10 @@
 
 package com.castlemock.web.mock.rest.model.project.service;
 
-import com.castlemock.core.basis.model.*;
-import com.castlemock.core.mock.rest.model.project.domain.*;
+import com.castlemock.core.basis.model.SearchQuery;
+import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.ServiceResult;
+import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.dto.*;
 import com.castlemock.core.mock.rest.model.project.service.message.input.SearchRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.SearchRestProjectOutput;

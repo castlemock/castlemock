@@ -19,13 +19,9 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestMockResponseOutput;
-
-import java.util.List;
 
 /**
  * The service provides the functionality to update an already existing REST mock response.

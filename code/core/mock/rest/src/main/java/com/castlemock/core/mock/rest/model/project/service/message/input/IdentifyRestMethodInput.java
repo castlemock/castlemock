@@ -16,8 +16,8 @@
 
 package com.castlemock.core.mock.rest.model.project.service.message.input;
 
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.Input;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.validation.NotNull;
 
 /**

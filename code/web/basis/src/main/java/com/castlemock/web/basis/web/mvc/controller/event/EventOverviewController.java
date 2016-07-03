@@ -17,8 +17,8 @@
 package com.castlemock.web.basis.web.mvc.controller.event;
 
 import com.castlemock.core.basis.model.event.dto.EventDto;
-import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import com.castlemock.web.basis.model.event.service.EventServiceFacadeImpl;
+import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;

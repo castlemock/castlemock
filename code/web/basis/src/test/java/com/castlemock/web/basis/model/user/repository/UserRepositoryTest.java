@@ -6,7 +6,6 @@ import com.castlemock.core.basis.model.user.dto.UserDto;
 import com.castlemock.web.basis.model.user.dto.UserDtoGenerator;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

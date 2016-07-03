@@ -28,13 +28,13 @@ import com.castlemock.core.mock.rest.model.project.service.message.output.Delete
 import com.castlemock.core.mock.rest.model.project.service.message.output.DeleteRestMockResponsesOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
-import com.castlemock.web.mock.rest.model.project.RestProjectDtoGenerator;
-import com.castlemock.web.mock.rest.model.project.RestResourceDtoGenerator;
-import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
 import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.model.project.RestApplicationDtoGenerator;
 import com.castlemock.web.mock.rest.model.project.RestMethodDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.RestProjectDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.RestResourceDtoGenerator;
 import com.castlemock.web.mock.rest.web.mvc.command.method.DeleteRestMethodsCommand;
+import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -17,17 +17,9 @@
 package com.castlemock.web.mock.soap.model.project.service;
 
 import com.castlemock.core.basis.model.*;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.SearchSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.SearchSoapProjectOutput;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**

@@ -21,19 +21,9 @@ import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.google.common.base.Preconditions;
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.GenericTypeResolver;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import java.io.ByteArrayInputStream;
 import java.io.Serializable;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**

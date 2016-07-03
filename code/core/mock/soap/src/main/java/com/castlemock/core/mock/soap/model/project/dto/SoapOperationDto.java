@@ -18,8 +18,8 @@ package com.castlemock.core.mock.soap.model.project.dto;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
+import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 import org.dozer.Mapping;
 
 import java.util.LinkedList;

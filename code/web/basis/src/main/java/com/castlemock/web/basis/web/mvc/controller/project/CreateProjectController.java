@@ -17,9 +17,9 @@
 package com.castlemock.web.basis.web.mvc.controller.project;
 
 import com.castlemock.core.basis.model.project.dto.ProjectDto;
-import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.command.project.CreateProjectCommand;
+import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

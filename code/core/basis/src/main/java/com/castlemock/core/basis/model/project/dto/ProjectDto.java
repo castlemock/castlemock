@@ -17,8 +17,8 @@
 package com.castlemock.core.basis.model.project.dto;
 
 import com.castlemock.core.basis.model.TypeIdentifiable;
-import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.model.TypeIdentifier;
+import com.castlemock.core.basis.model.project.domain.Project;
 import org.dozer.Mapping;
 
 import java.util.Date;

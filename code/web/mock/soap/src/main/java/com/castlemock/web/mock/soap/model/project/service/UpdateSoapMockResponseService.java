@@ -19,13 +19,9 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapMockResponseOutput;
-
-import java.util.List;
 
 /**
  * The service provides functionality to update a specific SOAP mock response.

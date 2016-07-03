@@ -5,7 +5,6 @@ import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.castlemock.web.basis.model.configuration.dto.ConfigurationGroupDtoGenerator;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

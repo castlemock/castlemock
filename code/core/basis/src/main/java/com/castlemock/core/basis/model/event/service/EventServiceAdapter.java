@@ -16,9 +16,9 @@
 
 package com.castlemock.core.basis.model.event.service;
 
-import com.castlemock.core.basis.model.event.dto.EventDto;
 import com.castlemock.core.basis.model.ServiceAdapter;
 import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.core.basis.model.event.dto.EventDto;
 
 /**
  * The event service adapter provides the functionality to translate incoming

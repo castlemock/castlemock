@@ -16,7 +16,8 @@
 
 package com.castlemock.web.mock.rest.model.project.service;
 
-import com.castlemock.core.mock.rest.model.project.domain.*;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;

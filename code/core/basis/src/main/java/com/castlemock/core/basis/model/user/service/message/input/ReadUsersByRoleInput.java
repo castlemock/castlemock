@@ -17,8 +17,8 @@
 package com.castlemock.core.basis.model.user.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
-import com.castlemock.core.basis.model.user.service.message.output.ReadUsersByRoleOutput;
 import com.castlemock.core.basis.model.user.domain.Role;
+import com.castlemock.core.basis.model.user.service.message.output.ReadUsersByRoleOutput;
 import com.castlemock.core.basis.model.validation.NotNull;
 
 /**

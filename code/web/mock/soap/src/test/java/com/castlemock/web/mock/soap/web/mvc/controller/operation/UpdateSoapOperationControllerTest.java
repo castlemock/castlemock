@@ -24,10 +24,10 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
-import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import com.castlemock.web.mock.soap.config.TestApplication;
+import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +41,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.mockito.Matchers.any;

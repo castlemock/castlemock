@@ -16,10 +16,10 @@
 
 package com.castlemock.web.mock.rest.model.project.service;
 
-import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.domain.*;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;

@@ -17,7 +17,6 @@
 package com.castlemock.web.mock.rest.web.mvc.controller.method;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;

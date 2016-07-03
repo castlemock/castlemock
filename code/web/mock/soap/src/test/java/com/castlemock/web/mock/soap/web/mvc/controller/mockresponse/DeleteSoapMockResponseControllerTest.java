@@ -26,11 +26,11 @@ import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoa
 import com.castlemock.core.mock.soap.model.project.service.message.output.DeleteSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.mock.soap.config.TestApplication;
 import com.castlemock.web.mock.soap.model.project.SoapMockResponseDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
-import com.castlemock.web.mock.soap.config.TestApplication;
 import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import com.castlemock.web.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;

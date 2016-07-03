@@ -16,9 +16,9 @@
 
 package com.castlemock.core.basis.model.user.service.message.output;
 
-import com.castlemock.core.basis.model.user.service.message.input.UpdateCurrentUserInput;
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.service.message.input.UpdateCurrentUserInput;
 import com.castlemock.core.basis.model.validation.NotNull;
 
 /**

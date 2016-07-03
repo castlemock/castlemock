@@ -22,7 +22,6 @@ import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
 import com.castlemock.web.basis.model.event.service.AbstractEventService;
 import com.castlemock.web.mock.soap.model.event.repository.SoapEventRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

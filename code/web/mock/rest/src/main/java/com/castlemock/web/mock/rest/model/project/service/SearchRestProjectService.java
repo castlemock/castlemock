@@ -17,14 +17,9 @@
 package com.castlemock.web.mock.rest.model.project.service;
 
 import com.castlemock.core.basis.model.*;
-import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.model.project.service.message.input.SearchRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.SearchRestProjectOutput;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**

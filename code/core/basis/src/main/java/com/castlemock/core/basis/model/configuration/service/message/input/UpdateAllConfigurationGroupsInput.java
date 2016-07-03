@@ -16,9 +16,9 @@
 
 package com.castlemock.core.basis.model.configuration.service.message.input;
 
+import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.castlemock.core.basis.model.configuration.service.message.output.UpdateAllConfigurationGroupsOutput;
-import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 
 import java.util.List;

@@ -16,12 +16,8 @@
 
 package com.castlemock.web.mock.soap.model.project.service;
 
-import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;

@@ -16,7 +16,6 @@
 
 package com.castlemock.web.mock.soap.web.mvc.controller.operation;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;

@@ -22,9 +22,6 @@ import com.castlemock.web.basis.model.event.service.AbstractEventService;
 import com.castlemock.web.mock.rest.model.event.repository.RestEventRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * The REST event service is responsible for all the functionality related to the REST events.
  * @author Karl Dahlgren

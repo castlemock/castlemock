@@ -16,16 +16,18 @@
 
 package com.castlemock.web.mock.soap.model.project.service;
 
-import com.castlemock.core.mock.soap.model.project.domain.*;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.web.basis.model.AbstractService;
 import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
 import com.google.common.base.Preconditions;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Karl Dahlgren

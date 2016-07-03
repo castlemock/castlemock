@@ -18,7 +18,6 @@ package com.castlemock.web.mock.soap.model.event.repository;
 
 
 import com.castlemock.core.basis.model.Repository;
-import com.castlemock.core.basis.model.event.dto.EventDto;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
 

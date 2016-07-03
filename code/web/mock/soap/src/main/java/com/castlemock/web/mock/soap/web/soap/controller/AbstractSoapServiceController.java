@@ -50,7 +50,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 /**
  * The AbstractSoapServiceController provides functionality that are shared for all the SOAP controllers

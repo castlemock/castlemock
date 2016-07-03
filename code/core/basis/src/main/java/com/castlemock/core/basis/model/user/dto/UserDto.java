@@ -16,9 +16,9 @@
 
 package com.castlemock.core.basis.model.user.dto;
 
-import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
+import com.castlemock.core.basis.model.user.domain.User;
 import org.dozer.Mapping;
 
 import java.util.Date;

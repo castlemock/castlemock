@@ -20,8 +20,8 @@ import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteS
 import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapMockResponsesInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
-import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import com.castlemock.web.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
+import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

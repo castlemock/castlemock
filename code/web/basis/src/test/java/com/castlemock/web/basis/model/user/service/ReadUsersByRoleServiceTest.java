@@ -21,7 +21,6 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
-import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.dto.UserDto;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUsersByRoleInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUsersByRoleOutput;

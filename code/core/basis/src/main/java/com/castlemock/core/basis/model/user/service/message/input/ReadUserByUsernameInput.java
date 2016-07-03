@@ -16,8 +16,8 @@
 
 package com.castlemock.core.basis.model.user.service.message.input;
 
-import com.castlemock.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
 import com.castlemock.core.basis.model.Input;
+import com.castlemock.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
 import com.castlemock.core.basis.model.validation.NotNull;
 
 /**

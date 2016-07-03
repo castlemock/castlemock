@@ -19,8 +19,6 @@ package com.castlemock.web.basis.model.configuration.service;
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.configuration.domain.Configuration;
-import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
 import com.castlemock.core.basis.model.configuration.dto.ConfigurationDto;
 import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;

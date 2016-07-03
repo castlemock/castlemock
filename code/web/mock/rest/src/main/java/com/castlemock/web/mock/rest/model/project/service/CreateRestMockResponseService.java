@@ -19,8 +19,6 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestMockResponseInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestMockResponseOutput;

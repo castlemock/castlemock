@@ -24,9 +24,9 @@ import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoa
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsStatusInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
+import com.castlemock.web.mock.soap.web.mvc.command.operation.SoapOperationModifierCommand;
 import com.castlemock.web.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
-import com.castlemock.web.mock.soap.web.mvc.command.operation.SoapOperationModifierCommand;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;

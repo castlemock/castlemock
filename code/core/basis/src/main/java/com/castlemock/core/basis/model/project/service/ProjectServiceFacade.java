@@ -16,11 +16,11 @@
 
 package com.castlemock.core.basis.model.project.service;
 
-import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
 import com.castlemock.core.basis.model.SearchQuery;
+import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.ServiceFacade;
 import com.castlemock.core.basis.model.project.domain.Project;
+import com.castlemock.core.basis.model.project.dto.ProjectDto;
 
 import java.util.List;
 

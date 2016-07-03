@@ -19,7 +19,6 @@ package com.castlemock.web.mock.soap.model.event.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.event.dto.EventDto;
 import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
 import com.castlemock.core.mock.soap.model.event.service.message.input.CreateSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.CreateSoapEventOutput;
