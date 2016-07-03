@@ -34,6 +34,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -96,28 +97,28 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     @Override
     protected void postInitiate() {
         for(SoapProject soapProject : collection.values()){
-            List<SoapPort> soapPorts = Collections.synchronizedList(new LinkedList<SoapPort>());
+            List<SoapPort> soapPorts = new CopyOnWriteArrayList<SoapPort>();
             if(soapProject.getPorts() != null){
                 soapPorts.addAll(soapProject.getPorts());
             }
             soapProject.setPorts(soapPorts);
 
             for(SoapPort soapPort : soapProject.getPorts()){
-                List<SoapOperation> soapOperations = Collections.synchronizedList(new LinkedList<SoapOperation>());
+                List<SoapOperation> soapOperations = new CopyOnWriteArrayList<SoapOperation>();
                 if(soapPort.getOperations() != null){
                     soapOperations.addAll(soapPort.getOperations());
                 }
                 soapPort.setOperations(soapOperations);
 
                 for(SoapOperation soapOperation : soapPort.getOperations()){
-                    List<SoapMockResponse> soapMockResponses = Collections.synchronizedList(new LinkedList<SoapMockResponse>());
+                    List<SoapMockResponse> soapMockResponses = new CopyOnWriteArrayList<SoapMockResponse>();
                     if(soapOperation.getMockResponses() != null){
                         soapMockResponses.addAll(soapOperation.getMockResponses());
                     }
                     soapOperation.setMockResponses(soapMockResponses);
 
                     for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
-                        List<HttpHeader> httpHeaders = Collections.synchronizedList(new LinkedList<HttpHeader>());
+                        List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
                         if(soapMockResponse.getHttpHeaders() != null){
                             httpHeaders.addAll(soapMockResponse.getHttpHeaders());
                         }

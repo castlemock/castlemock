@@ -29,11 +29,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
-
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -98,35 +97,35 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
     @Override
     protected void postInitiate() {
         for(RestProject restProject : collection.values()){
-            List<RestApplication> restApplications = Collections.synchronizedList(new LinkedList<RestApplication>());
+            List<RestApplication> restApplications = new CopyOnWriteArrayList<RestApplication>();
             if(restProject.getApplications() != null){
                 restApplications.addAll(restProject.getApplications());
             }
             restProject.setApplications(restApplications);
 
             for(RestApplication restApplication : restProject.getApplications()){
-                List<RestResource> restResources = Collections.synchronizedList(new LinkedList<RestResource>());
+                List<RestResource> restResources = new CopyOnWriteArrayList<RestResource>();
                 if(restApplication.getResources() != null){
                     restResources.addAll(restApplication.getResources());
                 }
                 restApplication.setResources(restResources);
 
                 for(RestResource restResource : restApplication.getResources()){
-                    List<RestMethod> restMethods = Collections.synchronizedList(new LinkedList<RestMethod>());
+                    List<RestMethod> restMethods = new CopyOnWriteArrayList<RestMethod>();
                     if(restResource.getMethods() != null){
                         restMethods.addAll(restResource.getMethods());
                     }
                     restResource.setMethods(restMethods);
 
                     for(RestMethod restMethod : restResource.getMethods()){
-                        List<RestMockResponse> restMockResponses = Collections.synchronizedList(new LinkedList<RestMockResponse>());
+                        List<RestMockResponse> restMockResponses = new CopyOnWriteArrayList<RestMockResponse>();
                         if(restMethod.getMockResponses() != null){
                             restMockResponses.addAll(restMethod.getMockResponses());
                         }
                         restMethod.setMockResponses(restMockResponses);
 
                         for(RestMockResponse restMockResponse : restMethod.getMockResponses()){
-                            List<HttpHeader> httpHeaders = Collections.synchronizedList(new LinkedList<HttpHeader>());
+                            List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
                             if(restMockResponse.getHttpHeaders() != null){
                                 httpHeaders.addAll(restMockResponse.getHttpHeaders());
                             }
