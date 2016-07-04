@@ -20,9 +20,9 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import org.dozer.Mapping;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -40,7 +40,7 @@ public class RestResourceDto {
     private String uri;
 
     @Mapping("methods")
-    private List<RestMethodDto> methods = new LinkedList<RestMethodDto>();
+    private List<RestMethodDto> methods = new CopyOnWriteArrayList<RestMethodDto>();
 
     private String invokeAddress;
 

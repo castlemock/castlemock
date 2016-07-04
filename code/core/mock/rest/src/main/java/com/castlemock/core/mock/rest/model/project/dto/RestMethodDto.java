@@ -20,9 +20,8 @@ import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import org.dozer.Mapping;
-
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -53,7 +52,7 @@ public class RestMethodDto {
     private RestResponseStrategy responseStrategy;
 
     @Mapping("mockResponses")
-    private List<RestMockResponseDto> mockResponses = new LinkedList<RestMockResponseDto>();
+    private List<RestMockResponseDto> mockResponses = new CopyOnWriteArrayList<RestMockResponseDto>();
 
     @Mapping("currentResponseSequenceIndex")
     private Integer currentResponseSequenceIndex = 0;

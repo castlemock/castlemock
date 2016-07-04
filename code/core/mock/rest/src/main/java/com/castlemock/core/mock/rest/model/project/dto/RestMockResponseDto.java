@@ -19,9 +19,8 @@ package com.castlemock.core.mock.rest.model.project.dto;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import org.dozer.Mapping;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -45,7 +44,7 @@ public class RestMockResponseDto {
     private RestMockResponseStatus status;
 
     @Mapping("httpHeaders")
-    private List<HttpHeaderDto> httpHeaders = new ArrayList<HttpHeaderDto>();
+    private List<HttpHeaderDto> httpHeaders = new CopyOnWriteArrayList<HttpHeaderDto>();
 
     public String getId() {
         return id;

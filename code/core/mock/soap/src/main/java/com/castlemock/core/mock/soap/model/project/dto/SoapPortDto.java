@@ -20,9 +20,9 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 import org.dozer.Mapping;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -40,7 +40,7 @@ public class SoapPortDto {
     private String uri;
 
     @Mapping("operations")
-    private List<SoapOperationDto> operations = new LinkedList<SoapOperationDto>();
+    private List<SoapOperationDto> operations = new CopyOnWriteArrayList<SoapOperationDto>();
 
     private String invokeAddress;
 

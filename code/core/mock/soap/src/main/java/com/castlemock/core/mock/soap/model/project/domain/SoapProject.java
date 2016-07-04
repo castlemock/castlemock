@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -30,7 +31,7 @@ import java.util.List;
 @XmlRootElement
 public class SoapProject extends Project {
 
-    private List<SoapPort> ports;
+    private List<SoapPort> ports = new CopyOnWriteArrayList<SoapPort>();
 
     @XmlElementWrapper(name = "ports")
     @XmlElement(name = "port")

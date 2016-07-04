@@ -20,9 +20,9 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import org.dozer.Mapping;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -37,7 +37,7 @@ public class RestApplicationDto {
     private String name;
 
     @Mapping("resources")
-    private List<RestResourceDto> resources = new LinkedList<RestResourceDto>();
+    private List<RestResourceDto> resources = new CopyOnWriteArrayList<RestResourceDto>();
 
     private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
 

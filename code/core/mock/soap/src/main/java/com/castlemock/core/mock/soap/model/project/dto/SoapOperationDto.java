@@ -22,8 +22,8 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 import org.dozer.Mapping;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -41,7 +41,7 @@ public class SoapOperationDto {
     private String identifier;
 
     @Mapping("mockResponses")
-    private List<SoapMockResponseDto> mockResponses = new LinkedList<SoapMockResponseDto>();
+    private List<SoapMockResponseDto> mockResponses = new CopyOnWriteArrayList<SoapMockResponseDto>();
 
     @Mapping("responseStrategy")
     private SoapResponseStrategy responseStrategy;

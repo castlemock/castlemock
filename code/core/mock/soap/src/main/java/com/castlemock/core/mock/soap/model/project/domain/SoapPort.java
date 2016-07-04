@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -34,7 +35,7 @@ public class SoapPort implements Saveable<String> {
     private String id;
     private String name;
     private String uri;
-    private List<SoapOperation> operations;
+    private List<SoapOperation> operations = new CopyOnWriteArrayList<SoapOperation>();
 
     @XmlElement
     @Override

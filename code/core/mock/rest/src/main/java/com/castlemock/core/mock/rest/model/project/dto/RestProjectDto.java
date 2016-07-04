@@ -18,9 +18,8 @@ package com.castlemock.core.mock.rest.model.project.dto;
 
 import com.castlemock.core.basis.model.project.dto.ProjectDto;
 import org.dozer.Mapping;
-
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -29,7 +28,7 @@ import java.util.List;
 public class RestProjectDto extends ProjectDto {
 
     @Mapping("applications")
-    private List<RestApplicationDto> applications = new LinkedList<RestApplicationDto>();
+    private List<RestApplicationDto> applications = new CopyOnWriteArrayList<RestApplicationDto>();
 
     /**
      * The default REST project constructor

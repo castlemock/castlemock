@@ -21,9 +21,9 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 import org.dozer.Mapping;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The DTO class for the Project class
@@ -33,7 +33,7 @@ import java.util.Map;
 public class SoapProjectDto extends ProjectDto {
 
     @Mapping("ports")
-    private List<SoapPortDto> ports = new LinkedList<SoapPortDto>();
+    private List<SoapPortDto> ports = new CopyOnWriteArrayList<SoapPortDto>();
     private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
 
     /**

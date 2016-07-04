@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -36,7 +37,7 @@ public class RestMockResponse implements Saveable<String> {
     private String body;
     private RestMockResponseStatus status;
     private Integer httpStatusCode;
-    private List<HttpHeader> httpHeaders;
+    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
 
     @Override
     @XmlElement

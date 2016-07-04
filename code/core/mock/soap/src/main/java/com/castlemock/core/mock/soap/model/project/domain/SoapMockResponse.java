@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Mock response represent a mocked response for a operation
@@ -38,7 +39,7 @@ public class SoapMockResponse implements Saveable<String> {
     private String body;
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
-    private List<HttpHeader> httpHeaders;
+    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
 
     @XmlElement
     @Override
