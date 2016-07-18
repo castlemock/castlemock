@@ -6,8 +6,5 @@ jdk:
 notifications:
   slack: castlemock:JxIkhf3PnSkUO0nVa470kedQ
 
-before_install:
-  - pip install --user codecov
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
