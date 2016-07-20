@@ -19,7 +19,7 @@
 	<groupId>com.castlemock</groupId>
 	<artifactId>castlemock</artifactId>
 	<packaging>pom</packaging>
-	<version>1.5</version>
+	<version>1.6-SNAPSHOT</version>
   	<name>Castle mock</name>
 	<url>http://www.castlemock.com</url>
 	<description>This is the root Maven project file which all the Castle Mock projects share</description>

@@ -19,7 +19,7 @@
 	<groupId>com.castlemock</groupId>
 	<artifactId>castlemock-web-basis</artifactId>
 	<packaging>jar</packaging>
-	<version>1.5</version>
+	<version>1.6-SNAPSHOT</version>
     <name>Castle Mock web basis</name>
 	<url>http://www.castlemock.com</url>
 	<description>The module that constitutes the main Castle Mock web basis</description>
@@ -34,7 +34,7 @@
 	<parent>
 		<groupId>com.castlemock</groupId>
 		<artifactId>castlemock-web</artifactId>
-		<version>1.5</version>
+		<version>1.6-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 

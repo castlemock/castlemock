@@ -19,7 +19,7 @@
 	<groupId>com.castlemock</groupId>
 	<artifactId>castlemock-core-mock-rest</artifactId>
 	<packaging>jar</packaging>
-	<version>1.5</version>
+	<version>1.6-SNAPSHOT</version>
     <name>Castle mock core - mock soap</name>
 	<url>http://www.castlemock.com</url>
 	<description>The core module contains the core package for Castle Mock</description>
@@ -34,7 +34,7 @@
 	<parent>
 		<groupId>com.castlemock</groupId>
 		<artifactId>castlemock-core-mock</artifactId>
-		<version>1.5</version>
+		<version>1.6-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 

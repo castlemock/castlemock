@@ -17,7 +17,7 @@ subprojects {
     apply plugin: 'eclipse'
     apply plugin: "jacoco"
     group = "com.fortmocks"
-    version = '1.5-SNAPSHOT'
+    version = '1.6-SNAPSHOT'
 
     repositories {
         mavenCentral()

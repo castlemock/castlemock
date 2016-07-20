@@ -19,7 +19,7 @@
 	<groupId>com.castlemock</groupId>
 	<artifactId>castlemock-web-mock-rest</artifactId>
 	<packaging>jar</packaging>
-	<version>1.5</version>
+	<version>1.6-SNAPSHOT</version>
     <name>Castle Mock web mock rest</name>
 	<url>http://www.castlemock.com</url>
 	<description>The module that constitutes the main Castle Mock rest</description>
@@ -34,7 +34,7 @@
 	<parent>
 		<groupId>com.castlemock</groupId>
 		<artifactId>castlemock-web-mock</artifactId>
-		<version>1.5</version>
+		<version>1.6-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
