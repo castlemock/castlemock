@@ -23,6 +23,13 @@ subprojects {
         mavenCentral()
     }
 
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled false
+        }
+    }
+
     ext.junitVersion = "4.11"
     ext.log4jVersion = "1.2.17"
     ext.guavaVersion = "17.0"
