@@ -3,8 +3,6 @@ language: java
 jdk:
   - oraclejdk8
 
-script:
-- ./gradlew jacocoRootReport coveralls
-
 after_success:
+  - ./gradlew jacocoRootReport coveralls
   - bash <(curl -s https://codecov.io/bash)
