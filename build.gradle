@@ -16,7 +16,7 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
     apply plugin: "jacoco"
-    group = "com.fortmocks"
+    group = "com.castlemock"
     version = '1.6-SNAPSHOT'
 
     repositories {
@@ -75,21 +75,21 @@ subprojects {
 
 
 project(':code:core:basis') {
-    description = "Fort mocks core: Basis"
-    group = "com.fortmocks.core"
+    description = "Castle Mock core: Basis"
+    group = "com.castlemock.core"
 }
 
 project(':code:core:mock:rest') {
-    description = "Fort mocks core: Mock REST"
-    group = "com.fortmocks.core"
+    description = "Castle Mock core: Mock REST"
+    group = "com.castlemock.core"
     dependencies {
         compile(project(":code:core:basis"))
     }
 }
 
 project(':code:core:mock:soap') {
-    description = "Fort mocks core: Mock SOAP"
-    group = "com.fortmocks.core"
+    description = "Castle Mock core: Mock SOAP"
+    group = "com.castlemock.core"
     dependencies {
         compile(project(":code:core:basis"))
     }
@@ -97,9 +97,9 @@ project(':code:core:mock:soap') {
 
 
 project(':code:web:basis') {
-    description = "Fort Mocks web: Basis"
+    description = "Castle Mock web: Basis"
     apply plugin: 'spring-boot'
-    group = "com.fortmocks.web"
+    group = "com.castlemock.web"
 
     bootRepackage {
         enabled = false
@@ -125,9 +125,9 @@ project(':code:web:basis') {
 }
 
 project(':code:web:mock:rest') {
-    description = "Fort Mocks web: Mock REST"
+    description = "Castle Mock web: Mock REST"
     apply plugin: 'spring-boot'
-    group = "com.fortmocks.web"
+    group = "com.castlemock.web"
 
     bootRepackage {
         enabled = false
@@ -145,9 +145,9 @@ project(':code:web:mock:rest') {
 }
 
 project(':code:web:mock:soap') {
-    description = "Fort Mocks web: Mock SOAP"
+    description = "Castle Mock web: Mock SOAP"
     apply plugin: 'spring-boot'
-    group = "com.fortmocks.web"
+    group = "com.castlemock.web"
 
     bootRepackage {
         enabled = false
@@ -166,17 +166,17 @@ project(':code:web:mock:soap') {
 }
 
 project(':code:web:war') {
-    description = "Fort Mocks web: WAR"
+    description = "Castle Mock web: WAR"
     apply plugin: 'spring-boot'
     apply plugin: 'war'
-    group = "com.fortmocks.web"
+    group = "com.castlemock.web"
 
     bootRepackage {
-      mainClass = "com.fortmocks.war.config.Application"
+      mainClass = "com.castlemock.war.config.Application"
     }
 
     war {
-      baseName = 'fortmocks'
+      baseName = 'castlemock'
       rootSpec.eachFile {
         if (it.name == 'application.properties') {
           ant.replace(file: it.file, token: "\${project.version}", value: version)
