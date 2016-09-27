@@ -19,6 +19,7 @@ package com.castlemock.web.mock.rest.web.rest.controller;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.model.http.dto.HttpParameterDto;
+import com.castlemock.core.basis.utility.parser.TextParser;
 import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
 import com.castlemock.core.mock.rest.model.event.dto.RestRequestDto;
 import com.castlemock.core.mock.rest.model.event.dto.RestResponseDto;
@@ -321,8 +322,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
             throw new RestException("No mocked response created for operation " + restMethod.getName());
         }
 
+        String body = mockResponse.getBody();
+        body = TextParser.parse(body);
         final RestResponseDto response = new RestResponseDto();
-        response.setBody(mockResponse.getBody());
+        response.setBody(body);
         response.setMockResponseName(mockResponse.getName());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
         response.setHttpHeaders(mockResponse.getHttpHeaders());
