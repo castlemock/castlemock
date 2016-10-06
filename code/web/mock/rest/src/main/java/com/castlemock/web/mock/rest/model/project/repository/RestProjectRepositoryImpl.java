@@ -567,14 +567,15 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         Iterator<RestApplication> restApplicationIterator = restProject.getApplications().iterator();
         RestApplication deletedRestApplication = null;
         while(restApplicationIterator.hasNext()){
-            deletedRestApplication = restApplicationIterator.next();
-            if(restApplicationId.equals(deletedRestApplication.getId())){
-                restApplicationIterator.remove();
+            RestApplication tempRestApplication = restApplicationIterator.next();
+            if(restApplicationId.equals(tempRestApplication.getId())){
+                deletedRestApplication = tempRestApplication;
                 break;
             }
         }
 
         if(deletedRestApplication != null){
+            restProject.getApplications().remove(deletedRestApplication);
             save(restProjectId);
         }
         return deletedRestApplication != null ? mapper.map(deletedRestApplication, RestApplicationDto.class) : null;
@@ -599,14 +600,15 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         Iterator<RestResource> restResourceIterator = restApplication.getResources().iterator();
         RestResource deletedRestResource = null;
         while(restResourceIterator.hasNext()){
-            deletedRestResource = restResourceIterator.next();
-            if(restResourceId.equals(deletedRestResource.getId())){
-                restResourceIterator.remove();
+            RestResource tempRestResource = restResourceIterator.next();
+            if(restResourceId.equals(tempRestResource.getId())){
+                deletedRestResource = tempRestResource;
                 break;
             }
         }
 
         if(deletedRestResource != null){
+            restApplication.getResources().remove(deletedRestResource);
             save(restProjectId);
         }
         return deletedRestResource != null ? mapper.map(deletedRestResource, RestResourceDto.class) : null;
@@ -634,14 +636,15 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         Iterator<RestMethod> restMethodIterator = restResource.getMethods().iterator();
         RestMethod deletedRestMethod = null;
         while(restMethodIterator.hasNext()){
-            deletedRestMethod = restMethodIterator.next();
-            if(restMethodId.equals(deletedRestMethod.getId())){
-                restMethodIterator.remove();
+            RestMethod tempRestMethod = restMethodIterator.next();
+            if(restMethodId.equals(tempRestMethod.getId())){
+                deletedRestMethod = tempRestMethod;
                 break;
             }
         }
 
         if(deletedRestMethod != null){
+            restResource.getMethods().remove(deletedRestMethod);
             save(restProjectId);
         }
         return deletedRestMethod != null ? mapper.map(deletedRestMethod, RestMethodDto.class) : null;
@@ -672,14 +675,15 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         Iterator<RestMockResponse> restMockResponseIterator = restMethod.getMockResponses().iterator();
         RestMockResponse deletedRestMockResponse = null;
         while(restMockResponseIterator.hasNext()){
-            deletedRestMockResponse = restMockResponseIterator.next();
-            if(restMockResponseId.equals(deletedRestMockResponse.getId())){
-                restMockResponseIterator.remove();
+            RestMockResponse tempRestMockResponse = restMockResponseIterator.next();
+            if(restMockResponseId.equals(tempRestMockResponse.getId())){
+                deletedRestMockResponse = tempRestMockResponse;
                 break;
             }
         }
 
         if(deletedRestMockResponse != null){
+            restMethod.getMockResponses().remove(deletedRestMockResponse);
             save(restProjectId);
         }
         return deletedRestMockResponse != null ? mapper.map(deletedRestMockResponse, RestMockResponseDto.class) : null;

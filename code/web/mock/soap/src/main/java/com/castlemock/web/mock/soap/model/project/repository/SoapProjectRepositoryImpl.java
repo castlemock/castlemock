@@ -422,14 +422,15 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         Iterator<SoapPort> soapPortIterator = soapProject.getPorts().iterator();
         SoapPort deletedSoapPort = null;
         while(soapPortIterator.hasNext()){
-            deletedSoapPort = soapPortIterator.next();
-            if(soapPortId.equals(deletedSoapPort.getId())){
-                soapPortIterator.remove();
+            SoapPort tempSoapPort = soapPortIterator.next();
+            if(soapPortId.equals(tempSoapPort.getId())){
+                deletedSoapPort = tempSoapPort;
                 break;
             }
         }
 
         if(deletedSoapPort != null){
+            soapProject.getPorts().remove(deletedSoapPort);
             save(soapProjectId);
         }
         return deletedSoapPort != null ? mapper.map(deletedSoapPort, SoapPortDto.class) : null;
@@ -454,14 +455,15 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         Iterator<SoapOperation> soapOperationIterator = soapPort.getOperations().iterator();
         SoapOperation deletedSoapOperation = null;
         while(soapOperationIterator.hasNext()){
-            deletedSoapOperation = soapOperationIterator.next();
-            if(soapOperationId.equals(deletedSoapOperation.getId())){
-                soapOperationIterator.remove();
+            SoapOperation tempSoapOperation = soapOperationIterator.next();
+            if(soapOperationId.equals(tempSoapOperation.getId())){
+                deletedSoapOperation = tempSoapOperation;
                 break;
             }
         }
 
         if(deletedSoapOperation != null){
+            soapPort.getOperations().remove(deletedSoapOperation);
             save(soapProjectId);
         }
         return deletedSoapOperation != null ? mapper.map(deletedSoapOperation, SoapOperationDto.class) : null;
@@ -489,14 +491,15 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         Iterator<SoapMockResponse> soapMockResponseIterator = soapOperation.getMockResponses().iterator();
         SoapMockResponse deleteSoapMockResponse = null;
         while(soapMockResponseIterator.hasNext()){
-            deleteSoapMockResponse = soapMockResponseIterator.next();
-            if(soapMockResponseId.equals(deleteSoapMockResponse.getId())){
-                soapMockResponseIterator.remove();
+            SoapMockResponse tempSoapMockResponse = soapMockResponseIterator.next();
+            if(soapMockResponseId.equals(tempSoapMockResponse.getId())){
+                deleteSoapMockResponse = tempSoapMockResponse;
                 break;
             }
         }
 
         if(deleteSoapMockResponse != null){
+            soapOperation.getMockResponses().remove(deleteSoapMockResponse);
             save(soapProjectId);
         }
         return deleteSoapMockResponse != null ? mapper.map(deleteSoapMockResponse, SoapMockResponseDto.class) : null;
