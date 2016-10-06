@@ -543,6 +543,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         restMockResponse.setHttpStatusCode(restMockResponseDto.getHttpStatusCode());
         restMockResponse.setHttpHeaders(headers);
         restMockResponse.setStatus(restMockResponseDto.getStatus());
+        restMockResponse.setUsingExpressions(restMockResponseDto.isUsingExpressions());
         save(restProjectId);
         return mapper.map(restMockResponse, RestMockResponseDto.class);
     }

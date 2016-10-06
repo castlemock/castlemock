@@ -323,7 +323,11 @@ public abstract class AbstractRestServiceController extends AbstractController {
         }
 
         String body = mockResponse.getBody();
-        body = TextParser.parse(body);
+        if(mockResponse.isUsingExpressions()){
+            // Parse the text and apply expression functionality if
+            // the mock response is configured to use expressions
+            body = TextParser.parse(body);
+        }
         final RestResponseDto response = new RestResponseDto();
         response.setBody(body);
         response.setMockResponseName(mockResponse.getName());

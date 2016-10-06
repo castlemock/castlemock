@@ -402,6 +402,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapMockResponse.setHttpStatusCode(soapMockResponseDto.getHttpStatusCode());
         soapMockResponse.setStatus(soapMockResponseDto.getStatus());
         soapMockResponse.setHttpHeaders(headers);
+        soapMockResponse.setUsingExpressions(soapMockResponseDto.isUsingExpressions());
         save(soapProjectId);
         return soapMockResponseDto;
     }

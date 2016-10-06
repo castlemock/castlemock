@@ -39,6 +39,7 @@ public class SoapMockResponse implements Saveable<String> {
     private String body;
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
+    private boolean usingExpressions;
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
 
     @XmlElement
@@ -86,6 +87,15 @@ public class SoapMockResponse implements Saveable<String> {
 
     public void setHttpStatusCode(Integer httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
+    }
+
+    @XmlElement
+    public boolean isUsingExpressions() {
+        return usingExpressions;
+    }
+
+    public void setUsingExpressions(boolean usingExpressions) {
+        this.usingExpressions = usingExpressions;
     }
 
     @XmlElementWrapper(name = "httpHeaders")

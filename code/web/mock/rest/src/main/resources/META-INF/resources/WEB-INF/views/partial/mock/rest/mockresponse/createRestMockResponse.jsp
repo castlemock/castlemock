@@ -42,6 +42,10 @@
                     </form:select>
                 </td>
             </tr>
+            <tr>
+                <td class="column1"><form:label path="usingExpressions"><spring:message code="rest.createrestmockresponse.label.useexpressions"/></form:label></td>
+                <td class="column2"><form:checkbox path="usingExpressions"/></td>
+            </tr>
         </table>
     </div>
 

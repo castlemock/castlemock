@@ -43,6 +43,9 @@ public class RestMockResponseDto {
     @Mapping("status")
     private RestMockResponseStatus status;
 
+    @Mapping("usingExpressions")
+    private boolean usingExpressions;
+
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders = new CopyOnWriteArrayList<HttpHeaderDto>();
 
@@ -84,6 +87,14 @@ public class RestMockResponseDto {
 
     public void setHttpStatusCode(Integer httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
+    }
+
+    public boolean isUsingExpressions() {
+        return usingExpressions;
+    }
+
+    public void setUsingExpressions(boolean usingExpressions) {
+        this.usingExpressions = usingExpressions;
     }
 
     public List<HttpHeaderDto> getHttpHeaders() {

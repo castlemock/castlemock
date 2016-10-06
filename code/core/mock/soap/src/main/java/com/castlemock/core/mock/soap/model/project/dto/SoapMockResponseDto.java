@@ -43,6 +43,9 @@ public class SoapMockResponseDto {
     @Mapping("httpStatusCode")
     private Integer httpStatusCode;
 
+    @Mapping("usingExpressions")
+    private boolean usingExpressions;
+
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders = new CopyOnWriteArrayList<HttpHeaderDto>();
 
@@ -84,6 +87,14 @@ public class SoapMockResponseDto {
 
     public void setHttpStatusCode(Integer httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
+    }
+
+    public boolean isUsingExpressions() {
+        return usingExpressions;
+    }
+
+    public void setUsingExpressions(boolean usingExpressions) {
+        this.usingExpressions = usingExpressions;
     }
 
     public List<HttpHeaderDto> getHttpHeaders() {
