@@ -54,4 +54,9 @@ public interface SoapEventRepository extends Repository<SoapEvent, SoapEventDto,
      */
     SoapEventDto deleteOldestEvent();
 
+    /**
+     * The method clears and deletes all logs.
+     * @since 1.7
+     */
+    void clearAll();
 }

@@ -16,7 +16,12 @@
 
 <%@ include file="../../../includes.jspf"%>
 <div class="content-top">
-    <h1><spring:message code="general.eventoverview.header.log"/></h1>
+    <div class="title">
+        <h1><spring:message code="general.eventoverview.header.log"/></h1>
+    </div>
+    <div class="menu" align="right">
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')"><a class="button-secondary pure-button" href="<c:url value="/web/event/clear"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.eventoverview.button.clearlogs"/></span></a></sec:authorize>
+    </div>
 </div>
 <div class="table-frame">
     <table class="entityTable">

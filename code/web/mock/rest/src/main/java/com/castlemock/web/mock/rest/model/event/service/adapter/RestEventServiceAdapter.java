@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.event.dto.EventDto;
 import com.castlemock.core.basis.model.event.service.EventServiceAdapter;
 import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.mock.rest.model.event.service.message.input.ClearAllRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadAllRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.ReadAllRestEventOutput;
@@ -154,6 +155,15 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
     @Override
     public String generateResourceLink(RestEventDto restEventDto) {
         return SLASH + WEB + SLASH + REST + SLASH + PROJECT + SLASH + restEventDto.getProjectId() + SLASH + APPLICATION + SLASH + restEventDto.getApplicationId() + SLASH + RESOURCE + SLASH + restEventDto.getResourceId() + SLASH + METHOD + SLASH + restEventDto.getMethodId();
+    }
+
+    /**
+     * The method will clear and remove all previous events.
+     * @since 1.7
+     */
+    @Override
+    public void clearAll() {
+        serviceProcessor.process(new ClearAllRestEventInput());
     }
 
 }

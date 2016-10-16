@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Event service component is used to assembly all the events service layers and interact with them
@@ -64,5 +65,12 @@ public class EventServiceFacadeImpl extends ServiceFacadeImpl<EventDto, String, 
         final List<EventDto> events = super.findAll();
         Collections.sort(events, new EventDtoStartDateComparator());
         return events;
+    }
+
+    public void clearAll(){
+        for(Map.Entry<String, EventServiceAdapter<EventDto>> entry : services.entrySet()){
+            EventServiceAdapter<EventDto> eventDtoEventServiceAdapter = entry.getValue();
+            eventDtoEventServiceAdapter.clearAll();
+        }
     }
 }

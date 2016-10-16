@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -139,5 +140,18 @@ public class RestEventRepositoryImpl extends RepositoryImpl<RestEvent, RestEvent
         RestEventDto eventDto = getOldestEvent();
         delete(eventDto.getId());
         return eventDto;
+    }
+
+    /**
+     * The method clears and deletes all logs.
+     * @since 1.7
+     */
+    @Override
+    public void clearAll() {
+        Iterator<RestEvent> iterator = collection.values().iterator();
+        while(iterator.hasNext()){
+            RestEvent restEvent = iterator.next();
+            delete(restEvent.getId());
+        }
     }
 }

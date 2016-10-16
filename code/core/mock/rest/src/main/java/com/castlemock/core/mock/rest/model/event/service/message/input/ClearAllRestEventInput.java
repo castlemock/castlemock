@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.soap.model.event.service.message.input;
+package com.castlemock.core.mock.rest.model.event.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 
 /**
  * @author Karl Dahlgren
- * @since 1.0
+ * @since 1.7
  */
-public class ReadAllSoapEventInput implements Input {
-
-
-
+public class ClearAllRestEventInput implements Input {
 }

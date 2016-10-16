@@ -39,4 +39,11 @@ public interface EventServiceAdapter<D extends EventDto> extends ServiceAdapter<
      */
     String generateResourceLink(D event);
 
+
+    /**
+     * The method will clear and remove all previous events.
+     * @since 1.7
+     */
+    void clearAll();
+
 }

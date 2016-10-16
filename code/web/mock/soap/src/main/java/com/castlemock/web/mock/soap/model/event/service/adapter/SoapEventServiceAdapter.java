@@ -22,6 +22,7 @@ import com.castlemock.core.basis.model.event.dto.EventDto;
 import com.castlemock.core.basis.model.event.service.EventServiceAdapter;
 import com.castlemock.core.basis.model.event.service.EventServiceFacade;
 import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.event.service.message.input.ClearAllSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadAllSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.ReadAllSoapEventOutput;
@@ -156,5 +157,14 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
     @Override
     public String generateResourceLink(SoapEventDto soapEventDto) {
         return SLASH + WEB + SLASH + SOAP + SLASH + PROJECT + SLASH + soapEventDto.getProjectId() + SLASH + PORT + SLASH + soapEventDto.getPortId() + SLASH + OPERATION + SLASH + soapEventDto.getOperationId();
+    }
+
+    /**
+     * The method will clear and remove all previous events.
+     * @since 1.7
+     */
+    @Override
+    public void clearAll() {
+        serviceProcessor.process(new ClearAllSoapEventInput());
     }
 }

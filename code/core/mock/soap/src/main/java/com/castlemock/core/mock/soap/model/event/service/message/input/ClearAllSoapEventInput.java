@@ -20,10 +20,8 @@ import com.castlemock.core.basis.model.Input;
 
 /**
  * @author Karl Dahlgren
- * @since 1.0
+ * @since 1.7
  */
-public class ReadAllSoapEventInput implements Input {
-
-
+public class ClearAllSoapEventInput implements Input {
 
 }

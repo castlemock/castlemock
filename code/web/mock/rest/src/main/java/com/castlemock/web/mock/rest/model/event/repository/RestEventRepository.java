@@ -54,4 +54,10 @@ public interface RestEventRepository extends Repository<RestEvent, RestEventDto,
      */
     RestEventDto deleteOldestEvent();
 
+    /**
+     * The method clears and deletes all logs.
+     * @since 1.7
+     */
+    void clearAll();
+
 }
