@@ -35,6 +35,7 @@
             <a href="${context}/web/event"><i class="fa fa-file-text fa-2x"></i> </a>
             <sec:authorize access="hasAuthority('ADMIN')"><a href="${context}/web/configuration"><i class="fa fa-cogs fa-2x"></i> </a></sec:authorize>
             <sec:authorize access="hasAuthority('ADMIN')"><a href="${context}/web/user"><i class="fa fa-users fa-2x"></i> </a></sec:authorize>
+            <sec:authorize access="hasAuthority('ADMIN')"><a href="${context}/web/system"><i class="fa fa-desktop fa-2x"></i> </a></sec:authorize>
             <a href="${context}/web/logout"><i class="fa fa-sign-out fa-2x"></i> </a>
         </nav>
 

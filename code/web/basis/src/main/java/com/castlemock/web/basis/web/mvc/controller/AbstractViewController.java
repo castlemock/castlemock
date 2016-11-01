@@ -123,7 +123,7 @@ public abstract class AbstractViewController extends AbstractController {
         final String configurationTitle = messageSource.getMessage("general.menu.item.configuration", null, LocaleContextHolder.getLocale());
         final String usersTitle = messageSource.getMessage("general.menu.item.users", null, LocaleContextHolder.getLocale());
         final String logoutTitle = messageSource.getMessage("general.menu.item.logout", null, LocaleContextHolder.getLocale());
-
+        final String systemTitle = messageSource.getMessage("general.system.header.system", null, LocaleContextHolder.getLocale());
 
         final List<ContentItem> mainContentItems = new ArrayList<ContentItem>();
         final ContentItem homeContentItem = new ContentItem(homeTitle, getContext() + "/web", Role.READER, "fa fa-home fa-1x");
@@ -132,12 +132,14 @@ public abstract class AbstractViewController extends AbstractController {
         final ContentItem configurationContentItem = new ContentItem(configurationTitle, getContext() + "/web/configuration", Role.ADMIN, "fa fa-cogs fa-1x");
         final ContentItem usersContentItem = new ContentItem(usersTitle, getContext() + "/web/user", Role.ADMIN, "fa fa-users fa-1x");
         final ContentItem logoutContentItem = new ContentItem(logoutTitle, getContext() + "/web/logout", Role.READER, "fa fa-sign-out fa-1x");
+        final ContentItem systemContentItem = new ContentItem(systemTitle, getContext() + "/web/system", Role.READER, "fa fa-desktop fa-1x");
 
         mainContentItems.add(homeContentItem);
         mainContentItems.add(userContentItem);
         mainContentItems.add(logContentItem);
         mainContentItems.add(configurationContentItem);
         mainContentItems.add(usersContentItem);
+        mainContentItems.add(systemContentItem);
         mainContentItems.add(logoutContentItem);
 
         return new ContentItemGroup(mainTitle, mainContentItems);
