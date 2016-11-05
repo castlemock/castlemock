@@ -30,6 +30,10 @@ public class SystemInformationDto {
     private String tomcatBuilt;
     private String tomcatInfo;
     private String tomcatVersion;
+    private long totalMemory;
+    private long maxMemory;
+    private long freeMemory;
+    private int availableProcessors;
 
     public String getOperatingSystemName() {
         return operatingSystemName;
@@ -77,5 +81,37 @@ public class SystemInformationDto {
 
     public void setTomcatVersion(String tomcatVersion) {
         this.tomcatVersion = tomcatVersion;
+    }
+
+    public long getTotalMemory() {
+        return totalMemory;
+    }
+
+    public void setTotalMemory(long totalMemory) {
+        this.totalMemory = totalMemory;
+    }
+
+    public long getMaxMemory() {
+        return maxMemory;
+    }
+
+    public void setMaxMemory(long maxMemory) {
+        this.maxMemory = maxMemory;
+    }
+
+    public long getFreeMemory() {
+        return freeMemory;
+    }
+
+    public void setFreeMemory(long freeMemory) {
+        this.freeMemory = freeMemory;
+    }
+
+    public int getAvailableProcessors() {
+        return availableProcessors;
+    }
+
+    public void setAvailableProcessors(int availableProcessors) {
+        this.availableProcessors = availableProcessors;
     }
 }

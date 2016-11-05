@@ -51,6 +51,10 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
         systemInformation.setTomcatBuilt(ServerInfo.getServerBuilt());
         systemInformation.setTomcatInfo(ServerInfo.getServerInfo());
         systemInformation.setTomcatVersion(ServerInfo.getServerNumber());
+        systemInformation.setAvailableProcessors(Runtime.getRuntime().availableProcessors());
+        systemInformation.setTotalMemory(Runtime.getRuntime().totalMemory() / 1000000); // Megabytes
+        systemInformation.setMaxMemory(Runtime.getRuntime().maxMemory() / 1000000); // Megabytes
+        systemInformation.setFreeMemory(Runtime.getRuntime().freeMemory() / 1000000); // Megabytes
         final GetSystemInformationOutput output = new GetSystemInformationOutput(systemInformation);
         return createServiceResult(output);
     }

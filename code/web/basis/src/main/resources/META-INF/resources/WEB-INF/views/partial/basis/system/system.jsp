@@ -45,6 +45,23 @@
         <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.tomcatversion"/></label></td>
         <td class="column2"><label path="javaVersion">${systemInformation.tomcatVersion}</label></td>
     </tr>
+    <tr>
+        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.totalmemory"/></label></td>
+        <td class="column2"><label path="javaVersion">${systemInformation.totalMemory}  MB</label></td>
+    </tr>
+    <tr>
+        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.maxmemory"/></label></td>
+        <td class="column2"><label path="javaVersion">${systemInformation.maxMemory}  MB</label></td>
+    </tr>
+    <tr>
+        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.freememory"/></label></td>
+        <td class="column2"><label path="javaVersion">${systemInformation.freeMemory} MB</label></td>
+    </tr>
+    <tr>
+        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.availableprocessors"/></label></td>
+        <td class="column2"><label path="javaVersion">${systemInformation.availableProcessors}</label></td>
+    </tr>
+
 </table>
 
 
