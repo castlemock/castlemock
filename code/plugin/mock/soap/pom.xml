@@ -19,7 +19,7 @@
 	<groupId>com.castlemock</groupId>
 	<artifactId>castlemock-plugin-mock-soap</artifactId>
 	<packaging>jar</packaging>
-	<version>1.7-SNAPSHOT</version>
+	<version>1.7</version>
     <name>Castle mock plugin mock soap</name>
 	<url>http://www.castlemock.com</url>
 	<description>The plugin module contains the plugin package for Castle Mock</description>
@@ -34,7 +34,7 @@
 	<parent>
 		<groupId>com.castlemock</groupId>
 		<artifactId>castlemock-plugin-mock</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.7</version>
 		<relativePath>../</relativePath>
 	</parent>
 
