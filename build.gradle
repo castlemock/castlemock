@@ -189,6 +189,11 @@ project(':code:web:war') {
           ant.replace(file: it.file, token: "\${project.version}", value: version)
         }
       }
+      from('../../../') {
+          include 'LICENSE-3RD-PARTY'
+          include 'LICENSE'
+          include 'AUTHORS'
+      }
     }
 
     dependencies {
