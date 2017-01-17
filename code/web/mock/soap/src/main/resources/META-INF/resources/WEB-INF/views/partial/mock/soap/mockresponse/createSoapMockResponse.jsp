@@ -91,7 +91,16 @@
         </div>
     </div>
 
-    <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.createsoapmockresponse.button.createmockresponse"/></span></button>
+    <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+        <c:choose>
+            <c:when test="${demoMode}">
+                <a class="button-success pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.createsoapmockresponse.button.createmockresponse"/></span></a>
+            </c:when>
+            <c:otherwise>
+                <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.createsoapmockresponse.button.createmockresponse"/></span></button>
+            </c:otherwise>
+        </c:choose>
+    </sec:authorize>
     <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="soap.createsoapmockresponse.button.cancel"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>

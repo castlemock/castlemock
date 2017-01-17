@@ -51,6 +51,7 @@ public abstract class AbstractControllerTest {
     protected static final String PROJECT = "project";
     protected static final String PROJECT_ID = "projectId";
     protected static final String PROJECT_TYPES = "projectTypes";
+    protected static final String DEMO_MODE = "demoMode";
 
     @Before
     public void initiateTest() {

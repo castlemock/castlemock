@@ -58,6 +58,7 @@ public class SoapMockResponseController extends AbstractSoapViewController {
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(SOAP_OPERATION_ID, soapOperationId);
         model.addObject(SOAP_MOCK_RESPONSE_STATUSES, SoapMockResponseStatus.values());
+        model.addObject(DEMO_MODE, demoMode);
         return model;
     }
 }

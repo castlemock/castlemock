@@ -51,6 +51,7 @@ public class RestMockResponseController extends AbstractRestViewController {
         model.addObject(REST_METHOD_ID, restMethodId);
         model.addObject(REST_MOCK_RESPONSE, output.getRestMockResponse());
         model.addObject(REST_MOCK_RESPONSE_STATUSES, RestMockResponseStatus.values());
+        model.addObject(DEMO_MODE, demoMode);
         return model;
     }
 

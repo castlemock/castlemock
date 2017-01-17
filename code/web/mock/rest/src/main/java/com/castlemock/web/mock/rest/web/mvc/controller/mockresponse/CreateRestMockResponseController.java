@@ -45,7 +45,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
 
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/create/response", method = RequestMethod.GET)
-    public ModelAndView dispayCreatePage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId) {
+    public ModelAndView displayCreatePage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId) {
         final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
 
         final RestMockResponseDto mockResponse = new RestMockResponseDto();
@@ -58,6 +58,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
         model.addObject(REST_METHOD_ID, restMethodId);
         model.addObject(REST_MOCK_RESPONSE, mockResponse);
         model.addObject(REST_MOCK_RESPONSE_STATUSES, RestMockResponseStatus.values());
+        model.addObject(DEMO_MODE, demoMode);
         return model;
     }
 

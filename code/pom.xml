@@ -69,6 +69,8 @@
 		<cobertura-version>2.7</cobertura-version>
 		<javadoc-version>2.10.3</javadoc-version>
 		<release-plugin-version>2.5.1</release-plugin-version>
+		<maven-war-plugin-version>3.0.0</maven-war-plugin-version>
+		<jacoco-maven-plugin-version>0.7.5.201505241946</jacoco-maven-plugin-version>
 	</properties>
 
 	<dependencyManagement>
@@ -198,7 +200,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.5.201505241946</version>
+				<version>${jacoco-maven-plugin-version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -213,6 +215,13 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin-version}</version>
+				<configuration>
+					<packagingIncludes>LICENSE</packagingIncludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
