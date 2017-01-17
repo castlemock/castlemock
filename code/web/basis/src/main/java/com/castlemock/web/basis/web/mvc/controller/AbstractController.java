@@ -39,6 +39,8 @@ public abstract class AbstractController {
 
     @Value("${server.mode.demo}")
     protected boolean demoMode;
+    @Value("${server.endpoint.address:}")
+    protected String endpointAddress;
     @Autowired
     private ServletContext servletContext;
     @Autowired
@@ -97,6 +99,9 @@ public abstract class AbstractController {
      * @throws SocketException Upon failing to extract network interfaces
      */
     public String getHostAddress() throws SocketException {
+        if(endpointAddress != null && !endpointAddress.isEmpty()){
+            return endpointAddress;
+        }
 
         final Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
         while (networkInterfaces.hasMoreElements())
