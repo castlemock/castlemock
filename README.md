@@ -1,4 +1,4 @@
-<p align="center"><img src="http://castlemock.com/images/fm-logo-small.png"></div></p>
+<p align="center"><img src="https://castlemock.com/images/fm-logo-small.png"></div></p>
 
 # Castle Mock: Mock RESTful APIs and SOAP web services
 
@@ -19,7 +19,7 @@ Castle Mock is completely free and open source (Apache License). It is built wit
 
 ## Downloads
 
-Non-source downloads such as WAR files can be found on our website: [http://www.castlemock.com/](http://www.castlemock.com/).
+Non-source downloads such as WAR files can be found on our website: [https://www.castlemock.com/](https://www.castlemock.com/).
 
 ## Usage
 
@@ -47,7 +47,7 @@ Our latest and greatest source of Castle Mock can be found on [GitHub](https://g
 Full documentation will be provided shortly.
 
 ## Communication
-- Website: [http://www.castlemock.com/](http://www.castlemock.com/)
+- Website: [https://www.castlemock.com/](https://www.castlemock.com/)
 - Google Group: [CastleMock](http://groups.google.com/d/forum/castlemock)
 - Twitter: [@CastleMock](http://twitter.com/CastleMock)
 - [GitHub Issues](https://github.com/castlemock/castlemock/issues)
