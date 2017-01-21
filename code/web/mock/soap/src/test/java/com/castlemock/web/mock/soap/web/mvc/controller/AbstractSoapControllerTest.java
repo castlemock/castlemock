@@ -42,5 +42,5 @@ public abstract class AbstractSoapControllerTest extends AbstractControllerTest 
 
     protected static final String EVENT = "event";
 
-    protected static final Integer GLOBAL_VIEW_MODEL_COUNT = 4;
+    protected static final Integer GLOBAL_VIEW_MODEL_COUNT = 5;
 }
