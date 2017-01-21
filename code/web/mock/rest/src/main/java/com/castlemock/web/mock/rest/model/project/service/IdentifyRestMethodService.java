@@ -19,6 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.basis.utility.compare.UrlComparer;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
@@ -31,6 +32,8 @@ import com.castlemock.core.mock.rest.model.project.service.message.output.Identi
  */
 @org.springframework.stereotype.Service
 public class IdentifyRestMethodService extends AbstractRestProjectService implements Service<IdentifyRestMethodInput, IdentifyRestMethodOutput> {
+
+    protected static final String SLASH = "/";
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -73,9 +76,9 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
         final RestApplicationDto restApplication = repository.findRestApplication(restProjectId, restApplicationId);
 
         for(RestResourceDto restResource : restApplication.getResources()){
-            final String[] restResourceUriParts = restResource.getUri().split(SLASH);
 
-            if(compareRestResourceUri(restResourceUriParts, otherRestResourceUriParts)){
+
+            if(UrlComparer.compareUri(restResource.getUri(), otherRestResourceUriParts)){
                 return restResource;
             }
         }

@@ -39,7 +39,7 @@ public abstract class AbstractService<T extends Saveable<I>, D, I extends Serial
      * The default constructor for the GenericServiceImpl class.
      * It will create an instance of the entity class and the dto class
      */
-    public AbstractService() {
+    protected AbstractService() {
     }
 
 

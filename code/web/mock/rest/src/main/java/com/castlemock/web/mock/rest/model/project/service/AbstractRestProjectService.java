@@ -35,12 +35,6 @@ import java.util.Map;
  */
 public abstract class AbstractRestProjectService extends AbstractService<RestProject, RestProjectDto, String, RestProjectRepository> {
 
-    protected static final String SLASH = "/";
-    protected static final String START_BRACKET = "{";
-    protected static final String END_BRACKET = "}";
-
-
-
 
     /**
      * Updates a project with new information
@@ -49,7 +43,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
      * @return The updated version project
      */
     @Override
-    public RestProjectDto update(final String restProjectId, final RestProjectDto updatedProject){
+    protected RestProjectDto update(final String restProjectId, final RestProjectDto updatedProject){
         Preconditions.checkNotNull(restProjectId, "Project id be null");
         Preconditions.checkNotNull(updatedProject, "Project cannot be null");
         Preconditions.checkArgument(!updatedProject.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
@@ -60,34 +54,6 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         project.setDescription(updatedProject.getDescription());
         return super.save(project);
     }
-
-
-    /**
-     * The method provides the functionality to compare two sets of REST resource URI parts.
-     * @param restResourceUriParts THe first set of resource URI parts
-     * @param otherRestResourceUriParts The second set of resource URI parts
-     * @return True if the provided URIs are matching. False otherwise
-     */
-    protected boolean compareRestResourceUri(final String[] restResourceUriParts, final String[] otherRestResourceUriParts){
-        if(restResourceUriParts.length != otherRestResourceUriParts.length){
-            return false;
-        }
-
-        for(int index = 0; index < restResourceUriParts.length; index++){
-            final String restResourceUriPart = restResourceUriParts[index];
-            final String otherRestResourceUriPart = otherRestResourceUriParts[index];
-
-            if(restResourceUriPart.startsWith(START_BRACKET) && restResourceUriPart.endsWith(END_BRACKET)){
-                continue;
-            }
-
-            if(!restResourceUriPart.equalsIgnoreCase(otherRestResourceUriPart)){
-                return false;
-            }
-        }
-        return true;
-    }
-
 
 
     /**
