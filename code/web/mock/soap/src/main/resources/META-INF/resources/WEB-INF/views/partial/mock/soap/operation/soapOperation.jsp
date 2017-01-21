@@ -112,12 +112,13 @@
                             <form:option value="${soapMockResponseStatus}"><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponseStatus}"/></form:option>
                         </c:forEach>
                     </form:select>
-                    <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapoperation.button.update"/></span></button>
                     <c:choose>
                         <c:when test="${demoMode}">
+                            <a class="button-success pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapoperation.button.update"/></span></a>
                             <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapoperation.button.deletemockresponse"/></span></a>
                         </c:when>
                         <c:otherwise>
+                            <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapoperation.button.update"/></span></button>
                             <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapoperation.button.deletemockresponse"/></span></button>
                         </c:otherwise>
                     </c:choose>

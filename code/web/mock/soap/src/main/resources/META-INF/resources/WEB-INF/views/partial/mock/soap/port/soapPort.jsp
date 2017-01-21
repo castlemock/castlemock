@@ -87,8 +87,16 @@
                         <form:option value="${operationStatus}"><spring:message code="soap.type.soapoperationstatus.${operationStatus}"/></form:option>
                     </c:forEach>
                 </form:select>
-                <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapport.button.updatestatus"/></span></button>
-                <button class="button-secondary pure-button" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="soap.soapport.button.updateendpoint"/></span></button>
+                <c:choose>
+                    <c:when test="${demoMode}">
+                        <a class="button-success pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapport.button.updatestatus"/></span></a>
+                        <a class="button-secondary pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-code-fork"></i> <span><spring:message code="soap.soapport.button.updateendpoint"/></span></a>
+                    </c:when>
+                    <c:otherwise>
+                        <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapport.button.updatestatus"/></span></button>
+                        <button class="button-secondary pure-button" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="soap.soapport.button.updateendpoint"/></span></button>
+                    </c:otherwise>
+                </c:choose>
             </sec:authorize>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 

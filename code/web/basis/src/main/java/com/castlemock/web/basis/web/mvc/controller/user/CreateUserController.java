@@ -19,6 +19,7 @@ package com.castlemock.web.basis.web.mvc.controller.user;
 import com.castlemock.core.basis.model.user.dto.UserDto;
 import com.castlemock.core.basis.model.user.service.message.input.CreateUserInput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @Scope("request")
 @RequestMapping("/web/user")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class CreateUserController extends AbstractViewController {
 
     /**
