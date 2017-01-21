@@ -22,8 +22,16 @@
     </div>
     <div class="menu" align="right">
         <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-        <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapoperation.button.updateoperation"/></span></a>
-        <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/create/response"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapoperation.button.createresponse"/></span></a>
+            <c:choose>
+                <c:when test="${demoMode}">
+                    <a class="button-success pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapoperation.button.updateoperation"/></span></a>
+                    <a class="button-secondary pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapoperation.button.createresponse"/></span></a>
+                </c:when>
+                <c:otherwise>
+                    <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapoperation.button.updateoperation"/></span></a>
+                    <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/create/response"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapoperation.button.createresponse"/></span></a>
+                </c:otherwise>
+            </c:choose>
         </sec:authorize>
     </div>
 </div>
@@ -105,7 +113,14 @@
                         </c:forEach>
                     </form:select>
                     <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapoperation.button.update"/></span></button>
-                    <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapoperation.button.deleteMockResponse"/></span></button>
+                    <c:choose>
+                        <c:when test="${demoMode}">
+                            <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapoperation.button.deletemockresponse"/></span></a>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapoperation.button.deletemockresponse"/></span></button>
+                        </c:otherwise>
+                    </c:choose>
                 </sec:authorize>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form:form>

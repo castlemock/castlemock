@@ -22,6 +22,7 @@ import com.castlemock.web.basis.web.mvc.command.project.CreateProjectCommand;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/web/project/create")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class CreateProjectController extends AbstractViewController {
 
     @Autowired

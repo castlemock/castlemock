@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.project.dto.ProjectDto;
 import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @Scope("request")
 @RequestMapping("/web")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class UpdateProjectController extends AbstractViewController {
 
     private static final String PAGE = "basis/project/updateProject";

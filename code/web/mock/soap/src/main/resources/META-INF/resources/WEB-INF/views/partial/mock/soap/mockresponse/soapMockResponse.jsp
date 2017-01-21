@@ -23,7 +23,14 @@
     </div>
     <div class="menu" align="right">
         <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-            <a class="button-error pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponse.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapmockresponse.button.delete"/></span></a>
+            <c:choose>
+                <c:when test="${demoMode}">
+                    <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapmockresponse.button.delete"/></span></a>
+                </c:when>
+                <c:otherwise>
+                    <a class="button-error pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponse.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapmockresponse.button.delete"/></span></a>
+                </c:otherwise>
+            </c:choose>
         </sec:authorize>
     </div>
 </div>

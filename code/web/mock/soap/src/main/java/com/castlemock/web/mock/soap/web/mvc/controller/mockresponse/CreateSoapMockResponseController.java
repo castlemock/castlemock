@@ -24,6 +24,7 @@ import com.castlemock.core.mock.soap.model.project.service.message.input.CreateS
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @Scope("request")
 @RequestMapping("/web/soap/project")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class CreateSoapMockResponseController extends AbstractSoapViewController {
 
     private static final String PAGE = "mock/soap/mockresponse/createSoapMockResponse";
@@ -68,7 +70,6 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(COMMAND, mockResponse);
         model.addObject(SOAP_MOCK_RESPONSE_STATUSES, SoapMockResponseStatus.values());
-        model.addObject(DEMO_MODE, demoMode);
         return model;
     }
 

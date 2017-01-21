@@ -22,6 +22,7 @@ import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoa
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
 import com.castlemock.web.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @Scope("request")
 @RequestMapping("/web/soap/project")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class DeleteSoapMockResponseController extends AbstractSoapViewController {
 
     private static final String PAGE = "mock/soap/mockresponse/deleteSoapMockResponse";

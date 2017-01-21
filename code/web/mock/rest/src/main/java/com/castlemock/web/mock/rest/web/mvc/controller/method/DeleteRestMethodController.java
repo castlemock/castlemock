@@ -22,6 +22,7 @@ import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRes
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.castlemock.web.mock.rest.web.mvc.command.method.DeleteRestMethodsCommand;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/web/rest/project")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class DeleteRestMethodController extends AbstractRestViewController {
 
     private static final String PAGE = "mock/rest/method/deleteRestMethod";

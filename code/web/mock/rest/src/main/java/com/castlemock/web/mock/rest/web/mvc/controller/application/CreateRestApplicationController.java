@@ -20,6 +20,7 @@ import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestApplicationOutput;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/web/rest/project")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class CreateRestApplicationController extends AbstractRestViewController {
 
     private static final String PAGE = "mock/rest/application/createRestApplication";

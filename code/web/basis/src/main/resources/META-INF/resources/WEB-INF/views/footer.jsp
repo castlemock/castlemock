@@ -21,6 +21,13 @@
     </div>
 
     <div class="info">
-        <a href="http://www.castlemock.com" target="_blank">Castle Mock version. ${appVersion}</a>
+        <c:choose>
+            <c:when test="${demoMode}">
+                <a href="https://www.castlemock.com" target="_blank">Castle Mock version. ${appVersion} (Demo)</a>
+            </c:when>
+            <c:otherwise>
+                <a href="https://www.castlemock.com" target="_blank">Castle Mock version. ${appVersion}</a>
+            </c:otherwise>
+        </c:choose>
     </div>
 </footer>

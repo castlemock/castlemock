@@ -86,7 +86,6 @@ public class ProjectsOverviewController extends AbstractViewController {
         ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(PROJECTS, projects);
         model.addObject(PROJECT_MODIFIER_COMMAND, new ProjectModifierCommand());
-        model.addObject(DEMO_MODE, demoMode);
         return model;
     }
 

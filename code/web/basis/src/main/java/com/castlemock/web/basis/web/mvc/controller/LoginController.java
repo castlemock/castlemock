@@ -76,6 +76,7 @@ public class LoginController extends AbstractViewController {
 
         final ModelAndView model = createModelAndView();
         model.setViewName(PAGE);
+        model.addObject(DEMO_MODE, demoMode);
         if (error != null) {
             LOGGER.debug("Unable to login");
             model.addObject(ERROR, getErrorMessage(request, SPRING_SECURITY_LAST_EXCEPTION));

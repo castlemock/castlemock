@@ -19,6 +19,7 @@ package com.castlemock.web.mock.rest.web.mvc.controller.mockresponse;
 import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @Scope("request")
 @RequestMapping("/web/rest/project")
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class UpdateRestMockResponseController extends AbstractRestViewController {
 
 

@@ -91,6 +91,7 @@ public abstract class AbstractViewController extends AbstractController {
         modelAndView.addObject(PARTIAL, createPartial(page));
         modelAndView.addObject(CONTENT_ITEM_GROUPS, createContentItemGroups(pageContentItems));
         modelAndView.addObject(SEARCH_COMMAND, new SearchCommand());
+        modelAndView.addObject(DEMO_MODE, demoMode);
         return modelAndView;
     }
 

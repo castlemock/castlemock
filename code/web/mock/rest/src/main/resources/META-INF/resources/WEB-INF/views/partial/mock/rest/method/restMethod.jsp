@@ -23,9 +23,19 @@
     </div>
     <div class="menu" align="right">
         <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-            <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
-            <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/create/response"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restmethod.button.createresponse"/></span></a>
-            <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.delete"/></span></a>
+            <c:choose>
+                <c:when test="${demoMode}">
+                    <a class="button-success pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
+                    <a class="button-secondary pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restmethod.button.createresponse"/></span></a>
+                    <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.delete"/></span></a>
+
+                </c:when>
+                <c:otherwise>
+                    <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
+                    <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/create/response"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restmethod.button.createresponse"/></span></a>
+                    <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.delete"/></span></a>
+                </c:otherwise>
+            </c:choose>
         </sec:authorize>
     </div>
 </div>
@@ -93,7 +103,14 @@
                         </c:forEach>
                     </form:select>
                     <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restmethod.button.update"/></span></button>
-                    <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.deleteMockResponses"/></span></button>
+                    <c:choose>
+                        <c:when test="${demoMode}">
+                            <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.deletemockresponses"/></span></a>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.deletemockresponses"/></span></button>
+                        </c:otherwise>
+                    </c:choose>
                 </sec:authorize>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form:form>

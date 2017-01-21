@@ -53,7 +53,6 @@ public class UserController extends AbstractViewController {
         final UserDto userDto = readUserOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USER, userDto);
-        model.addObject(DEMO_MODE, demoMode);
         return model;
     }
 
