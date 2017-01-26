@@ -206,7 +206,7 @@ aside {
 }
 
 section{
-    width: 80%;
+    width: 100%;
     position: relative;
     font-size: 12px;
     min-height:100%;
@@ -304,7 +304,7 @@ section{
 
     .formTable .column2 * {
         width: 100%;
-        
+
     }
 
     .entityTable {
@@ -319,6 +319,7 @@ section{
 
     a {
         color: #000;
+        text-decoration: underline;
     }
 
     table {
@@ -330,8 +331,8 @@ section{
         }
 
     }
-    
-     
+
+
     th, td {
         &:first-child {
             padding: 0 0 0 10px;
@@ -357,11 +358,19 @@ section{
     .even {
         color: #000000;
         background-color: #fff;
+
+        &:hover {
+            background-color: #E8E8E8;
+        }
     }
 
     .odd {
         color: #000000;
         background-color: #fbfbfb;
+
+        &:hover {
+            background-color: #E8E8E8;
+        }
     }
 }
 

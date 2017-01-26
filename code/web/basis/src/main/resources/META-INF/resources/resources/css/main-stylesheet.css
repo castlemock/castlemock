@@ -270,7 +270,7 @@ aside {
       color: #000; }
 
 section {
-  width: 80%;
+  width: 100%;
   position: relative;
   font-size: 12px;
   min-height: 100%;
@@ -338,7 +338,8 @@ section {
   section .button {
     margin: 10px 3px; }
   section a {
-    color: #000; }
+    color: #000;
+    text-decoration: underline; }
   section table {
     border-collapse: collapse;
     position: relative; }
@@ -361,9 +362,13 @@ section {
   section .even {
     color: #000000;
     background-color: #fff; }
+    section .even:hover {
+      background-color: #E8E8E8; }
   section .odd {
     color: #000000;
     background-color: #fbfbfb; }
+    section .odd:hover {
+      background-color: #E8E8E8; }
 
 .decorated span {
   font-size: 18px;

@@ -32,7 +32,6 @@
         <jsp:include page="navigation.jsp" />
 
         <div class="container">
-            <jsp:include page="aside.jsp" />
             <section>
                     <jsp:include page="${partial}" />
             </section>
