@@ -2,6 +2,12 @@
   font-family: robotoThinFont;
   src: url("../font/Roboto-Thin.ttf"); }
 @font-face {
+  font-family: robotoMediumFont;
+  src: url("../font/Roboto-Medium.ttf"); }
+@font-face {
+  font-family: robotoRegularFont;
+  src: url("../font/Roboto-Regular.ttf"); }
+@font-face {
   font-family: robotoBoldFont;
   src: url("../font/Roboto-Bold.ttf"); }
 @font-face {
@@ -130,6 +136,12 @@ a {
   font-family: robotoThinFont;
   src: url("../font/Roboto-Thin.ttf"); }
 @font-face {
+  font-family: robotoMediumFont;
+  src: url("../font/Roboto-Medium.ttf"); }
+@font-face {
+  font-family: robotoRegularFont;
+  src: url("../font/Roboto-Regular.ttf"); }
+@font-face {
   font-family: robotoBoldFont;
   src: url("../font/Roboto-Bold.ttf"); }
 @font-face {
@@ -137,7 +149,8 @@ a {
   src: url("../font/Roboto-ThinItalic.ttf"); }
 body {
   background-color: #fbfbfb;
-  font-family: robotoThinFont; }
+  font-family: robotoRegularFont;
+  color: #666666; }
 
 #login-box {
   width: 250px;
@@ -168,7 +181,7 @@ body {
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
-    color: #000;
+    color: #666666;
     background-color: #f2dede;
     border-color: #fff;
     text-align: center;
@@ -179,7 +192,6 @@ body {
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
-    color: #000;
     background-color: #e3f5cf;
     border-color: #fff;
     text-align: center; }

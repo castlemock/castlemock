@@ -2,6 +2,12 @@
   font-family: robotoThinFont;
   src: url("../font/Roboto-Thin.ttf"); }
 @font-face {
+  font-family: robotoMediumFont;
+  src: url("../font/Roboto-Medium.ttf"); }
+@font-face {
+  font-family: robotoRegularFont;
+  src: url("../font/Roboto-Regular.ttf"); }
+@font-face {
   font-family: robotoBoldFont;
   src: url("../font/Roboto-Bold.ttf"); }
 @font-face {
@@ -130,6 +136,12 @@ a {
   font-family: robotoThinFont;
   src: url("../font/Roboto-Thin.ttf"); }
 @font-face {
+  font-family: robotoMediumFont;
+  src: url("../font/Roboto-Medium.ttf"); }
+@font-face {
+  font-family: robotoRegularFont;
+  src: url("../font/Roboto-Regular.ttf"); }
+@font-face {
   font-family: robotoBoldFont;
   src: url("../font/Roboto-Bold.ttf"); }
 @font-face {
@@ -137,26 +149,28 @@ a {
   src: url("../font/Roboto-ThinItalic.ttf"); }
 body {
   margin: 0px;
-  font-family: robotoThinFont; }
+  font-family: robotoRegularFont;
+  color: #666666; }
+  body h1 {
+    color: #4b4b4b; }
 
 .main-header {
   width: 100%;
   min-height: 41px;
   background: #3E444D;
-  color: #fff;
+  color: #C4C3C3;
   border: 0px solid #000;
   top: 0px;
   font-size: 13px;
   position: fixed;
   z-index: 1; }
   .main-header a {
-    color: #fff; }
+    color: #C4C3C3; }
   .main-header .logo {
     float: left;
     margin-top: 5px;
     margin-left: 5%;
-    font-size: 25px;
-    font-weight: bold; }
+    font-size: 30px; }
     .main-header .logo a:hover {
       text-decoration: none; }
   .main-header #header-logo {
@@ -267,7 +281,7 @@ aside {
     margin-left: 15px;
     margin-top: 5px; }
     aside .content .content-item a {
-      color: #000; }
+      color: #666666; }
 
 section {
   width: 100%;
@@ -338,7 +352,7 @@ section {
   section .button {
     margin: 10px 3px; }
   section a {
-    color: #000;
+    color: #666666;
     text-decoration: underline; }
   section table {
     border-collapse: collapse;
@@ -358,14 +372,14 @@ section {
     padding-bottom: 4px;
     background-color: #f0f0f0;
     border-collapse: collapse;
-    color: #000000; }
+    color: #666666; }
   section .even {
-    color: #000000;
+    color: #666666;
     background-color: #fff; }
     section .even:hover {
       background-color: #E8E8E8; }
   section .odd {
-    color: #000000;
+    color: #666666;
     background-color: #fbfbfb; }
     section .odd:hover {
       background-color: #E8E8E8; }

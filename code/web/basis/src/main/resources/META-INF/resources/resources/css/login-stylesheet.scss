@@ -9,8 +9,9 @@
 // - - - - - - - - - - - - - - - - - - - - -//
 
 body {
-  background-color: rgb(251,251,251);
-  font-family: robotoThinFont;
+    background-color: rgb(251,251,251);
+    font-family: robotoRegularFont;
+    color: #666666;
 }
 
 #login-box {
@@ -50,7 +51,7 @@ body {
         margin-bottom: 20px;
         border: 1px solid transparent;
         border-radius: 4px;
-        color: #000;
+        color: #666666;
         background-color: #f2dede;
         border-color: #fff;
         text-align: center;
@@ -63,7 +64,6 @@ body {
         margin-bottom: 20px;
         border: 1px solid transparent;
         border-radius: 4px;
-        color: #000;
         background-color: #e3f5cf;
         border-color: #fff;
         text-align: center;

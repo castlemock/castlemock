@@ -10,13 +10,18 @@
 
 body {
     margin: 0px;
-    font-family: robotoThinFont;
+    font-family: robotoRegularFont;
+    color: #666666;
+
+    h1 {
+        color: #4b4b4b;
+    }
 }
 .main-header {
     width: 100%;
     min-height: 41px;
     background: #3E444D;
-    color: #fff;
+    color: #C4C3C3;
     border: 0px solid #000;
     top: 0px;
     font-size: 13px;
@@ -24,15 +29,14 @@ body {
     z-index: 1;
 
     a {
-        color: #fff;
+        color: #C4C3C3;
     }
 
     .logo {
         float: left;
         margin-top: 5px;
         margin-left: 5%;
-        font-size: 25px;
-        font-weight: bold;
+        font-size: 30px;
         a {
             &:hover {
                 text-decoration: none;
@@ -199,7 +203,7 @@ aside {
             margin-left: 15px;
             margin-top: 5px;
             a {
-                color: #000;
+                color: #666666;
             }
         }
     }
@@ -318,7 +322,7 @@ section{
     }
 
     a {
-        color: #000;
+        color: #666666;
         text-decoration: underline;
     }
 
@@ -352,11 +356,11 @@ section{
         padding-bottom: 4px;
         background-color: #f0f0f0;
         border-collapse: collapse;
-        color: #000000;
+        color: #666666;
     }
 
     .even {
-        color: #000000;
+        color: #666666;
         background-color: #fff;
 
         &:hover {
@@ -365,7 +369,7 @@ section{
     }
 
     .odd {
-        color: #000000;
+        color: #666666;
         background-color: #fbfbfb;
 
         &:hover {
