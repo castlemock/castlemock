@@ -33,7 +33,7 @@ footer {
   footer .info {
     text-align: right;
     padding-right: 20px;
-    padding-top: 7px; }
+    padding-top: 10px; }
     footer .info a {
       text-decoration: underline;
       font-size: 11px;
@@ -158,14 +158,14 @@ body {
   width: 100%;
   min-height: 41px;
   background: #3E444D;
-  color: #C4C3C3;
+  color: #fff;
   border: 0px solid #000;
   top: 0px;
   font-size: 13px;
   position: fixed;
   z-index: 1; }
   .main-header a {
-    color: #C4C3C3; }
+    color: #fff; }
   .main-header .logo {
     float: left;
     margin-top: 5px;
