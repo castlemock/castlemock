@@ -57,6 +57,12 @@ public class RestMethodDto {
     @Mapping("currentResponseSequenceIndex")
     private Integer currentResponseSequenceIndex = 0;
 
+    @Mapping("simulateNetworkDelay")
+    private boolean simulateNetworkDelay;
+
+    @Mapping("networkDelay")
+    private long networkDelay;
+
     private String invokeAddress;
 
     public String getId() {
@@ -137,5 +143,21 @@ public class RestMethodDto {
 
     public void setInvokeAddress(String invokeAddress) {
         this.invokeAddress = invokeAddress;
+    }
+
+    public boolean getSimulateNetworkDelay() {
+        return simulateNetworkDelay;
+    }
+
+    public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
+        this.simulateNetworkDelay = simulateNetworkDelay;
+    }
+
+    public long getNetworkDelay() {
+        return networkDelay;
+    }
+
+    public void setNetworkDelay(long networkDelay) {
+        this.networkDelay = networkDelay;
     }
 }

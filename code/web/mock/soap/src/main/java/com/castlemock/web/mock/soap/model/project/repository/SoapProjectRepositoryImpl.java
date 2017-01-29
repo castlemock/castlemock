@@ -369,6 +369,8 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapOperation.setStatus(soapOperationDto.getStatus());
         soapOperation.setForwardedEndpoint(soapOperationDto.getForwardedEndpoint());
         soapOperation.setResponseStrategy(soapOperationDto.getResponseStrategy());
+        soapOperation.setSimulateNetworkDelay(soapOperationDto.getSimulateNetworkDelay());
+        soapOperation.setNetworkDelay(soapOperationDto.getNetworkDelay());
         save(soapProjectId);
         return soapOperationDto;
     }

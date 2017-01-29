@@ -65,6 +65,14 @@
             <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.forwardedendpoint"/></label></td>
             <td class="column2"><label path="name">${restMethod.forwardedEndpoint}</label></td>
         </tr>
+        <tr>
+            <td class="column1"><label path="simulateNetworkDelay"><spring:message code="rest.restmethod.label.simulatenetworkdelay"/></label></td>
+            <td class="column2"><input type="checkbox" path="simulateNetworkDelay" ${restMethod.simulateNetworkDelay == 'true' ? 'checked' : ''} disabled /></td>
+        </tr>
+        <tr>
+            <td class="column1"><label path="networkDelay"><spring:message code="rest.restmethod.label.networkdelay"/></label></td>
+            <td class="column2"><label path="networkDelay">${restMethod.networkDelay} ms</label></td>
+        </tr>
     </table>
 </div>
 

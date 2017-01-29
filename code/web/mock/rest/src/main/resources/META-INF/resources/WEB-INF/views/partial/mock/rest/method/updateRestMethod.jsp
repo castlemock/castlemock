@@ -61,6 +61,14 @@
             <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.forwardedendpoint"/></label></td>
             <td class="column2"><form:input path="forwardedEndpoint" value="${restMethod.forwardedEndpoint}"/></td>
         </tr>
+        <tr>
+            <td class="column1"><form:label path="simulateNetworkDelay"><spring:message code="rest.updatemethod.label.simulatenetworkdelay"/></form:label></td>
+            <td class="column2"><form:checkbox path="simulateNetworkDelay"/></td>
+        </tr>
+        <tr>
+            <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.networkdelay"/> (ms)</label></td>
+            <td class="column2"><form:input path="networkDelay" value="${restMethod.networkDelay}"/></td>
+        </tr>
     </table>
     
     <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="rest.updatemethod.button.updatemethod"/></button>

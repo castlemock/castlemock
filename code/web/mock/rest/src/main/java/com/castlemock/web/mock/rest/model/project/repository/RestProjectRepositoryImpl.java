@@ -512,6 +512,8 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         restMethod.setResponseStrategy(restMethodDto.getResponseStrategy());
         restMethod.setStatus(restMethodDto.getStatus());
         restMethod.setForwardedEndpoint(restMethodDto.getForwardedEndpoint());
+        restMethod.setNetworkDelay(restMethodDto.getNetworkDelay());
+        restMethod.setSimulateNetworkDelay(restMethodDto.getSimulateNetworkDelay());
         save(restProjectId);
         return mapper.map(restMethod, RestMethodDto.class);
     }

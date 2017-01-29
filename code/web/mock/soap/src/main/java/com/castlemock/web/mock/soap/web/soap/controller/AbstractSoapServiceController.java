@@ -159,6 +159,16 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             for(HttpHeaderDto httpHeader : response.getHttpHeaders()){
                 httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
             }
+
+            if(soapOperationDto.getSimulateNetworkDelay() &&
+                    soapOperationDto.getNetworkDelay() >= 0){
+                try {
+                        Thread.sleep(soapOperationDto.getNetworkDelay());
+                } catch (InterruptedException e) {
+                    LOGGER.error("Unable to simulate network delay", e);
+                }
+            }
+
             return response.getBody();
         } finally{
             if(event != null){

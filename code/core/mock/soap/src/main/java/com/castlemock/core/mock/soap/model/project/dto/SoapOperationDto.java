@@ -67,6 +67,12 @@ public class SoapOperationDto {
     @Mapping("originalEndpoint")
     private String originalEndpoint;
 
+    @Mapping("simulateNetworkDelay")
+    private Boolean simulateNetworkDelay;
+
+    @Mapping("networkDelay")
+    private Long networkDelay;
+
     private String invokeAddress;
 
     public String getId() {
@@ -171,5 +177,21 @@ public class SoapOperationDto {
 
     public void setOriginalEndpoint(String originalEndpoint) {
         this.originalEndpoint = originalEndpoint;
+    }
+
+    public Boolean getSimulateNetworkDelay() {
+        return simulateNetworkDelay;
+    }
+
+    public void setSimulateNetworkDelay(Boolean simulateNetworkDelay) {
+        this.simulateNetworkDelay = simulateNetworkDelay;
+    }
+
+    public Long getNetworkDelay() {
+        return networkDelay;
+    }
+
+    public void setNetworkDelay(Long networkDelay) {
+        this.networkDelay = networkDelay;
     }
 }

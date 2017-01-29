@@ -163,6 +163,15 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 responseHeaders.put(httpHeader.getName(), headerValues);
             }
 
+            if(restMethod.getSimulateNetworkDelay() &&
+                    restMethod.getNetworkDelay() >= 0){
+                try {
+                    Thread.sleep(restMethod.getNetworkDelay());
+                } catch (InterruptedException e) {
+                    LOGGER.error("Unable to simulate network delay", e);
+                }
+            }
+
             return new ResponseEntity<String>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
         } finally{
             if(event != null){

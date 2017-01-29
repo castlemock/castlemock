@@ -44,6 +44,8 @@ public class SoapOperation implements Saveable<String> {
     private Integer currentResponseSequenceIndex;
     private String forwardedEndpoint;
     private String originalEndpoint;
+    private boolean simulateNetworkDelay;
+    private long networkDelay;
 
     @XmlElement
     @Override
@@ -157,4 +159,21 @@ public class SoapOperation implements Saveable<String> {
         this.originalEndpoint = originalEndpoint;
     }
 
+    @XmlElement
+    public boolean getSimulateNetworkDelay() {
+        return simulateNetworkDelay;
+    }
+
+    public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
+        this.simulateNetworkDelay = simulateNetworkDelay;
+    }
+
+    @XmlElement
+    public long getNetworkDelay() {
+        return networkDelay;
+    }
+
+    public void setNetworkDelay(long networkDelay) {
+        this.networkDelay = networkDelay;
+    }
 }

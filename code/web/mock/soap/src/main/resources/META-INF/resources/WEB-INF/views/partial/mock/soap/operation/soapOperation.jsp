@@ -74,6 +74,14 @@
             <td class="column1"><label path="forwardedEndpoint"><spring:message code="soap.soapoperation.label.forwardedendpoint"/></label></td>
             <td class="column2"><label path="forwardedEndpoint">${soapOperation.forwardedEndpoint}</label></td>
         </tr>
+        <tr>
+            <td class="column1"><label path="simulateNetworkDelay"><spring:message code="soap.soapoperation.label.simulatenetworkdelay"/></label></td>
+            <td class="column2"><input type="checkbox" path="simulateNetworkDelay" ${soapOperation.simulateNetworkDelay == 'true' ? 'checked' : ''} disabled /></td>
+        </tr>
+        <tr>
+            <td class="column1"><label path="networkDelay"><spring:message code="soap.soapoperation.label.networkdelay"/></label></td>
+            <td class="column2"><label path="networkDelay">${soapOperation.networkDelay} ms</label></td>
+        </tr>
     </table>
 </div>
 
