@@ -133,16 +133,16 @@ public class RestMethod implements Saveable<String> {
         return simulateNetworkDelay;
     }
 
-    public void setSimulateNetworkDelay(Boolean simulateNetworkDelay) {
+    public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
         this.simulateNetworkDelay = simulateNetworkDelay;
     }
 
-
+    @XmlElement
     public long getNetworkDelay() {
         return networkDelay;
     }
 
-    public void setNetworkDelay(Long networkDelay) {
+    public void setNetworkDelay(long networkDelay) {
         this.networkDelay = networkDelay;
     }
 }
