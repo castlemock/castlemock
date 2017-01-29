@@ -1,24 +1,24 @@
 @font-face {
     font-family: robotoThinFont;
-    src: url('../font/Roboto-Thin.ttf');
+    src: local("Roboto Thin"), local("Roboto-Thin"), url('../font/Roboto-Thin.ttf');
 }
 
 @font-face {
     font-family: robotoMediumFont;
-    src: url('../font/Roboto-Medium.ttf');
+    src: local("Roboto Medium"), local("Roboto-Medium"), url('../font/Roboto-Medium.ttf');
 }
 
 @font-face {
     font-family: robotoRegularFont;
-    src: url('../font/Roboto-Regular.ttf');
+    src: local("Roboto Regular"), local("Roboto-Regular"), url('../font/Roboto-Regular.ttf');
 }
 
 @font-face {
     font-family: robotoBoldFont;
-    src: url('../font/Roboto-Bold.ttf');
+    src: local("Roboto Bold"), local("Roboto-Bold"), url('../font/Roboto-Bold.ttf');
 }
 
 @font-face {
     font-family: robotoItalicFont;
-    src: url('../font/Roboto-ThinItalic.ttf');
+    src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url('../font/Roboto-ThinItalic.ttf');
 }
