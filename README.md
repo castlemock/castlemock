@@ -48,7 +48,6 @@ Full documentation will be provided shortly.
 
 ## Communication
 - Website: [https://www.castlemock.com/](https://www.castlemock.com/)
-- Google Group: [CastleMock](http://groups.google.com/d/forum/castlemock)
 - Twitter: [@CastleMock](http://twitter.com/CastleMock)
 - [GitHub Issues](https://github.com/castlemock/castlemock/issues)
 - [Docker](https://hub.docker.com/r/castlemock/castlemock/)
