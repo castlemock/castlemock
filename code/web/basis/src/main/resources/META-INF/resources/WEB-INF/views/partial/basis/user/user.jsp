@@ -32,7 +32,7 @@
         </c:choose>
     </div>
 </div>
-<table class="entityTable">
+<table class="entityTable sortable">
     <tr>
         <td class="column1"><label path="username"><spring:message code="general.user.label.username"/></label></td>
         <td class="column2"><label path="username">${user.username}</label></td>

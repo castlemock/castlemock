@@ -69,7 +69,7 @@
     <c:when test="${restProject.applications.size() > 0}">
         <form:form action="${rest_resource_update_url}/" method="POST"  commandName="restApplicationModifierCommand">
             <div class="table-frame">
-                <table class="entityTable">
+                <table class="entityTable sortable">
                     <tr>
                         <th><spring:message code="rest.restproject.column.selected"/></th>
                         <th><spring:message code="rest.restproject.column.application"/></th>

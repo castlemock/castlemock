@@ -67,7 +67,7 @@
     <c:when test="${soapProject.ports.size() > 0}">
         <form:form action="${soap_port_update_url}/" method="POST"  commandName="soapPortModifierCommand">
             <div class="table-frame">
-                <table class="entityTable">
+                <table class="entityTable sortable">
                     <tr>
                         <th><spring:message code="soap.soapproject.column.selected"/></th>
                         <th><spring:message code="soap.soapproject.column.port"/></th>

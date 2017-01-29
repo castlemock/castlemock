@@ -372,7 +372,8 @@ section {
     padding-bottom: 4px;
     background-color: #f0f0f0;
     border-collapse: collapse;
-    color: #666666; }
+    color: #666666;
+    cursor: pointer; }
   section .even {
     color: #666666;
     background-color: #fff; }

@@ -91,7 +91,7 @@
         </fieldset>
 
         <div class="table-frame">
-            <table class="entityTable" id="headerTable">
+            <table class="entityTable sortable" id="headerTable">
                 <col width="4%">
                 <col width="48%">
                 <col width="48%">

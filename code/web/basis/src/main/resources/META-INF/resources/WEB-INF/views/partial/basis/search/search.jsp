@@ -22,7 +22,7 @@
 <c:choose>
     <c:when test="${searchResults.size() > 0}">
         <div class="table-frame">
-            <table class="entityTable">
+            <table class="entityTable sortable">
                 <col width="50%">
                 <col width="50%">
                 <tr>

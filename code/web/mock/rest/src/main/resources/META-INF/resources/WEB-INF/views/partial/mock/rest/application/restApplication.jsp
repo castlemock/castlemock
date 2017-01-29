@@ -52,7 +52,7 @@
     <c:when test="${restApplication.resources.size() > 0}">
         <form:form action="${rest_resource_update_url}/" method="POST"  commandName="restResourceModifierCommand">
             <div class="table-frame">
-                <table class="entityTable">
+                <table class="entityTable sortable">
                     <col width="10%">
                     <col width="20%">
                     <col width="30%">

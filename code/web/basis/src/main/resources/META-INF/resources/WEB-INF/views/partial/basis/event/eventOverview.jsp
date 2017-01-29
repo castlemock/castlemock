@@ -24,7 +24,7 @@
     </div>
 </div>
 <div class="table-frame">
-    <table class="entityTable">
+    <table class="entityTable sortable">
         <col width="10%">
         <col width="30%">
         <col width="10%">

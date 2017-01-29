@@ -57,7 +57,7 @@
     <c:when test="${soapPort.operations.size() > 0}">
         <form:form action="${operation_update_url}" method="POST"  commandName="soapOperationModifierCommand">
             <div class="table-frame">
-                <table class="entityTable">
+                <table class="entityTable sortable">
                     <col width="10%">
                     <col width="40%">
                     <col width="15%">
