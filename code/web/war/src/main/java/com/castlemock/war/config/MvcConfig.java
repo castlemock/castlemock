@@ -43,6 +43,8 @@ import java.util.Locale;
 @ComponentScan(basePackages = { "com.castlemock" })
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
+    private static final int CACHE_PERIOD = 86400;
+
     @Autowired
     private SecurityInterceptor securityInterceptor;
 
@@ -52,9 +54,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        registry.addResourceHandler("/favicon.ico").addResourceLocations("/resources/images/favicon.ico");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(CACHE_PERIOD);
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").setCachePeriod(CACHE_PERIOD);
+        registry.addResourceHandler("/favicon.ico").addResourceLocations("/resources/images/favicon.ico").setCachePeriod(CACHE_PERIOD);
     }
 
     /**
