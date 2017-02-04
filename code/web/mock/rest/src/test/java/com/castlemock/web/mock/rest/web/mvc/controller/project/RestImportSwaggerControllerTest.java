@@ -54,15 +54,14 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestApplication.class)
 @WebAppConfiguration
-public class RestAddWADLControllerTest extends AbstractRestControllerTest {
+public class RestImportSwaggerControllerTest extends AbstractRestControllerTest {
 
-    private static final String PAGE = "partial/mock/rest/project/restAddWADL.jsp";
-    private static final String ADD = "add";
-    private static final String WADL = "wadl";
-    private static final int MAX_SOAP_PORT_COUNT = 5;
+    private static final String PAGE = "partial/mock/rest/project/restImportSwagger.jsp";
+    private static final String IMPORT = "import";
+    private static final String SWAGGER = "swagger";
 
     @InjectMocks
-    private RestAddWADLController  restAddWADLController;
+    private RestImportSwaggerController restImportSwaggerController;
 
     @Mock
     private ServiceProcessor serviceProcessor;
@@ -72,14 +71,14 @@ public class RestAddWADLControllerTest extends AbstractRestControllerTest {
 
     @Override
     protected AbstractController getController() {
-        return restAddWADLController;
+        return restImportSwaggerController;
     }
 
     @Test
-    public void testAddWADLGet() throws Exception {
+    public void testImportSwaggerGet() throws Exception {
         final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + ADD + SLASH + WADL);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT + SLASH + SWAGGER);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(2 + GLOBAL_VIEW_MODEL_COUNT))
@@ -89,7 +88,7 @@ public class RestAddWADLControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testAddWADLPostFile() throws Exception {
+    public void testImportSwaggerPostFile() throws Exception {
         final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
         final List<File> files = new ArrayList<File>();
         final WADLFileUploadForm uploadForm = new WADLFileUploadForm();
@@ -98,7 +97,7 @@ public class RestAddWADLControllerTest extends AbstractRestControllerTest {
 
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
         when(fileManager.uploadFiles(anyListOf(MultipartFile.class))).thenReturn(files);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + ADD + SLASH + WADL).param("type", "file").requestAttr("uploadForm", uploadForm);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT + SLASH + SWAGGER).param("type", "file").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
@@ -106,7 +105,7 @@ public class RestAddWADLControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testAddWADLPostLink() throws Exception {
+    public void testImportSwaggerPostLink() throws Exception {
         final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
         final List<File> files = new ArrayList<File>();
         final WADLFileUploadForm uploadForm = new WADLFileUploadForm();
@@ -115,7 +114,7 @@ public class RestAddWADLControllerTest extends AbstractRestControllerTest {
 
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
         when(fileManager.uploadFiles(anyString())).thenReturn(files);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + ADD + SLASH + WADL).param("type", "link").requestAttr("uploadForm", uploadForm);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT + SLASH + SWAGGER).param("type", "link").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.utility;
+package com.castlemock.web.mock.rest.converter;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.utility.file.FileUtility;
@@ -31,29 +31,31 @@ import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
- * The {@link SwaggerUtility} provides Swagger related functionality.
+ * The {@link SwaggerRestDefinitionConverter} provides Swagger related functionality.
  * @since 1.10
  * @author Karl Dahlgren
  */
-public class SwaggerUtility {
-
-    private static final String AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME = "Auto-generated mocked response";
+class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
     /**
      * The method provides the functionality to convert a provided Swagger {@link File} into a {@link RestApplicationDto}.
      * The method will simply parse the file and extracts its content. The content will then be passed to
-     * {@link SwaggerUtility#convertSwagger(String, boolean)}.
+     * {@link SwaggerRestDefinitionConverter#convertSwagger(String, boolean)}.
      * @param file The file which content will be extracted from and transformed into a {@link RestApplicationDto}.
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
      * @return A {@link RestApplicationDto} based on the provided {@link File}.
-     * @see SwaggerUtility#convertSwagger(String, boolean)
+     * @see SwaggerRestDefinitionConverter#convertSwagger(String, boolean)
      */
-    public static RestApplicationDto convertSwagger(final File file, final boolean generateResponse){
+    @Override
+    public List<RestApplicationDto> convert(final File file, final boolean generateResponse){
         final String swaggerContent = FileUtility.getFileContent(file);
-        return convertSwagger(swaggerContent, generateResponse);
+        final RestApplicationDto restApplication = convertSwagger(swaggerContent, generateResponse);
+        return Arrays.asList(restApplication);
     }
 
 
@@ -72,7 +74,7 @@ public class SwaggerUtility {
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
      * @return A {@link RestApplicationDto} based on the provided Swagger content.
      */
-    public static RestApplicationDto convertSwagger(final String content, final boolean generateResponse){
+    private RestApplicationDto convertSwagger(final String content, final boolean generateResponse){
 
         final Swagger swagger = new SwaggerParser().parse(content);
 
@@ -136,23 +138,11 @@ public class SwaggerUtility {
     }
 
     /**
-     * The method generates a default response.
-     * @return The newly generated {@link RestMockResponseDto}.
-     */
-    private static RestMockResponseDto generateResponse(){
-        RestMockResponseDto restMockResponse = new RestMockResponseDto();
-        restMockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
-        restMockResponse.setHttpStatusCode(200);
-        restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
-        return restMockResponse;
-    }
-
-    /**
      * The method extracts the forward address from the {@link Swagger} model.
      * @param swagger The {@link Swagger} model contains information about the source address.
      * @return The extracted source address configured in {@link Swagger}.
      */
-    private static String getForwardAddress(final Swagger swagger){
+    private String getForwardAddress(final Swagger swagger){
         String schemas = "http";
         if(swagger.getSchemes() != null && !swagger.getSchemes().isEmpty()){
             schemas = swagger.getSchemes().get(0).toValue();
@@ -168,7 +158,7 @@ public class SwaggerUtility {
      * @param httpMethod The {@link HttpMethod} of the new {@link RestMethodDto}.
      * @return A {@link RestMethodDto} based on the provided Swagger {@link Operation} and the {@link HttpMethod}.
      */
-    private static RestMethodDto createRestMethod(Operation operation, HttpMethod httpMethod){
+    private RestMethodDto createRestMethod(Operation operation, HttpMethod httpMethod){
         final RestMethodDto restMethod = new RestMethodDto();
         restMethod.setHttpMethod(httpMethod);
         restMethod.setName(operation.getOperationId());

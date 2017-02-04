@@ -42,7 +42,7 @@ public class CreateRestApplicationsServiceTest {
     private RestProjectRepository repository;
 
     @InjectMocks
-    private CreateRestApplicationsService service;
+    private ImportRestDefinitionService service;
 
     @Before
     public void setup() {

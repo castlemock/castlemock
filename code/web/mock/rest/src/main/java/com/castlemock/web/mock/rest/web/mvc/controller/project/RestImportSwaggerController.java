@@ -16,7 +16,8 @@
 
 package com.castlemock.web.mock.rest.web.mvc.controller.project;
 
-import com.castlemock.core.mock.rest.model.project.service.message.input.ImportSwaggerInput;
+import com.castlemock.core.mock.rest.model.RestDefinitionType;
+import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestDefinitionInput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.rest.web.mvc.command.project.SwaggerFileUploadForm;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -57,7 +58,7 @@ public class RestImportSwaggerController extends AbstractRestViewController {
      * @return A view that provides functionality to upload a Swagger file
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/add/swagger", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/import/swagger", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String projectId) {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
@@ -75,7 +76,7 @@ public class RestImportSwaggerController extends AbstractRestViewController {
      * @return A view that redirects the user to the main page for the project.
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value="/{projectId}/add/swagger", method=RequestMethod.POST)
+    @RequestMapping(value="/{projectId}/import/swagger", method=RequestMethod.POST)
     public ModelAndView uploadSwagger(@PathVariable final String projectId, @RequestParam final String type, @ModelAttribute("uploadForm") final SwaggerFileUploadForm uploadForm) throws IOException {
          List<File> files = null;
 
@@ -87,7 +88,7 @@ public class RestImportSwaggerController extends AbstractRestViewController {
             throw new IllegalArgumentException("Invalid type: " + type);
         }
 
-        serviceProcessor.process(new ImportSwaggerInput(projectId, files, uploadForm.isGenerateResponse()));
+        serviceProcessor.process(new ImportRestDefinitionInput(projectId, files, uploadForm.isGenerateResponse(), RestDefinitionType.SWAGGER));
 
 
         for(File uploadedFile : files){

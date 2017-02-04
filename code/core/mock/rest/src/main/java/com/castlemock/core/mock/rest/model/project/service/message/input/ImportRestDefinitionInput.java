@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Karl Dahlgren
+ * Copyright 2015 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,16 @@ package com.castlemock.core.mock.rest.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.mock.rest.model.RestDefinitionType;
 
 import java.io.File;
 import java.util.List;
 
 /**
  * @author Karl Dahlgren
- * @since 1.10
+ * @since 1.0
  */
-public class ImportSwaggerInput implements Input {
+public class ImportRestDefinitionInput implements Input {
 
     @NotNull
     private String restProjectId;
@@ -34,11 +35,15 @@ public class ImportSwaggerInput implements Input {
     private List<File> files;
     @NotNull
     private boolean generateResponse;
+    @NotNull
+    private RestDefinitionType definitionType;
 
-    public ImportSwaggerInput(String restProjectId, List<File> files, boolean generateResponse) {
+    public ImportRestDefinitionInput(final String restProjectId, final List<File> files,
+                                     final boolean generateResponse, final RestDefinitionType definitionType) {
         this.restProjectId = restProjectId;
         this.files = files;
         this.generateResponse = generateResponse;
+        this.definitionType = definitionType;
     }
 
     public String getRestProjectId() {
@@ -63,5 +68,13 @@ public class ImportSwaggerInput implements Input {
 
     public void setGenerateResponse(boolean generateResponse) {
         this.generateResponse = generateResponse;
+    }
+
+    public RestDefinitionType getDefinitionType() {
+        return definitionType;
+    }
+
+    public void setDefinitionType(RestDefinitionType definitionType) {
+        this.definitionType = definitionType;
     }
 }

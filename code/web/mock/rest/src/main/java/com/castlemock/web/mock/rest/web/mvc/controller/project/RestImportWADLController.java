@@ -16,7 +16,8 @@
 
 package com.castlemock.web.mock.rest.web.mvc.controller.project;
 
-import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestApplicationsInput;
+import com.castlemock.core.mock.rest.model.RestDefinitionType;
+import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestDefinitionInput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.rest.web.mvc.command.project.WADLFileUploadForm;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -41,12 +42,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/web/rest/project")
 @ConditionalOnExpression("${server.mode.demo} == false")
-public class RestAddWADLController extends AbstractRestViewController {
+public class RestImportWADLController extends AbstractRestViewController {
 
-    private static final String PAGE = "mock/rest/project/restAddWADL";
+    private static final String PAGE = "mock/rest/project/restImportWADL";
     private static final String TYPE_LINK = "link";
     private static final String TYPE_FILE = "file";
-    private static final Logger LOGGER = Logger.getLogger(RestAddWADLController.class);
+    private static final Logger LOGGER = Logger.getLogger(RestImportWADLController.class);
 
     @Autowired
     private FileManager fileManager;
@@ -57,7 +58,7 @@ public class RestAddWADLController extends AbstractRestViewController {
      * @return A view that provides functionality to upload a WADL file
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/add/wadl", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/import/wadl", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String projectId) {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
@@ -75,7 +76,7 @@ public class RestAddWADLController extends AbstractRestViewController {
      * @return A view that redirects the user to the main page for the project.
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value="/{projectId}/add/wadl", method=RequestMethod.POST)
+    @RequestMapping(value="/{projectId}/import/wadl", method=RequestMethod.POST)
     public ModelAndView uploadWADL(@PathVariable final String projectId, @RequestParam final String type, @ModelAttribute("uploadForm") final WADLFileUploadForm uploadForm) throws IOException {
          List<File> files = null;
 
@@ -87,7 +88,7 @@ public class RestAddWADLController extends AbstractRestViewController {
             throw new IllegalArgumentException("Invalid type: " + type);
         }
 
-        serviceProcessor.process(new CreateRestApplicationsInput(projectId, files, uploadForm.isGenerateResponse()));
+        serviceProcessor.process(new ImportRestDefinitionInput(projectId, files, uploadForm.isGenerateResponse(), RestDefinitionType.WADL));
 
 
         for(File uploadedFile : files){

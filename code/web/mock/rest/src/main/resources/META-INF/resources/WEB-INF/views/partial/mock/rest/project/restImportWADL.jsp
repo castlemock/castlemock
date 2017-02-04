@@ -15,37 +15,37 @@
   ~ limitations under the License.
   --%>
 
-<c:url var="add_wadl_url"  value="/web/rest/project/${restProjectId}/add/wadl" />
+<c:url var="add_wadl_url"  value="/web/rest/project/${restProjectId}/import/wadl" />
 <div class="content-top">
-    <h1><spring:message code="rest.restaddwadl.header.uploadfile" arguments="WADL"/></h1>
+    <h1><spring:message code="rest.restimportwadl.header.uploadfile" arguments="WADL"/></h1>
 </div>
 
 <div class="upload-information">
     <i class="fa fa-info-circle fa-4x"></i>
     <p>
-        <spring:message code="rest.restaddwadl.header.description"/>
+        <spring:message code="rest.restimportwadl.header.description"/>
     </p>
 </div>
 
 <div class="upload-link">
-    <h2 class="decorated"><span><spring:message code="rest.restaddwadl.header.link" arguments="WADL"/></span></h2>
+    <h2 class="decorated"><span><spring:message code="rest.restimportwadl.header.link" arguments="WADL"/></span></h2>
     <form:form method="POST" action="${add_wadl_url}" modelAttribute="uploadForm">
         <table class="formTable">
             <tr>
-                <td class="column1"><form:label path="link"><spring:message code="rest.restaddwadl.label.link" arguments="WADL"/></form:label></td>
+                <td class="column1"><form:label path="link"><spring:message code="rest.restimportwadl.label.link" arguments="WADL"/></form:label></td>
                 <td class="column2"><form:input path="link" type="text" name="wadlLinkInput" id="wadlLinkInput" size="100"/>
             </tr>
             <tr>
-                <td class="column1"><form:label path="generateResponse"><spring:message code="rest.restaddwadl.label.generateresponse"/></form:label></td>
+                <td class="column1"><form:label path="generateResponse"><spring:message code="rest.restimportwadl.label.generateresponse"/></form:label></td>
                 <td class="column1"><form:checkbox path="generateResponse" title="Generate response"></form:checkbox></td>
             </tr>
         </table>
-        <button class="button button-success pure-button" type="submit" name="type" value="link"><i class="fa fa-upload"></i> <span><spring:message code="rest.restaddwadl.button.linkwadl"/></span></button>
+        <button class="button button-success pure-button" type="submit" name="type" value="link"><i class="fa fa-upload"></i> <span><spring:message code="rest.restimportwadl.button.linkwadl"/></span></button>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>
 </div>
 
-<h2 class="decorated"><span><spring:message code="rest.restaddwadl.header.upload" arguments="WADL"/></span></h2>
+<h2 class="decorated"><span><spring:message code="rest.restimportwadl.header.upload" arguments="WADL"/></span></h2>
 
 <div class="upload-file">
     <form:form method="POST" enctype="multipart/form-data" action="${add_wadl_url}" modelAttribute="uploadForm">
@@ -62,8 +62,8 @@
         </table>
 
 
-        <button class="button-success pure-button" name="type" value="file"><i class="fa fa-upload"></i> <span><spring:message code="rest.restaddwadl.button.uploadfiles"/></span></button>
-        <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.restaddwadl.button.cancel"/></a>
+        <button class="button-success pure-button" name="type" value="file"><i class="fa fa-upload"></i> <span><spring:message code="rest.restimportwadl.button.uploadfiles"/></span></button>
+        <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.restimportwadl.button.cancel"/></a>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>
 </div>

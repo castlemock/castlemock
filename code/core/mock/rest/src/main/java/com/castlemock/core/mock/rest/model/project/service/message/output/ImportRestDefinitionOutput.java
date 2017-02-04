@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Karl Dahlgren
+ * Copyright 2015 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Output;
 
 /**
  * @author Karl Dahlgren
- * @since 1.10
+ * @since 1.0
  */
-public class ImportSwaggerOutput implements Output {
+public class ImportRestDefinitionOutput implements Output {
 
 }

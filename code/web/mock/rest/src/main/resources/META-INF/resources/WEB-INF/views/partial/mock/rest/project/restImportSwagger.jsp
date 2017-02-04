@@ -15,7 +15,7 @@
   ~ limitations under the License.
   --%>
 
-<c:url var="add_swagger_url"  value="/web/rest/project/${restProjectId}/add/swagger" />
+<c:url var="add_swagger_url"  value="/web/rest/project/${restProjectId}/import/swagger" />
 <div class="content-top">
     <h1><spring:message code="rest.restimportswagger.header.uploadfile" arguments="Swagger"/></h1>
 </div>

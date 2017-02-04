@@ -148,8 +148,8 @@ project(':code:web:mock:rest') {
     dependencies {
         compile(project(":code:web:basis"))
         compile(project(":code:core:mock:rest"))
-        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security')
-        testCompile(group: 'io.swagger', name: 'swagger-parser', version: swaggerVersion)
+        compile(group: 'io.swagger', name: 'swagger-parser', version: swaggerVersion)
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
     }
 }
 
