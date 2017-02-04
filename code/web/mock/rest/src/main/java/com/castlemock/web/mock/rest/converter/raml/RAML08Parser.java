@@ -22,6 +22,7 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import org.apache.log4j.Logger;
 import org.raml.v2.api.model.v08.methods.Method;
 import org.raml.v2.api.model.v08.resources.Resource;
 
@@ -32,6 +33,8 @@ import java.util.List;
  * @since 1.10
  */
 class RAML08Parser {
+
+    private static final Logger LOGGER = Logger.getLogger(RAML08Parser.class);
 
     public void getResources(final List<Resource> resources, final List<RestResourceDto> result, final String path) {
         if(resources.isEmpty()){
@@ -49,12 +52,17 @@ class RAML08Parser {
                 result.add(restResource);
 
                 for(Method method : methods){
+                    HttpMethod httpMethod = HttpMethod.getValue(method.method());
+                    if(httpMethod == null){
+                        LOGGER.error("The REST method '" + method.method() + "' is not supported.");
+                        continue;
+                    }
+
                     RestMethodDto restMethod = new RestMethodDto();
-                    String httpMethod = method.method().toUpperCase();
-                    restMethod.setName(httpMethod);
+                    restMethod.setName(httpMethod.name());
                     restMethod.setStatus(RestMethodStatus.MOCKED);
                     restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
-                    restMethod.setHttpMethod(HttpMethod.valueOf(httpMethod));
+                    restMethod.setHttpMethod(httpMethod);
                     restResource.getMethods().add(restMethod);
                 }
 

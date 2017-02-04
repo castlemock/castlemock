@@ -26,5 +26,21 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @XmlEnum(String.class)
 public enum HttpMethod {
-    GET, POST, PUT, HEAD, DELETE, OPTIONS, TRACE
+    GET, POST, PUT, HEAD, DELETE, OPTIONS, TRACE;
+
+    /**
+     * Parse an input String and convert it to a {@link HttpMethod}.
+     * @param input The input String which will be converted.
+     * @return A {@link HttpMethod} based on the input String. Null will be
+     *          return if no match was found.
+     * @since 1.10
+     */
+    public static HttpMethod getValue(String input){
+        input = input.toUpperCase();
+        try {
+            return HttpMethod.valueOf(input);
+        } catch (Exception e){}
+        return null;
+    }
+
 }

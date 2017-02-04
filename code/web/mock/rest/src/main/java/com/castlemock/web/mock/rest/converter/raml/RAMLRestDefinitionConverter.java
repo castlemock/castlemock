@@ -40,6 +40,11 @@ public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter
     @Override
     public List<RestApplicationDto> convert(final File file, final boolean generateResponse){
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(file);
+
+        if(!ramlModelResult.getValidationResults().isEmpty()){
+            throw new IllegalStateException("Unable to parse the RAML file");
+        }
+
         String title = null;
         List<RestResourceDto> restResources = new ArrayList<>();
         if(ramlModelResult.getApiV08() != null){
