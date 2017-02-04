@@ -1,111 +1,59 @@
 /*!
-Pure v0.5.0
-Copyright 2014 Yahoo! Inc. All rights reserved.
+Pure v0.6.2
+Copyright 2013 Yahoo!
 Licensed under the BSD License.
-https://github.com/yui/pure/blob/master/LICENSE.md
+https://github.com/yahoo/pure/blob/master/LICENSE.md
 */
-/*csslint adjoining-classes:false, outline-none:false*/
-/*TODO: Remove this lint rule override after a refactor of this code.*/
-
-.pure-menu ul {
-    position: absolute;
-    visibility: hidden;
+/*csslint adjoining-classes: false, box-model:false*/
+.pure-menu {
+    box-sizing: border-box;
 }
 
-.pure-menu.pure-menu-open {
-    visibility: visible;
-    z-index: 2;
-    width: 100%;
+.pure-menu-fixed {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 3;
 }
 
-.pure-menu ul {
-    left: -10000px;
+.pure-menu-list,
+.pure-menu-item {
+    position: relative;
+}
+
+.pure-menu-list {
     list-style: none;
     margin: 0;
     padding: 0;
-    top: -10000px;
-    z-index: 1;
 }
 
-.pure-menu > ul { position: relative; }
-
-.pure-menu-open > ul {
-    left: 0;
-    top: 0;
-    visibility: visible;
+.pure-menu-item {
+    padding: 0;
+    margin: 0;
+    height: 100%;
 }
 
-.pure-menu-open > ul:focus {
-    outline: 0;
-}
-
-.pure-menu li { position: relative; }
-
-.pure-menu a,
-.pure-menu .pure-menu-heading {
+.pure-menu-link,
+.pure-menu-heading {
     display: block;
-    color: inherit;
-    line-height: 1.5em;
-    padding: 5px 20px;
     text-decoration: none;
     white-space: nowrap;
 }
 
-.pure-menu.pure-menu-horizontal > .pure-menu-heading {
-    display: inline-block;
-    *display: inline;
-    zoom: 1;
-    margin: 0;
-    vertical-align: middle;
-}
-.pure-menu.pure-menu-horizontal > ul {
-    display: inline-block;
-    *display: inline;
-    zoom: 1;
-    vertical-align: middle;
-}
-
-.pure-menu li a { padding: 5px 20px; }
-
-.pure-menu-can-have-children > .pure-menu-label:after {
-    content: '\25B8';
-    float: right;
-    /* These specific fonts have the Unicode char we need. */
-    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif;
-    margin-right: -20px;
-    margin-top: -1px;
-}
-
-.pure-menu-can-have-children > .pure-menu-label {
-    padding-right: 30px;
-}
-
-.pure-menu-separator {
-    background-color: #dfdfdf;
-    display: block;
-    height: 1px;
-    font-size: 0;
-    margin: 7px 2px;
-    overflow: hidden;
-}
-
-.pure-menu-hidden {
-    display: none;
-}
-
-/* FIXED MENU */
-.pure-menu-fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
+/* HORIZONTAL MENU */
+.pure-menu-horizontal {
     width: 100%;
+    white-space: nowrap;
 }
 
-
-/* HORIZONTAL MENU CODE */
+.pure-menu-horizontal .pure-menu-list {
+    display: inline-block;
+}
 
 /* Initial menus should be inline-block so that they are horizontal */
-.pure-menu-horizontal li {
+.pure-menu-horizontal .pure-menu-item,
+.pure-menu-horizontal .pure-menu-heading,
+.pure-menu-horizontal .pure-menu-separator {
     display: inline-block;
     *display: inline;
     zoom: 1;
@@ -113,184 +61,127 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 }
 
 /* Submenus should still be display: block; */
-.pure-menu-horizontal li li {
+.pure-menu-item .pure-menu-item {
     display: block;
 }
 
-/* Content after should be down arrow */
-.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label:after {
+.pure-menu-children {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 3;
+}
+
+.pure-menu-horizontal .pure-menu-children {
+    left: 0;
+    top: auto;
+    width: inherit;
+}
+
+.pure-menu-allow-hover:hover > .pure-menu-children,
+.pure-menu-active > .pure-menu-children {
+    display: block;
+    position: absolute;
+}
+
+/* Vertical Menus - show the dropdown arrow */
+.pure-menu-has-children > .pure-menu-link:after {
+    padding-left: 0.5em;
+    content: "\25B8";
+    font-size: small;
+}
+
+/* Horizontal Menus - show the dropdown arrow */
+.pure-menu-horizontal .pure-menu-has-children > .pure-menu-link:after {
     content: "\25BE";
 }
-/*Add extra padding to elements that have the arrow so that the hover looks nice */
-.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label {
-    padding-right: 30px;
+
+/* scrollable menus */
+.pure-menu-scrollable {
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
-/* Adjusting separator for vertical menus */
-.pure-menu-horizontal li.pure-menu-separator {
-	height: 50%;
-	width: 1px;
-	margin: 0 7px;
+.pure-menu-scrollable .pure-menu-list {
+    display: block;
 }
 
-/* Submenus should be horizontal separator again */
-.pure-menu-horizontal li li.pure-menu-separator {
-	height: 1px;
-	width: auto;
-	margin: 7px 2px;
+.pure-menu-horizontal.pure-menu-scrollable .pure-menu-list {
+    display: inline-block;
 }
 
-
-/*csslint adjoining-classes:false*/
-/*TODO: Remove this lint rule override after a refactor of this code.*/
-
-/* MAIN MENU STYLING */
-
-.pure-menu.pure-menu-open,
-.pure-menu.pure-menu-horizontal li .pure-menu-children {
-    background: #fff; /* Old browsers */
-    border: 1px solid #b7b7b7;
+.pure-menu-horizontal.pure-menu-scrollable {
+    white-space: nowrap;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    /* a little extra padding for this style to allow for scrollbars */
+    padding: .5em 0;
 }
 
-/* remove borders for horizontal menus */
-.pure-menu.pure-menu-horizontal,
-.pure-menu.pure-menu-horizontal .pure-menu-heading {
-    border: none;
+.pure-menu-horizontal.pure-menu-scrollable::-webkit-scrollbar {
+    display: none;
 }
 
+/* misc default styling */
 
-/* LINK STYLES */
-
-.pure-menu a {
-    border: 1px solid transparent;
-    border-left: none;
-    border-right: none;
-
+.pure-menu-separator,
+.pure-menu-horizontal .pure-menu-children .pure-menu-separator {
+    background-color: #ccc;
+    height: 1px;
+    margin: .3em 0;
 }
 
-.pure-menu a,
-.pure-menu .pure-menu-can-have-children > li:after {
+.pure-menu-horizontal .pure-menu-separator {
+    width: 1px;
+    height: 1.3em;
+    margin: 0 .3em ;
+}
+
+/* Need to reset the separator since submenu is vertical */
+.pure-menu-horizontal .pure-menu-children .pure-menu-separator {
+    display: block;
+    width: auto;
+}
+
+.pure-menu-heading {
+    text-transform: uppercase;
+    color: #565d64;
+}
+
+.pure-menu-link {
     color: #777;
 }
 
-.pure-menu .pure-menu-can-have-children > li:hover:after {
-    color: #fff;
+.pure-menu-children {
+    background-color: #fff;
 }
 
-/* Focus style for a dropdown menu-item when the parent has been opened */
-.pure-menu .pure-menu-open {
-    background: #dedede;
+.pure-menu-link,
+.pure-menu-disabled,
+.pure-menu-heading {
+    padding: .5em 1em;
 }
 
-
-.pure-menu li a:hover,
-.pure-menu li a:focus {
-    background: #eee;
+.pure-menu-disabled {
+    opacity: .5;
 }
 
-/* DISABLED STATES */
-.pure-menu li.pure-menu-disabled a:hover,
-.pure-menu li.pure-menu-disabled a:focus {
-    background: #fff;
-    color: #bfbfbf;
+.pure-menu-disabled .pure-menu-link:hover {
+    background-color: transparent;
 }
 
-.pure-menu .pure-menu-disabled > a {
-    background-image: none;
-    border-color: transparent;
-    cursor: default;
+.pure-menu-active > .pure-menu-link,
+.pure-menu-link:hover,
+.pure-menu-link:focus {
+    background-color: #eee;
 }
 
-.pure-menu .pure-menu-disabled > a,
-.pure-menu .pure-menu-can-have-children.pure-menu-disabled > a:after {
-    color: #bfbfbf;
-}
-
-/* HEADINGS */
-.pure-menu .pure-menu-heading {
-    color: #565d64;
-    text-transform: uppercase;
-    font-size: 90%;
-    margin-top: 0.5em;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: #dfdfdf;
-}
-
-/* ACTIVE MENU ITEM */
-.pure-menu .pure-menu-selected a {
+.pure-menu-selected .pure-menu-link,
+.pure-menu-selected .pure-menu-link:visited {
     color: #000;
-}
-
-/* FIXED MENU */
-.pure-menu.pure-menu-open.pure-menu-fixed {
-    border: none;
-    border-bottom: 1px solid #b7b7b7;
-}
-
-/*csslint box-model:false*/
-/*TODO: Remove this lint rule override after a refactor of this code.*/
-
-
-.pure-paginator {
-
-    /* `pure-g` Grid styles */
-    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */
-    *letter-spacing: normal; /* reset IE < 8 */
-    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */
-    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */
-
-    /* `pure-paginator` Specific styles */
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.opera-only :-o-prefocus,
-.pure-paginator {
-    word-spacing: -0.43em;
-}
-
-/* `pure-u` Grid styles */
-.pure-paginator li {
-    display: inline-block;
-    *display: inline; /* IE < 8: fake inline-block */
-    zoom: 1;
-    letter-spacing: normal;
-    word-spacing: normal;
-    vertical-align: top;
-    text-rendering: auto;
-}
-
-
-.pure-paginator .pure-button {
-    border-radius: 0;
-    padding: 0.8em 1.4em;
-    vertical-align: top;
-    height: 1.1em;
-}
-.pure-paginator .pure-button:focus,
-.pure-paginator .pure-button:active {
-    outline-style: none;
-}
-.pure-paginator .prev,
-.pure-paginator .next {
-    color: #C0C1C3;
-    text-shadow: 0 -1px 0 rgba(0,0,0, 0.45);
-}
-.pure-paginator .prev {
-    border-radius: 2px 0 0 2px;
-}
-.pure-paginator .next {
-    border-radius: 0 2px 2px 0;
-}
-
-@media (max-width: 480px) {
-    .pure-menu-horizontal {
-        width: 100%;
-    }
-
-    .pure-menu-children li {
-        display: block;
-        border-bottom: 1px solid black;
-    }
 }

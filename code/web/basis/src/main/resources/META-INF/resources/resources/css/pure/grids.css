@@ -1,8 +1,8 @@
 /*!
-Pure v0.5.0
-Copyright 2014 Yahoo! Inc. All rights reserved.
+Pure v0.6.2
+Copyright 2013 Yahoo!
 Licensed under the BSD License.
-https://github.com/yui/pure/blob/master/LICENSE.md
+https://github.com/yahoo/pure/blob/master/LICENSE.md
 */
 /*csslint regex-selectors:false, known-properties:false, duplicate-properties:false*/
 
@@ -14,7 +14,7 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 
     /*
     Sets the font stack to fonts known to work properly with the above letter
-    and word spacings. See: https://github.com/yui/pure/issues/41/
+    and word spacings. See: https://github.com/yahoo/pure/issues/41/
 
     The following font stack makes Pure Grids work on all known environments.
 
@@ -30,19 +30,26 @@ https://github.com/yui/pure/blob/master/LICENSE.md
     */
     font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
 
-    /*
-    Use flexbox when possible to avoid `letter-spacing` side-effects.
-
-    NOTE: Firefox (as of 25) does not currently support flex-wrap, so the
-    `-moz-` prefix version is omitted.
-    */
-
+    /* Use flexbox when possible to avoid `letter-spacing` side-effects. */
+    display: -webkit-box;
     display: -webkit-flex;
-    -webkit-flex-flow: row wrap;
-
-    /* IE10 uses display: flexbox */
     display: -ms-flexbox;
-    -ms-flex-flow: row wrap;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+        -ms-flex-flow: row wrap;
+            flex-flow: row wrap;
+
+    /* Prevents distributing space between rows */
+    -webkit-align-content: flex-start;
+        -ms-flex-line-pack: start;
+            align-content: flex-start;
+}
+
+/* IE10 display: -ms-flexbox (and display: flex in IE 11) does not work inside a table; fall back to block and rely on font hack */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	table .pure-g {
+		display: block;
+	}
 }
 
 /* Opera as of 12 on Windows needs word-spacing.
