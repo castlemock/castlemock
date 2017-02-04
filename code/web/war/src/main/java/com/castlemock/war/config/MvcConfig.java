@@ -43,7 +43,8 @@ import java.util.Locale;
 @ComponentScan(basePackages = { "com.castlemock" })
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
-    private static final int CACHE_PERIOD = 86400;
+    private static final int STANDARD_CACHE_PERIOD = 86400; // One day
+    private static final int FONT_CACHE_PERIOD = 604800; // One week
 
     @Autowired
     private SecurityInterceptor securityInterceptor;
@@ -54,9 +55,11 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(CACHE_PERIOD);
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").setCachePeriod(CACHE_PERIOD);
-        registry.addResourceHandler("/favicon.ico").addResourceLocations("/resources/images/favicon.ico").setCachePeriod(CACHE_PERIOD);
+        registry.addResourceHandler("/resources/css/**").addResourceLocations("/resources/css/").setCachePeriod(STANDARD_CACHE_PERIOD);
+        registry.addResourceHandler("/resources/font/**").addResourceLocations("/resources/font/").setCachePeriod(FONT_CACHE_PERIOD);
+        registry.addResourceHandler("/resources/images/**").addResourceLocations("/resources/images/").setCachePeriod(STANDARD_CACHE_PERIOD);
+        registry.addResourceHandler("/resources/js/**").addResourceLocations("/resources/js/").setCachePeriod(STANDARD_CACHE_PERIOD);
+        registry.addResourceHandler("/favicon.ico").addResourceLocations("/resources/images/favicon.ico").setCachePeriod(STANDARD_CACHE_PERIOD);
     }
 
     /**
