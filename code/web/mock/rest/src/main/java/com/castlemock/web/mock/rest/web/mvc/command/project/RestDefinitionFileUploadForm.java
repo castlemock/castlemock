@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Karl Dahlgren
+ * Copyright 2015 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,23 @@
 
 package com.castlemock.web.mock.rest.web.mvc.command.project;
 
+import com.castlemock.core.mock.rest.model.RestDefinitionType;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 /**
- * The {@link SwaggerFileUploadForm} is a class that represent a form which contains a
+ * The RestDefinitionFileUploadForm is a class that represent a form which contains a
  * multipart file.
  * @author Karl Dahlgren
- * @since 1.10
+ * @since 1.0
  */
-public class SwaggerFileUploadForm {
+public class RestDefinitionFileUploadForm {
 
     private boolean generateResponse;
     private List<MultipartFile> files;
     private String link;
+    private RestDefinitionType definitionType;
 
     /**
      * Returns the multipart files
@@ -62,5 +64,13 @@ public class SwaggerFileUploadForm {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public RestDefinitionType getDefinitionType() {
+        return definitionType;
+    }
+
+    public void setDefinitionType(RestDefinitionType definitionType) {
+        this.definitionType = definitionType;
     }
 }

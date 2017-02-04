@@ -24,7 +24,7 @@ import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.model.project.RestProjectDtoGenerator;
-import com.castlemock.web.mock.rest.web.mvc.command.project.WADLFileUploadForm;
+import com.castlemock.web.mock.rest.web.mvc.command.project.RestDefinitionFileUploadForm;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,14 +54,14 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestApplication.class)
 @WebAppConfiguration
-public class RestImportSwaggerControllerTest extends AbstractRestControllerTest {
+public class RestImportDefinitionControllerTest extends AbstractRestControllerTest {
 
-    private static final String PAGE = "partial/mock/rest/project/restImportSwagger.jsp";
+    private static final String PAGE = "partial/mock/rest/project/restImportWADL.jsp";
     private static final String IMPORT = "import";
-    private static final String SWAGGER = "swagger";
+    private static final String WADL = "wadl";
 
     @InjectMocks
-    private RestImportSwaggerController restImportSwaggerController;
+    private RestImportDefinitionController restAddWADLController;
 
     @Mock
     private ServiceProcessor serviceProcessor;
@@ -71,14 +71,14 @@ public class RestImportSwaggerControllerTest extends AbstractRestControllerTest 
 
     @Override
     protected AbstractController getController() {
-        return restImportSwaggerController;
+        return restAddWADLController;
     }
 
     @Test
-    public void testImportSwaggerGet() throws Exception {
+    public void testAddWADLGet() throws Exception {
         final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT + SLASH + SWAGGER);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT + SLASH + WADL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(2 + GLOBAL_VIEW_MODEL_COUNT))
@@ -88,16 +88,16 @@ public class RestImportSwaggerControllerTest extends AbstractRestControllerTest 
     }
 
     @Test
-    public void testImportSwaggerPostFile() throws Exception {
+    public void testAddWADLPostFile() throws Exception {
         final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
         final List<File> files = new ArrayList<File>();
-        final WADLFileUploadForm uploadForm = new WADLFileUploadForm();
+        final RestDefinitionFileUploadForm uploadForm = new RestDefinitionFileUploadForm();
         final List<MultipartFile> uploadedFiles = new ArrayList<>();
         uploadForm.setFiles(uploadedFiles);
 
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
         when(fileManager.uploadFiles(anyListOf(MultipartFile.class))).thenReturn(files);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT + SLASH + SWAGGER).param("type", "file").requestAttr("uploadForm", uploadForm);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT + SLASH + WADL).param("type", "file").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
@@ -105,16 +105,16 @@ public class RestImportSwaggerControllerTest extends AbstractRestControllerTest 
     }
 
     @Test
-    public void testImportSwaggerPostLink() throws Exception {
+    public void testAddWADLPostLink() throws Exception {
         final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
         final List<File> files = new ArrayList<File>();
-        final WADLFileUploadForm uploadForm = new WADLFileUploadForm();
+        final RestDefinitionFileUploadForm uploadForm = new RestDefinitionFileUploadForm();
         final List<MultipartFile> uploadedFiles = new ArrayList<>();
         uploadForm.setFiles(uploadedFiles);
 
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
         when(fileManager.uploadFiles(anyString())).thenReturn(files);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT + SLASH + SWAGGER).param("type", "link").requestAttr("uploadForm", uploadForm);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT + SLASH + WADL).param("type", "link").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

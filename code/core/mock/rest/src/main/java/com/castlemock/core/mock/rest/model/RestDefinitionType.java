@@ -22,6 +22,16 @@ package com.castlemock.core.mock.rest.model;
  */
 public enum RestDefinitionType {
 
-    SWAGGER, WADL, RAML
+    SWAGGER("Swagger"), WADL("WADL"), RAML("RAML");
 
+
+    private final String displayName;
+
+    RestDefinitionType(final String displayName){
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }
