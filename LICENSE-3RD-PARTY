@@ -10,7 +10,8 @@
         - Roboto: https://fonts.google.com/specimen/Roboto
         - SnakeYAML: https://code.google.com/archive/p/snakeyaml
         - Spring: https://spring.io
-        - Validation-api 
+        - Validation-api
+        - Swagger parser: https://github.com/swagger-api/swagger-parser
 -----------------------------------------------------------------------------
 
 Apache License

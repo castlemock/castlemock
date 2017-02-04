@@ -43,6 +43,7 @@ subprojects {
     ext.jstlVersion = "1.2"
     ext.servletApiVersion = "3.1.0"
     ext.servletJspVersion = "2.2"
+    ext.swaggerVersion = "1.0.25"
 
 	compileJava {
 		sourceCompatibility = 1.8
@@ -147,7 +148,8 @@ project(':code:web:mock:rest') {
     dependencies {
         compile(project(":code:web:basis"))
         compile(project(":code:core:mock:rest"))
-        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security')
+        testCompile(group: 'io.swagger', name: 'swagger-parser', version: swaggerVersion)
     }
 }
 
