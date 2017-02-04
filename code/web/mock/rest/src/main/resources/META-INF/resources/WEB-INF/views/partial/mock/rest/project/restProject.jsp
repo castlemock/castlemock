@@ -34,6 +34,7 @@
                     <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/create/application"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restproject.button.createapplication"/></span></a>
                     <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/import/wadl"/>"><i class="fa fa-upload"></i> <span><spring:message code="rest.restproject.button.upload" arguments="WADL"/></span></a>
                     <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/import/swagger"/>"><i class="fa fa-upload"></i> <span><spring:message code="rest.restproject.button.upload" arguments="Swagger"/></span></a>
+                    <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/import/raml"/>"><i class="fa fa-upload"></i> <span><spring:message code="rest.restproject.button.upload" arguments="RAML"/></span></a>
                 </c:otherwise>
             </c:choose>
             <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="rest.restproject.button.export"/></span></a>

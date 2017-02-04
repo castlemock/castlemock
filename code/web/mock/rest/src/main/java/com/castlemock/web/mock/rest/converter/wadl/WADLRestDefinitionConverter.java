@@ -1,13 +1,30 @@
-package com.castlemock.web.mock.rest.converter;
+/*
+ * Copyright 2017 Karl Dahlgren
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+package com.castlemock.web.mock.rest.converter.wadl;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -27,7 +44,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.10
  */
-class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter {
+public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
     /**
      * The method is responsible for parsing a {@link File} and converting into a list of {@link RestApplicationDto}.

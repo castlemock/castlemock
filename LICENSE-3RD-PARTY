@@ -12,6 +12,7 @@
         - Spring: https://spring.io
         - Validation-api
         - Swagger parser: https://github.com/swagger-api/swagger-parser
+        - RAML parser: https://github.com/raml-org/raml-java-parser
 -----------------------------------------------------------------------------
 
 Apache License

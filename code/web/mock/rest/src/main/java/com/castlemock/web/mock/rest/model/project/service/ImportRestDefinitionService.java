@@ -113,7 +113,7 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
 
         // Remove the existing REST application from the list of existing REST application
         // This is done so that we can add the REST applications which have not been
-        // either updated or re-added from the import. 
+        // either updated or re-added from the import.
         existingRestApplications.remove(existingRestApplication);
     }
 

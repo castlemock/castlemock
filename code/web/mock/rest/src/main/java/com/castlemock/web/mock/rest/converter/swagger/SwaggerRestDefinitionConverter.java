@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.converter;
+package com.castlemock.web.mock.rest.converter.swagger;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.utility.file.FileUtility;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
@@ -40,7 +40,7 @@ import java.util.Map;
  * @since 1.10
  * @author Karl Dahlgren
  */
-class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConverter {
+public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
     /**
      * The method provides the functionality to convert a provided Swagger {@link File} into a {@link RestApplicationDto}.

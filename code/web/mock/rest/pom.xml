@@ -40,6 +40,7 @@
 
 	<properties>
 		<swagger.version>1.0.25</swagger.version>
+		<raml.version>1.0.6</raml.version>
 	</properties>
 
 	<dependencies>
@@ -83,6 +84,14 @@
 			<artifactId>swagger-parser</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
+
+		<!-- RAML -->
+		<dependency>
+			<groupId>org.raml</groupId>
+			<artifactId>raml-parser-2</artifactId>
+			<version>${raml.version}</version>
+		</dependency>
+
 
 		<!-- test -->
 
