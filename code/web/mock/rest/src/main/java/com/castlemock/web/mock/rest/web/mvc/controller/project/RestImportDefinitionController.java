@@ -65,7 +65,7 @@ public class RestImportDefinitionController extends AbstractRestViewController {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
         model.addObject(FILE_UPLOAD_FORM, new RestDefinitionFileUploadForm());
-        model.addObject(DEFINITION_TYPE, definitionType);
+        model.addObject(DEFINITION_TYPE, definitionType.name());
         model.addObject(DEFINITION_DISPLAY_NAME, definitionType.getDisplayName());
         return model;
     }
