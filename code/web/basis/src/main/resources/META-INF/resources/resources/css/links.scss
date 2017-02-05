@@ -5,14 +5,15 @@ a {
     }
 }
 
-.button-success {
+.btn-success {
     background: rgb(28, 184, 65); /* this is a green */
 }
 
-.button-success,
-.button-error,
-.button-warning,
-.button-secondary {
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-primary,
+.btn-danger {
   color: white;
   border-radius: 4px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -21,7 +22,6 @@ a {
   vertical-align: bottom;
   
   i {
-      font-size: 15px;
       margin-right: 5px;
   }
   
@@ -30,24 +30,29 @@ a {
   }
 }
 
-.button-success {
+.btn-success {
   background: rgb(28, 184, 65); /* this is a green */
 }
 
-.button-error {
+.btn-danger {
   background: rgb(202, 60, 60); /* this is a maroon */
 }
 
-.button-warning {
+.btn-warning {
   background: rgb(223, 117, 20); /* this is an orange */
 }
 
-.button-secondary {
+.btn-primary {
   background: rgb(66, 184, 221); /* this is a light blue */
 }
 
-
-.pure-button:hover {
+.btn {
+  font-size: 12px;
+  font-weight: normal;
+  text-decoration: none !important;
+  border: 0px;
+}
+.btn:hover {
     text-decoration: none !important;
 }
 

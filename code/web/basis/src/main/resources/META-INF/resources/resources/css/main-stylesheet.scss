@@ -1,6 +1,7 @@
 // - - - - - - - - IMPORT - - - - - - - - - //
 
 @import "footer";
+@import "header";
 @import "links";
 @import "responsive";
 @import "fonts";
@@ -15,94 +16,10 @@ body {
 
     h1 {
         color: #4b4b4b;
+        font-size: 2em;
     }
 }
-.main-header {
-    width: 100%;
-    min-height: 41px;
-    background: #3E444D;
-    color: #fff;
-    border: 0px solid #000;
-    top: 0px;
-    font-size: 13px;
-    position: fixed;
-    z-index: 1;
 
-    a {
-        color: #fff;
-    }
-
-    .logo {
-        float: left;
-        margin-top: 5px;
-        margin-left: 5%;
-        font-size: 30px;
-        a {
-            &:hover {
-                text-decoration: none;
-            }
-        }
-    }
-
-    #header-logo {
-        height: 27px;
-    }
- 
-    .meta {
-        float: right;
-        margin-top: 10px;
-        margin-right: 5%;
-
-        .search  {
-            float: left;
-
-            form {
-                float: left;
-            }
-
-            input[type=text] {
-                width: 200px;
-                padding: 5px;
-                outline: none;
-                border: 2px solid #9EA1A6;
-                background-color: #9EA1A6;
-                font-size: 12px;
-                border-radius: 5px;
-                float: left;
-                position: relative;
-                top: -4px;
-                color: #fff;
-
-                &::-webkit-input-placeholder {
-                    color: #fff;
-                }
-
-            }
-        }
-        .links {
-            float: right;
-            a {
-                text-decoration: none;
-
-                i {
-                    margin: 0 10px;
-                }
-            }
-
-            .fa-2x {
-                font-size: 1.6em;
-
-            }
-
-            i {
-                &:hover {
-                    color: #ddd;
-                }
-            }
-        }
-
-    }
-}
 
 .information {
     padding: 0px;
@@ -176,35 +93,6 @@ body {
         .fa-home {
             position: relative;
             top: 3px;
-        }
-    }
-}
-
-aside {
-    position: relative;
-    width: 14%;
-    float: left;
-    font-size: 14px;
-
-    .content {
-
-        .content-title {
-            margin-top: 20px;
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .content-divider {
-            width: 150px;
-            border-bottom: 1px solid #ddd !important;
-        }
-
-        .content-item {
-            margin-left: 15px;
-            margin-top: 5px;
-            a {
-                color: #666666;
-            }
         }
     }
 }
@@ -308,6 +196,7 @@ section{
 
     .formTable .column2 * {
         width: 100%;
+        font-weight: normal;
 
     }
 
@@ -346,6 +235,7 @@ section{
     td {
         font-size: 12px;
         padding: 3px 7px 2px 7px;
+        font-weight: normal;
     }
 
     th {
@@ -358,24 +248,6 @@ section{
         border-collapse: collapse;
         color: #666666;
         cursor: pointer;
-    }
-
-    .even {
-        color: #666666;
-        background-color: #fff;
-
-        &:hover {
-            background-color: #E8E8E8;
-        }
-    }
-
-    .odd {
-        color: #666666;
-        background-color: #fbfbfb;
-
-        &:hover {
-            background-color: #E8E8E8;
-        }
     }
 }
 

@@ -35,12 +35,12 @@
                     <td class="column2"><form:input path="forwardedEndpoint" value="${updateRestApplicationsEndpointCommand.forwardedEndpoint}"/></td>
                 </tr>
             </table>
-            <button class="button-success pure-button"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.updaterestapplicationsendpoint.button.updateapplications"/></span></button>
-            <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.updaterestapplicationsendpoint.button.cancel"/></a>
+            <button class="btn btn-success"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.updaterestapplicationsendpoint.button.updateapplications"/></span></button>
+            <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.updaterestapplicationsendpoint.button.cancel"/></a>
         </form:form>
     </c:when>
     <c:otherwise>
         <p><spring:message code="rest.updaterestapplicationsendpoint.label.noapplications"/></p>
-        <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.updaterestapplicationsendpoint.button.cancel"/></a>
+        <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.updaterestapplicationsendpoint.button.cancel"/></a>
     </c:otherwise>
 </c:choose>

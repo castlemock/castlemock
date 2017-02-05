@@ -30,9 +30,9 @@
                     <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restresource.button.delete"/></span></a>
                 </c:when>
                 <c:otherwise>
-                    <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restresource.button.updateresource"/></span></a>
-                    <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/create/method"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restresource.button.createmethod"/></span></a>
-                    <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restresource.button.delete"/></span></a>
+                    <a class="btn btn-success" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restresource.button.updateresource"/></span></a>
+                    <a class="btn btn-primary" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/create/method"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restresource.button.createmethod"/></span></a>
+                    <a class="btn btn-danger" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restresource.button.delete"/></span></a>
                 </c:otherwise>
             </c:choose>
         </sec:authorize>
@@ -60,7 +60,7 @@
     <c:when test="${restResource.methods.size() > 0}">
         <form:form action="${rest_method_update_url}/" method="POST"  commandName="restMethodModifierCommand">
             <div class="table-frame">
-                <table class="entityTable sortable">
+                <table class="table table-bordered table-striped table-hover sortable">
                     <col width="10%">
                     <col width="30%">
                     <col width="10%">
@@ -74,7 +74,7 @@
                         <th><spring:message code="rest.restresource.column.methodforwardedendpoint"/></th>
                     </tr>
                     <c:forEach items="${restResource.methods}" var="restMethod" varStatus="loopStatus">
-                        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                        <tr>
                             <td><form:checkbox path="restMethodIds" name="${restMethod.id}" value="${restMethod.id}"/></td>
                             <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.name}</a></td>
                             <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.httpMethod}</a></td>
@@ -97,9 +97,9 @@
                         <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restresource.button.deletemethods"/></span></a>
                     </c:when>
                     <c:otherwise>
-                        <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restresource.button.update"/></span></button>
-                        <button class="button-secondary pure-button" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="rest.restresource.button.updateendpoint"/></span></button>
-                        <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restresource.button.deletemethods"/></span></button>
+                        <button class="btn btn-success" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restresource.button.update"/></span></button>
+                        <button class="btn btn-primary" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="rest.restresource.button.updateendpoint"/></span></button>
+                        <button class="btn btn-danger" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restresource.button.deletemethods"/></span></button>
                     </c:otherwise>
                 </c:choose>
             </sec:authorize>

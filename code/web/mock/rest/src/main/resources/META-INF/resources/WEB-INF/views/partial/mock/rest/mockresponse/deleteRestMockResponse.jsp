@@ -21,6 +21,6 @@
 <spring:message code="rest.deleterestmockresponse.label.confirmation" arguments="${restMockResponse.name}"/>
 
 <p>
-<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}/delete/confirm"/>" class="button-error pure-button"><i class="fa fa-trash"></i> <spring:message code="rest.deleterestmockresponse.button.deleteresponse"/></a>
-<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.deleterestmockresponse.button.cancel"/></a>
+<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="rest.deleterestmockresponse.button.deleteresponse"/></a>
+<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/response/${restMockResponseId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.deleterestmockresponse.button.cancel"/></a>
 </p>

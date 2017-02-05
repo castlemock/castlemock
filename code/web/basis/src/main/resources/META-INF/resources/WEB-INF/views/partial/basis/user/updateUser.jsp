@@ -56,8 +56,8 @@
             </td>
         </tr>
     </table>
-    <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="general.updateuser.button.updateuser"/></button>
-    <a href="<c:url value="/web/user/${command.id}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="general.updateuser.button.discardchanges"/></a>
+    <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="general.updateuser.button.updateuser"/></button>
+    <a href="<c:url value="/web/user/${command.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.updateuser.button.discardchanges"/></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     
 </form:form>

@@ -51,14 +51,14 @@
                 <a class="button-success pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-plus"></i> <span><spring:message code="general.useroverview.button.createuser"/></span></a>
             </c:when>
             <c:otherwise>
-                <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="general.useroverview.button.createuser"/></span></button>
+                <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="general.useroverview.button.createuser"/></span></button>
             </c:otherwise>
         </c:choose>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>
 </fieldset>
 <h2 class="decorated"><span><spring:message code="general.useroverview.header.usertable"/></span></h2>
-<table class="entityTable sortable">
+<table class="table table-bordered table-striped table-hover sortable">
     <tr>
         <th><spring:message code="general.useroverview.column.name"/></th>
         <th><spring:message code="general.useroverview.column.email"/></th>
@@ -68,7 +68,7 @@
         <th><spring:message code="general.useroverview.column.updated"/></th>
     </tr>
     <c:forEach items="${users}" var="user" varStatus="loopStatus">
-        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+        <tr>
             <td><a href="<c:url value="/web/user/${user.id}"/>">${user.username}</a></td>
             <td><a href="<c:url value="/web/user/${user.id}"/>">${user.email}</a></td>
             <td><spring:message code="general.type.role.${user.role}"/></td>

@@ -58,13 +58,13 @@
         <c:when test="${event.request.httpHeaders.size() > 0}">
             <h3><span><spring:message code="soap.event.header.headers"/></span></h3>
             <div class="table-frame">
-                <table class="entityTable sortable">
+                <table class="table table-bordered table-striped table-hover sortable">
                     <tr>
                         <th><spring:message code="soap.event.column.headername"/></th>
                         <th><spring:message code="soap.event.column.headervalue"/></th>
                     </tr>
                     <c:forEach items="${event.request.httpHeaders}" var="httpHeader" varStatus="loopStatus">
-                        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                        <tr>
                             <td>${httpHeader.name}</td>
                             <td>${httpHeader.value}</td>
                         </tr>
@@ -92,13 +92,13 @@
         <c:when test="${event.response.httpHeaders.size() > 0}">
             <h3><span><spring:message code="soap.event.header.headers"/></span></h3>
             <div class="table-frame">
-                <table class="entityTable sortable">
+                <table class="table table-bordered table-striped table-hover sortable">
                     <tr>
                         <th><spring:message code="soap.event.column.headername"/></th>
                         <th><spring:message code="soap.event.column.headervalue"/></th>
                     </tr>
                     <c:forEach items="${event.response.httpHeaders}" var="httpHeader" varStatus="loopStatus">
-                        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                        <tr>
                             <td>${httpHeader.name}</td>
                             <td>${httpHeader.value}</td>
                         </tr>

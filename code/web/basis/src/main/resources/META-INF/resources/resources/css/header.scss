@@ -1,0 +1,95 @@
+// - - - - - - - - IMPORT - - - - - - - - - //
+
+@import "links";
+@import "responsive";
+@import "fonts";
+
+// - - - - - - - - - - - - - - - - - - - - -//
+
+.main-header {
+  width: 100%;
+  min-height: 41px;
+  background: #3E444D;
+  color: #fff;
+  border: 0px solid #000;
+  top: 0px;
+  font-size: 13px;
+  position: fixed;
+  z-index: 1;
+
+  a {
+    color: #fff;
+}
+
+  .logo {
+    float: left;
+    margin-top: 5px;
+    margin-left: 5%;
+    font-size: 30px;
+    a {
+      &:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+  }
+}
+
+  #header-logo {
+    height: 27px;
+}
+
+  .meta {
+    float: right;
+    margin-top: 10px;
+    margin-right: 5%;
+
+    .search  {
+      float: left;
+
+      form {
+        float: left;
+    }
+
+      input[type=text] {
+        width: 200px;
+        padding: 5px;
+        outline: none;
+        border: 2px solid #9EA1A6;
+        background-color: #9EA1A6;
+        font-size: 12px;
+        border-radius: 5px;
+        float: left;
+        position: relative;
+        top: -4px;
+        color: #fff;
+
+        &::-webkit-input-placeholder {
+          color: #fff;
+      }
+
+    }
+  }
+    .links {
+      float: right;
+      a {
+        text-decoration: none;
+
+        i {
+          margin: 0 10px;
+      }
+    }
+
+      .fa-2x {
+        font-size: 1.6em;
+
+    }
+
+      i {
+        &:hover {
+          color: #ddd;
+      }
+    }
+  }
+
+}
+}

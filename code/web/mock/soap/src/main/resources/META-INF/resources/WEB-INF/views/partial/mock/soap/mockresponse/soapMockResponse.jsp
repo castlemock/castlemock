@@ -28,7 +28,7 @@
                     <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapmockresponse.button.delete"/></span></a>
                 </c:when>
                 <c:otherwise>
-                    <a class="button-error pure-button" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponse.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapmockresponse.button.delete"/></span></a>
+                    <a class="btn btn-danger" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponse.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapmockresponse.button.delete"/></span></a>
                 </c:otherwise>
             </c:choose>
         </sec:authorize>
@@ -88,11 +88,11 @@
                     <td class="column2"><input type="text" name="headerValue" id="headerValueInput"></td>
                 </tr>
             </table>
-            <button class="button-success pure-button" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.addheader"/></span></button>
+            <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.addheader"/></span></button>
         </fieldset>
 
         <div class="table-frame">
-            <table class="entityTable sortable" id="headerTable">
+            <table class="table table-bordered table-striped table-hover sortable" id="headerTable">
                 <col width="4%">
                 <col width="48%">
                 <col width="48%">
@@ -117,11 +117,11 @@
                 <a class="button-secondary pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></a>
             </c:when>
             <c:otherwise>
-                <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></button>
+                <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></button>
             </c:otherwise>
         </c:choose>
     </sec:authorize>
-    <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="soap.soapmockresponse.button.discardchanges"/></span></a>
+    <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="soap.soapmockresponse.button.discardchanges"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
 <script src=<c:url value="/resources/js/headerTable.js"/>></script>

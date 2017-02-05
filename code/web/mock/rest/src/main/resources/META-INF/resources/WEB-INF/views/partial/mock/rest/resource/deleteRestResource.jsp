@@ -21,6 +21,6 @@
 <spring:message code="rest.deleteresource.label.confirmation" arguments="${restResource.name}"/>
 
 <p>
-<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/delete/confirm"/>" class="button-error pure-button"><i class="fa fa-trash"></i> <spring:message code="rest.deleteresource.button.deleteresource"/></a>
-<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="rest.deleteresource.button.cancel"/></a>
+<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="rest.deleteresource.button.deleteresource"/></a>
+<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.deleteresource.button.cancel"/></a>
 </p>

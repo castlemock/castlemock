@@ -63,8 +63,8 @@
         </table>
 
 
-        <button class="button-success pure-button" name="type" value="file"><i class="fa fa-upload"></i> <span><spring:message code="soap.soapaddwsdl.button.uploadfiles"/></span></button>
-        <a href="<c:url value="/web/soap/project/${soapProjectId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="soap.soapaddwsdl.button.cancel"/></a>
+        <button class="btn btn-success" name="type" value="file"><i class="fa fa-upload"></i> <span><spring:message code="soap.soapaddwsdl.button.uploadfiles"/></span></button>
+        <a href="<c:url value="/web/soap/project/${soapProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="soap.soapaddwsdl.button.cancel"/></a>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>
 </div>

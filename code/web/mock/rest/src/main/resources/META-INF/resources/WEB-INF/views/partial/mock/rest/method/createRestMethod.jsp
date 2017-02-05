@@ -37,8 +37,8 @@
         </tr>
     </table>
  
-    <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="rest.createmethod.button.createmethod"/></span></button>
-    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${resourceId}"/>" class="button-error pure-button"><i class="fa fa-times"></i> <span><spring:message code="rest.createmethod.button.cancel"/></span></a>
+    <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="rest.createmethod.button.createmethod"/></span></button>
+    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${resourceId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="rest.createmethod.button.cancel"/></span></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
 <script>

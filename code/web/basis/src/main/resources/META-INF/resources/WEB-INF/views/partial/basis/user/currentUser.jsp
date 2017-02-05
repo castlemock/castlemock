@@ -26,13 +26,13 @@
                     <a class="button-success pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
                 </c:when>
                 <c:otherwise>
-                    <a class="button-success pure-button" href="<c:url value="/web/me/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
+                    <a class="btn btn-success" href="<c:url value="/web/me/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
                 </c:otherwise>
             </c:choose>
         </div>
     </div>
 </div>
-<table class="entityTable">
+<table class="table">
     <tr>
         <td class="column1"><label path="username"><spring:message code="general.currentuser.label.username"/></label></td>
         <td class="column2"><label path="username">${user.username}</label></td>

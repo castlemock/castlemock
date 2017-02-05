@@ -29,17 +29,17 @@
                     <a class="button-secondary pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-upload"></i> <span><spring:message code="soap.soapproject.button.upload" arguments="wsdl"/></span></a>
                 </c:when>
                 <c:otherwise>
-                    <a class="button-success pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapproject.button.updateproject"/></span></a>
-                    <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/add/wsdl"/>"><i class="fa fa-upload"></i> <span><spring:message code="soap.soapproject.button.upload" arguments="wsdl"/></span></a>
+                    <a class="btn btn-success" href="<c:url value="/web/soap/project/${soapProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="soap.soapproject.button.updateproject"/></span></a>
+                    <a class="btn btn-primary" href="<c:url value="/web/soap/project/${soapProject.id}/add/wsdl"/>"><i class="fa fa-upload"></i> <span><spring:message code="soap.soapproject.button.upload" arguments="wsdl"/></span></a>
                 </c:otherwise>
             </c:choose>
-        <a class="button-secondary pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="soap.soapproject.button.export"/></span></a>
+        <a class="btn btn-primary" href="<c:url value="/web/soap/project/${soapProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="soap.soapproject.button.export"/></span></a>
             <c:choose>
                 <c:when test="${demoMode}">
                     <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapproject.button.delete"/></span></a>
                 </c:when>
                 <c:otherwise>
-                    <a class="button-error pure-button" href="<c:url value="/web/soap/project/${soapProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapproject.button.delete"/></span></a>
+                    <a class="btn btn-danger" href="<c:url value="/web/soap/project/${soapProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapproject.button.delete"/></span></a>
                 </c:otherwise>
             </c:choose>
         </sec:authorize>
@@ -67,7 +67,7 @@
     <c:when test="${soapProject.ports.size() > 0}">
         <form:form action="${soap_port_update_url}/" method="POST"  commandName="soapPortModifierCommand">
             <div class="table-frame">
-                <table class="entityTable sortable">
+                <table class="table table-bordered table-striped table-hover sortable">
                     <col width="10%">
                     <col width="40%">
                     <tr>
@@ -78,7 +78,7 @@
                         </c:forEach>
                     </tr>
                     <c:forEach items="${soapProject.ports}" var="soapPort" varStatus="loopStatus">
-                        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                        <tr>
                             <td><form:checkbox path="soapPortIds" name="${soapPort.id}" value="${soapPort.id}"/></td>
                             <td><a href="<c:url value="/web/soap/project/${soapProject.id}/port/${soapPort.id}"/>">${soapPort.name}</a></td>
                             <c:forEach items="${soapOperationStatuses}" var="soapOperationStatus">
@@ -101,9 +101,9 @@
                         <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapproject.button.deleteport"/></span></a>
                     </c:when>
                     <c:otherwise>
-                        <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapproject.button.update"/></span></button>
-                        <button class="button-secondary pure-button" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="soap.soapproject.button.updateendpoint"/></span></button>
-                        <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapproject.button.deleteport"/></span></button>
+                        <button class="btn btn-success" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapproject.button.update"/></span></button>
+                        <button class="btn btn-primary" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="soap.soapproject.button.updateendpoint"/></span></button>
+                        <button class="btn btn-danger" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapproject.button.deleteport"/></span></button>
                     </c:otherwise>
                 </c:choose>
             </sec:authorize>

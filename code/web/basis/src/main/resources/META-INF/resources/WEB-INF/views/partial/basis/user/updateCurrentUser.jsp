@@ -38,8 +38,8 @@
             <td class="column2"><form:password path="verifiedPassword" />
         </tr>
     </table>
-    <button class="button-success pure-button" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="general.updatecurrentuser.button.updateuser"/></button>
-    <a href="<c:url value="/web/me"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="general.updatecurrentuser.button.discardchanges"/></a>
+    <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="general.updatecurrentuser.button.updateuser"/></button>
+    <a href="<c:url value="/web/me"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.updatecurrentuser.button.discardchanges"/></a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form:form>
 <script>

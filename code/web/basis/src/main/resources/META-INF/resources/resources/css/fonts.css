@@ -1,9 +1,9 @@
 @font-face {
   font-family: robotoThinFont;
-  src: url("../font/Roboto-Thin.ttf"); }
+  src: url("../font/roboto/Roboto-Thin.ttf"); }
 @font-face {
   font-family: robotoBoldFont;
-  src: url("../font/Roboto-Bold.ttf"); }
+  src: url("../font/roboto/Roboto-Bold.ttf"); }
 @font-face {
   font-family: robotoItalicFont;
   src: url("../font/Roboto-YhinItalic.ttf"); }

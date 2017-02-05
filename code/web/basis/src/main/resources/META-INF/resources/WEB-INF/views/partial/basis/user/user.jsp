@@ -26,13 +26,13 @@
                 <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.user.button.deleteuser"/></span></a>
             </c:when>
             <c:otherwise>
-                <a class="button-success pure-button" href="<c:url value="/web/user/${user.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.user.button.updateuser"/></span></a>
-                <a class="button-error pure-button" href="<c:url value="/web/user/${user.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.user.button.deleteuser"/></span></a>
+                <a class="btn btn-success" href="<c:url value="/web/user/${user.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.user.button.updateuser"/></span></a>
+                <a class="btn btn-danger" href="<c:url value="/web/user/${user.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.user.button.deleteuser"/></span></a>
             </c:otherwise>
         </c:choose>
     </div>
 </div>
-<table class="entityTable sortable">
+<table class="table table-bordered table-striped table-hover sortable">
     <tr>
         <td class="column1"><label path="username"><spring:message code="general.user.label.username"/></label></td>
         <td class="column2"><label path="username">${user.username}</label></td>

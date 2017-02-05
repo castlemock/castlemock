@@ -1,18 +1,18 @@
 @font-face {
   font-family: robotoThinFont;
-  src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/Roboto-Thin.ttf"); }
+  src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/roboto/Roboto-Thin.ttf"); }
 @font-face {
   font-family: robotoMediumFont;
-  src: local("Roboto Medium"), local("Roboto-Medium"), url("../font/Roboto-Medium.ttf"); }
+  src: local("Roboto Medium"), local("Roboto-Medium"), url("../font/roboto/Roboto-Medium.ttf"); }
 @font-face {
   font-family: robotoRegularFont;
-  src: local("Roboto Regular"), local("Roboto-Regular"), url("../font/Roboto-Regular.ttf"); }
+  src: local("Roboto Regular"), local("Roboto-Regular"), url("../font/roboto/Roboto-Regular.ttf"); }
 @font-face {
   font-family: robotoBoldFont;
-  src: local("Roboto Bold"), local("Roboto-Bold"), url("../font/Roboto-Bold.ttf"); }
+  src: local("Roboto Bold"), local("Roboto-Bold"), url("../font/roboto/Roboto-Bold.ttf"); }
 @font-face {
   font-family: robotoItalicFont;
-  src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url("../font/Roboto-ThinItalic.ttf"); }
+  src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url("../font/roboto/Roboto-ThinItalic.ttf"); }
 footer {
   position: fixed;
   bottom: 0px;
@@ -44,44 +44,51 @@ a {
   a:hover {
     text-decoration: underline; }
 
-.button-success {
+.btn-success {
   background: #1cb841;
   /* this is a green */ }
 
-.button-success,
-.button-error,
-.button-warning,
-.button-secondary {
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-primary,
+.btn-danger {
   color: white;
   border-radius: 4px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   margin: 0 3px;
   padding: 9px 11px;
   vertical-align: bottom; }
-  .button-success i,
-  .button-error i,
-  .button-warning i,
-  .button-secondary i {
-    font-size: 15px;
+  .btn-success i,
+  .btn-info i,
+  .btn-warning i,
+  .btn-primary i,
+  .btn-danger i {
     margin-right: 5px; }
 
-.button-success {
+.btn-success {
   background: #1cb841;
   /* this is a green */ }
 
-.button-error {
+.btn-danger {
   background: #ca3c3c;
   /* this is a maroon */ }
 
-.button-warning {
+.btn-warning {
   background: #df7514;
   /* this is an orange */ }
 
-.button-secondary {
+.btn-primary {
   background: #42b8dd;
   /* this is a light blue */ }
 
-.pure-button:hover {
+.btn {
+  font-size: 12px;
+  font-weight: normal;
+  text-decoration: none !important;
+  border: 0px; }
+
+.btn:hover {
   text-decoration: none !important; }
 
 @media screen and (max-width: 1000px) {
@@ -134,26 +141,26 @@ a {
     display: none; } }
 @font-face {
   font-family: robotoThinFont;
-  src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/Roboto-Thin.ttf"); }
+  src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/roboto/Roboto-Thin.ttf"); }
 @font-face {
   font-family: robotoMediumFont;
-  src: local("Roboto Medium"), local("Roboto-Medium"), url("../font/Roboto-Medium.ttf"); }
+  src: local("Roboto Medium"), local("Roboto-Medium"), url("../font/roboto/Roboto-Medium.ttf"); }
 @font-face {
   font-family: robotoRegularFont;
-  src: local("Roboto Regular"), local("Roboto-Regular"), url("../font/Roboto-Regular.ttf"); }
+  src: local("Roboto Regular"), local("Roboto-Regular"), url("../font/roboto/Roboto-Regular.ttf"); }
 @font-face {
   font-family: robotoBoldFont;
-  src: local("Roboto Bold"), local("Roboto-Bold"), url("../font/Roboto-Bold.ttf"); }
+  src: local("Roboto Bold"), local("Roboto-Bold"), url("../font/roboto/Roboto-Bold.ttf"); }
 @font-face {
   font-family: robotoItalicFont;
-  src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url("../font/Roboto-ThinItalic.ttf"); }
+  src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url("../font/roboto/Roboto-ThinItalic.ttf"); }
 body {
   background-color: #fbfbfb;
   font-family: robotoRegularFont;
   color: #666666; }
 
 #login-box {
-  width: 250px;
+  width: 350px;
   padding: 30px 40px;
   margin: 5% auto;
   font-size: 12px;

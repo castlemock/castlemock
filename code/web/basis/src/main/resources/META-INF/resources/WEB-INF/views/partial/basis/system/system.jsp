@@ -20,7 +20,7 @@
         <h1><spring:message code="general.system.header.system"/></h1>
     </div>
 </div>
-<table class="entityTable">
+<table class="table">
     <tr>
         <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.operatingsystemname"/></label></td>
         <td class="column2"><label path="javaVersion">${systemInformation.operatingSystemName}</label></td>

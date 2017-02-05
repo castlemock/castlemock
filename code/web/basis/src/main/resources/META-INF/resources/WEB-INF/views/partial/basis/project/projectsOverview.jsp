@@ -29,8 +29,8 @@
                 <a class="button-secondary pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a>
             </c:when>
             <c:otherwise>
-                <a class="button-success pure-button" href="<c:url value="/web/project/create"/>"><i class="fa fa-file"></i> <span><spring:message code="general.projectoverview.button.newproject"/></span></a>
-                <a class="button-secondary pure-button" href="<c:url value="/web/project/import"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a>
+                <a class="btn btn-success" href="<c:url value="/web/project/create"/>"><i class="fa fa-file"></i> <span><spring:message code="general.projectoverview.button.newproject"/></span></a>
+                <a class="btn btn-primary" href="<c:url value="/web/project/import"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a>
             </c:otherwise>
         </c:choose>
         </sec:authorize>
@@ -40,7 +40,7 @@
     <c:when test="${projects.size() > 0}">
         <form:form action="${project_url}" method="POST" commandName="projectModifierCommand">
             <div class="table-frame">
-                <table class="entityTable sortable">
+                <table class="table table-bordered table-striped table-hover sortable">
                     <col width="10%">
                     <col width="20%">
                     <col width="10%">
@@ -52,7 +52,7 @@
                         <th><spring:message code="general.projectoverview.column.description"/></th>
                     </tr>
                     <c:forEach items="${projects}" var="project" varStatus="loopStatus">
-                        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                        <tr>
                             <td><form:checkbox path="projects" name="${project.id}" value="${project.typeIdentifier.typeUrl}/${project.id}"/></td>
                             <td><a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>">${project.name}</a></td>
                             <td>${project.typeIdentifier.type}</td>
@@ -62,13 +62,13 @@
                 </table>
             </div>
             <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                <button class="button-secondary pure-button" type="submit" name="action" value="export"><i class="fa fa-cloud-download"></i> <span><spring:message code="general.projectoverview.button.exportprojects"/></span></button>
+                <button class="btn btn-primary" type="submit" name="action" value="export"><i class="fa fa-cloud-download"></i> <span><spring:message code="general.projectoverview.button.exportprojects"/></span></button>
                 <c:choose>
                     <c:when test="${demoMode}">
                         <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.projectoverview.button.deleteprojects"/></span></a>
                     </c:when>
                     <c:otherwise>
-                        <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="general.projectoverview.button.deleteprojects"/></span></button>
+                        <button class="btn btn-danger" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="general.projectoverview.button.deleteprojects"/></span></button>
                     </c:otherwise>
                 </c:choose>
             </sec:authorize>

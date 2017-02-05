@@ -21,6 +21,6 @@
 <spring:message code="soap.deletesoapmockresponse.label.confirmation" arguments="${soapMockResponse.name}"/>
 
 <p>
-<a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponseId}/delete/confirm"/>" class="button-error pure-button"><i class="fa fa-trash"></i> <spring:message code="soap.deletesoapmockresponse.button.deleteresponse"/></a>
-<a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponseId}"/>" class="button-secondary pure-button"><i class="fa fa-times"></i> <spring:message code="soap.deletesoapmockresponse.button.cancel"/></a>
+<a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponseId}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="soap.deletesoapmockresponse.button.deleteresponse"/></a>
+<a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponseId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="soap.deletesoapmockresponse.button.cancel"/></a>
 </p>

@@ -35,7 +35,7 @@
 	<div>
 		<p><spring:message code="general.error.notfound.message"/></p>
 
-		<a href="<c:url value="/login"/>" class="button-success pure-button"><i class="fa fa-sign-in"></i>Go to login page</a>
+		<a href="<c:url value="/login"/>" class="btn btn-success"><i class="fa fa-sign-in"></i>Go to login page</a>
 	</div>
 
 </section>

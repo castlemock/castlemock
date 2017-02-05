@@ -31,9 +31,9 @@
 
                 </c:when>
                 <c:otherwise>
-                    <a class="button-success pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
-                    <a class="button-secondary pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/create/response"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restmethod.button.createresponse"/></span></a>
-                    <a class="button-error pure-button" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.delete"/></span></a>
+                    <a class="btn btn-success" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
+                    <a class="btn btn-primary" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/create/response"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restmethod.button.createresponse"/></span></a>
+                    <a class="btn btn-danger" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.delete"/></span></a>
                 </c:otherwise>
             </c:choose>
         </sec:authorize>
@@ -83,7 +83,7 @@
         <c:when test="${restMethod.mockResponses.size() > 0}">
             <form:form action="${rest_mock_response_update_url}" method="POST"  commandName="restMockResponseModifierCommand">
                 <div class="table-frame">
-                    <table class="entityTable sortable">
+                    <table class="table table-bordered table-striped table-hover sortable">
                         <col width="10%">
                         <col width="50%">
                         <col width="20%">
@@ -95,7 +95,7 @@
                             <th><spring:message code="rest.restmethod.column.httpstatuscode"/></th>
                         </tr>
                         <c:forEach items="${restMethod.mockResponses}" var="restMockResponse" varStatus="loopStatus">
-                            <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                            <tr>
                                 <td><form:checkbox path="restMockResponseIds" name="${restMockResponse.id}" value="${restMockResponse.id}"/></td>
                                 <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
                                 <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.status}"/></td>
@@ -116,8 +116,8 @@
                             <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.deletemockresponses"/></span></a>
                         </c:when>
                         <c:otherwise>
-                            <button class="button-success pure-button" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restmethod.button.update"/></span></button>
-                            <button class="button-error pure-button" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.deletemockresponses"/></span></button>
+                            <button class="btn btn-success" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restmethod.button.update"/></span></button>
+                            <button class="btn btn-danger" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.deletemockresponses"/></span></button>
                         </c:otherwise>
                     </c:choose>
                 </sec:authorize>
@@ -135,7 +135,7 @@
     <c:choose>
         <c:when test="${restEvents.size() > 0}">
             <div class="table-frame">
-                <table class="entityTable sortable">
+                <table class="table table-bordered table-striped table-hover sortable">
                     <col width="10%">
                     <col width="40%">
                     <col width="25%">
@@ -147,7 +147,7 @@
                         <th><spring:message code="rest.restmethod.column.enddate"/></th>
                     </tr>
                     <c:forEach items="${restEvents}" var="event" varStatus="loopStatus">
-                        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                        <tr>
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.id}</a></td>
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.response.mockResponseName}</a></td>
                             <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.startDate}</a></td>

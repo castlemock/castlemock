@@ -20,11 +20,11 @@
         <h1><spring:message code="general.eventoverview.header.log"/></h1>
     </div>
     <div class="menu" align="right">
-        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')"><a class="button-error pure-button" href="<c:url value="/web/event/clear"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.eventoverview.button.clearlogs"/></span></a></sec:authorize>
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')"><a class="btn btn-danger" href="<c:url value="/web/event/clear"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.eventoverview.button.clearlogs"/></span></a></sec:authorize>
     </div>
 </div>
 <div class="table-frame">
-    <table class="entityTable sortable">
+    <table class="table table-bordered table-striped table-hover sortable">
         <col width="10%">
         <col width="30%">
         <col width="10%">
@@ -38,7 +38,7 @@
             <th><spring:message code="general.eventoverview.column.enddate"/></th>
         </tr>
         <c:forEach items="${events}" var="event" varStatus="loopStatus">
-            <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+            <tr>
                 <td><a href="<c:url value="/web/${event.typeIdentifier.typeUrl}/event/${event.id}"/>">${event.id}</a></td>
                 <td><a href="<c:url value="${event.resourceLink}"/>">${event.resourceName}</a></td>
                 <td><a href="<c:url value="/web/${event.typeIdentifier.typeUrl}/event/${event.id}"/>">${event.typeIdentifier.type}</a></td>
