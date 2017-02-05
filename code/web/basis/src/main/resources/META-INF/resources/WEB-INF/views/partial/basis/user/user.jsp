@@ -32,32 +32,31 @@
         </c:choose>
     </div>
 </div>
-<div class="table-responsive">
-    <table class="table table-striped table-hover sortable">
-        <tr>
-            <td class="column1"><label path="username"><spring:message code="general.user.label.username"/></label></td>
-            <td class="column2"><label path="username">${user.username}</label></td>
-        </tr>
-        <tr>
-            <td class="column1"><label path="email"><spring:message code="general.user.label.email"/></label></td>
-            <td class="column2"><label path="email">${user.email}</label></td>
-        </tr>
-        <tr>
-            <td class="column1"><label path="status"><spring:message code="general.user.label.status"/></label></td>
-            <td class="column2"><label path="status"><spring:message code="general.type.status.${user.status}"/></label></td>
-        </tr>
-        <tr>
-            <td class="column1"><label path="role"><spring:message code="general.user.label.role"/></label></td>
-            <td class="column2"><label path="role"><spring:message code="general.type.role.${user.role}"/></label></td>
-        </tr>
-        <tr>
-            <td class="column1"><label path="username"><spring:message code="general.user.label.created"/></label></td>
-            <td class="column2"><label path="username">${user.created}</label></td>
-        </tr>
-        <tr>
-            <td class="column1"><label path="updated"><spring:message code="general.user.label.updated"/></label></td>
-            <td class="column2"><label path="updated">${user.updated}</label></td>
-        </tr>
-    </table>
-</div>
+<table class="formTable">
+    <tr>
+        <td class="column1"><label path="username"><spring:message code="general.user.label.username"/></label></td>
+        <td class="column2"><label path="username">${user.username}</label></td>
+    </tr>
+    <tr>
+        <td class="column1"><label path="email"><spring:message code="general.user.label.email"/></label></td>
+        <td class="column2"><label path="email">${user.email}</label></td>
+    </tr>
+    <tr>
+        <td class="column1"><label path="status"><spring:message code="general.user.label.status"/></label></td>
+        <td class="column2"><label path="status"><spring:message code="general.type.status.${user.status}"/></label></td>
+    </tr>
+    <tr>
+        <td class="column1"><label path="role"><spring:message code="general.user.label.role"/></label></td>
+        <td class="column2"><label path="role"><spring:message code="general.type.role.${user.role}"/></label></td>
+    </tr>
+    <tr>
+        <td class="column1"><label path="username"><spring:message code="general.user.label.created"/></label></td>
+        <td class="column2"><label path="username">${user.created}</label></td>
+    </tr>
+    <tr>
+        <td class="column1"><label path="updated"><spring:message code="general.user.label.updated"/></label></td>
+        <td class="column2"><label path="updated">${user.updated}</label></td>
+    </tr>
+</table>
+
 
