@@ -161,7 +161,7 @@ a {
     color: #fff; }
   .main-header .logo {
     float: left;
-    margin-top: 5px;
+    margin-top: 2px;
     margin-left: 5%;
     font-size: 30px; }
     .main-header .logo a:hover {
@@ -192,7 +192,8 @@ a {
         .main-header .meta .search input[type=text]::-webkit-input-placeholder {
           color: #fff; }
     .main-header .meta .links {
-      float: right; }
+      float: right;
+      margin-top: 2px; }
       .main-header .meta .links a {
         text-decoration: none; }
         .main-header .meta .links a i {
