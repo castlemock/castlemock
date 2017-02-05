@@ -139,6 +139,9 @@ a {
     background-color: inherit;
     border-color: inherit;
     color: inherit; }
+    .main-header .navbar-default .navbar-form {
+      color: #000;
+      margin-top: 12px; }
     .main-header .navbar-default .container-fluid .navbar-collapse {
       border: 0px solid #3E444D; }
     .main-header .navbar-default .container-fluid .navbar-header {

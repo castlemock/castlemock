@@ -43,22 +43,12 @@
                     <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/system"><i class="fa fa-desktop fa-2x"></i><span class="title"> System</span></a></li></sec:authorize>
                     <li><a href="${context}/web/logout"><i class="fa fa-sign-out fa-2x"></i><span class="title"> Logout</span></a></li>
                 </ul>
-                <!--
-                <form class="navbar-form navbar-right">
+                <form:form action="${searchUrl}" method="POST" commandName="searchCommand" class="navbar-form navbar-right">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <form:input onfocus="this.placeholder = ''" type="text" path="query" placeholder="${searchPlaceholder}"></form:input>
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-                -->
+                </form:form>
             </div>
         </div>
     </nav>
-
-
-    <!--
-        <form:form action="${searchUrl}" method="POST" commandName="searchCommand">
-            <form:input onfocus="this.placeholder = ''" type="text" path="query" placeholder="${searchPlaceholder}"></form:input>
-        </form:form>
-     -->
 </header>
