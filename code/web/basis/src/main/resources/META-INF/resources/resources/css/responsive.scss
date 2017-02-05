@@ -11,17 +11,9 @@
         border-bottom: 0px solid #f0f0f0;
     }
 
-    aside {
-        visibility: hidden;
-        clear: both;
-        float: left;
-        display: none;
-    }
-
-
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 800px) {
 
     .main-header {
 
@@ -36,7 +28,7 @@
         }
     }
 }
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 600px) {
 
     .main-header {
         min-height: 65px;
@@ -50,9 +42,8 @@
             text-align: center;
 
             img {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
+                visibility: hidden;
+                display: none;
             }
         }
 

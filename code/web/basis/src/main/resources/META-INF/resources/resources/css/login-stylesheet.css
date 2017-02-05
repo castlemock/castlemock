@@ -98,20 +98,14 @@ a {
       width: 100%; }
 
   .main-header {
-    border-bottom: 0px solid #f0f0f0; }
-
-  aside {
-    visibility: hidden;
-    clear: both;
-    float: left;
-    display: none; } }
-@media screen and (max-width: 760px) {
+    border-bottom: 0px solid #f0f0f0; } }
+@media screen and (max-width: 800px) {
   .main-header .meta .search {
     visibility: hidden;
     clear: both;
     float: left;
     display: none; } }
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 600px) {
   .main-header {
     min-height: 65px;
     border-bottom: none;
@@ -122,9 +116,8 @@ a {
       margin-right: auto;
       text-align: center; }
       .main-header .logo img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto; }
+        visibility: hidden;
+        display: none; }
     .main-header .meta {
       width: 100%;
       float: left; }
