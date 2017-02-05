@@ -19,25 +19,46 @@
 <c:url var="searchUrl"  value="/web/search" />
 <spring:message code="general.header.input.search" var="searchPlaceholder"/>
 <header class="main-header">
-    <div class="logo">
-        <a href="${context}/web">Castle Mock <img src="${context}/resources/images/logo-landscape-white.png" id="header-logo"/></a>
-    </div>
 
-    <div class="meta">
-        <div class="search">
-            <form:form action="${searchUrl}" method="POST" commandName="searchCommand">
-                <form:input onfocus="this.placeholder = ''" type="text" path="query" placeholder="${searchPlaceholder}"></form:input>
-            </form:form>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand logo" href="${context}/web">Castle Mock  <img src="${context}/resources/images/logo-landscape-white.png" id="header-logo"/></a>
+            </div>
+
+            <div class="links collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="${context}/web"><i class="fa fa-home fa-2x"></i><span class="title"> Home</span></a></li>
+                    <li><a href="${context}/web/me"><i class="fa fa-user fa-2x"></i><span class="title"> Me</span></a></li>
+                    <li><a href="${context}/web/event"><i class="fa fa-file-text fa-2x"></i><span class="title"> Events</span></a></li>
+                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/configuration"><i class="fa fa-cogs fa-2x"></i><span class="title"> Configurations</span></a></li></sec:authorize>
+                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/user"><i class="fa fa-users fa-2x"></i><span class="title"> Users</span></a></li></sec:authorize>
+                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/system"><i class="fa fa-desktop fa-2x"></i><span class="title"> System</span></a></li></sec:authorize>
+                    <li><a href="${context}/web/logout"><i class="fa fa-sign-out fa-2x"></i><span class="title"> Logout</span></a></li>
+                </ul>
+                <!--
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                -->
+            </div>
         </div>
-        <nav class="links">
-            <a href="${context}/web"><i class="fa fa-home fa-2x"></i> </a>
-            <a href="${context}/web/me"><i class="fa fa-user fa-2x"></i> </a>
-            <a href="${context}/web/event"><i class="fa fa-file-text fa-2x"></i> </a>
-            <sec:authorize access="hasAuthority('ADMIN')"><a href="${context}/web/configuration"><i class="fa fa-cogs fa-2x"></i> </a></sec:authorize>
-            <sec:authorize access="hasAuthority('ADMIN')"><a href="${context}/web/user"><i class="fa fa-users fa-2x"></i> </a></sec:authorize>
-            <sec:authorize access="hasAuthority('ADMIN')"><a href="${context}/web/system"><i class="fa fa-desktop fa-2x"></i> </a></sec:authorize>
-            <a href="${context}/web/logout"><i class="fa fa-sign-out fa-2x"></i> </a>
-        </nav>
+    </nav>
 
-    </div>
+
+    <!--
+        <form:form action="${searchUrl}" method="POST" commandName="searchCommand">
+            <form:input onfocus="this.placeholder = ''" type="text" path="query" placeholder="${searchPlaceholder}"></form:input>
+        </form:form>
+     -->
 </header>

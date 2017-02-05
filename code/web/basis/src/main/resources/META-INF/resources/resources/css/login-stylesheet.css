@@ -91,47 +91,26 @@ a {
 .btn:hover {
   text-decoration: none !important; }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 767px) {
   .container {
     width: 100%; }
     .container section {
       width: 100%; }
 
-  .main-header {
-    border-bottom: 0px solid #f0f0f0; } }
-@media screen and (max-width: 800px) {
-  .main-header .meta .search {
-    visibility: hidden;
-    clear: both;
-    float: left;
-    display: none; } }
-@media screen and (max-width: 600px) {
-  .main-header {
-    min-height: 65px;
-    border-bottom: none;
-    padding-bottom: 12px; }
-    .main-header .logo {
-      width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center; }
-      .main-header .logo img {
-        visibility: hidden;
-        display: none; }
-    .main-header .meta {
-      width: 100%;
-      float: left; }
-      .main-header .meta .links {
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center; }
-
   .header-nav {
     visibility: hidden;
     clear: both;
     float: left;
-    display: none; } }
+    display: none; }
+
+  .main-header .meta .search {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none; }
+  .main-header .links .title {
+    visibility: visible;
+    display: initial; } }
 @font-face {
   font-family: robotoThinFont;
   src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/roboto/Roboto-Thin.ttf"); }
