@@ -33,8 +33,13 @@
                 <a class="navbar-brand logo" href="${context}/web">Castle Mock  <img src="${context}/resources/images/logo-landscape-white.png" id="header-logo"/></a>
             </div>
 
-            <div class="links collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="links nav navbar-nav navbar-right">
+                    <form:form action="${searchUrl}" method="POST" commandName="searchCommand" class="navbar-form navbar-left search">
+                        <div class="form-group">
+                            <form:input onfocus="this.placeholder = ''" type="text" path="query" placeholder="${searchPlaceholder}"></form:input>
+                        </div>
+                    </form:form>
                     <li><a href="${context}/web"><i class="fa fa-home fa-2x"></i><span class="title"> Home</span></a></li>
                     <li><a href="${context}/web/me"><i class="fa fa-user fa-2x"></i><span class="title"> Me</span></a></li>
                     <li><a href="${context}/web/event"><i class="fa fa-file-text fa-2x"></i><span class="title"> Events</span></a></li>
@@ -43,11 +48,6 @@
                     <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/system"><i class="fa fa-desktop fa-2x"></i><span class="title"> System</span></a></li></sec:authorize>
                     <li><a href="${context}/web/logout"><i class="fa fa-sign-out fa-2x"></i><span class="title"> Logout</span></a></li>
                 </ul>
-                <form:form action="${searchUrl}" method="POST" commandName="searchCommand" class="navbar-form navbar-right">
-                    <div class="form-group">
-                        <form:input onfocus="this.placeholder = ''" type="text" path="query" placeholder="${searchPlaceholder}"></form:input>
-                    </div>
-                </form:form>
             </div>
         </div>
     </nav>

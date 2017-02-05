@@ -8,7 +8,6 @@
 
 .main-header {
   width: 100%;
-  min-height: 41px;
   background: #3E444D;
   color: #fff;
   border: 0px solid #3E444D;
@@ -23,7 +22,6 @@
 
     .navbar-form {
       color: #000;
-      margin-top: 12px;
     }
 
     .container-fluid {
@@ -72,47 +70,31 @@
 }
 
   #header-logo {
-    height: 27px;
-    margin-bottom: 10px;
-}
+    height: 30px;
+    margin-top: -10px;
+  }
 
-  .meta {
-    float: right;
-    margin-right: 5%;
+  .search  {
+    input[type=text] {
+      width: 200px;
+      padding: 5px;
+      outline: none;
+      margin-top: 1px;
+      border: 2px solid #9EA1A6;
+      background-color: #9EA1A6;
+      font-size: 12px;
+      border-radius: 5px;
+      color: #fff;
 
-    .search  {
-      float: left;
-
-      form {
-        float: left;
-    }
-
-      input[type=text] {
-        width: 200px;
-        padding: 5px;
-        outline: none;
-        border: 2px solid #9EA1A6;
-        background-color: #9EA1A6;
-        font-size: 12px;
-        border-radius: 5px;
-        float: left;
-        position: relative;
-        top: -4px;
+      &::-webkit-input-placeholder {
         color: #fff;
-
-        &::-webkit-input-placeholder {
-          color: #fff;
       }
 
     }
   }
 
-
-}
-
   .links {
     float: right;
-    margin-top: 0px;
     a {
       text-decoration: none;
       color: #fff;

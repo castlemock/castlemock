@@ -128,7 +128,6 @@ a {
   src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url("../font/roboto/Roboto-ThinItalic.ttf"); }
 .main-header {
   width: 100%;
-  min-height: 41px;
   background: #3E444D;
   color: #fff;
   border: 0px solid #3E444D;
@@ -140,8 +139,7 @@ a {
     border-color: inherit;
     color: inherit; }
     .main-header .navbar-default .navbar-form {
-      color: #000;
-      margin-top: 12px; }
+      color: #000; }
     .main-header .navbar-default .container-fluid .navbar-collapse {
       border: 0px solid #3E444D; }
     .main-header .navbar-default .container-fluid .navbar-header {
@@ -162,32 +160,22 @@ a {
       .main-header .logo a:hover {
         text-decoration: none; }
   .main-header #header-logo {
-    height: 27px;
-    margin-bottom: 10px; }
-  .main-header .meta {
-    float: right;
-    margin-right: 5%; }
-    .main-header .meta .search {
-      float: left; }
-      .main-header .meta .search form {
-        float: left; }
-      .main-header .meta .search input[type=text] {
-        width: 200px;
-        padding: 5px;
-        outline: none;
-        border: 2px solid #9EA1A6;
-        background-color: #9EA1A6;
-        font-size: 12px;
-        border-radius: 5px;
-        float: left;
-        position: relative;
-        top: -4px;
-        color: #fff; }
-        .main-header .meta .search input[type=text]::-webkit-input-placeholder {
-          color: #fff; }
+    height: 30px;
+    margin-top: -10px; }
+  .main-header .search input[type=text] {
+    width: 200px;
+    padding: 5px;
+    outline: none;
+    margin-top: 1px;
+    border: 2px solid #9EA1A6;
+    background-color: #9EA1A6;
+    font-size: 12px;
+    border-radius: 5px;
+    color: #fff; }
+    .main-header .search input[type=text]::-webkit-input-placeholder {
+      color: #fff; }
   .main-header .links {
-    float: right;
-    margin-top: 0px; }
+    float: right; }
     .main-header .links a {
       text-decoration: none;
       color: #fff; }
