@@ -91,7 +91,7 @@
             <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.addheader"/></span></button>
         </fieldset>
 
-        <div class="table-frame">
+        <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover sortable" id="headerTable">
                 <col width="4%">
                 <col width="48%">

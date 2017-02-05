@@ -121,11 +121,6 @@ section{
         }
     }
 
-    .table-frame {
-        border-radius: 4px;
-        margin: 10px 0 30px 0;
-    }
-
     .upload-link {
         width: 100%;
         border-bottom: 1px solid #ddd !important;
@@ -196,7 +191,6 @@ section{
     .formTable .column2 * {
         width: 100%;
         font-weight: normal;
-
     }
 
     .button {
@@ -234,6 +228,7 @@ section{
         font-size: 12px;
         padding: 3px 7px 2px 7px;
         font-weight: normal;
+        border-top: none;
     }
 
     th {
@@ -290,7 +285,15 @@ section{
 
 fieldset {
     border: 1px solid #ddd;
+    padding: 10px;
 }
+
+legend {
+    border-bottom: none;
+    width: auto;
+    font-size: 18px;
+}
+
 
 textarea {
     border: 1px solid #ddd;

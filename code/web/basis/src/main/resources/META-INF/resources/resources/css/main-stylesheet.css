@@ -406,9 +406,6 @@ section {
     section .upload-information i {
       display: inline-block;
       width: 50px; }
-  section .table-frame {
-    border-radius: 4px;
-    margin: 10px 0 30px 0; }
   section .upload-link {
     width: 100%;
     border-bottom: 1px solid #ddd !important; }
@@ -469,7 +466,8 @@ section {
   section td {
     font-size: 12px;
     padding: 3px 7px 2px 7px;
-    font-weight: normal; }
+    font-weight: normal;
+    border-top: none; }
   section th {
     font-weight: bold;
     font-size: 12px;
@@ -503,7 +501,13 @@ section {
     border-top: none; }
 
 fieldset {
-  border: 1px solid #ddd; }
+  border: 1px solid #ddd;
+  padding: 10px; }
+
+legend {
+  border-bottom: none;
+  width: auto;
+  font-size: 18px; }
 
 textarea {
   border: 1px solid #ddd; }

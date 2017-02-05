@@ -56,7 +56,7 @@
 <c:choose>
     <c:when test="${soapPort.operations.size() > 0}">
         <form:form action="${operation_update_url}" method="POST"  commandName="soapOperationModifierCommand">
-            <div class="table-frame">
+            <div class="table-responsive">
                 <table class="table table-striped table-hover sortable">
                     <col width="10%">
                     <col width="40%">

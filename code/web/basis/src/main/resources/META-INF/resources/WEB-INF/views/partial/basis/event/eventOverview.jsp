@@ -23,7 +23,7 @@
         <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')"><a class="btn btn-danger" href="<c:url value="/web/event/clear"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.eventoverview.button.clearlogs"/></span></a></sec:authorize>
     </div>
 </div>
-<div class="table-frame">
+<div class="table-responsive">
     <table class="table table-striped table-hover sortable">
         <col width="10%">
         <col width="30%">

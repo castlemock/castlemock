@@ -82,7 +82,7 @@
 
         <c:when test="${restMethod.mockResponses.size() > 0}">
             <form:form action="${rest_mock_response_update_url}" method="POST"  commandName="restMockResponseModifierCommand">
-                <div class="table-frame">
+                <div class="table-responsive">
                     <table class="table table-striped table-hover sortable">
                         <col width="10%">
                         <col width="50%">
@@ -134,7 +134,7 @@
     <h2 class="decorated"><span><spring:message code="rest.restmethod.header.events"/></span></h2>
     <c:choose>
         <c:when test="${restEvents.size() > 0}">
-            <div class="table-frame">
+            <div class="table-responsive">
                 <table class="table table-striped table-hover sortable">
                     <col width="10%">
                     <col width="40%">

@@ -40,7 +40,7 @@
                 <td class="column1"><form:checkbox path="generateResponse" title="Generate response"></form:checkbox></td>
             </tr>
         </table>
-        <button class="button button-success pure-button" type="submit" name="type" value="link"><i class="fa fa-upload"></i> <span><spring:message code="rest.restimportdefinition.button.link" arguments="${definitionDisplayName}"/></span></button>
+        <button class="btn btn-success" type="submit" name="type" value="link"><i class="fa fa-upload"></i> <span><spring:message code="rest.restimportdefinition.button.link" arguments="${definitionDisplayName}"/></span></button>
         <input type="hidden" name="definitionType" value="${definitionType}"/>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>

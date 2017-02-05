@@ -39,7 +39,7 @@
 <c:choose>
     <c:when test="${projects.size() > 0}">
         <form:form action="${project_url}" method="POST" commandName="projectModifierCommand">
-            <div class="table-frame">
+            <div class="table-responsive">
                 <table class="table table-striped table-hover sortable">
                     <col width="10%">
                     <col width="20%">

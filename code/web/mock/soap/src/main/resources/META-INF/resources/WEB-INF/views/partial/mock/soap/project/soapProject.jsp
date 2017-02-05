@@ -66,7 +66,7 @@
 <c:choose>
     <c:when test="${soapProject.ports.size() > 0}">
         <form:form action="${soap_port_update_url}/" method="POST"  commandName="soapPortModifierCommand">
-            <div class="table-frame">
+            <div class="table-responsive">
                 <table class="table table-striped table-hover sortable">
                     <col width="10%">
                     <col width="40%">
