@@ -71,7 +71,7 @@
     <c:when test="${restProject.applications.size() > 0}">
         <form:form action="${rest_resource_update_url}/" method="POST"  commandName="restApplicationModifierCommand">
             <div class="table-frame">
-                <table class="table table-bordered table-striped table-hover sortable">
+                <table class="table table-striped table-hover sortable">
                     <col width="10%">
                     <col width="40%">
 

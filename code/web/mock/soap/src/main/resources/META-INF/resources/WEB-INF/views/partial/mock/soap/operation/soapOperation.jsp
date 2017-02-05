@@ -93,7 +93,7 @@
         <c:when test="${soapOperation.mockResponses.size() > 0}">
             <form:form action="${soap_mock_response_update_url}" method="POST"  commandName="soapMockResponseModifierCommand">
                 <div class="table-frame">
-                    <table class="table table-bordered table-striped table-hover sortable">
+                    <table class="table table-striped table-hover sortable">
                         <col width="10%">
                         <col width="50%">
                         <col width="20%">
@@ -145,7 +145,7 @@
     <c:choose>
         <c:when test="${soapEvents.size() > 0}">
             <div class="table-frame">
-                <table class="table table-bordered table-striped table-hover sortable">
+                <table class="table table-striped table-hover sortable">
                     <col width="10%">
                     <col width="40%">
                     <col width="25%">

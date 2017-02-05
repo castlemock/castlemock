@@ -32,7 +32,7 @@
         </c:choose>
     </div>
 </div>
-<table class="table table-bordered table-striped table-hover sortable">
+<table class="table table-striped table-hover sortable">
     <tr>
         <td class="column1"><label path="username"><spring:message code="general.user.label.username"/></label></td>
         <td class="column2"><label path="username">${user.username}</label></td>

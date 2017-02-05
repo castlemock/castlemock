@@ -60,7 +60,7 @@
     <c:when test="${restResource.methods.size() > 0}">
         <form:form action="${rest_method_update_url}/" method="POST"  commandName="restMethodModifierCommand">
             <div class="table-frame">
-                <table class="table table-bordered table-striped table-hover sortable">
+                <table class="table table-striped table-hover sortable">
                     <col width="10%">
                     <col width="30%">
                     <col width="10%">

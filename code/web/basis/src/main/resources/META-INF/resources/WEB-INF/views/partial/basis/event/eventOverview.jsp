@@ -24,7 +24,7 @@
     </div>
 </div>
 <div class="table-frame">
-    <table class="table table-bordered table-striped table-hover sortable">
+    <table class="table table-striped table-hover sortable">
         <col width="10%">
         <col width="30%">
         <col width="10%">

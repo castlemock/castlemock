@@ -58,7 +58,7 @@
     </form:form>
 </fieldset>
 <h2 class="decorated"><span><spring:message code="general.useroverview.header.usertable"/></span></h2>
-<table class="table table-bordered table-striped table-hover sortable">
+<table class="table table-striped table-hover sortable">
     <tr>
         <th><spring:message code="general.useroverview.column.name"/></th>
         <th><spring:message code="general.useroverview.column.email"/></th>

@@ -23,7 +23,6 @@
         <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/bootstrap.min.css"/>">
         <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome/css/font-awesome.css"/>">
         <link rel="stylesheet" href="<c:url value="/resources/css/login-stylesheet.css"/>">
-        <link rel="stylesheet" href="<c:url value="/resources/css/flags/flags.css"/>">
     </head>
     <body onload='document.loginForm.username.focus();'>
 

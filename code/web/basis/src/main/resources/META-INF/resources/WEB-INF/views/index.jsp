@@ -22,7 +22,6 @@
       <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/bootstrap.min.css"/>">
       <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome/css/font-awesome.css"/>">
       <link rel="stylesheet" href="<c:url value="/resources/css/main-stylesheet.css"/>">
-      <link rel="stylesheet" href="<c:url value="/resources/css/flags/flags.css"/>">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/jquery/jquery-2.1.4.min.js"/>"></script>
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/bootstrap/bootstrap.js"/>"></script>

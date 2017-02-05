@@ -408,7 +408,6 @@ section {
       width: 50px; }
   section .table-frame {
     border-radius: 4px;
-    border: 1px solid #f0f0f0;
     margin: 10px 0 30px 0; }
   section .upload-link {
     width: 100%;
@@ -452,20 +451,19 @@ section {
   section .formTable .column2 * {
     width: 100%;
     font-weight: normal; }
-  section .entityTable {
-    width: 100%;
-    align: left;
-    border: 1px solid #f0f0f0; }
   section .button {
     margin: 10px 3px; }
   section a {
     color: #666666;
     text-decoration: underline; }
   section table {
+    align: left;
     border-collapse: collapse;
     position: relative; }
     section table tr {
       height: 35px; }
+  section .table {
+    border: 1px solid #f0f0f0; }
   section th:first-child, section td:first-child {
     padding: 0 0 0 10px; }
   section td {
