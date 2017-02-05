@@ -48,7 +48,7 @@
         </table>
         <c:choose>
             <c:when test="${demoMode}">
-                <a class="button-success pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-plus"></i> <span><spring:message code="general.useroverview.button.createuser"/></span></a>
+                <a class="btn btn-success" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-plus"></i> <span><spring:message code="general.useroverview.button.createuser"/></span></a>
             </c:when>
             <c:otherwise>
                 <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="general.useroverview.button.createuser"/></span></button>

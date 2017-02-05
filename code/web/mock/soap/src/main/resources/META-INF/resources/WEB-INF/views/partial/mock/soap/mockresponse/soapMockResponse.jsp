@@ -25,7 +25,7 @@
         <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
             <c:choose>
                 <c:when test="${demoMode}">
-                    <a class="button-error pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapmockresponse.button.delete"/></span></a>
+                    <a class="btn btn-danger" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapmockresponse.button.delete"/></span></a>
                 </c:when>
                 <c:otherwise>
                     <a class="btn btn-danger" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponse.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapmockresponse.button.delete"/></span></a>
@@ -114,7 +114,7 @@
     <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
         <c:choose>
             <c:when test="${demoMode}">
-                <a class="button-secondary pure-button pure-button-disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></a>
+                <a class="btn btn-primary" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-plus"></i> <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></a>
             </c:when>
             <c:otherwise>
                 <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></button>
