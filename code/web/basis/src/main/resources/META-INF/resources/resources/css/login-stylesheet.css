@@ -91,7 +91,7 @@ a {
 .btn:hover {
   text-decoration: none !important; }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 850px) {
   .container {
     width: 100%; }
     .container section {

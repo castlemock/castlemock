@@ -91,7 +91,7 @@ a {
 .btn:hover {
   text-decoration: none !important; }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 850px) {
   .container {
     width: 100%; }
     .container section {
@@ -153,7 +153,6 @@ a {
   .main-header .logo {
     float: left;
     margin-top: 2px;
-    margin-left: 5%;
     font-size: 30px; }
     .main-header .logo a {
       color: #fff; }
@@ -243,7 +242,7 @@ a {
 .btn:hover {
   text-decoration: none !important; }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 850px) {
   .container {
     width: 100%; }
     .container section {
