@@ -27,37 +27,41 @@
         <div class="content-top">
         <h1><spring:message code="general.useroverview.header.users"/></h1>
         </div>
-        <fieldset>
-            <legend><spring:message code="general.useroverview.field.createuser"/></legend>
-            <form:form action="${create_user_url}" method="POST">
-                <table class="formTable">
-                    <tr>
-                        <td class="column1"><form:label path="username"><spring:message code="general.useroverview.label.username"/></form:label></td>
-                        <td class="column2"><form:input path="username" id="userUsernameInput" />
-                    </tr>
-                    <tr>
-                        <td class="column1"><form:label path="password"><spring:message code="general.useroverview.label.password"/></form:label></td>
-                        <td class="column2"><form:password path="password" id="userPasswordInput"/>
-                    </tr>
-                    <tr>
-                        <td class="column1"><form:label path="email"><spring:message code="general.useroverview.label.email"/></form:label></td>
-                        <td class="column2"><form:input path="email" />
-                    </tr>
-                    <tr>
-                        <td class="column1"><spring:message code="general.useroverview.label.role"/></td>
-                        <td>
-                            <form:select path="role">
-                                <c:forEach items="${roles}" var="role">
-                                    <option value="${role}"><spring:message code="general.type.role.${role}"/></option>
-                                </c:forEach>
-                            </form:select>
-                        </td>
-                    </tr>
-                </table>
-                <button class="btn btn-success demo-button-disabled" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="general.useroverview.button.createuser"/></span></button>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            </form:form>
-        </fieldset>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><spring:message code="general.useroverview.field.createuser"/></h3>
+            </div>
+            <div class="panel-body">
+                <form:form action="${create_user_url}" method="POST">
+                    <table class="formTable">
+                        <tr>
+                            <td class="column1"><form:label path="username"><spring:message code="general.useroverview.label.username"/></form:label></td>
+                            <td class="column2"><form:input path="username" id="userUsernameInput" />
+                        </tr>
+                        <tr>
+                            <td class="column1"><form:label path="password"><spring:message code="general.useroverview.label.password"/></form:label></td>
+                            <td class="column2"><form:password path="password" id="userPasswordInput"/>
+                        </tr>
+                        <tr>
+                            <td class="column1"><form:label path="email"><spring:message code="general.useroverview.label.email"/></form:label></td>
+                            <td class="column2"><form:input path="email" />
+                        </tr>
+                        <tr>
+                            <td class="column1"><spring:message code="general.useroverview.label.role"/></td>
+                            <td>
+                                <form:select path="role">
+                                    <c:forEach items="${roles}" var="role">
+                                        <option value="${role}"><spring:message code="general.type.role.${role}"/></option>
+                                    </c:forEach>
+                                </form:select>
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="btn btn-success demo-button-disabled" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="general.useroverview.button.createuser"/></span></button>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form:form>
+            </div>
+        </div>
         <h2 class="decorated"><span><spring:message code="general.useroverview.header.usertable"/></span></h2>
         <div class="table-responsive">
             <table class="table table-striped table-hover sortable">

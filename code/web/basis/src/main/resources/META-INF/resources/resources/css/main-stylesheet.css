@@ -491,15 +491,6 @@ section {
   .question:first-child {
     border-top: none; }
 
-fieldset {
-  border: 1px solid #ddd;
-  padding: 10px; }
-
-legend {
-  border-bottom: none;
-  width: auto;
-  font-size: 18px; }
-
 textarea {
   border: 1px solid #ddd; }
 
