@@ -50,6 +50,16 @@ body {
     absolute: relative;
 }
 
+.navigation {
+    width: 100%;
+    left: 0px;
+    right: 0px;
+
+    a {
+        color: #666666;
+    }
+}
+
 .header-nav {
     font-size: 13px;
     text-decoration: none;

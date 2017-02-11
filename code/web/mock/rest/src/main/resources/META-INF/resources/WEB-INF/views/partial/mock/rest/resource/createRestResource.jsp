@@ -16,26 +16,38 @@
   --%>
 
 <c:url var="create_rest_resource_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/create/resource" />
-<div class="content-top">
-    <h1><spring:message code="rest.createresource.header.resource"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}"><spring:message code="rest.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}/application/${restApplicationId}"><spring:message code="rest.breadcrumb.application"/></a></li>
+        <li class="active"><spring:message code="rest.createresource.header.resource"/></li>
+    </ol>
 </div>
-<form:form action="${create_rest_resource_url}" method="POST" commandName="restResource">
-    <table class="formTable">
-        <tr>
-            <td class="column1"><label><spring:message code="rest.createresource.label.name"/></label></td>
-            <td class="column2"><form:input id="restResourceNameInput" path="name" /></td>
-        </tr>
-        <tr>
-            <td class="column1"><label><spring:message code="rest.createresource.label.uri"/></label></td>
-            <td class="column2"><form:input id="restResourceUriInput" path="uri" /></td>
-            <td class="information" title="<spring:message code="rest.createresource.tooltip.uri"/>"><i class="fa fa-question-circle fa-1x"></i></td>
-        </tr>
-    </table>
- 
-    <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="rest.createresource.button.createresource"/></span></button>
-    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="rest.createresource.button.cancel"/></span></a>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form:form>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="rest.createresource.header.resource"/></h1>
+        </div>
+        <form:form action="${create_rest_resource_url}" method="POST" commandName="restResource">
+            <table class="formTable">
+                <tr>
+                    <td class="column1"><label><spring:message code="rest.createresource.label.name"/></label></td>
+                    <td class="column2"><form:input id="restResourceNameInput" path="name" /></td>
+                </tr>
+                <tr>
+                    <td class="column1"><label><spring:message code="rest.createresource.label.uri"/></label></td>
+                    <td class="column2"><form:input id="restResourceUriInput" path="uri" /></td>
+                    <td class="information" title="<spring:message code="rest.createresource.tooltip.uri"/>"><i class="fa fa-question-circle fa-1x"></i></td>
+                </tr>
+            </table>
+
+            <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="rest.createresource.button.createresource"/></span></button>
+            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="rest.createresource.button.cancel"/></span></a>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form:form>
+    </section>
+</div>
 <script>
     $("#restResourceNameInput").attr('required', '');
     $("#restResourceUriInput").attr('required', '');

@@ -15,53 +15,62 @@
 --%>
 
 <%@ include file="../../../includes.jspf"%>
-<div class="content-top">
-    <div class="title">
-        <h1><spring:message code="general.system.header.system"/></h1>
-    </div>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li class="active"><spring:message code="general.system.header.system"/></li>
+    </ol>
 </div>
-<table class="table">
-    <tr>
-        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.operatingsystemname"/></label></td>
-        <td class="column2"><label path="javaVersion">${systemInformation.operatingSystemName}</label></td>
-    </tr>
-    <tr>
-        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.javaversion"/></label></td>
-        <td class="column2"><label path="javaVersion">${systemInformation.javaVersion}</label></td>
-    </tr>
-    <tr>
-        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.javavendor"/></label></td>
-        <td class="column2"><label path="javaVersion">${systemInformation.javaVendor}</label></td>
-    </tr>
-    <tr>
-        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.tomcatinfo"/></label></td>
-        <td class="column2"><label path="javaVersion">${systemInformation.tomcatInfo}</label></td>
-    </tr>
-    <tr>
-        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.tomcatbuilt"/></label></td>
-        <td class="column2"><label path="javaVersion">${systemInformation.tomcatBuilt}</label></td>
-    </tr>
-    <tr>
-        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.tomcatversion"/></label></td>
-        <td class="column2"><label path="javaVersion">${systemInformation.tomcatVersion}</label></td>
-    </tr>
-    <tr>
-        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.totalmemory"/></label></td>
-        <td class="column2"><label path="javaVersion">${systemInformation.totalMemory}  MB</label></td>
-    </tr>
-    <tr>
-        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.maxmemory"/></label></td>
-        <td class="column2"><label path="javaVersion">${systemInformation.maxMemory}  MB</label></td>
-    </tr>
-    <tr>
-        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.freememory"/></label></td>
-        <td class="column2"><label path="javaVersion">${systemInformation.freeMemory} MB</label></td>
-    </tr>
-    <tr>
-        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.availableprocessors"/></label></td>
-        <td class="column2"><label path="javaVersion">${systemInformation.availableProcessors}</label></td>
-    </tr>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <div class="title">
+                <h1><spring:message code="general.system.header.system"/></h1>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.operatingsystemname"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.operatingSystemName}</label></td>
+            </tr>
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.javaversion"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.javaVersion}</label></td>
+            </tr>
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.javavendor"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.javaVendor}</label></td>
+            </tr>
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.tomcatinfo"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.tomcatInfo}</label></td>
+            </tr>
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.tomcatbuilt"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.tomcatBuilt}</label></td>
+            </tr>
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.tomcatversion"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.tomcatVersion}</label></td>
+            </tr>
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.totalmemory"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.totalMemory}  MB</label></td>
+            </tr>
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.maxmemory"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.maxMemory}  MB</label></td>
+            </tr>
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.freememory"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.freeMemory} MB</label></td>
+            </tr>
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.availableprocessors"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.availableProcessors}</label></td>
+            </tr>
 
-</table>
-
+        </table>
+    </section>
+</div>
 

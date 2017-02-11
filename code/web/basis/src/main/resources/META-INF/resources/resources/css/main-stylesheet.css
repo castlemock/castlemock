@@ -164,7 +164,8 @@ a {
   .main-header .navbar-default {
     background-color: inherit;
     border-color: inherit;
-    color: inherit; }
+    color: inherit;
+    margin-bottom: 0px; }
     .main-header .navbar-default .navbar-form {
       color: #000; }
     .main-header .navbar-default .container-fluid .navbar-collapse {
@@ -337,6 +338,13 @@ body {
   height: 75%;
   margin: 0 auto;
   absolute: relative; }
+
+.navigation {
+  width: 100%;
+  left: 0px;
+  right: 0px; }
+  .navigation a {
+    color: #666666; }
 
 .header-nav {
   font-size: 13px;

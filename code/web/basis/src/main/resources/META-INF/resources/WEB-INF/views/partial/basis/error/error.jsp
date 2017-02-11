@@ -15,7 +15,16 @@
 --%>
 
 <%@ include file="../../../includes.jspf"%>
-<div class="content-top">
-    <h1>${title}</h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+    </ol>
 </div>
-${message}
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1>${title}</h1>
+        </div>
+        ${message}
+    </section>
+</div>

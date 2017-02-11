@@ -16,21 +16,32 @@
   --%>
 
 <c:url var="create_rest_application_url"  value="/web/rest/project/${restProjectId}/create/application" />
-<div class="content-top">
-    <h1><spring:message code="rest.createapplication.header.application"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}"><spring:message code="rest.breadcrumb.project"/></a></li>
+        <li class="active"><spring:message code="rest.createapplication.header.application"/></li>
+    </ol>
 </div>
-<form:form action="${create_rest_application_url}" method="POST" commandName="restApplication">
-    <table class="formTable">
-        <tr>
-            <td class="column1"><label><spring:message code="rest.createapplication.label.name"/></label></td>
-            <td class="column2"><form:input id="restApplicationNameInput" path="name" /></td>
-        </tr>
-    </table>
- 
-    <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="rest.createapplication.button.createapplication"/></span></button>
-    <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="rest.createapplication.button.cancel"/></span></a>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form:form>
-<script>
-    $("#restApplicationNameInput").attr('required', '');
-</script>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="rest.createapplication.header.application"/></h1>
+        </div>
+        <form:form action="${create_rest_application_url}" method="POST" commandName="restApplication">
+            <table class="formTable">
+                <tr>
+                    <td class="column1"><label><spring:message code="rest.createapplication.label.name"/></label></td>
+                    <td class="column2"><form:input id="restApplicationNameInput" path="name" /></td>
+                </tr>
+            </table>
+
+            <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="rest.createapplication.button.createapplication"/></span></button>
+            <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="rest.createapplication.button.cancel"/></span></a>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form:form>
+        <script>
+            $("#restApplicationNameInput").attr('required', '');
+        </script>
+    </section>
+</div>

@@ -15,13 +15,24 @@
 --%>
 
 <%@ include file="../../../includes.jspf"%>
-<div class="content-top">
-    <h1><spring:message code="general.clearevents.header.clearlogs"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/event"><spring:message code="general.breadcrumb.logs"/></a></li>
+        <li class="active"><spring:message code="general.clearevents.header.clearlogs"/></li>
+    </ol>
 </div>
-<p>
-    <spring:message code="general.clearevents.label.confirmation"/>
-</p>
-<p>
-    <a href="<c:url value="/web/event/clear/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="general.clearevents.button.clearlogs"/></a>
-    <a href="<c:url value="/web/event"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.clearevents.button.cancel"/></a>
-</p>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="general.clearevents.header.clearlogs"/></h1>
+        </div>
+        <p>
+            <spring:message code="general.clearevents.label.confirmation"/>
+        </p>
+        <p>
+            <a href="<c:url value="/web/event/clear/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="general.clearevents.button.clearlogs"/></a>
+            <a href="<c:url value="/web/event"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.clearevents.button.cancel"/></a>
+        </p>
+    </section>
+</div>

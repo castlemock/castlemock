@@ -16,32 +16,44 @@
 
 <%@ include file="../../../includes.jspf"%>
 <c:url var="update_current_user_url"  value="/web/me/update" />
-<div class="content-top">
-    <h1><spring:message code="general.updatecurrentuser.header.updateuser" arguments="${command.user.username}"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/user"><spring:message code="general.breadcrumb.users"/></a></li>
+        <li><a href="${context}/web/me">${command.user.username}</a></li>
+        <li class="active"><spring:message code="general.updatecurrentuser.header.updateuser" arguments="${command.user.username}"/></li>
+    </ol>
 </div>
-<form:form action="${update_current_user_url}" method="POST">
-    <table class="formTable">
-        <tr>
-            <td class="column1"><label><spring:message code="general.updatecurrentuser.label.username"/></label></td>
-            <td class="column2"><form:input path="user.username" id="userUsernameInput"/>
-        </tr>
-        <tr>
-            <td class="column1"><label><spring:message code="general.updatecurrentuser.label.email"/></label></td>
-            <td class="column2"><form:input path="user.email"  />
-        </tr>
-        <tr>
-            <td class="column1"><label><spring:message code="general.updatecurrentuser.label.password"/></label></td>
-            <td class="column2"><form:password path="user.password" />
-        </tr>
-        <tr>
-            <td class="column1"><label><spring:message code="general.updatecurrentuser.label.verifypassword"/></label></td>
-            <td class="column2"><form:password path="verifiedPassword" />
-        </tr>
-    </table>
-    <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="general.updatecurrentuser.button.updateuser"/></button>
-    <a href="<c:url value="/web/me"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.updatecurrentuser.button.discardchanges"/></a>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form:form>
-<script>
-    $("#userUsernameInput").attr('required', '');
-</script>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="general.updatecurrentuser.header.updateuser" arguments="${command.user.username}"/></h1>
+        </div>
+        <form:form action="${update_current_user_url}" method="POST">
+            <table class="formTable">
+                <tr>
+                    <td class="column1"><label><spring:message code="general.updatecurrentuser.label.username"/></label></td>
+                    <td class="column2"><form:input path="user.username" id="userUsernameInput"/>
+                </tr>
+                <tr>
+                    <td class="column1"><label><spring:message code="general.updatecurrentuser.label.email"/></label></td>
+                    <td class="column2"><form:input path="user.email"  />
+                </tr>
+                <tr>
+                    <td class="column1"><label><spring:message code="general.updatecurrentuser.label.password"/></label></td>
+                    <td class="column2"><form:password path="user.password" />
+                </tr>
+                <tr>
+                    <td class="column1"><label><spring:message code="general.updatecurrentuser.label.verifypassword"/></label></td>
+                    <td class="column2"><form:password path="verifiedPassword" />
+                </tr>
+            </table>
+            <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="general.updatecurrentuser.button.updateuser"/></button>
+            <a href="<c:url value="/web/me"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.updatecurrentuser.button.discardchanges"/></a>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form:form>
+        <script>
+            $("#userUsernameInput").attr('required', '');
+        </script>
+    </section>
+</div>

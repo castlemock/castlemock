@@ -16,28 +16,40 @@
   --%>
 
 <c:url var="delete_resources_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/delete/confirm" />
-<div class="content-top">
-    <h1><spring:message code="rest.deleteresources.header.deleteresources"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}"><spring:message code="rest.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}/application/${restApplicationId}"><spring:message code="rest.breadcrumb.application"/></a></li>
+        <li class="active"><spring:message code="rest.deleteresources.header.deleteresources"/></li>
+    </ol>
 </div>
-<c:choose>
-    <c:when test="${restResources.size() > 0}">
-        <p><spring:message code="rest.deleteresources.label.confirmation"/></p>
-        <form:form action="${delete_resources_url}" method="POST" commandName="deleteRestResourcesCommand">
-            <ul>
-                <c:forEach items="${restResources}" var="restResource" varStatus="loopStatus">
-                    <li>${restResource.name}</li>
-                    <form:hidden path="restResources[${loopStatus.index}].id" value="${restResource.id}"/>
-                </c:forEach>
-            </ul>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="rest.deleteresources.header.deleteresources"/></h1>
+        </div>
+        <c:choose>
+            <c:when test="${restResources.size() > 0}">
+                <p><spring:message code="rest.deleteresources.label.confirmation"/></p>
+                <form:form action="${delete_resources_url}" method="POST" commandName="deleteRestResourcesCommand">
+                    <ul>
+                        <c:forEach items="${restResources}" var="restResource" varStatus="loopStatus">
+                            <li>${restResource.name}</li>
+                            <form:hidden path="restResources[${loopStatus.index}].id" value="${restResource.id}"/>
+                        </c:forEach>
+                    </ul>
 
-            <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i> <span><spring:message code="rest.deleteresources.button.deleteresources"/></span></button>
-            <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.deleteresources.button.cancel"/></a>
-        </form:form>
-    </c:when>
-    <c:otherwise>
-        <spring:message code="rest.deleteresources.label.noresources"/>
-        <p>
-        <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.deleteresources.button.cancel"/></a>
-        </p>
-    </c:otherwise>
-</c:choose>
+                    <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i> <span><spring:message code="rest.deleteresources.button.deleteresources"/></span></button>
+                    <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.deleteresources.button.cancel"/></a>
+                </form:form>
+            </c:when>
+            <c:otherwise>
+                <spring:message code="rest.deleteresources.label.noresources"/>
+                <p>
+                <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.deleteresources.button.cancel"/></a>
+                </p>
+            </c:otherwise>
+        </c:choose>
+    </section>
+</div>

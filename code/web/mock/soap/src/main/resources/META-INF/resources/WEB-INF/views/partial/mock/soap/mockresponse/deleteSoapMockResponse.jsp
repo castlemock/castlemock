@@ -15,12 +15,26 @@
 --%>
 
 <%@ include file="../../../../includes.jspf"%>
-<div class="content-top">
-<h1><spring:message code="soap.deletesoapmockresponse.header.deleteresponse" arguments="${soapMockResponse.name}"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/soap/project/${soapProjectId}"><spring:message code="soap.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/soap/project/${soapProjectId}/port/${soapPortId}"><spring:message code="soap.breadcrumb.port"/></a></li>
+        <li><a href="${context}/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}"><spring:message code="soap.breadcrumb.operation"/></a></li>
+        <li><a href="${context}/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponseId}"><spring:message code="soap.breadcrumb.response"/></a></li>
+        <li class="active"><spring:message code="soap.deletesoapmockresponse.header.deleteresponse" arguments="${soapMockResponse.name}"/></li>
+    </ol>
 </div>
-<spring:message code="soap.deletesoapmockresponse.label.confirmation" arguments="${soapMockResponse.name}"/>
+<div class="container">
+    <section>
+        <div class="content-top">
+        <h1><spring:message code="soap.deletesoapmockresponse.header.deleteresponse" arguments="${soapMockResponse.name}"/></h1>
+        </div>
+        <spring:message code="soap.deletesoapmockresponse.label.confirmation" arguments="${soapMockResponse.name}"/>
 
-<p>
-<a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponseId}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="soap.deletesoapmockresponse.button.deleteresponse"/></a>
-<a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponseId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="soap.deletesoapmockresponse.button.cancel"/></a>
-</p>
+        <p>
+        <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponseId}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="soap.deletesoapmockresponse.button.deleteresponse"/></a>
+        <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}/response/${soapMockResponseId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="soap.deletesoapmockresponse.button.cancel"/></a>
+        </p>
+    </section>
+</div>

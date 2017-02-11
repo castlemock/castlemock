@@ -31,13 +31,7 @@
   </head>
     <body>
         <jsp:include page="header.jsp" />
-        <!--<jsp:include page="navigation.jsp" />-->
-
-        <div class="container">
-            <section>
-                    <jsp:include page="${partial}" />
-            </section>
-        </div>
+        <jsp:include page="${partial}" />
         <jsp:include page="footer.jsp" />
     </body>
 </html>

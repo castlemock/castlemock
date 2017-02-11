@@ -16,24 +16,35 @@
 
 <%@ include file="../../../includes.jspf"%>
 <c:url var="update_project_url"  value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}/update" />
-<div class="content-top">
-    <h1><spring:message code="general.updateproject.header.updateproject" arguments="${project.name}"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/${project.typeIdentifier.typeUrl}/project/${project.id}"><spring:message code="${project.typeIdentifier.typeUrl}.breadcrumb.project"/></a></li>
+        <li class="active"><spring:message code="general.updateproject.header.updateproject" arguments="${project.name}"/></li>
+    </ol>
 </div>
-<form:form action="${update_project_url}" method="POST" commandName="project">
-    <table class="formTable">
-        <tr>
-            <td class="column1"><form:label path="name"><spring:message code="general.updateproject.label.name"/></form:label></td>
-            <td class="column2"><form:input path="name" id="projectNameInput" value="${project.name}"/></td>
-        </tr>
-        <tr>
-            <td class="column1"><spring:message code="general.updateproject.label.description"/></td>
-            <td class="column2"><form:textarea rows="4" path="description"></form:textarea></td>
-        </tr>
-    </table>
-    <button class="btn btn-success"><i class="fa fa-check-circle"></i> <spring:message code="general.updateproject.button.updateproject"/></button>
-    <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.updateproject.button.discardchanges"/></a>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form:form>
-<script>
-    $("#projectNameInput").attr('required', '');
-</script>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="general.updateproject.header.updateproject" arguments="${project.name}"/></h1>
+        </div>
+        <form:form action="${update_project_url}" method="POST" commandName="project">
+            <table class="formTable">
+                <tr>
+                    <td class="column1"><form:label path="name"><spring:message code="general.updateproject.label.name"/></form:label></td>
+                    <td class="column2"><form:input path="name" id="projectNameInput" value="${project.name}"/></td>
+                </tr>
+                <tr>
+                    <td class="column1"><spring:message code="general.updateproject.label.description"/></td>
+                    <td class="column2"><form:textarea rows="4" path="description"></form:textarea></td>
+                </tr>
+            </table>
+            <button class="btn btn-success"><i class="fa fa-check-circle"></i> <spring:message code="general.updateproject.button.updateproject"/></button>
+            <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.updateproject.button.discardchanges"/></a>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form:form>
+        <script>
+            $("#projectNameInput").attr('required', '');
+        </script>
+    </section>
+</div>

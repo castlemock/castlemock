@@ -15,12 +15,24 @@
   ~ limitations under the License.
   --%>
 
-<div class="content-top">
-<h1><spring:message code="rest.deleteapplication.header.deleteapplication" arguments="${restApplication.name}"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}"><spring:message code="rest.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}/application/${restApplication.id}"><spring:message code="rest.breadcrumb.application"/></a></li>
+        <li class="active"><spring:message code="rest.deleteapplication.header.deleteapplication" arguments="${restApplication.name}"/></li>
+    </ol>
 </div>
-<spring:message code="rest.deleteapplication.label.confirmation" arguments="${restApplication.name}"/>
+<div class="container">
+    <section>
+        <div class="content-top">
+        <h1><spring:message code="rest.deleteapplication.header.deleteapplication" arguments="${restApplication.name}"/></h1>
+        </div>
+        <spring:message code="rest.deleteapplication.label.confirmation" arguments="${restApplication.name}"/>
 
-<p>
-<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="rest.deleteapplication.button.deleteapplication"/></a>
-<a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.deleteapplication.button.cancel"/></a>
-</p>
+        <p>
+        <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="rest.deleteapplication.button.deleteapplication"/></a>
+        <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.deleteapplication.button.cancel"/></a>
+        </p>
+    </section>
+</div>

@@ -16,31 +16,44 @@
   --%>
 
 <c:url var="create_rest_method_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/create/method" />
-<div class="content-top">
-    <h1><spring:message code="rest.createmethod.header.method"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}"><spring:message code="rest.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}/application/${restApplicationId}"><spring:message code="rest.breadcrumb.application"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}"><spring:message code="rest.breadcrumb.resource"/></a></li>
+        <li class="active"><spring:message code="rest.createmethod.header.method"/></li>
+    </ol>
 </div>
-<form:form action="${create_rest_method_url}" method="POST" commandName="restMethod">
-    <table class="formTable">
-        <tr>
-            <td class="column1"><label><spring:message code="rest.restresource.label.name"/></label></td>
-            <td class="column2"><form:input id="restMethodNameInput" path="restMethod.name" />
-        </tr>
-        <tr>
-            <td class="column1"><spring:message code="rest.createmethod.label.methodtype"/></td>
-            <td>
-                <form:select path="restMethod.httpMethod">
-                    <c:forEach items="${restMethodTypes}" var="type">
-                        <option value="${type}">${type}</option>
-                    </c:forEach>
-                </form:select>
-            </td>
-        </tr>
-    </table>
- 
-    <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="rest.createmethod.button.createmethod"/></span></button>
-    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${resourceId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="rest.createmethod.button.cancel"/></span></a>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form:form>
-<script>
-    $("#restMethodNameInput").attr('required', '');
-</script>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="rest.createmethod.header.method"/></h1>
+        </div>
+        <form:form action="${create_rest_method_url}" method="POST" commandName="restMethod">
+            <table class="formTable">
+                <tr>
+                    <td class="column1"><label><spring:message code="rest.restresource.label.name"/></label></td>
+                    <td class="column2"><form:input id="restMethodNameInput" path="restMethod.name" />
+                </tr>
+                <tr>
+                    <td class="column1"><spring:message code="rest.createmethod.label.methodtype"/></td>
+                    <td>
+                        <form:select path="restMethod.httpMethod">
+                            <c:forEach items="${restMethodTypes}" var="type">
+                                <option value="${type}">${type}</option>
+                            </c:forEach>
+                        </form:select>
+                    </td>
+                </tr>
+            </table>
+
+            <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="rest.createmethod.button.createmethod"/></span></button>
+            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${resourceId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="rest.createmethod.button.cancel"/></span></a>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form:form>
+        <script>
+            $("#restMethodNameInput").attr('required', '');
+        </script>
+    </section>
+</div>

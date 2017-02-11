@@ -15,12 +15,24 @@
 --%>
 
 <%@ include file="../../../includes.jspf"%>
-<div class="content-top">
-    <h1><spring:message code="general.deleteuser.header.deleteuser" arguments="${user.username}"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/user"><spring:message code="general.breadcrumb.users"/></a></li>
+        <li><a href="${context}/web/user/${user.id}">${user.username}</a></li>
+        <li class="active"><spring:message code="general.deleteuser.header.deleteuser" arguments="${user.username}"/></li>
+    </ol>
 </div>
-<spring:message code="general.deleteuser.label.confirmation" arguments="${user.username}"/>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="general.deleteuser.header.deleteuser" arguments="${user.username}"/></h1>
+        </div>
+        <spring:message code="general.deleteuser.label.confirmation" arguments="${user.username}"/>
 
-<p>
-    <a href="<c:url value="/web/user/${user.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="general.deleteuser.button.deleteuser"/></a>
-    <a href="<c:url value="/web/user/${user.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.deleteuser.button.cancel"/></a>
-</p>
+        <p>
+            <a href="<c:url value="/web/user/${user.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="general.deleteuser.button.deleteuser"/></a>
+            <a href="<c:url value="/web/user/${user.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.deleteuser.button.cancel"/></a>
+        </p>
+    </section>
+</div>

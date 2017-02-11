@@ -16,35 +16,45 @@
 
 <%@ include file="../../../includes.jspf"%>
 <c:url var="create_project_url"  value="/web/project/create" />
-<div class="content-top">
-    <h1><spring:message code="general.createproject.header"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li class="active"><spring:message code="general.createproject.header"/></li>
+    </ol>
 </div>
-<form:form action="${create_project_url}" method="POST">
-    <table class="formTable">
-        <tr>
-            <td class="column1"><label><spring:message code="general.createproject.label.name"/></label></td>
-            <td class="column2"><form:input id="projectNameInput" path="project.name"  />
-        </tr>
-        <tr>
-            <td class="column1"><spring:message code="general.createproject.label.description"/></td>
-            <td class="column2"><form:textarea rows="4" path="project.description"></form:textarea></td>
-        </tr>
-        <tr>
-            <td class="column1"><spring:message code="general.createproject.label.projecttype"/></td>
-            <td>
-                <form:select path="projectType">
-                    <c:forEach items="${projectTypes}" var="projectType">
-                        <option value="${projectType}">${projectType}</option>
-                    </c:forEach>
-                </form:select>
-            </td>
-        </tr>
-    </table>
- 
-    <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="general.createproject.button.createproject"/></span></button>
-    <a href="<c:url value="/web"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="general.createproject.button.cancel"/></span></a>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form:form>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="general.createproject.header"/></h1>
+        </div>
+        <form:form action="${create_project_url}" method="POST">
+            <table class="formTable">
+                <tr>
+                    <td class="column1"><label><spring:message code="general.createproject.label.name"/></label></td>
+                    <td class="column2"><form:input id="projectNameInput" path="project.name"  />
+                </tr>
+                <tr>
+                    <td class="column1"><spring:message code="general.createproject.label.description"/></td>
+                    <td class="column2"><form:textarea rows="4" path="project.description"></form:textarea></td>
+                </tr>
+                <tr>
+                    <td class="column1"><spring:message code="general.createproject.label.projecttype"/></td>
+                    <td>
+                        <form:select path="projectType">
+                            <c:forEach items="${projectTypes}" var="projectType">
+                                <option value="${projectType}">${projectType}</option>
+                            </c:forEach>
+                        </form:select>
+                    </td>
+                </tr>
+            </table>
+
+            <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="general.createproject.button.createproject"/></span></button>
+            <a href="<c:url value="/web"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="general.createproject.button.cancel"/></span></a>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form:form>
+    </section>
+</div>
 <script>
     $("#projectNameInput").attr('required', '');
 </script>

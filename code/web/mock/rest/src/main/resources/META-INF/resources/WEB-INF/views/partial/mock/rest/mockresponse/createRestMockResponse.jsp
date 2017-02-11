@@ -16,87 +16,101 @@
   --%>
 
 <c:url var="create_rest_mock_response_url"  value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}/create/response" />
-<div class="content-top">
-    <h1><spring:message code="rest.createrestmockresponse.header.createmockresponse"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}"><spring:message code="rest.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}/application/${restApplicationId}"><spring:message code="rest.breadcrumb.application"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}"><spring:message code="rest.breadcrumb.resource"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"><spring:message code="rest.breadcrumb.method"/></a></li>
+        <li class="active"><spring:message code="rest.createrestmockresponse.header.createmockresponse"/></li>
+    </ol>
 </div>
-<form:form action="${create_rest_mock_response_url}" method="POST" commandName="restMockResponse">
-    <div class="content-summary">
-        <table class="formTable">
-            <tr>
-                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.name"/></form:label></td>
-                <td class="column2"><form:input path="name" id="restMockResponseNameInput" /></td>
-            </tr>
-            <tr>
-                <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.createrestmockresponse.label.httpstatuscode"/></form:label></td>
-                <td class="column2"><form:input path="httpStatusCode" id="restMockResponseHttpResponseCodeInput" /></td>
-                <td><label id="httpCodeDefinitionLabel"><spring:message code="soap.createrestmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
-            </tr>
-            <tr>
-                <td class="column1"><form:label path="status"><spring:message code="rest.createrestmockresponse.label.status"/></form:label></td>
-                <td>
-                    <form:select path="status">
-                        <c:forEach items="${restMockResponseStatuses}" var="restMockResponseStatus">
-                            <spring:message var="label" code="rest.type.restmockresponsestatus.${restMockResponseStatus}"/>
-                            <form:option value="${restMockResponseStatus}" label="${label}"/>
-                        </c:forEach>
-                    </form:select>
-                </td>
-            </tr>
-            <tr>
-                <td class="column1"><form:label path="usingExpressions"><spring:message code="rest.createrestmockresponse.label.useexpressions"/></form:label></td>
-                <td class="column2"><form:checkbox path="usingExpressions"/></td>
-            </tr>
-        </table>
-    </div>
-
-    <div>
-        <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.header.body"/></span></h2>
-        <div class="editor">
-            <form:textarea id="body" path="body"/>
-            <div class="editorButtons">
-                <button id="formatXmlButton" type="button"><spring:message code="rest.createrestmockresponse.button.formatxml"/></button>
-                <button id="formatJsonButton" type="button"><spring:message code="rest.createrestmockresponse.button.formatjson"/></button>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="rest.createrestmockresponse.header.createmockresponse"/></h1>
+        </div>
+        <form:form action="${create_rest_mock_response_url}" method="POST" commandName="restMockResponse">
+            <div class="content-summary">
+                <table class="formTable">
+                    <tr>
+                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.name"/></form:label></td>
+                        <td class="column2"><form:input path="name" id="restMockResponseNameInput" /></td>
+                    </tr>
+                    <tr>
+                        <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.createrestmockresponse.label.httpstatuscode"/></form:label></td>
+                        <td class="column2"><form:input path="httpStatusCode" id="restMockResponseHttpResponseCodeInput" /></td>
+                        <td><label id="httpCodeDefinitionLabel"><spring:message code="soap.createrestmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="column1"><form:label path="status"><spring:message code="rest.createrestmockresponse.label.status"/></form:label></td>
+                        <td>
+                            <form:select path="status">
+                                <c:forEach items="${restMockResponseStatuses}" var="restMockResponseStatus">
+                                    <spring:message var="label" code="rest.type.restmockresponsestatus.${restMockResponseStatus}"/>
+                                    <form:option value="${restMockResponseStatus}" label="${label}"/>
+                                </c:forEach>
+                            </form:select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="column1"><form:label path="usingExpressions"><spring:message code="rest.createrestmockresponse.label.useexpressions"/></form:label></td>
+                        <td class="column2"><form:checkbox path="usingExpressions"/></td>
+                    </tr>
+                </table>
             </div>
-        </div>
-    </div>
 
-    <div>
-        <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.header.headers"/></span></h2>
+            <div>
+                <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.header.body"/></span></h2>
+                <div class="editor">
+                    <form:textarea id="body" path="body"/>
+                    <div class="editorButtons">
+                        <button id="formatXmlButton" type="button"><spring:message code="rest.createrestmockresponse.button.formatxml"/></button>
+                        <button id="formatJsonButton" type="button"><spring:message code="rest.createrestmockresponse.button.formatjson"/></button>
+                    </div>
+                </div>
+            </div>
 
-        <fieldset>
-            <legend><spring:message code="rest.createrestmockresponse.field.addheader"/></legend>
-            <table class="formTable">
-                <tr>
-                    <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.headername"/></form:label></td>
-                    <td class="column2"><input type="text" name="headerName" id="headerNameInput"></td>
-                </tr>
-                <tr>
-                    <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.headervalue"/></form:label></td>
-                    <td class="column2"><input type="text" name="headerValue" id="headerValueInput"></td>
-                </tr>
-            </table>
-            <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="rest.createrestmockresponse.button.addheader"/></span></button>
-        </fieldset>
+            <div>
+                <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.header.headers"/></span></h2>
 
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover sortable" id="headerTable">
-                <col width="4%">
-                <col width="48%">
-                <col width="48%">
-                <tr>
-                    <th></th>
-                    <th><spring:message code="rest.createrestmockresponse.column.headername"/></th>
-                    <th><spring:message code="rest.createrestmockresponse.column.headervalue"/></th>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-        <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="rest.createrestmockresponse.button.createmockresponse"/></span></button>
-    </sec:authorize>
-    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="rest.createrestmockresponse.button.cancel"/></span></a>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form:form>
+                <fieldset>
+                    <legend><spring:message code="rest.createrestmockresponse.field.addheader"/></legend>
+                    <table class="formTable">
+                        <tr>
+                            <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.headername"/></form:label></td>
+                            <td class="column2"><input type="text" name="headerName" id="headerNameInput"></td>
+                        </tr>
+                        <tr>
+                            <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.headervalue"/></form:label></td>
+                            <td class="column2"><input type="text" name="headerValue" id="headerValueInput"></td>
+                        </tr>
+                    </table>
+                    <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="rest.createrestmockresponse.button.addheader"/></span></button>
+                </fieldset>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover sortable" id="headerTable">
+                        <col width="4%">
+                        <col width="48%">
+                        <col width="48%">
+                        <tr>
+                            <th></th>
+                            <th><spring:message code="rest.createrestmockresponse.column.headername"/></th>
+                            <th><spring:message code="rest.createrestmockresponse.column.headervalue"/></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="rest.createrestmockresponse.button.createmockresponse"/></span></button>
+            </sec:authorize>
+            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="rest.createrestmockresponse.button.cancel"/></span></a>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form:form>
+    </section>
+</div>
 <script src=<c:url value="/resources/js/headerTable.js"/>></script>
 <script src=<c:url value="/resources/js/editor.js"/>></script>
 <script>

@@ -15,7 +15,6 @@
 --%>
 
 <%@ include file="includes.jspf"%>
-<c:set var="context" value="${pageContext.request.contextPath}"/>
 <c:url var="searchUrl"  value="/web/search" />
 <spring:message code="general.header.input.search" var="searchPlaceholder"/>
 <header class="main-header">
@@ -50,5 +49,6 @@
                 </ul>
             </div>
         </div>
+
     </nav>
 </header>

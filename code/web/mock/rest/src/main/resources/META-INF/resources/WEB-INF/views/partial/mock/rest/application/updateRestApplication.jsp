@@ -16,21 +16,33 @@
   --%>
 
 <c:url var="update_rest_application_url"  value="/web/rest/project/${restProjectId}/application/${restApplication.id}/update" />
-<div class="content-top">
-    <h1><spring:message code="rest.updaterestapplication.header.updateapplication" arguments="${restApplication.name}"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}"><spring:message code="rest.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/rest/project/${restProjectId}/application/${restApplication.id}"><spring:message code="rest.breadcrumb.application"/></a></li>
+        <li class="active"><spring:message code="rest.updaterestapplication.header.updateapplication" arguments="${restApplication.name}"/></li>
+    </ol>
 </div>
-<form:form action="${update_rest_application_url}" method="POST" commandName="restApplication">
-    <table class="formTable">
-        <tr>
-            <td class="column1"><label path="name"><spring:message code="rest.updaterestapplication.label.name"/></label></td>
-            <td class="column2"><form:input path="name" id="restApplicationNameInput" value="${restApplication.name}"/></td>
-        </tr>
-    </table>
-    
-    <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="rest.updaterestapplication.button.updateapplication"/></button>
-    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <spring:message code="rest.updaterestapplication.button.cancel"/></a>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form:form>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="rest.updaterestapplication.header.updateapplication" arguments="${restApplication.name}"/></h1>
+        </div>
+        <form:form action="${update_rest_application_url}" method="POST" commandName="restApplication">
+            <table class="formTable">
+                <tr>
+                    <td class="column1"><label path="name"><spring:message code="rest.updaterestapplication.label.name"/></label></td>
+                    <td class="column2"><form:input path="name" id="restApplicationNameInput" value="${restApplication.name}"/></td>
+                </tr>
+            </table>
+
+            <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="rest.updaterestapplication.button.updateapplication"/></button>
+            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplication.id}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <spring:message code="rest.updaterestapplication.button.cancel"/></a>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form:form>
+    </section>
+</div>
 <script>
     $("#restApplicationNameInput").attr('required', '');
 </script>

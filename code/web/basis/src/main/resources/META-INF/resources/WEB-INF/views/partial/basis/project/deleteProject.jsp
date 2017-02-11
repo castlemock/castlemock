@@ -15,11 +15,22 @@
 --%>
 
 <%@ include file="../../../includes.jspf"%>
-<div class="content-top">
-    <h1><spring:message code="general.deleteproject.header.deleteproject" arguments="${project.name}"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/${project.typeIdentifier.typeUrl}/project/${project.id}"><spring:message code="${project.typeIdentifier.typeUrl}.breadcrumb.project"/></a></li>
+        <li class="active"><spring:message code="general.deleteproject.header.deleteproject" arguments="${project.name}"/></li>
+    </ol>
 </div>
-<spring:message code="general.deleteproject.label.confirmation" arguments="${project.name}"/>
-<p>
-<a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="general.deleteproject.button.deleteproject"/></a>
-<a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.deleteproject.button.cancel"/></a>
-</p>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="general.deleteproject.header.deleteproject" arguments="${project.name}"/></h1>
+        </div>
+        <spring:message code="general.deleteproject.label.confirmation" arguments="${project.name}"/>
+        <p>
+        <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="general.deleteproject.button.deleteproject"/></a>
+        <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.deleteproject.button.cancel"/></a>
+        </p>
+    </section>
+</div>

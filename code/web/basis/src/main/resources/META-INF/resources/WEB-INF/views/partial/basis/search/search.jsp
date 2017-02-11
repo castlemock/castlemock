@@ -16,29 +16,39 @@
 
 <%@ include file="../../../includes.jspf"%>
 
-<div class="content-top">
-    <h1><spring:message code="general.search.header.results"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li class="active"><spring:message code="general.search.header.results"/></li>
+    </ol>
 </div>
-<c:choose>
-    <c:when test="${searchResults.size() > 0}">
-        <div class="table-responsive">
-            <table class="table table-striped table-hover sortable">
-                <col width="50%">
-                <col width="50%">
-                <tr>
-                    <th><spring:message code="general.search.column.title"/></th>
-                    <th><spring:message code="general.search.column.description"/></th>
-                </tr>
-                <c:forEach items="${searchResults}" var="searchResult" varStatus="loopStatus">
-                    <tr>
-                        <td><a href="<c:url value="/web/${searchResult.link}"/>">${searchResult.title}</a></td>
-                        <td>${searchResult.description}</td>
-                    </tr>
-                </c:forEach>
-            </table>
+<div class="container">
+    <section>
+        <div class="content-top">
+            <h1><spring:message code="general.search.header.results"/></h1>
         </div>
-    </c:when>
-    <c:otherwise>
-        <spring:message code="general.search.label.noresults"/>
-    </c:otherwise>
-</c:choose>
+        <c:choose>
+            <c:when test="${searchResults.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover sortable">
+                        <col width="50%">
+                        <col width="50%">
+                        <tr>
+                            <th><spring:message code="general.search.column.title"/></th>
+                            <th><spring:message code="general.search.column.description"/></th>
+                        </tr>
+                        <c:forEach items="${searchResults}" var="searchResult" varStatus="loopStatus">
+                            <tr>
+                                <td><a href="<c:url value="/web/${searchResult.link}"/>">${searchResult.title}</a></td>
+                                <td>${searchResult.description}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <spring:message code="general.search.label.noresults"/>
+            </c:otherwise>
+        </c:choose>
+    </section>
+</div>

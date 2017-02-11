@@ -15,12 +15,24 @@
 --%>
 
 <%@ include file="../../../../includes.jspf"%>
-<div class="content-top">
-<h1><spring:message code="soap.deletesoapport.header.deleleteport" arguments="${soapPort.name}"/></h1>
+<div class="navigation">
+    <ol class="breadcrumb">
+        <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+        <li><a href="${context}/web/soap/project/${soapProjectId}"><spring:message code="soap.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/soap/project/${soapProjectId}/port/${soapPort.id}"><spring:message code="soap.breadcrumb.port"/></a></li>
+        <li class="active"><spring:message code="soap.deletesoapport.header.deleleteport" arguments="${soapPort.name}"/></li>
+    </ol>
 </div>
-<spring:message code="soap.deletesoapport.label.confirmation" arguments="${soapPort.name}"/>
+<div class="container">
+    <section>
+        <div class="content-top">
+        <h1><spring:message code="soap.deletesoapport.header.deleleteport" arguments="${soapPort.name}"/></h1>
+        </div>
+        <spring:message code="soap.deletesoapport.label.confirmation" arguments="${soapPort.name}"/>
 
-<p>
-<a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="soap.deletesoapport.button.deleteport"/></a>
-<a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="soap.deletesoapport.button.cancel"/></a>
-</p>
+        <p>
+        <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="soap.deletesoapport.button.deleteport"/></a>
+        <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="soap.deletesoapport.button.cancel"/></a>
+        </p>
+    </section>
+</div>

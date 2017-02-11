@@ -15,6 +15,15 @@
 --%>
 
 <%@ include file="../../../includes.jspf"%>
-<div class="content-top">
-	<h1><spring:message code="general.error.notfound.message"/></h1>
+<div class="navigation">
+	<ol class="breadcrumb">
+		<li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
+	</ol>
+</div>
+<div class="container">
+	<section>
+		<div class="content-top">
+			<h1><spring:message code="general.error.notfound.message"/></h1>
+		</div>
+	</section>
 </div>
