@@ -23,7 +23,7 @@ const TABLE_CELL= "TD";
  * The method register the sorting actions for all tables with class entityTable.
  * @since 1.9
  */
-window.onload = function() {
+$(document).ready(function() {
     var tables = document.getElementsByClassName('sortable');
     for(var tableIndex = 0; tableIndex < tables.length; tableIndex++){
         var table = tables[tableIndex];
@@ -34,7 +34,7 @@ window.onload = function() {
             sortTable(table, column);
         }
     }
-};
+});
 
 
 /**

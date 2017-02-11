@@ -40,13 +40,13 @@
                             <form:input onfocus="this.placeholder = ''" type="text" path="query" placeholder="${searchPlaceholder}"></form:input>
                         </div>
                     </form:form>
-                    <li><a href="${context}/web"><i class="fa fa-home fa-2x"></i><span class="title"> Home</span></a></li>
-                    <li><a href="${context}/web/me"><i class="fa fa-user fa-2x"></i><span class="title"> Me</span></a></li>
-                    <li><a href="${context}/web/event"><i class="fa fa-file-text fa-2x"></i><span class="title"> Events</span></a></li>
-                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/configuration"><i class="fa fa-cogs fa-2x"></i><span class="title"> Configurations</span></a></li></sec:authorize>
-                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/user"><i class="fa fa-users fa-2x"></i><span class="title"> Users</span></a></li></sec:authorize>
-                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/system"><i class="fa fa-desktop fa-2x"></i><span class="title"> System</span></a></li></sec:authorize>
-                    <li><a href="${context}/web/logout"><i class="fa fa-sign-out fa-2x"></i><span class="title"> Logout</span></a></li>
+                    <li><a href="${context}/web" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.home"/>"><i class="fa fa-home fa-2x"></i><span class="title"> <spring:message code="general.menu.home"/></span></a></li>
+                    <li><a href="${context}/web/me" data-toggle="tooltip" data-placement="bottom" title="${loggedInUser}"><i class="fa fa-user fa-2x"></i><span class="title"> ${loggedInUser}</span></a></li>
+                    <li><a href="${context}/web/event" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.events"/>"><i class="fa fa-file-text fa-2x"></i><span class="title"> <spring:message code="general.menu.events"/></span></a></li>
+                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/configuration" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.configuration"/>"><i class="fa fa-cogs fa-2x"></i><span class="title"> <spring:message code="general.menu.configuration"/></span></a></li></sec:authorize>
+                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/user" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.users"/>"><i class="fa fa-users fa-2x"></i><span class="title"> <spring:message code="general.menu.users"/></span></a></li></sec:authorize>
+                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/system" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.system"/>"><i class="fa fa-desktop fa-2x"></i><span class="title"> <spring:message code="general.menu.system"/></span></a></li></sec:authorize>
+                    <li><a href="${context}/web/logout" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.logout"/>"><i class="fa fa-sign-out fa-2x"></i><span class="title"> <spring:message code="general.menu.logout"/></span></a></li>
                 </ul>
             </div>
         </div>

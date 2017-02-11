@@ -51,7 +51,7 @@ public abstract class AbstractViewController extends AbstractController {
     private static final String JSP = ".jsp";
     private static final String INDEX = "index";
     private static final String PARTIAL = "partial";
-    private static final String CONTENT_ITEM_GROUPS = "contentItemGroups";
+    private static final String LOGGED_IN_USER = "loggedInUser";
     private static final String SEARCH_COMMAND = "searchCommand";
 
     /**
@@ -89,81 +89,10 @@ public abstract class AbstractViewController extends AbstractController {
         final ModelAndView modelAndView = createModelAndView();
         modelAndView.setViewName(INDEX);
         modelAndView.addObject(PARTIAL, createPartial(page));
-        modelAndView.addObject(CONTENT_ITEM_GROUPS, createContentItemGroups(pageContentItems));
+        modelAndView.addObject(LOGGED_IN_USER, getLoggedInUsername());
         modelAndView.addObject(SEARCH_COMMAND, new SearchCommand());
         modelAndView.addObject(DEMO_MODE, demoMode);
         return modelAndView;
-    }
-
-    /**
-     * The method is responsible for creating the various content item groups that are displayed
-     * on all the pages (Except login page)
-     * @return A list of content item groups
-     * @see ContentItem
-     * @see ContentItemGroup
-     */
-    private List<ContentItemGroup> createContentItemGroups(final List<ContentItem> pageContentItems){
-        final List<ContentItemGroup> contentItemGroups = new ArrayList<ContentItemGroup>();
-        contentItemGroups.add(createMainContentItemGroup());
-        contentItemGroups.add(createPageContentItemGroup(pageContentItems));
-        return contentItemGroups;
-    }
-
-    /**
-     * The method is responsible for creating the main content item group. The main content group is static
-     * and will remain the same on all the pages
-     * @return The main content item group
-     * @see ContentItem
-     * @see ContentItemGroup
-     */
-    private ContentItemGroup createMainContentItemGroup(){
-        final String mainTitle = messageSource.getMessage("general.menu.title.main", null, LocaleContextHolder.getLocale());
-        final String homeTitle = messageSource.getMessage("general.menu.item.home", null, LocaleContextHolder.getLocale());
-        final String userTitle = getLoggedInUsername();
-        final String logTitle = messageSource.getMessage("general.menu.item.log", null, LocaleContextHolder.getLocale());
-        final String configurationTitle = messageSource.getMessage("general.menu.item.configuration", null, LocaleContextHolder.getLocale());
-        final String usersTitle = messageSource.getMessage("general.menu.item.users", null, LocaleContextHolder.getLocale());
-        final String logoutTitle = messageSource.getMessage("general.menu.item.logout", null, LocaleContextHolder.getLocale());
-        final String systemTitle = messageSource.getMessage("general.system.header.system", null, LocaleContextHolder.getLocale());
-
-        final List<ContentItem> mainContentItems = new ArrayList<ContentItem>();
-        final ContentItem homeContentItem = new ContentItem(homeTitle, getContext() + "/web", Role.READER, "fa fa-home fa-1x");
-        final ContentItem userContentItem = new ContentItem(userTitle, getContext() + "/web/me", Role.READER, "fa fa-user fa-1x");
-        final ContentItem logContentItem = new ContentItem(logTitle, getContext() + "/web/event", Role.READER, "fa fa-file-text fa-1x");
-        final ContentItem configurationContentItem = new ContentItem(configurationTitle, getContext() + "/web/configuration", Role.ADMIN, "fa fa-cogs fa-1x");
-        final ContentItem usersContentItem = new ContentItem(usersTitle, getContext() + "/web/user", Role.ADMIN, "fa fa-users fa-1x");
-        final ContentItem logoutContentItem = new ContentItem(logoutTitle, getContext() + "/web/logout", Role.READER, "fa fa-sign-out fa-1x");
-        final ContentItem systemContentItem = new ContentItem(systemTitle, getContext() + "/web/system", Role.ADMIN, "fa fa-desktop fa-1x");
-
-        mainContentItems.add(homeContentItem);
-        mainContentItems.add(userContentItem);
-        mainContentItems.add(logContentItem);
-        mainContentItems.add(configurationContentItem);
-        mainContentItems.add(usersContentItem);
-        mainContentItems.add(systemContentItem);
-        mainContentItems.add(logoutContentItem);
-
-        return new ContentItemGroup(mainTitle, mainContentItems);
-    }
-
-    /**
-     * The method creates a content item group with all the content items for the specific page.
-     * @param contentItems The content items that will be displayed on the specific page
-     * @return A content item group for the specific page
-     * @see ContentItem
-     * @see ContentItemGroup
-     */
-    private ContentItemGroup createPageContentItemGroup(final List<ContentItem> contentItems){
-        final String pageTitle = messageSource.getMessage("general.menu.title.page", null, LocaleContextHolder.getLocale());
-        ContentItemGroup contentItemGroup = null;
-
-        if(contentItems != null){
-            contentItemGroup = new ContentItemGroup(pageTitle, contentItems);
-        } else {
-            contentItemGroup = new ContentItemGroup(pageTitle, new ArrayList<ContentItem>());
-        }
-
-        return contentItemGroup;
     }
 
     /**

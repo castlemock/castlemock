@@ -27,6 +27,7 @@
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/bootstrap/bootstrap.js"/>"></script>
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/main-script.js"/>"></script>
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/table.js"/>"></script>
+      <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/tooltip.js"/>"></script>
   </head>
     <body>
         <jsp:include page="header.jsp" />
