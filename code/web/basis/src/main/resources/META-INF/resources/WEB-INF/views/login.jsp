@@ -33,10 +33,10 @@
             <div id="logo-text">Castle Mock</div>
 
             <c:if test="${not empty error}">
-                <div class="error">${error}</div>
+                <div class="alert alert-danger" role="alert">${error}</div>
             </c:if>
             <c:if test="${not empty msg}">
-                <div class="msg">${msg}</div>
+                <div class="alert alert-success" role="alert">${msg}</div>
             </c:if>
 
             <form name='loginForm' action="<c:url value='/login' />" method='POST'>
