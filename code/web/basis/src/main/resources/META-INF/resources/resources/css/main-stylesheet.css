@@ -109,9 +109,11 @@ a {
     clear: both;
     float: left;
     display: none; }
-  .main-header .links .title {
-    visibility: visible;
-    display: initial; } }
+  .main-header .links {
+    float: left; }
+    .main-header .links .title {
+      visibility: visible;
+      display: initial; } }
 @font-face {
   font-family: robotoThinFont;
   src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/roboto/Roboto-Thin.ttf"); }
@@ -135,6 +137,30 @@ a {
   top: 0px;
   font-size: 13px;
   z-index: 1; }
+  .main-header .navbar-toggle {
+    border: none;
+    background: transparent !important;
+    margin-top: 11px; }
+    .main-header .navbar-toggle:hover {
+      background: transparent !important; }
+    .main-header .navbar-toggle .icon-bar {
+      width: 22px;
+      transition: all 0.2s;
+      background-color: #fff; }
+    .main-header .navbar-toggle .top-bar {
+      transform: rotate(45deg);
+      transform-origin: 10% 10%; }
+    .main-header .navbar-toggle .middle-bar {
+      opacity: 0; }
+    .main-header .navbar-toggle .bottom-bar {
+      transform: rotate(-45deg);
+      transform-origin: 10% 90%; }
+  .main-header .navbar-toggle.collapsed .top-bar {
+    transform: rotate(0); }
+  .main-header .navbar-toggle.collapsed .middle-bar {
+    opacity: 1; }
+  .main-header .navbar-toggle.collapsed .bottom-bar {
+    transform: rotate(0); }
   .main-header .navbar-default {
     background-color: inherit;
     border-color: inherit;
@@ -261,9 +287,11 @@ a {
     clear: both;
     float: left;
     display: none; }
-  .main-header .links .title {
-    visibility: visible;
-    display: initial; } }
+  .main-header .links {
+    float: left; }
+    .main-header .links .title {
+      visibility: visible;
+      display: initial; } }
 @font-face {
   font-family: robotoThinFont;
   src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/roboto/Roboto-Thin.ttf"); }

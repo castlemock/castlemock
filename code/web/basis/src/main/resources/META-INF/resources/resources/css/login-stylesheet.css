@@ -109,9 +109,11 @@ a {
     clear: both;
     float: left;
     display: none; }
-  .main-header .links .title {
-    visibility: visible;
-    display: initial; } }
+  .main-header .links {
+    float: left; }
+    .main-header .links .title {
+      visibility: visible;
+      display: initial; } }
 @font-face {
   font-family: robotoThinFont;
   src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/roboto/Roboto-Thin.ttf"); }

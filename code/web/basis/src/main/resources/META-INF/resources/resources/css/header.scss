@@ -15,6 +15,46 @@
   font-size: 13px;
   z-index: 1;
 
+  .navbar-toggle {
+    border: none;
+    background: transparent !important;
+    margin-top: 11px;
+
+    &:hover {
+      background: transparent !important;
+    }
+
+    .icon-bar {
+      width: 22px;
+      transition: all 0.2s;
+      background-color: #fff;
+    }
+    .top-bar {
+      transform: rotate(45deg);
+      transform-origin: 10% 10%;
+    }
+    .middle-bar {
+      opacity: 0;
+    }
+    .bottom-bar {
+      transform: rotate(-45deg);
+      transform-origin: 10% 90%;
+    }
+  }
+
+  .navbar-toggle.collapsed {
+    .top-bar {
+      transform: rotate(0);
+    }
+    .middle-bar {
+      opacity: 1;
+    }
+    .bottom-bar {
+      transform: rotate(0);
+    }
+  }
+
+
   .navbar-default {
     background-color: inherit;
     border-color: inherit;
