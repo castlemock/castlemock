@@ -31,29 +31,20 @@
             </div>
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                    <c:choose>
-                        <c:when test="${demoMode}">
-                            <a class="btn btn-success" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restproject.button.updateproject"/></span></a>
-                            <a class="btn btn-primary" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>"  href="<c:url value="#"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restproject.button.createapplication"/></span></a>
-                            <a class="btn btn-primary" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-upload"></i> <span><spring:message code="rest.restproject.button.upload" arguments="wadl"/></span></a>
-                        </c:when>
-                        <c:otherwise>
-                            <a class="btn btn-success" href="<c:url value="/web/rest/project/${restProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restproject.button.updateproject"/></span></a>
-                            <a class="btn btn-primary" href="<c:url value="/web/rest/project/${restProject.id}/create/application"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restproject.button.createapplication"/></span></a>
-                            <a class="btn btn-primary" href="<c:url value="/web/rest/project/${restProject.id}/import?type=WADL"/>"><i class="fa fa-upload"></i> <span><spring:message code="rest.restproject.button.upload" arguments="WADL"/></span></a>
-                            <a class="btn btn-primary" href="<c:url value="/web/rest/project/${restProject.id}/import?type=SWAGGER"/>"><i class="fa fa-upload"></i> <span><spring:message code="rest.restproject.button.upload" arguments="Swagger"/></span></a>
-                            <a class="btn btn-primary" href="<c:url value="/web/rest/project/${restProject.id}/import?type=RAML"/>"><i class="fa fa-upload"></i> <span><spring:message code="rest.restproject.button.upload" arguments="RAML"/></span></a>
-                        </c:otherwise>
-                    </c:choose>
+                    <a class="btn btn-success demo-button-disabled"  href="<c:url value="/web/rest/project/${restProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="rest.restproject.button.updateproject"/></span></a>
+                    <a class="btn btn-primary demo-button-disabled"  href="<c:url value="/web/rest/project/${restProject.id}/create/application"/>"><i class="fa fa-plus"></i> <span><spring:message code="rest.restproject.button.createapplication"/></span></a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle demo-button-disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-upload"></i> <span><spring:message code="rest.restproject.button.upload"/> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="<c:url value="/web/rest/project/${restProject.id}/import?type=WADL"/>">WADL</a></li>
+                            <li><a href="<c:url value="/web/rest/project/${restProject.id}/import?type=SWAGGER"/>">Swagger</a></li>
+                            <li><a href="<c:url value="/web/rest/project/${restProject.id}/import?type=RAML"/>">RAML</a></li>
+                        </ul>
+                    </div>
                     <a class="btn btn-primary" href="<c:url value="/web/rest/project/${restProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="rest.restproject.button.export"/></span></a>
-                    <c:choose>
-                        <c:when test="${demoMode}">
-                            <a class="btn btn-danger" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.delete"/></span></a>
-                        </c:when>
-                        <c:otherwise>
-                            <a class="btn btn-danger" href="<c:url value="/web/rest/project/${restProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.delete"/></span></a>
-                        </c:otherwise>
-                    </c:choose>
+                    <a class="btn btn-danger demo-button-disabled" href="<c:url value="/web/rest/project/${restProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.delete"/></span></a>
                 </sec:authorize>
             </div>
         </div>
@@ -107,18 +98,9 @@
                                 <form:option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></form:option>
                             </c:forEach>
                         </form:select>
-                        <c:choose>
-                            <c:when test="${demoMode}">
-                                <a class="btn btn-success" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restproject.button.update"/></span></a>
-                                <a class="btn btn-primary" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-code-fork"></i> <span><spring:message code="rest.restproject.button.updateendpoint"/></span></a>
-                                <a class="btn btn-danger" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.deleteapplication"/></span></a>
-                            </c:when>
-                            <c:otherwise>
-                                <button class="btn btn-success" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restproject.button.update"/></span></button>
-                                <button class="btn btn-primary" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="rest.restproject.button.updateendpoint"/></span></button>
-                                <button class="btn btn-danger" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.deleteapplication"/></span></button>
-                            </c:otherwise>
-                        </c:choose>
+                        <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restproject.button.update"/></span></button>
+                        <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="rest.restproject.button.updateendpoint"/></span></button>
+                        <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restproject.button.deleteapplication"/></span></button>
                     </sec:authorize>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form:form>

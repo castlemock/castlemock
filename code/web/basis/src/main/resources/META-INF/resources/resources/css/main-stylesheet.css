@@ -315,6 +315,8 @@ body {
   body h1 {
     color: #4b4b4b;
     font-size: 2em; }
+  body a .disabled {
+    cursor: not-allowed; }
 
 .information {
   padding: 0px; }

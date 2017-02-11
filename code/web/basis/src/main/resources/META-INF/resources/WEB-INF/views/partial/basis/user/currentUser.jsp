@@ -30,14 +30,7 @@
             </div>
             <div class="menu" align="right">
                 <div class="menu" align="right">
-                    <c:choose>
-                        <c:when test="${demoMode}">
-                            <a class="btn btn-success" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
-                        </c:when>
-                        <c:otherwise>
-                            <a class="btn btn-success" href="<c:url value="/web/me/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
-                        </c:otherwise>
-                    </c:choose>
+                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/me/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
                 </div>
             </div>
         </div>

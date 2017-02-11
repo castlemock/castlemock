@@ -29,16 +29,8 @@
             </div>
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                <c:choose>
-                    <c:when test="${demoMode}">
-                        <a class="btn btn-success" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-file"></i> <span><spring:message code="general.projectoverview.button.newproject"/></span></a>
-                        <a class="btn btn-primary" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="btn btn-success" href="<c:url value="/web/project/create"/>"><i class="fa fa-file"></i> <span><spring:message code="general.projectoverview.button.newproject"/></span></a>
-                        <a class="btn btn-primary" href="<c:url value="/web/project/import"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a>
-                    </c:otherwise>
-                </c:choose>
+                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/project/create"/>"><i class="fa fa-file"></i> <span><spring:message code="general.projectoverview.button.newproject"/></span></a>
+                    <a class="btn btn-primary demo-button-disabled" href="<c:url value="/web/project/import"/>"><i class="fa fa-cloud-upload"></i> <span><spring:message code="general.projectoverview.button.importproject"/></span></a>
                 </sec:authorize>
             </div>
         </div>
@@ -69,14 +61,7 @@
                     </div>
                     <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
                         <button class="btn btn-primary" type="submit" name="action" value="export"><i class="fa fa-cloud-download"></i> <span><spring:message code="general.projectoverview.button.exportprojects"/></span></button>
-                        <c:choose>
-                            <c:when test="${demoMode}">
-                                <a class="btn btn-danger" disabled="disabled" title="<spring:message code="general.mode.demo.disabled"/>" href="<c:url value="#"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.projectoverview.button.deleteprojects"/></span></a>
-                            </c:when>
-                            <c:otherwise>
-                                <button class="btn btn-danger" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="general.projectoverview.button.deleteprojects"/></span></button>
-                            </c:otherwise>
-                        </c:choose>
+                        <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="general.projectoverview.button.deleteprojects"/></span></button>
                     </sec:authorize>
                 </form:form>
             </c:when>

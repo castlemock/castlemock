@@ -23,11 +23,13 @@
       <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome/css/font-awesome.css"/>">
       <link rel="stylesheet" href="<c:url value="/resources/css/main-stylesheet.css"/>">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <script>var demoMode =<c:out value="${demoMode}"/></script>
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/jquery/jquery-2.1.4.min.js"/>"></script>
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/bootstrap/bootstrap.js"/>"></script>
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/main-script.js"/>"></script>
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/table.js"/>"></script>
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/tooltip.js"/>"></script>
+      <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/demoMode.js"/>"></script>
   </head>
     <body>
         <jsp:include page="header.jsp" />
