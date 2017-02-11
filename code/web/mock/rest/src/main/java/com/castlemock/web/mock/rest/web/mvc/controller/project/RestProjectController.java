@@ -28,6 +28,7 @@ import com.castlemock.web.mock.rest.web.mvc.command.application.RestApplicationM
 import com.castlemock.web.mock.rest.web.mvc.command.application.UpdateRestApplicationsEndpointCommand;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.apache.log4j.Logger;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,9 @@ public class RestProjectController extends AbstractRestViewController {
     private static final String UPDATE_ENDPOINTS = "update-endpoint";
     private static final String UPDATE_REST_APPLICATIONS_ENDPOINT_PAGE = "mock/rest/application/updateRestApplicationsEndpoint";
     private static final String UPDATE_REST_APPLICATIONS_ENDPOINT_COMMAND = "updateRestApplicationsEndpointCommand";
+    private static final String UPLOAD = "upload";
+    private static final String UPLOAD_OUTCOME_SUCCESS = "success";
+    private static final String UPLOAD_OUTCOME_ERROR = "error";
 
     private static final Logger LOGGER = Logger.getLogger(RestProjectController.class);
     /**
@@ -63,13 +67,22 @@ public class RestProjectController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
-    public ModelAndView getProject(@PathVariable final String projectId) {
+    public ModelAndView getProject(@PathVariable final String projectId, @RequestParam(value = UPLOAD, required = false) final String upload) {
         final ReadRestProjectOutput output =  serviceProcessor.process(new ReadRestProjectInput(projectId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT, output.getRestProject());
         model.addObject(REST_METHOD_STATUSES, getRestMethodStatuses());
         model.addObject(REST_APPLICATION_MODIFIER_COMMAND, new RestApplicationModifierCommand());
+
+        if (UPLOAD_OUTCOME_SUCCESS.equals(upload)) {
+            LOGGER.debug("Upload successful");
+            model.addObject(UPLOAD, UPLOAD_OUTCOME_SUCCESS);
+        } else if(UPLOAD_OUTCOME_ERROR.equals(upload)){
+            LOGGER.debug("Upload unsuccessful");
+            model.addObject(UPLOAD, UPLOAD_OUTCOME_ERROR);
+        }
+
         return model;
     }
 

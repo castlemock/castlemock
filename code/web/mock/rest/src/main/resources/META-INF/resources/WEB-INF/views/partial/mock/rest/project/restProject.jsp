@@ -25,6 +25,21 @@
 </div>
 <div class="container">
     <section>
+        <c:if test="${not empty upload}">
+            <c:if test="${upload == 'success'}">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong><spring:message code="rest.restimportdefinition.message.success.title"/></strong> <spring:message code="rest.restimportdefinition.message.success.body"/>
+                </div>
+            </c:if>
+            <c:if test="${upload == 'error'}">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong><spring:message code="rest.restimportdefinition.message.error.title"/></strong> <spring:message code="rest.restimportdefinition.message.error.body"/>
+                </div>
+            </c:if>
+        </c:if>
+
         <div class="content-top">
             <div class="title">
                 <h1><spring:message code="rest.restproject.header.project" arguments="${restProject.name}"/></h1>

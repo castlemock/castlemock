@@ -55,6 +55,9 @@ public class SoapProjectController extends AbstractSoapViewController {
     private static final String DELETE_SOAP_PORTS_COMMAND = "deleteSoapPortsCommand";
     private static final String SOAP_PORT_MODIFIER_COMMAND = "soapPortModifierCommand";
     private static final String UPDATE_SOAP_PORTS_ENDPOINT_COMMAND = "updateSoapPortsEndpointCommand";
+    private static final String UPLOAD = "upload";
+    private static final String UPLOAD_OUTCOME_SUCCESS = "success";
+    private static final String UPLOAD_OUTCOME_ERROR = "error";
     private static final Logger LOGGER = Logger.getLogger(SoapProjectController.class);
 
     /**
@@ -64,13 +67,22 @@ public class SoapProjectController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
-    public ModelAndView getProject(@PathVariable final String projectId) {
+    public ModelAndView getProject(@PathVariable final String projectId, @RequestParam(value = UPLOAD, required = false) final String upload) {
         final ReadSoapProjectOutput readSoapProjectOutput = serviceProcessor.process(new ReadSoapProjectInput(projectId));
         final SoapProjectDto project = readSoapProjectOutput.getSoapProject();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT, project);
         model.addObject(SOAP_OPERATION_STATUSES, getSoapOperationStatuses());
         model.addObject(SOAP_PORT_MODIFIER_COMMAND, new SoapPortModifierCommand());
+
+        if (UPLOAD_OUTCOME_SUCCESS.equals(upload)) {
+            LOGGER.debug("Upload successful");
+            model.addObject(UPLOAD, UPLOAD_OUTCOME_SUCCESS);
+        } else if(UPLOAD_OUTCOME_ERROR.equals(upload)){
+            LOGGER.debug("Upload unsuccessful");
+            model.addObject(UPLOAD, UPLOAD_OUTCOME_ERROR);
+        }
+
         return model;
     }
 

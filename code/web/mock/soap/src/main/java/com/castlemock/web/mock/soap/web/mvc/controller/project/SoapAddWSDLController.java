@@ -87,19 +87,22 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
             throw new IllegalArgumentException("Invalid type: " + type);
         }
 
-        serviceProcessor.process(new CreateSoapPortsInput(projectId, uploadForm.isGenerateResponse(), uploadedFiles));
+        try {
+            serviceProcessor.process(new CreateSoapPortsInput(projectId, uploadForm.isGenerateResponse(), uploadedFiles));
+            return redirect("/soap/project/" + projectId + "?upload=success");
+        }catch (Exception e){
+            return redirect("/soap/project/" + projectId + "?upload=error");
+        } finally {
+            for(File uploadedFile : uploadedFiles){
+                boolean deletionResult = fileManager.deleteFile(uploadedFile);
+                if(deletionResult){
+                    LOGGER.debug("Deleted the following WSDL file: " + uploadedFile.getName());
+                } else {
+                    LOGGER.warn("Unable to delete the following WSDL file: " + uploadedFile.getName());
+                }
 
-        for(File uploadedFile : uploadedFiles){
-            boolean deletionResult = fileManager.deleteFile(uploadedFile);
-            if(deletionResult){
-                LOGGER.debug("Deleted the following WSDL file: " + uploadedFile.getName());
-            } else {
-                LOGGER.warn("Unable to delete the following WSDL file: " + uploadedFile.getName());
             }
-
         }
-
-        return redirect("/soap/project/" + projectId);
     }
 
 }
