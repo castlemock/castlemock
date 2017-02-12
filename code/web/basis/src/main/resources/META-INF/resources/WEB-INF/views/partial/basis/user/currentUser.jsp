@@ -29,9 +29,7 @@
                 <h1><spring:message code="general.currentuser.header.user" arguments="${user.username}"/></h1>
             </div>
             <div class="menu" align="right">
-                <div class="menu" align="right">
-                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/me/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
-                </div>
+                <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/me/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.currentuser.button.updateuser"/></span></a>
             </div>
         </div>
         <table class="formTable">
