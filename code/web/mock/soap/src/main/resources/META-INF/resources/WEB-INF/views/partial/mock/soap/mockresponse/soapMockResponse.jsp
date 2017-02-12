@@ -69,12 +69,12 @@
             </div>
 
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#body"><spring:message code="soap.soapmockresponse.header.body"/></a></li>
-            <li><a data-toggle="tab" href="#headers"><spring:message code="soap.soapmockresponse.header.headers"/></a></li>
+            <li class="active"><a data-toggle="tab" href="#tab-body"><spring:message code="soap.soapmockresponse.header.body"/></a></li>
+            <li><a data-toggle="tab" href="#tab-headers"><spring:message code="soap.soapmockresponse.header.headers"/></a></li>
         </ul>
 
         <div class="tab-content">
-            <div id="body" class="tab-pane fade in active">
+            <div id="tab-body" class="tab-pane fade in active">
                 <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.header.body"/></span></h2>
                 <div class="editor">
                     <form:textarea id="body" path="body"/>
@@ -85,7 +85,7 @@
                 </div>
             </div>
 
-            <div id="headers" class="tab-pane fade">
+            <div id="tab-headers" class="tab-pane fade">
                 <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.header.headers"/></span></h2>
                 <div class="panel panel-default">
                     <div class="panel-heading">
