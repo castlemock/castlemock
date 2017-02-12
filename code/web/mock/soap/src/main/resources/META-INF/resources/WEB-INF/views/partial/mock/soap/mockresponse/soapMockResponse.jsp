@@ -67,7 +67,14 @@
                     </tr>
                 </table>
             </div>
-            <div>
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#body"><spring:message code="soap.soapmockresponse.header.body"/></a></li>
+            <li><a data-toggle="tab" href="#headers"><spring:message code="soap.soapmockresponse.header.headers"/></a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="body" class="tab-pane fade in active">
                 <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.header.body"/></span></h2>
                 <div class="editor">
                     <form:textarea id="body" path="body"/>
@@ -77,24 +84,27 @@
                     </div>
                 </div>
             </div>
-            <div>
+
+            <div id="headers" class="tab-pane fade">
                 <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.header.headers"/></span></h2>
-
-                <fieldset>
-                    <legend><spring:message code="soap.soapmockresponse.field.addheader"/></legend>
-                    <table class="formTable">
-                        <tr>
-                            <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headername"/></form:label></td>
-                            <td class="column2"><input type="text" name="headerName" id="headerNameInput"></td>
-                        </tr>
-                        <tr>
-                            <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headervalue"/></form:label></td>
-                            <td class="column2"><input type="text" name="headerValue" id="headerValueInput"></td>
-                        </tr>
-                    </table>
-                    <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.addheader"/></span></button>
-                </fieldset>
-
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><spring:message code="soap.soapmockresponse.field.addheader"/></h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="formTable">
+                            <tr>
+                                <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headername"/></form:label></td>
+                                <td class="column2"><input type="text" name="headerName" id="headerNameInput"></td>
+                            </tr>
+                            <tr>
+                                <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headervalue"/></form:label></td>
+                                <td class="column2"><input type="text" name="headerValue" id="headerValueInput"></td>
+                            </tr>
+                        </table>
+                        <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.addheader"/></span></button>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover sortable" id="headerTable">
                         <col width="4%">
@@ -115,11 +125,12 @@
                     </table>
                 </div>
             </div>
-            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                <button class="btn btn-success demo-button-disabled" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></button>
-            </sec:authorize>
-            <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="soap.soapmockresponse.button.discardchanges"/></span></a>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </div>
+        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+            <button class="btn btn-success demo-button-disabled" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.updateresponse"/></span></button>
+        </sec:authorize>
+        <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperationId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="soap.soapmockresponse.button.discardchanges"/></span></a>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form:form>
     </section>
 </div>
