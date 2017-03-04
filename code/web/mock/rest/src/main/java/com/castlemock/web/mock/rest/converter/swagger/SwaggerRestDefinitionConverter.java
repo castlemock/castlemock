@@ -19,6 +19,7 @@ package com.castlemock.web.mock.rest.converter.swagger;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.utility.file.FileUtility;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
@@ -27,13 +28,12 @@ import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
+import io.swagger.models.Response;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The {@link SwaggerRestDefinitionConverter} provides Swagger related functionality.
@@ -95,39 +95,34 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             restResource.setName(resourceName);
             restResource.setUri(resourceName);
 
-            RestMethodDto restMethod = null;
             if(resourcePath.getGet() != null){
                 Operation operation = resourcePath.getGet();
-                restMethod = createRestMethod(operation, HttpMethod.GET);
+                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.GET, forwardAddress, generateResponse);
+                restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getPost() != null){
                 Operation operation = resourcePath.getPost();
-                restMethod = createRestMethod(operation, HttpMethod.POST);
+                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.POST, forwardAddress, generateResponse);
+                restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getPut() != null){
                 Operation operation = resourcePath.getPut();
-                restMethod = createRestMethod(operation, HttpMethod.PUT);
+                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.PUT, forwardAddress, generateResponse);
+                restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getDelete() != null){
                 Operation operation = resourcePath.getDelete();
-                restMethod = createRestMethod(operation, HttpMethod.DELETE);
+                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.DELETE, forwardAddress, generateResponse);
+                restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getHead() != null){
                 Operation operation = resourcePath.getHead();
-                restMethod = createRestMethod(operation, HttpMethod.HEAD);
+                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.HEAD, forwardAddress, generateResponse);
+                restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getOptions() != null){
                 Operation operation = resourcePath.getOptions();
-                restMethod = createRestMethod(operation, HttpMethod.OPTIONS);
-            }
-
-            if(restMethod != null){
-                restMethod.setForwardedEndpoint(forwardAddress);
-                if(generateResponse){
-                    RestMockResponseDto generatedResponse = generateResponse();
-                    restMethod.getMockResponses().add(generatedResponse);
-                }
-
+                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.OPTIONS, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
 
@@ -136,6 +131,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
 
         return restApplication;
     }
+
 
     /**
      * The method extracts the forward address from the {@link Swagger} model.
@@ -156,9 +152,14 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * Create a {@link RestMethodDto} based on a Swagger {@link Operation} and a {@link HttpMethod}.
      * @param operation The Swagger operation that will be converted to a {@link RestMethodDto}.
      * @param httpMethod The {@link HttpMethod} of the new {@link RestMethodDto}.
+     * @param forwardAddress The configured forward address. The request for this method will be forwarded to
+     *                       this address if the service is configured to be {@link RestMethodStatus#FORWARDED},
+     *                       {@link RestMethodStatus#RECORDING} or  {@link RestMethodStatus#RECORD_ONCE}
+     * @param generateResponse Will generate a default response if true. No response will be generated if false.
      * @return A {@link RestMethodDto} based on the provided Swagger {@link Operation} and the {@link HttpMethod}.
      */
-    private RestMethodDto createRestMethod(Operation operation, HttpMethod httpMethod){
+    private RestMethodDto createRestMethod(final Operation operation, final HttpMethod httpMethod,
+                                           final String forwardAddress, final boolean generateResponse){
         final RestMethodDto restMethod = new RestMethodDto();
 
         String methodName;
@@ -175,7 +176,57 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         restMethod.setName(methodName);
         restMethod.setStatus(RestMethodStatus.MOCKED);
         restMethod.setResponseStrategy(RestResponseStrategy.SEQUENCE);
+        restMethod.setForwardedEndpoint(forwardAddress);
+
+        if(generateResponse){
+            if(!operation.getResponses().isEmpty()){
+                Collection<RestMockResponseDto> mockResponses = generateResponse(operation.getResponses());
+                restMethod.getMockResponses().addAll(mockResponses);
+            } else {
+                RestMockResponseDto generatedResponse = generateResponse();
+                restMethod.getMockResponses().add(generatedResponse);
+            }
+        }
+
         return restMethod;
     }
+
+
+    /**
+     * The method generates a default response.
+     * @param responses The Swagger response definitions
+     * @return The newly generated {@link RestMockResponseDto}.
+     */
+    private Collection<RestMockResponseDto> generateResponse(final Map<String,Response> responses){
+        final List<RestMockResponseDto> mockResponses = new ArrayList<>();
+        for(Map.Entry<String, Response> responseEntry : responses.entrySet()){
+            int httpStatusCode = extractHttpStatusCode(responseEntry.getKey());
+            Response response = responseEntry.getValue();
+            RestMockResponseDto restMockResponse = new RestMockResponseDto();
+            restMockResponse.setName(response.getDescription());
+            restMockResponse.setHttpStatusCode(httpStatusCode);
+            restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
+            mockResponses.add(restMockResponse);
+        }
+        return mockResponses;
+    }
+
+    /**
+     * The method will extract the HTTP response status code. The provided response code
+     * is a {@link String} and should be parsed to an integer. However, the response code
+     * is not always the actual response code. In fact, it can be anything. Therefore,
+     * upon {@link NumberFormatException} the default response code will be returned: 200.
+     * @param responseCode The response code that will be parsed into an integer.
+     * @return The parsed response code. 200 if the parsing failed.
+     */
+    private int extractHttpStatusCode(final String responseCode){
+        try {
+            return Integer.parseInt(responseCode);
+        } catch (Exception e){
+            return 200;
+        }
+    }
+
+
 
 }
