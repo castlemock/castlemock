@@ -17,6 +17,7 @@
 package com.castlemock.web.mock.rest.converter.swagger;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.utility.file.FileUtility;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
@@ -30,6 +31,7 @@ import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Response;
 import io.swagger.models.Swagger;
+import io.swagger.models.properties.Property;
 import io.swagger.parser.SwaggerParser;
 
 import java.io.File;
@@ -42,19 +44,33 @@ import java.util.*;
  */
 public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
+
     /**
-     * The method provides the functionality to convert a provided Swagger {@link File} into a {@link RestApplicationDto}.
-     * The method will simply parse the file and extracts its content. The content will then be passed to
-     * {@link SwaggerRestDefinitionConverter#convertSwagger(String, boolean)}.
-     * @param file The file which content will be extracted from and transformed into a {@link RestApplicationDto}.
+     * The convert method provides the functionality to convert the provided {@link File} into
+     * a list of {@link RestApplicationDto}.
+     * @param file The file which will be converted to one or more {@link RestApplicationDto}.
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A {@link RestApplicationDto} based on the provided {@link File}.
-     * @see SwaggerRestDefinitionConverter#convertSwagger(String, boolean)
+     * @return A list of {@link RestApplicationDto} based on the provided file.
      */
     @Override
     public List<RestApplicationDto> convert(final File file, final boolean generateResponse){
         final String swaggerContent = FileUtility.getFileContent(file);
-        final RestApplicationDto restApplication = convertSwagger(swaggerContent, generateResponse);
+        final Swagger swagger = new SwaggerParser().parse(swaggerContent);
+        final RestApplicationDto restApplication = convertSwagger(swagger, generateResponse);
+        return Arrays.asList(restApplication);
+    }
+
+    /**
+     * The convert method provides the functionality to convert the provided {@link File} into
+     * a list of {@link RestApplicationDto}.
+     * @param location The location of the definition file
+     * @param generateResponse Will generate a default response if true. No response will be generated if false.
+     * @return A list of {@link RestApplicationDto} based on the provided file.
+     */
+    @Override
+    public List<RestApplicationDto> convert(final String location, final boolean generateResponse){
+        final Swagger swagger = new SwaggerParser().read(location);
+        final RestApplicationDto restApplication = convertSwagger(swagger, generateResponse);
         return Arrays.asList(restApplication);
     }
 
@@ -70,13 +86,11 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      *     <li>HEAD</li>
      *     <li>OPTIONS</li>
      * </ul>
-     * @param content The Swagger content which will be generated into a {@link RestApplicationDto}.
+     * @param swagger The Swagger content which will be generated into a {@link RestApplicationDto}.
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
      * @return A {@link RestApplicationDto} based on the provided Swagger content.
      */
-    private RestApplicationDto convertSwagger(final String content, final boolean generateResponse){
-
-        final Swagger swagger = new SwaggerParser().parse(content);
+    private RestApplicationDto convertSwagger(final Swagger swagger, final boolean generateResponse){
 
         if(swagger == null){
             throw new IllegalArgumentException("Unable to parse the Swagger content.");
@@ -205,7 +219,22 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             RestMockResponseDto restMockResponse = new RestMockResponseDto();
             restMockResponse.setName(response.getDescription());
             restMockResponse.setHttpStatusCode(httpStatusCode);
-            restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
+            if(httpStatusCode == DEFAULT_RESPONSE_CODE){
+                restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
+            } else {
+                restMockResponse.setStatus(RestMockResponseStatus.DISABLED);
+            }
+
+            if(response.getHeaders() != null){
+                for(Map.Entry<String, Property> headerEntry : response.getHeaders().entrySet()){
+                    String headerName = headerEntry.getKey();
+                    HttpHeaderDto httpHeader = new HttpHeaderDto();
+                    httpHeader.setName(headerName);
+                    // Swagger does not include an example value for the response.
+                    restMockResponse.getHttpHeaders().add(httpHeader);
+                }
+            }
+
             mockResponses.add(restMockResponse);
         }
         return mockResponses;
@@ -223,7 +252,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         try {
             return Integer.parseInt(responseCode);
         } catch (Exception e){
-            return 200;
+            return DEFAULT_RESPONSE_CODE;
         }
     }
 

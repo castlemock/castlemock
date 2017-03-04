@@ -32,16 +32,18 @@ public class ImportRestDefinitionInput implements Input {
     @NotNull
     private String restProjectId;
     @NotNull
-    private List<File> files;
-    @NotNull
     private boolean generateResponse;
     @NotNull
     private RestDefinitionType definitionType;
 
-    public ImportRestDefinitionInput(final String restProjectId, final List<File> files,
+    private List<File> files;
+    private String location;
+
+    public ImportRestDefinitionInput(final String restProjectId, final List<File> files, String location,
                                      final boolean generateResponse, final RestDefinitionType definitionType) {
         this.restProjectId = restProjectId;
         this.files = files;
+        this.location = location;
         this.generateResponse = generateResponse;
         this.definitionType = definitionType;
     }
@@ -60,6 +62,14 @@ public class ImportRestDefinitionInput implements Input {
 
     public void setFiles(List<File> files) {
         this.files = files;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public boolean isGenerateResponse() {

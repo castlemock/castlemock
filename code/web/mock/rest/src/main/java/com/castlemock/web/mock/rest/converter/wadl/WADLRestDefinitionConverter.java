@@ -24,7 +24,10 @@ import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -33,6 +36,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,6 +49,10 @@ import java.util.List;
  * @since 1.10
  */
 public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter {
+
+    @Autowired
+    private FileManager fileManager;
+    private static final Logger LOGGER = Logger.getLogger(WADLRestDefinitionConverter.class);
 
     /**
      * The method is responsible for parsing a {@link File} and converting into a list of {@link RestApplicationDto}.
@@ -105,6 +113,44 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
         }
 
         return applications;
+    }
+
+    /**
+     * The convert method provides the functionality to convert the provided {@link File} into
+     * a list of {@link RestApplicationDto}.
+     *
+     * @param location         The location of the definition file
+     * @param generateResponse Will generate a default response if true. No response will be generated if false.
+     * @return A list of {@link RestApplicationDto} based on the provided file.
+     */
+    @Override
+    public List<RestApplicationDto> convert(final String location, boolean generateResponse) {
+
+        final List<RestApplicationDto> restApplications = new ArrayList<>();
+        List<File> files = null;
+        try {
+            files = fileManager.uploadFiles(location);
+
+            for(File file : files){
+                List<RestApplicationDto> convertedRestApplications = convert(file, generateResponse);
+                restApplications.addAll(convertedRestApplications);
+            }
+        } catch (IOException e) {
+            LOGGER.error("Unable to download file file: " + location, e);
+        } finally {
+            if(files != null){
+                for(File uploadedFile : files){
+                    boolean deletionResult = fileManager.deleteFile(uploadedFile);
+                    if(deletionResult){
+                        LOGGER.debug("Deleted the following WADL file: " + uploadedFile.getName());
+                    } else {
+                        LOGGER.warn("Unable to delete the following WADL file: " + uploadedFile.getName());
+                    }
+
+                }
+            }
+        }
+        return restApplications;
     }
 
     /**

@@ -29,6 +29,7 @@ import java.util.List;
  */
 public interface RestDefinitionConverter {
 
+
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
      * a list of {@link RestApplicationDto}.
@@ -37,5 +38,15 @@ public interface RestDefinitionConverter {
      * @return A list of {@link RestApplicationDto} based on the provided file.
      */
     List<RestApplicationDto> convert(File file, boolean generateResponse);
+
+    /**
+     * The convert method provides the functionality to convert the provided {@link File} into
+     * a list of {@link RestApplicationDto}.
+     * @param location The location of the definition file
+     * @param generateResponse Will generate a default response if true. No response will be generated if false.
+     * @return A list of {@link RestApplicationDto} based on the provided file.
+     */
+    List<RestApplicationDto> convert(String location, boolean generateResponse);
+
 
 }

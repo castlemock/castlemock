@@ -37,10 +37,41 @@ import java.util.List;
 public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
 
+    /**
+     * The convert method provides the functionality to convert the provided {@link File} into
+     * a list of {@link RestApplicationDto}.
+     * @param file The file which will be converted to one or more {@link RestApplicationDto}.
+     * @param generateResponse Will generate a default response if true. No response will be generated if false.
+     * @return A list of {@link RestApplicationDto} based on the provided file.
+     */
     @Override
     public List<RestApplicationDto> convert(final File file, final boolean generateResponse){
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(file);
+        return convert(ramlModelResult, generateResponse);
+    }
 
+    /**
+     * The convert method provides the functionality to convert the provided {@link File} into
+     * a list of {@link RestApplicationDto}.
+     * @param location The location of the definition file
+     * @param generateResponse Will generate a default response if true. No response will be generated if false.
+     * @return A list of {@link RestApplicationDto} based on the provided file.
+     */
+    @Override
+    public List<RestApplicationDto> convert(final String location, final boolean generateResponse){
+        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(location);
+        return convert(ramlModelResult, generateResponse);
+    }
+
+    /**
+     * The convert method provides the functionality to convert the provided {@link File} into
+     * a list of {@link RestApplicationDto}.
+     * @param ramlModelResult The RAML model result
+     * @param generateResponse Will generate a default response if true. No response will be generated if false.
+     * @return A list of {@link RestApplicationDto} based on the provided file.
+     * @throws IllegalStateException In case the {@link RamlModelResult} is not parsable.
+     */
+    private List<RestApplicationDto> convert(final RamlModelResult ramlModelResult, final boolean generateResponse){
         if(!ramlModelResult.getValidationResults().isEmpty()){
             throw new IllegalStateException("Unable to parse the RAML file");
         }
@@ -50,20 +81,11 @@ public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter
         if(ramlModelResult.getApiV08() != null){
             org.raml.v2.api.model.v08.api.Api api = ramlModelResult.getApiV08();
             title = api.title();
-            new RAML08Parser().getResources(api.resources(), restResources, "");
+            new RAML08Parser().getResources(api.resources(), restResources, "", generateResponse);
         } else if(ramlModelResult.getApiV10() != null){
             org.raml.v2.api.model.v10.api.Api api = ramlModelResult.getApiV10();
             title = api.title().value();
-            new RAML10Parser().getResources(api.resources(), restResources, "");
-        }
-
-        if(generateResponse){
-            for(RestResourceDto restResource : restResources){
-                for(RestMethodDto restMethod : restResource.getMethods()){
-                    RestMockResponseDto restMockResponse = generateResponse();
-                    restMethod.getMockResponses().add(restMockResponse);
-                }
-            }
+            new RAML10Parser().getResources(api.resources(), restResources, "", generateResponse);
         }
 
         RestApplicationDto restApplication = new RestApplicationDto();

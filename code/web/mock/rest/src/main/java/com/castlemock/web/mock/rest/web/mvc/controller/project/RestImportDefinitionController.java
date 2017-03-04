@@ -86,26 +86,24 @@ public class RestImportDefinitionController extends AbstractRestViewController {
 
         if(TYPE_FILE.equals(type)){
             files = fileManager.uploadFiles(uploadForm.getFiles());
-        } else if(TYPE_LINK.equals(type)){
-            files = fileManager.uploadFiles(uploadForm.getLink());
-        } else {
-            throw new IllegalArgumentException("Invalid type: " + type);
         }
 
         try {
-            serviceProcessor.process(new ImportRestDefinitionInput(projectId, files, uploadForm.isGenerateResponse(), uploadForm.getDefinitionType()));
+            serviceProcessor.process(new ImportRestDefinitionInput(projectId, files, uploadForm.getLink(), uploadForm.isGenerateResponse(), uploadForm.getDefinitionType()));
             return redirect("/rest/project/" + projectId + "?upload=success");
         } catch (Exception e){
             return redirect("/rest/project/" + projectId + "?upload=error");
         } finally {
-            for(File uploadedFile : files){
-                boolean deletionResult = fileManager.deleteFile(uploadedFile);
-                if(deletionResult){
-                    LOGGER.debug("Deleted the following WADL file: " + uploadedFile.getName());
-                } else {
-                    LOGGER.warn("Unable to delete the following WADL file: " + uploadedFile.getName());
-                }
+            if(files != null){
+                for(File uploadedFile : files){
+                    boolean deletionResult = fileManager.deleteFile(uploadedFile);
+                    if(deletionResult){
+                        LOGGER.debug("Deleted the following WADL file: " + uploadedFile.getName());
+                    } else {
+                        LOGGER.warn("Unable to delete the following WADL file: " + uploadedFile.getName());
+                    }
 
+                }
             }
         }
     }
