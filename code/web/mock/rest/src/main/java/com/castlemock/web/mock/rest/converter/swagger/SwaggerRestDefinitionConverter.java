@@ -160,8 +160,19 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      */
     private RestMethodDto createRestMethod(Operation operation, HttpMethod httpMethod){
         final RestMethodDto restMethod = new RestMethodDto();
+
+        String methodName;
+        if(operation.getOperationId() != null){
+            methodName = operation.getOperationId();
+        }
+        else if(operation.getSummary() != null){
+            methodName = operation.getSummary();
+        } else {
+            methodName = httpMethod.name();
+        }
+
         restMethod.setHttpMethod(httpMethod);
-        restMethod.setName(operation.getOperationId());
+        restMethod.setName(methodName);
         restMethod.setStatus(RestMethodStatus.MOCKED);
         restMethod.setResponseStrategy(RestResponseStrategy.SEQUENCE);
         return restMethod;
