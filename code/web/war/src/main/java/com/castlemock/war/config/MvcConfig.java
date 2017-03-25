@@ -162,4 +162,17 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     public DozerBeanMapper getMapper() {
         return new DozerBeanMapper();
     }
+
+    /**
+     * Configure the content negotiation. This method will set the
+     * {@link ContentNegotiationConfigurer#favorPathExtension(boolean)} to true
+     * which will allow REST request mappings to include dots.
+     * @param configurer The content negotiation configurer
+     * @since 1.12
+     */
+    @Override
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        super.configureContentNegotiation(configurer);
+        configurer.favorPathExtension(false);
+    }
 }
