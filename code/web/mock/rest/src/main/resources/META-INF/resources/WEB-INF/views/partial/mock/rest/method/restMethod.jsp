@@ -68,7 +68,7 @@
                 </tr>
                 <tr>
                     <td class="column1"><label path="simulateNetworkDelay"><spring:message code="rest.restmethod.label.simulatenetworkdelay"/></label></td>
-                    <td class="column2"><input type="checkbox" path="simulateNetworkDelay" ${restMethod.simulateNetworkDelay == 'true' ? 'checked' : ''} disabled /></td>
+                    <td class="column2"><span class="checkbox"><input type="checkbox" path="simulateNetworkDelay" ${restMethod.simulateNetworkDelay == 'true' ? 'checked' : ''} disabled /></span></td>
                 </tr>
                 <tr>
                     <td class="column1"><label path="networkDelay"><spring:message code="rest.restmethod.label.networkdelay"/></label></td>

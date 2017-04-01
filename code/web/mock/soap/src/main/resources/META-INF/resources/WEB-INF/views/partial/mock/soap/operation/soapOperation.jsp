@@ -78,7 +78,7 @@
                 </tr>
                 <tr>
                     <td class="column1"><label path="simulateNetworkDelay"><spring:message code="soap.soapoperation.label.simulatenetworkdelay"/></label></td>
-                    <td class="column2"><input type="checkbox" path="simulateNetworkDelay" ${soapOperation.simulateNetworkDelay == 'true' ? 'checked' : ''} disabled /></td>
+                    <td class="column2"><span class="checkbox"><input type="checkbox" path="simulateNetworkDelay" ${soapOperation.simulateNetworkDelay == 'true' ? 'checked' : ''} disabled /></span></td>
                 </tr>
                 <tr>
                     <td class="column1"><label path="networkDelay"><spring:message code="soap.soapoperation.label.networkdelay"/></label></td>

@@ -64,7 +64,7 @@
                 </tr>
                 <tr>
                     <td class="column1"><form:label path="simulateNetworkDelay"><spring:message code="soap.updatesoapoperation.label.simulatenetworkdelay"/></form:label></td>
-                    <td class="column2"><form:checkbox path="simulateNetworkDelay"/></td>
+                    <td class="column2"><span class="checkbox"><form:checkbox path="simulateNetworkDelay"/></span></td>
                 </tr>
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="soap.updatesoapoperation.label.networkdelay"/> (ms)</label></td>

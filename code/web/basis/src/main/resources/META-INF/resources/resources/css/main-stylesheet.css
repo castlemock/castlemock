@@ -439,6 +439,11 @@ section {
   section .formTable .column2 * {
     width: 100%;
     font-weight: normal; }
+    section .formTable .column2 * input[type=checkbox] {
+      margin-top: 0px;
+      position: relative;
+      width: 15px;
+      margin-left: 0px; }
   section .button {
     margin: 10px 3px; }
   section a {

@@ -63,7 +63,7 @@
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="usingExpressions"><spring:message code="rest.restmockresponse.label.useexpressions"/></form:label></td>
-                        <td class="column2"><form:checkbox path="usingExpressions"/></td>
+                        <td class="column2"><span class="checkbox"><form:checkbox path="usingExpressions"/></span></td>
                     </tr>
                 </table>
             </div>
