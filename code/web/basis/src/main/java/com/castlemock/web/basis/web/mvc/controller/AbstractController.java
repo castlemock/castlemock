@@ -48,6 +48,7 @@ public abstract class AbstractController {
 
     protected static final String DEMO_MODE = "demoMode";
     protected static final String CONTENT_TYPE = "Content-Type";
+    protected static final String ACCEPT_HEADER = "Accept";
     protected static final String COMMAND = "command";
     protected static final String DIVIDER = ":";
     protected static final String EMPTY = "";

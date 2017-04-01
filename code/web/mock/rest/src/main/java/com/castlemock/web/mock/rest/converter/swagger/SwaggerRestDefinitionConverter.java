@@ -33,9 +33,17 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import io.swagger.models.*;
 import io.swagger.models.properties.*;
 import io.swagger.parser.SwaggerParser;
-import io.swagger.util.Json;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -51,6 +59,10 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
     private static final Logger LOGGER = Logger.getLogger(SwaggerRestDefinitionConverter.class);
     private static final String START_EXPRESSION = "${";
     private static final String END_EXPRESSION = "}";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String APPLICATION_XML = "application/xml";
+    private static final String APPLICATION_JSON = "application/json";
+    private static final int MAX_RESPONSE_ITEMS = 10;
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
@@ -203,7 +215,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
 
         if(generateResponse){
             if(!operation.getResponses().isEmpty()){
-                Collection<RestMockResponseDto> mockResponses = generateResponse(operation.getResponses(), definitions);
+                Collection<RestMockResponseDto> mockResponses = generateResponse(operation.getResponses(), definitions, operation.getProduces());
                 restMethod.getMockResponses().addAll(mockResponses);
             } else {
                 RestMockResponseDto generatedResponse = generateResponse();
@@ -214,43 +226,221 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         return restMethod;
     }
 
-
     /**
      * The method generates a default response.
      * @param responses The Swagger response definitions
      * @return The newly generated {@link RestMockResponseDto}.
      */
     private Collection<RestMockResponseDto> generateResponse(final Map<String,Response> responses,
-                                                             final Map<String, Model> definitions){
+                                                             final Map<String, Model> definitions,
+                                                             final List<String> produces){
         final List<RestMockResponseDto> mockResponses = new ArrayList<>();
         for(Map.Entry<String, Response> responseEntry : responses.entrySet()){
-            int httpStatusCode = extractHttpStatusCode(responseEntry.getKey());
+            Map<String, String> bodies = new HashMap<String, String>();
             Response response = responseEntry.getValue();
-            RestMockResponseDto restMockResponse = new RestMockResponseDto();
-            String responseBody = generateBody(response, definitions);
-            restMockResponse.setName(response.getDescription());
-            restMockResponse.setHttpStatusCode(httpStatusCode);
-            restMockResponse.setBody(responseBody);
-            restMockResponse.setUsingExpressions(true);
-            if(httpStatusCode == DEFAULT_RESPONSE_CODE){
-                restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
-            } else {
-                restMockResponse.setStatus(RestMockResponseStatus.DISABLED);
-            }
-
-            if(response.getHeaders() != null){
-                for(Map.Entry<String, Property> headerEntry : response.getHeaders().entrySet()){
-                    String headerName = headerEntry.getKey();
-                    HttpHeaderDto httpHeader = new HttpHeaderDto();
-                    httpHeader.setName(headerName);
-                    // Swagger does not include an example value for the response.
-                    restMockResponse.getHttpHeaders().add(httpHeader);
+            for(String produce : produces){
+                String body = null;
+                if(APPLICATION_XML.equalsIgnoreCase(produce)){
+                    body = generateXmlBody(response, definitions);
+                } else if(APPLICATION_JSON.equalsIgnoreCase(produce)){
+                    body = generateJsonBody(response, definitions);
+                }
+                if(body != null && !body.isEmpty()){
+                    bodies.put(produce, body);
                 }
             }
 
-            mockResponses.add(restMockResponse);
+            int httpStatusCode = extractHttpStatusCode(responseEntry.getKey());
+
+            if(bodies.isEmpty()){
+                RestMockResponseDto restMockResponse = generateResponse(httpStatusCode, response);
+                mockResponses.add(restMockResponse);
+            } else {
+                for(Map.Entry<String, String> bodyEntry : bodies.entrySet()){
+                    String contentType = bodyEntry.getKey();
+                    String body = bodyEntry.getValue();
+                    RestMockResponseDto restMockResponse = generateResponse(httpStatusCode, response);
+                    restMockResponse.setName(restMockResponse.getName() + " (" + contentType + ")");
+                    restMockResponse.setBody(body);
+
+                    HttpHeaderDto httpHeader = new HttpHeaderDto();
+                    httpHeader.setName(CONTENT_TYPE);
+                    httpHeader.setValue(contentType);
+                    restMockResponse.getHttpHeaders().add(httpHeader);
+                    mockResponses.add(restMockResponse);
+                }
+            }
         }
         return mockResponses;
+    }
+
+    /**
+     * The method generates a mocked response based on the provided {@link Response} and the
+     * <code>httpStatusCode</code>.
+     * @param httpStatusCode The HTTP status code that the mocked response will have. Please note that
+     *                       any mock response with status code different from OK (200), will be
+     *                       marked as disabled.
+     * @param response The Swagger response that the mocked response will be based on.
+     * @return A new {@link RestMockResponseDto} based on the provided {@link Response}.
+     */
+    private RestMockResponseDto generateResponse(final int httpStatusCode, final Response response){
+        RestMockResponseDto restMockResponse = new RestMockResponseDto();
+        restMockResponse.setName(response.getDescription());
+        restMockResponse.setHttpStatusCode(httpStatusCode);
+        restMockResponse.setUsingExpressions(true);
+        if(httpStatusCode == DEFAULT_RESPONSE_CODE){
+            restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
+        } else {
+            restMockResponse.setStatus(RestMockResponseStatus.DISABLED);
+        }
+
+        if(response.getHeaders() != null){
+            for(Map.Entry<String, Property> headerEntry : response.getHeaders().entrySet()){
+                String headerName = headerEntry.getKey();
+                HttpHeaderDto httpHeader = new HttpHeaderDto();
+                httpHeader.setName(headerName);
+                // Swagger does not include an example value for the response.
+                restMockResponse.getHttpHeaders().add(httpHeader);
+            }
+        }
+        return restMockResponse;
+    }
+
+
+    /**
+     * The method provides the functionality to generate an XML body based on a provided {@link Response}
+     * and a list of {@link Model}s that might be required.
+     * @param response The Swagger response which the XML body will be based on.
+     * @param definitions Definitions of Swagger models
+     * @return An XML response body.
+     * @since 1.13
+     */
+    private String generateXmlBody(final Response response, final Map<String, Model> definitions){
+        final Property schema = response.getSchema();
+        if(schema == null){
+            return null;
+        }
+
+        final StringWriter stringWriter = new StringWriter();
+        try {
+            final DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            final DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            final Document document = docBuilder.newDocument();
+            final Element root = getXmlElement(null, schema, definitions, document);
+            document.appendChild(root);
+
+            final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            final Transformer transformer = transformerFactory.newTransformer();
+            final DOMSource source = new DOMSource(document);
+
+            final StreamResult result = new StreamResult(stringWriter);
+            transformer.transform(source, result);
+            return stringWriter.toString();
+        } catch (Exception e){
+            LOGGER.error("Unable to generate a XML response body", e);
+        }
+
+        return stringWriter.toString();
+    }
+
+    /**
+     * The method creates a DOM {@link Element} based on a {@link Property}.
+     * @param name The name of the element
+     * @param property The property that the element if based on.
+     * @param definitions Models which may or may not be required
+     * @param document The XML DOM document
+     * @return An {@link Element}  based on the provided {@link Property}.
+     * @since 1.13
+     */
+    private Element getXmlElement(String name, final Property property, final Map<String, Model> definitions,
+                                  final Document document) {
+        Element element = null;
+        if(name == null){
+            name = property.getType();
+        }
+
+        if(property instanceof RefProperty){
+            final RefProperty refProperty = (RefProperty) property;
+            final String simpleRef = refProperty.getSimpleRef();
+            final Model model = definitions.get(simpleRef);
+
+            if(model == null){
+                LOGGER.warn("Unable to find the following definition in the Swagger file: " + simpleRef);
+                return null;
+            }
+            element = getXmlElement(model, definitions, document);
+        } else if(property instanceof ArrayProperty){
+            final ArrayProperty arrayProperty = (ArrayProperty) property;
+            final Property item = arrayProperty.getItems();
+            final int maxItems = getMaxItems(arrayProperty.getMaxItems());
+            element = document.createElement(name);
+            for(int index = 0; index < maxItems; index++){
+                Element child = getXmlElement(name, item, definitions, document);
+                element.appendChild(child);
+            }
+        } else {
+            String expression = getExpressionIdentifier(property);
+            element = document.createElement(name);
+            if(expression != null){
+                Text text = document.createTextNode(expression);
+                element.appendChild(text);
+            } else {
+
+            }
+        }
+
+        return element;
+    }
+
+    /**
+     * Method used to generate a response body based on a {@link Model} and perhaps related other {@link Model}.
+     * @param model The {@link Model} used to generate to the body.
+     * @param definitions Other {@link Model} that might be related and required.
+     * @param document The XML DOM document.
+     * @since 1.13
+     * @see {@link #getXmlElement(String, Property, Map, Document)}
+     */
+    private Element getXmlElement(final Model model, final Map<String, Model> definitions, final Document document) {
+
+        Element element = null;
+
+        if(model instanceof ModelImpl){
+            Xml xml = ((ModelImpl) model).getXml();
+            if(xml != null) {
+                if(xml.getName() != null){
+                    element = document.createElement(xml.getName());
+                }
+            }
+        }
+
+        if(element == null){
+            element = document.createElement("Result");
+        }
+
+        if(model instanceof ArrayModel){
+            final ArrayModel arrayModel = (ArrayModel) model;
+            final Property item = arrayModel.getItems();
+            final int maxItems = getMaxItems(arrayModel.getMaxItems());
+            for(int index = 0; index < maxItems; index++){
+                Element child = getXmlElement(arrayModel.getType(), item, definitions, document);
+                element.appendChild(child);
+            }
+        } else if(model instanceof RefModel){
+            final RefModel refModel = (RefModel) model;
+            final String simpleRef = refModel.getSimpleRef();
+            final Model subModel = definitions.get(simpleRef);
+            final Element child = getXmlElement(subModel, definitions, document);
+            element.appendChild(child);
+        }
+
+        if(model.getProperties() != null){
+            for(Map.Entry<String, Property> property : model.getProperties().entrySet()){
+                Element subElement = getXmlElement(property.getKey(), property.getValue(), definitions, document);
+                element.appendChild(subElement);
+            }
+        }
+
+        return element;
     }
 
 
@@ -260,9 +450,9 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param definitions The map of definitions that might be required to generate the response.
      * @return A HTTP response body based on the provided {@link Response}.
      * @since 1.13
-     * @see {@link #generateBody(String, Property, Map, JsonGenerator)}
+     * @see {@link #generateJsonBody(String, Property, Map, JsonGenerator)}
      */
-    private String generateBody(final Response response, final Map<String, Model> definitions){
+    private String generateJsonBody(final Response response, final Map<String, Model> definitions){
         final StringWriter writer = new StringWriter();
         final Property schema = response.getSchema();
         if(schema == null){
@@ -274,7 +464,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         JsonGenerator generator = null;
         try {
             generator = factory.createGenerator(writer);
-            generateBody(null, schema, definitions, generator);
+            generateJsonBody(null, schema, definitions, generator);
         } catch (IOException e) {
             LOGGER.error("Unable to generate a response body", e);
         } finally {
@@ -298,9 +488,9 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param generator The {@link JsonGenerator}.
      * @throws IOException
      * @since 1.13
-     * @see {@link #generateBody(Response, Map)}
+     * @see {@link #generateJsonBody(Response, Map)}
      */
-    private void generateBody(final String name, final Property property,
+    private void generateJsonBody(final String name, final Property property,
                               final Map<String, Model> definitions, final JsonGenerator generator) throws IOException {
 
         if(name != null){
@@ -316,46 +506,24 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
                 LOGGER.warn("Unable to find the following definition in the Swagger file: " + simpleRef);
                 return;
             }
-            generateBody(model, definitions, generator);
+            generateJsonBody(model, definitions, generator);
         } else if(property instanceof ArrayProperty){
             final ArrayProperty arrayProperty = (ArrayProperty) property;
             final Property item = arrayProperty.getItems();
+            final int maxItems = getMaxItems(arrayProperty.getMaxItems());
             generator.writeStartArray();
-            for(int index = 0; index < 1; index++){
-                generateBody(item.getName(), item, definitions, generator);
+
+            for(int index = 0; index < maxItems; index++){
+                generateJsonBody(item.getName(), item, definitions, generator);
             }
             generator.writeEndArray();
-        } else if(property instanceof MapProperty){
-            final MapProperty mapProperty = (MapProperty) property;
-        } else if(property instanceof IntegerProperty){
-            generator.writeObject(START_EXPRESSION + RandomIntegerExpression.IDENTIFIER + END_EXPRESSION);
-        } else if(property instanceof LongProperty) {
-            generator.writeObject(START_EXPRESSION + RandomLongExpression.IDENTIFIER + END_EXPRESSION);
-        } else if(property instanceof StringProperty){
-            generator.writeObject(START_EXPRESSION + RandomStringExpression.IDENTIFIER + END_EXPRESSION);
-        } else if(property instanceof DoubleProperty){
-            generator.writeObject(START_EXPRESSION + RandomDoubleExpression.IDENTIFIER + END_EXPRESSION);
-        } else if(property instanceof FloatProperty){
-            generator.writeObject(START_EXPRESSION + RandomFloatExpression.IDENTIFIER + END_EXPRESSION);
-        } else if(property instanceof BooleanProperty){
-            generator.writeObject(START_EXPRESSION + RandomBooleanExpression.IDENTIFIER + END_EXPRESSION);
-        } else if(property instanceof UUIDProperty){
-            generator.writeObject(START_EXPRESSION + RandomUUIDExpression.IDENTIFIER + END_EXPRESSION);
-        } else if(property instanceof DecimalProperty){
-            generator.writeObject(START_EXPRESSION + RandomDecimalExpression.IDENTIFIER + END_EXPRESSION);
-        } else if(property instanceof DateProperty){
-            generator.writeObject(START_EXPRESSION + RandomDateExpression.IDENTIFIER + END_EXPRESSION);
-        } else if(property instanceof DateTimeProperty){
-            generator.writeObject(START_EXPRESSION + RandomDateExpression.IDENTIFIER + END_EXPRESSION);
-        } else if(property instanceof PasswordProperty){
-            generator.writeObject(START_EXPRESSION + RandomPasswordExpression.IDENTIFIER + END_EXPRESSION);
         } else {
-            LOGGER.warn("Unsupported property type: " + property.getClass().getSimpleName());
+            String expression = getExpressionIdentifier(property);
 
-            if(name != null){
-                // Write something in case the type is not supported.
-                // Otherwise, there is a risk of having parsing errors if there
-                // is a field name, but no field.
+            if(expression != null){
+                generator.writeObject(expression);
+            } else {
+                // Unsupported type, but we need to write something.
                 generator.writeObject("");
             }
         }
@@ -368,32 +536,75 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param generator generator The {@link JsonGenerator}.
      * @throws IOException
      * @since 1.13
-     * @see {@link #generateBody(String, Property, Map, JsonGenerator)}
+     * @see {@link #generateJsonBody(String, Property, Map, JsonGenerator)}
      */
-    private void generateBody(final Model model, final Map<String, Model> definitions, final JsonGenerator generator) throws IOException {
+    private void generateJsonBody(final Model model, final Map<String, Model> definitions, final JsonGenerator generator) throws IOException {
         generator.writeStartObject();
         if(model instanceof ArrayModel){
             final ArrayModel arrayModel = (ArrayModel) model;
             final Property item = arrayModel.getItems();
+            final int maxItems = getMaxItems(arrayModel.getMaxItems());
             generator.writeStartArray();
-            for(int index = 0; index < 1; index++){
-                generateBody(item.getName(), item, definitions, generator);
+            for(int index = 0; index < maxItems; index++){
+                generateJsonBody(item.getName(), item, definitions, generator);
             }
             generator.writeEndArray();
         } else if(model instanceof RefModel){
             final RefModel refModel = (RefModel) model;
             final String simpleRef = refModel.getSimpleRef();
             final Model subModel = definitions.get(simpleRef);
-            generateBody(subModel, definitions, generator);
+            generateJsonBody(subModel, definitions, generator);
         }
 
         if(model.getProperties() != null){
             for(Map.Entry<String, Property> property : model.getProperties().entrySet()){
-                generateBody(property.getKey(), property.getValue(), definitions, generator);
+                generateJsonBody(property.getKey(), property.getValue(), definitions, generator);
             }
         }
 
         generator.writeEndObject();
+    }
+
+
+    /**
+     * The method returns an expression identifier for a given {@link Property}.
+     * @param property The property that the expression identifier will be based on.
+     * @return An expression identifier that matches the provided {@link Property}.
+     * If nothing is matched, then <code>null</code> will be returned.
+     * @see Expression
+     * @see 1.13
+     */
+    private String getExpressionIdentifier(final Property property){
+        final StringBuilder expression = new StringBuilder();
+        expression.append(START_EXPRESSION);
+        if(property instanceof IntegerProperty){
+            expression.append(RandomIntegerExpression.IDENTIFIER);
+        } else if(property instanceof LongProperty) {
+            expression.append(RandomLongExpression.IDENTIFIER);
+        } else if(property instanceof StringProperty){
+            expression.append(RandomStringExpression.IDENTIFIER);
+        } else if(property instanceof DoubleProperty){
+            expression.append(RandomDoubleExpression.IDENTIFIER);
+        } else if(property instanceof FloatProperty){
+            expression.append(RandomFloatExpression.IDENTIFIER);
+        } else if(property instanceof BooleanProperty){
+            expression.append(RandomBooleanExpression.IDENTIFIER);
+        } else if(property instanceof UUIDProperty){
+            expression.append(RandomUUIDExpression.IDENTIFIER);
+        } else if(property instanceof DecimalProperty){
+            expression.append(RandomDecimalExpression.IDENTIFIER);
+        } else if(property instanceof DateProperty){
+            expression.append(RandomDateExpression.IDENTIFIER);
+        } else if(property instanceof DateTimeProperty){
+            expression.append(RandomDateExpression.IDENTIFIER);
+        } else if(property instanceof PasswordProperty){
+            expression.append(RandomPasswordExpression.IDENTIFIER);
+        } else {
+            LOGGER.warn("Unsupported property type: " + property.getClass().getSimpleName());
+            return null;
+        }
+        expression.append(END_EXPRESSION);
+        return expression.toString();
     }
 
 
@@ -413,6 +624,23 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         }
     }
 
+    /**
+     * Get the max item count. It is based in the value configured in the Swagger file.
+     * If the <code>maxitemCount</code> is null, then the <code>MAX_RESPONSE_ITEMS</code>
+     * will be returned.
+     *
+     * If <code>maxitemCount</code> is not null, then it will take the minimum of <code>maxitemCount</code>
+     * and <code>MAX_RESPONSE_ITEMS</code>.
+     * @param maxItemCount The max item count configured in the Swagger file.
+     * @return The max item count.
+     * ßee 1.13
+     */
+    private int getMaxItems(final Integer maxItemCount){
+        if(maxItemCount == null){
+            return MAX_RESPONSE_ITEMS;
+        }
+        return Math.min(MAX_RESPONSE_ITEMS, maxItemCount);
+    }
 
 
 }

@@ -71,7 +71,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
     private static final Logger LOGGER = Logger.getLogger(AbstractRestServiceController.class);
     private static final Integer OK_RESPONSE = 200;
 
-
     /**
      *
      * @param projectId The id of the project which the incoming request and mocked response belongs to
@@ -88,7 +87,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
             Preconditions.checkNotNull(httpMethod, "The REST method cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
             Preconditions.checkNotNull(httpServletResponse, "The HTTP Servlet Response cannot be null");
-
             final RestRequestDto restRequest = prepareRequest(projectId, applicationId, httpMethod, httpServletRequest);
             final IdentifyRestMethodOutput output = serviceProcessor.process(new IdentifyRestMethodInput(projectId, applicationId, restRequest.getUri(), httpMethod));
             final String resourceId = output.getRestResourceId();
@@ -153,7 +151,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             } else if (RestMethodStatus.RECORD_ONCE.equals(restMethod.getStatus())) {
                 response = forwardRequestAndRecordResponseOnce(restRequest, projectId, applicationId, resourceId, restMethod);
             } else { // Status.MOCKED
-                response = mockResponse(projectId, applicationId, resourceId, restMethod);
+                response = mockResponse(restRequest, projectId, applicationId, resourceId, restMethod);
             }
 
             HttpHeaders responseHeaders = new HttpHeaders();
@@ -190,7 +188,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
     protected RestResponseDto forwardRequest(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
         if(demoMode){
             // If the application is configured to run in demo mode, then use mocked response instead
-            return mockResponse(projectId, applicationId, resourceId, restMethod);
+            return mockResponse(restRequest, projectId, applicationId, resourceId, restMethod);
         }
 
 
@@ -304,12 +302,38 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param restMethod The REST method which the incoming request belongs to
      * @return Returns a selected mocked response which will be returned to the service consumer
      */
-    protected RestResponseDto mockResponse(final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
-        final List<RestMockResponseDto> mockResponses = new ArrayList<RestMockResponseDto>();
+    protected RestResponseDto mockResponse(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
+        // Extract the accept header value.
+        final Collection<String> acceptHeaderValues = getHeaderValues(ACCEPT_HEADER, restRequest.getHttpHeaders());
+
+
+        // Iterate through all mocked responses and extract the ones
+        // that are active.
+        final List<RestMockResponseDto> enabledMockResponses = new ArrayList<RestMockResponseDto>();
         for(RestMockResponseDto mockResponse : restMethod.getMockResponses()){
             if(mockResponse.getStatus().equals(RestMockResponseStatus.ENABLED)){
-                mockResponses.add(mockResponse);
+                enabledMockResponses.add(mockResponse);
             }
+        }
+
+        List<RestMockResponseDto> mockResponses = new ArrayList<>();
+
+        if(acceptHeaderValues != null){
+            // Find request that matches the accept header.
+            for(RestMockResponseDto mockResponse : enabledMockResponses){
+                // The accept header has to match the content type.
+                final Collection<String> mockResponseContentTypeValues = getHeaderValues(CONTENT_TYPE, mockResponse.getHttpHeaders());
+                mockResponseContentTypeValues.retainAll(acceptHeaderValues);
+                if(!mockResponseContentTypeValues.isEmpty()){
+                    mockResponses.add(mockResponse);
+                }
+            }
+        }
+
+        // If no mock responses are matching the accept header, then
+        // any mock response will do.
+        if(mockResponses.isEmpty()){
+            mockResponses.addAll(enabledMockResponses);
         }
 
         RestMockResponseDto mockResponse = null;
@@ -343,5 +367,34 @@ public abstract class AbstractRestServiceController extends AbstractController {
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
         response.setHttpHeaders(mockResponse.getHttpHeaders());
         return response;
+    }
+
+    /**
+     * The method returns a list of values for a header ({@link HttpHeaderDto}).
+     * @param headerName The name of the header which value will be extracted and returned.
+     * @param httpHeaders A list of {@link HttpHeaderDto}s
+     * @return A list of HTTP header values
+     * @since 1.13
+     */
+    private Collection<String> getHeaderValues(final String headerName, final List<HttpHeaderDto> httpHeaders){
+        HttpHeaderDto httpHeader = null;
+        for(HttpHeaderDto tmpHeader : httpHeaders){
+            if(headerName.equalsIgnoreCase(tmpHeader.getName())){
+                httpHeader = tmpHeader;
+            }
+        }
+
+        List<String> result = new ArrayList<>();
+
+        if(httpHeader != null){
+            String value = httpHeader.getValue();
+            String[] headerValues = value.split(",");
+            for(String headerValue : headerValues){
+                result.add(headerValue.toLowerCase());
+            }
+
+        }
+
+        return result;
     }
 }
