@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Karl Dahlgren
+ * Copyright 2017 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,19 @@
 package com.castlemock.core.basis.utility.parser.expression;
 
 /**
- * {@link RandomLongExpression} is an {@link Expression} and will
- * transform an matching input string into a random long.
+ * {@link RandomEmailExpression} is an {@link Expression} and will
+ * transform an matching input string into a random email.
  * @author Karl Dahlgren
- * @since 1.6
+ * @since 1.13
  */
-public class RandomLongExpression extends AbstractExpression {
+public class RandomEmailExpression extends AbstractExpression {
 
-    public static final String IDENTIFIER = "RANDOM_LONG";
+    private static final int MIN_LENGTH = 5;
+    private static final int MAX_LENGTH = 10;
+    private static final String AT = "@";
+    private static final String DOT = ".";
+    private static final String TOP_DOMAIN = "com";
+    public static final String IDENTIFIER = "RANDOM_EMAIL";
 
     /**
      * The transform method provides the functionality to transform a provided <code>input</code>.
@@ -35,7 +40,10 @@ public class RandomLongExpression extends AbstractExpression {
      */
     @Override
     public String transform(String input) {
-        return Long.toString(RANDOM.nextLong());
+        final String username = randomString(RANDOM.nextInt(MAX_LENGTH) + MIN_LENGTH);
+        final String domain = randomString(RANDOM.nextInt(MAX_LENGTH) + MIN_LENGTH);
+
+        return username + AT + domain + DOT + TOP_DOMAIN;
     }
 
     /**
@@ -48,4 +56,5 @@ public class RandomLongExpression extends AbstractExpression {
     public boolean match(String input) {
         return IDENTIFIER.equalsIgnoreCase(input);
     }
+
 }

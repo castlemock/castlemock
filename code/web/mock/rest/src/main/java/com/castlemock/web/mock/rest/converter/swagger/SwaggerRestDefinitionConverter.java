@@ -19,6 +19,7 @@ package com.castlemock.web.mock.rest.converter.swagger;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.utility.file.FileUtility;
+import com.castlemock.core.basis.utility.parser.expression.*;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
@@ -27,14 +28,17 @@ import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
-import io.swagger.models.Operation;
-import io.swagger.models.Path;
-import io.swagger.models.Response;
-import io.swagger.models.Swagger;
-import io.swagger.models.properties.Property;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import io.swagger.models.*;
+import io.swagger.models.properties.*;
 import io.swagger.parser.SwaggerParser;
+import io.swagger.util.Json;
+import org.apache.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.*;
 
 /**
@@ -44,6 +48,9 @@ import java.util.*;
  */
 public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
+    private static final Logger LOGGER = Logger.getLogger(SwaggerRestDefinitionConverter.class);
+    private static final String START_EXPRESSION = "${";
+    private static final String END_EXPRESSION = "}";
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
@@ -100,6 +107,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         restApplication.setName(swagger.getHost());
 
         final String forwardAddress = getForwardAddress(swagger);
+        final Map<String, Model> definitions = swagger.getDefinitions();
 
         for(Map.Entry<String, Path> pathEntry : swagger.getPaths().entrySet()){
             final String resourceName = pathEntry.getKey();
@@ -111,32 +119,32 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
 
             if(resourcePath.getGet() != null){
                 Operation operation = resourcePath.getGet();
-                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.GET, forwardAddress, generateResponse);
+                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.GET, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getPost() != null){
                 Operation operation = resourcePath.getPost();
-                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.POST, forwardAddress, generateResponse);
+                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.POST, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getPut() != null){
                 Operation operation = resourcePath.getPut();
-                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.PUT, forwardAddress, generateResponse);
+                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.PUT, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getDelete() != null){
                 Operation operation = resourcePath.getDelete();
-                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.DELETE, forwardAddress, generateResponse);
+                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.DELETE, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getHead() != null){
                 Operation operation = resourcePath.getHead();
-                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.HEAD, forwardAddress, generateResponse);
+                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.HEAD, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getOptions() != null){
                 Operation operation = resourcePath.getOptions();
-                RestMethodDto restMethod = createRestMethod(operation, HttpMethod.OPTIONS, forwardAddress, generateResponse);
+                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.OPTIONS, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
 
@@ -172,8 +180,9 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
      * @return A {@link RestMethodDto} based on the provided Swagger {@link Operation} and the {@link HttpMethod}.
      */
-    private RestMethodDto createRestMethod(final Operation operation, final HttpMethod httpMethod,
-                                           final String forwardAddress, final boolean generateResponse){
+    private RestMethodDto createRestMethod(final Operation operation, final Map<String, Model> definitions,
+                                           final HttpMethod httpMethod, final String forwardAddress,
+                                           final boolean generateResponse){
         final RestMethodDto restMethod = new RestMethodDto();
 
         String methodName;
@@ -194,7 +203,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
 
         if(generateResponse){
             if(!operation.getResponses().isEmpty()){
-                Collection<RestMockResponseDto> mockResponses = generateResponse(operation.getResponses());
+                Collection<RestMockResponseDto> mockResponses = generateResponse(operation.getResponses(), definitions);
                 restMethod.getMockResponses().addAll(mockResponses);
             } else {
                 RestMockResponseDto generatedResponse = generateResponse();
@@ -211,14 +220,18 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param responses The Swagger response definitions
      * @return The newly generated {@link RestMockResponseDto}.
      */
-    private Collection<RestMockResponseDto> generateResponse(final Map<String,Response> responses){
+    private Collection<RestMockResponseDto> generateResponse(final Map<String,Response> responses,
+                                                             final Map<String, Model> definitions){
         final List<RestMockResponseDto> mockResponses = new ArrayList<>();
         for(Map.Entry<String, Response> responseEntry : responses.entrySet()){
             int httpStatusCode = extractHttpStatusCode(responseEntry.getKey());
             Response response = responseEntry.getValue();
             RestMockResponseDto restMockResponse = new RestMockResponseDto();
+            String responseBody = generateBody(response, definitions);
             restMockResponse.setName(response.getDescription());
             restMockResponse.setHttpStatusCode(httpStatusCode);
+            restMockResponse.setBody(responseBody);
+            restMockResponse.setUsingExpressions(true);
             if(httpStatusCode == DEFAULT_RESPONSE_CODE){
                 restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
             } else {
@@ -239,6 +252,150 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         }
         return mockResponses;
     }
+
+
+    /**
+     * The method generates a body based on the provided {@link Response} and a map of {@link Model}.
+     * @param response The response which the body will be based on.
+     * @param definitions The map of definitions that might be required to generate the response.
+     * @return A HTTP response body based on the provided {@link Response}.
+     * @since 1.13
+     * @see {@link #generateBody(String, Property, Map, JsonGenerator)}
+     */
+    private String generateBody(final Response response, final Map<String, Model> definitions){
+        final StringWriter writer = new StringWriter();
+        final Property schema = response.getSchema();
+        if(schema == null){
+            return writer.toString();
+        }
+
+
+        final JsonFactory factory = new JsonFactory();
+        JsonGenerator generator = null;
+        try {
+            generator = factory.createGenerator(writer);
+            generateBody(null, schema, definitions, generator);
+        } catch (IOException e) {
+            LOGGER.error("Unable to generate a response body", e);
+        } finally {
+            if(generator != null){
+                try {
+                    generator.close();
+                } catch (IOException e) {
+                    LOGGER.error("Unable to close the JsonGenerator", e);
+                }
+            }
+        }
+
+        return writer.toString();
+    }
+
+    /**
+     * The method generates a response body based on a given name, {@link Property} and a map of {@link Model}.
+     * @param name The name of the property.
+     * @param property The property that will be part of the response.
+     * @param definitions The map of definitions will be used when composing the response body.
+     * @param generator The {@link JsonGenerator}.
+     * @throws IOException
+     * @since 1.13
+     * @see {@link #generateBody(Response, Map)}
+     */
+    private void generateBody(final String name, final Property property,
+                              final Map<String, Model> definitions, final JsonGenerator generator) throws IOException {
+
+        if(name != null){
+            generator.writeFieldName(name);
+        }
+
+        if(property instanceof RefProperty){
+            final RefProperty refProperty = (RefProperty) property;
+            final String simpleRef = refProperty.getSimpleRef();
+            final Model model = definitions.get(simpleRef);
+
+            if(model == null){
+                LOGGER.warn("Unable to find the following definition in the Swagger file: " + simpleRef);
+                return;
+            }
+            generateBody(model, definitions, generator);
+        } else if(property instanceof ArrayProperty){
+            final ArrayProperty arrayProperty = (ArrayProperty) property;
+            final Property item = arrayProperty.getItems();
+            generator.writeStartArray();
+            for(int index = 0; index < 1; index++){
+                generateBody(item.getName(), item, definitions, generator);
+            }
+            generator.writeEndArray();
+        } else if(property instanceof MapProperty){
+            final MapProperty mapProperty = (MapProperty) property;
+        } else if(property instanceof IntegerProperty){
+            generator.writeObject(START_EXPRESSION + RandomIntegerExpression.IDENTIFIER + END_EXPRESSION);
+        } else if(property instanceof LongProperty) {
+            generator.writeObject(START_EXPRESSION + RandomLongExpression.IDENTIFIER + END_EXPRESSION);
+        } else if(property instanceof StringProperty){
+            generator.writeObject(START_EXPRESSION + RandomStringExpression.IDENTIFIER + END_EXPRESSION);
+        } else if(property instanceof DoubleProperty){
+            generator.writeObject(START_EXPRESSION + RandomDoubleExpression.IDENTIFIER + END_EXPRESSION);
+        } else if(property instanceof FloatProperty){
+            generator.writeObject(START_EXPRESSION + RandomFloatExpression.IDENTIFIER + END_EXPRESSION);
+        } else if(property instanceof BooleanProperty){
+            generator.writeObject(START_EXPRESSION + RandomBooleanExpression.IDENTIFIER + END_EXPRESSION);
+        } else if(property instanceof UUIDProperty){
+            generator.writeObject(START_EXPRESSION + RandomUUIDExpression.IDENTIFIER + END_EXPRESSION);
+        } else if(property instanceof DecimalProperty){
+            generator.writeObject(START_EXPRESSION + RandomDecimalExpression.IDENTIFIER + END_EXPRESSION);
+        } else if(property instanceof DateProperty){
+            generator.writeObject(START_EXPRESSION + RandomDateExpression.IDENTIFIER + END_EXPRESSION);
+        } else if(property instanceof DateTimeProperty){
+            generator.writeObject(START_EXPRESSION + RandomDateExpression.IDENTIFIER + END_EXPRESSION);
+        } else if(property instanceof PasswordProperty){
+            generator.writeObject(START_EXPRESSION + RandomPasswordExpression.IDENTIFIER + END_EXPRESSION);
+        } else {
+            LOGGER.warn("Unsupported property type: " + property.getClass().getSimpleName());
+
+            if(name != null){
+                // Write something in case the type is not supported.
+                // Otherwise, there is a risk of having parsing errors if there
+                // is a field name, but no field.
+                generator.writeObject("");
+            }
+        }
+    }
+
+    /**
+     * Method used to generate a response body based on a {@link Model} and perhaps related other {@link Model}.
+     * @param model The {@link Model} used to generate to the body.
+     * @param definitions Other {@link Model} that might be related and required.
+     * @param generator generator The {@link JsonGenerator}.
+     * @throws IOException
+     * @since 1.13
+     * @see {@link #generateBody(String, Property, Map, JsonGenerator)}
+     */
+    private void generateBody(final Model model, final Map<String, Model> definitions, final JsonGenerator generator) throws IOException {
+        generator.writeStartObject();
+        if(model instanceof ArrayModel){
+            final ArrayModel arrayModel = (ArrayModel) model;
+            final Property item = arrayModel.getItems();
+            generator.writeStartArray();
+            for(int index = 0; index < 1; index++){
+                generateBody(item.getName(), item, definitions, generator);
+            }
+            generator.writeEndArray();
+        } else if(model instanceof RefModel){
+            final RefModel refModel = (RefModel) model;
+            final String simpleRef = refModel.getSimpleRef();
+            final Model subModel = definitions.get(simpleRef);
+            generateBody(subModel, definitions, generator);
+        }
+
+        if(model.getProperties() != null){
+            for(Map.Entry<String, Property> property : model.getProperties().entrySet()){
+                generateBody(property.getKey(), property.getValue(), definitions, generator);
+            }
+        }
+
+        generator.writeEndObject();
+    }
+
 
     /**
      * The method will extract the HTTP response status code. The provided response code

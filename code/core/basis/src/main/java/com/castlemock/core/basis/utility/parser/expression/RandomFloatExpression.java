@@ -16,7 +16,6 @@
 
 package com.castlemock.core.basis.utility.parser.expression;
 
-import java.util.Random;
 
 /**
  * {@link RandomFloatExpression} is an {@link Expression} and will
@@ -26,8 +25,7 @@ import java.util.Random;
  */
 public class RandomFloatExpression extends AbstractExpression {
 
-    private static final Random RANDOM = new Random();
-    private static final String IDENTIFIER = "RANDOM_FLOAT";
+    public static final String IDENTIFIER = "RANDOM_FLOAT";
 
     /**
      * The transform method provides the functionality to transform a provided <code>input</code>.

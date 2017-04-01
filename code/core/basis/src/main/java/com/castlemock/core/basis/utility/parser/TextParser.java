@@ -33,11 +33,13 @@ import java.util.regex.Pattern;
  */
 public class TextParser {
 
-    private static final String START_EXPRESSION = "\\{";
+    private static final String START_EXPRESSION = "\\$\\{";
     private static final String END_EXPRESSION = "\\}";
     private static final Expression[] EXPRESSIONS =
             {new RandomIntegerExpression(), new RandomDoubleExpression(), new RandomLongExpression(),
-                    new RandomFloatExpression()};
+                    new RandomFloatExpression(), new RandomBooleanExpression(), new RandomDateExpression(),
+                    new RandomStringExpression(), new RandomUUIDExpression(), new RandomEmailExpression(),
+                    new RandomPasswordExpression(), new RandomDecimalExpression(), new RandomDateTimeExpression()};
 
     /**
      * The parse method is responsible for parsing a provided text and transform the text
@@ -50,7 +52,7 @@ public class TextParser {
      */
     public static String parse(final String text){
         String output = text;
-        Pattern pattern = Pattern.compile("(?<=\\{)(.*?)(?=\\})");
+        Pattern pattern = Pattern.compile("(?<=\\$\\{)(.*?)(?=\\})");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()){
             String match = matcher.group();

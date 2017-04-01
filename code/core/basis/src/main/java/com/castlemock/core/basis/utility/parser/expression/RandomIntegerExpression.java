@@ -16,8 +16,6 @@
 
 package com.castlemock.core.basis.utility.parser.expression;
 
-import java.util.Random;
-
 /**
  * {@link RandomIntegerExpression} is an {@link Expression} and will
  * transform an matching input string into a random integer.
@@ -26,8 +24,7 @@ import java.util.Random;
  */
 public class RandomIntegerExpression extends AbstractExpression {
 
-    private static final Random RANDOM = new Random();
-    private static final String IDENTIFIER = "RANDOM_INTEGER";
+    public static final String IDENTIFIER = "RANDOM_INTEGER";
 
     /**
      * The transform method provides the functionality to transform a provided <code>input</code>.

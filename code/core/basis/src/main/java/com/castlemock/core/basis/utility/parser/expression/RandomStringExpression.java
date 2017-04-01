@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Karl Dahlgren
+ * Copyright 2017 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,18 @@
 
 package com.castlemock.core.basis.utility.parser.expression;
 
-/**
- * {@link RandomLongExpression} is an {@link Expression} and will
- * transform an matching input string into a random long.
- * @author Karl Dahlgren
- * @since 1.6
- */
-public class RandomLongExpression extends AbstractExpression {
 
-    public static final String IDENTIFIER = "RANDOM_LONG";
+/**
+ * {@link RandomStringExpression} is an {@link Expression} and will
+ * transform an matching input string into a random String.
+ * @author Karl Dahlgren
+ * @since 1.13
+ */
+public class RandomStringExpression extends AbstractExpression {
+
+    private static final int MIN_LENGTH = 5;
+    private static final int MAX_LENGTH = 15;
+    public static final String IDENTIFIER = "RANDOM_STRING";
 
     /**
      * The transform method provides the functionality to transform a provided <code>input</code>.
@@ -35,7 +38,7 @@ public class RandomLongExpression extends AbstractExpression {
      */
     @Override
     public String transform(String input) {
-        return Long.toString(RANDOM.nextLong());
+        return randomString(RANDOM.nextInt(MAX_LENGTH) + MIN_LENGTH);
     }
 
     /**
