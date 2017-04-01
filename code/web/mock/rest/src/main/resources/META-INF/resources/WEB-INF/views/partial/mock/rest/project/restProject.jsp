@@ -53,9 +53,9 @@
                             <i class="fa fa-upload"></i> <span><spring:message code="rest.restproject.button.upload"/> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="<c:url value="/web/rest/project/${restProject.id}/import?type=WADL"/>">WADL</a></li>
-                            <li><a href="<c:url value="/web/rest/project/${restProject.id}/import?type=SWAGGER"/>">Swagger</a></li>
                             <li><a href="<c:url value="/web/rest/project/${restProject.id}/import?type=RAML"/>">RAML</a></li>
+                            <li><a href="<c:url value="/web/rest/project/${restProject.id}/import?type=SWAGGER"/>">Swagger</a></li>
+                            <li><a href="<c:url value="/web/rest/project/${restProject.id}/import?type=WADL"/>">WADL</a></li>
                         </ul>
                     </div>
                     <a class="btn btn-primary" href="<c:url value="/web/rest/project/${restProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="rest.restproject.button.export"/></span></a>
