@@ -414,6 +414,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         }
 
         if(element == null){
+            // Unclear when this can happen, but this should still be handled
             element = document.createElement("Result");
         }
 
@@ -523,7 +524,8 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             if(expression != null){
                 generator.writeObject(expression);
             } else {
-                // Unsupported type, but we need to write something.
+                // Unsupported type. Need to write something otherwise
+                // we might have a serialization problem.
                 generator.writeObject("");
             }
         }
