@@ -59,6 +59,9 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
     private static final Logger LOGGER = Logger.getLogger(SwaggerRestDefinitionConverter.class);
     private static final String START_EXPRESSION = "${";
     private static final String END_EXPRESSION = "}";
+    private static final String START_ENUM_ARRAY = "[";
+    private static final String END_ENUM_ARRAY = "]";
+    private static final String ENUM_DELIMITER = ",";
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String APPLICATION_XML = "application/xml";
     private static final String APPLICATION_JSON = "application/json";
@@ -584,7 +587,27 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         } else if(property instanceof LongProperty) {
             expression.append(RandomLongExpression.IDENTIFIER);
         } else if(property instanceof StringProperty){
-            expression.append(RandomStringExpression.IDENTIFIER);
+            StringProperty stringProperty = (StringProperty) property;
+            List<String> enumValues = stringProperty.getEnum();
+
+            // Check if the property has enums
+            if(enumValues == null || enumValues.isEmpty()){
+                // Return a String expression if it doesn't have enum enums
+                expression.append(RandomStringExpression.IDENTIFIER);
+            } else {
+                // Extract the enums and return a enum expression
+                expression.append(RandomEnumExpression.IDENTIFIER);
+                expression.append(START_ENUM_ARRAY);
+                Iterator<String> enumIterator = enumValues.iterator();
+                while(enumIterator.hasNext()){
+                    String enumValue = enumIterator.next();
+                    expression.append(enumValue);
+                    if(enumIterator.hasNext()){
+                        expression.append(ENUM_DELIMITER);
+                    }
+                }
+                expression.append(END_ENUM_ARRAY);
+            }
         } else if(property instanceof DoubleProperty){
             expression.append(RandomDoubleExpression.IDENTIFIER);
         } else if(property instanceof FloatProperty){
