@@ -81,11 +81,33 @@ subprojects {
     }
 }
 
+project(':code:core:expression') {
+    apply plugin: 'antlr'
 
+    description = "Castle Mock core: Expression"
+    group = "com.castlemock.core"
+
+    dependencies {
+        antlr "org.antlr:antlr4:4.7"
+    }
+
+    generateGrammarSource {
+        maxHeapSize = "64m"
+        arguments += [
+                "-visitor",
+                "-long-messages",
+                "-package", "com.castlemock.core.expression"]
+    }
+}
 
 project(':code:core:basis') {
     description = "Castle Mock core: Basis"
     group = "com.castlemock.core"
+
+    dependencies {
+        compile(project(":code:core:expression"))
+    }
+
 }
 
 project(':code:core:mock:rest') {
