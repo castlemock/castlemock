@@ -45,6 +45,7 @@ subprojects {
     ext.servletJspVersion = "2.2"
     ext.swaggerVersion = "1.0.25"
     ext.ramlVersion = "1.0.6"
+    ext.antlrVersion = "4.7"
 
 	compileJava {
 		sourceCompatibility = 1.8
@@ -88,11 +89,10 @@ project(':code:core:expression') {
     group = "com.castlemock.core"
 
     dependencies {
-        antlr "org.antlr:antlr4:4.7"
+        antlr group: "org.antlr", name: "antlr4", version: antlrVersion
     }
 
     generateGrammarSource {
-        maxHeapSize = "64m"
         arguments += [
                 "-visitor",
                 "-long-messages",
