@@ -32,7 +32,7 @@ public interface Expression {
      * @param input The input string that will be transformed.
      * @return A transformed <code>input</code>.
      */
-    String transform(String input);
+    String transform(ExpressionInput input);
 
     /**
      * The match method is used to determine if an <code>input</code> string matches

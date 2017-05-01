@@ -2,8 +2,8 @@ grammar Expression;
 
 
 expression
-    : type=expressionName
-       ('(' (arguments+=argument ( ',' arguments+=argument )*)? ')')?
+    : '${' type=expressionName
+       ('(' (WS+)? (arguments+=argument (',' (WS+)? arguments+=argument )*)? ')')? '}'
      ;
 
 expressionName
@@ -26,7 +26,7 @@ argumentValue
 
 
 argumentString
-    : '"' (value=string)? '"'
+    : ('\\')? '"' (value=string)? ('\\')? '"'
     ;
 
 argumentNumber
@@ -39,16 +39,16 @@ number
 
 array
     :
-    ('[' (value+=argumentValue ( ',' value+=argumentValue)*)? ']')
+    ('[' (WS+)? (value+=argumentValue ( ',' (WS+)? value+=argumentValue)*)? ']')
     ;
 
 string
-    : value=(DIGIT | CHAR | '<' | '>' | '|' | '(' | ')' | '?'
-    | '!' | '@' | '#' | '€' | '%' | '&' | '/' | '\\' | '=' | '+'
+    : value=(DIGIT | CHAR | WS | '<' | '>' | '|' | '(' | ')' | '?'
+    | '!' | '@' | '#' | '€' | '%' | '&' | '/' | '=' | '+'
     | '-' | '*' | '^' | '^' | '.' | ',' | ':' | ';' | '^')+
     ;
 
 CHAR: ('a'..'z' | 'A'..'Z');
 DIGIT: ('0'..'9');
 UNDER_SCORE: '_';
-WS  : [ \t\r\n]+ -> skip ;
+WS  : [ \t\r\n]+;

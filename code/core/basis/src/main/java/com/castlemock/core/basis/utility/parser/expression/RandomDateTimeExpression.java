@@ -38,7 +38,7 @@ public class RandomDateTimeExpression extends AbstractExpression {
      * @return A transformed <code>input</code>.
      */
     @Override
-    public String transform(String input) {
+    public String transform(final ExpressionInput input) {
         final Date date = new Date(Math.abs(System.currentTimeMillis()));
         return DATE_FORMAT.format(date);
     }
@@ -50,7 +50,7 @@ public class RandomDateTimeExpression extends AbstractExpression {
      * @return True if the input string matches the criteria. False otherwise.
      */
     @Override
-    public boolean match(String input) {
+    public boolean match(final String input) {
         return IDENTIFIER.equalsIgnoreCase(input);
     }
 }

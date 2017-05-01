@@ -16,6 +16,9 @@
 
 package com.castlemock.core.basis.utility.parser.expression;
 
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentNumber;
+
 /**
  * {@link RandomPasswordExpression} is an {@link Expression} and will
  * transform an matching input string into a random password.
@@ -24,9 +27,10 @@ package com.castlemock.core.basis.utility.parser.expression;
  */
 public class RandomPasswordExpression extends AbstractExpression {
 
-    private static final int MIN_LENGTH = 5;
-    private static final int MAX_LENGTH = 10;
+    private static final String MIN_ARGUMENT = "min";
+    private static final String MAX_ARGUMENT = "max";
     public static final String IDENTIFIER = "RANDOM_PASSWORD";
+
 
     /**
      * The transform method provides the functionality to transform a provided <code>input</code>.
@@ -36,8 +40,22 @@ public class RandomPasswordExpression extends AbstractExpression {
      * @return A transformed <code>input</code>.
      */
     @Override
-    public String transform(String input) {
-        return randomString(RANDOM.nextInt(MAX_LENGTH) + MIN_LENGTH);
+    public String transform(final ExpressionInput input) {
+        int minLength = 5;
+        int maxLength = 10;
+
+        final ExpressionArgument minArgument = input.getArgument(MIN_ARGUMENT);
+        final ExpressionArgument maxArgument = input.getArgument(MAX_ARGUMENT);
+
+        if(minArgument != null && minArgument instanceof ExpressionArgumentNumber){
+            minLength = ((ExpressionArgumentNumber) minArgument).getValue().intValue();
+        }
+        if(maxArgument != null && maxArgument instanceof ExpressionArgumentNumber){
+            maxLength = ((ExpressionArgumentNumber) maxArgument).getValue().intValue();
+        }
+
+
+        return randomString(RANDOM.nextInt(maxLength) + minLength);
     }
 
     /**
@@ -47,7 +65,7 @@ public class RandomPasswordExpression extends AbstractExpression {
      * @return True if the input string matches the criteria. False otherwise.
      */
     @Override
-    public boolean match(String input) {
+    public boolean match(final String input) {
         return IDENTIFIER.equalsIgnoreCase(input);
     }
 

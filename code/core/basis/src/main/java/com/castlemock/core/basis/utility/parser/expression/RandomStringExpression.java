@@ -37,8 +37,9 @@ public class RandomStringExpression extends AbstractExpression {
      * @return A transformed <code>input</code>.
      */
     @Override
-    public String transform(String input) {
-        return randomString(RANDOM.nextInt(MAX_LENGTH) + MIN_LENGTH);
+    public String transform(final ExpressionInput input) {
+        final int length = RANDOM.nextInt(MAX_LENGTH) + MIN_LENGTH;
+        return randomString(length);
     }
 
     /**
@@ -48,7 +49,7 @@ public class RandomStringExpression extends AbstractExpression {
      * @return True if the input string matches the criteria. False otherwise.
      */
     @Override
-    public boolean match(String input) {
+    public boolean match(final String input) {
         return IDENTIFIER.equalsIgnoreCase(input);
     }
 }

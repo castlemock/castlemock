@@ -16,6 +16,10 @@
 
 package com.castlemock.core.basis.utility.parser.expression;
 
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentNumber;
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentString;
+
 /**
  * {@link RandomEmailExpression} is an {@link Expression} and will
  * transform an matching input string into a random email.
@@ -26,9 +30,15 @@ public class RandomEmailExpression extends AbstractExpression {
 
     private static final int MIN_LENGTH = 5;
     private static final int MAX_LENGTH = 10;
+
+    private static final String DOMAIN_ARGUMENT = "domain";
+    private static final String TOP_DOMAIN_ARGUMENT = "topDomain";
+    private static final String MIN_ARGUMENT = "min";
+    private static final String MAX_ARGUMENT = "max";
+
     private static final String AT = "@";
     private static final String DOT = ".";
-    private static final String TOP_DOMAIN = "com";
+    private static final String DEFAULT_TOP_DOMAIN = "com";
     public static final String IDENTIFIER = "RANDOM_EMAIL";
 
     /**
@@ -39,11 +49,41 @@ public class RandomEmailExpression extends AbstractExpression {
      * @return A transformed <code>input</code>.
      */
     @Override
-    public String transform(String input) {
-        final String username = randomString(RANDOM.nextInt(MAX_LENGTH) + MIN_LENGTH);
-        final String domain = randomString(RANDOM.nextInt(MAX_LENGTH) + MIN_LENGTH);
+    public String transform(final ExpressionInput input) {
 
-        return username + AT + domain + DOT + TOP_DOMAIN;
+        final ExpressionArgument domainArgument = input.getArgument(DOMAIN_ARGUMENT);
+        final ExpressionArgument topDomainArgument = input.getArgument(TOP_DOMAIN_ARGUMENT);
+
+
+        final ExpressionArgument minArgument = input.getArgument(MIN_ARGUMENT);
+        final ExpressionArgument maxArgument = input.getArgument(MAX_ARGUMENT);
+
+        String domain = null;
+        String topDomain = null;
+        int minLength = MIN_LENGTH;
+        int maxLength = MAX_LENGTH;
+
+        if(domainArgument != null && domainArgument instanceof ExpressionArgumentString){
+            domain = ((ExpressionArgumentString) domainArgument).getValue();
+        } else {
+            domain = randomString(RANDOM.nextInt(MAX_LENGTH) + MIN_LENGTH);
+        }
+
+        if(topDomainArgument != null && topDomainArgument instanceof ExpressionArgumentString){
+            topDomain = ((ExpressionArgumentString) topDomainArgument).getValue();
+        } else {
+            topDomain = DEFAULT_TOP_DOMAIN;
+        }
+
+        if(minArgument != null && minArgument instanceof ExpressionArgumentNumber){
+            minLength = ((ExpressionArgumentNumber) minArgument).getValue().intValue();
+        }
+        if(maxArgument != null && maxArgument instanceof ExpressionArgumentNumber){
+            maxLength = ((ExpressionArgumentNumber) maxArgument).getValue().intValue();
+        }
+
+        final String username = randomString(RANDOM.nextInt(maxLength) + minLength);
+        return username + AT + domain + DOT + topDomain;
     }
 
     /**
@@ -53,7 +93,7 @@ public class RandomEmailExpression extends AbstractExpression {
      * @return True if the input string matches the criteria. False otherwise.
      */
     @Override
-    public boolean match(String input) {
+    public boolean match(final String input) {
         return IDENTIFIER.equalsIgnoreCase(input);
     }
 

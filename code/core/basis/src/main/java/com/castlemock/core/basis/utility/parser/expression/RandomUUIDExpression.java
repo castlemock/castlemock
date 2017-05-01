@@ -36,7 +36,7 @@ public class RandomUUIDExpression extends AbstractExpression {
      * @return A transformed <code>input</code>.
      */
     @Override
-    public String transform(String input) {
+    public String transform(ExpressionInput input) {
         return UUID.randomUUID().toString();
     }
 

@@ -20,6 +20,9 @@ import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.utility.file.FileUtility;
 import com.castlemock.core.basis.utility.parser.expression.*;
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentArray;
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentString;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
@@ -57,11 +60,6 @@ import java.util.*;
 public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
     private static final Logger LOGGER = Logger.getLogger(SwaggerRestDefinitionConverter.class);
-    private static final String START_EXPRESSION = "${";
-    private static final String END_EXPRESSION = "}";
-    private static final String START_ENUM_ARRAY = "[";
-    private static final String END_ENUM_ARRAY = "]";
-    private static final String ENUM_DELIMITER = ",";
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String APPLICATION_XML = "application/xml";
     private static final String APPLICATION_JSON = "application/json";
@@ -580,56 +578,51 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @see 1.13
      */
     private String getExpressionIdentifier(final Property property){
-        final StringBuilder expression = new StringBuilder();
-        expression.append(START_EXPRESSION);
+        ExpressionInput expressionInput = null;
         if(property instanceof IntegerProperty){
-            expression.append(RandomIntegerExpression.IDENTIFIER);
+            expressionInput = new ExpressionInput(RandomIntegerExpression.IDENTIFIER);
         } else if(property instanceof LongProperty) {
-            expression.append(RandomLongExpression.IDENTIFIER);
+            expressionInput = new ExpressionInput(RandomLongExpression.IDENTIFIER);
         } else if(property instanceof StringProperty){
-            StringProperty stringProperty = (StringProperty) property;
-            List<String> enumValues = stringProperty.getEnum();
+            final StringProperty stringProperty = (StringProperty) property;
+            final List<String> enumValues = stringProperty.getEnum();
 
-            // Check if the property has enums
             if(enumValues == null || enumValues.isEmpty()){
-                // Return a String expression if it doesn't have enum enums
-                expression.append(RandomStringExpression.IDENTIFIER);
+                expressionInput = new ExpressionInput(RandomStringExpression.IDENTIFIER);
             } else {
-                // Extract the enums and return a enum expression
-                expression.append(RandomEnumExpression.IDENTIFIER);
-                expression.append(START_ENUM_ARRAY);
-                Iterator<String> enumIterator = enumValues.iterator();
+                expressionInput = new ExpressionInput(RandomEnumExpression.IDENTIFIER);
+                ExpressionArgumentArray arrayArgument = new ExpressionArgumentArray();
+                final Iterator<String> enumIterator = enumValues.iterator();
                 while(enumIterator.hasNext()){
                     String enumValue = enumIterator.next();
-                    expression.append(enumValue);
-                    if(enumIterator.hasNext()){
-                        expression.append(ENUM_DELIMITER);
-                    }
+                    ExpressionArgumentString expressionArgumentString = new ExpressionArgumentString(enumValue);
+                    arrayArgument.addArgument(expressionArgumentString);
                 }
-                expression.append(END_ENUM_ARRAY);
+
+                expressionInput.addArgument(RandomEnumExpression.VALUES_PARAMETER, arrayArgument);
             }
         } else if(property instanceof DoubleProperty){
-            expression.append(RandomDoubleExpression.IDENTIFIER);
+            expressionInput = new ExpressionInput(RandomDoubleExpression.IDENTIFIER);
         } else if(property instanceof FloatProperty){
-            expression.append(RandomFloatExpression.IDENTIFIER);
+            expressionInput = new ExpressionInput(RandomFloatExpression.IDENTIFIER);
         } else if(property instanceof BooleanProperty){
-            expression.append(RandomBooleanExpression.IDENTIFIER);
+            expressionInput = new ExpressionInput(RandomBooleanExpression.IDENTIFIER);
         } else if(property instanceof UUIDProperty){
-            expression.append(RandomUUIDExpression.IDENTIFIER);
+            expressionInput = new ExpressionInput(RandomUUIDExpression.IDENTIFIER);
         } else if(property instanceof DecimalProperty){
-            expression.append(RandomDecimalExpression.IDENTIFIER);
+            expressionInput = new ExpressionInput(RandomDecimalExpression.IDENTIFIER);
         } else if(property instanceof DateProperty){
-            expression.append(RandomDateExpression.IDENTIFIER);
+            expressionInput = new ExpressionInput(RandomDateExpression.IDENTIFIER);
         } else if(property instanceof DateTimeProperty){
-            expression.append(RandomDateExpression.IDENTIFIER);
+            expressionInput = new ExpressionInput(RandomDateTimeExpression.IDENTIFIER);
         } else if(property instanceof PasswordProperty){
-            expression.append(RandomPasswordExpression.IDENTIFIER);
+            expressionInput = new ExpressionInput(RandomPasswordExpression.IDENTIFIER);
         } else {
             LOGGER.warn("Unsupported property type: " + property.getClass().getSimpleName());
             return null;
         }
-        expression.append(END_EXPRESSION);
-        return expression.toString();
+
+        return ExpressionInputParser.convert(expressionInput);
     }
 
 

@@ -16,6 +16,9 @@
 
 package com.castlemock.core.basis.utility.parser.expression;
 
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentNumber;
+
 /**
  * {@link RandomIntegerExpression} is an {@link Expression} and will
  * transform an matching input string into a random integer.
@@ -24,6 +27,8 @@ package com.castlemock.core.basis.utility.parser.expression;
  */
 public class RandomIntegerExpression extends AbstractExpression {
 
+    private static final String MIN_ARGUMENT = "min";
+    private static final String MAX_ARGUMENT = "max";
     public static final String IDENTIFIER = "RANDOM_INTEGER";
 
     /**
@@ -34,8 +39,22 @@ public class RandomIntegerExpression extends AbstractExpression {
      * @return A transformed <code>input</code>.
      */
     @Override
-    public String transform(String input) {
-        return Integer.toString(RANDOM.nextInt());
+    public String transform(final ExpressionInput input) {
+        int minLength = -1000;
+        int maxLength = 2000;
+
+        final ExpressionArgument minArgument = input.getArgument(MIN_ARGUMENT);
+        final ExpressionArgument maxArgument = input.getArgument(MAX_ARGUMENT);
+
+        if(minArgument != null && minArgument instanceof ExpressionArgumentNumber){
+            minLength = ((ExpressionArgumentNumber) minArgument).getValue().intValue();
+        }
+        if(maxArgument != null && maxArgument instanceof ExpressionArgumentNumber){
+            maxLength = ((ExpressionArgumentNumber) maxArgument).getValue().intValue();
+        }
+
+        int randomValue = RANDOM.nextInt(maxLength) + minLength;
+        return Integer.toString(randomValue);
     }
 
     /**
@@ -45,7 +64,7 @@ public class RandomIntegerExpression extends AbstractExpression {
      * @return True if the input string matches the criteria. False otherwise.
      */
     @Override
-    public boolean match(String input) {
+    public boolean match(final String input) {
         return IDENTIFIER.equalsIgnoreCase(input);
     }
 }

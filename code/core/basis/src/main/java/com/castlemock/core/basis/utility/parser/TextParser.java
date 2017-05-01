@@ -17,8 +17,13 @@
 package com.castlemock.core.basis.utility.parser;
 
 import com.castlemock.core.basis.utility.parser.expression.*;
+import com.castlemock.core.basis.utility.parser.expression.ExpressionInput;
+import com.castlemock.core.basis.utility.parser.expression.ExpressionInputParser;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,12 +41,25 @@ public class TextParser {
 
     private static final String START_EXPRESSION = "${";
     private static final String END_EXPRESSION = "}";
-    private static final Expression[] EXPRESSIONS =
-            {new RandomIntegerExpression(), new RandomDoubleExpression(), new RandomLongExpression(),
-                    new RandomFloatExpression(), new RandomBooleanExpression(), new RandomDateExpression(),
-                    new RandomStringExpression(), new RandomUUIDExpression(), new RandomEmailExpression(),
-                    new RandomPasswordExpression(), new RandomDecimalExpression(), new RandomDateTimeExpression(),
-            new RandomEnumExpression()};
+    private static final Map<String,Expression> EXPRESSIONS = new HashMap<>();
+    private static final Logger LOGGER = Logger.getLogger(TextParser.class);
+
+
+    static {
+        EXPRESSIONS.put(RandomIntegerExpression.IDENTIFIER, new RandomIntegerExpression());
+        EXPRESSIONS.put(RandomDoubleExpression.IDENTIFIER, new RandomDoubleExpression());
+        EXPRESSIONS.put(RandomLongExpression.IDENTIFIER, new RandomLongExpression());
+        EXPRESSIONS.put(RandomFloatExpression.IDENTIFIER, new RandomFloatExpression());
+        EXPRESSIONS.put(RandomBooleanExpression.IDENTIFIER, new RandomBooleanExpression());
+        EXPRESSIONS.put(RandomDateExpression.IDENTIFIER, new RandomDateExpression());
+        EXPRESSIONS.put(RandomStringExpression.IDENTIFIER, new RandomStringExpression());
+        EXPRESSIONS.put(RandomUUIDExpression.IDENTIFIER, new RandomUUIDExpression());
+        EXPRESSIONS.put(RandomEmailExpression.IDENTIFIER, new RandomEmailExpression());
+        EXPRESSIONS.put(RandomPasswordExpression.IDENTIFIER, new RandomDecimalExpression());
+        EXPRESSIONS.put(RandomDateTimeExpression.IDENTIFIER, new RandomDateTimeExpression());
+        EXPRESSIONS.put(RandomEnumExpression.IDENTIFIER, new RandomEnumExpression());
+
+    }
 
     /**
      * The parse method is responsible for parsing a provided text and transform the text
@@ -54,18 +72,20 @@ public class TextParser {
      */
     public static String parse(final String text){
         String output = text;
-        Pattern pattern = Pattern.compile("(?<=\\$\\{)(.*?)(?=\\})");
+        Pattern pattern = Pattern.compile("(?=\\$\\{)(.*?)\\}");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()){
             String match = matcher.group();
+            ExpressionInput expressionInput = ExpressionInputParser.parse(match);
+            Expression expression = EXPRESSIONS.get(expressionInput.getName());
 
-            for(Expression expression : EXPRESSIONS){
-                if(expression.match(match)){
-                    String expressionResult = expression.transform(match);
-                    String identifier = START_EXPRESSION + match + END_EXPRESSION;
-                    output = StringUtils.replaceOnce(output, identifier, expressionResult);
-                }
+            if(expression == null){
+                LOGGER.error("Unable to parse the following expression: " + expressionInput.getName());
+                continue;
             }
+
+            String expressionResult = expression.transform(expressionInput);
+            output = StringUtils.replaceOnce(output, match, expressionResult);
 
         }
         return output;

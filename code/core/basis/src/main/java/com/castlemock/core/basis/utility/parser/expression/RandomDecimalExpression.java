@@ -35,7 +35,7 @@ public class RandomDecimalExpression extends AbstractExpression {
      * @return A transformed <code>input</code>.
      */
     @Override
-    public String transform(String input) {
+    public String transform(final ExpressionInput input) {
         return Float.toString(RANDOM.nextFloat());
     }
 
@@ -46,7 +46,7 @@ public class RandomDecimalExpression extends AbstractExpression {
      * @return True if the input string matches the criteria. False otherwise.
      */
     @Override
-    public boolean match(String input) {
+    public boolean match(final String input) {
         return IDENTIFIER.equalsIgnoreCase(input);
     }
 }

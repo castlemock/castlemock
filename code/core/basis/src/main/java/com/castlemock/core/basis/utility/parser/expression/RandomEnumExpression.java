@@ -16,10 +16,9 @@
 
 package com.castlemock.core.basis.utility.parser.expression;
 
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentArray;
 import org.apache.log4j.Logger;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * {@link RandomEnumExpression} is an {@link Expression} and will
@@ -30,8 +29,7 @@ import java.util.regex.Pattern;
 public class RandomEnumExpression extends AbstractExpression {
 
     public static final String IDENTIFIER = "RANDOM_ENUM";
-    private static final String DELIMITER = ",";
-    private static final String EMPTY_RETURN_VALUE = "";
+    public static final String VALUES_PARAMETER = "values";
     private static final Logger LOGGER = Logger.getLogger(RandomEnumExpression.class);
 
     /**
@@ -42,19 +40,26 @@ public class RandomEnumExpression extends AbstractExpression {
      * @return A transformed <code>input</code>.
      */
     @Override
-    public String transform(final String input) {
-        final Pattern pattern = Pattern.compile("(?<=\\[)(.*?)(?=\\])");
-        final Matcher matcher = pattern.matcher(input);
-        while (matcher.find()) {
-            String match = matcher.group();
-            String[] values = match.split(DELIMITER);
-            int index = RANDOM.nextInt(values.length);
-            return values[index];
+    public String transform(final ExpressionInput input) {
+        final ExpressionArgument expressionArgument = input.getArgument(VALUES_PARAMETER);
+        if(expressionArgument == null){
+            throw new IllegalArgumentException("Unable to extract the enum values");
+        } else if(!(expressionArgument instanceof ExpressionArgumentArray)){
+            throw new IllegalArgumentException("Invalid enum argument");
         }
 
-        LOGGER.warn("Unable to extract an enum value from the expression: " + input);
+        final ExpressionArgumentArray array = (ExpressionArgumentArray) expressionArgument;
+        final int argumentSize = array.getArgumentSize();
+        final int index = RANDOM.nextInt(argumentSize);
 
-        return EMPTY_RETURN_VALUE;
+        final ExpressionArgument argument = array.getArgument(index);
+
+        if(argument instanceof ExpressionArgumentArray){
+            LOGGER.error("The enum argument can't be an array");
+            throw new IllegalArgumentException("Invalid enum argument");
+        }
+
+        return argument.getValue().toString();
     }
 
     /**

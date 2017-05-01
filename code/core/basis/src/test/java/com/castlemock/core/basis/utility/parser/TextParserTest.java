@@ -28,7 +28,7 @@ public class TextParserTest {
 
     @Test
     public void testParseRandomInteger(){
-        String input = "Hello this is a {RANDOM_INTEGER}.";
+        String input = "Hello this is a ${RANDOM_INTEGER}.";
         String output = TextParser.parse(input);
         Assert.assertNotEquals(input, output);
         Assert.assertTrue(output.matches("Hello this is a (.*?)."));
@@ -36,7 +36,7 @@ public class TextParserTest {
 
     @Test
     public void testParseRandomDouble(){
-        String input = "Hello this is a {RANDOM_DOUBLE}.";
+        String input = "Hello this is a ${RANDOM_DOUBLE}.";
         String output = TextParser.parse(input);
         Assert.assertNotEquals(input, output);
         Assert.assertTrue(output.matches("Hello this is a (.*?)."));
@@ -44,7 +44,7 @@ public class TextParserTest {
 
     @Test
     public void testParseRandomLong(){
-        String input = "Hello this is a {RANDOM_LONG}.";
+        String input = "Hello this is a ${RANDOM_LONG}.";
         String output = TextParser.parse(input);
         Assert.assertNotEquals(input, output);
         Assert.assertTrue(output.matches("Hello this is a (.*?)."));
@@ -52,7 +52,7 @@ public class TextParserTest {
 
     @Test
     public void testParseRandomFloat(){
-        String input = "Hello this is a {RANDOM_FLOAT}.";
+        String input = "Hello this is a ${RANDOM_FLOAT}.";
         String output = TextParser.parse(input);
         Assert.assertNotEquals(input, output);
         Assert.assertTrue(output.matches("Hello this is a (.*?)."));

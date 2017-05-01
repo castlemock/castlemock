@@ -35,7 +35,7 @@ public class RandomFloatExpression extends AbstractExpression {
      * @return A transformed <code>input</code>.
      */
     @Override
-    public String transform(String input) {
+    public String transform(final ExpressionInput input) {
         return Float.toString(RANDOM.nextFloat());
     }
 
