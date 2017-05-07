@@ -68,8 +68,10 @@ public abstract class AbstractController {
     protected static final String FILE_UPLOAD_FORM = "uploadForm";
     protected static final String HTTP = "http://";
     protected static final String HTTPS = "https://";
-    private static final String LOCAL_ADDRESS = "127.0.0.1";
 
+    protected static final int DEFAULT_ECHO_RESPONSE_CODE = 200;
+
+    private static final String LOCAL_ADDRESS = "127.0.0.1";
     private static final String ANONYMOUS_USER = "Anonymous";
     /**
      * Returns the current application context for Castle Mock. For example the /castlemock in http://localhost:8080/castlemock

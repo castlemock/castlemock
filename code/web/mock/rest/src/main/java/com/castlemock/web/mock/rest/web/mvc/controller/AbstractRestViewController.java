@@ -93,6 +93,7 @@ public class AbstractRestViewController extends AbstractViewController {
     protected List<RestMethodStatus> getRestMethodStatuses(){
         List<RestMethodStatus> restMethodStatuses = new LinkedList<RestMethodStatus>();
         restMethodStatuses.add(RestMethodStatus.MOCKED);
+        restMethodStatuses.add(RestMethodStatus.ECHO);
         restMethodStatuses.add(RestMethodStatus.DISABLED);
 
         if(!demoMode) {

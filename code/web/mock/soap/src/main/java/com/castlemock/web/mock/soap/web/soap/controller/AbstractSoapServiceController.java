@@ -121,6 +121,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         request.setHttpMethod(HttpMethod.valueOf(httpServletRequest.getMethod()));
         request.setBody(body);
         request.setOperationIdentifier(identifier);
+        request.setContentType(httpServletRequest.getContentType());
         return request;
     }
 
@@ -152,6 +153,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 response = forwardRequestAndRecordResponse(request, soapProjectId, soapPortId, soapOperationDto);
             } else if (SoapOperationStatus.RECORD_ONCE.equals(soapOperationDto.getStatus())) {
                 response = forwardRequestAndRecordResponseOnce(request, soapProjectId, soapPortId, soapOperationDto);
+            } else if (SoapOperationStatus.ECHO.equals(soapOperationDto.getStatus())) {
+                response = echoResponse(request);
             } else { // Status.MOCKED
                 response = mockResponse(soapProjectId, soapPortId, soapOperationDto);
             }
@@ -176,6 +179,30 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 serviceProcessor.processAsync(new CreateSoapEventInput(event));
             }
         }
+    }
+
+    /**
+     * The method will echo the incoming {@link SoapRequestDto} and create a {@link SoapResponseDto}
+     * with the same body, content type and headers.
+     *
+     * @param request The incoming {@link SoapRequestDto} that will be echoed back to the
+     *                service consumer.
+     * @return A {@link SoapResponseDto} based on the provided {@link SoapRequestDto}.
+     * @since 1.14
+     */
+    private SoapResponseDto echoResponse(final SoapRequestDto request) {
+        final List<HttpHeaderDto> headers = new ArrayList<HttpHeaderDto>();
+        final HttpHeaderDto contentTypeHeader = new HttpHeaderDto();
+        contentTypeHeader.setName(CONTENT_TYPE);
+        contentTypeHeader.setValue(request.getContentType());
+        headers.add(contentTypeHeader);
+
+        final SoapResponseDto response = new SoapResponseDto();
+        response.setBody(request.getBody());
+        response.setContentType(request.getContentType());
+        response.setHttpHeaders(headers);
+        response.setHttpStatusCode(DEFAULT_ECHO_RESPONSE_CODE);
+        return response;
     }
 
     /**

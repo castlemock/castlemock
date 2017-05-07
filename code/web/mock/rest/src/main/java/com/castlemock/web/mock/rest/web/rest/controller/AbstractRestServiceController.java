@@ -121,6 +121,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         request.setUri(restResourceUri);
         request.setHttpParameters(httpParameters);
         request.setHttpHeaders(httpHeaders);
+        request.setContentType(httpServletRequest.getContentType());
         return request;
     }
 
@@ -150,6 +151,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 response = forwardRequestAndRecordResponse(restRequest, projectId, applicationId, resourceId, restMethod);
             } else if (RestMethodStatus.RECORD_ONCE.equals(restMethod.getStatus())) {
                 response = forwardRequestAndRecordResponseOnce(restRequest, projectId, applicationId, resourceId, restMethod);
+            } else if (RestMethodStatus.ECHO.equals(restMethod.getStatus())) {
+                response = echoResponse(restRequest);
             } else { // Status.MOCKED
                 response = mockResponse(restRequest, projectId, applicationId, resourceId, restMethod);
             }
@@ -293,6 +296,30 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final RestResponseDto response = forwardRequestAndRecordResponse(restRequest, projectId, applicationId, resourceId, restMethod);
         restMethod.setStatus(RestMethodStatus.MOCKED);
         serviceProcessor.process(new UpdateRestMethodInput(projectId, applicationId, resourceId, restMethod.getId(), restMethod));
+        return response;
+    }
+
+    /**
+     * The method will echo the incoming {@link RestRequestDto} and create a {@link RestResponseDto}
+     * with the same body, content type and headers.
+     *
+     * @param request The incoming {@link RestRequestDto} that will be echoed back to the
+     *                service consumer.
+     * @return A {@link RestResponseDto} based on the provided {@link RestRequestDto}.
+     * @since 1.14
+     */
+    private RestResponseDto echoResponse(final RestRequestDto request) {
+        final List<HttpHeaderDto> headers = new ArrayList<HttpHeaderDto>();
+        final HttpHeaderDto contentTypeHeader = new HttpHeaderDto();
+        contentTypeHeader.setName(CONTENT_TYPE);
+        contentTypeHeader.setValue(request.getContentType());
+        headers.add(contentTypeHeader);
+
+        final RestResponseDto response = new RestResponseDto();
+        response.setBody(request.getBody());
+        response.setContentType(request.getContentType());
+        response.setHttpHeaders(headers);
+        response.setHttpStatusCode(DEFAULT_ECHO_RESPONSE_CODE);
         return response;
     }
 
