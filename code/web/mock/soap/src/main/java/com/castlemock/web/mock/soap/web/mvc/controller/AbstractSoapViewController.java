@@ -77,7 +77,6 @@ public class AbstractSoapViewController extends AbstractViewController {
     protected List<SoapOperationStatus> getSoapOperationStatuses(){
         List<SoapOperationStatus> soapOperationStatuses = new LinkedList<SoapOperationStatus>();
         soapOperationStatuses.add(SoapOperationStatus.MOCKED);
-        soapOperationStatuses.add(SoapOperationStatus.ECHO);
         soapOperationStatuses.add(SoapOperationStatus.DISABLED);
 
         if(!demoMode) {
@@ -85,6 +84,8 @@ public class AbstractSoapViewController extends AbstractViewController {
             soapOperationStatuses.add(SoapOperationStatus.RECORDING);
             soapOperationStatuses.add(SoapOperationStatus.RECORD_ONCE);
         }
+
+        soapOperationStatuses.add(SoapOperationStatus.ECHO);
         return soapOperationStatuses;
     }
 

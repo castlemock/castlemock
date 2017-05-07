@@ -73,7 +73,7 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
     }
 
     @Test
-    public void testGetUserWithValidId() throws Exception {
+    public void updateSoapOperationGet() throws Exception {
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
         final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
         final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
@@ -94,7 +94,7 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
     }
 
     @Test
-    public void testPostUserWithValidId() throws Exception {
+    public void updateSoapOperationPost() throws Exception {
         final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
         final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
         final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
