@@ -24,6 +24,7 @@ import com.castlemock.core.basis.model.system.service.message.input.GetSystemInf
 import com.castlemock.core.basis.model.system.service.message.output.GetSystemInformationOutput;
 import com.castlemock.web.basis.model.configuration.service.AbstractConfigurationGroupService;
 import org.apache.catalina.util.ServerInfo;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * The {@link GetSystemInformationService} is used to retrieve information about the system which
@@ -33,6 +34,9 @@ import org.apache.catalina.util.ServerInfo;
  */
 @org.springframework.stereotype.Service
 public class GetSystemInformationService extends AbstractConfigurationGroupService implements Service<GetSystemInformationInput, GetSystemInformationOutput> {
+
+    @Value("${base.file.directory}")
+    private String castleMockHomeDirectory;
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -55,6 +59,7 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
         systemInformation.setTotalMemory(Runtime.getRuntime().totalMemory() / 1000000); // Megabytes
         systemInformation.setMaxMemory(Runtime.getRuntime().maxMemory() / 1000000); // Megabytes
         systemInformation.setFreeMemory(Runtime.getRuntime().freeMemory() / 1000000); // Megabytes
+        systemInformation.setCastleMockHomeDirectory(this.castleMockHomeDirectory);
         final GetSystemInformationOutput output = new GetSystemInformationOutput(systemInformation);
         return createServiceResult(output);
     }

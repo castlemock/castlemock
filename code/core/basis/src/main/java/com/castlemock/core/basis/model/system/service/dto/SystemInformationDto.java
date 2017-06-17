@@ -34,6 +34,7 @@ public class SystemInformationDto {
     private long maxMemory;
     private long freeMemory;
     private int availableProcessors;
+    private String castleMockHomeDirectory;
 
     public String getOperatingSystemName() {
         return operatingSystemName;
@@ -113,5 +114,13 @@ public class SystemInformationDto {
 
     public void setAvailableProcessors(int availableProcessors) {
         this.availableProcessors = availableProcessors;
+    }
+
+    public String getCastleMockHomeDirectory() {
+        return castleMockHomeDirectory;
+    }
+
+    public void setCastleMockHomeDirectory(String castleMockHomeDirectory) {
+        this.castleMockHomeDirectory = castleMockHomeDirectory;
     }
 }

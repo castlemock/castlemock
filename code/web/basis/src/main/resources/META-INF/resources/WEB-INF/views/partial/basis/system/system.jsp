@@ -69,7 +69,10 @@
                 <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.availableprocessors"/></label></td>
                 <td class="column2"><label path="javaVersion">${systemInformation.availableProcessors}</label></td>
             </tr>
-
+            <tr>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.castlemockhomedirectory"/></label></td>
+                <td class="column2"><label path="javaVersion">${systemInformation.castleMockHomeDirectory}</label></td>
+            </tr>
         </table>
     </section>
 </div>
