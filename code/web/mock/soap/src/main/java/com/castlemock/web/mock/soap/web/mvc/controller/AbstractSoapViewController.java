@@ -33,6 +33,8 @@ public class AbstractSoapViewController extends AbstractViewController {
 
     protected static final String SOAP = "soap";
     protected static final String SOAP_PORT = "soapPort";
+    protected static final String SOAP_RESOURCE = "soapResource";
+    protected static final String SOAP_RESOURCE_DATA = "soapResourceData";
     protected static final String SOAP_PORT_ID = "soapPortId";
     protected static final String SOAP_PORTS = "soapPorts";
     protected static final String SOAP_PROJECT = "soapProject";

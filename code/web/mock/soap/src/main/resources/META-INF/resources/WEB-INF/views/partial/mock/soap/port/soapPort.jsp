@@ -50,6 +50,10 @@
                     <td class="column1"><label path="invokeAddress"><spring:message code="soap.soapport.label.address"/></label></td>
                     <td class="column2"><label path="invokeAddress">${soapPort.invokeAddress}</label></td>
                 </tr>
+                <tr>
+                    <td class="column1"><label path="invokeAddress"><spring:message code="soap.soapport.label.wsdl"/></label></td>
+                    <td class="column2"><label path="invokeAddress">${soapPort.invokeAddress}?wsdl</label></td>
+                </tr>
             </table>
         </div>
 

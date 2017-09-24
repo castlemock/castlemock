@@ -20,15 +20,10 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.*;
+import com.castlemock.core.mock.soap.model.project.dto.*;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +31,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,6 +58,11 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     private static final String RESPONSE = "response";
     private static final String COMMA = ", ";
     private static final String SOAP_TYPE = "SOAP";
+    private static final String WSDL_DIRECTORY = "wsdl";
+    private static final String SCHEMA_DIRECTORY = "wsdl";
+
+    @Autowired
+    private FileRepositorySupport fileRepositorySupport;
 
     @Autowired
     private MessageSource messageSource;
@@ -69,6 +70,10 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     private String soapProjectFileDirectory;
     @Value(value = "${soap.project.file.extension}")
     private String soapProjectFileExtension;
+    @Value(value = "${soap.resource.file.directory}")
+    private String soapResourceFileDirectory;
+    @Value(value = "${soap.resource.file.extension}")
+    private String soapResourceFileExtension;
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -103,10 +108,15 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     protected void postInitiate() {
         for(SoapProject soapProject : collection.values()){
             List<SoapPort> soapPorts = new CopyOnWriteArrayList<SoapPort>();
+            List<SoapResource> soapResources = new CopyOnWriteArrayList<SoapResource>();
             if(soapProject.getPorts() != null){
                 soapPorts.addAll(soapProject.getPorts());
             }
+            if(soapProject.getResources() != null){
+                soapResources.addAll(soapProject.getResources());
+            }
             soapProject.setPorts(soapPorts);
+            soapProject.setResources(soapResources);
 
             for(SoapPort soapPort : soapProject.getPorts()){
                 List<SoapOperation> soapOperations = new CopyOnWriteArrayList<SoapOperation>();
@@ -160,6 +170,12 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
      */
     @Override
     public SoapProjectDto save(final SoapProject soapProject) {
+        for(SoapResource soapResource : soapProject.getResources()){
+            if(soapResource.getId() == null){
+                String soapResourceId = generateId();
+                soapResource.setId(soapResourceId);
+            }
+        }
         for(SoapPort soapPort : soapProject.getPorts()){
             if(soapPort.getId() == null){
                 String soapPortId = generateId();
@@ -237,6 +253,58 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     }
 
     /**
+     * The method finds a resource that matching the search criteria and returns the result
+     *
+     * @param soapProjectId  The id of the project which the resource belongs to
+     * @param soapResourceId The id of the resource that will be retrieved
+     * @return Returns a resource that matches the search criteria.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapResource
+     * @see SoapResourceDto
+     * @since 1.16
+     */
+    @Override
+    public SoapResourceDto findSoapResource(String soapProjectId, String soapResourceId) {
+        Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
+        Preconditions.checkNotNull(soapResourceId, "Resource id cannot be null");
+        final SoapResource soapResource = findSoapResourceType(soapProjectId, soapResourceId);
+        return mapper.map(soapResource, SoapResourceDto.class);
+    }
+
+    /**
+     * The method loads a resource that matching the search criteria and returns the result
+     *
+     * @param soapProjectId  The id of the project which the resource belongs to
+     * @param soapResourceId The id of the resource that will be loaded
+     * @return Returns the loaded resource and returns it as a String.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapResource
+     * @see SoapResourceDto
+     * @since 1.16
+     */
+    @Override
+    public String loadSoapResource(String soapProjectId, String soapResourceId) {
+        Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
+        Preconditions.checkNotNull(soapResourceId, "Resource id cannot be null");
+        final SoapResource soapResource = findSoapResourceType(soapProjectId, soapResourceId);
+        String path = this.soapResourceFileDirectory + File.separator;
+
+        if(SoapResourceType.WSDL.equals(soapResource.getType())){
+            path += WSDL_DIRECTORY;
+        } else if(SoapResourceType.WSDL.equals(soapResource.getType())){
+            path += SCHEMA_DIRECTORY;
+        }
+
+        String resource = fileRepositorySupport.load(path, soapResource.getId() +
+                this.soapResourceFileExtension);
+        return resource;
+    }
+
+    /**
      * The method provides the functionality to retrieve a mocked response with project id, port id,
      * operation id and mock response id
      * @param soapProjectId The id of the project that the mocked response belongs to
@@ -278,6 +346,44 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapProject.getPorts().add(soapPort);
         save(soapProjectId);
         return mapper.map(soapPort, SoapPortDto.class);
+    }
+
+    /**
+     * The method adds a new {@link SoapResource} to a {@link SoapProject} and then saves
+     * the {@link SoapProject} to the file system.
+     *
+     * @param soapProjectId   The id of the {@link SoapProject}
+     * @param soapResourceDto The dto instance of {@link SoapResource} that will be added to the {@link SoapProject}
+     * @param resource        The raw resource
+     * @return The saved {@link SoapResourceDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapResource
+     * @see SoapResourceDto
+     */
+    @Override
+    public SoapResourceDto saveSoapResource(final String soapProjectId, final SoapResourceDto soapResourceDto, final String resource) {
+        SoapProject soapProject = collection.get(soapProjectId);
+        SoapResource soapResource = mapper.map(soapResourceDto, SoapResource.class);
+        soapProject.getResources().add(soapResource);
+        save(soapProjectId);
+        String path = this.soapResourceFileDirectory + File.separator;
+
+        if(SoapResourceType.WSDL.equals(soapResource.getType())){
+            path += WSDL_DIRECTORY;
+        } else if(SoapResourceType.WSDL.equals(soapResource.getType())){
+            path += SCHEMA_DIRECTORY;
+        }
+
+        try {
+            this.fileRepositorySupport.save(path, soapResource.getId() + this.soapResourceFileExtension, resource);
+        } catch (Exception e){
+            // Delete the resource if the save operation fails.
+            soapProject.getResources().remove(soapResource);
+            save(soapProjectId);
+        }
+
+        return mapper.map(soapResource, SoapResourceDto.class);
     }
 
     /**
@@ -590,6 +696,34 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
             }
         }
         throw new IllegalArgumentException("Unable to find a SOAP port with id " + soapPortId);
+    }
+
+    /**
+     * The method find a resource with project id and resource id
+     * @param soapProjectId The id of the project which the port belongs to
+     * @param soapResourceId The id of the resource that will be retrieved
+     * @return Returns a resource that matches the search criteria. Returns null if no resource matches.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP resource was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapResource
+     * @see SoapResourceDto
+     */
+    private SoapResource findSoapResourceType(final String soapProjectId, final String soapResourceId) {
+        Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
+        Preconditions.checkNotNull(soapResourceId, "Resource id cannot be null");
+        final SoapProject soapProject = collection.get(soapProjectId);
+
+        if(soapProject == null){
+            throw new IllegalArgumentException("Unable to find a SOAP project with id " + soapProjectId);
+        }
+
+        for(SoapResource soapResource : soapProject.getResources()){
+            if(soapResource.getId().equals(soapResourceId)){
+                return soapResource;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a SOAP resource with id " + soapResourceId);
     }
 
 

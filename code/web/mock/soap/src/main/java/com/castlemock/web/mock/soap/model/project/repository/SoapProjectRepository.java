@@ -17,14 +17,8 @@
 package com.castlemock.web.mock.soap.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.*;
+import com.castlemock.core.mock.soap.model.project.dto.*;
 
 /**
  * The soap project file repository provides the functionality to interact with the file system.
@@ -56,7 +50,7 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
     SoapPortDto findSoapPort(String soapProjectId, String soapPortId);
 
     /**
-     * The method finds a operation that matching the search criteria and returns the result
+     * The method finds an operation that matching the search criteria and returns the result
      * @param soapProjectId The id of the project which the operation belongs to
      * @param soapPortId The id of the port which the operation belongs to
      * @param soapOperationId The id of the operation that will be retrieved
@@ -71,6 +65,33 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
      */
     SoapOperationDto findSoapOperation(String soapProjectId, String soapPortId, String soapOperationId);
 
+    /**
+     * The method finds a resource that matching the search criteria and returns the result
+     * @param soapProjectId The id of the project which the resource belongs to
+     * @param soapResourceId The id of the resource that will be retrieved
+     * @return Returns a resource that matches the search criteria.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapResource
+     * @see SoapResourceDto
+     * @since 1.16
+     */
+    SoapResourceDto findSoapResource(String soapProjectId, String soapResourceId);
+
+    /**
+     * The method loads a resource that matching the search criteria and returns the result
+     * @param soapProjectId The id of the project which the resource belongs to
+     * @param soapResourceId The id of the resource that will be loaded
+     * @return Returns the loaded resource and returns it as a String.
+     * @throws IllegalArgumentException IllegalArgumentException will be thrown jf no matching SOAP operation was found
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapResource
+     * @see SoapResourceDto
+     * @since 1.16
+     */
+    String loadSoapResource(String soapProjectId, String soapResourceId);
 
 
     /**
@@ -135,6 +156,20 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
      * @see SoapPortDto
      */
     SoapPortDto saveSoapPort(String soapProjectId, SoapPortDto soapPortDto);
+
+    /**
+     * The method adds a new {@link SoapResource} to a {@link SoapProject} and then saves
+     * the {@link SoapProject} to the file system.
+     * @param soapProjectId The id of the {@link SoapProject}
+     * @param soapResourceDto The dto instance of {@link SoapResource} that will be added to the {@link SoapProject}
+     * @param resource The raw resource
+     * @return The saved {@link SoapResourceDto}
+     * @see SoapProject
+     * @see SoapProjectDto
+     * @see SoapResource
+     * @see SoapResourceDto
+     */
+    SoapResourceDto saveSoapResource(String soapProjectId, SoapResourceDto soapResourceDto, String resource);
 
     /**
      * The method adds a new {@link SoapOperation} to a {@link SoapPort} and then saves

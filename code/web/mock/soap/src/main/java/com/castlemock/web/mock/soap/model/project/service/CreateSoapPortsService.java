@@ -20,16 +20,16 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
+import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.CreateSoapPortsInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.CreateSoapPortsOutput;
+import com.castlemock.web.basis.support.FileRepositorySupport;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -58,6 +58,9 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
     private static final String SOAP_11_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/soap/";
     private static final String SOAP_12_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/soap12/";
 
+    @Autowired
+    private FileRepositorySupport fileRepositorySupport;
+
     /**
      *
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -77,7 +80,6 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         } catch (WSDLException e) {
             throw new IllegalStateException("Unable to parse the WSDL file");
         }
-
 
         for(SoapPortDto newSoapPort : soapPorts){
             SoapPortDto existingSoapPort = repository.findSoapPortWithName(soapProjectId, newSoapPort.getName());
@@ -99,6 +101,15 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                 }
             }
         }
+
+        for(File file : input.getFiles()){
+            String resource = fileRepositorySupport.read(file);
+            SoapResourceDto soapResourceDto = new SoapResourceDto();
+            soapResourceDto.setName(file.getName());
+            soapResourceDto.setType(SoapResourceType.WSDL);
+            repository.saveSoapResource(soapProjectId, soapResourceDto, resource);
+        }
+
         return createServiceResult(new CreateSoapPortsOutput());
     }
 

@@ -16,6 +16,7 @@
 
 package com.castlemock.web.basis.support;
 
+import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -23,10 +24,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,6 +39,73 @@ import java.util.Collection;
 public class FileRepositorySupport {
 
     private static final Logger LOGGER = Logger.getLogger(FileRepositorySupport.class);
+
+    public String read(File file){
+        Preconditions.checkNotNull(file, "The file cannot be null");
+        try {
+            final byte[] raw = Files.readAllBytes(file.toPath());
+            return new String(raw);
+        } catch (IOException e) {
+            LOGGER.error("Unable to find the following file: " + file.getName(), e);
+            throw new IllegalStateException("Unable to find the following file: " + file.getName());
+        }
+    }
+
+    public String load(String directory, String filename){
+        final Path path = FileSystems.getDefault().getPath(directory);
+
+        if(!Files.exists(path)){
+            try {
+                LOGGER.debug("Creating the following directory: " + path);
+                Files.createDirectories(path);
+            } catch (IOException e) {
+                LOGGER.error("Unable to create the following directory: " + path, e);
+                throw new IllegalStateException("Unable to create the following folder: " + directory);
+            }
+        }
+
+        if(!Files.isDirectory(path)){
+            throw new IllegalStateException("The provided path is not a directory: " + path);
+        }
+
+        final File file = new File(directory, filename);
+        try {
+            final byte[] raw = Files.readAllBytes(file.toPath());
+            return new String(raw);
+        } catch (IOException e) {
+            LOGGER.error("Unable to find the following file: " + filename, e);
+            throw new IllegalStateException("Unable to find the following file: " + filename);
+        }
+    }
+
+    public void save(String directory, String filename, String data){
+        final Path path = FileSystems.getDefault().getPath(directory);
+
+        if(!Files.exists(path)){
+            try {
+                LOGGER.debug("Creating the following directory: " + path);
+                Files.createDirectories(path);
+            } catch (IOException e) {
+                LOGGER.error("Unable to create the following directory: " + path, e);
+                throw new IllegalStateException("Unable to create the following folder: " + directory);
+            }
+        }
+
+        if(!Files.isDirectory(path)){
+            throw new IllegalStateException("The provided path is not a directory: " + path);
+        }
+
+        final File file = new File(directory, filename);
+
+        try {
+            PrintWriter writer = new PrintWriter(file);
+            writer.print(data);
+        } catch (FileNotFoundException e) {
+            LOGGER.error("Unable to save the following file: " + filename, e);
+            throw new IllegalStateException("Unable to save the following file: " + filename);
+        }
+    }
+
 
     public <T> Collection<T> load(Class<T> entityClass, String directory, String postfix){
         final Collection<T> loadedTypes = new ArrayList<T>();

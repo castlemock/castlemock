@@ -23,17 +23,15 @@ import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
 import com.castlemock.core.mock.soap.model.event.dto.SoapRequestDto;
 import com.castlemock.core.mock.soap.model.event.dto.SoapResponseDto;
 import com.castlemock.core.mock.soap.model.event.service.message.input.CreateSoapEventInput;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
+import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.service.message.input.CreateSoapMockResponseInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.IdentifySoapOperationInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
+import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.service.message.input.*;
 import com.castlemock.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
+import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSoapResourceOutput;
+import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
@@ -95,6 +93,36 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
             throw new SoapException(exception.getMessage());
         }
+    }
+
+    protected String processGet(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+        try{
+            Preconditions.checkNotNull(projectId, "THe project id cannot be null");
+            Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
+            final String wsdl = httpServletRequest.getParameter("wsdl");
+            if(wsdl != null){
+                return getWsdl(projectId);
+            }
+
+            throw new IllegalArgumentException("Unable to parse incoming message");
+        }catch(Exception exception){
+            LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
+            throw new SoapException(exception.getMessage());
+        }
+    }
+
+    private String getWsdl(final String projectId){
+        final ReadSoapProjectOutput projectOutput = this.serviceProcessor.process(new ReadSoapProjectInput(projectId));
+        final SoapProjectDto soapProject = projectOutput.getSoapProject();
+
+        for(SoapResourceDto soapResource : soapProject.getResources()){
+            if(SoapResourceType.WSDL.equals(soapResource.getType())){
+                final LoadSoapResourceOutput loadOutput =
+                        this.serviceProcessor.process(new LoadSoapResourceInput(projectId, soapResource.getId()));
+                return loadOutput.getResource();
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a WSDL file for the following project: " + projectId);
     }
 
     /**

@@ -34,6 +34,9 @@ public class SoapProjectDto extends ProjectDto {
 
     @Mapping("ports")
     private List<SoapPortDto> ports = new CopyOnWriteArrayList<SoapPortDto>();
+    @Mapping("resources")
+    private List<SoapResourceDto> resources = new CopyOnWriteArrayList<SoapResourceDto>();
+
     private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
 
     /**
@@ -65,6 +68,22 @@ public class SoapProjectDto extends ProjectDto {
      */
     public void setPorts(List<SoapPortDto> ports) {
         this.ports = ports;
+    }
+
+    /**
+     * Returns all the SOAP resources
+     * @return The SOAP resources for the SOAP resources
+     */
+    public List<SoapResourceDto> getResources() {
+        return resources;
+    }
+
+    /**
+     * Set new value to the variable resources
+     * @param resources The new value to resources
+     */
+    public void setResources(List<SoapResourceDto> resources) {
+        this.resources = resources;
     }
 
     /**

@@ -32,6 +32,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class SoapProject extends Project {
 
     private List<SoapPort> ports = new CopyOnWriteArrayList<SoapPort>();
+    private List<SoapResource> resources = new CopyOnWriteArrayList<SoapResource>();
 
     @XmlElementWrapper(name = "ports")
     @XmlElement(name = "port")
@@ -43,4 +44,13 @@ public class SoapProject extends Project {
         this.ports = ports;
     }
 
+    @XmlElementWrapper(name = "resources")
+    @XmlElement(name = "resource")
+    public List<SoapResource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<SoapResource> resources) {
+        this.resources = resources;
+    }
 }
