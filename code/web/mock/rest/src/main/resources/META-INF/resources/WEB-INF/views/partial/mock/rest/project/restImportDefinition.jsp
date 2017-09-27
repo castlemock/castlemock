@@ -81,7 +81,7 @@
     </section>
 </div>
 
-<script src=<c:url value="/resources/js/fileUpload.js"/>>
+<script src=<c:url value="/resources/js/FileUpload.js"/>>
 </script>
 <script>
     $("#linkInput").attr('required', '');
