@@ -97,12 +97,19 @@ public class FileRepositorySupport {
 
         final File file = new File(directory, filename);
 
+        BufferedWriter writer = null;
         try {
-            PrintWriter writer = new PrintWriter(file);
-            writer.print(data);
-        } catch (FileNotFoundException e) {
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(data);
+        } catch (Exception e) {
             LOGGER.error("Unable to save the following file: " + filename, e);
             throw new IllegalStateException("Unable to save the following file: " + filename);
+        } finally {
+            try {
+                writer.close();
+            } catch (IOException e) {
+                LOGGER.error("Unable to close the writer", e);
+            }
         }
     }
 
