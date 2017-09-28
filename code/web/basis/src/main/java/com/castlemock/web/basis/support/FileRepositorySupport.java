@@ -181,4 +181,12 @@ public class FileRepositorySupport {
         }
     }
 
+    public void delete(String directory, String filename){
+        File file = new File(directory, filename);
+        if(!file.delete()){
+            LOGGER.error("Unable to delete the following file: " + filename);
+            throw new IllegalStateException("Unable to delete the following file: " + filename);
+        }
+    }
+
 }

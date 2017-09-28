@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.core.mock.soap.model.project.dto.*;
 
+import java.util.Collection;
+
 /**
  * The soap project file repository provides the functionality to interact with the file system.
  * The repository is responsible for loading and soap project to the file system. Each
@@ -93,7 +95,6 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
      */
     String loadSoapResource(String soapProjectId, String soapResourceId);
 
-
     /**
      * The method provides the functionality to retrieve a mocked response with project id, port id,
      * operation id and mock response id
@@ -139,6 +140,17 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
     SoapPortDto findSoapPortWithName(String soapProjectId, String soapPortName);
+
+    /**
+     * The method returns a list of {@link SoapResourceDto} that matches the
+     * search criteria.
+     * @param soapProjectId The id of the project.
+     * @param type The type of {@link SoapResourceDto} that should be returned.
+     * @return A list of {@link SoapResourceDto} of the specific provided type.
+     * All resources will be returned if the type is null.
+     * @since 1.16
+     */
+    Collection<SoapResourceDto> findSoapResources(String soapProjectId, SoapResourceType type);
 
     /*
      * SAVE OPERATIONS
@@ -309,5 +321,13 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
      * @see SoapMockResponseDto
      */
     SoapMockResponseDto deleteSoapMockResponse(String soapProjectId, String soapPortId, String soapOperationId, String soapMockResponseId);
+
+    /**
+     * The method deletes a {@link SoapResource} that matches the search criteria (Project id and resource id).
+     * @param soapProjectId The id of the SOAP project.
+     * @param soapResourceId The id of the SOAP resource that will be removed.
+     * @return The deleted {@link SoapResourceDto}.
+     */
+    SoapResourceDto deleteSoapResource(String soapProjectId, String soapResourceId);
 
 }

@@ -40,6 +40,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -100,6 +101,14 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                     repository.saveSoapOperation(soapProjectId, existingSoapPort.getId(), newSoapOperation);
                 }
             }
+        }
+
+        // Should only be one WSDL file
+        final Collection<SoapResourceDto> wsdlSoapResources =
+                this.repository.findSoapResources(soapProjectId, SoapResourceType.WSDL);
+
+        for(SoapResourceDto wsdlSoapResource : wsdlSoapResources){
+            this.repository.deleteSoapResource(soapProjectId, wsdlSoapResource.getId());
         }
 
         for(File file : input.getFiles()){

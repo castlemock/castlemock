@@ -32,9 +32,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -159,6 +157,26 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     @Override
     protected void checkType(SoapProject soapProject) {
 
+    }
+
+    /**
+     * Delete an instance that match the provided id
+     * @param soapProjectId The instance that matches the provided id will be deleted in the database
+     */
+    @Override
+    public void delete(final String soapProjectId) {
+        Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
+        final SoapProject soapProject = collection.get(soapProjectId);
+
+        if(soapProject == null){
+            throw new IllegalArgumentException("Unable to find a SOAP project with id " + soapProjectId);
+        }
+
+        for(SoapResource soapResource : soapProject.getResources()){
+            this.deleteSoapResource(soapProjectId, soapResource.getId());
+        }
+
+        super.delete(soapProjectId);
     }
 
     /**
@@ -615,6 +633,50 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     }
 
     /**
+     * The method deletes a {@link SoapResource} that matches the search criteria (Project id and resource id).
+     *
+     * @param soapProjectId  The id of the SOAP project.
+     * @param soapResourceId The id of the SOAP resource that will be removed.
+     * @return The deleted {@link SoapResourceDto}.
+     */
+    @Override
+    public SoapResourceDto deleteSoapResource(final String soapProjectId, final String soapResourceId) {
+        Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
+        Preconditions.checkNotNull(soapResourceId, "Resource id cannot be null");
+        final SoapProject soapProject = collection.get(soapProjectId);
+
+        if(soapProject == null){
+            throw new IllegalArgumentException("Unable to find a SOAP project with id " + soapProjectId);
+        }
+
+        Iterator<SoapResource> soapResourceIterator = soapProject.getResources().iterator();
+        SoapResource deletedSoapResource = null;
+        while(soapResourceIterator.hasNext()){
+            SoapResource tempSoapResource = soapResourceIterator.next();
+            if(soapResourceId.equals(tempSoapResource.getId())){
+                deletedSoapResource = tempSoapResource;
+                break;
+            }
+        }
+
+        if(deletedSoapResource != null){
+            soapProject.getResources().remove(deletedSoapResource);
+            save(soapProjectId);
+
+            String path = this.soapResourceFileDirectory + File.separator;
+
+            if(SoapResourceType.WSDL.equals(deletedSoapResource.getType())){
+                path += WSDL_DIRECTORY;
+            } else if(SoapResourceType.WSDL.equals(deletedSoapResource.getType())){
+                path += SCHEMA_DIRECTORY;
+            }
+
+            this.fileRepositorySupport.delete(path, deletedSoapResource.getId() + this.soapResourceFileExtension);
+        }
+        return deletedSoapResource != null ? mapper.map(deletedSoapResource, SoapResourceDto.class) : null;
+    }
+
+    /**
      * The method provides the functionality to find a SOAP operation with a specific name
      * @param soapProjectId The id of the {@link SoapProject}
      * @param soapPortId The id of the {@link SoapPort}
@@ -648,6 +710,35 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
             }
         }
         return null;
+    }
+
+    /**
+     * The method returns a list of {@link SoapResourceDto} that matches the
+     * search criteria.
+     *
+     * @param soapProjectId The id of the project.
+     * @param type          The type of {@link SoapResourceDto} that should be returned.
+     * @return A list of {@link SoapResourceDto} of the specific provided type.
+     * All resources will be returned if the type is null.
+     * @since 1.16
+     */
+    @Override
+    public Collection<SoapResourceDto> findSoapResources(final String soapProjectId, final SoapResourceType type) {
+        Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
+        final SoapProject soapProject = collection.get(soapProjectId);
+
+        if(soapProject == null){
+            throw new IllegalArgumentException("Unable to find a SOAP project with id " + soapProjectId);
+        }
+
+        List<SoapResourceDto> soapResources = new ArrayList<>();
+        for(SoapResource soapResource : soapProject.getResources()){
+            if(type == null || type.equals(soapResource.getType())){
+                SoapResourceDto soapResourceDto = mapper.map(soapResource, SoapResourceDto.class);
+                soapResources.add(soapResourceDto);
+            }
+        }
+        return soapResources;
     }
 
     /**
