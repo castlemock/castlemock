@@ -49,10 +49,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * The AbstractSoapServiceController provides functionality that are shared for all the SOAP controllers
@@ -99,9 +96,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
-            final String wsdl = httpServletRequest.getParameter("wsdl");
-            if(wsdl != null){
-                return getWsdl(projectId);
+            Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+            while(parameterNames.hasMoreElements()){
+                String parameterName = parameterNames.nextElement();
+                if(parameterName.equalsIgnoreCase("wsdl")){
+                    return getWsdl(projectId);
+                }
             }
 
             throw new IllegalArgumentException("Unable to parse incoming message");
