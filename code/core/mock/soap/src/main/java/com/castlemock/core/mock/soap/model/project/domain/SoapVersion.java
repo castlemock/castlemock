@@ -30,26 +30,27 @@ public enum SoapVersion {
     SOAP11("SOAP 1.1", "application/xml"), SOAP12("SOAP 1.2", "application/soap+xml");
 
     private String name;
-    private String contextPath;
+    private String contextType;
 
-    private SoapVersion(final String name, final String contextPath){
+    private SoapVersion(final String name, final String contextType){
         this.name = name;
-        this.contextPath = contextPath;
+        this.contextType = contextType;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getContextType() {
+        return contextType;
     }
 
-    public String getContextPath() {
-        return contextPath;
-    }
+    public static SoapVersion convert(final String contextType) {
+        if(contextType.contains(SOAP12.getContextType())){
+            return SOAP12;
+        }
 
-    public void setContextPath(String contextPath) {
-        this.contextPath = contextPath;
+        // Return SOAP 1.1 as default
+        return SOAP11;
     }
 }

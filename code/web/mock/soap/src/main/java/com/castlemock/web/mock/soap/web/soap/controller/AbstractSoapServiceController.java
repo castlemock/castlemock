@@ -138,11 +138,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         final String serviceUri = httpServletRequest.getRequestURI().replace(getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
         final List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 
-        SoapVersion type = SoapVersion.SOAP11;
-        if(SoapVersion.SOAP12.getContextPath().equalsIgnoreCase(httpServletRequest.getContextPath())){
-            type = SoapVersion.SOAP12;
-        }
-
+        SoapVersion type = SoapVersion.convert(httpServletRequest.getContentType());
         request.setSoapVersion(type);
         request.setHttpHeaders(httpHeaders);
         request.setUri(serviceUri);
