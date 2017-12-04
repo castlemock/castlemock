@@ -330,4 +330,16 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
      */
     SoapResourceDto deleteSoapResource(String soapProjectId, String soapResourceId);
 
+
+    /**
+     * Updates the current response sequence index.
+     * @param soapProjectId The project id.
+     * @param soapPortId The port id.
+     * @param soapOperationId The operation id.
+     * @param index The new response sequence index.
+     * @since 1.17
+     */
+    void setCurrentResponseSequenceIndex(String soapProjectId, String soapPortId,
+                                    String soapOperationId, Integer index);
+
 }

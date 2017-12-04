@@ -692,6 +692,24 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
         return deletedRestMockResponse != null ? mapper.map(deletedRestMockResponse, RestMockResponseDto.class) : null;
     }
 
+    /**
+     * Updates the current response sequence index.
+     *
+     * @param restProjectId     The project id.
+     * @param restApplicationId The application id.
+     * @param restResourceId    The resource id.
+     * @param restMethodId      The method id.
+     * @param index             The new response sequence index.
+     * @since 1.17
+     */
+    @Override
+    public void setCurrentResponseSequenceIndex(final String restProjectId, final String restApplicationId,
+                                                final String restResourceId, final String restMethodId,
+                                                final Integer index) {
+        RestMethod restMethod = findRestMethodType(restProjectId, restApplicationId, restResourceId, restMethodId);
+        restMethod.setCurrentResponseSequenceIndex(index);
+    }
+
 
     /**
      * Finds a {@link RestApplication} with the provided ids.

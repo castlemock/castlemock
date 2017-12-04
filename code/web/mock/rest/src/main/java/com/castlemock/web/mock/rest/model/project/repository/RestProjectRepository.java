@@ -342,4 +342,16 @@ public interface RestProjectRepository extends Repository<RestProject, RestProje
      */
     RestMockResponseDto deleteRestMockResponse(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponseId);
 
+    /**
+     * Updates the current response sequence index.
+     * @param restProjectId The project id.
+     * @param restApplicationId The application id.
+     * @param restResourceId The resource id.
+     * @param restMethodId The method id.
+     * @param index The new response sequence index.
+     * @since 1.17
+     */
+    void setCurrentResponseSequenceIndex(String restProjectId, String restApplicationId,
+                                         String restResourceId, String restMethodId, Integer index);
+
 }

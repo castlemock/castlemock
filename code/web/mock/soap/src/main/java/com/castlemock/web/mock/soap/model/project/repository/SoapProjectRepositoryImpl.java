@@ -495,6 +495,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapOperation.setResponseStrategy(soapOperationDto.getResponseStrategy());
         soapOperation.setSimulateNetworkDelay(soapOperationDto.getSimulateNetworkDelay());
         soapOperation.setNetworkDelay(soapOperationDto.getNetworkDelay());
+        soapOperation.setCurrentResponseSequenceIndex(soapOperationDto.getCurrentResponseSequenceIndex());
         save(soapProjectId);
         return soapOperationDto;
     }
@@ -674,6 +675,22 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
             this.fileRepositorySupport.delete(path, deletedSoapResource.getId() + this.soapResourceFileExtension);
         }
         return deletedSoapResource != null ? mapper.map(deletedSoapResource, SoapResourceDto.class) : null;
+    }
+
+    /**
+     * Updates the current response sequence index.
+     *
+     * @param soapProjectId   The project id.
+     * @param soapPortId      The port id.
+     * @param soapOperationId The operation id.
+     * @param index           The new response sequence index.
+     * @since 1.17
+     */
+    @Override
+    public void setCurrentResponseSequenceIndex(final String soapProjectId, final String soapPortId,
+                                                final String soapOperationId, final Integer index) {
+        SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
+        soapOperation.setCurrentResponseSequenceIndex(index);
     }
 
     /**

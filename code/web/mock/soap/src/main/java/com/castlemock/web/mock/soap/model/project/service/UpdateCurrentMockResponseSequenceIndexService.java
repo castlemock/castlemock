@@ -41,9 +41,7 @@ public class UpdateCurrentMockResponseSequenceIndexService extends AbstractSoapP
     @Override
     public ServiceResult<UpdateCurrentMockResponseSequenceIndexOutput> process(final ServiceTask<UpdateCurrentMockResponseSequenceIndexInput> serviceTask) {
         final UpdateCurrentMockResponseSequenceIndexInput input = serviceTask.getInput();
-        final SoapOperationDto soapOperation = repository.findSoapOperation(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId());
-        soapOperation.setCurrentResponseSequenceIndex(input.getCurrentResponseSequenceIndex());
-        repository.updateSoapOperation(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId(), soapOperation);
+        repository.setCurrentResponseSequenceIndex(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId(), input.getCurrentResponseSequenceIndex());
         return createServiceResult(new UpdateCurrentMockResponseSequenceIndexOutput());
     }
 }
