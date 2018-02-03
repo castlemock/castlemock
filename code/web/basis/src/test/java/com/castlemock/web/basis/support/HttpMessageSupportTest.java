@@ -23,6 +23,8 @@ import org.mockito.Mockito;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * @author Karl Dahlgren
@@ -50,6 +52,47 @@ public class HttpMessageSupportTest {
 
         final String output = HttpMessageSupport.getBody(httpServletRequest);
         Assert.assertEquals(readerOutput, output);
+    }
+
+
+    @Test
+    public void testGetMTOMBody(){
+        String body = "------=_Part_64_1526053806.1517665317492\n" +
+                "Content-Type: text/xml; charset=UTF-8\n" +
+                "Content-Transfer-Encoding: 8bit\n" +
+                "Content-ID: <test@castlemock.org>\n" +
+                "\n" +
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cas=\"http://castlemock.org/\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "      <cas:TestService>\n" +
+                "         <Variable1>?</Variable1>\n" +
+                "         <Variable2>\n" +
+                "            <Variable1>?</Variable1>\n" +
+                "            <Variable2>?</Variable2>\n" +
+                "            <files/>\n" +
+                "         </Variable2>\n" +
+                "      </cas:Test>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>\n" +
+                "------=_Part_64_1526053806.1517665317492\n" +
+                "Content-Type: text/plain; charset=us-ascii; name=\"example\"\n" +
+                "Content-ID: <example>\n" +
+                "Content-Disposition: attachment; name=\"example.txt\"; filename=\"example.txt\"\n" +
+                "\n" +
+                "This is an example\n" +
+                "------=_Part_24_1742827313.1517654770545--";
+        final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
+        final Reader reader = new StringReader(body);
+        final BufferedReader bufferedReader = new BufferedReader(reader);
+        try {
+            Mockito.when(httpServletRequest.getReader()).thenReturn(bufferedReader);
+        } catch (IOException e) {
+            Assert.fail("Unable to mock getReader method for HttpServletRequest");
+        }
+
+        final String output = HttpMessageSupport.getBody(httpServletRequest);
+        Assert.assertEquals(body, output);
     }
 
     @Test(expected = IllegalStateException.class)

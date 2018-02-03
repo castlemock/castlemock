@@ -35,10 +35,11 @@ import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSo
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
+import com.castlemock.web.mock.soap.support.MtomUtility;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -134,7 +135,21 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     protected SoapRequestDto prepareRequest(final String projectId, final HttpServletRequest httpServletRequest) {
         final SoapRequestDto request = new SoapRequestDto();
         final String body = HttpMessageSupport.getBody(httpServletRequest);
-        final String identifier = HttpMessageSupport.extractSoapRequestName(body);
+
+        final String identifier;
+        if(httpServletRequest instanceof MultipartHttpServletRequest){
+            // Check if the request is a Multipart request. If so, interpret  the incoming request
+            // as a MTOM request and extract the main body (Exclude the attachment).
+            // MTOM request mixes both the attachments and the body in the HTTP request body.
+            String mainBody = MtomUtility.extractMtomBody(body, httpServletRequest.getContentType());
+
+            // Use the main body to identify
+            identifier = HttpMessageSupport.extractSoapRequestName(mainBody);
+        } else {
+            // The incoming request is a regular SOAP request. Parse the body as it is.
+            identifier = HttpMessageSupport.extractSoapRequestName(body);
+        }
+
         final String serviceUri = httpServletRequest.getRequestURI().replace(getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
         final List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 

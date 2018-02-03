@@ -32,9 +32,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 /**
  * The class provides functionality and support methods specifiably for SOAP messages.
@@ -43,12 +41,12 @@ import java.util.List;
  */
 public class HttpMessageSupport {
 
-    protected static final String DIVIDER = ":";
-    protected static final String VARIABLE = "#";
+    private static final String DIVIDER = ":";
+    private static final String VARIABLE = "#";
     private static final String BODY = "Body";
     private static final String TRANSFER_ENCODING = "Transfer-Encoding";
     private static final Logger LOGGER = Logger.getLogger(HttpMessageSupport.class);
-    protected static final String EMPTY = "";
+    private static final String EMPTY = "";
 
     /**
      * The default constructor for SoapMessageSupport. It is marked as private
@@ -126,17 +124,42 @@ public class HttpMessageSupport {
      * @return The request body as a String
      */
     public static String getBody(final HttpServletRequest httpServletRequest) {
+        BufferedReader reader = null;
         try {
-            final StringBuilder buffer = new StringBuilder();
-            final BufferedReader reader = httpServletRequest.getReader();
+            final Deque<String> lines = new ArrayDeque<String>();
+            reader = httpServletRequest.getReader();
             String line;
+
+            // Read each lines and add them to the lines list
             while ((line = reader.readLine()) != null) {
-                buffer.append(line);
+                lines.add(line);
             }
-            return buffer.toString();
+
+            final StringBuilder builder = new StringBuilder();
+            final Iterator<String> linesIterator = lines.iterator();
+
+            while (linesIterator.hasNext()){
+                line  = linesIterator.next();
+                builder.append(line);
+
+                if(linesIterator.hasNext()){
+                    // Add a new line. Mainly required to parse MTOM requests.
+                    builder.append(System.lineSeparator());
+                }
+            }
+
+            return builder.toString();
         } catch (IOException e) {
             LOGGER.error("Unable to read the incoming file", e);
             throw new IllegalStateException("Unable to extract the request body");
+        } finally {
+            if(reader != null){
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    LOGGER.error("Unable to close the buffered reader", e);
+                }
+            }
         }
     }
 
