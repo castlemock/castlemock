@@ -17,6 +17,7 @@
 package com.castlemock.core.mock.soap.model.event.domain;
 
 
+import com.castlemock.core.basis.model.http.domain.HttpEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -36,6 +37,7 @@ public class SoapResponse {
     private Integer httpStatusCode;
     private String contentType;
     private List<HttpHeader> httpHeaders;
+    private List<HttpEncoding> httpEncodings;
 
     @XmlElement
     public String getBody() {
@@ -81,5 +83,15 @@ public class SoapResponse {
 
     public void setHttpHeaders(List<HttpHeader> httpHeaders) {
         this.httpHeaders = httpHeaders;
+    }
+
+    @XmlElementWrapper(name = "httpEncodings")
+    @XmlElement(name = "httpEncoding")
+    public List<HttpEncoding> getHttpEncodings() {
+        return httpEncodings;
+    }
+
+    public void setHttpEncodings(List<HttpEncoding> httpEncodings) {
+        this.httpEncodings = httpEncodings;
     }
 }

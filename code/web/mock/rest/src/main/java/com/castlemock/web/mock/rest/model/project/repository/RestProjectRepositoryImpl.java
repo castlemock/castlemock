@@ -19,6 +19,7 @@ package com.castlemock.web.mock.rest.model.project.repository;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
+import com.castlemock.core.basis.model.http.domain.HttpEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.model.project.dto.*;
@@ -131,6 +132,13 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
                                 httpHeaders.addAll(restMockResponse.getHttpHeaders());
                             }
                             restMockResponse.setHttpHeaders(httpHeaders);
+
+                            List<HttpEncoding> httpEncodings = new CopyOnWriteArrayList<HttpEncoding>();
+                            if(restMockResponse.getHttpEncodings() != null){
+                                httpEncodings.addAll(restMockResponse.getHttpEncodings());
+                            }
+
+                            restMockResponse.setHttpEncodings(httpEncodings);
                         }
                     }
                 }

@@ -16,6 +16,8 @@
 
 package com.castlemock.web.basis.support;
 
+import com.castlemock.core.basis.model.http.domain.HttpEncoding;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.model.http.dto.HttpParameterDto;
 import com.google.common.base.Preconditions;
@@ -28,11 +30,14 @@ import org.xml.sax.InputSource;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
+import java.util.zip.InflaterInputStream;
 
 /**
  * The class provides functionality and support methods specifiably for SOAP messages.
@@ -47,6 +52,8 @@ public class HttpMessageSupport {
     private static final String TRANSFER_ENCODING = "Transfer-Encoding";
     private static final Logger LOGGER = Logger.getLogger(HttpMessageSupport.class);
     private static final String EMPTY = "";
+    private static final Integer OK_RESPONSE = 200;
+    private static final String NEW_LINE = System.lineSeparator();
 
     /**
      * The default constructor for SoapMessageSupport. It is marked as private
@@ -251,5 +258,197 @@ public class HttpMessageSupport {
             }
         }
         return stringBuilder.toString();
+    }
+
+
+    /**
+     * The method will establish a connection towards a particular <code>endpoint</code> and send
+     * a request towards the endpoint.
+     * The method will return a {@link HttpURLConnection}, which is the established connection
+     * towards the endpoint. Please note that the returned connection has to be closed after being used.
+     * @param endpoint The connection endpoint.
+     * @param httpMethod The HTTP method that the request will be sent to.
+     * @param body The body that will be sent in the request. No body will be sent if the value <code>null</code> has been provided.
+     * @param headers The headers that will be added to the request.
+     * @return An established connection towards the endpoint.
+     * @throws IOException
+     * @since 1.18
+     */
+    public static HttpURLConnection establishConnection(final String endpoint,
+                                                        final HttpMethod httpMethod,
+                                                        final String body,
+                                                        final List<HttpHeaderDto> headers) throws IOException {
+        OutputStream outputStream = null;
+        try {
+            final URL url = new URL(endpoint);
+            final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod(httpMethod.name());
+            for (HttpHeaderDto httpHeader : headers) {
+                connection.addRequestProperty(httpHeader.getName(), httpHeader.getValue());
+            }
+
+            if(body != null){
+                outputStream = connection.getOutputStream();
+                outputStream.write(body.getBytes());
+                outputStream.flush();
+            }
+
+            return connection;
+        }catch (Exception e){
+            LOGGER.error("Unable to establish connection towards " + endpoint, e);
+            throw e;
+        } finally {
+            if(outputStream != null){
+                try {
+                    outputStream.close();
+                } catch (IOException exception) {
+                    LOGGER.error("Unable to close output stream", exception);
+                }
+            }
+        }
+    }
+
+    /**
+     * The method extracts an HTTP body from an already established {@link HttpURLConnection}.
+     * @param connection The connection that the body will be extracted from.
+     * @param encodings The encoding that will be used to parse and decode the body.
+     * @return The decoded body in String format.
+     * @throws IOException
+     * @since 1.18
+     */
+    public static String extractHttpBody(final HttpURLConnection connection,
+                                         final List<HttpEncoding> encodings) throws IOException {
+
+        final InputStream inputStream;
+        BufferedReader bufferedReader = null;
+        try {
+
+            if (connection.getResponseCode() == OK_RESPONSE) {
+                // The connection returned a response with HTTP status 200.
+                // Use the input stream.
+                inputStream = connection.getInputStream();
+
+            } else {
+                // The connection returned a response with a HTTP status
+                // that is not 200 (500 error code).
+                // Use the error stream instead.
+                inputStream = connection.getErrorStream();
+            }
+
+            // Check if the content is encoded
+            if (encodings.contains(HttpEncoding.GZIP)) {
+                // The content is GZIP encoded.
+                // Create a decoder and parse the response.
+                final InputStream gzipStream = new GZIPInputStream(inputStream);
+                final Reader decoder = new InputStreamReader(gzipStream);
+                bufferedReader = new BufferedReader(decoder);
+            } else if(encodings.contains(HttpEncoding.DEFLATE)){
+                // The content is DEFLATE encoded.
+                // Create a decoder and parse the response.
+                final InflaterInputStream inflaterInputStream = new InflaterInputStream(inputStream);
+                final Reader decoder = new InputStreamReader(inflaterInputStream);
+                bufferedReader = new BufferedReader(decoder);
+            } else {
+                // No encoding was used. Simply parse the response.
+                final InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                bufferedReader = new BufferedReader(inputStreamReader);
+            }
+
+            final StringBuilder stringBuilder = new StringBuilder();
+            String buffer;
+            while ((buffer = bufferedReader.readLine()) != null) {
+                stringBuilder.append(buffer);
+                stringBuilder.append(NEW_LINE);
+            }
+            return stringBuilder.toString();
+        } catch(Exception e) {
+            LOGGER.error("Error occurred when extracting HTTP response body", e);
+            throw e;
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException exception) {
+                    LOGGER.error("Unable to close buffered reader", exception);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Encode the provided <code>body</code> with a particular {@link HttpEncoding}.
+     * @param body The body that will be encoded.
+     * @param encoding The encoding the body will be encoded with.
+     * @return Encoded value of the body.
+     * @since 1.18
+     */
+    public static String encodeBody(final String body, final HttpEncoding encoding) {
+
+        ByteArrayOutputStream outputStream = null;
+        OutputStream encodingStream = null;
+        try {
+            if (HttpEncoding.GZIP.equals(encoding)) {
+                outputStream = new ByteArrayOutputStream();
+                encodingStream = new GZIPOutputStream(outputStream);
+            } else if (HttpEncoding.DEFLATE.equals(encoding)) {
+                outputStream = new ByteArrayOutputStream();
+                encodingStream = new DeflaterOutputStream(outputStream);
+            }
+
+            if(encodingStream == null){
+                LOGGER.warn("Unable to match the HTTP encoding to an encoder");
+                return body;
+            }
+
+            encodingStream.write(body.getBytes());
+            encodingStream.flush();
+
+            return new String( outputStream.toByteArray(), "UTF-8" );
+        }catch (Exception e){
+            LOGGER.error("Unable to encode the body", e);
+            throw new RuntimeException(e);
+        } finally {
+            if(outputStream != null){
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    LOGGER.warn("Unable to close the byte array output stream");
+                }
+            }
+            if(encodingStream != null){
+                try {
+                    encodingStream.close();
+                } catch (IOException e) {
+                    LOGGER.warn("Unable to close the encoding stream");
+                }
+            }
+        }
+    }
+
+    /**
+     * The method will extract all the encodings (Content-Encoding) from an established
+     * {@link HttpURLConnection}.
+     * @param connection The connection that the encodings will be extracted from.
+     * @return A list of {@link HttpEncoding} extracted from the provided {@link HttpURLConnection}.
+     * @since 1.18
+     */
+    public static List<HttpEncoding> extractHttpEncoding(final HttpURLConnection connection){
+        final List<HttpEncoding> encodings = new ArrayList<>();
+        // Extract the content encoding
+        String contentEncoding = connection.getContentEncoding();
+
+        if(contentEncoding != null){
+            contentEncoding = contentEncoding.toUpperCase();
+            for(HttpEncoding httpEncoding : HttpEncoding.values()){
+                int index = contentEncoding.indexOf(httpEncoding.name());
+                if(index != -1){
+                    encodings.add(httpEncoding);
+                }
+            }
+        }
+
+        return encodings;
     }
 }

@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.soap.controller;
 
+import com.castlemock.core.basis.model.http.domain.HttpEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.utility.parser.TextParser;
@@ -43,13 +44,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.zip.GZIPInputStream;
 
 /**
  * The AbstractSoapServiceController provides functionality that are shared for all the SOAP controllers
@@ -65,8 +64,6 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     private static final Random RANDOM = new Random();
     private static final String SOAP = "soap";
     private static final Logger LOGGER = Logger.getLogger(AbstractSoapServiceController.class);
-    private static final Integer OK_RESPONSE = 200;
-    private static final String GZIP_ENCODING = "gzip";
 
     /**
      * Process the incoming message by forwarding it to the main process method in
@@ -202,6 +199,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
             }
 
+            String body = response.getBody();
+
+            for(HttpEncoding httpEncoding : response.getHttpEncodings()){
+                body = HttpMessageSupport.encodeBody(body, httpEncoding);
+            }
+
             if(soapOperationDto.getSimulateNetworkDelay() &&
                     soapOperationDto.getNetworkDelay() >= 0){
                 try {
@@ -288,6 +291,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         response.setMockResponseName(mockResponse.getName());
         response.setHttpHeaders(mockResponse.getHttpHeaders());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
+        response.setHttpEncodings(mockResponse.getHttpEncodings());
         return response;
 
     }
@@ -340,65 +344,24 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             return mockResponse(soapProjectId, soapPortId, soapOperationDto);
         }
 
-
         final SoapResponseDto response = new SoapResponseDto();
         HttpURLConnection connection = null;
-        OutputStream outputStream = null;
-        BufferedReader bufferedReader = null;
         try {
-            final URL url = new URL(soapOperationDto.getForwardedEndpoint());
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod(request.getHttpMethod().name());
-            for(HttpHeaderDto httpHeader : request.getHttpHeaders()){
-                connection.addRequestProperty(httpHeader.getName(), httpHeader.getValue());
-            }
+            connection = HttpMessageSupport.establishConnection(
+                    soapOperationDto.getForwardedEndpoint(),
+                    request.getHttpMethod(),
+                    request.getBody(),
+                    request.getHttpHeaders());
 
-            outputStream = connection.getOutputStream();
-            outputStream.write(request.getBody().getBytes());
-            outputStream.flush();
 
-            final InputStream inputStream;
-            if(connection.getResponseCode() == OK_RESPONSE){
-                // The connection returned a response with HTTP status 200.
-                // Use the input stream.
-                inputStream = connection.getInputStream();
-
-            } else {
-                // The connection returned a response with a HTTP status
-                // that is not 200 (500 error code).
-                // Use the error stream instead.
-                inputStream = connection.getErrorStream();
-            }
-
-            // Extract the content encoding
-            final String contentEncoding = connection.getContentEncoding();
-
-            // Check if the content is encoded
-            if(GZIP_ENCODING.equals(contentEncoding)){
-                // The content is GZIP encoded.
-                // Create a decoder and parse the response.
-                final InputStream gzipStream = new GZIPInputStream(inputStream);
-                final Reader decoder = new InputStreamReader(gzipStream);
-                bufferedReader = new BufferedReader(decoder);
-            } else {
-                // No encoding was used. Simply parse the response.
-                final InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                bufferedReader = new BufferedReader(inputStreamReader);
-            }
-
-            final StringBuilder stringBuilder = new StringBuilder();
-            String buffer;
-            while ((buffer = bufferedReader.readLine()) != null) {
-                stringBuilder.append(buffer);
-                stringBuilder.append(NEW_LINE);
-            }
-
+            final List<HttpEncoding> encodings = HttpMessageSupport.extractHttpEncoding(connection);
+            final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings);
             final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
-            response.setBody(stringBuilder.toString());
+            response.setBody(responseBody);
             response.setHttpHeaders(responseHttpHeaders);
             response.setHttpStatusCode(connection.getResponseCode());
+            response.setHttpEncodings(encodings);
             return response;
         } catch (IOException exception) {
             LOGGER.error("Unable to forward request", exception);
@@ -406,20 +369,6 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         } finally {
             if(connection != null){
                 connection.disconnect();
-            }
-            if(outputStream != null){
-                try {
-                    outputStream.close();
-                } catch (IOException exception) {
-                    LOGGER.error("Unable to close output stream", exception);
-                }
-            }
-            if(bufferedReader != null){
-                try {
-                    bufferedReader.close();
-                } catch (IOException exception) {
-                    LOGGER.error("Unable to close buffered reader", exception);
-                }
             }
         }
     }

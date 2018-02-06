@@ -19,6 +19,7 @@ package com.castlemock.web.mock.soap.model.project.repository;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
+import com.castlemock.core.basis.model.http.domain.HttpEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.core.mock.soap.model.project.dto.*;
@@ -136,6 +137,13 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
                             httpHeaders.addAll(soapMockResponse.getHttpHeaders());
                         }
                         soapMockResponse.setHttpHeaders(httpHeaders);
+
+                        List<HttpEncoding> httpEncodings = new CopyOnWriteArrayList<HttpEncoding>();
+                        if(soapMockResponse.getHttpEncodings() != null){
+                            httpEncodings.addAll(soapMockResponse.getHttpEncodings());
+                        }
+
+                        soapMockResponse.setHttpEncodings(httpEncodings);
                     }
                 }
 

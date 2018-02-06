@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.rest.web.rest.controller;
 
+import com.castlemock.core.basis.model.http.domain.HttpEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.model.http.dto.HttpParameterDto;
@@ -45,15 +46,13 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 /**
  * The abstract REST controller is a base class shared among all the REST service classes.
@@ -69,7 +68,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static final Random RANDOM = new Random();
     private static final Logger LOGGER = Logger.getLogger(AbstractRestServiceController.class);
-    private static final Integer OK_RESPONSE = 200;
 
     /**
      *
@@ -164,6 +162,12 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 responseHeaders.put(httpHeader.getName(), headerValues);
             }
 
+            String body = response.getBody();
+
+            for(HttpEncoding httpEncoding : response.getHttpEncodings()){
+                body = HttpMessageSupport.encodeBody(body, httpEncoding);
+            }
+
             if(restMethod.getSimulateNetworkDelay() &&
                     restMethod.getNetworkDelay() >= 0){
                 try {
@@ -184,58 +188,46 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
     /**
      * The method provides the functionality to forward a request to another endpoint
-     * @param restRequest The incoming request
+     * @param request The incoming request
      * @param restMethod The REST method which the incoming request belongs to
      * @return The response received from the external endpoint
      */
-    protected RestResponseDto forwardRequest(final RestRequestDto restRequest, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
+    protected RestResponseDto forwardRequest(final RestRequestDto request, final String projectId, final String applicationId, final String resourceId, final RestMethodDto restMethod){
         if(demoMode){
             // If the application is configured to run in demo mode, then use mocked response instead
-            return mockResponse(restRequest, projectId, applicationId, resourceId, restMethod);
+            return mockResponse(request, projectId, applicationId, resourceId, restMethod);
         }
 
 
         final RestResponseDto response = new RestResponseDto();
         HttpURLConnection connection = null;
-        OutputStream outputStream = null;
-        BufferedReader bufferedReader = null;
         try {
-            final String parameterUri = HttpMessageSupport.buildParameterUri(restRequest.getHttpParameters());
-            final URL url = new URL(restMethod.getForwardedEndpoint() + restRequest.getUri() + parameterUri);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod(restRequest.getHttpMethod().name());
-            for(HttpHeaderDto httpHeader : restRequest.getHttpHeaders()){
-                connection.addRequestProperty(httpHeader.getName(), httpHeader.getValue());
+
+            String requestBody = null;
+
+            if(HttpMethod.POST.equals(request.getHttpMethod()) ||
+                    HttpMethod.PUT.equals(request.getHttpMethod()) ||
+                    HttpMethod.DELETE.equals(request.getHttpMethod())){
+                requestBody = request.getBody();
             }
 
-            if(HttpMethod.POST.equals(restRequest.getHttpMethod()) || HttpMethod.PUT.equals(restRequest.getHttpMethod()) || HttpMethod.DELETE.equals(restRequest.getHttpMethod())){
-                outputStream = connection.getOutputStream();
-                outputStream.write(restRequest.getBody().getBytes());
-                outputStream.flush();
-            }
+            final String parameterUri = HttpMessageSupport.buildParameterUri(request.getHttpParameters());
+            final String endpoint = restMethod.getForwardedEndpoint() + request.getUri() + parameterUri;
 
-            InputStreamReader inputStreamReader = null;
-            if(connection.getResponseCode() == OK_RESPONSE){
-                inputStreamReader = new InputStreamReader(connection.getInputStream());
-            } else {
-                inputStreamReader = new InputStreamReader(connection.getErrorStream());
-            }
+            connection = HttpMessageSupport.establishConnection(
+                    endpoint,
+                    request.getHttpMethod(),
+                    requestBody,
+                    request.getHttpHeaders());
 
-            bufferedReader = new BufferedReader(inputStreamReader);
-
-            final StringBuilder stringBuilder = new StringBuilder();
-            String buffer;
-            while ((buffer = bufferedReader.readLine()) != null) {
-                stringBuilder.append(buffer);
-                stringBuilder.append(NEW_LINE);
-            }
-
+            final List<HttpEncoding> encodings = HttpMessageSupport.extractHttpEncoding(connection);
+            final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings);
             final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
-            response.setBody(stringBuilder.toString());
+            response.setBody(responseBody);
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setHttpHeaders(responseHttpHeaders);
             response.setHttpStatusCode(connection.getResponseCode());
+            response.setHttpEncodings(encodings);
             return response;
         } catch (IOException exception) {
             LOGGER.error("Unable to forward request", exception);
@@ -243,20 +235,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
         } finally {
             if(connection != null){
                 connection.disconnect();
-            }
-            if(outputStream != null){
-                try {
-                    outputStream.close();
-                } catch (IOException exception) {
-                    LOGGER.error("Unable to close output stream", exception);
-                }
-            }
-            if(bufferedReader != null){
-                try {
-                    bufferedReader.close();
-                } catch (IOException exception) {
-                    LOGGER.error("Unable to close buffered reader", exception);
-                }
             }
         }
     }
@@ -393,6 +371,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         response.setMockResponseName(mockResponse.getName());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
         response.setHttpHeaders(mockResponse.getHttpHeaders());
+        response.setHttpEncodings(mockResponse.getHttpEncodings());
         return response;
     }
 
