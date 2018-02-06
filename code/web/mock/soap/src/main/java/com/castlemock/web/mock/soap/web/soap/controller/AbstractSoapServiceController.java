@@ -40,17 +40,16 @@ import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 /**
  * The AbstractSoapServiceController provides functionality that are shared for all the SOAP controllers
@@ -66,7 +65,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     private static final Random RANDOM = new Random();
     private static final String SOAP = "soap";
     private static final Logger LOGGER = Logger.getLogger(AbstractSoapServiceController.class);
-
+    private static final Integer OK_RESPONSE = 200;
+    private static final String GZIP_ENCODING = "gzip";
 
     /**
      * Process the incoming message by forwarding it to the main process method in
@@ -358,7 +358,34 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             outputStream.write(request.getBody().getBytes());
             outputStream.flush();
 
-            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            final InputStream inputStream;
+            if(connection.getResponseCode() == OK_RESPONSE){
+                // The connection returned a response with HTTP status 200.
+                // Use the input stream.
+                inputStream = connection.getInputStream();
+
+            } else {
+                // The connection returned a response with a HTTP status
+                // that is not 200 (500 error code).
+                // Use the error stream instead.
+                inputStream = connection.getErrorStream();
+            }
+
+            // Extract the content encoding
+            final String contentEncoding = connection.getContentEncoding();
+
+            // Check if the content is encoded
+            if(GZIP_ENCODING.equals(contentEncoding)){
+                // The content is GZIP encoded.
+                // Create a decoder and parse the response.
+                final InputStream gzipStream = new GZIPInputStream(inputStream);
+                final Reader decoder = new InputStreamReader(gzipStream);
+                bufferedReader = new BufferedReader(decoder);
+            } else {
+                // No encoding was used. Simply parse the response.
+                final InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                bufferedReader = new BufferedReader(inputStreamReader);
+            }
 
             final StringBuilder stringBuilder = new StringBuilder();
             String buffer;
