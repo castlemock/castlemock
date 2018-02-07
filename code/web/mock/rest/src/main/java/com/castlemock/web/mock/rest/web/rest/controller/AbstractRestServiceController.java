@@ -35,6 +35,7 @@ import com.castlemock.core.mock.rest.model.project.service.message.input.Identif
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
+import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import com.castlemock.web.mock.rest.model.RestException;
@@ -160,12 +161,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 responseHeaders.put(httpHeader.getName(), headerValues);
             }
 
-            String body = response.getBody();
-
-            for(ContentEncoding contentEncoding : response.getContentEncodings()){
-                body = HttpMessageSupport.encodeBody(body, contentEncoding);
-            }
-
             if(restMethod.getSimulateNetworkDelay() &&
                     restMethod.getNetworkDelay() >= 0){
                 try {
@@ -219,8 +214,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
                     request.getHttpHeaders());
 
             final List<ContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
-            final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings);
             final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
+            final String characterEncoding = CharsetUtility.parseHttpHeaders(responseHttpHeaders);
+            final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings, characterEncoding);
             response.setBody(responseBody);
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setHttpHeaders(responseHttpHeaders);

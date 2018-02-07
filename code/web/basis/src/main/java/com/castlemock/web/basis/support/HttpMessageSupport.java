@@ -50,6 +50,7 @@ public class HttpMessageSupport {
     private static final String VARIABLE = "#";
     private static final String BODY = "Body";
     private static final String TRANSFER_ENCODING = "Transfer-Encoding";
+    private static final String CONTENT_LENGTH = "Content-Length";
     private static final Logger LOGGER = Logger.getLogger(HttpMessageSupport.class);
     private static final String EMPTY = "";
     private static final Integer OK_RESPONSE = 200;
@@ -203,6 +204,11 @@ public class HttpMessageSupport {
             if(headerName.equalsIgnoreCase(TRANSFER_ENCODING)){
                 continue;
             }
+            if(headerName.equalsIgnoreCase(CONTENT_LENGTH)){
+                // Ignore the Content-Length, since it might
+                // effect the response when being forwarded or recorded.
+                continue;
+            }
             final String headerValue = connection.getHeaderField(headerName);
             final HttpHeaderDto httpHeader = new HttpHeaderDto();
             httpHeader.setName(headerName);
@@ -313,12 +319,14 @@ public class HttpMessageSupport {
      * The method extracts an HTTP body from an already established {@link HttpURLConnection}.
      * @param connection The connection that the body will be extracted from.
      * @param encodings The encoding that will be used to parse and decode the body.
+     * @param characterEncoding The character encoding
      * @return The decoded body in String format.
      * @throws IOException
      * @since 1.18
      */
     public static String extractHttpBody(final HttpURLConnection connection,
-                                         final List<ContentEncoding> encodings) throws IOException {
+                                         final List<ContentEncoding> encodings,
+                                         final String characterEncoding) throws IOException {
 
         final InputStream inputStream;
         BufferedReader bufferedReader = null;
@@ -347,11 +355,11 @@ public class HttpMessageSupport {
                 // The content is DEFLATE encoded.
                 // Create a decoder and parse the response.
                 final InflaterInputStream inflaterInputStream = new InflaterInputStream(inputStream);
-                final Reader decoder = new InputStreamReader(inflaterInputStream);
+                final Reader decoder = new InputStreamReader(inflaterInputStream, characterEncoding);
                 bufferedReader = new BufferedReader(decoder);
             } else {
                 // No encoding was used. Simply parse the response.
-                final InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                final InputStreamReader inputStreamReader = new InputStreamReader(inputStream, characterEncoding);
                 bufferedReader = new BufferedReader(inputStreamReader);
             }
 
@@ -381,10 +389,13 @@ public class HttpMessageSupport {
      * Encode the provided <code>body</code> with a particular {@link ContentEncoding}.
      * @param body The body that will be encoded.
      * @param encoding The encoding the body will be encoded with.
+     * @param characterEncoding The character encoding
      * @return Encoded value of the body.
      * @since 1.18
      */
-    public static String encodeBody(final String body, final ContentEncoding encoding) {
+    public static String encodeBody(final String body,
+                                    final ContentEncoding encoding,
+                                    final String characterEncoding) {
 
         ByteArrayOutputStream outputStream = null;
         OutputStream encodingStream = null;
@@ -405,7 +416,7 @@ public class HttpMessageSupport {
             encodingStream.write(body.getBytes());
             encodingStream.flush();
 
-            return new String( outputStream.toByteArray(), "UTF-8" );
+            return new String( outputStream.toByteArray(), characterEncoding );
         }catch (Exception e){
             LOGGER.error("Unable to encode the body", e);
             throw new RuntimeException(e);

@@ -33,12 +33,16 @@ import com.castlemock.core.mock.soap.model.project.service.message.input.*;
 import com.castlemock.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSoapResourceOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.support.MtomUtility;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -75,7 +79,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletResponse The outgoing response
      * @return Returns the response as an String
      */
-    protected String process(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity process(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
@@ -172,7 +176,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletResponse The outgoing HTTP servlet response
      * @return Returns the response as an String
      */
-    protected String process(final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto, final SoapRequestDto request, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity process(final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto, final SoapRequestDto request, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(request, "Request cannot be null");
         if(soapOperationDto == null){
             throw new SoapException("Soap operation could not be found");
@@ -194,15 +198,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             } else { // Status.MOCKED
                 response = mockResponse(soapProjectId, soapPortId, soapOperationDto);
             }
-            httpServletResponse.setStatus(response.getHttpStatusCode());
+
+            HttpHeaders responseHeaders = new HttpHeaders();
             for(HttpHeaderDto httpHeader : response.getHttpHeaders()){
-                httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
-            }
-
-            String body = response.getBody();
-
-            for(ContentEncoding contentEncoding : response.getContentEncodings()){
-                body = HttpMessageSupport.encodeBody(body, contentEncoding);
+                List<String> headerValues = new LinkedList<String>();
+                headerValues.add(httpHeader.getValue());
+                responseHeaders.put(httpHeader.getName(), headerValues);
             }
 
             if(soapOperationDto.getSimulateNetworkDelay() &&
@@ -214,7 +215,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 }
             }
 
-            return response.getBody();
+            return new ResponseEntity<String>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
         } finally{
             if(event != null){
                 event.finish(response);
@@ -355,8 +356,9 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
 
             final List<ContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
-            final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings);
             final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
+            final String characterEncoding = CharsetUtility.parseHttpHeaders(responseHttpHeaders);
+            final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings, characterEncoding);
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setBody(responseBody);
             response.setHttpHeaders(responseHttpHeaders);
