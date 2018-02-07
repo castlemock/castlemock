@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.support;
 
-import com.castlemock.core.basis.model.http.domain.HttpEncoding;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.model.http.dto.HttpParameterDto;
@@ -318,7 +318,7 @@ public class HttpMessageSupport {
      * @since 1.18
      */
     public static String extractHttpBody(final HttpURLConnection connection,
-                                         final List<HttpEncoding> encodings) throws IOException {
+                                         final List<ContentEncoding> encodings) throws IOException {
 
         final InputStream inputStream;
         BufferedReader bufferedReader = null;
@@ -337,13 +337,13 @@ public class HttpMessageSupport {
             }
 
             // Check if the content is encoded
-            if (encodings.contains(HttpEncoding.GZIP)) {
+            if (encodings.contains(ContentEncoding.GZIP)) {
                 // The content is GZIP encoded.
                 // Create a decoder and parse the response.
                 final InputStream gzipStream = new GZIPInputStream(inputStream);
                 final Reader decoder = new InputStreamReader(gzipStream);
                 bufferedReader = new BufferedReader(decoder);
-            } else if(encodings.contains(HttpEncoding.DEFLATE)){
+            } else if(encodings.contains(ContentEncoding.DEFLATE)){
                 // The content is DEFLATE encoded.
                 // Create a decoder and parse the response.
                 final InflaterInputStream inflaterInputStream = new InflaterInputStream(inputStream);
@@ -378,21 +378,21 @@ public class HttpMessageSupport {
     }
 
     /**
-     * Encode the provided <code>body</code> with a particular {@link HttpEncoding}.
+     * Encode the provided <code>body</code> with a particular {@link ContentEncoding}.
      * @param body The body that will be encoded.
      * @param encoding The encoding the body will be encoded with.
      * @return Encoded value of the body.
      * @since 1.18
      */
-    public static String encodeBody(final String body, final HttpEncoding encoding) {
+    public static String encodeBody(final String body, final ContentEncoding encoding) {
 
         ByteArrayOutputStream outputStream = null;
         OutputStream encodingStream = null;
         try {
-            if (HttpEncoding.GZIP.equals(encoding)) {
+            if (ContentEncoding.GZIP.equals(encoding)) {
                 outputStream = new ByteArrayOutputStream();
                 encodingStream = new GZIPOutputStream(outputStream);
-            } else if (HttpEncoding.DEFLATE.equals(encoding)) {
+            } else if (ContentEncoding.DEFLATE.equals(encoding)) {
                 outputStream = new ByteArrayOutputStream();
                 encodingStream = new DeflaterOutputStream(outputStream);
             }
@@ -431,20 +431,20 @@ public class HttpMessageSupport {
      * The method will extract all the encodings (Content-Encoding) from an established
      * {@link HttpURLConnection}.
      * @param connection The connection that the encodings will be extracted from.
-     * @return A list of {@link HttpEncoding} extracted from the provided {@link HttpURLConnection}.
+     * @return A list of {@link ContentEncoding} extracted from the provided {@link HttpURLConnection}.
      * @since 1.18
      */
-    public static List<HttpEncoding> extractHttpEncoding(final HttpURLConnection connection){
-        final List<HttpEncoding> encodings = new ArrayList<>();
+    public static List<ContentEncoding> extractContentEncoding(final HttpURLConnection connection){
+        final List<ContentEncoding> encodings = new ArrayList<>();
         // Extract the content encoding
-        String contentEncoding = connection.getContentEncoding();
+        String connectionContentEncoding = connection.getContentEncoding();
 
-        if(contentEncoding != null){
-            contentEncoding = contentEncoding.toUpperCase();
-            for(HttpEncoding httpEncoding : HttpEncoding.values()){
-                int index = contentEncoding.indexOf(httpEncoding.name());
+        if(connectionContentEncoding != null){
+            connectionContentEncoding = connectionContentEncoding.toUpperCase();
+            for(ContentEncoding contentEncoding : ContentEncoding.values()){
+                int index = connectionContentEncoding.indexOf(contentEncoding.name());
                 if(index != -1){
-                    encodings.add(httpEncoding);
+                    encodings.add(contentEncoding);
                 }
             }
         }

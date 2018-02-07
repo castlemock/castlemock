@@ -16,7 +16,7 @@
 
 package com.castlemock.core.mock.rest.model.event.dto;
 
-import com.castlemock.core.basis.model.http.domain.HttpEncoding;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import org.dozer.Mapping;
 
@@ -44,8 +44,8 @@ public class RestResponseDto {
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders;
 
-    @Mapping("httpEncodings")
-    private List<HttpEncoding> httpEncodings;
+    @Mapping("contentEncodings")
+    private List<ContentEncoding> contentEncodings;
 
     public String getBody() {
         return body;
@@ -87,11 +87,11 @@ public class RestResponseDto {
         this.httpHeaders = httpHeaders;
     }
 
-    public List<HttpEncoding> getHttpEncodings() {
-        return httpEncodings;
+    public List<ContentEncoding> getContentEncodings() {
+        return contentEncodings;
     }
 
-    public void setHttpEncodings(List<HttpEncoding> httpEncodings) {
-        this.httpEncodings = httpEncodings;
+    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+        this.contentEncodings = contentEncodings;
     }
 }

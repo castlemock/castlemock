@@ -16,7 +16,7 @@
 
 package com.castlemock.core.mock.rest.model.event.domain;
 
-import com.castlemock.core.basis.model.http.domain.HttpEncoding;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -36,7 +36,7 @@ public class RestResponse {
     private Integer httpStatusCode;
     private String contentType;
     private List<HttpHeader> httpHeaders;
-    private List<HttpEncoding> httpEncodings;
+    private List<ContentEncoding> contentEncodings;
 
     @XmlElement
     public String getBody() {
@@ -84,13 +84,13 @@ public class RestResponse {
         this.httpHeaders = httpHeaders;
     }
 
-    @XmlElementWrapper(name = "httpEncodings")
-    @XmlElement(name = "httpEncoding")
-    public List<HttpEncoding> getHttpEncodings() {
-        return httpEncodings;
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
+    public List<ContentEncoding> getContentEncodings() {
+        return contentEncodings;
     }
 
-    public void setHttpEncodings(List<HttpEncoding> httpEncodings) {
-        this.httpEncodings = httpEncodings;
+    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+        this.contentEncodings = contentEncodings;
     }
 }

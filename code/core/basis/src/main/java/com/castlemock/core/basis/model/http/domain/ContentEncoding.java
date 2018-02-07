@@ -25,21 +25,21 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType
 @XmlEnum(String.class)
-public enum HttpEncoding {
+public enum ContentEncoding {
 
     GZIP, DEFLATE;
 
     /**
-     * Parse an input String and convert it to a {@link HttpEncoding}.
+     * Parse an input String and convert it to a {@link ContentEncoding}.
      * @param input The input String which will be converted.
-     * @return A {@link HttpEncoding} based on the input String. Null will be
+     * @return A {@link ContentEncoding} based on the input String. Null will be
      *          return if no match was found.
      * @since 1.10
      */
-    public static HttpEncoding getValue(String input){
+    public static ContentEncoding getValue(String input){
         input = input.toUpperCase();
         try {
-            return HttpEncoding.valueOf(input);
+            return ContentEncoding.valueOf(input);
         } catch (Exception e){}
         return null;
     }

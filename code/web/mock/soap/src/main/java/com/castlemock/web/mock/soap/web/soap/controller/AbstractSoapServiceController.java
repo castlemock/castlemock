@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.soap.controller;
 
-import com.castlemock.core.basis.model.http.domain.HttpEncoding;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.utility.parser.TextParser;
@@ -201,8 +201,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
             String body = response.getBody();
 
-            for(HttpEncoding httpEncoding : response.getHttpEncodings()){
-                body = HttpMessageSupport.encodeBody(body, httpEncoding);
+            for(ContentEncoding contentEncoding : response.getContentEncodings()){
+                body = HttpMessageSupport.encodeBody(body, contentEncoding);
             }
 
             if(soapOperationDto.getSimulateNetworkDelay() &&
@@ -291,7 +291,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         response.setMockResponseName(mockResponse.getName());
         response.setHttpHeaders(mockResponse.getHttpHeaders());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
-        response.setHttpEncodings(mockResponse.getHttpEncodings());
+        response.setContentEncodings(mockResponse.getContentEncodings());
         return response;
 
     }
@@ -354,14 +354,14 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                     request.getHttpHeaders());
 
 
-            final List<HttpEncoding> encodings = HttpMessageSupport.extractHttpEncoding(connection);
+            final List<ContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
             final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings);
             final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setBody(responseBody);
             response.setHttpHeaders(responseHttpHeaders);
             response.setHttpStatusCode(connection.getResponseCode());
-            response.setHttpEncodings(encodings);
+            response.setContentEncodings(encodings);
             return response;
         } catch (IOException exception) {
             LOGGER.error("Unable to forward request", exception);

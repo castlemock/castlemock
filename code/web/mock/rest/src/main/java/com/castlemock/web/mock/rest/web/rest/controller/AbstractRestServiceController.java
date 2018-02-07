@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.web.rest.controller;
 
-import com.castlemock.core.basis.model.http.domain.HttpEncoding;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.model.http.dto.HttpParameterDto;
@@ -48,11 +48,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.zip.GZIPInputStream;
 
 /**
  * The abstract REST controller is a base class shared among all the REST service classes.
@@ -164,8 +162,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
             String body = response.getBody();
 
-            for(HttpEncoding httpEncoding : response.getHttpEncodings()){
-                body = HttpMessageSupport.encodeBody(body, httpEncoding);
+            for(ContentEncoding contentEncoding : response.getContentEncodings()){
+                body = HttpMessageSupport.encodeBody(body, contentEncoding);
             }
 
             if(restMethod.getSimulateNetworkDelay() &&
@@ -220,14 +218,14 @@ public abstract class AbstractRestServiceController extends AbstractController {
                     requestBody,
                     request.getHttpHeaders());
 
-            final List<HttpEncoding> encodings = HttpMessageSupport.extractHttpEncoding(connection);
+            final List<ContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
             final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings);
             final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
             response.setBody(responseBody);
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setHttpHeaders(responseHttpHeaders);
             response.setHttpStatusCode(connection.getResponseCode());
-            response.setHttpEncodings(encodings);
+            response.setContentEncodings(encodings);
             return response;
         } catch (IOException exception) {
             LOGGER.error("Unable to forward request", exception);
@@ -371,7 +369,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         response.setMockResponseName(mockResponse.getName());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
         response.setHttpHeaders(mockResponse.getHttpHeaders());
-        response.setHttpEncodings(mockResponse.getHttpEncodings());
+        response.setContentEncodings(mockResponse.getContentEncodings());
         return response;
     }
 
