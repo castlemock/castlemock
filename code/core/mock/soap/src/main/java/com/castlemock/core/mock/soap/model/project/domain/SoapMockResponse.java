@@ -41,6 +41,7 @@ public class SoapMockResponse implements Saveable<String> {
     private Integer httpStatusCode;
     private boolean usingExpressions;
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+    private String xpathExpression;
 
     @XmlElement
     @Override
@@ -106,6 +107,15 @@ public class SoapMockResponse implements Saveable<String> {
 
     public void setHttpHeaders(List<HttpHeader> httpHeaders) {
         this.httpHeaders = httpHeaders;
+    }
+
+    @XmlElement
+    public String getXpathExpression() {
+        return xpathExpression;
+    }
+
+    public void setXpathExpression(String xpathExpression) {
+        this.xpathExpression = xpathExpression;
     }
 
     @Override

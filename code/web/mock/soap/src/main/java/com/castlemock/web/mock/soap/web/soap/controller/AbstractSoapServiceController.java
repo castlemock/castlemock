@@ -180,7 +180,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             } else if (SoapOperationStatus.ECHO.equals(soapOperationDto.getStatus())) {
                 response = echoResponse(request);
             } else { // Status.MOCKED
-                response = mockResponse(soapProjectId, soapPortId, soapOperationDto);
+                response = mockResponse(request, soapProjectId, soapPortId, soapOperationDto);
             }
             httpServletResponse.setStatus(response.getHttpStatusCode());
             for(HttpHeaderDto httpHeader : response.getHttpHeaders()){
@@ -231,11 +231,13 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
     /**
      * The method is responsible for retrieving and returning a mocked response for the provided operation
+     *
+     * @param request
      * @param soapOperationDto The SOAP operation that is being executed. The response is based on
      *                         the provided SOAP operation.
      * @return A mocked response based on the provided SOAP operation
      */
-    private SoapResponseDto mockResponse(final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto){
+    private SoapResponseDto mockResponse(SoapRequestDto request, final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto){
         final List<SoapMockResponseDto> mockResponses = new ArrayList<SoapMockResponseDto>();
         for(SoapMockResponseDto mockResponse : soapOperationDto.getMockResponses()){
             if(mockResponse.getStatus().equals(SoapMockResponseStatus.ENABLED)){
@@ -256,6 +258,13 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
             serviceProcessor.process(new UpdateCurrentMockResponseSequenceIndexInput(soapProjectId, soapPortId, soapOperationDto.getId(), currentSequenceNumber + 1));
+        } else if (soapOperationDto.getResponseStrategy().equals(SoapResponseStrategy.XPATH_INPUT)) {
+            for (SoapMockResponseDto testedMockResponse : mockResponses) {
+                if (HttpMessageSupport.isValidXPathExpr(request.getBody(), testedMockResponse.getXpathExpressionDto())) {
+                    mockResponse = testedMockResponse;
+                    break;
+                }
+            }
         }
 
         if(mockResponse == null){
@@ -322,7 +331,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     private SoapResponseDto forwardRequest(final SoapRequestDto request, final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto){
         if(demoMode){
             // If the application is configured to run in demo mode, then use mocked response instead
-            return mockResponse(soapProjectId, soapPortId, soapOperationDto);
+            return mockResponse(request, soapProjectId, soapPortId, soapOperationDto);
         }
 
 

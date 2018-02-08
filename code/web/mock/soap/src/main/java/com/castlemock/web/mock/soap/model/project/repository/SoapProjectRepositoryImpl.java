@@ -530,6 +530,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapMockResponse.setStatus(soapMockResponseDto.getStatus());
         soapMockResponse.setHttpHeaders(headers);
         soapMockResponse.setUsingExpressions(soapMockResponseDto.isUsingExpressions());
+        soapMockResponse.setXpathExpression(soapMockResponseDto.getXpathExpressionDto());
         save(soapProjectId);
         return soapMockResponseDto;
     }

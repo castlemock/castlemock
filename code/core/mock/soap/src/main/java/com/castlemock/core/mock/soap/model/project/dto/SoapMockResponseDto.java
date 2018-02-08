@@ -49,6 +49,9 @@ public class SoapMockResponseDto {
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders = new CopyOnWriteArrayList<HttpHeaderDto>();
 
+    @Mapping("xpathExpression")
+    private String xpathExpressionDto;
+
     public String getId() {
         return id;
     }
@@ -103,5 +106,13 @@ public class SoapMockResponseDto {
 
     public void setHttpHeaders(List<HttpHeaderDto> httpHeaders) {
         this.httpHeaders = httpHeaders;
+    }
+
+    public String getXpathExpressionDto() {
+        return xpathExpressionDto;
+    }
+
+    public void setXpathExpressionDto(String xpathExpressionDto) {
+        this.xpathExpressionDto = xpathExpressionDto;
     }
 }
