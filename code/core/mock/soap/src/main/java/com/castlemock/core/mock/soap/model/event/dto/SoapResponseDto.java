@@ -16,6 +16,7 @@
 
 package com.castlemock.core.mock.soap.model.event.dto;
 
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import org.dozer.Mapping;
 
@@ -42,6 +43,9 @@ public class SoapResponseDto {
 
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders;
+
+    @Mapping("contentEncodings")
+    private List<ContentEncoding> contentEncodings;
 
     public String getBody() {
         return body;
@@ -81,5 +85,13 @@ public class SoapResponseDto {
 
     public void setHttpHeaders(List<HttpHeaderDto> httpHeaders) {
         this.httpHeaders = httpHeaders;
+    }
+
+    public List<ContentEncoding> getContentEncodings() {
+        return contentEncodings;
+    }
+
+    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+        this.contentEncodings = contentEncodings;
     }
 }

@@ -16,6 +16,7 @@
 
 package com.castlemock.core.mock.rest.model.project.dto;
 
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import org.dozer.Mapping;
@@ -48,6 +49,9 @@ public class RestMockResponseDto {
 
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders = new CopyOnWriteArrayList<HttpHeaderDto>();
+
+    @Mapping("contentEncodings")
+    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
 
     public String getId() {
         return id;
@@ -103,5 +107,13 @@ public class RestMockResponseDto {
 
     public void setHttpHeaders(List<HttpHeaderDto> httpHeaders) {
         this.httpHeaders = httpHeaders;
+    }
+
+    public List<ContentEncoding> getContentEncodings() {
+        return contentEncodings;
+    }
+
+    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+        this.contentEncodings = contentEncodings;
     }
 }

@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.soap.controller;
 
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.basis.utility.parser.TextParser;
@@ -32,21 +33,23 @@ import com.castlemock.core.mock.soap.model.project.service.message.input.*;
 import com.castlemock.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSoapResourceOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
+import com.castlemock.web.mock.soap.support.MtomUtility;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -66,7 +69,6 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     private static final String SOAP = "soap";
     private static final Logger LOGGER = Logger.getLogger(AbstractSoapServiceController.class);
 
-
     /**
      * Process the incoming message by forwarding it to the main process method in
      * the AbstractServiceController class. However, the Protocol value SOAP is being
@@ -77,7 +79,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletResponse The outgoing response
      * @return Returns the response as an String
      */
-    protected String process(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity process(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
@@ -134,7 +136,21 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     protected SoapRequestDto prepareRequest(final String projectId, final HttpServletRequest httpServletRequest) {
         final SoapRequestDto request = new SoapRequestDto();
         final String body = HttpMessageSupport.getBody(httpServletRequest);
-        final String identifier = HttpMessageSupport.extractSoapRequestName(body);
+
+        final String identifier;
+        if(httpServletRequest instanceof MultipartHttpServletRequest){
+            // Check if the request is a Multipart request. If so, interpret  the incoming request
+            // as a MTOM request and extract the main body (Exclude the attachment).
+            // MTOM request mixes both the attachments and the body in the HTTP request body.
+            String mainBody = MtomUtility.extractMtomBody(body, httpServletRequest.getContentType());
+
+            // Use the main body to identify
+            identifier = HttpMessageSupport.extractSoapRequestName(mainBody);
+        } else {
+            // The incoming request is a regular SOAP request. Parse the body as it is.
+            identifier = HttpMessageSupport.extractSoapRequestName(body);
+        }
+
         final String serviceUri = httpServletRequest.getRequestURI().replace(getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
         final List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 
@@ -160,7 +176,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletResponse The outgoing HTTP servlet response
      * @return Returns the response as an String
      */
-    protected String process(final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto, final SoapRequestDto request, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity process(final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto, final SoapRequestDto request, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(request, "Request cannot be null");
         if(soapOperationDto == null){
             throw new SoapException("Soap operation could not be found");
@@ -182,9 +198,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             } else { // Status.MOCKED
                 response = mockResponse(request, soapProjectId, soapPortId, soapOperationDto);
             }
-            httpServletResponse.setStatus(response.getHttpStatusCode());
+
+            HttpHeaders responseHeaders = new HttpHeaders();
             for(HttpHeaderDto httpHeader : response.getHttpHeaders()){
-                httpServletResponse.addHeader(httpHeader.getName(), httpHeader.getValue());
+                List<String> headerValues = new LinkedList<String>();
+                headerValues.add(httpHeader.getValue());
+                responseHeaders.put(httpHeader.getName(), headerValues);
             }
 
             if(soapOperationDto.getSimulateNetworkDelay() &&
@@ -196,7 +215,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 }
             }
 
-            return response.getBody();
+            return new ResponseEntity<String>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
         } finally{
             if(event != null){
                 event.finish(response);
@@ -282,6 +301,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         response.setMockResponseName(mockResponse.getName());
         response.setHttpHeaders(mockResponse.getHttpHeaders());
         response.setHttpStatusCode(mockResponse.getHttpStatusCode());
+        response.setContentEncodings(mockResponse.getContentEncodings());
         return response;
 
     }
@@ -334,38 +354,25 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             return mockResponse(request, soapProjectId, soapPortId, soapOperationDto);
         }
 
-
         final SoapResponseDto response = new SoapResponseDto();
         HttpURLConnection connection = null;
-        OutputStream outputStream = null;
-        BufferedReader bufferedReader = null;
         try {
-            final URL url = new URL(soapOperationDto.getForwardedEndpoint());
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod(request.getHttpMethod().name());
-            for(HttpHeaderDto httpHeader : request.getHttpHeaders()){
-                connection.addRequestProperty(httpHeader.getName(), httpHeader.getValue());
-            }
+            connection = HttpMessageSupport.establishConnection(
+                    soapOperationDto.getForwardedEndpoint(),
+                    request.getHttpMethod(),
+                    request.getBody(),
+                    request.getHttpHeaders());
 
-            outputStream = connection.getOutputStream();
-            outputStream.write(request.getBody().getBytes());
-            outputStream.flush();
 
-            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-            final StringBuilder stringBuilder = new StringBuilder();
-            String buffer;
-            while ((buffer = bufferedReader.readLine()) != null) {
-                stringBuilder.append(buffer);
-                stringBuilder.append(NEW_LINE);
-            }
-
+            final List<ContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
             final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
+            final String characterEncoding = CharsetUtility.parseHttpHeaders(responseHttpHeaders);
+            final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings, characterEncoding);
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
-            response.setBody(stringBuilder.toString());
+            response.setBody(responseBody);
             response.setHttpHeaders(responseHttpHeaders);
             response.setHttpStatusCode(connection.getResponseCode());
+            response.setContentEncodings(encodings);
             return response;
         } catch (IOException exception) {
             LOGGER.error("Unable to forward request", exception);
@@ -373,20 +380,6 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         } finally {
             if(connection != null){
                 connection.disconnect();
-            }
-            if(outputStream != null){
-                try {
-                    outputStream.close();
-                } catch (IOException exception) {
-                    LOGGER.error("Unable to close output stream", exception);
-                }
-            }
-            if(bufferedReader != null){
-                try {
-                    bufferedReader.close();
-                } catch (IOException exception) {
-                    LOGGER.error("Unable to close buffered reader", exception);
-                }
             }
         }
     }

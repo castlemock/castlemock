@@ -18,6 +18,7 @@ package com.castlemock.core.mock.soap.model.project.domain;
 
 
 import com.castlemock.core.basis.model.Saveable;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -40,8 +41,9 @@ public class SoapMockResponse implements Saveable<String> {
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
     private boolean usingExpressions;
-    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
     private String xpathExpression;
+    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
 
     @XmlElement
     @Override
@@ -109,6 +111,7 @@ public class SoapMockResponse implements Saveable<String> {
         this.httpHeaders = httpHeaders;
     }
 
+
     @XmlElement
     public String getXpathExpression() {
         return xpathExpression;
@@ -116,6 +119,16 @@ public class SoapMockResponse implements Saveable<String> {
 
     public void setXpathExpression(String xpathExpression) {
         this.xpathExpression = xpathExpression;
+    }
+  
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
+    public List<ContentEncoding> getContentEncodings() {
+        return contentEncodings;
+    }
+
+    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+        this.contentEncodings = contentEncodings;
     }
 
     @Override

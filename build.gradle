@@ -17,7 +17,7 @@ subprojects {
     apply plugin: 'eclipse'
     apply plugin: "jacoco"
     group = "com.castlemock"
-    version = '1.17'
+    version = '1.18-SNAPSHOT'
 
     repositories {
         mavenCentral()
@@ -46,6 +46,7 @@ subprojects {
     ext.swaggerVersion = "1.0.25"
     ext.ramlVersion = "1.0.6"
     ext.antlrVersion = "4.7"
+    ext.cxfVersion = "3.2.1"
 
 	compileJava {
 		sourceCompatibility = 1.8
@@ -191,6 +192,7 @@ project(':code:web:mock:soap') {
     }
 
     dependencies {
+        compile(group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxws', version: cxfVersion)
         compile(project(":code:web:basis"))
         compile(project(":code:core:mock:soap"))
         compile(group: 'wsdl4j', name: 'wsdl4j', version: wsdl4jVersion)

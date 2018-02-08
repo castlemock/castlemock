@@ -55,7 +55,6 @@ public abstract class AbstractController {
     protected static final String EVENTS = "events";
     protected static final String EVENT = "event";
     protected static final String MOCK = "mock";
-    protected static final String NEW_LINE = System.lineSeparator();
     protected static final String PROJECT = "project";
     protected static final String PROJECTS = "projects";
     protected static final String PROJECT_TYPES = "projectTypes";

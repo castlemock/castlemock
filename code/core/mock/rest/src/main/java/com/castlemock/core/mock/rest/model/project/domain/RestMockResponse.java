@@ -17,6 +17,7 @@
 package com.castlemock.core.mock.rest.model.project.domain;
 
 import com.castlemock.core.basis.model.Saveable;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -39,6 +40,7 @@ public class RestMockResponse implements Saveable<String> {
     private Integer httpStatusCode;
     private boolean usingExpressions;
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
 
     @Override
     @XmlElement
@@ -104,5 +106,35 @@ public class RestMockResponse implements Saveable<String> {
 
     public void setHttpHeaders(List<HttpHeader> httpHeaders) {
         this.httpHeaders = httpHeaders;
+    }
+
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
+    public List<ContentEncoding> getContentEncodings() {
+        return contentEncodings;
+    }
+
+    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+        this.contentEncodings = contentEncodings;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof RestMockResponse))
+            return false;
+
+        RestMockResponse that = (RestMockResponse) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

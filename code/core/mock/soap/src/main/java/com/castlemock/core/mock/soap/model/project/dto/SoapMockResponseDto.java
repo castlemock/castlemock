@@ -16,6 +16,7 @@
 
 package com.castlemock.core.mock.soap.model.project.dto;
 
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import org.dozer.Mapping;
@@ -46,11 +47,15 @@ public class SoapMockResponseDto {
     @Mapping("usingExpressions")
     private boolean usingExpressions;
 
+    @Mapping("xpathExpression")
+    private String xpathExpressionDto;
+  
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders = new CopyOnWriteArrayList<HttpHeaderDto>();
 
-    @Mapping("xpathExpression")
-    private String xpathExpressionDto;
+    @Mapping("contentEncodings")
+    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+
 
     public String getId() {
         return id;
@@ -108,11 +113,20 @@ public class SoapMockResponseDto {
         this.httpHeaders = httpHeaders;
     }
 
+
     public String getXpathExpressionDto() {
         return xpathExpressionDto;
     }
 
     public void setXpathExpressionDto(String xpathExpressionDto) {
         this.xpathExpressionDto = xpathExpressionDto;
+    }
+  
+    public List<ContentEncoding> getContentEncodings() {
+        return contentEncodings;
+    }
+
+    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+        this.contentEncodings = contentEncodings;
     }
 }
