@@ -174,4 +174,75 @@ public class HttpMessageSupportTest {
     public void testExtractSoapRequestNameInvalidRequestBody(){
         HttpMessageSupport.extractSoapRequestName(new String());
     }
+
+    @Test
+    public void testIsValidXPathExprWithNameSpaces(){
+
+        String body = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n" +
+                "   <soap:Body>\n" +
+                "      <GetWhoISResponse xmlns=\"http://www.webservicex.net\">\n" +
+                "         <GetWhoISResult>google.com is a good domain</GetWhoISResult>\n" +
+                "      </GetWhoISResponse>\n" +
+                "   </soap:Body>\n" +
+                "</soap:Envelope>";
+
+        String xpath = "//GetWhoISResponse/GetWhoISResult[text()='google.com is a good domain']";
+
+        boolean validXPathValue = HttpMessageSupport.isValidXPathExpr(body, xpath);
+        Assert.assertTrue(validXPathValue);
+    }
+
+    @Test
+    public void testIsValidXPathExprAttr(){
+
+        String body = "<entries>\n" +
+                "    <entry key=\"mykey1\" attr=\"attr1\"/>\n" +
+                "    <entry key=\"mykey2\" attr=\"attr2\"/>\n" +
+                "    <otherentry key=\"mykey1\" attr=\"attr3\"/>\n" +
+                "    <entry key=\"mykey4\"/>\n" +
+                "    <otherentry key=\"mykey4\"/>\n" +
+                "</entries>";
+
+        String xpath = "//entry[@key]";
+
+        boolean validXPathValue = HttpMessageSupport.isValidXPathExpr(body, xpath);
+        Assert.assertTrue(validXPathValue);
+
+    }
+
+    @Test
+    public void testIsValidXPathExprNumbers(){
+
+        String body = "<entries>\n" +
+                "\t<entry>\n" +
+                "\t\t1234\n" +
+                "\t</entry>\n" +
+                "</entries>";
+
+        String xpath = "//entry[text() = 1234]";
+
+        boolean validXPathValue = HttpMessageSupport.isValidXPathExpr(body, xpath);
+        Assert.assertTrue(validXPathValue);
+
+    }
+
+    @Test
+    public void testIsValidXPathExprTestActualWSInput(){
+
+        String body = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://www.webservicex.net\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "      <web:GetWhoIS>\n" +
+                "         <!--Optional:-->\n" +
+                "         <web:HostName>google.com</web:HostName>\n" +
+                "      </web:GetWhoIS>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
+
+        String xpath = "//GetWhoIS/HostName[text() = 'google.com']";
+
+        boolean validXPathValue = HttpMessageSupport.isValidXPathExpr(body, xpath);
+        Assert.assertTrue(validXPathValue);
+
+    }
 }

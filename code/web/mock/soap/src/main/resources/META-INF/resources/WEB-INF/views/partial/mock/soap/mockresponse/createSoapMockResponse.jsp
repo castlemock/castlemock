@@ -57,6 +57,10 @@
                         <td class="column1"><form:label path="usingExpressions"><spring:message code="soap.createsoapmockresponse.label.useexpressions"/></form:label></td>
                         <td class="column2"><span class="checkbox"><form:checkbox path="usingExpressions"/></span></td>
                     </tr>
+                    <tr>
+                        <td class="column1"><label><spring:message code="soap.createsoapmockresponse.label.xpathExpression"/></label></td>
+                        <td class="column2"><form:input path="xpathExpressionDto" id="xpathExpression" /></td>
+                    </tr>
                 </table>
             </div>
 

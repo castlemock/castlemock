@@ -30,6 +30,13 @@ import org.xml.sax.InputSource;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -266,6 +273,22 @@ public class HttpMessageSupport {
         return stringBuilder.toString();
     }
 
+    public static boolean isValidXPathExpr(String body, String xpathExpr) {
+        try {
+            final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            final InputSource inputSource = new InputSource(new StringReader(body));
+            final Document document = documentBuilder.parse(inputSource);
+
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            NodeList evaluate = (NodeList) xPath.compile(xpathExpr).evaluate(document, XPathConstants.NODESET);
+            return evaluate.getLength() > 0;
+
+        } catch (Exception exception) {
+            LOGGER.error("Unable to evaluate xpath expression", exception);
+            return false;
+        }
+    }
 
     /**
      * The method will establish a connection towards a particular <code>endpoint</code> and send
