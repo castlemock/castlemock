@@ -16,6 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller;
 
+
 import com.castlemock.web.basis.config.TestApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,9 +26,11 @@ import org.mockito.Spy;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 
 /**
  * @author Karl Dahlgren
@@ -36,37 +39,26 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestApplication.class)
 @WebAppConfiguration
-public class ForbiddenControllerTest extends AbstractControllerTest {
+public class LogoutControllerTest extends AbstractControllerTest {
 
-    private static final String SERVICE_URL = "/web/forbidden";
-    private static final String FORWARDED_URL = "redirect:/web";
-    private static final String PAGE = "/WEB-INF/views/forbidden.jsp";
+    private static final String PAGE = "/WEB-INF/views/logout.jsp";
+    private static final String SERVICE_URL = "/web/logout";
 
     @Spy
     @InjectMocks
-    private ForbiddenController forbiddenController;
-
+    private LogoutController logoutController;
 
     @Override
     protected AbstractController getController() {
-        return forbiddenController;
+        return logoutController;
     }
 
     @Test
-    public void testForbiddenNotLoggedIn() throws Exception {
-        Mockito.when(forbiddenController.isLoggedIn()).thenReturn(false);
+    public void testLogout() throws Exception {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
-        mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().size(0));
-    }
-
-    @Test
-    public void testForbiddenLoggedIn() throws Exception {
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
-        mockMvc.perform(message)
+        ResultActions result = mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.model().size(0))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(PAGE));
     }
 

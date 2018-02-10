@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Karl Dahlgren
+ * Copyright 2018 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller;
 
+
 import com.castlemock.web.basis.config.TestApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,49 +26,42 @@ import org.mockito.Spy;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+
 /**
  * @author Karl Dahlgren
- * @since 1.0
+ * @since 1.18
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestApplication.class)
 @WebAppConfiguration
-public class ForbiddenControllerTest extends AbstractControllerTest {
+public class RootControllerTest extends AbstractControllerTest {
 
-    private static final String SERVICE_URL = "/web/forbidden";
-    private static final String FORWARDED_URL = "redirect:/web";
-    private static final String PAGE = "/WEB-INF/views/forbidden.jsp";
+    private static final String SERVICE_URL = "/";
 
     @Spy
     @InjectMocks
-    private ForbiddenController forbiddenController;
-
+    private RootController rootController;
 
     @Override
     protected AbstractController getController() {
-        return forbiddenController;
+        return rootController;
     }
 
     @Test
-    public void testForbiddenNotLoggedIn() throws Exception {
-        Mockito.when(forbiddenController.isLoggedIn()).thenReturn(false);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
-        mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().size(0));
-    }
+    public void testRoot() throws Exception {
+        Mockito.when(rootController.isLoggedIn()).thenReturn(false);
 
-    @Test
-    public void testForbiddenLoggedIn() throws Exception {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
-        mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(1))
-                .andExpect(MockMvcResultMatchers.forwardedUrl(PAGE));
+        ResultActions result = mockMvc.perform(message)
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.model().size(0))
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/web"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl(null));
     }
 
 }

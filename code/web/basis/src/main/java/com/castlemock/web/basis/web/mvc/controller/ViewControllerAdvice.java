@@ -34,7 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewControllerAdvice extends AbstractViewController {
 
     private static final String PAGE = "basis/error/error";
-    private static final String TITLE = "title";
     private static final String MESSAGE = "message";
     private static final Logger LOGGER = Logger.getLogger(ViewControllerAdvice.class);
 
@@ -50,7 +49,6 @@ public class ViewControllerAdvice extends AbstractViewController {
         LOGGER.error("The following request failed: " + request.getRequestURI() + " (" + request.getMethod() + ")");
         LOGGER.error(exception.getMessage(), exception);
         ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(TITLE, "An error occurred");
         model.addObject(MESSAGE, exception.getMessage());
         return model;
     }

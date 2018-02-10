@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.basis.web.mvc.controller.error;
+package com.castlemock.web.basis.config;
 
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  * @since 1.2
  */
 @Component
-public class ErrorComponent {
+public class ErrorConfig {
 
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {

@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.project.dto.ProjectDto;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.model.project.dto.ProjectDtoGenerator;
 import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
+import com.castlemock.web.basis.web.mvc.command.project.DeleteProjectsCommand;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import com.castlemock.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
@@ -32,6 +33,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.Arrays;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
@@ -49,6 +52,7 @@ public class DeleteProjectControllerTest extends AbstractControllerTest {
     private static final String PAGE = "partial/basis/project/deleteProject.jsp";
     private static final String DELETE = "/delete";
     private static final String DELETE_CONFIRM = "/delete/confirm";
+    private static final String SERVICE_URL_DELETE_MULTIPLE = "/web/project/delete/confirm";
 
     @InjectMocks
     private DeleteProjectController deleteProjectController;
@@ -81,6 +85,22 @@ public class DeleteProjectControllerTest extends AbstractControllerTest {
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(0));
+    }
+
+    @Test
+    public void testConfirmDeletationOfMultpleProjects() throws Exception {
+        final String[] projects = {"Project"};
+        final String[] types = {"SOAP"};
+
+        final DeleteProjectsCommand command = new DeleteProjectsCommand();
+        command.setProjectIds(projects);
+        command.setTypeUrls(types);
+
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL_DELETE_MULTIPLE).flashAttr("deleteProjectsCommand", command);
+        mockMvc.perform(message)
+                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/web"));
     }
 
 }

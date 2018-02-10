@@ -22,6 +22,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.context.MessageSource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.servlet.ServletContext;
 import java.util.Locale;
@@ -45,7 +46,7 @@ public abstract class AbstractControllerTest {
     protected MockMvc mockMvc;
     protected static final String CONTEXT = "/castlemock";
     protected static final String PARTIAL = "partial";
-    protected static final String INDEX = "index";
+    protected static final String INDEX = "/WEB-INF/views/index.jsp";
     protected static final String SLASH = "/";
     protected static final String PROJECT = "project";
     protected static final String PROJECT_ID = "projectId";
@@ -55,7 +56,12 @@ public abstract class AbstractControllerTest {
     @Before
     public void initiateTest() {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(getController()).build();
+
+        final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setPrefix("/WEB-INF/views/");
+        viewResolver.setSuffix(".jsp");
+
+        mockMvc = MockMvcBuilders.standaloneSetup(getController()).setViewResolvers(viewResolver).build();
         when(servletContext.getContextPath()).thenReturn(CONTEXT);
 
         when(messageSource.getMessage(anyString(), any(Object[].class), any(Locale.class))).thenReturn("Empty string");

@@ -31,6 +31,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 
 /**
@@ -42,7 +43,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @WebAppConfiguration
 public class LoginControllerTest extends AbstractControllerTest {
 
-    private static final String PAGE = "login";
+    private static final String PAGE = "/WEB-INF/views/login.jsp";
     private static final String SERVICE_URL = "/login";
 
     @Spy
@@ -55,7 +56,6 @@ public class LoginControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @Ignore
     public void testLogin() throws Exception {
         Mockito.when(loginController.isLoggedIn()).thenReturn(false);
 

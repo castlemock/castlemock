@@ -23,7 +23,7 @@
 <div class="container">
     <section>
         <div class="content-top">
-            <h1>${title}</h1>
+            <h1><spring:message code="general.error.title"/></h1>
         </div>
         ${message}
     </section>

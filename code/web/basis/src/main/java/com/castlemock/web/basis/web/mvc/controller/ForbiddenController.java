@@ -33,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/web/forbidden")
 public class ForbiddenController extends AbstractViewController {
 
-    private static final String PAGE = "forbidden.jsp";
+    private static final String PAGE = "forbidden";
 
     /**
      * The method is called every time when a user tries to access a section which the user

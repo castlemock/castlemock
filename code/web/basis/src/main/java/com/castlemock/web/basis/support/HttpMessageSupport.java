@@ -204,23 +204,27 @@ public class HttpMessageSupport {
      */
     public static List<HttpHeaderDto> extractHttpHeaders(final HttpURLConnection connection){
         final List<HttpHeaderDto> httpHeaders = new ArrayList<HttpHeaderDto>();
-        for(String headerName : connection.getHeaderFields().keySet()){
-            if(headerName == null){
-                continue;
+        for(Map.Entry<String, List<String>> header : connection.getHeaderFields().entrySet()){
+            for(String headerValue : header.getValue()){
+                String headerName = header.getKey();
+                if(headerName == null){
+                    continue;
+                }
+                if(headerName.equalsIgnoreCase(TRANSFER_ENCODING)){
+                    continue;
+                }
+                if(headerName.equalsIgnoreCase(CONTENT_LENGTH)){
+                    // Ignore the Content-Length, since it might
+                    // effect the response when being forwarded or recorded.
+                    continue;
+                }
+
+                final HttpHeaderDto httpHeader = new HttpHeaderDto();
+                httpHeader.setName(headerName);
+                httpHeader.setValue(headerValue);
+                httpHeaders.add(httpHeader);
             }
-            if(headerName.equalsIgnoreCase(TRANSFER_ENCODING)){
-                continue;
-            }
-            if(headerName.equalsIgnoreCase(CONTENT_LENGTH)){
-                // Ignore the Content-Length, since it might
-                // effect the response when being forwarded or recorded.
-                continue;
-            }
-            final String headerValue = connection.getHeaderField(headerName);
-            final HttpHeaderDto httpHeader = new HttpHeaderDto();
-            httpHeader.setName(headerName);
-            httpHeader.setValue(headerValue);
-            httpHeaders.add(httpHeader);
+
         }
         return httpHeaders;
     }

@@ -16,6 +16,9 @@
 
 package com.castlemock.web.basis.support;
 
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
+import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import com.castlemock.core.basis.model.http.dto.HttpParameterDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -25,6 +28,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.util.*;
 
 /**
  * @author Karl Dahlgren
@@ -32,6 +37,70 @@ import java.io.StringReader;
  * @see HttpMessageSupport
  */
 public class HttpMessageSupportTest {
+
+
+    @Test
+    public void testExtractHttpHeadersRequest(){
+        final List<String> headerNames = Arrays.asList("Content-Type", "Accept", "Content-Length");
+
+        final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
+        Mockito.when(httpServletRequest.getHeaderNames()).thenReturn(Collections.enumeration(headerNames));
+        Mockito.when(httpServletRequest.getHeader("Content-Type")).thenReturn("application/xml");
+        Mockito.when(httpServletRequest.getHeader("Accept")).thenReturn("application/json");
+        Mockito.when(httpServletRequest.getHeader("Content-Length")).thenReturn("1024");
+
+        List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
+
+        Assert.assertEquals(headerNames.size(), httpHeaders.size());
+
+        HttpHeaderDto contentTypeHeader = httpHeaders.get(0);
+        HttpHeaderDto acceptHeader = httpHeaders.get(1);
+        HttpHeaderDto contentLengthHeader = httpHeaders.get(2);
+
+        Assert.assertEquals("Content-Type", contentTypeHeader.getName());
+        Assert.assertEquals("application/xml", contentTypeHeader.getValue());
+
+        Assert.assertEquals("Accept", acceptHeader.getName());
+        Assert.assertEquals("application/json", acceptHeader.getValue());
+
+        Assert.assertEquals("Content-Length", contentLengthHeader.getName());
+        Assert.assertEquals("1024", contentLengthHeader.getValue());
+
+    }
+
+    @Test
+    public void testExtractHttpHeadersConnection(){
+        final List<String> headerNames = Arrays.asList("Content-Type", "Accept", "Content-Length");
+
+        final Map<String, List<String>> headers = new HashMap<>();
+        headers.put("Content-Type", Arrays.asList("application/xml", "application/json"));
+        headers.put("Accept", Arrays.asList("application/json"));
+        headers.put("Content-Length", Arrays.asList("1024"));
+        headers.put("Transfer-Encoding", Arrays.asList("gzip"));
+
+        final HttpURLConnection httpURLConnection = Mockito.mock(HttpURLConnection.class);
+        Mockito.when(httpURLConnection.getHeaderFields()).thenReturn(headers);
+
+        List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpURLConnection);
+
+        // Should ignore the Content-Length and Transfer-Encoding headers
+        Assert.assertEquals(3, httpHeaders.size());
+
+        HttpHeaderDto acceptHeader = httpHeaders.get(0);
+        HttpHeaderDto contentTypeXmlHeader = httpHeaders.get(1);
+        HttpHeaderDto contentTypeJsonHeader = httpHeaders.get(2);
+
+        Assert.assertEquals("Accept", acceptHeader.getName());
+        Assert.assertEquals("application/json", acceptHeader.getValue());
+
+        Assert.assertEquals("Content-Type", contentTypeXmlHeader.getName());
+        Assert.assertEquals("application/xml", contentTypeXmlHeader.getValue());
+
+        Assert.assertEquals("Content-Type", contentTypeJsonHeader.getName());
+        Assert.assertEquals("application/json", contentTypeJsonHeader.getValue());
+
+    }
+
 
     @Test
     public void testGetBody(){
@@ -52,6 +121,45 @@ public class HttpMessageSupportTest {
 
         final String output = HttpMessageSupport.getBody(httpServletRequest);
         Assert.assertEquals(readerOutput, output);
+    }
+
+    @Test
+    public void testExtractParameters(){
+        final List<String> parameterNames = Arrays.asList("Parameter1", "Parameter2");
+
+        final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
+        Mockito.when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(parameterNames));
+        Mockito.when(httpServletRequest.getParameter("Parameter1")).thenReturn("Value1");
+        Mockito.when(httpServletRequest.getParameter("Parameter2")).thenReturn("Value2");
+
+        List<HttpParameterDto> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
+
+        Assert.assertEquals(parameterNames.size(), parameters.size());
+
+        HttpParameterDto parameter1 = parameters.get(0);
+        HttpParameterDto parameter2 = parameters.get(1);
+
+        Assert.assertEquals("Parameter1", parameter1.getName());
+        Assert.assertEquals("Value1", parameter1.getValue());
+
+        Assert.assertEquals("Parameter2", parameter2.getName());
+        Assert.assertEquals("Value2", parameter2.getValue());
+    }
+
+    @Test
+    public void testBuildParameterUri(){
+
+        HttpParameterDto parameter1 = new HttpParameterDto();
+        parameter1.setName("Parameter1");
+        parameter1.setValue("Value1");
+
+        HttpParameterDto parameter2 = new HttpParameterDto();
+        parameter2.setName("Parameter2");
+        parameter2.setValue("Value2");
+
+        String uri = HttpMessageSupport.buildParameterUri(Arrays.asList(parameter1, parameter2));
+
+        Assert.assertEquals("?Parameter1=Value1&Parameter2=Value2", uri);
     }
 
 
@@ -243,6 +351,27 @@ public class HttpMessageSupportTest {
 
         boolean validXPathValue = HttpMessageSupport.isValidXPathExpr(body, xpath);
         Assert.assertTrue(validXPathValue);
+    }
 
+    @Test
+    public void testExtractContentEncodingAll(){
+        final HttpURLConnection httpURLConnection = Mockito.mock(HttpURLConnection.class);
+        Mockito.when(httpURLConnection.getContentEncoding()).thenReturn("gzip/deflate");
+        List<ContentEncoding> contentEncodings = HttpMessageSupport.extractContentEncoding(httpURLConnection);
+
+        Assert.assertEquals(2, contentEncodings.size());
+        Assert.assertEquals(true, contentEncodings.contains(ContentEncoding.GZIP));
+        Assert.assertEquals(true, contentEncodings.contains(ContentEncoding.DEFLATE));
+    }
+
+    @Test
+    public void testExtractContentEncodingDeflate(){
+        final HttpURLConnection httpURLConnection = Mockito.mock(HttpURLConnection.class);
+        Mockito.when(httpURLConnection.getContentEncoding()).thenReturn("deflate");
+        List<ContentEncoding> contentEncodings = HttpMessageSupport.extractContentEncoding(httpURLConnection);
+
+        Assert.assertEquals(1, contentEncodings.size());
+        Assert.assertEquals(false, contentEncodings.contains(ContentEncoding.GZIP));
+        Assert.assertEquals(true, contentEncodings.contains(ContentEncoding.DEFLATE));
     }
 }
