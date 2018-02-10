@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.web.mvc.controller;
+package com.castlemock.web.mock.rest.web;
 
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import org.junit.Before;
@@ -52,6 +52,9 @@ public abstract class AbstractControllerTest {
     protected static final String PROJECT_ID = "projectId";
     protected static final String PROJECT_TYPES = "projectTypes";
     protected static final String DEMO_MODE = "demoMode";
+    protected static final String MOCK = "mock";
+    protected static final String REST = "rest";
+    protected static final String APPLICATION = "application";
 
     @Before
     public void initiateTest() {

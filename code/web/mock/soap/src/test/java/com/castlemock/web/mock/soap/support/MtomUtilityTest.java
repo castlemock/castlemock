@@ -34,7 +34,7 @@ public class MtomUtilityTest {
                 "Content-Transfer-Encoding: 8bit\n" +
                 "Content-ID: <test@castlemock.org>\n" +
                 "\n" +
-                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cas=\"http://castlemock.org/\">\n" +
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cas=\"http://castlemock.com/\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
                 "      <cas:TestService>\n" +
@@ -44,7 +44,7 @@ public class MtomUtilityTest {
                 "            <Variable2>?</Variable2>\n" +
                 "            <files/>\n" +
                 "         </Variable2>\n" +
-                "      </cas:Test>\n" +
+                "      </cas:TestService>\n" +
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>\n" +
                 "------=_Part_64_1526053806.1517665317492\n" +
@@ -54,12 +54,12 @@ public class MtomUtilityTest {
                 "\n" +
                 "This is an example\n" +
                 "------=_Part_24_1742827313.1517654770545--";
-        String contextType = "multipart/related; type=\"text/xml\"; start=\"<rootpart@soapui.org>\"; boundary=\"----=_Part_64_1526053806.1517665317492\"";
+        String contextType = "multipart/related; type=\"text/xml\"; start=\"<test@castlemock.org>\"; boundary=\"----=_Part_64_1526053806.1517665317492\"";
 
         String mainBody = MtomUtility.extractMtomBody(body, contextType);
 
         Assert.assertNotNull(mainBody);
-        Assert.assertEquals("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cas=\"http://castlemock.org/\">\n" +
+        Assert.assertEquals("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cas=\"http://castlemock.com/\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
                 "      <cas:TestService>\n" +
@@ -69,7 +69,7 @@ public class MtomUtilityTest {
                 "            <Variable2>?</Variable2>\n" +
                 "            <files/>\n" +
                 "         </Variable2>\n" +
-                "      </cas:Test>\n" +
+                "      </cas:TestService>\n" +
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>\n", mainBody);
     }

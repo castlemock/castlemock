@@ -17,6 +17,8 @@
 package com.castlemock.web.mock.soap.web.mvc.controller;
 
 
+import com.castlemock.web.mock.soap.web.AbstractControllerTest;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0

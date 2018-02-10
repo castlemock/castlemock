@@ -94,7 +94,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
     }
 
-    protected String processGet(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity processGet(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
@@ -102,7 +102,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             while(parameterNames.hasMoreElements()){
                 String parameterName = parameterNames.nextElement();
                 if(parameterName.equalsIgnoreCase("wsdl")){
-                    return getWsdl(projectId);
+                    final String wsdl = getWsdl(projectId);
+                    return new ResponseEntity<String>(wsdl, HttpStatus.OK);
                 }
             }
 

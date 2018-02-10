@@ -107,7 +107,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      */
     protected RestRequestDto prepareRequest(final String projectId, final String applicationId, final HttpMethod httpMethod, final HttpServletRequest httpServletRequest) {
         final RestRequestDto request = new RestRequestDto();
-        final String body = RestMessageSupport.getBody(httpServletRequest);
+        final String body = HttpMessageSupport.getBody(httpServletRequest);
         final String incomingRequestUri = httpServletRequest.getRequestURI();
         final String restResourceUri = incomingRequestUri.replace(getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId, EMPTY);
         final List<HttpParameterDto> httpParameters = HttpMessageSupport.extractParameters(httpServletRequest);
