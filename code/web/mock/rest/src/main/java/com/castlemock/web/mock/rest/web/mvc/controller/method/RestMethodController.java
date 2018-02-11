@@ -134,7 +134,6 @@ public class RestMethodController extends AbstractRestViewController {
             model.addObject(REST_APPLICATION_ID, restApplicationId);
             model.addObject(REST_RESOURCE_ID, restResourceId);
             model.addObject(REST_METHOD_ID, restMethodId);
-            model.addObject(REST_METHOD, mockResponses);
             model.addObject(REST_MOCK_RESPONSES, mockResponses);
             model.addObject(DELETE_REST_MOCK_RESPONSES_COMMAND, new DeleteRestMockResponsesCommand());
             return model;

@@ -16,27 +16,21 @@
 
 package com.castlemock.web.mock.soap.web.mvc.controller.resource;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
-import com.castlemock.core.mock.soap.model.project.service.message.input.*;
+import com.castlemock.core.mock.soap.model.project.service.message.input.LoadSoapResourceInput;
+import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapResourceInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSoapResourceOutput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapResourceOutput;
-import com.castlemock.web.mock.soap.web.mvc.command.operation.SoapOperationModifierCommand;
-import com.castlemock.web.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The SoapResourceController provides functionality to retrieve a specific resource for a project
@@ -56,12 +50,11 @@ public class SoapResourceController extends AbstractSoapViewController {
      * Returns a resource that matches the incoming parameters (soapProjectId and soapResourceId)
      * @param soapProjectId The id of the project which the port belongs to
      * @param soapResourceId The id of the resource that should be returned
-     * @param request The incoming servlet request.
      * @return Returns a resource that matches the incoming parameters (projectId and soapResourceId)
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/resource/{soapResourceId}", method = RequestMethod.GET)
-    public ModelAndView getSoapResource(@PathVariable final String soapProjectId, @PathVariable final String soapResourceId, final ServletRequest request) {
+    public ModelAndView getSoapResource(@PathVariable final String soapProjectId, @PathVariable final String soapResourceId) {
         final ReadSoapResourceOutput readSoapResourceOutput = serviceProcessor.process(new ReadSoapResourceInput(soapProjectId, soapResourceId));
         final LoadSoapResourceOutput loadSoapResourceOutput = serviceProcessor.process(new LoadSoapResourceInput(soapProjectId, soapResourceId));
         final SoapResourceDto soapResource = readSoapResourceOutput.getSoapResource();

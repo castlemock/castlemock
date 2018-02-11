@@ -22,17 +22,20 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsForwardedEndpointInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
 import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -103,6 +106,23 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
+    }
+
+    @Test
+    public void testUpdateEndpoint() throws Exception {
+        final String projectId = "projectId";
+        final String portId = "portId";
+
+        final UpdateSoapOperationsEndpointCommand updateSoapOperationsEndpointCommand = new UpdateSoapOperationsEndpointCommand();
+        updateSoapOperationsEndpointCommand.setForwardedEndpoint("http://localhost:8080/web");
+
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + PORT + SLASH + portId + SLASH + OPERATION + SLASH  + "update/confirm")
+                .flashAttr("updateSoapOperationsEndpointCommand", updateSoapOperationsEndpointCommand);
+        mockMvc.perform(message)
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/web/soap/project/" + projectId + "/port/" + portId));
+
+        Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(UpdateSoapOperationsForwardedEndpointInput.class));
     }
 
 }

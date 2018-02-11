@@ -22,6 +22,7 @@ import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
+import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesStatusInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
@@ -86,11 +87,11 @@ public class RestResourceController extends AbstractRestViewController {
     }
 
     /**
-     * The method is responsible for executing a specific action for {@link com.fortmocks.core.mock.rest.model.project.domain.RestMethod}.
+     * The method is responsible for executing a specific action for {@link com.castlemock.core.mock.rest.model.project.domain.RestMethod}.
      * The following actions is supported:
      * <ul>
      *  <li>Update status: Updates a method status</li>
-     *  <li>Delete REST method: Deletes one or more REST methods ({@link com.fortmocks.core.mock.rest.model.project.domain.RestMethod})</li>
+     *  <li>Delete REST method: Deletes one or more REST methods ({@link com.castlemock.core.mock.rest.model.project.domain.RestMethod})</li>
      *  <li>Update endpoint: Change the endpoint for certain REST methods</li>
      * </ul>
      * @param restProjectId The id of the project responsible for the REST resource
@@ -107,7 +108,13 @@ public class RestResourceController extends AbstractRestViewController {
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final RestMethodStatus restMethodStatus = RestMethodStatus.valueOf(restMethodModifierCommand.getRestMethodStatus());
             for(String restMethodId : restMethodModifierCommand.getRestMethodIds()){
-                serviceProcessor.process(new UpdateRestResourcesStatusInput(restProjectId, restApplicationId, restResourceId, restMethodStatus));
+                final ReadRestMethodOutput readRestMethodOutput =
+                        serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
+
+                RestMethodDto restMethodDto = readRestMethodOutput.getRestMethod();
+                restMethodDto.setStatus(restMethodStatus);
+
+                serviceProcessor.process(new UpdateRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMethodDto));
             }
         } if(DELETE_REST_METHODS.equalsIgnoreCase(action)) {
             final List<RestMethodDto> restMethods = new ArrayList<RestMethodDto>();
@@ -132,6 +139,7 @@ public class RestResourceController extends AbstractRestViewController {
             final ModelAndView model = createPartialModelAndView(UPDATE_REST_METHODS_ENDPOINT_PAGE);
             model.addObject(REST_PROJECT_ID, restProjectId);
             model.addObject(REST_APPLICATION_ID, restApplicationId);
+            model.addObject(REST_RESOURCE_ID, restResourceId);
             model.addObject(REST_METHODS, restMethodDtos);
             model.addObject(UPDATE_REST_METHODS_ENDPOINT_COMMAND, new UpdateRestMethodsEndpointCommand());
             return model;

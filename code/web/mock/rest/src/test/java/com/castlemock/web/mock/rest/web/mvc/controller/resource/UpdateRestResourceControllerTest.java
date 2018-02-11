@@ -21,6 +21,7 @@ import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourceInput;
+import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesForwardedEndpointInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestResourceOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
@@ -28,11 +29,14 @@ import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.model.project.RestApplicationDtoGenerator;
 import com.castlemock.web.mock.rest.model.project.RestProjectDtoGenerator;
 import com.castlemock.web.mock.rest.model.project.RestResourceDtoGenerator;
+import com.castlemock.web.mock.rest.web.mvc.command.method.UpdateRestMethodsEndpointCommand;
+import com.castlemock.web.mock.rest.web.mvc.command.resource.UpdateRestResourcesEndpointCommand;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -94,6 +98,23 @@ public class UpdateRestResourceControllerTest extends AbstractRestControllerTest
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
+    }
+
+    @Test
+    public void testUpdateEndpoint() throws Exception {
+        final String projectId = "projectId";
+        final String applicationId = "applicationId";
+
+        final UpdateRestResourcesEndpointCommand updateRestResourcesEndpointCommand = new UpdateRestResourcesEndpointCommand();
+        updateRestResourcesEndpointCommand.setForwardedEndpoint("http://localhost:8080/web");
+
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + "update/confirm")
+                .flashAttr("updateRestResourcesEndpointCommand", updateRestResourcesEndpointCommand);
+        mockMvc.perform(message)
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/web/rest/project/" + projectId + "/application/" + applicationId));
+
+        Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(UpdateRestResourcesForwardedEndpointInput.class));
     }
 
 }
