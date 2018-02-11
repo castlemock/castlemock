@@ -73,7 +73,12 @@ public class SoapOperationDto {
     @Mapping("networkDelay")
     private Long networkDelay;
 
+    @Mapping("defaultXPathMockResponseId")
+    private String defaultXPathMockResponseId;
+
     private String invokeAddress;
+
+    private String defaultXPathResponseName;
 
     public String getId() {
         return id;
@@ -193,5 +198,21 @@ public class SoapOperationDto {
 
     public void setNetworkDelay(Long networkDelay) {
         this.networkDelay = networkDelay;
+    }
+
+    public String getDefaultXPathMockResponseId() {
+        return defaultXPathMockResponseId;
+    }
+
+    public void setDefaultXPathMockResponseId(String defaultXPathMockResponseId) {
+        this.defaultXPathMockResponseId = defaultXPathMockResponseId;
+    }
+
+    public String getDefaultXPathResponseName() {
+        return defaultXPathResponseName;
+    }
+
+    public void setDefaultXPathResponseName(String defaultXPathResponseName) {
+        this.defaultXPathResponseName = defaultXPathResponseName;
     }
 }

@@ -275,7 +275,20 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     public SoapOperationDto findSoapOperation(final String soapProjectId, final String soapPortId, final String soapOperationId){
         Preconditions.checkNotNull(soapOperationId, "Operation id cannot be null");
         final SoapOperation soapOperation = findSoapOperationType(soapProjectId, soapPortId, soapOperationId);
-        return mapper.map(soapOperation, SoapOperationDto.class);
+
+        final SoapOperationDto dto = mapper.map(soapOperation, SoapOperationDto.class);
+        // Extract the
+        final String defaultXpathResponseId = dto.getDefaultXPathMockResponseId();
+        if(defaultXpathResponseId != null && !defaultXpathResponseId.isEmpty()){
+            for(SoapMockResponseDto mockResponse : dto.getMockResponses()){
+                if(mockResponse.getId().equals(defaultXpathResponseId)){
+                    dto.setDefaultXPathResponseName(mockResponse.getName());
+                    break;
+                }
+            }
+        }
+
+        return dto;
     }
 
     /**
@@ -504,6 +517,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         soapOperation.setSimulateNetworkDelay(soapOperationDto.getSimulateNetworkDelay());
         soapOperation.setNetworkDelay(soapOperationDto.getNetworkDelay());
         soapOperation.setCurrentResponseSequenceIndex(soapOperationDto.getCurrentResponseSequenceIndex());
+        soapOperation.setDefaultXPathMockResponseId(soapOperationDto.getDefaultXPathMockResponseId());
         save(soapProjectId);
         return soapOperationDto;
     }
@@ -637,6 +651,13 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
 
         if(deleteSoapMockResponse != null){
             soapOperation.getMockResponses().remove(deleteSoapMockResponse);
+
+            // Check if the mocked response is set to the default XPath response
+            // If so, remove the default XPath response
+            if(deleteSoapMockResponse.getId().equals(soapOperation.getDefaultXPathMockResponseId())){
+                soapOperation.setDefaultXPathMockResponseId(null);
+            }
+
             save(soapProjectId);
         }
         return deleteSoapMockResponse != null ? mapper.map(deleteSoapMockResponse, SoapMockResponseDto.class) : null;

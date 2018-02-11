@@ -70,6 +70,18 @@
                     <td class="column1"><label path="name"><spring:message code="soap.updatesoapoperation.label.networkdelay"/> (ms)</label></td>
                     <td class="column2"><form:input path="networkDelay" value="${command.networkDelay}"/></td>
                 </tr>
+                <tr>
+                    <td class="column1"><spring:message code="soap.updatesoapoperation.label.defaultxpathresponse"/></td>
+                    <td>
+                        <form:select path="defaultXPathMockResponseId">
+                            <spring:message var="label" code="soap.updatesoapoperation.dropdown.option.selectresponse"/>
+                            <form:option value="" label="${label}"/>
+                            <c:forEach items="${command.mockResponses}" var="mockResponse">
+                                <form:option value="${mockResponse.id}" label="${mockResponse.name}"/>
+                            </c:forEach>
+                        </form:select>
+                    </td>
+                </tr>
             </table>
 
             <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-check-circle"></i> <spring:message code="soap.updatesoapoperation.button.updateoperation"/></button>

@@ -44,6 +44,7 @@ public class SoapOperation implements Saveable<String> {
     private Integer currentResponseSequenceIndex;
     private String forwardedEndpoint;
     private String originalEndpoint;
+    private String defaultXPathMockResponseId;
     private boolean simulateNetworkDelay;
     private long networkDelay;
 
@@ -175,5 +176,14 @@ public class SoapOperation implements Saveable<String> {
 
     public void setNetworkDelay(long networkDelay) {
         this.networkDelay = networkDelay;
+    }
+
+    @XmlElement
+    public String getDefaultXPathMockResponseId() {
+        return defaultXPathMockResponseId;
+    }
+
+    public void setDefaultXPathMockResponseId(String defaultXPathMockResponseId) {
+        this.defaultXPathMockResponseId = defaultXPathMockResponseId;
     }
 }

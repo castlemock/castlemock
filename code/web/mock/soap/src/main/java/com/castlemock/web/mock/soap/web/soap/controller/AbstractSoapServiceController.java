@@ -285,6 +285,26 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                     break;
                 }
             }
+
+            if(mockResponse == null){
+                LOGGER.info("Unable to match the input XPath to a response");
+                final String defaultXPathResponseId = soapOperationDto.getDefaultXPathMockResponseId();
+
+                if(defaultXPathResponseId != null && !defaultXPathResponseId.isEmpty()){
+                    LOGGER.info("Use the default XPath response");
+                    for (SoapMockResponseDto mockResponseDto : mockResponses) {
+                        if(defaultXPathResponseId.equals(mockResponseDto.getId())){
+                            mockResponse = mockResponseDto;
+                            break;
+                        }
+                    }
+
+                    if(mockResponse == null){
+                        LOGGER.error("Unable to find the default XPath response");
+                    }
+                }
+            }
+
         }
 
         if(mockResponse == null){

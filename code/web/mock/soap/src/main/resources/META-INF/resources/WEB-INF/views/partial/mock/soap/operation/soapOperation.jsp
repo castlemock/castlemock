@@ -84,6 +84,10 @@
                     <td class="column1"><label path="networkDelay"><spring:message code="soap.soapoperation.label.networkdelay"/></label></td>
                     <td class="column2"><label path="networkDelay">${soapOperation.networkDelay} ms</label></td>
                 </tr>
+                <tr>
+                    <td class="column1"><label path="defaultXPathResponse"><spring:message code="soap.soapoperation.label.defaultxpathresponse"/></label></td>
+                    <td class="column2"><label path="defaultXPathResponse">${soapOperation.defaultXPathResponseName}</label></td>
+                </tr>
             </table>
         </div>
 
