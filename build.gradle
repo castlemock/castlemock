@@ -127,6 +127,13 @@ project(':code:core:mock:soap') {
     }
 }
 
+project(':code:core:mock:graphql') {
+    description = "Castle Mock core: Mock GraphQL"
+    group = "com.castlemock.core"
+    dependencies {
+        compile(project(":code:core:basis"))
+    }
+}
 
 project(':code:web:basis') {
     description = "Castle Mock web: Basis"
@@ -175,6 +182,27 @@ project(':code:web:mock:rest') {
         compile(group: 'io.swagger', name: 'swagger-parser', version: swaggerVersion)
         compile(group: 'org.raml', name: 'raml-parser-2', version: ramlVersion)
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+
+project(':code:web:mock:graphql') {
+    description = "Castle Mock web: Mock GraphQL"
+    apply plugin: 'spring-boot'
+    group = "com.castlemock.web"
+
+    bootRepackage {
+        enabled = false
+    }
+
+    bootRun {
+        enabled = false
+    }
+
+    dependencies {
+        compile(project(":code:web:basis"))
+        compile(project(":code:core:mock:graphql"))
+        compile 'com.graphql-java:graphql-java:7.0'
     }
 }
 
@@ -228,6 +256,7 @@ project(':code:web:war') {
         compile(project(":code:web:basis"))
         compile(project(":code:web:mock:rest"))
         compile(project(":code:web:mock:soap"))
+        compile(project(":code:web:mock:graphql"))
 
         compile(group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', 'version': tomcatEmbedVersion)
         compile(group: 'javax.servlet', name: 'javax.servlet-api', 'version': servletApiVersion)
