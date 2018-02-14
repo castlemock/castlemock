@@ -24,10 +24,7 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
+import com.castlemock.core.mock.soap.model.project.service.message.input.*;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
@@ -192,6 +189,42 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attributeExists(DELETE_SOAP_MOCK_RESPONSES_COMMAND));
 
         Mockito.verify(serviceProcessor, Mockito.times(2)).process(Mockito.isA(ReadSoapMockResponseInput.class));
+
+    }
+
+    @Test
+    public void testServiceFunctionalityDuplicate() throws Exception {
+        final String projectId = "projectId";
+        final String portId = "portId";
+        final String operationId = "operationId";
+        final String[] soapMockResponseIds = {"MockResponse1", "MockResponse2"};
+
+
+        final SoapMockResponseDto soapMockResponse1 = new SoapMockResponseDto();
+        soapMockResponse1.setId("MockResponseId1");
+
+        final SoapMockResponseDto soapMockResponse2 = new SoapMockResponseDto();
+        soapMockResponse2.setId("MockResponseId2");
+
+        Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapMockResponseInput.class)))
+                .thenReturn(new ReadSoapMockResponseOutput(soapMockResponse1))
+                .thenReturn(new ReadSoapMockResponseOutput(soapMockResponse2));
+
+
+        final SoapMockResponseModifierCommand soapMockResponseModifierCommand = new SoapMockResponseModifierCommand();
+        soapMockResponseModifierCommand.setSoapMockResponseIds(soapMockResponseIds);
+
+        final MockHttpServletRequestBuilder message =
+                MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + PORT + SLASH + portId + SLASH + OPERATION + SLASH + operationId)
+                        .param("action", "duplicate").flashAttr("soapMockResponseModifierCommand", soapMockResponseModifierCommand);
+
+        mockMvc.perform(message)
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/web/soap/project/" + projectId + "/port/" + portId + "/operation/" + operationId));
+
+        Mockito.verify(serviceProcessor, Mockito.times(2)).process(Mockito.isA(ReadSoapMockResponseInput.class));
+        Mockito.verify(serviceProcessor, Mockito.times(2)).process(Mockito.isA(CreateSoapMockResponseInput.class));
 
     }
 
