@@ -9,7 +9,7 @@ after_success:
 
 deploy:
   provider: releases
-  api_key: GITHUB_OAUTH_TOKEN
+  api_key: $GITHUB_OAUTH_TOKEN
   draft: true
   file: castlemock-*.war
   skip_cleanup: true
