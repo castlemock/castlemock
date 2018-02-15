@@ -6,3 +6,11 @@ jdk:
 after_success:
   - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
   - bash <(curl -s https://codecov.io/bash)
+
+deploy:
+  provider: releases
+  api_key: GITHUB_OAUTH_TOKEN
+  file: castlemock-*.war
+  skip_cleanup: true
+  on:
+    tags: true
