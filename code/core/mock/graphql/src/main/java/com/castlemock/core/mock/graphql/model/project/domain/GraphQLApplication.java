@@ -33,6 +33,7 @@ public class GraphQLApplication implements Saveable<String> {
 
     private String id;
     private String name;
+    private List<GraphQLType> types = new CopyOnWriteArrayList<GraphQLType>();
     private List<GraphQLQuery> queries = new CopyOnWriteArrayList<GraphQLQuery>();
     private List<GraphQLMutation> mutations = new CopyOnWriteArrayList<GraphQLMutation>();
     private List<GraphQLSubscription> subscriptions = new CopyOnWriteArrayList<GraphQLSubscription>();
@@ -55,6 +56,16 @@ public class GraphQLApplication implements Saveable<String> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @XmlElementWrapper(name = "types")
+    @XmlElement(name = "type")
+    public List<GraphQLType> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<GraphQLType> types) {
+        this.types = types;
     }
 
     @XmlElementWrapper(name = "queries")

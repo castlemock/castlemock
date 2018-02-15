@@ -33,6 +33,9 @@ public class GraphQLApplicationDto {
     @Mapping("name")
     private String name;
 
+    @Mapping("types")
+    private List<GraphQLTypeDto> types = new CopyOnWriteArrayList<GraphQLTypeDto>();
+
     @Mapping("queries")
     private List<GraphQLQueryDto> queries = new CopyOnWriteArrayList<GraphQLQueryDto>();
 
@@ -56,6 +59,14 @@ public class GraphQLApplicationDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<GraphQLTypeDto> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<GraphQLTypeDto> types) {
+        this.types = types;
     }
 
     public List<GraphQLQueryDto> getQueries() {

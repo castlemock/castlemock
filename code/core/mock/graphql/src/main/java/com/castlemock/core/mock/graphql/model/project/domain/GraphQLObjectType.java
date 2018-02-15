@@ -4,31 +4,20 @@ import com.castlemock.core.basis.model.Saveable;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @XmlRootElement
-public class GraphQLObjectType implements Saveable<String> {
+public class GraphQLObjectType extends GraphQLType {
 
-    private String id;
-    private String name;
-
-    @Override
-    @XmlElement
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
+    private List<GraphQLAttribute> attributes = new CopyOnWriteArrayList<GraphQLAttribute>();
 
     @XmlElement
-    public String getName() {
-        return name;
+    public List<GraphQLAttribute> getAttributes() {
+        return attributes;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAttributes(List<GraphQLAttribute> attributes) {
+        this.attributes = attributes;
     }
-
 }

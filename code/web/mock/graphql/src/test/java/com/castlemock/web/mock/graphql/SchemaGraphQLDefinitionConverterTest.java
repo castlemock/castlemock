@@ -20,6 +20,10 @@ public class SchemaGraphQLDefinitionConverterTest {
             "  name: String!\n" +
             "  shortDescription: String\n" +
             "}\n" +
+            "type ProductList {\n" +
+            "  id: ID!\n" +
+            "  products: [Product]!\n" +
+            "}\n" +
             "type Query {\n" +
             "  # ### GET products\n" +
             "  #\n" +

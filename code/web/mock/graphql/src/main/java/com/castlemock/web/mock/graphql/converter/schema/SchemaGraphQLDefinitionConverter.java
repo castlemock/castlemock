@@ -19,10 +19,7 @@ package com.castlemock.web.mock.graphql.converter.schema;
 
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLResponseStrategy;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLMutationDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLQueryDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLSubscriptionDto;
+import com.castlemock.core.mock.graphql.model.project.dto.*;
 import com.castlemock.web.mock.graphql.converter.AbstractGraphQLDefinitionConverter;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLSchema;
@@ -65,20 +62,14 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         List<GraphQLQueryDto> queries = new ArrayList<>();
         List<GraphQLMutationDto> mutations = new ArrayList<>();
         List<GraphQLSubscriptionDto> subscriptions = new ArrayList<>();
-        List<GraphQLObjectType> objectTypes = new ArrayList<>();
+        List<GraphQLTypeDto> types = new ArrayList<>();
 
         for(GraphQLType graphQLType : graphQLSchema.getAllTypesAsList()){
+            GraphQLTypeDto graphQLObjectType = GraphQLObjectTypeFactory.parse(graphQLType);
 
-            if(graphQLType instanceof graphql.schema.GraphQLObjectType){
-                graphql.schema.GraphQLObjectType type  =
-                        (graphql.schema.GraphQLObjectType) graphQLType;
-
-
-                GraphQLObjectType graphQLObjectType = new GraphQLObjectType();
-                graphQLObjectType.setName(type.getName());
-                objectTypes.add(graphQLObjectType);
+            if(graphQLObjectType != null){
+                types.add(graphQLObjectType);
             }
-
         }
 
         if(graphQLSchema.getQueryType() != null){
@@ -111,7 +102,7 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
             }
         }
 
-
+        application.setTypes(types);
         application.setQueries(queries);
         application.setMutations(mutations);
         application.setSubscriptions(subscriptions);
