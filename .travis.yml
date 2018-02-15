@@ -13,7 +13,5 @@ deploy:
   draft: true
   file: castlemock-*.war
   skip_cleanup: true
-  tag_name: $TRAVIS_TAG
+  tag_name: "develop"
   overwrite: true
-  on:
-    tags: true
