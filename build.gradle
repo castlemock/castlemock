@@ -211,6 +211,7 @@ project(':code:web:war') {
     }
 
     war {
+      archiveName = 'castlemock.war'
       baseName = 'castlemock'
       rootSpec.eachFile {
         if (it.name == 'application.properties') {

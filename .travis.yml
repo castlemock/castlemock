@@ -11,7 +11,7 @@ deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
   draft: true
-  file: code/web/war/build/libs/castlemock-*.war
+  file: code/web/war/build/libs/castlemock.war
   skip_cleanup: true
   name: develop
   tag_name: develop
