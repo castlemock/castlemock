@@ -14,4 +14,7 @@ deploy:
   file: castlemock-*.war
   skip_cleanup: true
   tag_name: "develop"
+  file_glob: true
   overwrite: true
+  on:
+    branch: develop
