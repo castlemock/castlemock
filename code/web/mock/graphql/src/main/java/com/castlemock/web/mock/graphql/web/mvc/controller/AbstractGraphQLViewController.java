@@ -16,7 +16,11 @@
 
 package com.castlemock.web.mock.graphql.web.mvc.controller;
 
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperationStatus;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The class operates as a shared base for all the view related to the Graph QL module
@@ -25,4 +29,28 @@ import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
  * @see AbstractViewController
  */
 public abstract class AbstractGraphQLViewController extends AbstractViewController {
+
+    protected static final String GRAPHQL_PROJECT = "graphQLProject";
+    protected static final String GRAPHQL_OPERATION_STATUSES = "graphQLOperationStatus";
+
+
+    /**
+     * The method returns a list of REST methods statuses. The method will only return DISABLED and MOCKED
+     * if the server is configured to run on demo mode. If not configured to run on demo mode,
+     * all the REST method statuses will be returned.
+     * @return A list of REST method statuses
+     */
+    protected List<GraphQLOperationStatus> getGraphQLOperationStatuses(){
+        List<GraphQLOperationStatus> statuses = new LinkedList<GraphQLOperationStatus>();
+        statuses.add(GraphQLOperationStatus.MOCKED);
+        statuses.add(GraphQLOperationStatus.DISABLED);
+
+        if(!demoMode) {
+            statuses.add(GraphQLOperationStatus.FORWARDED);
+        }
+
+        statuses.add(GraphQLOperationStatus.ECHO);
+        return statuses;
+    }
+
 }

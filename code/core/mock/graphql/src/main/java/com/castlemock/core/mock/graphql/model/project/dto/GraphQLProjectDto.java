@@ -35,6 +35,15 @@ public class GraphQLProjectDto extends ProjectDto {
 
     }
 
+    /**
+     * The constructor will create a new REST project DTO based on the provided projectDto
+     * @param projectDto The new REST project DTO will be based on the provided project DTO and contain
+     *                   the same information as the provided project DTO
+     */
+    public GraphQLProjectDto(final ProjectDto projectDto){
+        super(projectDto);
+    }
+
     public List<GraphQLApplicationDto> getApplications() {
         return applications;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Karl Dahlgren
+ * Copyright 2018 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import java.util.Map;
 
 /**
  * @author Karl Dahlgren
- * @since 1.0
+ * @since 1.19
  */
 public abstract class AbstractGraphQLProjectService extends AbstractService<GraphQLProject, GraphQLProjectDto, String, GraphQLProjectRepository> {
 
