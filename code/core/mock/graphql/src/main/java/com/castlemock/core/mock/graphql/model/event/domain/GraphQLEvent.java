@@ -18,6 +18,7 @@ package com.castlemock.core.mock.graphql.model.event.domain;
 
 import com.castlemock.core.basis.model.event.domain.Event;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,4 +27,55 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class GraphQLEvent extends Event {
+
+    private GraphQLRequest request;
+    private GraphQLResponse response;
+    private String projectId;
+    private String applicationId;
+    private String operationId;
+
+    @XmlElement
+    public GraphQLRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(GraphQLRequest request) {
+        this.request = request;
+    }
+
+    @XmlElement
+    public GraphQLResponse getResponse() {
+        return response;
+    }
+
+    public void setResponse(GraphQLResponse response) {
+        this.response = response;
+    }
+
+    @XmlElement
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    @XmlElement
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
+    }
+
+    @XmlElement
+    public String getOperationId() {
+        return operationId;
+    }
+
+    public void setOperationId(String operationId) {
+        this.operationId = operationId;
+    }
 }

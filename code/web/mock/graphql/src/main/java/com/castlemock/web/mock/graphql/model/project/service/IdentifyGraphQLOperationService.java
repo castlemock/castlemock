@@ -15,17 +15,26 @@
  */
 
 
-package com.castlemock.web.mock.graphql;
+package com.castlemock.web.mock.graphql.model.project.service;
 
+
+import com.castlemock.core.basis.model.Service;
+import com.castlemock.core.basis.model.ServiceResult;
+import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLQueryDto;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLOperationDto;
+import com.castlemock.core.mock.graphql.model.project.service.message.input.IdentifyGraphQLOperationInput;
+import com.castlemock.core.mock.graphql.model.project.service.message.output.IdentifyGraphQLOperationOutput;
 import com.castlemock.web.mock.graphql.converter.schema.SchemaGraphQLDefinitionConverter;
-import org.junit.Assert;
-import org.junit.Test;
 
 import java.util.List;
 
-public class SchemaGraphQLDefinitionConverterTest {
+/**
+ * @author Karl Dahlgren
+ * @since 1.19
+ */
+@org.springframework.stereotype.Service
+public class IdentifyGraphQLOperationService extends AbstractGraphQLProjectService implements Service<IdentifyGraphQLOperationInput, IdentifyGraphQLOperationOutput> {
 
     private static final String SCHEMA = "type Product {\n" +
             "  id: ID!\n" +
@@ -67,16 +76,28 @@ public class SchemaGraphQLDefinitionConverterTest {
             "  variants(id: [LengthUnit]!): [Variant]\n" +
             "}";
 
-    @Test
-    public void testParseSchema(){
-        SchemaGraphQLDefinitionConverter converter = new SchemaGraphQLDefinitionConverter();
-        List<GraphQLApplicationDto> applications = converter.convertRaw(SCHEMA, true);
-        Assert.assertEquals(1, applications.size());
+    static SchemaGraphQLDefinitionConverter converter = new SchemaGraphQLDefinitionConverter();
+    static List<GraphQLApplicationDto> applications = converter.convertRaw(SCHEMA, true);
 
-        List<GraphQLQueryDto> queries = applications.get(0).getQueries();
-        Assert.assertEquals(2, queries.size());
+    /**
+     * The process message is responsible for processing an incoming serviceTask and generate
+     * a response based on the incoming serviceTask input
+     *
+     * @param serviceTask The serviceTask that will be processed by the service
+     * @return A result based on the processed incoming serviceTask
+     * @see ServiceTask
+     * @see ServiceResult
+     */
+    @Override
+    public ServiceResult<IdentifyGraphQLOperationOutput> process(ServiceTask<IdentifyGraphQLOperationInput> serviceTask) {
 
+        GraphQLApplicationDto application = applications.get(0);
+        GraphQLOperationDto operation = application.getQueries().get(0);
+
+        final IdentifyGraphQLOperationOutput output =
+                new IdentifyGraphQLOperationOutput(
+                        "ProjectId", "ApplicationId",
+                        "OperationId", operation);
+        return createServiceResult(output);
     }
-
-
 }

@@ -17,14 +17,11 @@
 
 package com.castlemock.web.mock.graphql.converter.schema;
 
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLResponseStrategy;
 import com.castlemock.core.mock.graphql.model.project.dto.*;
 import com.castlemock.web.mock.graphql.converter.AbstractGraphQLDefinitionConverter;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.GraphQLType;
-import graphql.schema.StaticDataFetcher;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
@@ -75,9 +72,7 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         if(graphQLSchema.getQueryType() != null){
             List<GraphQLFieldDefinition> fieldQueries = graphQLSchema.getQueryType().getFieldDefinitions();
             for(GraphQLFieldDefinition fieldQuery : fieldQueries){
-                GraphQLQueryDto query = new GraphQLQueryDto();
-                query.setName(fieldQuery.getName());
-                query.setResponseStrategy(GraphQLResponseStrategy.RANDOM);
+                GraphQLQueryDto query = GraphQLObjectTypeFactory.query(fieldQuery);
                 queries.add(query);
             }
         }
@@ -85,9 +80,7 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         if(graphQLSchema.getMutationType() != null){
             List<GraphQLFieldDefinition> fieldMutations = graphQLSchema.getMutationType().getFieldDefinitions();
             for(GraphQLFieldDefinition fieldMutation : fieldMutations){
-                GraphQLMutationDto mutation = new GraphQLMutationDto();
-                mutation.setName(fieldMutation.getName());
-                mutation.setResponseStrategy(GraphQLResponseStrategy.RANDOM);
+                GraphQLMutationDto mutation = GraphQLObjectTypeFactory.mutation(fieldMutation);
                 mutations.add(mutation);
             }
         }
@@ -95,9 +88,7 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         if(graphQLSchema.getSubscriptionType() != null){
             List<GraphQLFieldDefinition> fieldSubscriptions = graphQLSchema.getSubscriptionType().getFieldDefinitions();
             for(GraphQLFieldDefinition fieldSubscription : fieldSubscriptions){
-                GraphQLSubscriptionDto subscription = new GraphQLSubscriptionDto();
-                subscription.setName(fieldSubscription.getName());
-                subscription.setResponseStrategy(GraphQLResponseStrategy.RANDOM);
+                GraphQLSubscriptionDto subscription = GraphQLObjectTypeFactory.subscription(fieldSubscription);
                 subscriptions.add(subscription);
             }
         }

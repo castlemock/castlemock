@@ -16,13 +16,11 @@
 
 package com.castlemock.core.mock.graphql.model.project.dto;
 
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperation;
-
 /**
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class GraphQLMutationDto extends GraphQLOperation {
+public class GraphQLMutationDto extends GraphQLOperationDto {
 
 
 }

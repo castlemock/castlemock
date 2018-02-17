@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
+
 package com.castlemock.core.mock.graphql.model.project.dto;
 
+import org.dozer.Mapping;
 
-/**
- * @author Karl Dahlgren
- * @since 1.19
- */
-public class GraphQLSubscriptionDto extends GraphQLOperationDto {
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+public class GraphQLEnumTypeDto extends GraphQLTypeDto{
+
+    @Mapping("definitions")
+    private List<GraphQLEnumValueDefinitionDto> definitions
+            = new CopyOnWriteArrayList<GraphQLEnumValueDefinitionDto>();
 
 
+    public List<GraphQLEnumValueDefinitionDto> getDefinitions() {
+        return definitions;
+    }
+
+    public void setDefinitions(List<GraphQLEnumValueDefinitionDto> definitions) {
+        this.definitions = definitions;
+    }
 }

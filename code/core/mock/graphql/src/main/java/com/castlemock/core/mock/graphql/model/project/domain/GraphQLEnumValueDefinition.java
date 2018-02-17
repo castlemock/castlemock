@@ -17,13 +17,36 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+import com.castlemock.core.basis.model.Saveable;
 
-@XmlType
-@XmlEnum(String.class)
-public enum GraphQLAttributeType {
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-    OBJECT_TYPE, STRING, ID, INT, FLOAT, BOOLEAN, ENUM
+@XmlRootElement
+public class GraphQLEnumValueDefinition implements Saveable<String> {
+
+    private String id;
+    private String name;
+
+    @Override
+    @XmlElement
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @XmlElement
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
 }

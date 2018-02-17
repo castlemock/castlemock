@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
+package com.castlemock.web.mock.graphql.model;
 
-package com.castlemock.core.mock.graphql.model.project.domain;
+public class GraphQLException extends RuntimeException {
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
-
-@XmlType
-@XmlEnum(String.class)
-public enum GraphQLAttributeType {
-
-    OBJECT_TYPE, STRING, ID, INT, FLOAT, BOOLEAN, ENUM
+    /**
+     * The default constructor for the SoapException class
+     * @param message The exception message
+     */
+    public GraphQLException(String message) {
+        super(message);
+    }
 
 }

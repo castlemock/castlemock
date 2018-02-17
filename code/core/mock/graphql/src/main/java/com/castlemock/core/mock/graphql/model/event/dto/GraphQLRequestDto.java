@@ -16,7 +16,12 @@
 
 package com.castlemock.core.mock.graphql.model.event.dto;
 
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import org.dozer.Mapping;
+
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -24,4 +29,82 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class GraphQLRequestDto {
+
+    @Mapping("body")
+    private String body;
+
+    @Mapping("contentType")
+    private String contentType;
+
+    @Mapping("uri")
+    private String uri;
+
+    @Mapping("httpMethod")
+    private HttpMethod httpMethod;
+
+    @Mapping("operationName")
+    private String operationName;
+
+    @Mapping("operationIdentifier")
+    private String operationIdentifier;
+
+    @Mapping("httpHeaders")
+    private List<HttpHeaderDto> httpHeaders;
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
+
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
+    }
+
+    public String getOperationName() {
+        return operationName;
+    }
+
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
+    }
+
+    public String getOperationIdentifier() {
+        return operationIdentifier;
+    }
+
+    public void setOperationIdentifier(String operationIdentifier) {
+        this.operationIdentifier = operationIdentifier;
+    }
+
+    public List<HttpHeaderDto> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeaderDto> httpHeaders) {
+        this.httpHeaders = httpHeaders;
+    }
+
 }

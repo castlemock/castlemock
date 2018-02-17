@@ -16,7 +16,12 @@
 
 package com.castlemock.core.mock.graphql.model.event.dto;
 
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
+import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import org.dozer.Mapping;
+
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -24,4 +29,60 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class GraphQLResponseDto {
+
+    @Mapping("body")
+    private String body;
+
+    @Mapping("httpStatusCode")
+    private Integer httpStatusCode;
+
+    @Mapping("contentType")
+    private String contentType;
+
+    @Mapping("httpHeaders")
+    private List<HttpHeaderDto> httpHeaders;
+
+    @Mapping("contentEncodings")
+    private List<ContentEncoding> contentEncodings;
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public Integer getHttpStatusCode() {
+        return httpStatusCode;
+    }
+
+    public void setHttpStatusCode(Integer httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public List<HttpHeaderDto> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeaderDto> httpHeaders) {
+        this.httpHeaders = httpHeaders;
+    }
+
+    public List<ContentEncoding> getContentEncodings() {
+        return contentEncodings;
+    }
+
+    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+        this.contentEncodings = contentEncodings;
+    }
+
 }

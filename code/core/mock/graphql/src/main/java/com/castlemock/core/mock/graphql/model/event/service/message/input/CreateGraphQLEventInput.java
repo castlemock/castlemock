@@ -14,14 +14,28 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.graphql.model.project.dto;
+package com.castlemock.core.mock.graphql.model.event.service.message.input;
 
+import com.castlemock.core.basis.model.Input;
+import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class GraphQLSubscriptionDto extends GraphQLOperationDto {
+public class CreateGraphQLEventInput implements Input {
 
+    private GraphQLEventDto graphQLEvent;
 
+    public CreateGraphQLEventInput(GraphQLEventDto graphQLEvent) {
+        this.graphQLEvent = graphQLEvent;
+    }
+
+    public GraphQLEventDto getGraphQLEvent() {
+        return graphQLEvent;
+    }
+
+    public void setGraphQLEvent(GraphQLEventDto graphQLEvent) {
+        this.graphQLEvent = graphQLEvent;
+    }
 }
