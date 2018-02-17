@@ -63,6 +63,9 @@ public class GraphQLOperationDto {
     @Mapping("arguments")
     private List<GraphQLArgumentDto> arguments = new CopyOnWriteArrayList<GraphQLArgumentDto>();
 
+    @Mapping("result")
+    private GraphQLResultDto result;
+
     public String getId() {
         return id;
     }
@@ -149,5 +152,13 @@ public class GraphQLOperationDto {
 
     public void setNetworkDelay(Long networkDelay) {
         this.networkDelay = networkDelay;
+    }
+
+    public GraphQLResultDto getResult() {
+        return result;
+    }
+
+    public void setResult(GraphQLResultDto result) {
+        this.result = result;
     }
 }

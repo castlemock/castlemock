@@ -41,6 +41,7 @@ public class GraphQLOperation implements Saveable<String> {
     private boolean simulateNetworkDelay;
     private GraphQLOperationStatus status;
     private GraphQLResponseStrategy responseStrategy;
+    private GraphQLResult result;
     private List<GraphQLMockResponse> mockResponses = new CopyOnWriteArrayList<GraphQLMockResponse>();
     private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
@@ -126,6 +127,18 @@ public class GraphQLOperation implements Saveable<String> {
     public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
         this.simulateNetworkDelay = simulateNetworkDelay;
     }
+
+
+    @XmlElement
+    public GraphQLResult getResult() {
+        return result;
+    }
+
+    public void setResult(GraphQLResult result) {
+        this.result = result;
+    }
+
+
 
     @XmlElementWrapper(name = "mockResponses")
     @XmlElement(name = "mockResponse")

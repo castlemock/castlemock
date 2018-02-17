@@ -20,7 +20,7 @@ package com.castlemock.web.mock.graphql.converter.schema;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLResponseStrategy;
 import com.castlemock.core.mock.graphql.model.project.dto.*;
-import graphql.language.EnumValueDefinition;
+import graphql.language.*;
 import graphql.schema.*;
 
 import java.util.Arrays;
@@ -50,6 +50,9 @@ public class GraphQLObjectTypeFactory {
             mutation.getArguments().add(graphQLArgument);
         }
 
+        GraphQLResultDto result = getResult(definition.getType());
+        mutation.setResult(result);
+
         return mutation;
     }
 
@@ -63,6 +66,9 @@ public class GraphQLObjectTypeFactory {
             query.getArguments().add(graphQLArgument);
         }
 
+        GraphQLResultDto result = getResult(definition.getType());
+        query.setResult(result);
+
         return query;
     }
 
@@ -75,6 +81,9 @@ public class GraphQLObjectTypeFactory {
             GraphQLArgumentDto graphQLArgument = getArgument(argument);
             subscription.getArguments().add(graphQLArgument);
         }
+
+        GraphQLResultDto result = getResult(definition.getType());
+        subscription.setResult(result);
 
         return subscription;
     }
@@ -132,6 +141,18 @@ public class GraphQLObjectTypeFactory {
         return graphQLEnumType;
     }
 
+    private static GraphQLResultDto getResult(final GraphQLOutputType outputType){
+        final GraphQLType type = getType(outputType);
+        final boolean nullable = isNullable(outputType);
+        final boolean listable = isListable(outputType);
+
+        final GraphQLResultDto result = new GraphQLResultDto();
+        result.setName(type.getName());
+        result.setListable(listable);
+        result.setNullable(nullable);
+
+        return result;
+    }
 
     private static GraphQLAttributeDto getAttribute(final GraphQLFieldDefinition definition){
         final GraphQLType type = definition.getType();
@@ -152,7 +173,9 @@ public class GraphQLObjectTypeFactory {
         }
 
         if(GraphQLAttributeType.OBJECT_TYPE.equals(attributeType)){
-            attribute.setObjectType(coreType.getName());
+            attribute.setTypeName(coreType.getName());
+        } else if(GraphQLAttributeType.ENUM.equals(attributeType)){
+            attribute.setTypeName(coreType.getName());
         }
 
         return attribute;
@@ -230,6 +253,37 @@ public class GraphQLObjectTypeFactory {
         }
         if(type instanceof GraphQLList){
             GraphQLType wrappedType = ((GraphQLList) type).getWrappedType();
+            return getType(wrappedType);
+        }
+
+        return type;
+    }
+
+    private static boolean isNullable(final Type type){
+        if(type instanceof ListType){
+            Type wrappedType = ((ListType) type).getType();
+            return isNullable(wrappedType);
+        }
+
+        return !(type instanceof GraphQLNonNull);
+    }
+
+    private static boolean isListable(final Type type){
+        if(type instanceof NonNullType){
+            Type wrappedType = ((NonNullType) type).getType();
+            return isListable(wrappedType);
+        }
+
+        return (type instanceof GraphQLList);
+    }
+
+    private static Type getType(final Type type){
+        if(type instanceof ListType){
+            Type wrappedType = ((ListType) type).getType();
+            return getType(wrappedType);
+        }
+        if(type instanceof NonNullType){
+            Type wrappedType = ((NonNullType) type).getType();
             return getType(wrappedType);
         }
 

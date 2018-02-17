@@ -20,21 +20,15 @@ package com.castlemock.core.mock.graphql.model.project.domain;
 import com.castlemock.core.basis.model.Saveable;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @XmlRootElement
-public class GraphQLAttribute implements Saveable<String> {
+public class GraphQLResult implements Saveable<String> {
 
     private String id;
     private String name;
-    private String typeName;
     private Boolean nullable;
     private Boolean listable;
-    private GraphQLAttributeType attributeType;
-    private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
     @Override
     @XmlElement
@@ -57,15 +51,6 @@ public class GraphQLAttribute implements Saveable<String> {
     }
 
     @XmlElement
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    @XmlElement
     public Boolean getNullable() {
         return nullable;
     }
@@ -83,22 +68,4 @@ public class GraphQLAttribute implements Saveable<String> {
         this.listable = listable;
     }
 
-    @XmlElement
-    public GraphQLAttributeType getAttributeType() {
-        return attributeType;
-    }
-
-    public void setAttributeType(GraphQLAttributeType attributeType) {
-        this.attributeType = attributeType;
-    }
-
-    @XmlElementWrapper(name = "arguments")
-    @XmlElement(name = "argument")
-    public List<GraphQLArgument> getArguments() {
-        return arguments;
-    }
-
-    public void setArguments(List<GraphQLArgument> arguments) {
-        this.arguments = arguments;
-    }
 }

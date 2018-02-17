@@ -17,14 +17,10 @@
 
 package com.castlemock.core.mock.graphql.model.project.dto;
 
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import org.dozer.Mapping;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-
-public class GraphQLAttributeDto {
+public class GraphQLResultDto {
 
     @Mapping("id")
     private String id;
@@ -32,20 +28,11 @@ public class GraphQLAttributeDto {
     @Mapping("name")
     private String name;
 
-    @Mapping("typeName")
-    private String typeName;
-
     @Mapping("nullable")
     private Boolean nullable;
 
     @Mapping("listable")
     private Boolean listable;
-
-    @Mapping("attributeType")
-    private GraphQLAttributeType attributeType;
-
-    @Mapping("arguments")
-    private List<GraphQLArgumentDto> arguments = new CopyOnWriteArrayList<GraphQLArgumentDto>();
 
     public String getId() {
         return id;
@@ -61,14 +48,6 @@ public class GraphQLAttributeDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
     }
 
     public Boolean getNullable() {
@@ -87,19 +66,4 @@ public class GraphQLAttributeDto {
         this.listable = listable;
     }
 
-    public GraphQLAttributeType getAttributeType() {
-        return attributeType;
-    }
-
-    public void setAttributeType(GraphQLAttributeType attributeType) {
-        this.attributeType = attributeType;
-    }
-
-    public List<GraphQLArgumentDto> getArguments() {
-        return arguments;
-    }
-
-    public void setArguments(List<GraphQLArgumentDto> arguments) {
-        this.arguments = arguments;
-    }
 }
