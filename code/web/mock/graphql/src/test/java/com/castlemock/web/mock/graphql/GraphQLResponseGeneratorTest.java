@@ -16,11 +16,12 @@
 
 package com.castlemock.web.mock.graphql;
 
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverterResult;
 import com.castlemock.web.mock.graphql.converter.query.GraphQLRequestQuery;
 import com.castlemock.web.mock.graphql.converter.query.QueryGraphQLConverter;
 import com.castlemock.web.mock.graphql.converter.schema.SchemaGraphQLDefinitionConverter;
-import com.castlemock.web.mock.graphql.web.mvc.controller.GraphQLResponseGenerator;
+import com.castlemock.web.mock.graphql.web.graphql.controller.GraphQLResponseGenerator;
 import org.junit.Test;
 
 import java.util.List;
@@ -55,19 +56,25 @@ public class GraphQLResponseGeneratorTest {
             "type Query {\n" +
             "  film(id: Int): Film\n" +
             "  actor: [Actor]!\n" +
+            "  test(id: Int): String!\n" +
             "}";
 
     @Test
     public void test(){
-        final SchemaGraphQLDefinitionConverter schemaConverter = new SchemaGraphQLDefinitionConverter();
-        final List<GraphQLApplicationDto> applications = schemaConverter.convertRaw(SCHEMA, true);
-        final GraphQLApplicationDto application = applications.get(0);
+        final SchemaGraphQLDefinitionConverter schemaConverter = new SchemaGraphQLDefinitionConverter(null);
+        final GraphQLDefinitionConverterResult result = schemaConverter.convertRaw(SCHEMA);
+        final GraphQLProjectDto project = new GraphQLProjectDto();
+        project.setMutations(result.getMutations());
+        project.setQueries(result.getQueries());
+        project.setSubscriptions(result.getSubscriptions());
+        project.setObjects(result.getObjects());
+        project.setEnums(result.getEnums());
 
         final QueryGraphQLConverter queryConverter = new QueryGraphQLConverter();
         final List<GraphQLRequestQuery> queries = queryConverter.parseQuery(QUERY);
 
         GraphQLResponseGenerator generator = new GraphQLResponseGenerator();
-        final String output = generator.getResponse(application, queries);
+        final String output = generator.getResponse(project, queries);
 
         System.out.println(output);
     }

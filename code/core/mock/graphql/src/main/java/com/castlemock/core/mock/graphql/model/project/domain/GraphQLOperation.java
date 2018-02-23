@@ -22,6 +22,7 @@ import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -30,7 +31,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.19
  */
 @XmlRootElement
-public class GraphQLOperation implements Saveable<String> {
+@XmlSeeAlso({GraphQLQuery.class, GraphQLMutation.class, GraphQLSubscription.class})
+public abstract class GraphQLOperation implements Saveable<String> {
 
     private String id;
     private String name;

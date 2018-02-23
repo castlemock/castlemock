@@ -30,6 +30,8 @@ import java.util.List;
  */
 public abstract class AbstractGraphQLViewController extends AbstractViewController {
 
+    protected static final String GRAPHQL_PROJECT_ID = "graphQLProjectId";
+
     protected static final String GRAPHQL_PROJECT = "graphQLProject";
     protected static final String GRAPHQL_OPERATION_STATUSES = "graphQLOperationStatus";
 

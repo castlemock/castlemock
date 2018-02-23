@@ -145,11 +145,13 @@ public class GraphQLObjectTypeFactory {
         final GraphQLType type = getType(outputType);
         final boolean nullable = isNullable(outputType);
         final boolean listable = isListable(outputType);
+        final GraphQLAttributeType attributeType = getAttributeType(type);
 
         final GraphQLResultDto result = new GraphQLResultDto();
         result.setName(type.getName());
         result.setListable(listable);
         result.setNullable(nullable);
+        result.setAttributeType(attributeType);
 
         return result;
     }

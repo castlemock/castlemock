@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.graphql.web.mvc.controller;
+package com.castlemock.web.mock.graphql.web.graphql.controller;
 
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import com.castlemock.core.mock.graphql.model.project.dto.*;
@@ -34,7 +34,7 @@ public class GraphQLResponseGenerator {
 
     private Random random = new Random();
 
-    public String getResponse(final GraphQLApplicationDto application,
+    public String getResponse(final GraphQLProjectDto project,
                               final List<GraphQLRequestQuery> queries){
         OutputStream output = new OutputStream()
         {
@@ -58,7 +58,7 @@ public class GraphQLResponseGenerator {
             generator.writeObjectFieldStart("data");
 
             for(GraphQLRequestQuery query : queries){
-                printQuery(query, application, generator);
+                printQuery(query, project, generator);
             }
 
             generator.writeEndObject();
@@ -78,12 +78,12 @@ public class GraphQLResponseGenerator {
     }
 
     private void printQuery(final GraphQLRequestQuery query,
-                            final GraphQLApplicationDto application,
+                            final GraphQLProjectDto project,
                             final JsonGenerator generator) throws IOException {
 
-        GraphQLQueryDto operation = getQuery(query.getOperationName(), application);
+        GraphQLQueryDto operation = getQuery(query.getOperationName(), project);
         GraphQLResultDto result = operation.getResult();
-        GraphQLTypeDto type = getType(result.getName(), application);
+        GraphQLTypeDto type = getObject(result.getName(), project);
 
 
         generator.writeFieldName(query.getOperationName());
@@ -92,7 +92,7 @@ public class GraphQLResponseGenerator {
         }
 
         generator.writeStartObject();
-        printType(type, query.getFields(), application, generator);
+        printType(type, query.getFields(), project, generator);
         generator.writeEndObject();
 
         if(result.getListable()){
@@ -104,12 +104,12 @@ public class GraphQLResponseGenerator {
 
     private void printType(final GraphQLTypeDto type,
                            final List<GraphQLRequestField> fields,
-                           final GraphQLApplicationDto application,
+                           final GraphQLProjectDto project,
                            final JsonGenerator generator) throws IOException {
 
         if(type instanceof GraphQLObjectTypeDto){
             GraphQLObjectTypeDto objectType = (GraphQLObjectTypeDto) type;
-            printObjectType(objectType, fields, application, generator);
+            printObjectType(objectType, fields, project, generator);
         } else if(type instanceof GraphQLEnumTypeDto){
             GraphQLEnumTypeDto enumTypeDto = (GraphQLEnumTypeDto) type;
             printEnumType(enumTypeDto, generator);
@@ -118,16 +118,16 @@ public class GraphQLResponseGenerator {
 
     private void printObjectType(final GraphQLObjectTypeDto type,
                                  final List<GraphQLRequestField> fields,
-                                 final GraphQLApplicationDto application,
+                                 final GraphQLProjectDto project,
                                  final JsonGenerator generator) throws IOException{
         if(fields != null && !fields.isEmpty()){
             for(GraphQLRequestField field : fields){
                 GraphQLAttributeDto attribute = getAttribute(field.getName(), type);
-                printAttribute(attribute, field.getFields(), application, generator);
+                printAttribute(attribute, field.getFields(), project, generator);
             }
         } else {
             for(GraphQLAttributeDto attribute : type.getAttributes()){
-                printAttribute(attribute, null, application, generator);
+                printAttribute(attribute, null, project, generator);
             }
         }
 
@@ -146,31 +146,31 @@ public class GraphQLResponseGenerator {
 
     private void printAttribute(final GraphQLAttributeDto attribute,
                                final List<GraphQLRequestField> fields,
-                            final GraphQLApplicationDto application,
+                            final GraphQLProjectDto project,
                             final JsonGenerator generator) throws IOException {
         GraphQLAttributeType type = attribute.getAttributeType();
 
         switch (type){
             case OBJECT_TYPE:
-                printObjectType(attribute, fields, application, generator);
+                printObjectType(attribute, fields, project, generator);
                 break;
             case STRING:
-                printString(attribute, application, generator);
+                printString(attribute, project, generator);
                 break;
             case ID:
-                printId(attribute, application, generator);
+                printId(attribute, project, generator);
                 break;
             case INT:
-                printInt(attribute, application, generator);
+                printInt(attribute, project, generator);
                 break;
             case FLOAT:
-                printFloat(attribute, application, generator);
+                printFloat(attribute, project, generator);
                 break;
             case BOOLEAN:
-                printBoolean(attribute, application, generator);
+                printBoolean(attribute, project, generator);
                 break;
             case ENUM:
-                printEnum(attribute, application, generator);
+                printEnum(attribute, project, generator);
                 break;
         }
     }
@@ -193,9 +193,9 @@ public class GraphQLResponseGenerator {
 
     private void printObjectType(final GraphQLAttributeDto attribute,
                                  final List<GraphQLRequestField> fields,
-                                 final GraphQLApplicationDto application,
+                                 final GraphQLProjectDto project,
                                  final JsonGenerator generator) throws IOException {
-        GraphQLTypeDto type = getType(attribute.getTypeName(),application);
+        GraphQLTypeDto type = getObject(attribute.getTypeName(),project);
 
         if(!(type instanceof GraphQLObjectTypeDto)){
             throw new IllegalArgumentException("Invalid type");
@@ -205,13 +205,13 @@ public class GraphQLResponseGenerator {
 
         printStartType(attribute, generator);
         generator.writeStartObject();
-        printObjectType(objectType, fields, application, generator);
+        printObjectType(objectType, fields, project, generator);
         generator.writeEndObject();
         printEndType(attribute, generator);
     }
 
     private void printString(final GraphQLAttributeDto attribute,
-                                 final GraphQLApplicationDto application,
+                                 final GraphQLProjectDto project,
                                  final JsonGenerator generator) throws IOException {
         printStartType(attribute, generator);
         generator.writeObject("String");
@@ -219,7 +219,7 @@ public class GraphQLResponseGenerator {
     }
 
     private void printId(final GraphQLAttributeDto attribute,
-                                 final GraphQLApplicationDto application,
+                                 final GraphQLProjectDto project,
                                  final JsonGenerator generator) throws IOException {
         printStartType(attribute, generator);
         generator.writeObject("Id");
@@ -227,7 +227,7 @@ public class GraphQLResponseGenerator {
     }
 
     private void printInt(final GraphQLAttributeDto attribute,
-                                 final GraphQLApplicationDto application,
+                                 final GraphQLProjectDto project,
                                  final JsonGenerator generator) throws IOException {
         printStartType(attribute, generator);
         generator.writeObject("Int");
@@ -235,7 +235,7 @@ public class GraphQLResponseGenerator {
     }
 
     private void printFloat(final GraphQLAttributeDto attribute,
-                                 final GraphQLApplicationDto application,
+                                 final GraphQLProjectDto project,
                                  final JsonGenerator generator) throws IOException {
         printStartType(attribute, generator);
         generator.writeObject("Float");
@@ -243,7 +243,7 @@ public class GraphQLResponseGenerator {
     }
 
     private void printBoolean(final GraphQLAttributeDto attribute,
-                                 final GraphQLApplicationDto application,
+                                 final GraphQLProjectDto project,
                                  final JsonGenerator generator) throws IOException {
         printStartType(attribute, generator);
         generator.writeObject("Boolean");
@@ -251,25 +251,18 @@ public class GraphQLResponseGenerator {
     }
 
     private void printEnum(final GraphQLAttributeDto attribute,
-                                 final GraphQLApplicationDto application,
+                                 final GraphQLProjectDto project,
                                  final JsonGenerator generator) throws IOException {
-        GraphQLTypeDto type = getType(attribute.getTypeName(),application);
-
-        if(!(type instanceof GraphQLEnumTypeDto)){
-            throw new IllegalArgumentException("Invalid type");
-        }
-
-        GraphQLEnumTypeDto enumType = (GraphQLEnumTypeDto) type;
-
+        GraphQLEnumTypeDto type = getEnum(attribute.getTypeName(),project);
         printStartType(attribute, generator);
-        printEnumType(enumType, generator);
+        printEnumType(type, generator);
         printEndType(attribute, generator);
     }
 
 
     private GraphQLQueryDto getQuery(final String queryName,
-                                           final GraphQLApplicationDto application){
-        for(GraphQLQueryDto query : application.getQueries()){
+                                           final GraphQLProjectDto project){
+        for(GraphQLQueryDto query : project.getQueries()){
             if(query.getName().equals(queryName)){
                 return query;
             }
@@ -278,9 +271,20 @@ public class GraphQLResponseGenerator {
         return null;
     }
 
-    private GraphQLTypeDto getType(final String typeName,
-                                final GraphQLApplicationDto application){
-        for(GraphQLTypeDto type : application.getTypes()){
+    private GraphQLTypeDto getObject(final String typeName,
+                                final GraphQLProjectDto project){
+        for(GraphQLObjectTypeDto type : project.getObjects()){
+            if(type.getName().equals(typeName)){
+                return type;
+            }
+        }
+
+        return null;
+    }
+
+    private GraphQLEnumTypeDto getEnum(final String typeName,
+                                     final GraphQLProjectDto project){
+        for(GraphQLEnumTypeDto type : project.getEnums()){
             if(type.getName().equals(typeName)){
                 return type;
             }

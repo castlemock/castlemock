@@ -14,34 +14,14 @@
  * limitations under the License.
  */
 
+package com.castlemock.core.mock.graphql.model.project.service.message.output;
 
-package com.castlemock.core.mock.graphql.model.project.dto;
+import com.castlemock.core.basis.model.Output;
 
-import org.dozer.Mapping;
-
-
-public abstract class GraphQLTypeDto {
-
-    @Mapping("id")
-    private String id;
-
-    @Mapping("name")
-    private String name;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+/**
+ * @author Karl Dahlgren
+ * @since 1.9
+ */
+public class ImportGraphQLDefinitionOutput implements Output {
 
 }

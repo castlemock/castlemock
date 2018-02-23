@@ -18,7 +18,9 @@
 package com.castlemock.web.mock.graphql.converter.schema;
 
 import com.castlemock.core.mock.graphql.model.project.dto.*;
+import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.graphql.converter.AbstractGraphQLDefinitionConverter;
+import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverterResult;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.GraphQLType;
@@ -26,28 +28,27 @@ import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
+import org.apache.log4j.Logger;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static graphql.schema.idl.RuntimeWiring.newRuntimeWiring;
 
 public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionConverter {
-    /**
-     * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link GraphQLApplicationDto}.
-     *
-     * @param raw             The file which will be converted to one or more {@link GraphQLApplicationDto}.
-     * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link GraphQLApplicationDto} based on the provided file.
-     */
+
+    private FileManager fileManager;
+    private static final Logger LOGGER = Logger.getLogger(SchemaGraphQLDefinitionConverter.class);
+
+    public SchemaGraphQLDefinitionConverter(FileManager fileManager){
+        this.fileManager = fileManager;
+    }
+
     @Override
-    public List<GraphQLApplicationDto> convertRaw(String raw, boolean generateResponse) {
-        GraphQLApplicationDto application = new GraphQLApplicationDto();
-
-
+    public GraphQLDefinitionConverterResult convertRaw(String raw) {
         SchemaParser schemaParser = new SchemaParser();
         TypeDefinitionRegistry typeDefinitionRegistry = schemaParser.parse(raw);
 
@@ -59,13 +60,18 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         List<GraphQLQueryDto> queries = new ArrayList<>();
         List<GraphQLMutationDto> mutations = new ArrayList<>();
         List<GraphQLSubscriptionDto> subscriptions = new ArrayList<>();
-        List<GraphQLTypeDto> types = new ArrayList<>();
+        List<GraphQLObjectTypeDto> objects = new ArrayList<>();
+        List<GraphQLEnumTypeDto> enums = new ArrayList<>();
 
         for(GraphQLType graphQLType : graphQLSchema.getAllTypesAsList()){
-            GraphQLTypeDto graphQLObjectType = GraphQLObjectTypeFactory.parse(graphQLType);
+            GraphQLTypeDto type = GraphQLObjectTypeFactory.parse(graphQLType);
 
-            if(graphQLObjectType != null){
-                types.add(graphQLObjectType);
+            if(type instanceof GraphQLObjectTypeDto){
+                GraphQLObjectTypeDto objectType = (GraphQLObjectTypeDto) type;
+                objects.add(objectType);
+            } else if(type instanceof GraphQLEnumTypeDto){
+                GraphQLEnumTypeDto enumType = (GraphQLEnumTypeDto) type;
+                enums.add(enumType);
             }
         }
 
@@ -93,37 +99,61 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
             }
         }
 
-        application.setTypes(types);
-        application.setQueries(queries);
-        application.setMutations(mutations);
-        application.setSubscriptions(subscriptions);
+        GraphQLDefinitionConverterResult result = new GraphQLDefinitionConverterResult();
+        result.setObjects(objects);
+        result.setEnums(enums);
+        result.setQueries(queries);
+        result.setMutations(mutations);
+        result.setSubscriptions(subscriptions);
 
-        return Collections.singletonList(application);
+        return result;
     }
 
-    /**
-     * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link GraphQLApplicationDto}.
-     *
-     * @param file             The file which will be converted to one or more {@link GraphQLApplicationDto}.
-     * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link GraphQLApplicationDto} based on the provided file.
-     */
     @Override
-    public List<GraphQLApplicationDto> convertFile(File file, boolean generateResponse) {
-        return null;
+    public GraphQLDefinitionConverterResult convertFile(File file) {
+        FileInputStream stream = null;
+        try {
+            stream = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            stream.read(data);
+            String schema = new String(data, "UTF-8");
+            return convertRaw(schema);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        } finally {
+            if(stream != null){
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-    /**
-     * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link GraphQLApplicationDto}.
-     *
-     * @param location         The location of the definition file
-     * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link GraphQLApplicationDto} based on the provided file.
-     */
     @Override
-    public List<GraphQLApplicationDto> convertRemote(String location, boolean generateResponse) {
-        return null;
+    public GraphQLDefinitionConverterResult convertRemote(String location) {
+        List<File> files = null;
+        try {
+            files = fileManager.uploadFiles(location);
+            GraphQLDefinitionConverterResult result = convertFile(files.get(0));
+            return result;
+        } catch (IOException e) {
+            LOGGER.error("Unable to download file file: " + location, e);
+            throw new IllegalStateException(e);
+        } finally {
+            if(files != null){
+                for(File uploadedFile : files){
+                    boolean deletionResult = fileManager.deleteFile(uploadedFile);
+                    if(deletionResult){
+                        LOGGER.debug("Deleted the following WADL file: " + uploadedFile.getName());
+                    } else {
+                        LOGGER.warn("Unable to delete the following WADL file: " + uploadedFile.getName());
+                    }
+
+                }
+            }
+        }
     }
+
 }

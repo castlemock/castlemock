@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-
 package com.castlemock.web.mock.graphql.model.project.service;
-
 
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.IdentifyGraphQLOperationInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.IdentifyGraphQLOperationOutput;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperationStatus;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLProjectInput;
+import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLProjectOutput;
+
+import java.util.Map;
 
 
 /**
@@ -30,19 +32,21 @@ import com.castlemock.core.mock.graphql.model.project.service.message.output.Ide
  * @since 1.19
  */
 @org.springframework.stereotype.Service
-public class IdentifyGraphQLOperationService extends AbstractGraphQLProjectService implements Service<IdentifyGraphQLOperationInput, IdentifyGraphQLOperationOutput> {
+public class ReadGraphQLProjectService extends AbstractGraphQLProjectService implements Service<ReadGraphQLProjectInput, ReadGraphQLProjectOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
      * a response based on the incoming serviceTask input
-     *
      * @param serviceTask The serviceTask that will be processed by the service
      * @return A result based on the processed incoming serviceTask
      * @see ServiceTask
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<IdentifyGraphQLOperationOutput> process(ServiceTask<IdentifyGraphQLOperationInput> serviceTask) {
-        return null;
+    public ServiceResult<ReadGraphQLProjectOutput> process(final ServiceTask<ReadGraphQLProjectInput> serviceTask) {
+        final ReadGraphQLProjectInput input = serviceTask.getInput();
+        final GraphQLProjectDto project = find(input.getGraphQLProjectId());
+
+        return createServiceResult(new ReadGraphQLProjectOutput(project));
     }
 }

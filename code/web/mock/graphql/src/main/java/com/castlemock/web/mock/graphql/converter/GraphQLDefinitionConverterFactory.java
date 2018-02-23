@@ -18,7 +18,10 @@
 package com.castlemock.web.mock.graphql.converter;
 
 import com.castlemock.core.mock.graphql.model.GraphQLDefinitionType;
+import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.graphql.converter.schema.SchemaGraphQLDefinitionConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * The {@link GraphQLDefinitionConverterFactory} is a factory class responsible for creating new {@link GraphQLDefinitionConverter}.
@@ -26,7 +29,11 @@ import com.castlemock.web.mock.graphql.converter.schema.SchemaGraphQLDefinitionC
  * @since 1.19
  * @see SchemaGraphQLDefinitionConverter
  */
+@Component
 public class GraphQLDefinitionConverterFactory {
+
+    @Autowired
+    private FileManager fileManager;
 
 
     /**
@@ -35,10 +42,10 @@ public class GraphQLDefinitionConverterFactory {
      * @return A {@link GraphQLDefinitionConverter} which matches the provided <code>converterType</code>
      * @throws IllegalArgumentException If not converter is matching the provided {@link GraphQLDefinitionType}
      */
-    public static GraphQLDefinitionConverter getConverter(final GraphQLDefinitionType converterType){
+    public GraphQLDefinitionConverter getConverter(final GraphQLDefinitionType converterType){
         switch (converterType){
             case SCHEMA:
-                return new SchemaGraphQLDefinitionConverter();
+                return new SchemaGraphQLDefinitionConverter(fileManager);
         }
 
         throw new IllegalArgumentException("Invalid converter type: " + converterType);

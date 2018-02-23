@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.graphql.web.mvc.controller;
+package com.castlemock.web.mock.graphql.web.mvc.controller.project;
 
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLProjectOutput;
 import com.castlemock.web.mock.graphql.web.mvc.command.application.GraphQLApplicationModifierCommand;
+import com.castlemock.web.mock.graphql.web.mvc.controller.AbstractGraphQLViewController;
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -32,11 +33,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @since 1.19
  */
 @Controller
-@RequestMapping("/web/graphQL/project")
+@RequestMapping("/web/graphql/project")
 public class GraphQLProjectController extends AbstractGraphQLViewController {
 
     private static final String PAGE = "mock/graphql/project/graphQLProject";
-    private static final String GraphQL_APPLICATION_MODIFIER_COMMAND = "graphQLApplicationModifierCommand";
+    private static final String GraphQL_QUERY_MODIFIER_COMMAND = "graphQLQueryModifierCommand";
     private static final String DELETE_GRAPHQL_APPLICATIONS = "delete";
     private static final String DELETE_GRAPHQLL_APPLICATIONS_COMMAND = "deleteGraphQLApplicationsCommand";
     private static final String DELETE_GRAPHQLL_APPLICATIONS_PAGE = "mock/graphql/application/deleteGraphQLApplications";
@@ -62,7 +63,7 @@ public class GraphQLProjectController extends AbstractGraphQLViewController {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_PROJECT, output.getGraphQLProject());
         model.addObject(GRAPHQL_OPERATION_STATUSES, getGraphQLOperationStatuses());
-        model.addObject(GraphQL_APPLICATION_MODIFIER_COMMAND, new GraphQLApplicationModifierCommand());
+        model.addObject(GraphQL_QUERY_MODIFIER_COMMAND, new GraphQLApplicationModifierCommand());
 
         if (UPLOAD_OUTCOME_SUCCESS.equals(upload)) {
             LOGGER.debug("Upload successful");

@@ -14,59 +14,41 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.graphql.model.project.dto;
 
-import org.dozer.Mapping;
+package com.castlemock.web.mock.graphql.converter;
+
+import com.castlemock.core.mock.graphql.model.project.dto.*;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class GraphQLApplicationDto {
+public class GraphQLDefinitionConverterResult {
 
-    @Mapping("id")
-    private String id;
 
-    @Mapping("name")
-    private String name;
+    private List<GraphQLObjectTypeDto> objects;
+    private List<GraphQLEnumTypeDto> enums;
+    private List<GraphQLQueryDto> queries;
+    private List<GraphQLMutationDto> mutations;
+    private List<GraphQLSubscriptionDto> subscriptions;
 
-    @Mapping("types")
-    private List<GraphQLTypeDto> types = new CopyOnWriteArrayList<GraphQLTypeDto>();
 
-    @Mapping("queries")
-    private List<GraphQLQueryDto> queries = new CopyOnWriteArrayList<GraphQLQueryDto>();
-
-    @Mapping("mutations")
-    private List<GraphQLMutationDto> mutations = new CopyOnWriteArrayList<GraphQLMutationDto>();
-
-    @Mapping("subscriptions")
-    private List<GraphQLSubscriptionDto> subscriptions = new CopyOnWriteArrayList<GraphQLSubscriptionDto>();
-
-    public String getId() {
-        return id;
+    public List<GraphQLObjectTypeDto> getObjects() {
+        return objects;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setObjects(List<GraphQLObjectTypeDto> objects) {
+        this.objects = objects;
     }
 
-    public String getName() {
-        return name;
+    public List<GraphQLEnumTypeDto> getEnums() {
+        return enums;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<GraphQLTypeDto> getTypes() {
-        return types;
-    }
-
-    public void setTypes(List<GraphQLTypeDto> types) {
-        this.types = types;
+    public void setEnums(List<GraphQLEnumTypeDto> enums) {
+        this.enums = enums;
     }
 
     public List<GraphQLQueryDto> getQueries() {

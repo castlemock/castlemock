@@ -17,6 +17,7 @@
 
 package com.castlemock.core.mock.graphql.model.project.dto;
 
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import org.dozer.Mapping;
 
 
@@ -33,6 +34,9 @@ public class GraphQLResultDto {
 
     @Mapping("listable")
     private Boolean listable;
+
+    @Mapping("attributeType")
+    private GraphQLAttributeType attributeType;
 
     public String getId() {
         return id;
@@ -66,4 +70,11 @@ public class GraphQLResultDto {
         this.listable = listable;
     }
 
+    public GraphQLAttributeType getAttributeType() {
+        return attributeType;
+    }
+
+    public void setAttributeType(GraphQLAttributeType attributeType) {
+        this.attributeType = attributeType;
+    }
 }

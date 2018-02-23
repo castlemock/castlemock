@@ -1,6 +1,5 @@
 package com.castlemock.web.mock.graphql.converter.query;
 
-import graphql.GraphQL;
 import graphql.language.*;
 import graphql.parser.Parser;
 import org.antlr.v4.runtime.misc.ParseCancellationException;

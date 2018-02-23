@@ -17,10 +17,7 @@
 
 package com.castlemock.web.mock.graphql.converter;
 
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
-
 import java.io.File;
-import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -29,32 +26,11 @@ import java.util.List;
 public interface GraphQLDefinitionConverter {
 
 
-    /**
-     * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link GraphQLApplicationDto}.
-     * @param file The file which will be converted to one or more {@link GraphQLApplicationDto}.
-     * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link GraphQLApplicationDto} based on the provided file.
-     */
-    List<GraphQLApplicationDto> convertRaw(String file, boolean generateResponse);
+    GraphQLDefinitionConverterResult convertRaw(String file);
 
-    /**
-     * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link GraphQLApplicationDto}.
-     * @param file The file which will be converted to one or more {@link GraphQLApplicationDto}.
-     * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link GraphQLApplicationDto} based on the provided file.
-     */
-    List<GraphQLApplicationDto> convertFile(File file, boolean generateResponse);
+    GraphQLDefinitionConverterResult convertFile(File file);
 
-    /**
-     * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link GraphQLApplicationDto}.
-     * @param location The location of the definition file
-     * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link GraphQLApplicationDto} based on the provided file.
-     */
-    List<GraphQLApplicationDto> convertRemote(String location, boolean generateResponse);
+    GraphQLDefinitionConverterResult convertRemote(String location);
 
 
 }

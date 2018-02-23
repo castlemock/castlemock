@@ -29,6 +29,7 @@ public class GraphQLResult implements Saveable<String> {
     private String name;
     private Boolean nullable;
     private Boolean listable;
+    private GraphQLAttributeType attributeType;
 
     @Override
     @XmlElement
@@ -68,4 +69,12 @@ public class GraphQLResult implements Saveable<String> {
         this.listable = listable;
     }
 
+    @XmlElement
+    public GraphQLAttributeType getAttributeType() {
+        return attributeType;
+    }
+
+    public void setAttributeType(GraphQLAttributeType attributeType) {
+        this.attributeType = attributeType;
+    }
 }
