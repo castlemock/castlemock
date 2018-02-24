@@ -32,8 +32,14 @@ public class GraphQLAttributeDto {
     @Mapping("name")
     private String name;
 
+    @Mapping("description")
+    private String description;
+
     @Mapping("typeName")
     private String typeName;
+
+    @Mapping("typeName")
+    private String typeId;
 
     @Mapping("nullable")
     private Boolean nullable;
@@ -61,6 +67,22 @@ public class GraphQLAttributeDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public String getTypeName() {

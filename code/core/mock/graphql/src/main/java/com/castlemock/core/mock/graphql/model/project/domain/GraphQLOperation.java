@@ -36,6 +36,7 @@ public abstract class GraphQLOperation implements Saveable<String> {
 
     private String id;
     private String name;
+    private String description;
     private long networkDelay;
     private HttpMethod httpMethod;
     private String forwardedEndpoint;
@@ -44,7 +45,6 @@ public abstract class GraphQLOperation implements Saveable<String> {
     private GraphQLOperationStatus status;
     private GraphQLResponseStrategy responseStrategy;
     private GraphQLResult result;
-    private List<GraphQLMockResponse> mockResponses = new CopyOnWriteArrayList<GraphQLMockResponse>();
     private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
     @Override
@@ -65,6 +65,15 @@ public abstract class GraphQLOperation implements Saveable<String> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @XmlElement
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @XmlElement
@@ -138,18 +147,6 @@ public abstract class GraphQLOperation implements Saveable<String> {
 
     public void setResult(GraphQLResult result) {
         this.result = result;
-    }
-
-
-
-    @XmlElementWrapper(name = "mockResponses")
-    @XmlElement(name = "mockResponse")
-    public List<GraphQLMockResponse> getMockResponses() {
-        return mockResponses;
-    }
-
-    public void setMockResponses(List<GraphQLMockResponse> mockResponses) {
-        this.mockResponses = mockResponses;
     }
 
     @XmlElementWrapper(name = "arguments")

@@ -18,28 +18,10 @@
 package com.castlemock.web.mock.graphql.converter;
 
 
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLMockResponseStatus;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLMockResponseDto;
-
 /**
  * @author Karl Dahlgren
  * @since 1.19
  */
 public abstract class AbstractGraphQLDefinitionConverter implements GraphQLDefinitionConverter {
-
-    protected static final String AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME = "Auto-generated mocked response";
-    protected static final int DEFAULT_RESPONSE_CODE = 200;
-
-    /**
-     * The method generates a default response.
-     * @return The newly generated {@link GraphQLMockResponseDto}.
-     */
-    protected GraphQLMockResponseDto generateResponse(){
-        GraphQLMockResponseDto mockResponse = new GraphQLMockResponseDto();
-        mockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
-        mockResponse.setHttpStatusCode(DEFAULT_RESPONSE_CODE);
-        mockResponse.setStatus(GraphQLMockResponseStatus.ENABLED);
-        return mockResponse;
-    }
 
 }

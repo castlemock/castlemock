@@ -80,8 +80,8 @@
 
         <h2 class="decorated"><span><spring:message code="graphql.graphqlproject.header.queries"/></span></h2>
         <c:choose>
-            <c:when test="${graphqlProject.queries.size() > 0}">
-                <form:form action="${graphql_resource_update_url}/" method="POST"  commandName="graphqlQueryModifierCommand">
+            <c:when test="${graphQLProject.queries.size() > 0}">
+                <form:form action="${graphql_resource_update_url}/" method="POST"  commandName="graphQLQueryModifierCommand">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover sortable">
                             <col width="10%">
@@ -90,12 +90,14 @@
                             <tr>
                                 <th><spring:message code="graphql.graphqlproject.column.selected"/></th>
                                 <th><spring:message code="graphql.graphqlproject.column.query"/></th>
+                                <th><spring:message code="graphql.graphqlproject.column.description"/></th>
                             </tr>
 
-                            <c:forEach items="${graphqlProject.queries}" var="graphqlQuery" varStatus="loopStatus">
+                            <c:forEach items="${graphQLProject.queries}" var="graphQLQuery" varStatus="loopStatus">
                                 <tr>
-                                    <td><form:checkbox path="graphqlQueriesIds" name="${graphqlQuery.id}" value="${graphqlQuery.id}"/></td>
-                                    <td><a href="<c:url value="/web/graphql/project/${graphqlProject.id}/query/${graphqlQuery.id}"/>">${graphqlQuery.name}</a></td>
+                                    <td><form:checkbox path="graphQLQueriesIds" name="${graphQLQuery.id}" value="${graphQLQuery.id}"/></td>
+                                    <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/query/${graphQLQuery.id}"/>">${graphQLQuery.name}</a></td>
+                                    <td>${graphQLQuery.description}</td>
                                 </tr>
                             </c:forEach>
                         </table>
@@ -106,24 +108,75 @@
             <c:otherwise>
                 <spring:message code="graphql.graphqlproject.label.noqueries"/>
             </c:otherwise>
-        </c:choose> 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        </c:choose>
+
+
+        <h2 class="decorated"><span><spring:message code="graphql.graphqlproject.header.mutations"/></span></h2>
+        <c:choose>
+            <c:when test="${graphQLProject.mutations.size() > 0}">
+                <form:form action="${graphql_resource_update_url}/" method="POST"  commandName="graphQLQueryModifierCommand">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover sortable">
+                            <col width="10%">
+                            <col width="40%">
+
+                            <tr>
+                                <th><spring:message code="graphql.graphqlproject.column.selected"/></th>
+                                <th><spring:message code="graphql.graphqlproject.column.query"/></th>
+                                <th><spring:message code="graphql.graphqlproject.column.description"/></th>
+                            </tr>
+
+                            <c:forEach items="${graphQLProject.queries}" var="graphQLMutation" varStatus="loopStatus">
+                                <tr>
+                                    <td><form:checkbox path="graphQLMutationIds" name="${graphQLMutation.id}" value="${graphQLMutation.id}"/></td>
+                                    <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/mutation/${graphQLMutation.id}"/>">${graphQLMutation.name}</a></td>
+                                    <td>${graphQLQuery.description}</td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form:form>
+            </c:when>
+            <c:otherwise>
+                <spring:message code="graphql.graphqlproject.label.nomutations"/>
+            </c:otherwise>
+        </c:choose>
+
+
+
+        <h2 class="decorated"><span><spring:message code="graphql.graphqlproject.header.subscriptions"/></span></h2>
+        <c:choose>
+            <c:when test="${graphQLProject.subscriptions.size() > 0}">
+                <form:form action="${graphql_resource_update_url}/" method="POST"  commandName="graphQLSubscriptionModifierCommand">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover sortable">
+                            <col width="10%">
+                            <col width="40%">
+
+                            <tr>
+                                <th><spring:message code="graphql.graphqlproject.column.selected"/></th>
+                                <th><spring:message code="graphql.graphqlproject.column.query"/></th>
+                                <th><spring:message code="graphql.graphqlproject.column.description"/></th>
+                            </tr>
+
+                            <c:forEach items="${graphQLProject.queries}" var="graphQLSubscription" varStatus="loopStatus">
+                                <tr>
+                                    <td><form:checkbox path="graphQLSubscriptionsIds" name="${graphQLSubscription.id}" value="${graphQLSubscription.id}"/></td>
+                                    <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/query/${graphQLSubscription.id}"/>">${graphQLSubscription.name}</a></td>
+                                    <td>${graphQLQuery.description}</td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form:form>
+            </c:when>
+            <c:otherwise>
+                <spring:message code="graphql.graphqlproject.label.nosubscriptions"/>
+            </c:otherwise>
+        </c:choose>
+
+
     </section>
 </div>

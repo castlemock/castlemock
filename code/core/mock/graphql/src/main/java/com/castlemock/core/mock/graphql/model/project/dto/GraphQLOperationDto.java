@@ -36,6 +36,9 @@ public class GraphQLOperationDto {
     @Mapping("name")
     private String name;
 
+    @Mapping("description")
+    private String description;
+
     @Mapping("responseStrategy")
     private GraphQLResponseStrategy responseStrategy;
 
@@ -56,9 +59,6 @@ public class GraphQLOperationDto {
 
     @Mapping("networkDelay")
     private Long networkDelay;
-
-    @Mapping("mockResponses")
-    private List<GraphQLMockResponseDto> mockResponses = new CopyOnWriteArrayList<GraphQLMockResponseDto>();
 
     @Mapping("arguments")
     private List<GraphQLArgumentDto> arguments = new CopyOnWriteArrayList<GraphQLArgumentDto>();
@@ -82,6 +82,14 @@ public class GraphQLOperationDto {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public GraphQLResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
@@ -96,14 +104,6 @@ public class GraphQLOperationDto {
 
     public void setStatus(GraphQLOperationStatus status) {
         this.status = status;
-    }
-
-    public List<GraphQLMockResponseDto> getMockResponses() {
-        return mockResponses;
-    }
-
-    public void setMockResponses(List<GraphQLMockResponseDto> mockResponses) {
-        this.mockResponses = mockResponses;
     }
 
     public List<GraphQLArgumentDto> getArguments() {

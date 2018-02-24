@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.domain.*;
+import com.castlemock.core.mock.graphql.model.project.dto.*;
 
 public interface GraphQLProjectRepository extends Repository<GraphQLProject, GraphQLProjectDto, String> {
 
@@ -30,5 +30,67 @@ public interface GraphQLProjectRepository extends Repository<GraphQLProject, Gra
      * @see GraphQLProjectDto
      */
     GraphQLProjectDto findGraphQLProjectWithName(String name);
+
+
+    /**
+     * Finds a {@link GraphQLQueryDto} with the provided ids.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLQueryId The id of the {@link GraphQLQuery}
+     * @return A {@link GraphQLQueryDto} that matches the search criteria.
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLQuery
+     * @see GraphQLQueryDto
+     */
+    GraphQLQueryDto findGraphQLQuery(String graphQLProjectId, String graphQLQueryId);
+
+
+    /**
+     * Finds a {@link GraphQLMutationDto} with the provided ids.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLQueryId The id of the {@link GraphQLMutation}
+     * @return A {@link GraphQLMutationDto} that matches the search criteria.
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLMutation
+     * @see GraphQLMutationDto
+     */
+    GraphQLMutationDto findGraphQLMutation(String graphQLProjectId, String graphQLQueryId);
+
+    /**
+     * Finds a {@link GraphQLSubscriptionDto} with the provided ids.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLQueryId The id of the {@link GraphQLSubscription}
+     * @return A {@link GraphQLSubscriptionDto} that matches the search criteria.
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLSubscription
+     * @see GraphQLSubscriptionDto
+     */
+    GraphQLSubscriptionDto findGraphQLSubscription(String graphQLProjectId, String graphQLQueryId);
+
+    /**
+     * Finds a {@link GraphQLObjectTypeDto} with the provided ids.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLQueryId The id of the {@link GraphQLObjectType}
+     * @return A {@link GraphQLObjectTypeDto} that matches the search criteria.
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLObjectType
+     * @see GraphQLObjectTypeDto
+     */
+    GraphQLObjectTypeDto findGraphQLObjectType(String graphQLProjectId, String graphQLQueryId);
+
+    /**
+     * Finds a {@link GraphQLEnumTypeDto} with the provided ids.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLQueryId The id of the {@link GraphQLEnumType}
+     * @return A {@link GraphQLEnumTypeDto} that matches the search criteria.
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLEnumType
+     * @see GraphQLEnumTypeDto
+     */
+    GraphQLEnumTypeDto findGraphQLEnumType(String graphQLProjectId, String graphQLQueryId);
 
 }

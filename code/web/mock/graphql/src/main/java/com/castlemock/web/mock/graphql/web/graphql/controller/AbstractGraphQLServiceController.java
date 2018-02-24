@@ -16,20 +16,19 @@
 
 package com.castlemock.web.mock.graphql.web.graphql.controller;
 
-import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
 import com.castlemock.core.mock.graphql.model.event.dto.GraphQLRequestDto;
 import com.castlemock.core.mock.graphql.model.event.dto.GraphQLResponseDto;
 import com.castlemock.core.mock.graphql.model.event.service.message.input.CreateGraphQLEventInput;
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperationStatus;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLOperationDto;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.IdentifyGraphQLOperationInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.IdentifyGraphQLOperationOutput;
-import com.castlemock.web.basis.support.CharsetUtility;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLProjectInput;
+import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLProjectOutput;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.mock.graphql.converter.query.GraphQLRequestQuery;
+import com.castlemock.web.mock.graphql.converter.query.QueryGraphQLConverter;
 import com.castlemock.web.mock.graphql.model.GraphQLException;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
@@ -40,8 +39,6 @@ import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,17 +49,19 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
 
     private static final String GRAPHQL = "graphql";
     private static final Logger LOGGER = Logger.getLogger(AbstractGraphQLServiceController.class);
+
+    private final QueryGraphQLConverter queryConverter = new QueryGraphQLConverter();
+    private final GraphQLResponseGenerator generator = new GraphQLResponseGenerator();
     
-    protected ResponseEntity process(final String projectId, final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity process(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
             final GraphQLRequestDto request = prepareRequest(projectId, httpServletRequest);
-            final IdentifyGraphQLOperationOutput output = serviceProcessor.process(new IdentifyGraphQLOperationInput(projectId, applicationId,
-                    request.getOperationIdentifier(), request.getUri(), request.getHttpMethod()));
-            final GraphQLOperationDto operation = output.getGraphQLOperation();
-            request.setOperationName(operation.getName());
-            return process(projectId, output.getGraphQLApplicationId(), operation, request, httpServletResponse);
+            final ReadGraphQLProjectOutput output = serviceProcessor.process(new ReadGraphQLProjectInput(projectId));
+            final GraphQLProjectDto project = output.getGraphQLProject();
+            request.setOperationName(project.getName());
+            return process(projectId, project, request, httpServletResponse);
         }catch(Exception exception){
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
             throw new GraphQLException(exception.getMessage());
@@ -98,21 +97,24 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
      * finding the appropriate response. The method is also responsible for creating
      * events and storing them.
      * @param graphQLProjectId The id of the project that the incoming request belong to
-     * @param graphQLApplicationId The id of the port that the incoming request belong to
-     * @param graphQLOperationDto The operation that contain the appropriate mocked response
+     * @param graphQLProject The operation that contain the appropriate mocked response
      * @param request The incoming request
      * @param httpServletResponse The outgoing HTTP servlet response
      * @return Returns the response as an String
      */
-    protected ResponseEntity process(final String graphQLProjectId, final String graphQLApplicationId, final GraphQLOperationDto graphQLOperationDto, final GraphQLRequestDto request, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity process(final String graphQLProjectId, final GraphQLProjectDto graphQLProject, final GraphQLRequestDto request, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(request, "Request cannot be null");
-        if(graphQLOperationDto == null){
-            throw new GraphQLException("Soap operation could not be found");
+        if(graphQLProject == null){
+            throw new GraphQLException("GraphQL project could not be found");
         }
         GraphQLEventDto event = null;
         GraphQLResponseDto response = null;
         try {
+            response = mockResponse(request, graphQLProjectId, graphQLProject);
+            event = new GraphQLEventDto("", request, graphQLProjectId, "", "");
+            /*
             event = new GraphQLEventDto(graphQLOperationDto.getName(), request, graphQLProjectId, graphQLApplicationId, graphQLOperationDto.getId());
+
             if (GraphQLOperationStatus.DISABLED.equals(graphQLOperationDto.getStatus())) {
                 throw new GraphQLException("The requested graphQL operation, " + graphQLOperationDto.getName() + ", is disabled");
             } else if (GraphQLOperationStatus.FORWARDED.equals(graphQLOperationDto.getStatus())) {
@@ -120,8 +122,9 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
             } else if (GraphQLOperationStatus.ECHO.equals(graphQLOperationDto.getStatus())) {
                 response = echoResponse(request);
             } else { // Status.MOCKED
-                response = mockResponse(request, graphQLProjectId, graphQLApplicationId, graphQLOperationDto);
+                response = mockResponse(request, graphQLProjectId, graphQLProject);
             }
+            */
 
             HttpHeaders responseHeaders = new HttpHeaders();
             for(HttpHeaderDto httpHeader : response.getHttpHeaders()){
@@ -130,6 +133,7 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
                 responseHeaders.put(httpHeader.getName(), headerValues);
             }
 
+            /*
             if(graphQLOperationDto.getSimulateNetworkDelay() &&
                     graphQLOperationDto.getNetworkDelay() >= 0){
                 try {
@@ -138,6 +142,7 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
                     LOGGER.error("Unable to simulate network delay", e);
                 }
             }
+            */
 
             return new ResponseEntity<String>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
         } finally{
@@ -152,42 +157,10 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
     /**
      * The method provides the functionality to forward request to a forwarded endpoint.
      * @param request The request that will be forwarded
-     * @param graphQLOperationDto The SOAP operation that is being executed
      * @return The response from the system that the request was forwarded to.
      */
-    private GraphQLResponseDto forwardRequest(final GraphQLRequestDto request, final String graphQLProjectId, final String graphQLPortId, final GraphQLOperationDto graphQLOperationDto){
-        if(demoMode){
-            // If the application is configured to run in demo mode, then use mocked response instead
-            return mockResponse(request, graphQLProjectId, graphQLPortId, graphQLOperationDto);
-        }
-
-        final GraphQLResponseDto response = new GraphQLResponseDto();
-        HttpURLConnection connection = null;
-        try {
-            connection = HttpMessageSupport.establishConnection(
-                    graphQLOperationDto.getForwardedEndpoint(),
-                    request.getHttpMethod(),
-                    request.getBody(),
-                    request.getHttpHeaders());
-
-
-            final List<ContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
-            final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
-            final String characterEncoding = CharsetUtility.parseHttpHeaders(responseHttpHeaders);
-            final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings, characterEncoding);
-            response.setBody(responseBody);
-            response.setHttpHeaders(responseHttpHeaders);
-            response.setHttpStatusCode(connection.getResponseCode());
-            response.setContentEncodings(encodings);
-            return response;
-        } catch (IOException exception) {
-            LOGGER.error("Unable to forward request", exception);
-            throw new GraphQLException("Unable to forward request to configured endpoint");
-        } finally {
-            if(connection != null){
-                connection.disconnect();
-            }
-        }
+    private GraphQLResponseDto forwardRequest(final GraphQLRequestDto request, final String graphQLProjectId, final String graphQLPortId, final GraphQLProjectDto graphQLProject){
+        return null;
     }
 
 
@@ -195,13 +168,19 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
      * The method is responsible for retrieving and returning a mocked response for the provided operation
      *
      * @param request
-     * @param graphQLOperationDto The SOAP operation that is being executed. The response is based on
+     * @param graphQLProject The SOAP operation that is being executed. The response is based on
      *                         the provided SOAP operation.
      * @return A mocked response based on the provided SOAP operation
      */
-    private GraphQLResponseDto mockResponse(GraphQLRequestDto request, final String graphQLProjectId, final String graphQLPortId, final GraphQLOperationDto graphQLOperationDto){
-       
+    private GraphQLResponseDto mockResponse(GraphQLRequestDto request, final String graphQLProjectId, final GraphQLProjectDto graphQLProject){
+        final List<GraphQLRequestQuery> queries = queryConverter.parseQuery(request.getBody());
+        final String output = generator.getResponse(graphQLProject, queries);
+
         final GraphQLResponseDto response = new GraphQLResponseDto();
+        response.setBody(output);
+        response.setContentType("application/json");
+        response.setHttpStatusCode(200);
+        response.setHttpHeaders(new ArrayList<>());
         return response;
 
     }

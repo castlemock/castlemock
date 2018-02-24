@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.graphql.web.mvc.command.application;
+package com.castlemock.web.mock.graphql.web.mvc.command.project;
 
 /**
- * The GraphQLApplicationModifierCommand is used when the user want to set the same status
+ * The GraphQLMutationModifierCommand is used when the user want to set the same status
  * to multiple GraphQL applications
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class GraphQLApplicationModifierCommand {
+public class GraphQLMutationModifierCommand {
 
     private String graphQLOperationStatus;
-    private String[] graphQLApplicationIds;
+    private String[] graphQLMutationIds;
 
     public String getGraphQLOperationStatus() {
         return graphQLOperationStatus;
@@ -35,11 +35,11 @@ public class GraphQLApplicationModifierCommand {
         this.graphQLOperationStatus = graphQLOperationStatus;
     }
 
-    public String[] getGraphQLApplicationIds() {
-        return graphQLApplicationIds;
+    public String[] getGraphQLMutationIds() {
+        return graphQLMutationIds;
     }
 
-    public void setGraphQLApplicationIds(String[] graphQLApplicationIds) {
-        this.graphQLApplicationIds = graphQLApplicationIds;
+    public void setGraphQLMutationIds(String[] graphQLMutationIds) {
+        this.graphQLMutationIds = graphQLMutationIds;
     }
 }

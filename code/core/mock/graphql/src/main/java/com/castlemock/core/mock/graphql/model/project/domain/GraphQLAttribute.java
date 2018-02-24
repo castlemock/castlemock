@@ -30,6 +30,8 @@ public class GraphQLAttribute implements Saveable<String> {
 
     private String id;
     private String name;
+    private String description;
+    private String typeId;
     private String typeName;
     private Boolean nullable;
     private Boolean listable;
@@ -54,6 +56,24 @@ public class GraphQLAttribute implements Saveable<String> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @XmlElement
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @XmlElement
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     @XmlElement

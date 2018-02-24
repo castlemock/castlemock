@@ -29,8 +29,14 @@ public class GraphQLArgumentDto {
     @Mapping("name")
     private String name;
 
-    @Mapping("objectType")
-    private String objectType;
+    @Mapping("description")
+    private String description;
+
+    @Mapping("typeName")
+    private String typeName;
+
+    @Mapping("typeId")
+    private String typeId;
 
     @Mapping("defaultValue")
     private Object defaultValue;
@@ -60,12 +66,28 @@ public class GraphQLArgumentDto {
         this.name = name;
     }
 
-    public String getObjectType() {
-        return objectType;
+    public String getDescription() {
+        return description;
     }
 
-    public void setObjectType(String objectType) {
-        this.objectType = objectType;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public Object getDefaultValue() {

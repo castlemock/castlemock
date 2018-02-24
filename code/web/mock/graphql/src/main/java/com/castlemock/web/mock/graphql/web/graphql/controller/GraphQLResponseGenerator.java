@@ -83,7 +83,7 @@ public class GraphQLResponseGenerator {
 
         GraphQLQueryDto operation = getQuery(query.getOperationName(), project);
         GraphQLResultDto result = operation.getResult();
-        GraphQLTypeDto type = getObject(result.getName(), project);
+        GraphQLTypeDto type = getObject(result.getTypeName(), project);
 
 
         generator.writeFieldName(query.getOperationName());

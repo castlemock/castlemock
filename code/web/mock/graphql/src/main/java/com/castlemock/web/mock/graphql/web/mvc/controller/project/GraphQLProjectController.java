@@ -18,7 +18,9 @@ package com.castlemock.web.mock.graphql.web.mvc.controller.project;
 
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLProjectOutput;
-import com.castlemock.web.mock.graphql.web.mvc.command.application.GraphQLApplicationModifierCommand;
+import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLMutationModifierCommand;
+import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLQueryModifierCommand;
+import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLSubscriptionModifierCommand;
 import com.castlemock.web.mock.graphql.web.mvc.controller.AbstractGraphQLViewController;
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,6 +40,8 @@ public class GraphQLProjectController extends AbstractGraphQLViewController {
 
     private static final String PAGE = "mock/graphql/project/graphQLProject";
     private static final String GraphQL_QUERY_MODIFIER_COMMAND = "graphQLQueryModifierCommand";
+    private static final String GraphQL_MUTATION_MODIFIER_COMMAND = "graphQLMutationModifierCommand";
+    private static final String GraphQL_SUBSCRIPTION_MODIFIER_COMMAND = "graphQLSubscriptionModifierCommand";
     private static final String DELETE_GRAPHQL_APPLICATIONS = "delete";
     private static final String DELETE_GRAPHQLL_APPLICATIONS_COMMAND = "deleteGraphQLApplicationsCommand";
     private static final String DELETE_GRAPHQLL_APPLICATIONS_PAGE = "mock/graphql/application/deleteGraphQLApplications";
@@ -63,7 +67,9 @@ public class GraphQLProjectController extends AbstractGraphQLViewController {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_PROJECT, output.getGraphQLProject());
         model.addObject(GRAPHQL_OPERATION_STATUSES, getGraphQLOperationStatuses());
-        model.addObject(GraphQL_QUERY_MODIFIER_COMMAND, new GraphQLApplicationModifierCommand());
+        model.addObject(GraphQL_QUERY_MODIFIER_COMMAND, new GraphQLQueryModifierCommand());
+        model.addObject(GraphQL_MUTATION_MODIFIER_COMMAND, new GraphQLMutationModifierCommand());
+        model.addObject(GraphQL_SUBSCRIPTION_MODIFIER_COMMAND, new GraphQLSubscriptionModifierCommand());
 
         if (UPLOAD_OUTCOME_SUCCESS.equals(upload)) {
             LOGGER.debug("Upload successful");

@@ -27,7 +27,9 @@ public class GraphQLArgument implements Saveable<String> {
 
     private String id;
     private String name;
-    private String objectType;
+    private String description;
+    private String typeName;
+    private String typeId;
     private Object defaultValue;
     private Boolean nullable;
     private Boolean listable;
@@ -54,12 +56,30 @@ public class GraphQLArgument implements Saveable<String> {
     }
 
     @XmlElement
-    public String getObjectType() {
-        return objectType;
+    public String getDescription() {
+        return description;
     }
 
-    public void setObjectType(String objectType) {
-        this.objectType = objectType;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @XmlElement
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    @XmlElement
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     @XmlElement

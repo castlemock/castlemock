@@ -26,7 +26,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GraphQLResult implements Saveable<String> {
 
     private String id;
-    private String name;
+    private String typeName;
+    private String typeId;
     private Boolean nullable;
     private Boolean listable;
     private GraphQLAttributeType attributeType;
@@ -43,12 +44,21 @@ public class GraphQLResult implements Saveable<String> {
     }
 
     @XmlElement
-    public String getName() {
-        return name;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    @XmlElement
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     @XmlElement

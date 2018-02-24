@@ -17,6 +17,7 @@
 
 package com.castlemock.web.mock.graphql.converter.schema;
 
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import com.castlemock.core.mock.graphql.model.project.dto.*;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.graphql.converter.AbstractGraphQLDefinitionConverter;
@@ -75,10 +76,19 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
             }
         }
 
+        for(GraphQLObjectTypeDto objectType : objects){
+            for(GraphQLAttributeDto attribute : objectType.getAttributes()){
+                String typeId = getId(attribute.getTypeName(), attribute.getAttributeType(), objects, enums);
+                attribute.setTypeId(typeId);
+            }
+        }
+
+
         if(graphQLSchema.getQueryType() != null){
             List<GraphQLFieldDefinition> fieldQueries = graphQLSchema.getQueryType().getFieldDefinitions();
             for(GraphQLFieldDefinition fieldQuery : fieldQueries){
                 GraphQLQueryDto query = GraphQLObjectTypeFactory.query(fieldQuery);
+                mapTypes(query, objects, enums);
                 queries.add(query);
             }
         }
@@ -87,6 +97,7 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
             List<GraphQLFieldDefinition> fieldMutations = graphQLSchema.getMutationType().getFieldDefinitions();
             for(GraphQLFieldDefinition fieldMutation : fieldMutations){
                 GraphQLMutationDto mutation = GraphQLObjectTypeFactory.mutation(fieldMutation);
+                mapTypes(mutation, objects, enums);
                 mutations.add(mutation);
             }
         }
@@ -95,6 +106,7 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
             List<GraphQLFieldDefinition> fieldSubscriptions = graphQLSchema.getSubscriptionType().getFieldDefinitions();
             for(GraphQLFieldDefinition fieldSubscription : fieldSubscriptions){
                 GraphQLSubscriptionDto subscription = GraphQLObjectTypeFactory.subscription(fieldSubscription);
+                mapTypes(subscription, objects, enums);
                 subscriptions.add(subscription);
             }
         }
@@ -107,6 +119,40 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         result.setSubscriptions(subscriptions);
 
         return result;
+    }
+
+    private void mapTypes(final GraphQLOperationDto operation,
+                          final List<GraphQLObjectTypeDto> objects,
+                          final List<GraphQLEnumTypeDto> enums){
+        final GraphQLResultDto result = operation.getResult();
+        final String typeId = getId(result.getTypeName(), result.getAttributeType(), objects, enums);
+        result.setTypeId(typeId);
+
+        for(GraphQLArgumentDto argument : operation.getArguments()){
+            String argumentTypeId = getId(argument.getTypeName(), argument.getAttributeType(), objects, enums);
+            argument.setTypeId(argumentTypeId);
+        }
+    }
+
+
+    private String getId(final String typeName,
+                          final GraphQLAttributeType attributeType,
+                          final List<GraphQLObjectTypeDto> objects,
+                          final List<GraphQLEnumTypeDto> enums){
+        if(GraphQLAttributeType.OBJECT_TYPE.equals(attributeType)){
+            for(GraphQLObjectTypeDto otherObjectType : objects){
+                if(typeName.equals(otherObjectType.getName())){
+                    return otherObjectType.getId();
+                }
+            }
+        } else if(GraphQLAttributeType.ENUM.equals(attributeType)){
+            for(GraphQLEnumTypeDto enumType : enums){
+                if(typeName.equals(enumType.getName())){
+                    return enumType.getId();
+                }
+            }
+        }
+        return null;
     }
 
     @Override

@@ -26,8 +26,11 @@ public class GraphQLResultDto {
     @Mapping("id")
     private String id;
 
-    @Mapping("name")
-    private String name;
+    @Mapping("typeName")
+    private String typeName;
+
+    @Mapping("typeId")
+    private String typeId;
 
     @Mapping("nullable")
     private Boolean nullable;
@@ -46,12 +49,20 @@ public class GraphQLResultDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public Boolean getNullable() {

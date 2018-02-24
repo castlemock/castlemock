@@ -22,6 +22,7 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLResponseStra
 import com.castlemock.core.mock.graphql.model.project.dto.*;
 import graphql.language.*;
 import graphql.schema.*;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -41,8 +42,11 @@ public class GraphQLObjectTypeFactory {
 
 
     public static GraphQLMutationDto mutation(GraphQLFieldDefinition definition){
-        GraphQLMutationDto mutation = new GraphQLMutationDto();
+        final String id = generateId();
+        final GraphQLMutationDto mutation = new GraphQLMutationDto();
+        mutation.setId(id);
         mutation.setName(definition.getName());
+        mutation.setDescription(definition.getDescription());
         mutation.setResponseStrategy(GraphQLResponseStrategy.RANDOM);
 
         for(GraphQLArgument argument : definition.getArguments()){
@@ -57,8 +61,11 @@ public class GraphQLObjectTypeFactory {
     }
 
     public static GraphQLQueryDto query(GraphQLFieldDefinition definition){
-        GraphQLQueryDto query = new GraphQLQueryDto();
+        final String id = generateId();
+        final GraphQLQueryDto query = new GraphQLQueryDto();
+        query.setId(id);
         query.setName(definition.getName());
+        query.setDescription(definition.getDescription());
         query.setResponseStrategy(GraphQLResponseStrategy.RANDOM);
 
         for(GraphQLArgument argument : definition.getArguments()){
@@ -73,8 +80,11 @@ public class GraphQLObjectTypeFactory {
     }
 
     public static GraphQLSubscriptionDto subscription(GraphQLFieldDefinition definition){
-        GraphQLSubscriptionDto subscription = new GraphQLSubscriptionDto();
+        final String id = generateId();
+        final GraphQLSubscriptionDto subscription = new GraphQLSubscriptionDto();
+        subscription.setId(id);
         subscription.setName(definition.getName());
+        subscription.setDescription(definition.getDescription());
         subscription.setResponseStrategy(GraphQLResponseStrategy.RANDOM);
 
         for(GraphQLArgument argument : definition.getArguments()){
@@ -102,6 +112,8 @@ public class GraphQLObjectTypeFactory {
 
 
 
+
+
         return null;
     }
 
@@ -112,8 +124,12 @@ public class GraphQLObjectTypeFactory {
             return null;
         }
 
+
+        final String id = generateId();
         final GraphQLObjectTypeDto graphQLObjectType = new GraphQLObjectTypeDto();
         graphQLObjectType.setName(name);
+        graphQLObjectType.setId(id);
+        graphQLObjectType.setDescription(type.getDescription());
 
         for(GraphQLFieldDefinition definition : type.getFieldDefinitions()){
             GraphQLAttributeDto attribute = getAttribute(definition);
@@ -129,8 +145,11 @@ public class GraphQLObjectTypeFactory {
             return null;
         }
 
+        final String id = generateId();
         final GraphQLEnumTypeDto graphQLEnumType = new GraphQLEnumTypeDto();
+        graphQLEnumType.setId(id);
         graphQLEnumType.setName(name);
+        graphQLEnumType.setDescription(type.getDescription());
 
         for(EnumValueDefinition definition : type.getDefinition().getEnumValueDefinitions()){
             GraphQLEnumValueDefinitionDto enumValueDefinition = new GraphQLEnumValueDefinitionDto();
@@ -147,8 +166,10 @@ public class GraphQLObjectTypeFactory {
         final boolean listable = isListable(outputType);
         final GraphQLAttributeType attributeType = getAttributeType(type);
 
+        final String id = generateId();
         final GraphQLResultDto result = new GraphQLResultDto();
-        result.setName(type.getName());
+        result.setId(id);
+        result.setTypeName(type.getName());
         result.setListable(listable);
         result.setNullable(nullable);
         result.setAttributeType(attributeType);
@@ -162,9 +183,12 @@ public class GraphQLObjectTypeFactory {
         final boolean listable = isListable(type);
         final GraphQLType coreType = getType(definition.getType());
 
+        final String id = generateId();
         final GraphQLAttributeDto attribute = new GraphQLAttributeDto();
         final GraphQLAttributeType attributeType = getAttributeType(coreType);
         attribute.setName(definition.getName());
+        attribute.setId(id);
+        attribute.setDescription(definition.getDescription());
         attribute.setNullable(nullable);
         attribute.setListable(listable);
         attribute.setAttributeType(attributeType);
@@ -190,15 +214,18 @@ public class GraphQLObjectTypeFactory {
         final boolean listable = isListable(type);
         final GraphQLType coreType = getType(argument.getType());
         final GraphQLAttributeType attributeType = getAttributeType(coreType);
+        final String id = generateId();
 
         graphQLArgument.setName(argument.getName());
+        graphQLArgument.setId(id);
         graphQLArgument.setNullable(nullable);
+        graphQLArgument.setDescription(argument.getDescription());
         graphQLArgument.setListable(listable);
         graphQLArgument.setAttributeType(attributeType);
         graphQLArgument.setDefaultValue(argument.getDefaultValue());
 
         if(GraphQLAttributeType.OBJECT_TYPE.equals(attributeType)){
-            graphQLArgument.setObjectType(coreType.getName());
+            graphQLArgument.setTypeName(coreType.getName());
         }
 
         return graphQLArgument;
@@ -261,36 +288,13 @@ public class GraphQLObjectTypeFactory {
         return type;
     }
 
-    private static boolean isNullable(final Type type){
-        if(type instanceof ListType){
-            Type wrappedType = ((ListType) type).getType();
-            return isNullable(wrappedType);
-        }
-
-        return !(type instanceof GraphQLNonNull);
+    /**
+     * The method is responsible for generating new ID for the entity. The
+     * ID will be six character and contain both characters and numbers.
+     * @return A generated ID
+     */
+    protected static String generateId(){
+        return RandomStringUtils.random(6, true, true);
     }
-
-    private static boolean isListable(final Type type){
-        if(type instanceof NonNullType){
-            Type wrappedType = ((NonNullType) type).getType();
-            return isListable(wrappedType);
-        }
-
-        return (type instanceof GraphQLList);
-    }
-
-    private static Type getType(final Type type){
-        if(type instanceof ListType){
-            Type wrappedType = ((ListType) type).getType();
-            return getType(wrappedType);
-        }
-        if(type instanceof NonNullType){
-            Type wrappedType = ((NonNullType) type).getType();
-            return getType(wrappedType);
-        }
-
-        return type;
-    }
-
 
 }

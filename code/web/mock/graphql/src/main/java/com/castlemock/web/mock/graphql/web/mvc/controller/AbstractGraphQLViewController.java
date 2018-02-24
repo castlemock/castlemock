@@ -33,6 +33,11 @@ public abstract class AbstractGraphQLViewController extends AbstractViewControll
     protected static final String GRAPHQL_PROJECT_ID = "graphQLProjectId";
 
     protected static final String GRAPHQL_PROJECT = "graphQLProject";
+    protected static final String GRAPHQL_QUERY = "graphQLQuery";
+    protected static final String GRAPHQL_MUTATION = "graphQLMutation";
+    protected static final String GRAPHQL_SUBSCRIPTION = "graphQLSubscription";
+    protected static final String GRAPHQL_OBJECT_TYPE = "graphQLObjectType";
+    protected static final String GRAPHQL_ENUM_TYPE = "graphQLEnumType";
     protected static final String GRAPHQL_OPERATION_STATUSES = "graphQLOperationStatus";
 
 
