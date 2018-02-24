@@ -79,7 +79,14 @@
                                         <td>${graphQLArgument.name}</td>
                                     </c:otherwise>
                                 </c:choose>
-                                <td>${graphQLArgument.attributeType}</td>
+                                <td>
+                                    <spring:message code="graphql.type.attributetype.${graphQLArgument.attributeType}"/>
+                                    <c:choose>
+                                        <c:when test="${graphQLArgument.listable == true}">
+                                            []
+                                        </c:when>
+                                    </c:choose>
+                                </td>
                                 <td>${graphQLArgument.nullable}</td>
                                 <td>${graphQLArgument.defaultValue}</td>
                                 <td>${graphQLArgument.description}</td>

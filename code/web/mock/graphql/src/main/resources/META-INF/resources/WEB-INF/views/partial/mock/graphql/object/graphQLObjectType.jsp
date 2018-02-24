@@ -78,7 +78,12 @@
                                         <td>${graphQLAttribute.name}</td>
                                     </c:otherwise>
                                 </c:choose>
-                                <td>${graphQLAttribute.attributeType}</td>
+                                <td>
+                                    <spring:message code="graphql.type.attributetype.${graphQLAttribute.attributeType}"/>
+                                    <c:choose>
+                                        <c:when test="${graphQLAttribute.listable == true}">[ ]</c:when>
+                                    </c:choose>
+                                </td>
                                 <td>${graphQLAttribute.nullable}</td>
                                 <td>${graphQLAttribute.description}</td>
                             </tr>
