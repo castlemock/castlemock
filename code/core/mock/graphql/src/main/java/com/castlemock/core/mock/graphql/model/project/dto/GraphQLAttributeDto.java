@@ -38,7 +38,7 @@ public class GraphQLAttributeDto {
     @Mapping("typeName")
     private String typeName;
 
-    @Mapping("typeName")
+    @Mapping("typeId")
     private String typeId;
 
     @Mapping("nullable")

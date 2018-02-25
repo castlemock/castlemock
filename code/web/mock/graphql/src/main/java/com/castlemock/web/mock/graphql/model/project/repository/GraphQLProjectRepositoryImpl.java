@@ -18,22 +18,40 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.*;
 import com.castlemock.core.mock.graphql.model.project.dto.*;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
 public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject, GraphQLProjectDto, String> implements GraphQLProjectRepository {
 
+    @Autowired
+    private MessageSource messageSource;
     @Value(value = "${graphql.project.file.directory}")
     private String graphQLProjectFileDirectory;
     @Value(value = "${graphql.project.file.extension}")
     private String graphQLProjectFileExtension;
+
+    private static final String SLASH = "/";
+    private static final String GRAPHQL = "graphql";
+    private static final String PROJECT = "project";
+    private static final String COMMA = ", ";
+    private static final String GRAPHQL_TYPE = "GraphQL";
+    private static final String QUERY = "query";
+    private static final String MUTATION = "mutation";
+    private static final String SUBSCRIPTION = "subscription";
+    private static final String OBJECT_TYPE = "object";
+    private static final String ENUM_TYPE = "enum";
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -77,14 +95,166 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
 
     /**
      * The method provides the functionality to search in the repository with a {@link SearchQuery}
-     *
      * @param query The search query
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
     public List<SearchResult> search(SearchQuery query) {
-        return null;
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        for(GraphQLProject project : collection.values()){
+            List<SearchResult> restProjectSearchResult = searchProject(project, query);
+            searchResults.addAll(restProjectSearchResult);
+        }
+        return searchResults;
     }
+
+    /**
+     * Search through a GraphQL project and all its resources
+     * @param project The GraphQL project which will be searched
+     * @param query The provided search query
+     * @return A list of search results that matches the provided query
+     */
+    private List<SearchResult> searchProject(final GraphQLProject project, final SearchQuery query){
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        if(SearchValidator.validate(project.getName(), query.getQuery())){
+            final String projectType = messageSource.getMessage("general.type.project", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
+            searchResult.setTitle(project.getName());
+            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + project.getId());
+            searchResult.setDescription(GRAPHQL_TYPE + COMMA + projectType);
+            searchResults.add(searchResult);
+        }
+
+        for(GraphQLQuery graphQLQuery : project.getQueries()){
+            List<SearchResult> results = searchQuery(project, graphQLQuery, query);
+            searchResults.addAll(results);
+        }
+
+        for(GraphQLMutation graphQLMutation : project.getMutations()){
+            List<SearchResult> results = searchMutation(project, graphQLMutation, query);
+            searchResults.addAll(results);
+        }
+
+        for(GraphQLSubscription graphQLSubscription : project.getSubscriptions()){
+            List<SearchResult> results = searchSubscription(project, graphQLSubscription, query);
+            searchResults.addAll(results);
+        }
+
+        for(GraphQLObjectType graphQLObjectType : project.getObjects()){
+            List<SearchResult> results = searchObject(project, graphQLObjectType, query);
+            searchResults.addAll(results);
+        }
+
+        for(GraphQLEnumType graphQLEnumType : project.getEnums()){
+            List<SearchResult> results = searchEnum(project, graphQLEnumType, query);
+            searchResults.addAll(results);
+        }
+        return searchResults;
+    }
+
+
+    /**
+     * Search through a GraphQL query and all its resources
+     * @param graphQLProject The GraphQL project which will be searched
+     * @param graphQLQuery The GraphQL application which will be searched
+     * @param query The provided search query
+     * @return A list of search results that matches the provided query
+     */
+    private List<SearchResult> searchQuery(final GraphQLProject graphQLProject, final GraphQLQuery graphQLQuery, final SearchQuery query){
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        if(SearchValidator.validate(graphQLQuery.getName(), query.getQuery())){
+            final String queryType = messageSource.getMessage("graphql.type.query", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
+            searchResult.setTitle(graphQLQuery.getName());
+            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + graphQLProject.getId() + SLASH + QUERY + SLASH + graphQLQuery.getId());
+            searchResult.setDescription(GRAPHQL_TYPE + COMMA + queryType);
+            searchResults.add(searchResult);
+        }
+        return searchResults;
+    }
+
+    /**
+     * Search through a GraphQL mutation and all its resources
+     * @param graphQLProject The GraphQL project which will be searched
+     * @param graphQLMutation The GraphQL mutation which will be searched
+     * @param query The provided search query
+     * @return A list of search results that matches the provided query
+     */
+    private List<SearchResult> searchMutation(final GraphQLProject graphQLProject, final GraphQLMutation graphQLMutation, final SearchQuery query){
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        if(SearchValidator.validate(graphQLMutation.getName(), query.getQuery())){
+            final String type = messageSource.getMessage("graphql.type.mutation", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
+            searchResult.setTitle(graphQLMutation.getName());
+            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + graphQLProject.getId() + SLASH + MUTATION + SLASH + graphQLMutation.getId());
+            searchResult.setDescription(GRAPHQL_TYPE + COMMA + type);
+            searchResults.add(searchResult);
+        }
+        return searchResults;
+    }
+
+    /**
+     * Search through a GraphQL subscription and all its resources
+     * @param graphQLProject The GraphQL project which will be searched
+     * @param graphQLSubscription The GraphQL subscription which will be searched
+     * @param query The provided search query
+     * @return A list of search results that matches the provided query
+     */
+    private List<SearchResult> searchSubscription(final GraphQLProject graphQLProject, final GraphQLSubscription graphQLSubscription, final SearchQuery query){
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        if(SearchValidator.validate(graphQLSubscription.getName(), query.getQuery())){
+            final String queryType = messageSource.getMessage("graphql.type.subscription", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
+            searchResult.setTitle(graphQLSubscription.getName());
+            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + graphQLProject.getId() + SLASH + SUBSCRIPTION + SLASH + graphQLSubscription.getId());
+            searchResult.setDescription(GRAPHQL_TYPE + COMMA + queryType);
+            searchResults.add(searchResult);
+        }
+        return searchResults;
+    }
+
+
+    /**
+     * Search through a GraphQL subscription and all its resources
+     * @param graphQLProject The GraphQL project which will be searched
+     * @param graphQLObjectType The GraphQL subscription which will be searched
+     * @param query The provided search query
+     * @return A list of search results that matches the provided query
+     */
+    private List<SearchResult> searchObject(final GraphQLProject graphQLProject, final GraphQLObjectType graphQLObjectType, final SearchQuery query){
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        if(SearchValidator.validate(graphQLObjectType.getName(), query.getQuery())){
+            final String queryType = messageSource.getMessage("graphql.type.object", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
+            searchResult.setTitle(graphQLObjectType.getName());
+            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + graphQLProject.getId() + SLASH + OBJECT_TYPE + SLASH + graphQLObjectType.getId());
+            searchResult.setDescription(GRAPHQL_TYPE + COMMA + queryType);
+            searchResults.add(searchResult);
+        }
+        return searchResults;
+    }
+
+    /**
+     * Search through a GraphQL enum and all its resources
+     * @param graphQLProject The GraphQL project which will be searched
+     * @param graphQLEnumType The GraphQL enum which will be searched
+     * @param query The provided search query
+     * @return A list of search results that matches the provided query
+     */
+    private List<SearchResult> searchEnum(final GraphQLProject graphQLProject, final GraphQLEnumType graphQLEnumType, final SearchQuery query){
+        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
+        if(SearchValidator.validate(graphQLEnumType.getName(), query.getQuery())){
+            final String queryType = messageSource.getMessage("graphql.type.enum", null , LocaleContextHolder.getLocale());
+            final SearchResult searchResult = new SearchResult();
+            searchResult.setTitle(graphQLEnumType.getName());
+            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + graphQLProject.getId() + SLASH + ENUM_TYPE + SLASH + graphQLEnumType.getId());
+            searchResult.setDescription(GRAPHQL_TYPE + COMMA + queryType);
+            searchResults.add(searchResult);
+        }
+        return searchResults;
+    }
+
+
 
 
 

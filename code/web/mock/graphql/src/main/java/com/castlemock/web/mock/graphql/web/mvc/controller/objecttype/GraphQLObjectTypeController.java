@@ -37,7 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/web/graphql/project")
 public class GraphQLObjectTypeController extends AbstractGraphQLViewController {
 
-    private static final String PAGE = "mock/graphql/object/graphQLObjectType";
+    private static final String PAGE = "mock/graphql/objecttype/graphQLObjectType";
     private static final Logger LOGGER = Logger.getLogger(GraphQLObjectTypeController.class);
     /**
      * Retrieves a specific project with a project id

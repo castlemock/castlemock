@@ -21,14 +21,14 @@
     <ol class="breadcrumb">
         <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
         <li><a href="${context}/web/graphql/project/${graphQLProjectId}"><spring:message code="graphql.breadcrumb.project"/></a></li>
-        <li class="active"><spring:message code="graphql.graphqlobject.header.query" arguments="${graphQLObjectType.name}"/></li>
+        <li class="active"><spring:message code="graphql.graphqlobject.header.object" arguments="${graphQLObjectType.name}"/></li>
     </ol>
 </div>
 <div class="container">
     <section>
         <div class="content-top">
             <div class="title">
-                <h1><spring:message code="graphql.graphqlobject.header.query" arguments="${graphQLObjectType.name}"/></h1>
+                <h1><spring:message code="graphql.graphqlobject.header.object" arguments="${graphQLObjectType.name}"/></h1>
             </div>
             <div class="menu" align="right">
 
@@ -67,19 +67,19 @@
 
                         <c:forEach items="${graphQLObjectType.attributes}" var="graphQLAttribute" varStatus="loopStatus">
                             <tr>
-                                <c:choose>
-                                    <c:when test="${graphQLAttribute.attributeType == 'OBJECT_TYPE'}">
-                                        <td><a href="<c:url value="/web/graphql/project/${graphQLProjectId}/object/${graphQLAttribute.typeId}"/>">${graphQLAttribute.name}</a></td>
-                                    </c:when>
-                                    <c:when test="${graphQLAttribute.attributeType == 'ENUM'}">
-                                        <td><a href="<c:url value="/web/graphql/project/${graphQLProjectId}/enum/${graphQLAttribute.typeId}"/>">${graphQLAttribute.name}</a></td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td>${graphQLAttribute.name}</td>
-                                    </c:otherwise>
-                                </c:choose>
+                                <td>${graphQLAttribute.name}</td>
                                 <td>
-                                    <spring:message code="graphql.type.attributetype.${graphQLAttribute.attributeType}"/>
+                                    <c:choose>
+                                        <c:when test="${graphQLAttribute.attributeType == 'OBJECT_TYPE'}">
+                                            <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/object/${graphQLAttribute.typeId}"/>">${graphQLAttribute.typeName}</a>
+                                        </c:when>
+                                        <c:when test="${graphQLAttribute.attributeType == 'ENUM'}">
+                                            <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/enum/${graphQLAttribute.typeId}"/>">${graphQLAttribute.typeName}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <spring:message code="graphql.type.attributetype.${graphQLAttribute.attributeType}"/>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <c:choose>
                                         <c:when test="${graphQLAttribute.listable == true}">[ ]</c:when>
                                     </c:choose>

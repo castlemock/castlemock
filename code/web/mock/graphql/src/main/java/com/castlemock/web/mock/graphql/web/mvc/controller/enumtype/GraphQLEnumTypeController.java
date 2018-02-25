@@ -37,7 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/web/graphql/project")
 public class GraphQLEnumTypeController extends AbstractGraphQLViewController {
 
-    private static final String PAGE = "mock/graphql/enum/graphQLEnumType";
+    private static final String PAGE = "mock/graphql/enumtype/graphQLEnumType";
     private static final Logger LOGGER = Logger.getLogger(GraphQLEnumTypeController.class);
     /**
      * Retrieves a specific project with a project id

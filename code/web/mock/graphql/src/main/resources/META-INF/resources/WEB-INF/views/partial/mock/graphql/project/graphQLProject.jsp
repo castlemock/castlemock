@@ -131,7 +131,46 @@
             </c:otherwise>
         </c:choose>
 
+        <h2 class="decorated"><span><spring:message code="graphql.graphqlproject.header.types"/></span></h2>
+        <c:choose>
+            <c:when test="${graphQLProject.objects.size() > 0 || graphQLProject.enums.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover sortable">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="40%">
 
+                        <tr>
+                            <th><spring:message code="graphql.graphqlproject.column.name"/></th>
+                            <th><spring:message code="graphql.graphqlproject.column.type"/></th>
+                            <th><spring:message code="graphql.graphqlproject.column.description"/></th>
+                        </tr>
+
+                        <c:forEach items="${graphQLProject.objects}" var="graphQLObject" varStatus="loopStatus">
+                            <tr>
+                                <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/object/${graphQLObject.id}"/>">${graphQLObject.name}</a></td>
+                                <td><spring:message code="graphql.graphqlproject.column.type.object"/></td>
+                                <td>${graphQLObject.description}</td>
+                            </tr>
+                        </c:forEach>
+
+                        <c:forEach items="${graphQLProject.enums}" var="graphQLEnum" varStatus="loopStatus">
+                            <tr>
+                                <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/enum/${graphQLEnum.id}"/>">${graphQLEnum.name}</a></td>
+                                <td><spring:message code="graphql.graphqlproject.column.type.enum"/></td>
+                                <td>${graphQLEnum.description}</td>
+                            </tr>
+                        </c:forEach>
+
+                    </table>
+                </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+            </c:when>
+            <c:otherwise>
+                <spring:message code="graphql.graphqlproject.label.nooperations"/>
+            </c:otherwise>
+        </c:choose>
 
     </section>
 </div>
