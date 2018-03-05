@@ -3,58 +3,38 @@ package com.castlemock.core.mock.graphql.model.project.service.message.output;
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLOperationDto;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestQueryDto;
+import java.util.Map;
 
 public class IdentifyGraphQLOperationOutput implements Output {
 
     @NotNull
-    private String graphQLProjectId;
-
+    private GraphQLProjectDto graphQLProject;
     @NotNull
-    private String graphQLApplicationId;
+    private Map<GraphQLRequestQueryDto, GraphQLOperationDto> operation;
 
-    @NotNull
-    private String graphQLOperationId;
 
-    @NotNull
-    private GraphQLOperationDto graphQLOperation;
+    public IdentifyGraphQLOperationOutput(GraphQLProjectDto graphQLProject,
+                                          Map<GraphQLRequestQueryDto, GraphQLOperationDto> operation) {
+        this.graphQLProject = graphQLProject;
+        this.operation = operation;
 
-    public IdentifyGraphQLOperationOutput(String graphQLProjectId, String graphQLApplicationId,
-                                          String graphQLOperationId, GraphQLOperationDto graphQLOperation) {
-        this.graphQLProjectId = graphQLProjectId;
-        this.graphQLApplicationId = graphQLApplicationId;
-        this.graphQLOperationId = graphQLOperationId;
-        this.graphQLOperation = graphQLOperation;
     }
 
-    public String getGraphQLProjectId() {
-        return graphQLProjectId;
+    public GraphQLProjectDto getGraphQLProject() {
+        return graphQLProject;
     }
 
-    public void setGraphQLProjectId(String graphQLProjectId) {
-        this.graphQLProjectId = graphQLProjectId;
+    public void setGraphQLProject(GraphQLProjectDto graphQLProject) {
+        this.graphQLProject = graphQLProject;
     }
 
-    public String getGraphQLApplicationId() {
-        return graphQLApplicationId;
+    public Map<GraphQLRequestQueryDto, GraphQLOperationDto> getOperation() {
+        return operation;
     }
 
-    public void setGraphQLApplicationId(String graphQLApplicationId) {
-        this.graphQLApplicationId = graphQLApplicationId;
-    }
-
-    public String getGraphQLOperationId() {
-        return graphQLOperationId;
-    }
-
-    public void setGraphQLOperationId(String graphQLOperationId) {
-        this.graphQLOperationId = graphQLOperationId;
-    }
-
-    public GraphQLOperationDto getGraphQLOperation() {
-        return graphQLOperation;
-    }
-
-    public void setGraphQLOperation(GraphQLOperationDto graphQLOperation) {
-        this.graphQLOperation = graphQLOperation;
+    public void setOperation(Map<GraphQLRequestQueryDto, GraphQLOperationDto> operation) {
+        this.operation = operation;
     }
 }

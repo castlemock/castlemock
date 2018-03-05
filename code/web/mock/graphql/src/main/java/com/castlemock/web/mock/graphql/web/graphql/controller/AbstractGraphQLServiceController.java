@@ -22,12 +22,14 @@ import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
 import com.castlemock.core.mock.graphql.model.event.dto.GraphQLRequestDto;
 import com.castlemock.core.mock.graphql.model.event.dto.GraphQLResponseDto;
 import com.castlemock.core.mock.graphql.model.event.service.message.input.CreateGraphQLEventInput;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperationStatus;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLOperationDto;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLProjectInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLProjectOutput;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestQueryDto;
+import com.castlemock.core.mock.graphql.model.project.service.message.input.IdentifyGraphQLOperationInput;
+import com.castlemock.core.mock.graphql.model.project.service.message.output.IdentifyGraphQLOperationOutput;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.mvc.controller.AbstractController;
-import com.castlemock.web.mock.graphql.converter.query.GraphQLRequestQuery;
 import com.castlemock.web.mock.graphql.converter.query.QueryGraphQLConverter;
 import com.castlemock.web.mock.graphql.model.GraphQLException;
 import com.google.common.base.Preconditions;
@@ -42,6 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public abstract class AbstractGraphQLServiceController extends AbstractController {
@@ -58,10 +61,12 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
             final GraphQLRequestDto request = prepareRequest(projectId, httpServletRequest);
-            final ReadGraphQLProjectOutput output = serviceProcessor.process(new ReadGraphQLProjectInput(projectId));
+
+            final IdentifyGraphQLOperationOutput output =
+                    serviceProcessor.process(new IdentifyGraphQLOperationInput(projectId, request.getQueries()));
             final GraphQLProjectDto project = output.getGraphQLProject();
-            request.setOperationName(project.getName());
-            return process(projectId, project, request, httpServletResponse);
+            final Map<GraphQLRequestQueryDto, GraphQLOperationDto> operations = output.getOperation();
+            return process(project, operations, request, httpServletResponse);
         }catch(Exception exception){
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
             throw new GraphQLException(exception.getMessage());
@@ -79,7 +84,7 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
         final GraphQLRequestDto request = new GraphQLRequestDto();
         final String body = HttpMessageSupport.getBody(httpServletRequest);
 
-        final String identifier = "";
+        final List<GraphQLRequestQueryDto> queries = queryConverter.parseQuery(body);
         final String serviceUri = httpServletRequest.getRequestURI().replace(getContext() + SLASH + MOCK + SLASH + GRAPHQL + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
         final List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 
@@ -87,7 +92,7 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
         request.setUri(serviceUri);
         request.setHttpMethod(HttpMethod.valueOf(httpServletRequest.getMethod()));
         request.setBody(body);
-        request.setOperationIdentifier(identifier);
+        request.setQueries(queries);
         request.setContentType(httpServletRequest.getContentType());
         return request;
     }
@@ -96,22 +101,35 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
      * The process method is responsible for processing the incoming request and
      * finding the appropriate response. The method is also responsible for creating
      * events and storing them.
-     * @param graphQLProjectId The id of the project that the incoming request belong to
      * @param graphQLProject The operation that contain the appropriate mocked response
      * @param request The incoming request
      * @param httpServletResponse The outgoing HTTP servlet response
      * @return Returns the response as an String
      */
-    protected ResponseEntity process(final String graphQLProjectId, final GraphQLProjectDto graphQLProject, final GraphQLRequestDto request, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity process(final GraphQLProjectDto graphQLProject,
+                                     final Map<GraphQLRequestQueryDto, GraphQLOperationDto> operations,
+                                     final GraphQLRequestDto request,
+                                     final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(request, "Request cannot be null");
         if(graphQLProject == null){
             throw new GraphQLException("GraphQL project could not be found");
         }
         GraphQLEventDto event = null;
         GraphQLResponseDto response = null;
+
+        for(Map.Entry<GraphQLRequestQueryDto, GraphQLOperationDto> operationEntry : operations.entrySet()){
+            GraphQLOperationDto operation = operationEntry.getValue();
+
+            if(operation.getStatus().equals(GraphQLOperationStatus.MOCKED)){
+
+            }
+        }
+
+
+
         try {
-            response = mockResponse(request, graphQLProjectId, graphQLProject);
-            event = new GraphQLEventDto("", request, graphQLProjectId, "", "");
+            response = mockResponse(request, graphQLProject, operations);
+            event = new GraphQLEventDto("", request, graphQLProject.getId(), "", "");
             /*
             event = new GraphQLEventDto(graphQLOperationDto.getName(), request, graphQLProjectId, graphQLApplicationId, graphQLOperationDto.getId());
 
@@ -172,9 +190,10 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
      *                         the provided SOAP operation.
      * @return A mocked response based on the provided SOAP operation
      */
-    private GraphQLResponseDto mockResponse(GraphQLRequestDto request, final String graphQLProjectId, final GraphQLProjectDto graphQLProject){
-        final List<GraphQLRequestQuery> queries = queryConverter.parseQuery(request.getBody());
-        final String output = generator.getResponse(graphQLProject, queries);
+    private GraphQLResponseDto mockResponse(final GraphQLRequestDto request,
+                                            final GraphQLProjectDto graphQLProject,
+                                            final Map<GraphQLRequestQueryDto, GraphQLOperationDto> operations){
+        final String output = generator.getResponse(graphQLProject, new ArrayList<>(operations.keySet()));
 
         final GraphQLResponseDto response = new GraphQLResponseDto();
         response.setBody(output);
@@ -184,29 +203,4 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
         return response;
 
     }
-
-    /**
-     * The method will echo the incoming {@link GraphQLRequestDto} and create a {@link GraphQLResponseDto}
-     * with the same body, content type and headers.
-     *
-     * @param request The incoming {@link GraphQLRequestDto} that will be echoed back to the
-     *                service consumer.
-     * @return A {@link GraphQLResponseDto} based on the provided {@link GraphQLRequestDto}.
-     * @since 1.14
-     */
-    private GraphQLResponseDto echoResponse(final GraphQLRequestDto request) {
-        final List<HttpHeaderDto> headers = new ArrayList<HttpHeaderDto>();
-        final HttpHeaderDto contentTypeHeader = new HttpHeaderDto();
-        contentTypeHeader.setName(CONTENT_TYPE);
-        contentTypeHeader.setValue(request.getContentType());
-        headers.add(contentTypeHeader);
-
-        final GraphQLResponseDto response = new GraphQLResponseDto();
-        response.setBody(request.getBody());
-        response.setContentType(request.getContentType());
-        response.setHttpHeaders(headers);
-        response.setHttpStatusCode(DEFAULT_ECHO_RESPONSE_CODE);
-        return response;
-    }
-
 }

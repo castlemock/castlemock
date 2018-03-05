@@ -18,7 +18,7 @@ package com.castlemock.web.mock.graphql;
 
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
 import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverterResult;
-import com.castlemock.web.mock.graphql.converter.query.GraphQLRequestQuery;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
 import com.castlemock.web.mock.graphql.converter.query.QueryGraphQLConverter;
 import com.castlemock.web.mock.graphql.converter.schema.SchemaGraphQLDefinitionConverter;
 import com.castlemock.web.mock.graphql.web.graphql.controller.GraphQLResponseGenerator;

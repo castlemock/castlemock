@@ -18,8 +18,6 @@ package com.castlemock.web.mock.graphql.web.graphql.controller;
 
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import com.castlemock.core.mock.graphql.model.project.dto.*;
-import com.castlemock.web.mock.graphql.converter.query.GraphQLRequestField;
-import com.castlemock.web.mock.graphql.converter.query.GraphQLRequestQuery;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
@@ -35,7 +33,7 @@ public class GraphQLResponseGenerator {
     private Random random = new Random();
 
     public String getResponse(final GraphQLProjectDto project,
-                              final List<GraphQLRequestQuery> queries){
+                              final List<GraphQLRequestQueryDto> queries){
         OutputStream output = new OutputStream()
         {
             private StringBuilder string = new StringBuilder();
@@ -57,7 +55,7 @@ public class GraphQLResponseGenerator {
             generator.writeStartObject();
             generator.writeObjectFieldStart("data");
 
-            for(GraphQLRequestQuery query : queries){
+            for(GraphQLRequestQueryDto query : queries){
                 printQuery(query, project, generator);
             }
 
@@ -77,7 +75,7 @@ public class GraphQLResponseGenerator {
         return null;
     }
 
-    private void printQuery(final GraphQLRequestQuery query,
+    private void printQuery(final GraphQLRequestQueryDto query,
                             final GraphQLProjectDto project,
                             final JsonGenerator generator) throws IOException {
 
@@ -103,7 +101,7 @@ public class GraphQLResponseGenerator {
     }
 
     private void printType(final GraphQLTypeDto type,
-                           final List<GraphQLRequestField> fields,
+                           final List<GraphQLRequestFieldDto> fields,
                            final GraphQLProjectDto project,
                            final JsonGenerator generator) throws IOException {
 
@@ -117,11 +115,11 @@ public class GraphQLResponseGenerator {
     }
 
     private void printObjectType(final GraphQLObjectTypeDto type,
-                                 final List<GraphQLRequestField> fields,
+                                 final List<GraphQLRequestFieldDto> fields,
                                  final GraphQLProjectDto project,
                                  final JsonGenerator generator) throws IOException{
         if(fields != null && !fields.isEmpty()){
-            for(GraphQLRequestField field : fields){
+            for(GraphQLRequestFieldDto field : fields){
                 GraphQLAttributeDto attribute = getAttribute(field.getName(), type);
                 printAttribute(attribute, field.getFields(), project, generator);
             }
@@ -145,7 +143,7 @@ public class GraphQLResponseGenerator {
 
 
     private void printAttribute(final GraphQLAttributeDto attribute,
-                               final List<GraphQLRequestField> fields,
+                               final List<GraphQLRequestFieldDto> fields,
                             final GraphQLProjectDto project,
                             final JsonGenerator generator) throws IOException {
         GraphQLAttributeType type = attribute.getAttributeType();
@@ -192,7 +190,7 @@ public class GraphQLResponseGenerator {
     }
 
     private void printObjectType(final GraphQLAttributeDto attribute,
-                                 final List<GraphQLRequestField> fields,
+                                 final List<GraphQLRequestFieldDto> fields,
                                  final GraphQLProjectDto project,
                                  final JsonGenerator generator) throws IOException {
         GraphQLTypeDto type = getObject(attribute.getTypeName(),project);

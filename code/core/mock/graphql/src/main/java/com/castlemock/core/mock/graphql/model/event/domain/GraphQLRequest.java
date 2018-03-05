@@ -18,6 +18,7 @@ package com.castlemock.core.mock.graphql.model.event.domain;
 
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -35,8 +36,7 @@ public class GraphQLRequest {
     private String contentType;
     private String uri;
     private HttpMethod httpMethod;
-    private String operationName;
-    private String operationIdentifier;
+    private List<GraphQLRequestQuery> queries;
     private List<HttpHeader> httpHeaders;
 
     @XmlElement
@@ -75,22 +75,15 @@ public class GraphQLRequest {
         this.httpMethod = httpMethod;
     }
 
-    @XmlElement
-    public String getOperationName() {
-        return operationName;
+
+    @XmlElementWrapper(name = "queries")
+    @XmlElement(name = "query")
+    public List<GraphQLRequestQuery> getQueries() {
+        return queries;
     }
 
-    public void setOperationName(String operationName) {
-        this.operationName = operationName;
-    }
-
-    @XmlElement
-    public String getOperationIdentifier() {
-        return operationIdentifier;
-    }
-
-    public void setOperationIdentifier(String operationIdentifier) {
-        this.operationIdentifier = operationIdentifier;
+    public void setQueries(List<GraphQLRequestQuery> queries) {
+        this.queries = queries;
     }
 
     @XmlElementWrapper(name = "httpHeaders")

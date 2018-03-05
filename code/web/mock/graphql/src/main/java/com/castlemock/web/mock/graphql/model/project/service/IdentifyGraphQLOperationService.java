@@ -21,8 +21,15 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLOperationDto;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestQueryDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.IdentifyGraphQLOperationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.IdentifyGraphQLOperationOutput;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -43,6 +50,29 @@ public class IdentifyGraphQLOperationService extends AbstractGraphQLProjectServi
      */
     @Override
     public ServiceResult<IdentifyGraphQLOperationOutput> process(ServiceTask<IdentifyGraphQLOperationInput> serviceTask) {
-        return null;
+        final IdentifyGraphQLOperationInput input = serviceTask.getInput();
+        final GraphQLProjectDto project = find(input.getGraphQLProjectId());
+        final List<GraphQLRequestQueryDto> requestQueries = input.getQueries();
+        final Map<GraphQLRequestQueryDto, GraphQLOperationDto> mapping = new HashMap<>();
+
+        mapOperations(requestQueries, project.getQueries(), mapping);
+        mapOperations(requestQueries, project.getMutations(), mapping);
+        mapOperations(requestQueries, project.getSubscriptions(), mapping);
+
+        final IdentifyGraphQLOperationOutput output = new IdentifyGraphQLOperationOutput(project, mapping);
+        return createServiceResult(output);
+    }
+
+    private void mapOperations(final List<GraphQLRequestQueryDto> requestQueries,
+                               final List<? extends GraphQLOperationDto> operations,
+                               final Map<GraphQLRequestQueryDto, GraphQLOperationDto> mapping){
+        for(GraphQLRequestQueryDto requestQuery : requestQueries){
+            for(GraphQLOperationDto operation : operations){
+                if(requestQuery.getOperationName().equals(operation.getName())){
+                    mapping.put(requestQuery, operation);
+                    break;
+                }
+            }
+        }
     }
 }

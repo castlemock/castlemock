@@ -18,6 +18,7 @@ package com.castlemock.core.mock.graphql.model.event.dto;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestQueryDto;
 import org.dozer.Mapping;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,11 +43,8 @@ public class GraphQLRequestDto {
     @Mapping("httpMethod")
     private HttpMethod httpMethod;
 
-    @Mapping("operationName")
-    private String operationName;
-
-    @Mapping("operationIdentifier")
-    private String operationIdentifier;
+    @Mapping("queries")
+    private List<GraphQLRequestQueryDto> queries;
 
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders;
@@ -83,20 +81,12 @@ public class GraphQLRequestDto {
         this.httpMethod = httpMethod;
     }
 
-    public String getOperationName() {
-        return operationName;
+    public List<GraphQLRequestQueryDto> getQueries() {
+        return queries;
     }
 
-    public void setOperationName(String operationName) {
-        this.operationName = operationName;
-    }
-
-    public String getOperationIdentifier() {
-        return operationIdentifier;
-    }
-
-    public void setOperationIdentifier(String operationIdentifier) {
-        this.operationIdentifier = operationIdentifier;
+    public void setQueries(List<GraphQLRequestQueryDto> queries) {
+        this.queries = queries;
     }
 
     public List<HttpHeaderDto> getHttpHeaders() {

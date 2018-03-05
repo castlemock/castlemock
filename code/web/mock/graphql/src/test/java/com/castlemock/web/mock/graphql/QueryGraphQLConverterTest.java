@@ -17,7 +17,7 @@
 
 package com.castlemock.web.mock.graphql;
 
-import com.castlemock.web.mock.graphql.converter.query.GraphQLRequestQuery;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
 import com.castlemock.web.mock.graphql.converter.query.QueryGraphQLConverter;
 import org.junit.Assert;
 import org.junit.Test;
