@@ -45,14 +45,17 @@ public class GraphQLEnumTypeController extends AbstractGraphQLViewController {
      * @return Project that matches the provided project id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/enum/{enumTypeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/application/{applicationId}/enum/{enumTypeId}", method = RequestMethod.GET)
     public ModelAndView getProject(@PathVariable final String projectId,
+                                   @PathVariable final String applicationId,
                                    @PathVariable final String enumTypeId) {
-        final ReadGraphQLEnumTypeOutput output =  serviceProcessor.process(new ReadGraphQLEnumTypeInput(projectId, enumTypeId));
+        final ReadGraphQLEnumTypeOutput output =
+                serviceProcessor.process(new ReadGraphQLEnumTypeInput(projectId, applicationId, enumTypeId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_ENUM_TYPE, output.getGraphQLEnumType());
         model.addObject(GRAPHQL_PROJECT_ID, projectId);
+        model.addObject(GRAPHQL_APPLICATION_ID, applicationId);
         model.addObject(GRAPHQL_OPERATION_STATUSES, getGraphQLOperationStatuses());
 
         return model;

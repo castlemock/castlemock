@@ -44,7 +44,8 @@ public class ReadGraphQLEnumTypeService extends AbstractGraphQLProjectService im
     @Override
     public ServiceResult<ReadGraphQLEnumTypeOutput> process(ServiceTask<ReadGraphQLEnumTypeInput> serviceTask) {
         final ReadGraphQLEnumTypeInput input = serviceTask.getInput();
-        final GraphQLEnumTypeDto enumType = repository.findGraphQLEnumType(input.getGraphQLProjectId(), input.getGraphQLEnumTypeId());
+        final GraphQLEnumTypeDto enumType = repository.findGraphQLEnumType(
+                input.getGraphQLProjectId(), input.getGraphQLApplicationId(), input.getGraphQLEnumTypeId());
         return createServiceResult(new ReadGraphQLEnumTypeOutput(enumType));
     }
 }

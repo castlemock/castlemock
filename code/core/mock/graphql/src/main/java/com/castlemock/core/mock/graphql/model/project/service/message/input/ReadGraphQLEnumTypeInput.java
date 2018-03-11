@@ -28,10 +28,15 @@ public class ReadGraphQLEnumTypeInput implements Input {
     @NotNull
     private String graphQLProjectId;
     @NotNull
+    private String graphQLApplicationId;
+    @NotNull
     private String graphQLEnumTypeId;
 
-    public ReadGraphQLEnumTypeInput(final String graphQLProjectId, final String graphQLEnumTypeId) {
+    public ReadGraphQLEnumTypeInput(final String graphQLProjectId,
+                                    final String graphQLApplicationId,
+                                    final String graphQLEnumTypeId) {
         this.graphQLProjectId = graphQLProjectId;
+        this.graphQLApplicationId = graphQLApplicationId;
         this.graphQLEnumTypeId = graphQLEnumTypeId;
     }
 
@@ -41,6 +46,14 @@ public class ReadGraphQLEnumTypeInput implements Input {
 
     public void setGraphQLProjectId(String graphQLProjectId) {
         this.graphQLProjectId = graphQLProjectId;
+    }
+
+    public String getGraphQLApplicationId() {
+        return graphQLApplicationId;
+    }
+
+    public void setGraphQLApplicationId(String graphQLApplicationId) {
+        this.graphQLApplicationId = graphQLApplicationId;
     }
 
     public String getGraphQLEnumTypeId() {

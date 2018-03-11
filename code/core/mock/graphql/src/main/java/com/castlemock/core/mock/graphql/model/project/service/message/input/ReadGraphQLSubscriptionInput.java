@@ -28,10 +28,15 @@ public class ReadGraphQLSubscriptionInput implements Input {
     @NotNull
     private String graphQLProjectId;
     @NotNull
+    private String graphQLApplicationId;
+    @NotNull
     private String graphQLSubscriptionId;
 
-    public ReadGraphQLSubscriptionInput(final String graphQLProjectId, final String graphQLSubscriptionId) {
+    public ReadGraphQLSubscriptionInput(final String graphQLProjectId,
+                                        final String graphQLApplicationId,
+                                        final String graphQLSubscriptionId) {
         this.graphQLProjectId = graphQLProjectId;
+        this.graphQLApplicationId = graphQLApplicationId;
         this.graphQLSubscriptionId = graphQLSubscriptionId;
     }
 
@@ -41,6 +46,14 @@ public class ReadGraphQLSubscriptionInput implements Input {
 
     public void setGraphQLProjectId(String graphQLProjectId) {
         this.graphQLProjectId = graphQLProjectId;
+    }
+
+    public String getGraphQLApplicationId() {
+        return graphQLApplicationId;
+    }
+
+    public void setGraphQLApplicationId(String graphQLApplicationId) {
+        this.graphQLApplicationId = graphQLApplicationId;
     }
 
     public String getGraphQLSubscriptionId() {

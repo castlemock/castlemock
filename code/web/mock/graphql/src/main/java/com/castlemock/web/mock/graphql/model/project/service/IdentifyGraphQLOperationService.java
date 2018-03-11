@@ -21,8 +21,8 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLOperationDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestQueryDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.IdentifyGraphQLOperationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.IdentifyGraphQLOperationOutput;
@@ -51,15 +51,16 @@ public class IdentifyGraphQLOperationService extends AbstractGraphQLProjectServi
     @Override
     public ServiceResult<IdentifyGraphQLOperationOutput> process(ServiceTask<IdentifyGraphQLOperationInput> serviceTask) {
         final IdentifyGraphQLOperationInput input = serviceTask.getInput();
-        final GraphQLProjectDto project = find(input.getGraphQLProjectId());
+        final GraphQLApplicationDto application =
+                repository.findGraphQLApplication(input.getGraphQLProjectId(), input.getGraphQLApplicationId());
         final List<GraphQLRequestQueryDto> requestQueries = input.getQueries();
         final Map<GraphQLRequestQueryDto, GraphQLOperationDto> mapping = new HashMap<>();
 
-        mapOperations(requestQueries, project.getQueries(), mapping);
-        mapOperations(requestQueries, project.getMutations(), mapping);
-        mapOperations(requestQueries, project.getSubscriptions(), mapping);
+        mapOperations(requestQueries, application.getQueries(), mapping);
+        mapOperations(requestQueries, application.getMutations(), mapping);
+        mapOperations(requestQueries, application.getSubscriptions(), mapping);
 
-        final IdentifyGraphQLOperationOutput output = new IdentifyGraphQLOperationOutput(project, mapping);
+        final IdentifyGraphQLOperationOutput output = new IdentifyGraphQLOperationOutput(application, mapping);
         return createServiceResult(output);
     }
 

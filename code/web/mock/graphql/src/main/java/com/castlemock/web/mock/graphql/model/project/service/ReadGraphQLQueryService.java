@@ -44,7 +44,8 @@ public class ReadGraphQLQueryService extends AbstractGraphQLProjectService imple
     @Override
     public ServiceResult<ReadGraphQLQueryOutput> process(ServiceTask<ReadGraphQLQueryInput> serviceTask) {
         final ReadGraphQLQueryInput input = serviceTask.getInput();
-        final GraphQLQueryDto query = repository.findGraphQLQuery(input.getGraphQLProjectId(), input.getGraphQLQueryId());
+        final GraphQLQueryDto query =
+                repository.findGraphQLQuery(input.getGraphQLProjectId(), input.getGraphQLApplicationId(), input.getGraphQLQueryId());
         return createServiceResult(new ReadGraphQLQueryOutput(query));
     }
 }

@@ -31,60 +31,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @XmlRootElement
 public class GraphQLProject extends Project {
 
-    private List<GraphQLObjectType> objects = new CopyOnWriteArrayList<GraphQLObjectType>();
-    private List<GraphQLEnumType> enums = new CopyOnWriteArrayList<GraphQLEnumType>();
-    private List<GraphQLQuery> queries = new CopyOnWriteArrayList<GraphQLQuery>();
-    private List<GraphQLMutation> mutations = new CopyOnWriteArrayList<GraphQLMutation>();
-    private List<GraphQLSubscription> subscriptions = new CopyOnWriteArrayList<GraphQLSubscription>();
+    private List<GraphQLApplication> applications
+            = new CopyOnWriteArrayList<GraphQLApplication>();
 
-    @XmlElementWrapper(name = "objects")
-    @XmlElement(name = "object")
-    public List<GraphQLObjectType> getObjects() {
-        return objects;
+    @XmlElementWrapper(name = "applications")
+    @XmlElement(name = "application")
+    public List<GraphQLApplication> getApplications() {
+        return applications;
     }
 
-    public void setObjects(List<GraphQLObjectType> objects) {
-        this.objects = objects;
-    }
-
-    @XmlElementWrapper(name = "enums")
-    @XmlElement(name = "enum")
-    public List<GraphQLEnumType> getEnums() {
-        return enums;
-    }
-
-    public void setEnums(List<GraphQLEnumType> enums) {
-        this.enums = enums;
-    }
-
-
-    @XmlElementWrapper(name = "queries")
-    @XmlElement(name = "query")
-    public List<GraphQLQuery> getQueries() {
-        return queries;
-    }
-
-    public void setQueries(List<GraphQLQuery> queries) {
-        this.queries = queries;
-    }
-
-    @XmlElementWrapper(name = "mutations")
-    @XmlElement(name = "mutation")
-    public List<GraphQLMutation> getMutations() {
-        return mutations;
-    }
-
-    public void setMutations(List<GraphQLMutation> mutations) {
-        this.mutations = mutations;
-    }
-
-    @XmlElementWrapper(name = "subscriptions")
-    @XmlElement(name = "subscription")
-    public List<GraphQLSubscription> getSubscriptions() {
-        return subscriptions;
-    }
-
-    public void setSubscriptions(List<GraphQLSubscription> subscriptions) {
-        this.subscriptions = subscriptions;
+    public void setApplications(List<GraphQLApplication> applications) {
+        this.applications = applications;
     }
 }

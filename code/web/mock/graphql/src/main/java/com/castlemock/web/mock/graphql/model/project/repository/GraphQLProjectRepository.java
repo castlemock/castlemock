@@ -31,10 +31,23 @@ public interface GraphQLProjectRepository extends Repository<GraphQLProject, Gra
      */
     GraphQLProjectDto findGraphQLProjectWithName(String name);
 
+    /**
+     * Finds a {@link GraphQLApplicationDto} with the provided id.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @return A {@link GraphQLApplicationDto} that matches the search criteria.
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     */
+    GraphQLApplicationDto findGraphQLApplication(String graphQLProjectId,
+                                     String graphQLApplicationId);
 
     /**
      * Finds a {@link GraphQLQueryDto} with the provided ids.
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId The id of the {@link GraphQLQuery}
      * @return A {@link GraphQLQueryDto} that matches the search criteria.
      * @see GraphQLProject
@@ -42,12 +55,15 @@ public interface GraphQLProjectRepository extends Repository<GraphQLProject, Gra
      * @see GraphQLQuery
      * @see GraphQLQueryDto
      */
-    GraphQLQueryDto findGraphQLQuery(String graphQLProjectId, String graphQLQueryId);
+    GraphQLQueryDto findGraphQLQuery(String graphQLProjectId,
+                                     String graphQLApplicationId,
+                                     String graphQLQueryId);
 
 
     /**
      * Finds a {@link GraphQLMutationDto} with the provided ids.
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId The id of the {@link GraphQLMutation}
      * @return A {@link GraphQLMutationDto} that matches the search criteria.
      * @see GraphQLProject
@@ -55,11 +71,14 @@ public interface GraphQLProjectRepository extends Repository<GraphQLProject, Gra
      * @see GraphQLMutation
      * @see GraphQLMutationDto
      */
-    GraphQLMutationDto findGraphQLMutation(String graphQLProjectId, String graphQLQueryId);
+    GraphQLMutationDto findGraphQLMutation(String graphQLProjectId,
+                                           String graphQLApplicationId,
+                                           String graphQLQueryId);
 
     /**
      * Finds a {@link GraphQLSubscriptionDto} with the provided ids.
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId The id of the {@link GraphQLSubscription}
      * @return A {@link GraphQLSubscriptionDto} that matches the search criteria.
      * @see GraphQLProject
@@ -67,11 +86,14 @@ public interface GraphQLProjectRepository extends Repository<GraphQLProject, Gra
      * @see GraphQLSubscription
      * @see GraphQLSubscriptionDto
      */
-    GraphQLSubscriptionDto findGraphQLSubscription(String graphQLProjectId, String graphQLQueryId);
+    GraphQLSubscriptionDto findGraphQLSubscription(String graphQLProjectId,
+                                                   String graphQLApplicationId,
+                                                   String graphQLQueryId);
 
     /**
      * Finds a {@link GraphQLObjectTypeDto} with the provided ids.
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId The id of the {@link GraphQLObjectType}
      * @return A {@link GraphQLObjectTypeDto} that matches the search criteria.
      * @see GraphQLProject
@@ -79,11 +101,14 @@ public interface GraphQLProjectRepository extends Repository<GraphQLProject, Gra
      * @see GraphQLObjectType
      * @see GraphQLObjectTypeDto
      */
-    GraphQLObjectTypeDto findGraphQLObjectType(String graphQLProjectId, String graphQLQueryId);
+    GraphQLObjectTypeDto findGraphQLObjectType(String graphQLProjectId,
+                                               String graphQLApplicationId,
+                                               String graphQLQueryId);
 
     /**
      * Finds a {@link GraphQLEnumTypeDto} with the provided ids.
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId The id of the {@link GraphQLEnumType}
      * @return A {@link GraphQLEnumTypeDto} that matches the search criteria.
      * @see GraphQLProject
@@ -91,6 +116,60 @@ public interface GraphQLProjectRepository extends Repository<GraphQLProject, Gra
      * @see GraphQLEnumType
      * @see GraphQLEnumTypeDto
      */
-    GraphQLEnumTypeDto findGraphQLEnumType(String graphQLProjectId, String graphQLQueryId);
+    GraphQLEnumTypeDto findGraphQLEnumType(String graphQLProjectId,
+                                           String graphQLApplicationId,
+                                           String graphQLQueryId);
 
+
+    /*
+     * UPDATE OPERATIONS
+     */
+
+
+    /**
+     * The method updates an already existing {@link GraphQLApplicationDto}
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param application The updated {@link GraphQLApplicationDto)
+     * @return The updated version of the {@link GraphQLApplicationDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     */
+    GraphQLApplicationDto updateGraphQLApplication(String graphQLProjectId,
+                                                   String graphQLApplicationId,
+                                                   GraphQLApplicationDto application);
+
+    /*
+     * SAVE OPERATIONS
+     */
+
+    /**
+     * The method adds a new {@link GraphQLApplication} to a {@link GraphQLProject} and then saves
+     * the {@link GraphQLProject} to the file system.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationDto The dto instance of {@link GraphQLApplication} that will be added to the {@link GraphQLProject}
+     * @return The saved {@link GraphQLApplicationDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     */
+    GraphQLApplicationDto saveGraphQLApplication(String graphQLProjectId, GraphQLApplicationDto graphQLApplicationDto);
+
+    /*
+     * DELETE OPERATIONS
+     */
+
+    /**
+     * The method deletes a {@link GraphQLApplication}
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication} that will be deleted
+     * @return The deleted {@link GraphQLApplicationDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     */
+    GraphQLApplicationDto deleteGraphQLApplication(String graphQLProjectId, String graphQLApplicationId);
 }

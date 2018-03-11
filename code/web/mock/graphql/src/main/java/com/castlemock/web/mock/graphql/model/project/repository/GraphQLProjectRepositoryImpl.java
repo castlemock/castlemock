@@ -23,12 +23,14 @@ import com.castlemock.core.mock.graphql.model.project.domain.*;
 import com.castlemock.core.mock.graphql.model.project.dto.*;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
+import graphql.GraphQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -102,8 +104,8 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
     public List<SearchResult> search(SearchQuery query) {
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
         for(GraphQLProject project : collection.values()){
-            List<SearchResult> restProjectSearchResult = searchProject(project, query);
-            searchResults.addAll(restProjectSearchResult);
+            List<SearchResult> graphQLProjectSearchResult = searchProject(project, query);
+            searchResults.addAll(graphQLProjectSearchResult);
         }
         return searchResults;
     }
@@ -125,30 +127,33 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
             searchResults.add(searchResult);
         }
 
-        for(GraphQLQuery graphQLQuery : project.getQueries()){
-            List<SearchResult> results = searchQuery(project, graphQLQuery, query);
-            searchResults.addAll(results);
+        for(GraphQLApplication application : project.getApplications()){
+            for(GraphQLQuery graphQLQuery : application.getQueries()){
+                List<SearchResult> results = searchQuery(project, graphQLQuery, query);
+                searchResults.addAll(results);
+            }
+
+            for(GraphQLMutation graphQLMutation : application.getMutations()){
+                List<SearchResult> results = searchMutation(project, graphQLMutation, query);
+                searchResults.addAll(results);
+            }
+
+            for(GraphQLSubscription graphQLSubscription : application.getSubscriptions()){
+                List<SearchResult> results = searchSubscription(project, graphQLSubscription, query);
+                searchResults.addAll(results);
+            }
+
+            for(GraphQLObjectType graphQLObjectType : application.getObjects()){
+                List<SearchResult> results = searchObject(project, graphQLObjectType, query);
+                searchResults.addAll(results);
+            }
+
+            for(GraphQLEnumType graphQLEnumType : application.getEnums()){
+                List<SearchResult> results = searchEnum(project, graphQLEnumType, query);
+                searchResults.addAll(results);
+            }
         }
 
-        for(GraphQLMutation graphQLMutation : project.getMutations()){
-            List<SearchResult> results = searchMutation(project, graphQLMutation, query);
-            searchResults.addAll(results);
-        }
-
-        for(GraphQLSubscription graphQLSubscription : project.getSubscriptions()){
-            List<SearchResult> results = searchSubscription(project, graphQLSubscription, query);
-            searchResults.addAll(results);
-        }
-
-        for(GraphQLObjectType graphQLObjectType : project.getObjects()){
-            List<SearchResult> results = searchObject(project, graphQLObjectType, query);
-            searchResults.addAll(results);
-        }
-
-        for(GraphQLEnumType graphQLEnumType : project.getEnums()){
-            List<SearchResult> results = searchEnum(project, graphQLEnumType, query);
-            searchResults.addAll(results);
-        }
         return searchResults;
     }
 
@@ -267,34 +272,42 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      */
     @Override
     public GraphQLProjectDto save(final GraphQLProject project) {
-        for(GraphQLQuery query : project.getQueries()){
-            if(query.getId() == null){
-                String queryId = generateId();
-                query.setId(queryId);
+        for(GraphQLApplication application : project.getApplications()){
+
+            if(application.getId() == null){
+                String applicationId = generateId();
+                application.setId(applicationId);
             }
-        }
-        for(GraphQLMutation mutation : project.getMutations()){
-            if(mutation.getId() == null){
-                String mutationId = generateId();
-                mutation.setId(mutationId);
+
+            for(GraphQLQuery query : application.getQueries()){
+                if(query.getId() == null){
+                    String queryId = generateId();
+                    query.setId(queryId);
+                }
             }
-        }
-        for(GraphQLSubscription subscription : project.getSubscriptions()){
-            if(subscription.getId() == null){
-                String subscriptionId = generateId();
-                subscription.setId(subscriptionId);
+            for(GraphQLMutation mutation : application.getMutations()){
+                if(mutation.getId() == null){
+                    String mutationId = generateId();
+                    mutation.setId(mutationId);
+                }
             }
-        }
-        for(GraphQLObjectType object : project.getObjects()){
-            if(object.getId() == null){
-                String objectId = generateId();
-                object.setId(objectId);
+            for(GraphQLSubscription subscription : application.getSubscriptions()){
+                if(subscription.getId() == null){
+                    String subscriptionId = generateId();
+                    subscription.setId(subscriptionId);
+                }
             }
-        }
-        for(GraphQLEnumType enumType : project.getEnums()){
-            if(enumType.getId() == null){
-                String enumTypeId = generateId();
-                enumType.setId(enumTypeId);
+            for(GraphQLObjectType object : application.getObjects()){
+                if(object.getId() == null){
+                    String objectId = generateId();
+                    object.setId(objectId);
+                }
+            }
+            for(GraphQLEnumType enumType : application.getEnums()){
+                if(enumType.getId() == null){
+                    String enumTypeId = generateId();
+                    enumType.setId(enumTypeId);
+                }
             }
         }
         return super.save(project);
@@ -321,9 +334,27 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
     }
 
     /**
+     * Finds a {@link GraphQLApplicationDto} with the provided id.
+     *
+     * @param graphQLProjectId   The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @return A {@link GraphQLApplicationDto} that matches the search criteria.
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     */
+    @Override
+    public GraphQLApplicationDto findGraphQLApplication(String graphQLProjectId, String graphQLApplicationId) {
+        final GraphQLApplication graphQLApplication = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
+        return mapper.map(graphQLApplication, GraphQLApplicationDto.class);
+    }
+
+    /**
      * Finds a {@link GraphQLQueryDto} with the provided ids.
      *
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId   The id of the {@link GraphQLQuery}
      * @return A {@link GraphQLQueryDto} that matches the search criteria.
      * @see GraphQLProject
@@ -332,8 +363,10 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @see GraphQLQueryDto
      */
     @Override
-    public GraphQLQueryDto findGraphQLQuery(String graphQLProjectId, String graphQLQueryId) {
-        final GraphQLQuery graphQLQuery = this.findGraphQLQueryType(graphQLProjectId, graphQLQueryId);
+    public GraphQLQueryDto findGraphQLQuery(String graphQLProjectId,
+                                            String graphQLApplicationId,
+                                            String graphQLQueryId) {
+        final GraphQLQuery graphQLQuery = this.findGraphQLQueryType(graphQLProjectId, graphQLApplicationId, graphQLQueryId);
         return mapper.map(graphQLQuery, GraphQLQueryDto.class);
     }
 
@@ -341,6 +374,7 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * Finds a {@link GraphQLMutationDto} with the provided ids.
      *
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId   The id of the {@link GraphQLMutation}
      * @return A {@link GraphQLMutationDto} that matches the search criteria.
      * @see GraphQLProject
@@ -349,8 +383,10 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @see GraphQLMutationDto
      */
     @Override
-    public GraphQLMutationDto findGraphQLMutation(String graphQLProjectId, String graphQLQueryId) {
-        final GraphQLMutation mutation = this.findGraphQLMutationType(graphQLProjectId, graphQLQueryId);
+    public GraphQLMutationDto findGraphQLMutation(String graphQLProjectId,
+                                                  String graphQLApplicationId,
+                                                  String graphQLQueryId) {
+        final GraphQLMutation mutation = this.findGraphQLMutationType(graphQLProjectId, graphQLApplicationId, graphQLQueryId);
         return mapper.map(mutation, GraphQLMutationDto.class);
     }
 
@@ -358,6 +394,7 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * Finds a {@link GraphQLSubscriptionDto} with the provided ids.
      *
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId   The id of the {@link GraphQLSubscription}
      * @return A {@link GraphQLSubscriptionDto} that matches the search criteria.
      * @see GraphQLProject
@@ -366,8 +403,11 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @see GraphQLSubscriptionDto
      */
     @Override
-    public GraphQLSubscriptionDto findGraphQLSubscription(String graphQLProjectId, String graphQLQueryId) {
-        final GraphQLSubscription subscription = this.findGraphQLSubscriptionType(graphQLProjectId, graphQLQueryId);
+    public GraphQLSubscriptionDto findGraphQLSubscription(String graphQLProjectId,
+                                                          String graphQLApplicationId,
+                                                          String graphQLQueryId) {
+        final GraphQLSubscription subscription =
+                this.findGraphQLSubscriptionType(graphQLProjectId, graphQLApplicationId, graphQLQueryId);
         return mapper.map(subscription, GraphQLSubscriptionDto.class);
     }
 
@@ -375,6 +415,7 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * Finds a {@link GraphQLObjectTypeDto} with the provided ids.
      *
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId   The id of the {@link GraphQLObjectType}
      * @return A {@link GraphQLObjectTypeDto} that matches the search criteria.
      * @see GraphQLProject
@@ -383,8 +424,11 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @see GraphQLObjectTypeDto
      */
     @Override
-    public GraphQLObjectTypeDto findGraphQLObjectType(String graphQLProjectId, String graphQLQueryId) {
-        final GraphQLObjectType objectType = this.findGraphQLObjectTypeType(graphQLProjectId, graphQLQueryId);
+    public GraphQLObjectTypeDto findGraphQLObjectType(String graphQLProjectId,
+                                                      String graphQLApplicationId,
+                                                      String graphQLQueryId) {
+        final GraphQLObjectType objectType =
+                this.findGraphQLObjectTypeType(graphQLProjectId, graphQLApplicationId, graphQLQueryId);
         return mapper.map(objectType, GraphQLObjectTypeDto.class);
     }
 
@@ -392,6 +436,7 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * Finds a {@link GraphQLEnumTypeDto} with the provided ids.
      *
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId   The id of the {@link GraphQLEnumType}
      * @return A {@link GraphQLEnumTypeDto} that matches the search criteria.
      * @see GraphQLProject
@@ -400,31 +445,118 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @see GraphQLEnumTypeDto
      */
     @Override
-    public GraphQLEnumTypeDto findGraphQLEnumType(String graphQLProjectId, String graphQLQueryId) {
-        final GraphQLEnumType graphQLEnumType = this.findGraphQLEnumTypeType(graphQLProjectId, graphQLQueryId);
+    public GraphQLEnumTypeDto findGraphQLEnumType(String graphQLProjectId,
+                                                  String graphQLApplicationId,
+                                                  String graphQLQueryId) {
+        final GraphQLEnumType graphQLEnumType =
+                this.findGraphQLEnumTypeType(graphQLProjectId, graphQLApplicationId, graphQLQueryId);
         return mapper.map(graphQLEnumType, GraphQLEnumTypeDto.class);
     }
 
+    /**
+     * The method updates an already existing {@link GraphQLApplicationDto}
+     *
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param applicationDto      The updated {@link GraphQLApplicationDto)
+     * @return The updated version of the {@link GraphQLApplicationDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     */
+    @Override
+    public GraphQLApplicationDto updateGraphQLApplication(String graphQLProjectId, String graphQLApplicationId, GraphQLApplicationDto applicationDto) {
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
+        final GraphQLApplication updatedApplication = mapper.map(applicationDto, GraphQLApplication.class);
+
+        application.setName(updatedApplication.getName());
+        application.setEnums(updatedApplication.getEnums());
+        application.setMutations(updatedApplication.getMutations());
+        application.setObjects(updatedApplication.getObjects());
+        application.setQueries(updatedApplication.getQueries());
+        application.setSubscriptions(updatedApplication.getSubscriptions());
+
+
+        save(graphQLProjectId);
+        return mapper.map(updatedApplication, GraphQLApplicationDto.class);
+    }
+
+    /**
+     * The method adds a new {@link GraphQLApplication} to a {@link GraphQLProject} and then saves
+     * the {@link GraphQLProject} to the file system.
+     *
+     * @param graphQLProjectId      The id of the {@link GraphQLProject}
+     * @param graphQLApplicationDto The dto instance of {@link GraphQLApplication} that will be added to the {@link GraphQLProject}
+     * @return The saved {@link GraphQLApplicationDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     */
+    @Override
+    public GraphQLApplicationDto saveGraphQLApplication(String graphQLProjectId,
+                                                        GraphQLApplicationDto graphQLApplicationDto) {
+        GraphQLProject graphQLProject = collection.get(graphQLProjectId);
+        GraphQLApplication graphQLApplication = mapper.map(graphQLApplicationDto, GraphQLApplication.class);
+        graphQLProject.getApplications().add(graphQLApplication);
+        save(graphQLProject);
+        return mapper.map(graphQLApplication, GraphQLApplicationDto.class);
+    }
+
+    /**
+     * The method deletes a {@link GraphQLApplication}
+     *
+     * @param graphQLProjectId     The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication} that will be deleted
+     * @return The deleted {@link GraphQLApplicationDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     */
+    @Override
+    public GraphQLApplicationDto deleteGraphQLApplication(String graphQLProjectId,
+                                                          String graphQLApplicationId) {
+        GraphQLProject graphQLProject = collection.get(graphQLProjectId);
+        Iterator<GraphQLApplication> graphQLApplicationIterator = graphQLProject.getApplications().iterator();
+        GraphQLApplication deletedGraphQLApplication = null;
+        while(graphQLApplicationIterator.hasNext()){
+            GraphQLApplication tempGraphQLApplication = graphQLApplicationIterator.next();
+            if(graphQLApplicationId.equals(tempGraphQLApplication.getId())){
+                deletedGraphQLApplication = tempGraphQLApplication;
+                break;
+            }
+        }
+
+        if(deletedGraphQLApplication != null){
+            graphQLProject.getApplications().remove(deletedGraphQLApplication);
+            save(graphQLProjectId);
+        }
+        return deletedGraphQLApplication != null ? mapper.map(deletedGraphQLApplication, GraphQLApplicationDto.class) : null;
+    }
 
 
     /**
      * Finds a {@link GraphQLQuery} with the provided ids.
      * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
      * @param graphQLQueryId The id of the {@link GraphQLQuery}
      * @return A {@link GraphQLQuery} that matches the search criteria.
      * @see GraphQLProject
      * @see GraphQLQuery
      */
-    private GraphQLQuery findGraphQLQueryType(final String graphQLProjectId, final String graphQLQueryId) {
+    private GraphQLQuery findGraphQLQueryType(final String graphQLProjectId,
+                                              final String graphQLApplicationId,
+                                              final String graphQLQueryId) {
         Preconditions.checkNotNull(graphQLProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(graphQLQueryId, "Query id cannot be null");
-        final GraphQLProject graphQLProject = collection.get(graphQLProjectId);
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
 
-        if(graphQLProject == null){
-            throw new IllegalArgumentException("Unable to find a GraphQL project with id " + graphQLProjectId);
+        if(application == null){
+            throw new IllegalArgumentException("Unable to find a GraphQL application with id " + graphQLProjectId);
         }
 
-        for(GraphQLQuery graphQLQuery : graphQLProject.getQueries()){
+        for(GraphQLQuery graphQLQuery : application.getQueries()){
             if(graphQLQuery.getId().equals(graphQLQueryId)){
                 return graphQLQuery;
             }
@@ -440,16 +572,18 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @see GraphQLProject
      * @see GraphQLMutation
      */
-    private GraphQLMutation findGraphQLMutationType(final String graphQLProjectId, final String graphQLMutationId) {
+    private GraphQLMutation findGraphQLMutationType(final String graphQLProjectId,
+                                                    final String graphQLApplicationId,
+                                                    final String graphQLMutationId) {
         Preconditions.checkNotNull(graphQLProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(graphQLMutationId, "Mutation id cannot be null");
-        final GraphQLProject graphQLProject = collection.get(graphQLProjectId);
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
 
-        if(graphQLProject == null){
-            throw new IllegalArgumentException("Unable to find a GraphQL project with id " + graphQLProjectId);
+        if(application == null){
+            throw new IllegalArgumentException("Unable to find a GraphQL application with id " + graphQLProjectId);
         }
 
-        for(GraphQLMutation graphQLMutation : graphQLProject.getMutations()){
+        for(GraphQLMutation graphQLMutation : application.getMutations()){
             if(graphQLMutation.getId().equals(graphQLMutationId)){
                 return graphQLMutation;
             }
@@ -465,16 +599,18 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @see GraphQLProject
      * @see GraphQLSubscription
      */
-    private GraphQLSubscription findGraphQLSubscriptionType(final String graphQLProjectId, final String graphQLSubscriptionId) {
+    private GraphQLSubscription findGraphQLSubscriptionType(final String graphQLProjectId,
+                                                            final String graphQLApplicationId,
+                                                            final String graphQLSubscriptionId) {
         Preconditions.checkNotNull(graphQLProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(graphQLSubscriptionId, "Subscription id cannot be null");
-        final GraphQLProject graphQLProject = collection.get(graphQLProjectId);
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
 
-        if(graphQLProject == null){
-            throw new IllegalArgumentException("Unable to find a GraphQL project with id " + graphQLProjectId);
+        if(application == null){
+            throw new IllegalArgumentException("Unable to find a GraphQL application with id " + graphQLProjectId);
         }
 
-        for(GraphQLSubscription graphQLSubscription : graphQLProject.getSubscriptions()){
+        for(GraphQLSubscription graphQLSubscription : application.getSubscriptions()){
             if(graphQLSubscription.getId().equals(graphQLSubscriptionId)){
                 return graphQLSubscription;
             }
@@ -490,16 +626,18 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @see GraphQLProject
      * @see GraphQLObjectType
      */
-    private GraphQLObjectType findGraphQLObjectTypeType(final String graphQLProjectId, final String graphQLObjectTypeId) {
+    private GraphQLObjectType findGraphQLObjectTypeType(final String graphQLProjectId,
+                                                        final String graphQLApplicationId,
+                                                        final String graphQLObjectTypeId) {
         Preconditions.checkNotNull(graphQLProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(graphQLObjectTypeId, "ObjectType id cannot be null");
-        final GraphQLProject graphQLProject = collection.get(graphQLProjectId);
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
 
-        if(graphQLProject == null){
-            throw new IllegalArgumentException("Unable to find a GraphQL project with id " + graphQLProjectId);
+        if(application == null){
+            throw new IllegalArgumentException("Unable to find a GraphQL application with id " + graphQLProjectId);
         }
 
-        for(GraphQLObjectType graphQLObjectType : graphQLProject.getObjects()){
+        for(GraphQLObjectType graphQLObjectType : application.getObjects()){
             if(graphQLObjectType.getId().equals(graphQLObjectTypeId)){
                 return graphQLObjectType;
             }
@@ -515,21 +653,48 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @see GraphQLProject
      * @see GraphQLEnumType
      */
-    private GraphQLEnumType findGraphQLEnumTypeType(final String graphQLProjectId, final String graphQLEnumTypeId) {
+    private GraphQLEnumType findGraphQLEnumTypeType(final String graphQLProjectId,
+                                                    final String graphQLApplicationId,
+                                                    final String graphQLEnumTypeId) {
         Preconditions.checkNotNull(graphQLProjectId, "Project id cannot be null");
         Preconditions.checkNotNull(graphQLEnumTypeId, "EnumType id cannot be null");
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
+
+        if(application == null){
+            throw new IllegalArgumentException("Unable to find a GraphQL project with id " + graphQLProjectId);
+        }
+
+        for(GraphQLEnumType graphQLEnumType : application.getEnums()){
+            if(graphQLEnumType.getId().equals(graphQLEnumTypeId)){
+                return graphQLEnumType;
+            }
+        }
+        throw new IllegalArgumentException("Unable to find a GraphQL enum type with id " + graphQLEnumTypeId);
+    }
+
+    /**
+     * Finds a {@link GraphQLApplication} with the provided ids.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @return A {@link GraphQLApplication} that matches the search criteria.
+     * @see GraphQLProject
+     * @see GraphQLApplication
+     */
+    private GraphQLApplication findGraphQLApplicationType(final String graphQLProjectId, final String graphQLApplicationId) {
+        Preconditions.checkNotNull(graphQLProjectId, "Project id cannot be null");
+        Preconditions.checkNotNull(graphQLApplicationId, "Application id cannot be null");
         final GraphQLProject graphQLProject = collection.get(graphQLProjectId);
 
         if(graphQLProject == null){
             throw new IllegalArgumentException("Unable to find a GraphQL project with id " + graphQLProjectId);
         }
 
-        for(GraphQLEnumType graphQLEnumType : graphQLProject.getEnums()){
-            if(graphQLEnumType.getId().equals(graphQLEnumTypeId)){
-                return graphQLEnumType;
+        for(GraphQLApplication graphQLApplication : graphQLProject.getApplications()){
+            if(graphQLApplication.getId().equals(graphQLApplicationId)){
+                return graphQLApplication;
             }
         }
-        throw new IllegalArgumentException("Unable to find a GraphQL enum type with id " + graphQLEnumTypeId);
+        throw new IllegalArgumentException("Unable to find a GraphQL application with id " + graphQLApplicationId);
     }
     
 }

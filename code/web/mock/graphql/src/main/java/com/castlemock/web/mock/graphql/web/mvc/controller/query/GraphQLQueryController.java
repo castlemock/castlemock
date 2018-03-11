@@ -45,14 +45,17 @@ public class GraphQLQueryController extends AbstractGraphQLViewController {
      * @return Project that matches the provided project id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/query/{queryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/application/{applicationId}/query/{queryId}", method = RequestMethod.GET)
     public ModelAndView getProject(@PathVariable final String projectId,
+                                   @PathVariable final String applicationId,
                                    @PathVariable final String queryId) {
-        final ReadGraphQLQueryOutput output =  serviceProcessor.process(new ReadGraphQLQueryInput(projectId, queryId));
+        final ReadGraphQLQueryOutput output =
+                serviceProcessor.process(new ReadGraphQLQueryInput(projectId, applicationId, queryId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_QUERY, output.getGraphQLQuery());
         model.addObject(GRAPHQL_PROJECT_ID, projectId);
+        model.addObject(GRAPHQL_APPLICATION_ID, applicationId);
         model.addObject(GRAPHQL_OPERATION_STATUSES, getGraphQLOperationStatuses());
 
         return model;

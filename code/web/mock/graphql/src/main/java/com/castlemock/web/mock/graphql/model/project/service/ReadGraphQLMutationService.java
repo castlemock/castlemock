@@ -43,7 +43,9 @@ public class ReadGraphQLMutationService extends AbstractGraphQLProjectService im
     @Override
     public ServiceResult<ReadGraphQLMutationOutput> process(ServiceTask<ReadGraphQLMutationInput> serviceTask) {
         final ReadGraphQLMutationInput input = serviceTask.getInput();
-        final GraphQLMutationDto mutation = repository.findGraphQLMutation(input.getGraphQLProjectId(), input.getGraphQLMutationId());
+        final GraphQLMutationDto mutation =
+                repository.findGraphQLMutation(
+                        input.getGraphQLProjectId(), input.getGraphQLApplicationId(), input.getGraphQLMutationId());
         return createServiceResult(new ReadGraphQLMutationOutput(mutation));
     }
 }

@@ -25,21 +25,6 @@
 </div>
 <div class="container">
     <section>
-        <c:if test="${not empty upload}">
-            <c:if test="${upload == 'success'}">
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong><spring:message code="graphql.graphqlimportdefinition.message.success.title"/></strong> <spring:message code="graphql.graphqlimportdefinition.message.success.body"/>
-                </div>
-            </c:if>
-            <c:if test="${upload == 'error'}">
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong><spring:message code="graphql.graphqlimportdefinition.message.error.title"/></strong> <spring:message code="graphql.graphqlimportdefinition.message.error.body"/>
-                </div>
-            </c:if>
-        </c:if>
-
         <div class="content-top">
             <div class="title">
                 <h1><spring:message code="graphql.graphqlproject.header.project" arguments="${graphQLProject.name}"/></h1>
@@ -47,14 +32,7 @@
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
                     <a class="btn btn-success demo-button-disabled"  href="<c:url value="/web/graphql/project/${graphQLProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="graphql.graphqlproject.button.updateproject"/></span></a>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle demo-button-disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-upload"></i> <span><spring:message code="graphql.graphqlproject.button.upload"/> <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/import?type=SCHEMA"/>">Schema</a></li>
-                        </ul>
-                    </div>
+                    <a class="btn btn-primary demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProject.id}/create/application"/>"><i class="fa fa-plus"></i> <span><spring:message code="graphql.graphqlproject.button.createapplication"/></span></a>
                     <a class="btn btn-primary" href="<c:url value="/web/graphql/project/${graphQLProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="graphql.graphqlproject.button.export"/></span></a>
                     <a class="btn btn-danger demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="graphql.graphqlproject.button.delete"/></span></a>
                 </sec:authorize>
@@ -78,10 +56,10 @@
         </div>
 
 
-        <h2 class="decorated"><span><spring:message code="graphql.graphqlproject.header.operations"/></span></h2>
+        <h2 class="decorated"><span><spring:message code="graphql.graphqlproject.header.applications"/></span></h2>
         <c:choose>
-            <c:when test="${graphQLProject.queries.size() > 0 || graphQLProject.mutations.size() > 0 || graphQLProject.subscriptions.size() > 0}">
-                <form:form action="${graphql_resource_update_url}/" method="POST"  commandName="graphQLQueryModifierCommand">
+            <c:when test="${graphQLProject.applications.size() > 0}">
+                <form:form action="${graphql_resource_update_url}/" method="POST"  commandName="graphQLApplicationModifierCommand">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover sortable">
                             <col width="10%">
@@ -91,84 +69,27 @@
                             <tr>
                                 <th><spring:message code="graphql.graphqlproject.column.selected"/></th>
                                 <th><spring:message code="graphql.graphqlproject.column.name"/></th>
-                                <th><spring:message code="graphql.graphqlproject.column.type"/></th>
                                 <th><spring:message code="graphql.graphqlproject.column.description"/></th>
                             </tr>
 
-                            <c:forEach items="${graphQLProject.queries}" var="graphQLQuery" varStatus="loopStatus">
+                            <c:forEach items="${graphQLProject.applications}" var="graphQLApplication" varStatus="loopStatus">
                                 <tr>
-                                    <td><form:checkbox path="graphQLQueriesIds" name="${graphQLQuery.id}" value="${graphQLQuery.id}"/></td>
-                                    <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/query/${graphQLQuery.id}"/>">${graphQLQuery.name}</a></td>
-                                    <td><spring:message code="graphql.graphqlproject.column.type.query"/></td>
-                                    <td>${graphQLQuery.description}</td>
+                                    <td><form:checkbox path="graphQLApplicationIds" name="${graphQLApplication.id}" value="${graphQLApplication.id}"/></td>
+                                    <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/application/${graphQLApplication.id}"/>">${graphQLApplication.name}</a></td>
+                                    <td>${graphQLApplication.description}</td>
                                 </tr>
                             </c:forEach>
 
-                            <c:forEach items="${graphQLProject.mutations}" var="graphQLMutation" varStatus="loopStatus">
-                                <tr>
-                                    <td><form:checkbox path="graphQLQueriesIds" name="${graphQLMutation.id}" value="${graphQLMutation.id}"/></td>
-                                    <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/mutation/${graphQLMutation.id}"/>">${graphQLMutation.name}</a></td>
-                                    <td><spring:message code="graphql.graphqlproject.column.type.mutation"/></td>
-                                    <td>${graphQLQuery.description}</td>
-                                </tr>
-                            </c:forEach>
-
-                            <c:forEach items="${graphQLProject.subscriptions}" var="graphQLSubscription" varStatus="loopStatus">
-                                <tr>
-                                    <td><form:checkbox path="graphQLQueriesIds" name="${graphQLSubscription.id}" value="${graphQLSubscription.id}"/></td>
-                                    <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/subscription/${graphQLSubscription.id}"/>">${graphQLSubscription.name}</a></td>
-                                    <td><spring:message code="graphql.graphqlproject.column.type.subscription"/></td>
-                                    <td>${graphQLQuery.description}</td>
-                                </tr>
-                            </c:forEach>
                         </table>
                     </div>
+                    <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                        <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="graphql.graphqlproject.button.deleteapplication"/></span></button>
+                    </sec:authorize>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form:form>
             </c:when>
             <c:otherwise>
-                <spring:message code="graphql.graphqlproject.label.nooperations"/>
-            </c:otherwise>
-        </c:choose>
-
-        <h2 class="decorated"><span><spring:message code="graphql.graphqlproject.header.types"/></span></h2>
-        <c:choose>
-            <c:when test="${graphQLProject.objects.size() > 0 || graphQLProject.enums.size() > 0}">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover sortable">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="40%">
-
-                        <tr>
-                            <th><spring:message code="graphql.graphqlproject.column.name"/></th>
-                            <th><spring:message code="graphql.graphqlproject.column.type"/></th>
-                            <th><spring:message code="graphql.graphqlproject.column.description"/></th>
-                        </tr>
-
-                        <c:forEach items="${graphQLProject.objects}" var="graphQLObject" varStatus="loopStatus">
-                            <tr>
-                                <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/object/${graphQLObject.id}"/>">${graphQLObject.name}</a></td>
-                                <td><spring:message code="graphql.graphqlproject.column.type.object"/></td>
-                                <td>${graphQLObject.description}</td>
-                            </tr>
-                        </c:forEach>
-
-                        <c:forEach items="${graphQLProject.enums}" var="graphQLEnum" varStatus="loopStatus">
-                            <tr>
-                                <td><a href="<c:url value="/web/graphql/project/${graphQLProject.id}/enum/${graphQLEnum.id}"/>">${graphQLEnum.name}</a></td>
-                                <td><spring:message code="graphql.graphqlproject.column.type.enum"/></td>
-                                <td>${graphQLEnum.description}</td>
-                            </tr>
-                        </c:forEach>
-
-                    </table>
-                </div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-            </c:when>
-            <c:otherwise>
-                <spring:message code="graphql.graphqlproject.label.nooperations"/>
+                <spring:message code="graphql.graphqlproject.label.noapplications"/>
             </c:otherwise>
         </c:choose>
 

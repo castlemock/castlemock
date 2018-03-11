@@ -44,7 +44,8 @@ public class ReadGraphQLSubscriptionService extends AbstractGraphQLProjectServic
     @Override
     public ServiceResult<ReadGraphQLSubscriptionOutput> process(ServiceTask<ReadGraphQLSubscriptionInput> serviceTask) {
         final ReadGraphQLSubscriptionInput input = serviceTask.getInput();
-        final GraphQLSubscriptionDto subscription = repository.findGraphQLSubscription(input.getGraphQLProjectId(), input.getGraphQLSubscriptionId());
+        final GraphQLSubscriptionDto subscription = repository.findGraphQLSubscription(
+                input.getGraphQLProjectId(), input.getGraphQLApplicationId(), input.getGraphQLSubscriptionId());
         return createServiceResult(new ReadGraphQLSubscriptionOutput(subscription));
     }
 }

@@ -45,14 +45,17 @@ public class GraphQLSubscriptionController extends AbstractGraphQLViewController
      * @return Project that matches the provided project id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/subscription/{subscriptionId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/application/{applicationId}/subscription/{subscriptionId}", method = RequestMethod.GET)
     public ModelAndView getProject(@PathVariable final String projectId,
+                                   @PathVariable final String applicationId,
                                    @PathVariable final String subscriptionId) {
-        final ReadGraphQLSubscriptionOutput output =  serviceProcessor.process(new ReadGraphQLSubscriptionInput(projectId, subscriptionId));
+        final ReadGraphQLSubscriptionOutput output =
+                serviceProcessor.process(new ReadGraphQLSubscriptionInput(projectId, applicationId, subscriptionId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_SUBSCRIPTION, output.getGraphQLSubscription());
         model.addObject(GRAPHQL_PROJECT_ID, projectId);
+        model.addObject(GRAPHQL_APPLICATION_ID, applicationId);
         model.addObject(GRAPHQL_OPERATION_STATUSES, getGraphQLOperationStatuses());
 
         return model;

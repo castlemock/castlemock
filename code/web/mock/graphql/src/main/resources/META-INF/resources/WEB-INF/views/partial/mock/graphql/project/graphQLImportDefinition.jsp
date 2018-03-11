@@ -15,11 +15,12 @@
   ~ limitations under the License.
   --%>
 
-<c:url var="import_url"  value="/web/graphql/project/${graphQLProjectId}/import" />
+<c:url var="import_url"  value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/import" />
 <div class="navigation">
     <ol class="breadcrumb">
         <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
         <li><a href="${context}/web/graphql/project/${graphQLProjectId}"><spring:message code="graphql.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}"><spring:message code="graphql.breadcrumb.application"/></a></li>
         <li class="active"><spring:message code="graphql.graphqlimportdefinition.header.uploadfile" arguments="${definitionDisplayName}"/></li>
     </ol>
 </div>
@@ -61,7 +62,7 @@
                 </div>
 
                 <button class="btn btn-success" name="type" value="file"><i class="fa fa-upload"></i> <span><spring:message code="graphql.graphqlimportdefinition.button.uploadfiles"/></span></button>
-                <a href="<c:url value="/web/graphql/project/${graphQLProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="graphql.graphqlimportdefinition.button.cancel"/></a>
+                <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="graphql.graphqlimportdefinition.button.cancel"/></a>
                 <input type="hidden" name="definitionType" value="${definitionType}"/>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form:form>

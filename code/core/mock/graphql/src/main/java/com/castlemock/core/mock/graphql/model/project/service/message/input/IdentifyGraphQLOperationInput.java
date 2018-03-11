@@ -11,10 +11,15 @@ public class IdentifyGraphQLOperationInput implements Input {
     @NotNull
     private String graphQLProjectId;
     @NotNull
+    private String graphQLApplicationId;
+    @NotNull
     private List<GraphQLRequestQueryDto> queries;
 
-    public IdentifyGraphQLOperationInput(String graphQLProjectId, List<GraphQLRequestQueryDto> queries) {
+    public IdentifyGraphQLOperationInput(String graphQLProjectId,
+                                         String graphQLApplicationId,
+                                         List<GraphQLRequestQueryDto> queries) {
         this.graphQLProjectId = graphQLProjectId;
+        this.graphQLApplicationId = graphQLApplicationId;
         this.queries = queries;
     }
 
@@ -24,6 +29,14 @@ public class IdentifyGraphQLOperationInput implements Input {
 
     public void setGraphQLProjectId(String graphQLProjectId) {
         this.graphQLProjectId = graphQLProjectId;
+    }
+
+    public String getGraphQLApplicationId() {
+        return graphQLApplicationId;
+    }
+
+    public void setGraphQLApplicationId(String graphQLApplicationId) {
+        this.graphQLApplicationId = graphQLApplicationId;
     }
 
     public List<GraphQLRequestQueryDto> getQueries() {

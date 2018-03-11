@@ -21,6 +21,7 @@
     <ol class="breadcrumb">
         <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
         <li><a href="${context}/web/graphql/project/${graphQLProjectId}"><spring:message code="graphql.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}"><spring:message code="graphql.breadcrumb.application"/></a></li>
         <li class="active"><spring:message code="graphql.graphqlobject.header.object" arguments="${graphQLObjectType.name}"/></li>
     </ol>
 </div>
@@ -71,10 +72,10 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${graphQLAttribute.attributeType == 'OBJECT_TYPE'}">
-                                            <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/object/${graphQLAttribute.typeId}"/>">${graphQLAttribute.typeName}</a>
+                                            <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLAttribute.typeId}"/>">${graphQLAttribute.typeName}</a>
                                         </c:when>
                                         <c:when test="${graphQLAttribute.attributeType == 'ENUM'}">
-                                            <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/enum/${graphQLAttribute.typeId}"/>">${graphQLAttribute.typeName}</a>
+                                            <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/enum/${graphQLAttribute.typeId}"/>">${graphQLAttribute.typeName}</a>
                                         </c:when>
                                         <c:otherwise>
                                             <spring:message code="graphql.type.attributetype.${graphQLAttribute.attributeType}"/>

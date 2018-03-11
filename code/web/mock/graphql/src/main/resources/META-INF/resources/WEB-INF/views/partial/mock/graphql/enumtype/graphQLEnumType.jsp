@@ -21,6 +21,7 @@
     <ol class="breadcrumb">
         <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
         <li><a href="${context}/web/graphql/project/${graphQLProjectId}"><spring:message code="graphql.breadcrumb.project"/></a></li>
+        <li><a href="${context}/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}"><spring:message code="graphql.breadcrumb.application"/></a></li>
         <li class="active"><spring:message code="graphql.graphqlenum.header.enum" arguments="${graphQLEnumType.name}"/></li>
     </ol>
 </div>

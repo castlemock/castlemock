@@ -28,10 +28,15 @@ public class ReadGraphQLMutationInput implements Input {
     @NotNull
     private String graphQLProjectId;
     @NotNull
+    private String graphQLApplicationId;
+    @NotNull
     private String graphQLMutationId;
 
-    public ReadGraphQLMutationInput(final String graphQLProjectId, final String graphQLMutationId) {
+    public ReadGraphQLMutationInput(final String graphQLProjectId,
+                                    final String graphQLApplicationId,
+                                    final String graphQLMutationId) {
         this.graphQLProjectId = graphQLProjectId;
+        this.graphQLApplicationId = graphQLApplicationId;
         this.graphQLMutationId = graphQLMutationId;
     }
 
@@ -41,6 +46,14 @@ public class ReadGraphQLMutationInput implements Input {
 
     public void setGraphQLProjectId(String graphQLProjectId) {
         this.graphQLProjectId = graphQLProjectId;
+    }
+
+    public String getGraphQLApplicationId() {
+        return graphQLApplicationId;
+    }
+
+    public void setGraphQLApplicationId(String graphQLApplicationId) {
+        this.graphQLApplicationId = graphQLApplicationId;
     }
 
     public String getGraphQLMutationId() {

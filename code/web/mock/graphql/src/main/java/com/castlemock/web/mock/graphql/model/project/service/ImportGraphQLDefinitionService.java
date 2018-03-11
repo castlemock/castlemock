@@ -19,7 +19,7 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ImportGraphQLDefinitionInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ImportGraphQLDefinitionOutput;
 import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverter;
@@ -50,7 +50,8 @@ public class ImportGraphQLDefinitionService extends AbstractGraphQLProjectServic
     @Override
     public ServiceResult<ImportGraphQLDefinitionOutput> process(final ServiceTask<ImportGraphQLDefinitionInput> serviceTask) {
         final ImportGraphQLDefinitionInput input = serviceTask.getInput();
-        final GraphQLProjectDto graphQLProject = repository.findOne(input.getGraphQLProjectId());
+        final GraphQLApplicationDto application =
+                repository.findGraphQLApplication(input.getGraphQLProjectId(), input.getGraphQLApplicationId());
         final GraphQLDefinitionConverter graphQLDefinitionConverter = definitionConverterFactory.getConverter(input.getDefinitionType());
 
         GraphQLDefinitionConverterResult result = null;
@@ -65,12 +66,12 @@ public class ImportGraphQLDefinitionService extends AbstractGraphQLProjectServic
             }
         }
 
-        graphQLProject.getObjects().addAll(result.getObjects());
-        graphQLProject.getEnums().addAll(result.getEnums());
-        graphQLProject.getQueries().addAll(result.getQueries());
-        graphQLProject.getMutations().addAll(result.getMutations());
-        graphQLProject.getSubscriptions().addAll(result.getSubscriptions());
-        save(graphQLProject);
+        application.getObjects().addAll(result.getObjects());
+        application.getEnums().addAll(result.getEnums());
+        application.getQueries().addAll(result.getQueries());
+        application.getMutations().addAll(result.getMutations());
+        application.getSubscriptions().addAll(result.getSubscriptions());
+        repository.updateGraphQLApplication(input.getGraphQLProjectId(), input.getGraphQLApplicationId(), application);
         return createServiceResult(new ImportGraphQLDefinitionOutput());
     }
 

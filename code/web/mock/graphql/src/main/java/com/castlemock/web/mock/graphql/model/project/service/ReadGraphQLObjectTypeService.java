@@ -44,7 +44,8 @@ public class ReadGraphQLObjectTypeService extends AbstractGraphQLProjectService 
     @Override
     public ServiceResult<ReadGraphQLObjectTypeOutput> process(ServiceTask<ReadGraphQLObjectTypeInput> serviceTask) {
         final ReadGraphQLObjectTypeInput input = serviceTask.getInput();
-        final GraphQLObjectTypeDto objectType = repository.findGraphQLObjectType(input.getGraphQLProjectId(), input.getGraphQLObjectTypeId());
+        final GraphQLObjectTypeDto objectType =
+                repository.findGraphQLObjectType(input.getGraphQLProjectId(), input.getGraphQLApplicationId(), input.getGraphQLObjectTypeId());
         return createServiceResult(new ReadGraphQLObjectTypeOutput(objectType));
     }
 }

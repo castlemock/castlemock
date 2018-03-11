@@ -32,14 +32,19 @@ public class ImportGraphQLDefinitionInput implements Input {
     @NotNull
     private String graphQLProjectId;
     @NotNull
+    private String graphQLApplicationId;
+    @NotNull
     private GraphQLDefinitionType definitionType;
 
     private List<File> files;
     private String location;
 
-    public ImportGraphQLDefinitionInput(final String graphQLProjectId, final List<File> files, String location,
+    public ImportGraphQLDefinitionInput(final String graphQLProjectId,
+                                        final String graphQLApplicationId,
+                                        final List<File> files, String location,
                                         final GraphQLDefinitionType definitionType) {
         this.graphQLProjectId = graphQLProjectId;
+        this.graphQLApplicationId = graphQLApplicationId;
         this.files = files;
         this.location = location;
         this.definitionType = definitionType;
@@ -51,6 +56,14 @@ public class ImportGraphQLDefinitionInput implements Input {
 
     public void setGraphQLProjectId(String graphQLProjectId) {
         this.graphQLProjectId = graphQLProjectId;
+    }
+
+    public String getGraphQLApplicationId() {
+        return graphQLApplicationId;
+    }
+
+    public void setGraphQLApplicationId(String graphQLApplicationId) {
+        this.graphQLApplicationId = graphQLApplicationId;
     }
 
     public List<File> getFiles() {

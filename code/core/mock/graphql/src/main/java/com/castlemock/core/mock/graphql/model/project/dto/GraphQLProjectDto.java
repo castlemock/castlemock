@@ -31,21 +31,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class GraphQLProjectDto extends ProjectDto {
 
-    @Mapping("objects")
-    private List<GraphQLObjectTypeDto> objects = new CopyOnWriteArrayList<GraphQLObjectTypeDto>();
-
-    @Mapping("enums")
-    private List<GraphQLEnumTypeDto> enums = new CopyOnWriteArrayList<GraphQLEnumTypeDto>();
-
-    @Mapping("queries")
-    private List<GraphQLQueryDto> queries = new CopyOnWriteArrayList<GraphQLQueryDto>();
-
-    @Mapping("mutations")
-    private List<GraphQLMutationDto> mutations = new CopyOnWriteArrayList<GraphQLMutationDto>();
-
-    @Mapping("subscriptions")
-    private List<GraphQLSubscriptionDto> subscriptions = new CopyOnWriteArrayList<GraphQLSubscriptionDto>();
-
+    @Mapping("applications")
+    private List<GraphQLApplicationDto> applications = new CopyOnWriteArrayList<GraphQLApplicationDto>();
     private Map<GraphQLOperationStatus, Integer> statusCount = new HashMap<GraphQLOperationStatus, Integer>();
 
     public GraphQLProjectDto(){
@@ -61,44 +48,12 @@ public class GraphQLProjectDto extends ProjectDto {
         super(projectDto);
     }
 
-    public List<GraphQLObjectTypeDto> getObjects() {
-        return objects;
+    public List<GraphQLApplicationDto> getApplications() {
+        return applications;
     }
 
-    public void setObjects(List<GraphQLObjectTypeDto> objects) {
-        this.objects = objects;
-    }
-
-    public List<GraphQLEnumTypeDto> getEnums() {
-        return enums;
-    }
-
-    public void setEnums(List<GraphQLEnumTypeDto> enums) {
-        this.enums = enums;
-    }
-
-    public List<GraphQLQueryDto> getQueries() {
-        return queries;
-    }
-
-    public void setQueries(List<GraphQLQueryDto> queries) {
-        this.queries = queries;
-    }
-
-    public List<GraphQLMutationDto> getMutations() {
-        return mutations;
-    }
-
-    public void setMutations(List<GraphQLMutationDto> mutations) {
-        this.mutations = mutations;
-    }
-
-    public List<GraphQLSubscriptionDto> getSubscriptions() {
-        return subscriptions;
-    }
-
-    public void setSubscriptions(List<GraphQLSubscriptionDto> subscriptions) {
-        this.subscriptions = subscriptions;
+    public void setApplications(List<GraphQLApplicationDto> applications) {
+        this.applications = applications;
     }
 
     public Map<GraphQLOperationStatus, Integer> getStatusCount() {

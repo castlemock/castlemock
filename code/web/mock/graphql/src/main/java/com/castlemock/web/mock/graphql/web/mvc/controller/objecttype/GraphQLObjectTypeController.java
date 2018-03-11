@@ -45,14 +45,17 @@ public class GraphQLObjectTypeController extends AbstractGraphQLViewController {
      * @return Project that matches the provided project id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/object/{objectTypeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/application/{applicationId}/object/{objectTypeId}", method = RequestMethod.GET)
     public ModelAndView getProject(@PathVariable final String projectId,
+                                   @PathVariable final String applicationId,
                                    @PathVariable final String objectTypeId) {
-        final ReadGraphQLObjectTypeOutput output =  serviceProcessor.process(new ReadGraphQLObjectTypeInput(projectId, objectTypeId));
+        final ReadGraphQLObjectTypeOutput output =
+                serviceProcessor.process(new ReadGraphQLObjectTypeInput(projectId, applicationId, objectTypeId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_OBJECT_TYPE, output.getGraphQLObjectType());
         model.addObject(GRAPHQL_PROJECT_ID, projectId);
+        model.addObject(GRAPHQL_APPLICATION_ID, applicationId);
         model.addObject(GRAPHQL_OPERATION_STATUSES, getGraphQLOperationStatuses());
 
         return model;

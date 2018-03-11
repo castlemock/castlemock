@@ -45,10 +45,12 @@ public class GraphQLMutationController extends AbstractGraphQLViewController {
      * @return Project that matches the provided project id
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/mutation/{mutationId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/application/{applicationId}/mutation/{mutationId}", method = RequestMethod.GET)
     public ModelAndView getProject(@PathVariable final String projectId,
+                                   @PathVariable final String applicationId,
                                    @PathVariable final String mutationId) {
-        final ReadGraphQLMutationOutput output =  serviceProcessor.process(new ReadGraphQLMutationInput(projectId, mutationId));
+        final ReadGraphQLMutationOutput output =
+                serviceProcessor.process(new ReadGraphQLMutationInput(projectId, applicationId, mutationId));
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_MUTATION, output.getGraphQLMutation());

@@ -58,10 +58,13 @@ public class GraphQLImportDefinitionController extends AbstractGraphQLViewContro
      * @return A view that provides functionality to upload a WADL file
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/{projectId}/import", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String projectId, @RequestParam(value="type") final GraphQLDefinitionType definitionType) {
+    @RequestMapping(value = "/{projectId}/application/{applicationId}/import", method = RequestMethod.GET)
+    public ModelAndView defaultPage(@PathVariable final String projectId,
+                                    @PathVariable final String applicationId,
+                                    @RequestParam(value="type") final GraphQLDefinitionType definitionType) {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_PROJECT_ID, projectId);
+        model.addObject(GRAPHQL_APPLICATION_ID, applicationId);
         model.addObject(FILE_UPLOAD_FORM, new GraphQLDefinitionFileUploadForm());
         model.addObject(DEFINITION_TYPE, definitionType.name());
         model.addObject(DEFINITION_DISPLAY_NAME, definitionType.getDisplayName());
@@ -78,8 +81,11 @@ public class GraphQLImportDefinitionController extends AbstractGraphQLViewContro
      * @return A view that redirects the user to the main page for the project.
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value="/{projectId}/import", method=RequestMethod.POST)
-    public ModelAndView uploadWADL(@PathVariable final String projectId, @RequestParam final String type, @ModelAttribute("uploadForm") final GraphQLDefinitionFileUploadForm uploadForm) throws IOException {
+    @RequestMapping(value="/{projectId}/application/{applicationId}/import", method=RequestMethod.POST)
+    public ModelAndView uploadWADL(@PathVariable final String projectId,
+                                   @PathVariable final String applicationId,
+                                   @RequestParam final String type,
+                                   @ModelAttribute("uploadForm") final GraphQLDefinitionFileUploadForm uploadForm) throws IOException {
          List<File> files = null;
 
         if(TYPE_FILE.equals(type)){
@@ -87,10 +93,11 @@ public class GraphQLImportDefinitionController extends AbstractGraphQLViewContro
         }
 
         try {
-            serviceProcessor.process(new ImportGraphQLDefinitionInput(projectId, files, uploadForm.getLink(), uploadForm.getDefinitionType()));
-            return redirect("/graphql/project/" + projectId + "?upload=success");
+            serviceProcessor.process(new ImportGraphQLDefinitionInput(projectId, applicationId,
+                    files, uploadForm.getLink(), uploadForm.getDefinitionType()));
+            return redirect("/graphql/project/" + projectId + "/application/" + applicationId + "?upload=success");
         } catch (Exception e){
-            return redirect("/graphql/project/" + projectId + "?upload=error");
+            return redirect("/graphql/project/" + projectId + "/application/" + applicationId + "?upload=error");
         } finally {
             if(files != null){
                 for(File uploadedFile : files){

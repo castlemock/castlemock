@@ -31,8 +31,10 @@ import java.util.List;
 public abstract class AbstractGraphQLViewController extends AbstractViewController {
 
     protected static final String GRAPHQL_PROJECT_ID = "graphQLProjectId";
+    protected static final String GRAPHQL_APPLICATION_ID = "graphQLApplicationId";
 
     protected static final String GRAPHQL_PROJECT = "graphQLProject";
+    protected static final String GRAPHQL_APPLICATION = "graphQLApplication";
     protected static final String GRAPHQL_QUERY = "graphQLQuery";
     protected static final String GRAPHQL_MUTATION = "graphQLMutation";
     protected static final String GRAPHQL_SUBSCRIPTION = "graphQLSubscription";

@@ -33,11 +33,12 @@ import javax.servlet.http.HttpServletResponse;
 public class GraphQLServiceController extends AbstractGraphQLServiceController {
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/**")
+    @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/application/{applicationId}/**")
     public ResponseEntity postMethod(@PathVariable final String projectId,
+                                     @PathVariable final String applicationId,
                                      final HttpServletRequest httpServletRequest,
                                      final HttpServletResponse httpServletResponse) {
-        return process(projectId, httpServletRequest, httpServletResponse);
+        return process(projectId, applicationId, httpServletRequest, httpServletResponse);
     }
 
 }
