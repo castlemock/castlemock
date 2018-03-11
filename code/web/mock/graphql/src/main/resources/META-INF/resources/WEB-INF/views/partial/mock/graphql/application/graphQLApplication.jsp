@@ -70,10 +70,6 @@
                     <td class="column1"><label path="description"><spring:message code="graphql.graphqlapplication.label.description"/></label></td>
                     <td class="column2"><label path="description">${graphQLApplication.description}</label></td>
                 </tr>
-                <tr>
-                    <td class="column1"><label path="projectType"><spring:message code="graphql.graphqlapplication.label.type"/></label></td>
-                    <td class="column2"><label path="projectType">GraphQL</label></td>
-                </tr>
             </table>
         </div>
 
