@@ -31,7 +31,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -66,9 +68,11 @@ public class FileManager {
             if(file.getOriginalFilename().isEmpty()){
                 continue;
             }
+            final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+            final String fileName = "Upload-" + formatter.format(new Date());
 
-            LOGGER.debug("Uploading file: " + file.getOriginalFilename());
-            final File serverFile = new File(fileDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename());
+            LOGGER.debug("Uploading file: " + fileName);
+            final File serverFile = new File(fileDirectory, fileName);
             final byte[] bytes = file.getBytes();
             final BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
             try{

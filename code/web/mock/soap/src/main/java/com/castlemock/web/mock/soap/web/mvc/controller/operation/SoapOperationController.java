@@ -22,10 +22,7 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus
 import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
+import com.castlemock.core.mock.soap.model.project.service.message.input.*;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
@@ -34,6 +31,7 @@ import com.castlemock.web.mock.soap.web.mvc.command.mockresponse.SoapMockRespons
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +57,7 @@ public class SoapOperationController extends AbstractSoapViewController {
     private static final String DELETE_MOCK_RESPONSES_PAGE = "mock/soap/mockresponse/deleteSoapMockResponses";
     private static final String UPDATE_STATUS = "update";
     private static final String DELETE_MOCK_RESPONSES = "delete";
+    private static final String DUPLICATE_MOCK_RESPONSE = "duplicate";
     private static final Logger LOGGER = Logger.getLogger(SoapOperationController.class);
 
     /**
@@ -127,6 +126,15 @@ public class SoapOperationController extends AbstractSoapViewController {
             model.addObject(SOAP_MOCK_RESPONSES, mockResponses);
             model.addObject(DELETE_SOAP_MOCK_RESPONSES_COMMAND, new DeleteSoapMockResponsesCommand());
             return model;
+        } else if (DUPLICATE_MOCK_RESPONSE.equalsIgnoreCase(action)) {
+            String copyOfLabel = messageSource.getMessage("soap.soapoperation.label.copyOf", null, LocaleContextHolder.getLocale());
+            for (String mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()) {
+                ReadSoapMockResponseOutput readSoapMockResponseOutput = serviceProcessor.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, mockResponseId));
+                SoapMockResponseDto soapMockResponseDto = readSoapMockResponseOutput.getSoapMockResponse();
+                soapMockResponseDto.setId(null);
+                soapMockResponseDto.setName(String.format("%s %s", copyOfLabel, soapMockResponseDto.getName()));
+                serviceProcessor.process(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseDto));
+            }
         }
 
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
