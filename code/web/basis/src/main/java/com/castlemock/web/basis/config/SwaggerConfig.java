@@ -55,7 +55,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/rest/**"))
+                .paths(PathSelectors.ant("/api/rest/**"))
                 .build()
                 .apiInfo(apiInfo())
                 .globalOperationParameters(Collections.singletonList(authorizationParameter));

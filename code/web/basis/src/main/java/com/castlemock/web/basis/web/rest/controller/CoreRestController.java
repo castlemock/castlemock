@@ -42,7 +42,7 @@ import java.io.IOException;
  * @since 1.19
  */
 @Controller
-@RequestMapping("/rest/core")
+@RequestMapping("/api/rest/core")
 @Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
 public class CoreRestController extends AbstractRestController {
 

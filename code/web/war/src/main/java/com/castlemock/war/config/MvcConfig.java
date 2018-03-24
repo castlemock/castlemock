@@ -62,8 +62,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/favicon.ico").addResourceLocations("/resources/images/favicon.ico").setCachePeriod(STANDARD_CACHE_PERIOD);
 
         // Swagger
-        registry.addResourceHandler("/api/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/api/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
     /**

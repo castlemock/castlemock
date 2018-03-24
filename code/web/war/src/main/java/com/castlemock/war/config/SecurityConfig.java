@@ -105,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity
                 .authorizeRequests()
-                    .antMatchers("/rest/**")
+                    .antMatchers("/api/rest/**")
                     .authenticated()
                     .and()
                 .httpBasic();
