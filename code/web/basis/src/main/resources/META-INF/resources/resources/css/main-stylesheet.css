@@ -30,10 +30,16 @@ footer {
     text-align: center;
     padding-left: 20px;
     padding-top: 10px; }
+  footer .page-created {
+    text-align: right;
+    padding-right: 30px;
+    padding-top: 8px;
+    font-size: 11px;
+    color: #666666; }
   footer .info {
     text-align: right;
     padding-right: 20px;
-    padding-top: 10px; }
+    padding-top: 8px; }
     footer .info a {
       text-decoration: underline;
       font-size: 11px;
@@ -114,6 +120,12 @@ a {
     .main-header .links .title {
       visibility: visible;
       display: initial; } }
+@media screen and (max-width: 550px) {
+  footer .page-created {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none; } }
 @font-face {
   font-family: robotoThinFont;
   src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/roboto/Roboto-Thin.ttf"); }
@@ -293,6 +305,12 @@ a {
     .main-header .links .title {
       visibility: visible;
       display: initial; } }
+@media screen and (max-width: 550px) {
+  footer .page-created {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none; } }
 @font-face {
   font-family: robotoThinFont;
   src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/roboto/Roboto-Thin.ttf"); }

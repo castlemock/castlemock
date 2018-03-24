@@ -35,3 +35,17 @@
         }
     }
 }
+
+@media screen and (max-width: 550px) {
+
+
+    footer {
+        .page-created {
+            visibility: hidden;
+            clear: both;
+            float: left;
+            display: none;
+        }
+    }
+
+}

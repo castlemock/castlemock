@@ -67,7 +67,7 @@ public class ForbiddenControllerTest extends AbstractControllerTest {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.model().size(2))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(PAGE));
     }
 

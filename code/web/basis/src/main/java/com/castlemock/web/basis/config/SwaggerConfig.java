@@ -41,7 +41,7 @@ import java.util.Collections;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    @Value("${app.version}")
+    @Value("${app.version:Undefined}")
     private String version;
 
     @Bean

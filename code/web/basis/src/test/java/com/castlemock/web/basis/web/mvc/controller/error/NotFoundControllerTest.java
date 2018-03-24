@@ -72,7 +72,7 @@ public class NotFoundControllerTest extends AbstractControllerTest {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.model().size(2))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(USER_NOT_LOGGED_IN_PAGE));
     }
 

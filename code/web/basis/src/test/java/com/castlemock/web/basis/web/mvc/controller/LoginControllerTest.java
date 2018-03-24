@@ -61,7 +61,7 @@ public class LoginControllerTest extends AbstractControllerTest {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         ResultActions result = mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(2))
+                .andExpect(MockMvcResultMatchers.model().size(3))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(PAGE));
     }
 

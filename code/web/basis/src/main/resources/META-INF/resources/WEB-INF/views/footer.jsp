@@ -20,7 +20,8 @@
         <!--<a href="?language=en"><img class="flag flag-gb" alt="English"/></a>-->
     </div>
 
-    <div class="info">
+
+    <div class="info" style="float: right;">
         <c:choose>
             <c:when test="${demoMode}">
                 <a href="https://www.castlemock.com" target="_blank">Castle Mock version. ${appVersion} (Demo)</a>
@@ -30,4 +31,9 @@
             </c:otherwise>
         </c:choose>
     </div>
+
+    <div class="page-created" style="float: right; width: 280px;">
+        <spring:message code="general.footer.pagecreated" arguments="${pageCreated}"/>
+    </div>
+
 </footer>
