@@ -118,6 +118,7 @@
                                     </c:forEach>
                                 </form:select>
                                 <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.restmethod.button.update"/></span></button>
+                                <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="duplicate"><i class="fa fa-copy"></i> <span><spring:message code="rest.restmethod.button.duplicate"/></span></button>
                                 <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="rest.restmethod.button.deletemockresponses"/></span></button>
                             </sec:authorize>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

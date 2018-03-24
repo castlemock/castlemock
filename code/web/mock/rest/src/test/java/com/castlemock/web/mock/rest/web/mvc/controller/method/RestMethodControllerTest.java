@@ -21,10 +21,7 @@ import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
 import com.castlemock.core.mock.rest.model.project.dto.*;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
+import com.castlemock.core.mock.rest.model.project.service.message.input.*;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
@@ -182,5 +179,47 @@ public class RestMethodControllerTest extends AbstractRestControllerTest {
         Mockito.verify(serviceProcessor, Mockito.times(2)).process(Mockito.any(ReadRestResourceInput.class));
 
     }
+    
+    @Test
+    public void testServiceFunctionalityDuplicate() throws Exception {
+        final String projectId = "projectId";
+        final String applicationId = "applicationId";
+        final String resourceId = "resourceId";
+        final String methodId = "resourceId";
+        final String[] restMockResponseIds = {"MockResponse1", "MockResponse2"};
+
+
+        final RestMockResponseDto restMockResponse1 = new RestMockResponseDto();
+        restMockResponse1.setId("MockResponseId1");
+
+        final RestMockResponseDto restMockResponse2 = new RestMockResponseDto();
+        restMockResponse2.setId("MockResponseId2");
+
+        Mockito.when(serviceProcessor.process(Mockito.any(ReadRestMockResponseInput.class)))
+                .thenReturn(new ReadRestMockResponseOutput(restMockResponse1))
+                .thenReturn(new ReadRestMockResponseOutput(restMockResponse2));
+
+
+        final RestMockResponseModifierCommand restMockResponseModifierCommand = new RestMockResponseModifierCommand();
+        restMockResponseModifierCommand.setRestMockResponseIds(restMockResponseIds);
+
+        final MockHttpServletRequestBuilder message =
+                MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION
+                        + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId + SLASH + METHOD + SLASH + methodId)
+                        .param("action", "duplicate").flashAttr("restMockResponseModifierCommand", restMockResponseModifierCommand);
+
+        mockMvc.perform(message)
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/web/rest/project/" + projectId
+                        + "/application/" + applicationId + "/resource/" + resourceId
+                        + "/method/" + methodId));
+
+        Mockito.verify(serviceProcessor, Mockito.times(2)).process(Mockito.isA(ReadRestMockResponseInput.class));
+        Mockito.verify(serviceProcessor, Mockito.times(2)).process(Mockito.isA(CreateRestMockResponseInput.class));
+
+    }
+
+
 
 }
