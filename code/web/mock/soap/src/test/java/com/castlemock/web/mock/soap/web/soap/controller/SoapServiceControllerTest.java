@@ -33,9 +33,8 @@ import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoa
 import com.castlemock.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSoapResourceOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.web.AbstractControllerTest;
-import com.castlemock.web.mock.soap.web.soap.controller.SoapServiceController;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;

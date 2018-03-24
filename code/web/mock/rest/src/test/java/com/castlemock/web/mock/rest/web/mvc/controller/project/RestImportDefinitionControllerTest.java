@@ -21,7 +21,7 @@ import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.model.project.RestProjectDtoGenerator;
 import com.castlemock.web.mock.rest.web.mvc.command.project.RestDefinitionFileUploadForm;

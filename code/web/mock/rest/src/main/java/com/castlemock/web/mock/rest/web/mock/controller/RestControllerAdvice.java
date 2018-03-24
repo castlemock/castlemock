@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.web.rest.controller;
+package com.castlemock.web.mock.rest.web.mock.controller;
 
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import com.castlemock.web.mock.rest.model.RestErrorMessage;

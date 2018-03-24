@@ -18,6 +18,7 @@ package com.castlemock.web.basis.web.mvc.controller;
 
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.web.basis.model.ContentItem;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.mvc.command.search.SearchCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

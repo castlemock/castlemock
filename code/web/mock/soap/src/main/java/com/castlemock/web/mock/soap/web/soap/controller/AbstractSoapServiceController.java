@@ -35,7 +35,7 @@ import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSo
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.support.MtomUtility;
 import com.google.common.base.Preconditions;

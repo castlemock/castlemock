@@ -16,11 +16,9 @@
 
 package com.castlemock.web.basis.web.mvc.controller.event;
 
-import com.castlemock.core.basis.model.event.dto.EventDto;
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.web.basis.model.event.dto.EventDtoGenerator;
 import com.castlemock.web.basis.model.event.service.EventServiceFacadeImpl;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,11 +31,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.Mockito.when;
 
 /**
  * @author Karl Dahlgren

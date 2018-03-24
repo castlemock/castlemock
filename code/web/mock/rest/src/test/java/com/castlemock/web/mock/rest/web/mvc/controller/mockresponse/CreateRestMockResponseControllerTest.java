@@ -22,7 +22,7 @@ import com.castlemock.core.mock.rest.model.project.service.message.input.CreateR
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestMockResponseOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.model.project.*;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;

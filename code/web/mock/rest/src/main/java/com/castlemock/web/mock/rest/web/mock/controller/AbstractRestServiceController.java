@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.web.rest.controller;
+package com.castlemock.web.mock.rest.web.mock.controller;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
@@ -37,7 +37,7 @@ import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateR
 import com.castlemock.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
 import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.model.RestException;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;

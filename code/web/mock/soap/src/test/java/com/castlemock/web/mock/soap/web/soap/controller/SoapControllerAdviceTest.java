@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.soap.controller;
 
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapErrorMessage;
 import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.web.AbstractControllerTest;

@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.mvc.controller.error;
 
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;

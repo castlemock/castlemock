@@ -18,10 +18,10 @@ package com.castlemock.web.basis.web.mvc.controller;
 
 
 import com.castlemock.web.basis.config.TestApplication;
+import com.castlemock.web.basis.web.AbstractController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

@@ -1,6 +1,7 @@
 package com.castlemock.web.basis.web.mvc.controller;
 
 import com.castlemock.web.basis.config.TestApplication;
+import com.castlemock.web.basis.web.AbstractController;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

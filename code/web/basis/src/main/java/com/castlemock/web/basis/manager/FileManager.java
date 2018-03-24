@@ -85,6 +85,29 @@ public class FileManager {
         return uploadedFiles;
     }
 
+    public File uploadFile(final MultipartFile file) throws IOException {
+        final File fileDirectory = new File(tempFilesFolder);
+
+        if (!fileDirectory.exists()) {
+            fileDirectory.mkdirs();
+        }
+
+        final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+        final String fileName = "Upload-" + formatter.format(new Date());
+
+        LOGGER.debug("Uploading file: " + fileName);
+        final File serverFile = new File(fileDirectory, fileName);
+        final byte[] bytes = file.getBytes();
+        final BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+        try{
+            stream.write(bytes);
+        }finally {
+            stream.close();
+        }
+
+        return serverFile;
+    }
+
     public List<File> uploadFiles(final String downloadURL) throws IOException {
         final File fileDirectory = new File(tempFilesFolder);
 
@@ -115,9 +138,18 @@ public class FileManager {
         Preconditions.checkNotNull(files, "Uploaded files list cannot be null");
         LOGGER.debug("Deleting uploaded files");
         for(File file : files) {
-            LOGGER.debug("Deleting: " + file.getName());
-            file.delete();
+            this.deleteUploadedFile(file);
         }
+    }
+
+    /**
+     * The method takes a file that has been uploaded to the server and deletes it
+     * @param file The file of the file that will be deleted
+     */
+    public void deleteUploadedFile(final File file){
+        Preconditions.checkNotNull(file, "Uploaded file cannot be null");
+        LOGGER.debug("Deleting: " + file.getName());
+        file.delete();
     }
 
     /**

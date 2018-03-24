@@ -47,6 +47,7 @@ subprojects {
     ext.ramlVersion = "1.0.6"
     ext.antlrVersion = "4.7"
     ext.cxfVersion = "3.2.1"
+    ext.springfoxVersion = "2.8.0"
 
 	compileJava {
 		sourceCompatibility = 1.8
@@ -152,6 +153,8 @@ project(':code:web:basis') {
         compile(group: 'org.springframework', name: 'spring-tx', version: springFrameworkVersion)
         compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security')
         compile(group: 'org.springframework.security', name: 'spring-security-taglibs', version: springSecurityVersion)
+        compile(group: 'io.springfox', name: 'springfox-swagger2', version: springfoxVersion)
+        compile(group: 'io.springfox', name: 'springfox-swagger-ui', version: springfoxVersion)
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
     }
 }

@@ -16,10 +16,11 @@
 
 package com.castlemock.web.mock.rest.web.rest.controller;
 
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.model.RestErrorMessage;
 import com.castlemock.web.mock.rest.model.RestException;
 import com.castlemock.web.mock.rest.web.AbstractControllerTest;
+import com.castlemock.web.mock.rest.web.mock.controller.RestControllerAdvice;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;

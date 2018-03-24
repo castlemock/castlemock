@@ -18,7 +18,7 @@ package com.castlemock.web.basis.web.mvc.controller;
 
 
 import com.castlemock.web.basis.config.TestApplication;
-import org.junit.Ignore;
+import com.castlemock.web.basis.web.AbstractController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,7 +31,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 
 /**

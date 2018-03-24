@@ -16,6 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller;
 
+import com.castlemock.web.basis.web.AbstractController;
 import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

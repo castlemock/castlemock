@@ -91,9 +91,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .logout()
                     .logoutSuccessUrl("/login?logout")
-                .and().csrf().and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(tokenValiditySeconds)
+                    .and()
+                .csrf().and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(tokenValiditySeconds)
                 .and().exceptionHandling().accessDeniedPage("/forbidden");
-        httpSecurity.authorizeRequests().antMatchers("/mock/**").permitAll().and().csrf().disable();
+
+        httpSecurity
+                .authorizeRequests()
+                    .antMatchers("/mock/**")
+                    .permitAll()
+                    .and()
+                .csrf()
+                    .disable();
+
+        httpSecurity
+                .authorizeRequests()
+                    .antMatchers("/rest/**")
+                    .authenticated()
+                    .and()
+                .httpBasic();
 
         httpSecurity.headers().cacheControl().disable();
     }
