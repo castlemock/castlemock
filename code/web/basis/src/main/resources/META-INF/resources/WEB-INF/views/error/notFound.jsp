@@ -30,15 +30,19 @@
 
 <section id="login-box">
 
-	<img src="<c:url value="/resources/images/fm-logo.png"/>" id="logo"/>
+	<img src="<c:url value="/resources/images/cm-logo.png"/>" id="logo"/>
+	<div id="logo-text">Castle Mock</div>
 
 	<div>
 		<p><spring:message code="general.error.notfound.message"/></p>
+	</div>
 
-		<a href="<c:url value="/login"/>" class="btn btn-success"><i class="fa fa-sign-in"></i>Go to login page</a>
+	<div id="not-found-button">
+		<a href="<c:url value="/login"/>" class="btn btn-success"><spring:message code="general.error.notfound.button"/></a>
 	</div>
 
 </section>
+
 
 <jsp:include page="../footer.jsp" />
 </body>
