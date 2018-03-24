@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.filter;
+package com.castlemock.web.basis.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The {@link SoapHttpServletRequestWrapperFilter} is a filter
+ * The {@link HttpServletRequestWrapperFilter} is a filter
  * that will wrap all incoming SOAP requests with the
- * {@link SoapHttpServletRequestWrapper}.
+ * {@link HttpServletRequestWrapper}.
  * @author Karl Dahlgren
  * @since 1.18
  */
-public class SoapHttpServletRequestWrapperFilter implements Filter {
+public class HttpServletRequestWrapperFilter implements Filter {
     public void init(FilterConfig config)
             throws ServletException {
     }
@@ -36,7 +36,7 @@ public class SoapHttpServletRequestWrapperFilter implements Filter {
         if(request instanceof HttpServletRequest){
             // Wrap the incoming request if it is a HTTP Servlet request
             final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-            final SoapHttpServletRequestWrapper requestWrapper = new SoapHttpServletRequestWrapper(httpServletRequest);
+            final HttpServletRequestWrapper requestWrapper = new HttpServletRequestWrapper(httpServletRequest);
             chain.doFilter(requestWrapper,response);
         } else {
             // Don't wrap the request if it is not a HTTP Servlet request

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.config;
+package com.castlemock.web.mock.rest.config;
 
 import com.castlemock.web.basis.filter.HttpServletRequestWrapperFilter;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
@@ -22,23 +22,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Configuration class specifically for the SOAP component.
+ * Configuration class specifically for the REST component.
  * @author Karl Dahlgren
- * @since 1.18
+ * @since 1.19
  */
 @Configuration
-public class SoapConfig {
+public class RestConfig {
 
     /**
      * Register a {@link HttpServletRequestWrapperFilter}
      * @return
      */
     @Bean
-    public FilterRegistrationBean soapRequestWrapperFilter() {
+    public FilterRegistrationBean restRequestWrapperFilter() {
         final FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new HttpServletRequestWrapperFilter());
-        registration.addUrlPatterns("/mock/soap/project/*");
-        registration.setName("soapRequestWrapperFilter");
+        registration.addUrlPatterns("/mock/rest/project/*");
+        registration.setName("restRequestWrapperFilter");
         registration.setOrder(1);
         return registration;
     }
