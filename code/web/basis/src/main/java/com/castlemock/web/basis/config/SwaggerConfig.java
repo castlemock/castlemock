@@ -57,6 +57,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.ant("/rest/**"))
                 .build()
+                .apiInfo(apiInfo())
                 .globalOperationParameters(Collections.singletonList(authorizationParameter));
     }
 
