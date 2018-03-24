@@ -98,22 +98,4 @@ public class CoreRestController extends AbstractRestController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
-    @ApiOperation(value = "Token",response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully generated token")
-    }
-    )
-    @RequestMapping(method = RequestMethod.GET, value = "/token")
-    public @ResponseBody ResponseEntity getToken(
-            final HttpServletRequest httpServletRequest,
-            final HttpServletResponse httpServletResponse) {
-
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-
-
-
-
 }
