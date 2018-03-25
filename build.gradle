@@ -17,7 +17,7 @@ subprojects {
     apply plugin: 'eclipse'
     apply plugin: "jacoco"
     group = "com.castlemock"
-    version = '1.19'
+    version = '1.20-SNAPSHOT'
 
     repositories {
         mavenCentral()
