@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.filter;
+package com.castlemock.web.basis.filter;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +28,7 @@ import java.io.IOException;
  * @author Karl Dahlgren
  * @since 1.18
  */
-public class SoapHttpServletRequestWrapperTest {
+public class HttpServletRequestWrapperTest {
 
     @Test
     public void testGetInputStream() throws IOException {
@@ -37,7 +37,7 @@ public class SoapHttpServletRequestWrapperTest {
         Mockito.when(inputStream.read(Mockito.any(byte[].class))).thenReturn(-1);
         Mockito.when(request.getInputStream()).thenReturn(inputStream);
 
-        final SoapHttpServletRequestWrapper wrapper = new SoapHttpServletRequestWrapper(request);
+        final HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request);
         final ServletInputStream stream = wrapper.getInputStream();
 
         Assert.assertNotNull(stream);
