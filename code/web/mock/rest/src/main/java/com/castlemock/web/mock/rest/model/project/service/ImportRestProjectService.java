@@ -19,6 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ImportRestProjectOutput;
 
@@ -40,7 +41,7 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
     @Override
     public ServiceResult<ImportRestProjectOutput> process(final ServiceTask<ImportRestProjectInput> serviceTask) {
         final ImportRestProjectInput input = serviceTask.getInput();
-        repository.importOne(input.getProjectRaw());
-        return createServiceResult(new ImportRestProjectOutput());
+        final RestProjectDto project = repository.importOne(input.getProjectRaw());
+        return createServiceResult(new ImportRestProjectOutput(project));
     }
 }

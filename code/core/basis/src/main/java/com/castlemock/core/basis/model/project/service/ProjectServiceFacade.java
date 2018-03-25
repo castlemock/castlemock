@@ -49,8 +49,9 @@ public interface ProjectServiceFacade extends ServiceFacade<ProjectDto, String> 
      * The method provides the functionality to import a project as a String
      * @param type The type value for the specific type that the instance belongs to
      * @param rawProject The imported project file
+     * @return The imported project
      */
-    void importProject(String type, String rawProject);
+    ProjectDto importProject(String type, String rawProject);
 
     /**
      * Searches for resources that matches the provided query. The matching resources will

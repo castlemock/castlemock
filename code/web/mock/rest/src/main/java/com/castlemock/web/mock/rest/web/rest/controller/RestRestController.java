@@ -17,10 +17,12 @@
 package com.castlemock.web.mock.rest.web.rest.controller;
 
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/rest/rest")
+@RequestMapping("/api/rest/rest")
+@Api(value="REST", description="REST Operations for Castle Mock REST", tags = {"REST"})
 public class RestRestController extends AbstractRestController {
 }

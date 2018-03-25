@@ -144,10 +144,12 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
     /**
      * The method provides the functionality to import a project as a String
      * @param projectRaw The project as a String
+     * @return The imported project
      */
     @Override
-    public void importProject(String projectRaw) {
-        serviceProcessor.process(new ImportSoapProjectInput(projectRaw));
+    public SoapProjectDto importProject(String projectRaw) {
+        final ImportSoapProjectOutput output = serviceProcessor.process(new ImportSoapProjectInput(projectRaw));
+        return output.getProject();
     }
 
     /**

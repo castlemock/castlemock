@@ -16,6 +16,7 @@
 
 package com.castlemock.web.basis.web.rest.controller;
 
+import com.castlemock.core.basis.model.project.dto.ProjectDto;
 import com.castlemock.core.basis.model.project.service.ProjectServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
 import io.swagger.annotations.*;
@@ -62,14 +63,15 @@ public class CoreRestController extends AbstractRestController {
      * @param httpServletResponse The outgoing HTTP servlet response.
      * @return A HTTP response.
      */
-    @ApiOperation(value = "Import project",response = ResponseEntity.class)
+    @ApiOperation(value = "Import project",response = ProjectDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully imported project")
     }
     )
     @RequestMapping(method = RequestMethod.POST, value = "/project/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public @ResponseBody ResponseEntity importProject(
+    public @ResponseBody
+    ProjectDto importProject(
             @ApiParam(name = "type", value = "The type of the project", allowableValues = "REST,SOAP")
             @RequestParam("type") final String type,
             @ApiParam(name = "file", value = "The project file which will be imported.")
@@ -88,14 +90,14 @@ public class CoreRestController extends AbstractRestController {
                 stringBuilder.append(line + "\n");
             }
 
-            projectServiceFacade.importProject(type, stringBuilder.toString());
-        } catch (IOException e) {
+            ProjectDto project = projectServiceFacade.importProject(type, stringBuilder.toString());
+            return project;
+        } catch (Exception e) {
             LOGGER.error("Unable to import project", e);
+            throw new RuntimeException(e);
         } finally {
             fileManager.deleteUploadedFile(file);
         }
-
-        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Karl Dahlgren
+ * Copyright 2018 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.rest.model.project.service.message.output;
+package com.castlemock.core.mock.soap.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
 
 /**
  * @author Karl Dahlgren
- * @since 1.0
+ * @since 1.19
  */
-public class ImportRestProjectOutput implements Output{
+public class ImportSoapResourceOutput implements Output{
 
-    private final RestProjectDto project;
+    @NotNull
+    private final SoapResourceDto resource;
 
-    public ImportRestProjectOutput(RestProjectDto project) {
-        this.project = project;
+    public ImportSoapResourceOutput(SoapResourceDto resource) {
+        this.resource = resource;
     }
 
-    public RestProjectDto getProject() {
-        return project;
+    public SoapResourceDto getResource() {
+        return resource;
     }
 }
