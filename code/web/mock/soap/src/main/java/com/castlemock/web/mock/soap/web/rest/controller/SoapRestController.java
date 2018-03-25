@@ -53,7 +53,8 @@ public class SoapRestController extends AbstractRestController {
     private static final Logger LOGGER = Logger.getLogger(SoapRestController.class);
 
     @ApiOperation(value = "Import resource", notes = "The service will upload a SOAP resource. " +
-            "Either the project id or the resource id is required.", response = SoapResourceDto.class)
+            "Either the project id or the resource id is required. Required authorization: Modifier or Admin.",
+            response = SoapResourceDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully imported SOAP project resource")
     }

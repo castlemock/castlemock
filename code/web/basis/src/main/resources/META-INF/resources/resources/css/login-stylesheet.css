@@ -36,6 +36,15 @@ footer {
     padding-top: 8px;
     font-size: 11px;
     color: #666666; }
+  footer .rest-api {
+    text-align: right;
+    padding-right: 30px;
+    padding-top: 8px;
+    font-size: 11px; }
+    footer .rest-api a {
+      text-decoration: underline;
+      font-size: 11px;
+      color: #666666; }
   footer .info {
     text-align: right;
     padding-right: 20px;
@@ -120,7 +129,7 @@ a {
     .main-header .links .title {
       visibility: visible;
       display: initial; } }
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 570px) {
   footer .page-created {
     visibility: hidden;
     clear: both;

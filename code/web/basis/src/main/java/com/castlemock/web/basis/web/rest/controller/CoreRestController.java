@@ -63,11 +63,11 @@ public class CoreRestController extends AbstractRestController {
      * @param httpServletResponse The outgoing HTTP servlet response.
      * @return A HTTP response.
      */
-    @ApiOperation(value = "Import project",response = ProjectDto.class)
+    @ApiOperation(value = "Import project",response = ProjectDto.class,
+            notes = "Import project. Required authorization: Modifier or Admin.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully imported project")
-    }
-    )
+    })
     @RequestMapping(method = RequestMethod.POST, value = "/project/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
