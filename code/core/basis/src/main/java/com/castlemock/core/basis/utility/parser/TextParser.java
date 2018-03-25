@@ -71,6 +71,9 @@ public class TextParser {
      *          were found in the provided text.
      */
     public static String parse(final String text){
+        if(text == null){
+            return null;
+        }
         String output = text;
         Pattern pattern = Pattern.compile("(?=\\$\\{)(.*?)\\}");
         Matcher matcher = pattern.matcher(text);
