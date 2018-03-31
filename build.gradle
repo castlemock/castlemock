@@ -48,6 +48,7 @@ subprojects {
     ext.antlrVersion = "4.7"
     ext.cxfVersion = "3.2.1"
     ext.springfoxVersion = "2.8.0"
+    ext.graphqlVersion = "8.0"
 
 	compileJava {
 		sourceCompatibility = 1.8
@@ -205,7 +206,7 @@ project(':code:web:mock:graphql') {
     dependencies {
         compile(project(":code:web:basis"))
         compile(project(":code:core:mock:graphql"))
-        compile 'com.graphql-java:graphql-java:7.0'
+        compile(group: 'com.graphql-java', name: 'graphql-java', version: graphqlVersion)
     }
 }
 
