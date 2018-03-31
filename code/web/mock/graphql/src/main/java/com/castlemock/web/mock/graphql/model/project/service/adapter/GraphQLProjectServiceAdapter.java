@@ -145,8 +145,9 @@ public class GraphQLProjectServiceAdapter implements ProjectServiceAdapter<Graph
      * @param projectRaw The project as a String
      */
     @Override
-    public void importProject(String projectRaw) {
-        serviceProcessor.process(new ImportGraphQLProjectInput(projectRaw));
+    public GraphQLProjectDto importProject(String projectRaw) {
+        final ImportGraphQLProjectOutput output = serviceProcessor.process(new ImportGraphQLProjectInput(projectRaw));
+        return output.getProject();
     }
 
     /**

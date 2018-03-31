@@ -19,6 +19,7 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ImportGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ImportGraphQLProjectOutput;
 
@@ -40,7 +41,7 @@ public class ImportGraphQLProjectService extends AbstractGraphQLProjectService i
     @Override
     public ServiceResult<ImportGraphQLProjectOutput> process(final ServiceTask<ImportGraphQLProjectInput> serviceTask) {
         final ImportGraphQLProjectInput input = serviceTask.getInput();
-        repository.importOne(input.getProjectRaw());
-        return createServiceResult(new ImportGraphQLProjectOutput());
+        final GraphQLProjectDto project = repository.importOne(input.getProjectRaw());
+        return createServiceResult(new ImportGraphQLProjectOutput(project));
     }
 }

@@ -30,7 +30,7 @@ import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestQueryDto
 import com.castlemock.core.mock.graphql.model.project.service.message.input.IdentifyGraphQLOperationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.IdentifyGraphQLOperationOutput;
 import com.castlemock.web.basis.support.HttpMessageSupport;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.graphql.converter.query.QueryGraphQLConverter;
 import com.castlemock.web.mock.graphql.model.GraphQLException;
 import com.google.common.base.Preconditions;
