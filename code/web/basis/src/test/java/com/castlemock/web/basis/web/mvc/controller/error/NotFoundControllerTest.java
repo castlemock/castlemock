@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.mvc.controller.error;
 
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,7 +72,7 @@ public class NotFoundControllerTest extends AbstractControllerTest {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.model().size(2))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(USER_NOT_LOGGED_IN_PAGE));
     }
 

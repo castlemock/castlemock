@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.config;
 
-import com.castlemock.web.mock.soap.filter.SoapHttpServletRequestWrapperFilter;
+import com.castlemock.web.basis.filter.HttpServletRequestWrapperFilter;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,15 +30,15 @@ import org.springframework.context.annotation.Configuration;
 public class SoapConfig {
 
     /**
-     * Register a {@link SoapHttpServletRequestWrapperFilter}
+     * Register a {@link HttpServletRequestWrapperFilter}
      * @return
      */
     @Bean
-    public FilterRegistrationBean requestWrapperFilter() {
+    public FilterRegistrationBean soapRequestWrapperFilter() {
         final FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new SoapHttpServletRequestWrapperFilter());
+        registration.setFilter(new HttpServletRequestWrapperFilter());
         registration.addUrlPatterns("/mock/soap/project/*");
-        registration.setName("requestWrapperFilter");
+        registration.setName("soapRequestWrapperFilter");
         registration.setOrder(1);
         return registration;
     }

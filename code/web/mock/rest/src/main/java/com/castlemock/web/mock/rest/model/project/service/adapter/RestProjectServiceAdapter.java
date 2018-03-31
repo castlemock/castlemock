@@ -143,10 +143,12 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
     /**
      * The method provides the functionality to import a project as a String
      * @param projectRaw The project as a String
+     * @return The imported project
      */
     @Override
-    public void importProject(String projectRaw) {
-        serviceProcessor.process(new ImportRestProjectInput(projectRaw));
+    public RestProjectDto importProject(String projectRaw) {
+        final ImportRestProjectOutput output =serviceProcessor.process(new ImportRestProjectInput(projectRaw));
+        return output.getProject();
     }
 
     /**

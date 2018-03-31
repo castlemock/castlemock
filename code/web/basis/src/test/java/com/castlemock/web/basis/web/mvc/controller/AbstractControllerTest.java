@@ -16,6 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller;
 
+import com.castlemock.web.basis.web.AbstractController;
 import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -51,7 +52,7 @@ public abstract class AbstractControllerTest {
     protected static final String PROJECT = "project";
     protected static final String PROJECT_ID = "projectId";
     protected static final String PROJECT_TYPES = "projectTypes";
-    protected static final Integer GLOBAL_VIEW_MODEL_COUNT = 6;
+    protected static final Integer GLOBAL_VIEW_MODEL_COUNT = 7;
 
     @Before
     public void initiateTest() {

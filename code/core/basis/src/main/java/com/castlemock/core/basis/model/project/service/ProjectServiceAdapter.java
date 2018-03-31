@@ -45,8 +45,9 @@ public interface ProjectServiceAdapter<D extends ProjectDto> extends ServiceAdap
     /**
      * The method provides the functionality to import a project as a String
      * @param projectRaw The project as a String
+     * @return The imported project
      */
-    void importProject(String projectRaw);
+    D importProject(String projectRaw);
 
     /**
      * Searches for resources that matches the provided query. The matching resources will

@@ -14,6 +14,7 @@
         - Swagger parser: https://github.com/swagger-api/swagger-parser
         - RAML parser: https://github.com/raml-org/raml-java-parser
         - Apache CXF: https://cxf.apache.org/
+        - Springfox: https://springfox.github.io/springfox/
 -----------------------------------------------------------------------------
 
 Apache License

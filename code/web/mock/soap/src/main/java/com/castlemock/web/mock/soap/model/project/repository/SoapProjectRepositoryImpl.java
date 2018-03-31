@@ -26,6 +26,7 @@ import com.castlemock.core.mock.soap.model.project.dto.*;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.google.common.base.Preconditions;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -59,6 +60,8 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     private static final String SOAP_TYPE = "SOAP";
     private static final String WSDL_DIRECTORY = "wsdl";
     private static final String SCHEMA_DIRECTORY = "wsdl";
+
+    private static final Logger LOGGER = Logger.getLogger(SoapProjectRepositoryImpl.class);
 
     @Autowired
     private FileRepositorySupport fileRepositorySupport;
@@ -426,6 +429,35 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     }
 
     /**
+     * The method adds a new {@link SoapResource}.
+     *
+     * @param soapResourceDto The dto instance of {@link SoapResource} that will be saved.
+     * @param resource        The raw resource
+     * @return The saved {@link SoapResourceDto}
+     * @see SoapResource
+     * @see SoapResourceDto
+     */
+    @Override
+    public SoapResourceDto saveSoapResource(SoapResourceDto soapResourceDto, String resource) {
+        SoapResource soapResource = mapper.map(soapResourceDto, SoapResource.class);
+        String path = this.soapResourceFileDirectory + File.separator;
+
+        if(SoapResourceType.WSDL.equals(soapResource.getType())){
+            path += WSDL_DIRECTORY;
+        } else if(SoapResourceType.WSDL.equals(soapResource.getType())){
+            path
+                    += SCHEMA_DIRECTORY;
+        }
+        try {
+            this.fileRepositorySupport.save(path, soapResource.getId() + this.soapResourceFileExtension, resource);
+        } catch (Exception e){
+            LOGGER.error("Unable to upload SOAP resource", e);
+        }
+
+        return mapper.map(soapResource, SoapResourceDto.class);
+    }
+
+    /**
      * The method adds a new {@link SoapOperation} to a {@link SoapPort} and then saves
      * the {@link SoapProject} to the file system.
      * @param soapProjectId The id of the {@link SoapProject}
@@ -702,7 +734,18 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
                 path += SCHEMA_DIRECTORY;
             }
 
-            this.fileRepositorySupport.delete(path, deletedSoapResource.getId() + this.soapResourceFileExtension);
+            try {
+                // Try to delete a SOAP resource.
+                // This operation can fail and that is expected.
+                // The reason for this is if you import a project,
+                // it might not have all the resource included.
+                // If that is the case, the we should only log
+                // that we weren't able to delete the resource file.
+                this.fileRepositorySupport.delete(path, deletedSoapResource.getId() + this.soapResourceFileExtension);
+            } catch (IllegalStateException e){
+                LOGGER.warn("Unable to delete the following SOAP resource: " + soapResourceId);
+            }
+
         }
         return deletedSoapResource != null ? mapper.map(deletedSoapResource, SoapResourceDto.class) : null;
     }

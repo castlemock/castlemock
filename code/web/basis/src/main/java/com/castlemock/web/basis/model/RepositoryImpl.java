@@ -258,16 +258,24 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
      * @param raw The entity as a String
      */
     @Override
-    public void importOne(final String raw){
+    public D importOne(final String raw){
 
         try {
             final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream (raw.getBytes());
             final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass);
             final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             final T type = (T) jaxbUnmarshaller.unmarshal(byteArrayInputStream);
-            type.setId(null);
+
+            // Check if a type already have the same id.
+            // If so, throw a new exception.
+            D existing = findOne(type.getId());
+            if(existing != null){
+                throw new IllegalArgumentException("A type with the following ID already exists: " + type.getId());
+            }
+
             D dto = mapper.map(type, dtoClass);
-            save(dto);
+            dto = save(dto);
+            return dto;
         } catch (JAXBException e) {
             throw new IllegalStateException("Unable to import type", e);
         }

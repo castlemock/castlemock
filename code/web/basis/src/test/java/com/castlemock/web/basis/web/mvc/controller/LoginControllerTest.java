@@ -18,7 +18,7 @@ package com.castlemock.web.basis.web.mvc.controller;
 
 
 import com.castlemock.web.basis.config.TestApplication;
-import org.junit.Ignore;
+import com.castlemock.web.basis.web.AbstractController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,7 +31,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 
 /**
@@ -62,7 +61,7 @@ public class LoginControllerTest extends AbstractControllerTest {
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         ResultActions result = mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(2))
+                .andExpect(MockMvcResultMatchers.model().size(3))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(PAGE));
     }
 

@@ -21,7 +21,7 @@ import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.project.service.ProjectServiceFacade;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.web.mvc.command.search.SearchCommand;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -27,6 +27,13 @@ import org.junit.Test;
 public class TextParserTest {
 
     @Test
+    public void testParseNull(){
+        String input = null;
+        String output = TextParser.parse(input);
+        Assert.assertNull(output);
+    }
+
+    @Test
     public void testParseRandomInteger(){
         String input = "Hello this is a ${RANDOM_INTEGER}.";
         String output = TextParser.parse(input);

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.filter;
+package com.castlemock.web.basis.filter;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -27,11 +27,11 @@ import java.io.IOException;
  * @author Karl Dahlgren
  * @since 1.18
  */
-public class SoapHttpServletRequestWrapperFilterTest {
+public class HttpServletRequestWrapperFilterTest {
 
     @Test
     public void testDoFilterHttpRequest() throws IOException, ServletException {
-        final SoapHttpServletRequestWrapperFilter filter = new SoapHttpServletRequestWrapperFilter();
+        final HttpServletRequestWrapperFilter filter = new HttpServletRequestWrapperFilter();
         final ServletInputStream inputStream = Mockito.mock(ServletInputStream.class);
         final ServletRequest request = Mockito.mock(HttpServletRequest.class);
         final ServletResponse response = Mockito.mock(ServletResponse.class);
@@ -43,13 +43,13 @@ public class SoapHttpServletRequestWrapperFilterTest {
 
         filter.doFilter(request, response, chain);
 
-        Mockito.verify(chain, Mockito.times(1)).doFilter(Mockito.any(SoapHttpServletRequestWrapper.class),
+        Mockito.verify(chain, Mockito.times(1)).doFilter(Mockito.any(HttpServletRequestWrapper.class),
                 Mockito.eq(response));
     }
 
     @Test
     public void testDoFilterRequest() throws IOException, ServletException {
-        final SoapHttpServletRequestWrapperFilter filter = new SoapHttpServletRequestWrapperFilter();
+        final HttpServletRequestWrapperFilter filter = new HttpServletRequestWrapperFilter();
         final ServletRequest request = Mockito.mock(ServletRequest.class);
         final ServletResponse response = Mockito.mock(ServletResponse.class);
         final FilterChain chain = Mockito.mock(FilterChain.class);

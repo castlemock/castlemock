@@ -19,6 +19,7 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ImportSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ImportSoapProjectOutput;
 
@@ -40,7 +41,7 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ImportSoapProjectOutput> process(final ServiceTask<ImportSoapProjectInput> serviceTask) {
         final ImportSoapProjectInput input = serviceTask.getInput();
-        repository.importOne(input.getProjectRaw());
-        return createServiceResult(new ImportSoapProjectOutput());
+        final SoapProjectDto project = repository.importOne(input.getProjectRaw());
+        return createServiceResult(new ImportSoapProjectOutput(project));
     }
 }

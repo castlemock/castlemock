@@ -96,6 +96,6 @@ public interface Repository<T extends Saveable<I>, D, I extends Serializable> {
      * The method provides the functionality to import a enity as a String
      * @param raw The entity as a String
      */
-    void importOne(String raw);
+    D importOne(String raw);
 
 }

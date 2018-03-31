@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.filter;
+package com.castlemock.web.basis.filter;
 
 import com.google.common.io.ByteStreams;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 
 /**
- * The {@link SoapHttpServletRequestWrapper} is a HTTP Servlet request wrapper
+ * The {@link HttpServletRequestWrapper} is a HTTP Servlet request wrapper
  * class and is used to allow multiple reads of the input stream.
  * If the wrapper is not applied, then the request will only allow you
  * to read the input stream once, which in certain cases won't work.
@@ -35,10 +34,10 @@ import java.io.*;
  * @author Karl Dahlgren
  * @since 1.18
  */
-public class SoapHttpServletRequestWrapper extends HttpServletRequestWrapper {
+public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletRequestWrapper {
     private byte[] bytes;
 
-    SoapHttpServletRequestWrapper(final HttpServletRequest request) throws IOException {
+    HttpServletRequestWrapper(final HttpServletRequest request) throws IOException {
         super(request);
 
         final InputStream inputStream = request.getInputStream();

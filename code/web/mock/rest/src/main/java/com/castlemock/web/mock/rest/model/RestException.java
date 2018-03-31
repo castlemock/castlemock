@@ -18,8 +18,8 @@ package com.castlemock.web.mock.rest.model;
 
 
 import com.castlemock.web.basis.web.mvc.controller.ViewControllerAdvice;
-import com.castlemock.web.mock.rest.web.rest.controller.RestControllerAdvice;
-import com.castlemock.web.mock.rest.web.rest.controller.RestServiceController;
+import com.castlemock.web.mock.rest.web.mock.controller.RestControllerAdvice;
+import com.castlemock.web.mock.rest.web.mock.controller.RestServiceController;
 
 /**
  * The RestException is the main exception for the all REST related issues. All REST related exceptions

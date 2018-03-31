@@ -18,6 +18,7 @@ package com.castlemock.web.basis.web.mvc.controller;
 
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.web.basis.model.ContentItem;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.mvc.command.search.SearchCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +46,7 @@ public abstract class AbstractViewController extends AbstractController {
     @Value("${app.version}")
     private String version;
     private static final String APPLICATION_VERSION = "appVersion";
+    private static final String PAGE_CREATED = "pageCreated";
     private static final String PARTIAL_DIRECTORY = "partial/";
     private static final String JSP = ".jsp";
     private static final String INDEX = "index";
@@ -50,6 +54,7 @@ public abstract class AbstractViewController extends AbstractController {
     private static final String LOGGED_IN_USER = "loggedInUser";
     private static final String SEARCH_COMMAND = "searchCommand";
     private static final String CONTEXT = "context";
+    private static final String DATE_FORMAT = "dd MMM yyyy HH:mm:ss z";
 
     /**
      * The method create a ModelAndView instance with the index page set as the view name
@@ -58,8 +63,11 @@ public abstract class AbstractViewController extends AbstractController {
      * @see #INDEX
      */
     public ModelAndView createModelAndView(){
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        final Date now = new Date();
         final ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject(APPLICATION_VERSION, version);
+        modelAndView.addObject(PAGE_CREATED, simpleDateFormat.format(now));
         return modelAndView;
     }
 

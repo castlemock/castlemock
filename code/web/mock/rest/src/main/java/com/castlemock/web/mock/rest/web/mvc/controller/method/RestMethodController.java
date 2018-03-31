@@ -22,10 +22,7 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
+import com.castlemock.core.mock.rest.model.project.service.message.input.*;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
@@ -37,6 +34,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import javax.servlet.ServletRequest;
 import java.util.ArrayList;
@@ -57,6 +55,8 @@ public class RestMethodController extends AbstractRestViewController {
     private static final Logger LOGGER = Logger.getLogger(RestMethodController.class);
     private static final String UPDATE_STATUS = "update";
     private static final String DELETE_MOCK_RESPONSES = "delete";
+    private static final String DUPLICATE_MOCK_RESPONSE = "duplicate";
+
 
     private static final String DELETE_REST_MOCK_RESPONSES_COMMAND = "deleteRestMockResponsesCommand";
     private static final String REST_MOCK_RESPONSE_MODIFIER_COMMAND = "restMockResponseModifierCommand";
@@ -137,7 +137,19 @@ public class RestMethodController extends AbstractRestViewController {
             model.addObject(REST_MOCK_RESPONSES, mockResponses);
             model.addObject(DELETE_REST_MOCK_RESPONSES_COMMAND, new DeleteRestMockResponsesCommand());
             return model;
+        } else if (DUPLICATE_MOCK_RESPONSE.equalsIgnoreCase(action)) {
+            String copyOfLabel = messageSource.getMessage("rest.restmethod.label.copyOf", null, LocaleContextHolder.getLocale());
+            for (String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()) {
+                ReadRestMockResponseOutput readRestMockResponseOutput =
+                        serviceProcessor.process(new ReadRestMockResponseInput(restProjectId,
+                                restApplicationId, restResourceId, restMethodId, mockResponseId));
+                RestMockResponseDto restMockResponseDto = readRestMockResponseOutput.getRestMockResponse();
+                restMockResponseDto.setId(null);
+                restMockResponseDto.setName(String.format("%s %s", copyOfLabel, restMockResponseDto.getName()));
+                serviceProcessor.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseDto));
+            }
         }
+
 
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }

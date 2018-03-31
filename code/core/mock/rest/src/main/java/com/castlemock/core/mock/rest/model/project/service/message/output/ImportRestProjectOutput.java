@@ -17,6 +17,7 @@
 package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
+import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 
 /**
  * @author Karl Dahlgren
@@ -24,4 +25,13 @@ import com.castlemock.core.basis.model.Output;
  */
 public class ImportRestProjectOutput implements Output{
 
+    private final RestProjectDto project;
+
+    public ImportRestProjectOutput(RestProjectDto project) {
+        this.project = project;
+    }
+
+    public RestProjectDto getProject() {
+        return project;
+    }
 }

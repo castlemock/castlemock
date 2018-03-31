@@ -21,7 +21,7 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.web.mvc.controller.AbstractController;
+import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
 import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
 import com.castlemock.web.mock.soap.web.mvc.command.project.WSDLFileUploadForm;

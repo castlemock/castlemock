@@ -71,11 +71,12 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, Stri
      * The method provides the functionality to import a project as a String
      * @param type The type value for the specific type that the instance belongs to
      * @param rawProject The imported project file
+     * @return The imported project
      */
     @Override
-    public void importProject(String type, String rawProject) {
+    public ProjectDto importProject(String type, String rawProject) {
         final ProjectServiceAdapter<ProjectDto> service = findByType(type);
-        service.importProject(rawProject);
+        return service.importProject(rawProject);
     }
 
     /**

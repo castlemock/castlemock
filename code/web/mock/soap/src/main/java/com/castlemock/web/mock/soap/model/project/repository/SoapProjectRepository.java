@@ -184,6 +184,17 @@ public interface SoapProjectRepository extends Repository<SoapProject, SoapProje
     SoapResourceDto saveSoapResource(String soapProjectId, SoapResourceDto soapResourceDto, String resource);
 
     /**
+     * The method adds a new {@link SoapResource}.
+     * @param soapResourceDto The dto instance of {@link SoapResource} that will be saved.
+     * @param resource The raw resource
+     * @return The saved {@link SoapResourceDto}
+     * @see SoapResource
+     * @see SoapResourceDto
+     */
+    SoapResourceDto saveSoapResource(SoapResourceDto soapResourceDto, String resource);
+
+
+    /**
      * The method adds a new {@link SoapOperation} to a {@link SoapPort} and then saves
      * the {@link SoapProject} to the file system.
      * @param soapProjectId The id of the {@link SoapProject}
