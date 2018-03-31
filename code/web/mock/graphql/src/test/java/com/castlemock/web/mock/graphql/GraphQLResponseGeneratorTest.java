@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.graphql;
 
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestQueryDto;
 import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverterResult;
@@ -63,18 +64,18 @@ public class GraphQLResponseGeneratorTest {
     public void test(){
         final SchemaGraphQLDefinitionConverter schemaConverter = new SchemaGraphQLDefinitionConverter(null);
         final GraphQLDefinitionConverterResult result = schemaConverter.convertRaw(SCHEMA);
-        final GraphQLProjectDto project = new GraphQLProjectDto();
-        project.setMutations(result.getMutations());
-        project.setQueries(result.getQueries());
-        project.setSubscriptions(result.getSubscriptions());
-        project.setObjects(result.getObjects());
-        project.setEnums(result.getEnums());
+        final GraphQLApplicationDto application = new GraphQLApplicationDto();
+        application.setMutations(result.getMutations());
+        application.setQueries(result.getQueries());
+        application.setSubscriptions(result.getSubscriptions());
+        application.setObjects(result.getObjects());
+        application.setEnums(result.getEnums());
 
         final QueryGraphQLConverter queryConverter = new QueryGraphQLConverter();
         final List<GraphQLRequestQueryDto> queries = queryConverter.parseQuery(QUERY);
 
         GraphQLResponseGenerator generator = new GraphQLResponseGenerator();
-        final String output = generator.getResponse(project, queries);
+        final String output = generator.getResponse(application, queries);
 
         System.out.println(output);
     }

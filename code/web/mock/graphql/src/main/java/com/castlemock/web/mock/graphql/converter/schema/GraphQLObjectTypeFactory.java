@@ -226,6 +226,8 @@ public class GraphQLObjectTypeFactory {
 
         if(GraphQLAttributeType.OBJECT_TYPE.equals(attributeType)){
             graphQLArgument.setTypeName(coreType.getName());
+        } else if(GraphQLAttributeType.ENUM.equals(attributeType)){
+            graphQLArgument.setTypeName(coreType.getName());
         }
 
         return graphQLArgument;
