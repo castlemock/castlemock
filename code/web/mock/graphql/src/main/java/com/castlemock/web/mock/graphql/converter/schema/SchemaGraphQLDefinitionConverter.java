@@ -37,8 +37,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static graphql.schema.idl.RuntimeWiring.newRuntimeWiring;
-
 public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionConverter {
 
     private FileManager fileManager;
@@ -50,19 +48,18 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
 
     @Override
     public GraphQLDefinitionConverterResult convertRaw(String raw) {
-        SchemaParser schemaParser = new SchemaParser();
-        TypeDefinitionRegistry typeDefinitionRegistry = schemaParser.parse(raw);
+        final SchemaParser schemaParser = new SchemaParser();
+        final TypeDefinitionRegistry typeDefinitionRegistry = schemaParser.parse(raw);
+        final RuntimeWiring runtimeWiring = RuntimeWiring.newRuntimeWiring().build();
 
-        RuntimeWiring runtimeWiring = newRuntimeWiring().build();
+        final SchemaGenerator schemaGenerator = new SchemaGenerator();
+        final GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
 
-        SchemaGenerator schemaGenerator = new SchemaGenerator();
-        GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
-
-        List<GraphQLQueryDto> queries = new ArrayList<>();
-        List<GraphQLMutationDto> mutations = new ArrayList<>();
-        List<GraphQLSubscriptionDto> subscriptions = new ArrayList<>();
-        List<GraphQLObjectTypeDto> objects = new ArrayList<>();
-        List<GraphQLEnumTypeDto> enums = new ArrayList<>();
+        final List<GraphQLQueryDto> queries = new ArrayList<>();
+        final List<GraphQLMutationDto> mutations = new ArrayList<>();
+        final List<GraphQLSubscriptionDto> subscriptions = new ArrayList<>();
+        final List<GraphQLObjectTypeDto> objects = new ArrayList<>();
+        final List<GraphQLEnumTypeDto> enums = new ArrayList<>();
 
         for(GraphQLType graphQLType : graphQLSchema.getAllTypesAsList()){
             GraphQLTypeDto type = GraphQLObjectTypeFactory.parse(graphQLType);

@@ -51,6 +51,8 @@ public class GraphQLApplicationDto {
     @Mapping("subscriptions")
     private List<GraphQLSubscriptionDto> subscriptions = new CopyOnWriteArrayList<GraphQLSubscriptionDto>();
 
+    private String invokeAddress;
+
     public String getId() {
         return id;
     }
@@ -115,4 +117,11 @@ public class GraphQLApplicationDto {
         this.subscriptions = subscriptions;
     }
 
+    public String getInvokeAddress() {
+        return invokeAddress;
+    }
+
+    public void setInvokeAddress(String invokeAddress) {
+        this.invokeAddress = invokeAddress;
+    }
 }

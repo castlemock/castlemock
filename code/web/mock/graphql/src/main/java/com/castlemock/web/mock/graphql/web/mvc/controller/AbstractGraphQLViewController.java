@@ -18,6 +18,7 @@ package com.castlemock.web.mock.graphql.web.mvc.controller;
 
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperationStatus;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import org.apache.log4j.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 public abstract class AbstractGraphQLViewController extends AbstractViewController {
 
+    protected static final String GRAPHQL = "graphql";
     protected static final String GRAPHQL_PROJECT_ID = "graphQLProjectId";
     protected static final String GRAPHQL_APPLICATION_ID = "graphQLApplicationId";
 
@@ -41,6 +43,8 @@ public abstract class AbstractGraphQLViewController extends AbstractViewControll
     protected static final String GRAPHQL_OBJECT_TYPE = "graphQLObjectType";
     protected static final String GRAPHQL_ENUM_TYPE = "graphQLEnumType";
     protected static final String GRAPHQL_OPERATION_STATUSES = "graphQLOperationStatus";
+
+    private static final Logger LOGGER = Logger.getLogger(AbstractGraphQLViewController.class);
 
 
     /**
@@ -61,5 +65,25 @@ public abstract class AbstractGraphQLViewController extends AbstractViewControll
         statuses.add(GraphQLOperationStatus.ECHO);
         return statuses;
     }
+
+
+    /**
+     * The method provides the functionality to create the address which is used to invoke a GraphQL service
+     * @param protocol THe protocol
+     * @param serverPort The server port
+     * @param projectId The id of the project
+     * @param applicationId The id of the application
+     * @return A URL based on all the incoming parameters
+     */
+    protected String getGraphQLInvokeAddress(final String protocol, int serverPort, final String projectId, final String applicationId){
+        try {
+            final String hostAddress = getHostAddress();
+            return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + GRAPHQL + SLASH + PROJECT + SLASH + projectId + SLASH + applicationId;
+        } catch (Exception exception) {
+            LOGGER.error("Unable to generate invoke URL", exception);
+            throw new IllegalStateException("Unable to generate invoke URL for " + projectId);
+        }
+    }
+
 
 }

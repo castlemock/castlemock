@@ -70,6 +70,10 @@
                     <td class="column1"><label path="description"><spring:message code="graphql.graphqlapplication.label.description"/></label></td>
                     <td class="column2"><label path="description">${graphQLApplication.description}</label></td>
                 </tr>
+                <tr>
+                    <td class="column1"><label path="address"><spring:message code="graphql.graphqlapplication.label.address"/></label></td>
+                    <td class="column2"><label path="address">${graphQLApplication.invokeAddress}</label></td>
+                </tr>
             </table>
         </div>
 

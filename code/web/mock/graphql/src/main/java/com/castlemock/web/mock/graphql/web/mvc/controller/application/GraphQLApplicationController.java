@@ -16,10 +16,9 @@
 
 package com.castlemock.web.mock.graphql.web.mvc.controller.application;
 
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLApplicationInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLApplicationOutput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLProjectOutput;
 import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLMutationModifierCommand;
 import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLQueryModifierCommand;
 import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLSubscriptionModifierCommand;
@@ -32,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.ServletRequest;
 
 
 /**
@@ -61,17 +62,25 @@ public class GraphQLApplicationController extends AbstractGraphQLViewController 
     @RequestMapping(value = "/{projectId}/application/{applicationId}", method = RequestMethod.GET)
     public ModelAndView getApplication(@PathVariable final String projectId,
                                        @PathVariable final String applicationId,
-                                        @RequestParam(value = UPLOAD, required = false) final String upload) {
+                                        @RequestParam(value = UPLOAD, required = false) final String upload,
+                                       final ServletRequest request) {
         final ReadGraphQLApplicationOutput output =  serviceProcessor.process(new ReadGraphQLApplicationInput(projectId, applicationId));
+        final GraphQLApplicationDto application = output.getGraphQLApplication();
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_PROJECT_ID, projectId);
-        model.addObject(GRAPHQL_APPLICATION, output.getGraphQLApplication());
+        model.addObject(GRAPHQL_APPLICATION, application);
         model.addObject(GRAPHQL_OPERATION_STATUSES, getGraphQLOperationStatuses());
         model.addObject(GraphQL_QUERY_MODIFIER_COMMAND, new GraphQLQueryModifierCommand());
         model.addObject(GraphQL_MUTATION_MODIFIER_COMMAND, new GraphQLMutationModifierCommand());
         model.addObject(GraphQL_SUBSCRIPTION_MODIFIER_COMMAND, new GraphQLSubscriptionModifierCommand());
 
+
+        final String protocol = getProtocol(request);
+        final int port = request.getServerPort();
+        final String invokeAddress = getGraphQLInvokeAddress(protocol, port, projectId, applicationId);
+
+        application.setInvokeAddress(invokeAddress);
 
         if (UPLOAD_OUTCOME_SUCCESS.equals(upload)) {
             LOGGER.debug("Upload successful");
