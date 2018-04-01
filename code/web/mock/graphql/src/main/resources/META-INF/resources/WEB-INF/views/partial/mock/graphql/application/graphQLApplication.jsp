@@ -85,8 +85,9 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-hover sortable">
                             <col width="10%">
+                            <col width="20%">
                             <col width="10%">
-                            <col width="40%">
+                            <col width="60%">
 
                             <tr>
                                 <th><spring:message code="graphql.graphqlapplication.column.selected"/></th>
@@ -136,9 +137,9 @@
             <c:when test="${graphQLApplication.objects.size() > 0 || graphQLApplication.enums.size() > 0}">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover sortable">
+                        <col width="20%">
                         <col width="10%">
-                        <col width="10%">
-                        <col width="40%">
+                        <col width="70%">
 
                         <tr>
                             <th><spring:message code="graphql.graphqlapplication.column.name"/></th>

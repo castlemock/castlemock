@@ -64,7 +64,7 @@
                         <table class="table table-striped table-hover sortable">
                             <col width="10%">
                             <col width="10%">
-                            <col width="40%">
+                            <col width="80%">
 
                             <tr>
                                 <th><spring:message code="graphql.graphqlproject.column.selected"/></th>
