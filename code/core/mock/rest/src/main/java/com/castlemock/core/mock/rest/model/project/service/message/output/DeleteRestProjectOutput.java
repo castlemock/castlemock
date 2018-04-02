@@ -17,10 +17,21 @@
 package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
+import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 public class DeleteRestProjectOutput implements Output {
+
+    private final RestProjectDto project;
+
+    public DeleteRestProjectOutput(RestProjectDto project) {
+        this.project = project;
+    }
+
+    public RestProjectDto getProject() {
+        return project;
+    }
 }

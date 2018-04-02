@@ -45,7 +45,7 @@ public interface ServiceAdapter<P extends TypeIdentifiable, D extends P, I exten
      * and id will be deleted.
      * @param id The id of the instance that will be deleted
      */
-    void delete(I id);
+    D delete(I id);
 
     /**
      * The method is used to update an already existing instance. The instance type is

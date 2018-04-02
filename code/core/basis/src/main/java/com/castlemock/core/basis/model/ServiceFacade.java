@@ -58,7 +58,7 @@ public interface ServiceFacade<D extends TypeIdentifiable, I extends Serializabl
      * @param typeUrl The url for the specific type that the instance belongs to
      * @param id The id of the instance that will be deleted
      */
-    void delete(String typeUrl, I id);
+    D delete(String typeUrl, I id);
 
     /**
      * The method is used to update an already existing instance. The instance type is

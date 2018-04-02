@@ -71,7 +71,7 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public void delete(String id) {
+    public RestEventDto delete(String id) {
         throw new UnsupportedOperationException();
     }
 

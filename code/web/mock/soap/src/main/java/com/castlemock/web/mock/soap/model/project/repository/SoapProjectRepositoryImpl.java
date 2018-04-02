@@ -175,7 +175,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
      * @param soapProjectId The instance that matches the provided id will be deleted in the database
      */
     @Override
-    public void delete(final String soapProjectId) {
+    public SoapProjectDto delete(final String soapProjectId) {
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
         final SoapProject soapProject = collection.get(soapProjectId);
 
@@ -187,7 +187,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
             this.deleteSoapResource(soapProjectId, soapResource.getId());
         }
 
-        super.delete(soapProjectId);
+        return super.delete(soapProjectId);
     }
 
     /**

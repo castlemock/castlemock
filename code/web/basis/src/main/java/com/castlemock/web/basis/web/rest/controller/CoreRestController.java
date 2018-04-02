@@ -56,6 +56,58 @@ public class CoreRestController extends AbstractRestController {
 
 
     /**
+     * The method retrieves a project with a particular ID.
+     * @param type The type of the project.
+     * @param projectId The project id.
+     * @param httpServletRequest The incoming HTTP servlet request.
+     * @param httpServletResponse The outgoing HTTP servlet response.
+     * @return The retrieved project.
+     */
+    @ApiOperation(value = "Get project",response = ProjectDto.class,
+            notes = "Get project. Required authorization: Reader, Modifier or Admin.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved project")
+    })
+    @RequestMapping(method = RequestMethod.GET, value = "/project/{type}/{projectId}")
+    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ProjectDto getProject(
+            @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
+            @PathVariable("type") final String type,
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable("projectId") final String projectId,
+            final HttpServletRequest httpServletRequest,
+            final HttpServletResponse httpServletResponse) {
+        return  projectServiceFacade.findOne(type, projectId);
+    }
+
+    /**
+     * The REST operation deletes a project with a particular ID.
+     * @param type The type of the project.
+     * @param projectId The project id.
+     * @param httpServletRequest The incoming HTTP servlet request.
+     * @param httpServletResponse The outgoing HTTP servlet response.
+     * @return The deleted project
+     */
+    @ApiOperation(value = "Delete project",response = ProjectDto.class,
+            notes = "Delete project. Required authorization: Modifier or Admin.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully deleted project")
+    })
+    @RequestMapping(method = RequestMethod.DELETE, value = "/project/{type}/{projectId}")
+    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ProjectDto deleteProject(
+            @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
+            @PathVariable("type") final String type,
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable("projectId") final String projectId,
+            final HttpServletRequest httpServletRequest,
+            final HttpServletResponse httpServletResponse) {
+        return  projectServiceFacade.delete(type, projectId);
+    }
+
+    /**
      * The REST operations imports a project.
      * @param type The type of the project.
      * @param multipartFile The project file which will be imported.
@@ -68,12 +120,12 @@ public class CoreRestController extends AbstractRestController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully imported project")
     })
-    @RequestMapping(method = RequestMethod.POST, value = "/project/import")
+    @RequestMapping(method = RequestMethod.POST, value = "/project/{type}/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ProjectDto importProject(
-            @ApiParam(name = "type", value = "The type of the project", allowableValues = "REST,SOAP")
-            @RequestParam("type") final String type,
+            @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
+            @PathVariable("type") final String type,
             @ApiParam(name = "file", value = "The project file which will be imported.")
             @RequestParam("file") final MultipartFile multipartFile,
                                         final HttpServletRequest httpServletRequest,

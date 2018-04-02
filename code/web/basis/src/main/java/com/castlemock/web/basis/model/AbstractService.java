@@ -85,9 +85,9 @@ public abstract class AbstractService<T extends Saveable<I>, D, I extends Serial
      * Delete an instance that match the provided id
      * @param id The instance that matches the provided id will be deleted in the database
      */
-    protected void delete(final I id) {
+    protected D delete(final I id) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
-        repository.delete(id);
+        return repository.delete(id);
     }
 
     /**
