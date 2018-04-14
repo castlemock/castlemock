@@ -26,5 +26,5 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @XmlEnum(String.class)
 public enum GraphQLOperationStatus {
-    MOCKED, DISABLED, FORWARDED, ECHO
+    MOCKED, DISABLED, FORWARDED
 }

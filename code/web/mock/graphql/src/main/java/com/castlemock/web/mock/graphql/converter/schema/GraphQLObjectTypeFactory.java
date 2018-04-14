@@ -18,6 +18,7 @@
 package com.castlemock.web.mock.graphql.converter.schema;
 
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperationStatus;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLResponseStrategy;
 import com.castlemock.core.mock.graphql.model.project.dto.*;
 import graphql.language.*;
@@ -48,6 +49,7 @@ public class GraphQLObjectTypeFactory {
         mutation.setName(definition.getName());
         mutation.setDescription(definition.getDescription());
         mutation.setResponseStrategy(GraphQLResponseStrategy.RANDOM);
+        mutation.setStatus(GraphQLOperationStatus.MOCKED);
 
         for(GraphQLArgument argument : definition.getArguments()){
             GraphQLArgumentDto graphQLArgument = getArgument(argument);
@@ -67,6 +69,7 @@ public class GraphQLObjectTypeFactory {
         query.setName(definition.getName());
         query.setDescription(definition.getDescription());
         query.setResponseStrategy(GraphQLResponseStrategy.RANDOM);
+        query.setStatus(GraphQLOperationStatus.MOCKED);
 
         for(GraphQLArgument argument : definition.getArguments()){
             GraphQLArgumentDto graphQLArgument = getArgument(argument);
@@ -86,6 +89,7 @@ public class GraphQLObjectTypeFactory {
         subscription.setName(definition.getName());
         subscription.setDescription(definition.getDescription());
         subscription.setResponseStrategy(GraphQLResponseStrategy.RANDOM);
+        subscription.setStatus(GraphQLOperationStatus.MOCKED);
 
         for(GraphQLArgument argument : definition.getArguments()){
             GraphQLArgumentDto graphQLArgument = getArgument(argument);

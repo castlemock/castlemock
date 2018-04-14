@@ -31,7 +31,7 @@
         <c:choose>
             <c:when test="${graphQLApplications.size() > 0}">
                 <p><spring:message code="graphql.deleteapplications.label.confirmation"/></p>
-                <form:form action="${delete_applications_url}" method="POST" commandName="deleteRestApplicationsCommand">
+                <form:form action="${delete_applications_url}" method="POST" commandName="deleteGraphQLApplicationsCommand">
                     <ul>
                         <c:forEach items="${graphQLApplications}" var="graphQLApplication" varStatus="loopStatus">
                             <li>${graphQLApplication.name}</li>

@@ -45,6 +45,14 @@
                     <td class="column1"><label path="description"><spring:message code="graphql.graphqlquery.label.description"/></label></td>
                     <td class="column2"><label path="description">${graphQLQuery.description}</label></td>
                 </tr>
+                <tr>
+                    <td class="column1"><label path="responsestrategy"><spring:message code="graphql.graphqlquery.label.responsestrategy"/></label></td>
+                    <td class="column2"><label path="responsestrategy"><spring:message code="graphql.type.responsestrategy.${graphQLQuery.responseStrategy}"/></label></td>
+                </tr>
+                <tr>
+                    <td class="column1"><label path="status"><spring:message code="graphql.graphqlquery.label.status"/></label></td>
+                    <td class="column2"><label path="status"><spring:message code="graphql.type.graphqloperationstatus.${graphQLQuery.status}"/></label></td>
+                </tr>
             </table>
         </div>
 

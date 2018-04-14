@@ -16,18 +16,22 @@
 
 package com.castlemock.web.mock.graphql.web.mvc.controller.project;
 
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLApplicationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLProjectInput;
+import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLApplicationOutput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLProjectOutput;
+import com.castlemock.web.mock.graphql.web.mvc.command.application.DeleteGraphQLApplicationsCommand;
 import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLApplicationModifierCommand;
-import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLMutationModifierCommand;
-import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLQueryModifierCommand;
-import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLSubscriptionModifierCommand;
 import com.castlemock.web.mock.graphql.web.mvc.controller.AbstractGraphQLViewController;
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -82,6 +86,28 @@ public class GraphQLProjectController extends AbstractGraphQLViewController {
         return model;
     }
 
+
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @RequestMapping(value = "/{projectId}", method = RequestMethod.POST)
+    public ModelAndView applicationFunctionality(@PathVariable final String projectId,
+                                                 @RequestParam final String action,
+                                                 @ModelAttribute final GraphQLApplicationModifierCommand command) {
+        if (DELETE_GRAPHQL_APPLICATIONS.equalsIgnoreCase(action)) {
+            final List<GraphQLApplicationDto> applications = new ArrayList<GraphQLApplicationDto>();
+            for (String applicationId : command.getGraphQLApplicationIds()) {
+                ReadGraphQLApplicationOutput output =
+                        serviceProcessor.process(new ReadGraphQLApplicationInput(projectId, applicationId));
+                applications.add(output.getGraphQLApplication());
+            }
+            final ModelAndView model = createPartialModelAndView(DELETE_GRAPHQLL_APPLICATIONS_PAGE);
+            model.addObject(GRAPHQL_PROJECT_ID, projectId);
+            model.addObject(GRAPHQL_APPLICATIONS, applications);
+            model.addObject(DELETE_GRAPHQLL_APPLICATIONS_COMMAND, new DeleteGraphQLApplicationsCommand());
+            return model;
+        }
+
+        return redirect("/graphql/project/" + projectId);
+    }
 
 }
 

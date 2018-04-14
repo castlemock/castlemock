@@ -34,6 +34,7 @@ public abstract class AbstractGraphQLViewController extends AbstractViewControll
     protected static final String GRAPHQL = "graphql";
     protected static final String GRAPHQL_PROJECT_ID = "graphQLProjectId";
     protected static final String GRAPHQL_APPLICATION_ID = "graphQLApplicationId";
+    protected static final String GRAPHQL_APPLICATIONS = "graphQLApplications";
 
     protected static final String GRAPHQL_PROJECT = "graphQLProject";
     protected static final String GRAPHQL_APPLICATION = "graphQLApplication";
@@ -43,6 +44,7 @@ public abstract class AbstractGraphQLViewController extends AbstractViewControll
     protected static final String GRAPHQL_OBJECT_TYPE = "graphQLObjectType";
     protected static final String GRAPHQL_ENUM_TYPE = "graphQLEnumType";
     protected static final String GRAPHQL_OPERATION_STATUSES = "graphQLOperationStatus";
+
 
     private static final Logger LOGGER = Logger.getLogger(AbstractGraphQLViewController.class);
 
@@ -62,7 +64,6 @@ public abstract class AbstractGraphQLViewController extends AbstractViewControll
             statuses.add(GraphQLOperationStatus.FORWARDED);
         }
 
-        statuses.add(GraphQLOperationStatus.ECHO);
         return statuses;
     }
 
