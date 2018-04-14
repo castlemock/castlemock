@@ -136,7 +136,7 @@ public abstract class AbstractUserService extends AbstractService<User, UserDto,
      * @param userId The user with the user id that will be deleted
      */
     @Override
-    public void delete(final String userId){
+    public UserDto delete(final String userId){
         LOGGER.debug("Deleting user with id " + userId);
         Preconditions.checkNotNull(userId, "User id cannot be null");
         final UserDto userDto = find(userId);
@@ -148,7 +148,7 @@ public abstract class AbstractUserService extends AbstractService<User, UserDto,
         if(userDto.getRole().equals(Role.ADMIN) && findByRole(Role.ADMIN).size() == 1){
             throw new IllegalArgumentException("Unable to delete the last administrator");
         }
-        super.delete(userId);
+        return super.delete(userId);
     }
 
 }

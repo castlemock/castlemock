@@ -85,9 +85,9 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public void delete(final String typeUrl, final I id){
-        final ServiceAdapter serviceAdapter = findByTypeUrl(typeUrl);
-        serviceAdapter.delete(id);
+    public D delete(final String typeUrl, final I id){
+        final SA serviceAdapter = findByTypeUrl(typeUrl);
+        return serviceAdapter.delete(id);
     }
 
     /**

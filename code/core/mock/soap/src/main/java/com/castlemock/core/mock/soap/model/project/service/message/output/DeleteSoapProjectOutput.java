@@ -17,10 +17,21 @@
 package com.castlemock.core.mock.soap.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
+import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 public class DeleteSoapProjectOutput implements Output {
+
+    private final SoapProjectDto project;
+
+    public DeleteSoapProjectOutput(SoapProjectDto project) {
+        this.project = project;
+    }
+
+    public SoapProjectDto getProject() {
+        return project;
+    }
 }

@@ -70,7 +70,7 @@ public interface Repository<T extends Saveable<I>, D, I extends Serializable> {
      * Delete an instance that match the provided id
      * @param id The instance that matches the provided id will be deleted in the database
      */
-    void delete(I id);
+    D delete(I id);
 
     /**
      * Count all the stored entities for the repository

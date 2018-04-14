@@ -74,7 +74,7 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public void delete(String id) {
+    public SoapEventDto delete(String id) {
         throw new UnsupportedOperationException();
     }
 

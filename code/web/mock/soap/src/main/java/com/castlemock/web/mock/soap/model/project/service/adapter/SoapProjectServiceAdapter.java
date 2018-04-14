@@ -65,8 +65,9 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public void delete(String id) {
-        serviceProcessor.process(new DeleteSoapProjectInput(id));
+    public SoapProjectDto delete(String id) {
+        final DeleteSoapProjectOutput output = serviceProcessor.process(new DeleteSoapProjectInput(id));
+        return output.getProject();
     }
 
     /**

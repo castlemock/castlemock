@@ -65,8 +65,9 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public void delete(String id) {
-        serviceProcessor.process(new DeleteRestProjectInput(id));
+    public RestProjectDto delete(String id) {
+        final DeleteRestProjectOutput output = serviceProcessor.process(new DeleteRestProjectInput(id));
+        return output.getProject();
     }
 
     /**

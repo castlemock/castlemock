@@ -214,7 +214,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
      * @param id The instance that matches the provided id will be deleted in the database
      */
     @Override
-    public void delete(final I id) {
+    public D delete(final I id) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         final String filename = getFilename(id);
         LOGGER.debug("Start the deletion of " + entityClass.getSimpleName() + " with id " + id);
@@ -222,8 +222,9 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         try {
             writeLock.acquire();
             fileRepositorySupport.delete(filename);
-            collection.remove(id);
+            T type = collection.remove(id);
             LOGGER.debug("Deletion of " + entityClass.getSimpleName() + " with id " + id + " was successfully completed");
+            return mapper.map(type, dtoClass);
         } catch (InterruptedException e) {
             throw new IllegalStateException("Unable to accuire the write lock", e);
         } finally {
