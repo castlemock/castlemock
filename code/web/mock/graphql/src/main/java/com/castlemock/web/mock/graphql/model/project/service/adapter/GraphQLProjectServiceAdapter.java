@@ -65,8 +65,9 @@ public class GraphQLProjectServiceAdapter implements ProjectServiceAdapter<Graph
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public void delete(String id) {
-        serviceProcessor.process(new DeleteGraphQLProjectInput(id));
+    public GraphQLProjectDto delete(String id) {
+        final DeleteGraphQLProjectOutput output = serviceProcessor.process(new DeleteGraphQLProjectInput(id));
+        return output.getProject();
     }
 
     /**

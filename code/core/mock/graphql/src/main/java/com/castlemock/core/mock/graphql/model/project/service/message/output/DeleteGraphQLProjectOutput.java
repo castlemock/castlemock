@@ -17,10 +17,21 @@
 package com.castlemock.core.mock.graphql.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.19
  */
 public class DeleteGraphQLProjectOutput implements Output {
+
+    private final GraphQLProjectDto project;
+
+    public DeleteGraphQLProjectOutput(GraphQLProjectDto project) {
+        this.project = project;
+    }
+
+    public GraphQLProjectDto getProject() {
+        return project;
+    }
 }

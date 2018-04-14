@@ -19,6 +19,7 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.DeleteGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.DeleteGraphQLProjectOutput;
 
@@ -41,7 +42,7 @@ public class DeleteGraphQLProjectService extends AbstractGraphQLProjectService i
     public ServiceResult<DeleteGraphQLProjectOutput> process(final ServiceTask<DeleteGraphQLProjectInput> serviceTask) {
         final DeleteGraphQLProjectInput input = serviceTask.getInput();
         final String restProjectId = input.getGraphQLProjectId();
-        delete(restProjectId);
-        return createServiceResult(new DeleteGraphQLProjectOutput());
+        final GraphQLProjectDto project = delete(restProjectId);
+        return createServiceResult(new DeleteGraphQLProjectOutput(project));
     }
 }
