@@ -34,6 +34,10 @@
                     <td class="column1"><label><spring:message code="graphql.createapplication.label.name"/></label></td>
                     <td class="column2"><form:input id="graphQLApplicationNameInput" path="name" /></td>
                 </tr>
+                <tr>
+                    <td class="column1"><spring:message code="graphql.createapplication.label.description"/></td>
+                    <td class="column2"><form:textarea rows="4" path="description"></form:textarea></td>
+                </tr>
             </table>
 
             <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="graphql.createapplication.button.createapplication"/></span></button>

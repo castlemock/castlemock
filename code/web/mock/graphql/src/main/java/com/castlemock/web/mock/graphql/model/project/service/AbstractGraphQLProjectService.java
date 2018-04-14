@@ -20,6 +20,7 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
 import com.castlemock.web.basis.model.AbstractService;
 import com.castlemock.web.mock.graphql.model.project.repository.GraphQLProjectRepository;
+import com.google.common.base.Preconditions;
 
 /**
  * @author Karl Dahlgren
@@ -27,4 +28,24 @@ import com.castlemock.web.mock.graphql.model.project.repository.GraphQLProjectRe
  */
 public abstract class AbstractGraphQLProjectService extends AbstractService<GraphQLProject, GraphQLProjectDto, String, GraphQLProjectRepository> {
 
+
+    /**
+     * Updates a project with new information
+     * @param graphQLProjectId The id of the project that will be updated
+     * @param updatedProject The updated version of the project
+     * @return The updated version project
+     */
+    @Override
+    public GraphQLProjectDto update(final String graphQLProjectId, final GraphQLProjectDto updatedProject){
+        Preconditions.checkNotNull(graphQLProjectId, "Project id be null");
+        Preconditions.checkNotNull(updatedProject, "Project cannot be null");
+        Preconditions.checkArgument(!updatedProject.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
+        final GraphQLProjectDto projectWithNameDto = repository.findGraphQLProjectWithName(updatedProject.getName());
+        Preconditions.checkArgument(projectWithNameDto == null || projectWithNameDto.getId().equals(graphQLProjectId), "Project name is already taken");
+        final GraphQLProjectDto project = find(graphQLProjectId);
+        project.setName(updatedProject.getName());
+        project.setDescription(updatedProject.getDescription());
+        return super.save(project);
+    }
+    
 }
