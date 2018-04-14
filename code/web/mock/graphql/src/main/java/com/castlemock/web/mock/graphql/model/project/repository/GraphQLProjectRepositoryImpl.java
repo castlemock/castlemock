@@ -470,12 +470,7 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
         final GraphQLApplication updatedApplication = mapper.map(applicationDto, GraphQLApplication.class);
 
         application.setName(updatedApplication.getName());
-        application.setEnums(updatedApplication.getEnums());
-        application.setMutations(updatedApplication.getMutations());
-        application.setObjects(updatedApplication.getObjects());
-        application.setQueries(updatedApplication.getQueries());
-        application.setSubscriptions(updatedApplication.getSubscriptions());
-
+        application.setDescription(updatedApplication.getDescription());
 
         save(graphQLProjectId);
         return mapper.map(updatedApplication, GraphQLApplicationDto.class);
@@ -501,6 +496,126 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
         graphQLProject.getApplications().add(graphQLApplication);
         save(graphQLProject);
         return mapper.map(graphQLApplication, GraphQLApplicationDto.class);
+    }
+
+    /**
+     * The method adds a new {@link GraphQLQuery} to a {@link GraphQLApplication} and then saves
+     * the {@link GraphQLProject} to the file system.
+     *
+     * @param graphQLProjectId     The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @param graphQLQueryDto      The dto instance of {@link GraphQLQueryDto} that will be added to the {@link GraphQLApplication}
+     * @return The saved {@link GraphQLQueryDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLQuery
+     * @see GraphQLQueryDto
+     */
+    @Override
+    public GraphQLQueryDto saveGraphQLQuery(String graphQLProjectId, String graphQLApplicationId, GraphQLQueryDto graphQLQueryDto) {
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
+        final GraphQLQuery graphQLQuery = mapper.map(graphQLQueryDto, GraphQLQuery.class);
+        application.getQueries().add(graphQLQuery);
+        save(graphQLProjectId);
+        return mapper.map(graphQLQuery, GraphQLQueryDto.class);
+    }
+
+    /**
+     * The method adds a new {@link GraphQLSubscription} to a {@link GraphQLApplication} and then saves
+     * the {@link GraphQLProject} to the file system.
+     *
+     * @param graphQLProjectId       The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId   The id of the {@link GraphQLApplication}
+     * @param graphQLSubscriptionDto The dto instance of {@link GraphQLSubscriptionDto} that will be added to the {@link GraphQLApplication}
+     * @return The saved {@link GraphQLSubscriptionDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLSubscription
+     * @see GraphQLSubscriptionDto
+     */
+    @Override
+    public GraphQLSubscriptionDto saveGraphQLSubscription(String graphQLProjectId, String graphQLApplicationId, GraphQLSubscriptionDto graphQLSubscriptionDto) {
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
+        final GraphQLSubscription graphQLSubscription = mapper.map(graphQLSubscriptionDto, GraphQLSubscription.class);
+        application.getSubscriptions().add(graphQLSubscription);
+        save(graphQLProjectId);
+        return mapper.map(graphQLSubscription, GraphQLSubscriptionDto.class);
+    }
+
+    /**
+     * The method adds a new {@link GraphQLEnumType} to a {@link GraphQLApplication} and then saves
+     * the {@link GraphQLProject} to the file system.
+     *
+     * @param graphQLProjectId     The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @param graphQLEnumTypeDto   The dto instance of {@link GraphQLEnumTypeDto} that will be added to the {@link GraphQLApplication}
+     * @return The saved {@link GraphQLEnumTypeDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLEnumType
+     * @see GraphQLEnumTypeDto
+     */
+    @Override
+    public GraphQLEnumTypeDto saveGraphQLEnumType(String graphQLProjectId, String graphQLApplicationId, GraphQLEnumTypeDto graphQLEnumTypeDto) {
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
+        final GraphQLEnumType graphQLEnumType = mapper.map(graphQLEnumTypeDto, GraphQLEnumType.class);
+        application.getEnums().add(graphQLEnumType);
+        save(graphQLProjectId);
+        return mapper.map(graphQLEnumType, GraphQLEnumTypeDto.class);
+    }
+
+    /**
+     * The method adds a new {@link GraphQLObjectType} to a {@link GraphQLApplication} and then saves
+     * the {@link GraphQLProject} to the file system.
+     *
+     * @param graphQLProjectId     The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @param graphQLObjectTypeDto The dto instance of {@link GraphQLObjectTypeDto} that will be added to the {@link GraphQLApplication}
+     * @return The saved {@link GraphQLObjectTypeDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLObjectType
+     * @see GraphQLObjectTypeDto
+     */
+    @Override
+    public GraphQLObjectTypeDto saveGraphQLObjectType(String graphQLProjectId, String graphQLApplicationId, GraphQLObjectTypeDto graphQLObjectTypeDto) {
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
+        final GraphQLObjectType graphQLObjectType = mapper.map(graphQLObjectTypeDto, GraphQLObjectType.class);
+        application.getObjects().add(graphQLObjectType);
+        save(graphQLProjectId);
+        return mapper.map(graphQLObjectType, GraphQLObjectTypeDto.class);
+    }
+
+    /**
+     * The method adds a new {@link GraphQLMutation} to a {@link GraphQLApplication} and then saves
+     * the {@link GraphQLProject} to the file system.
+     *
+     * @param graphQLProjectId     The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @param graphQLMutationDto   The dto instance of {@link GraphQLMutationDto} that will be added to the {@link GraphQLApplication}
+     * @return The saved {@link GraphQLMutationDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLMutation
+     * @see GraphQLMutationDto
+     */
+    @Override
+    public GraphQLMutationDto saveGraphQLMutation(String graphQLProjectId, String graphQLApplicationId, GraphQLMutationDto graphQLMutationDto) {
+        final GraphQLApplication application = this.findGraphQLApplicationType(graphQLProjectId, graphQLApplicationId);
+        final GraphQLMutation graphQLMutation = mapper.map(graphQLMutationDto, GraphQLMutation.class);
+        application.getMutations().add(graphQLMutation);
+        save(graphQLProjectId);
+        return mapper.map(graphQLMutation, GraphQLMutationDto.class);
     }
 
     /**

@@ -157,6 +157,89 @@ public interface GraphQLProjectRepository extends Repository<GraphQLProject, Gra
      */
     GraphQLApplicationDto saveGraphQLApplication(String graphQLProjectId, GraphQLApplicationDto graphQLApplicationDto);
 
+
+    /**
+     * The method adds a new {@link GraphQLQuery} to a {@link GraphQLApplication} and then saves
+     * the {@link GraphQLProject} to the file system.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @param graphQLQueryDto The dto instance of {@link GraphQLQueryDto} that will be added to the {@link GraphQLApplication}
+     * @return The saved {@link GraphQLQueryDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLQuery
+     * @see GraphQLQueryDto
+     */
+    GraphQLQueryDto saveGraphQLQuery(String graphQLProjectId, String graphQLApplicationId, GraphQLQueryDto graphQLQueryDto);
+
+    /**
+     * The method adds a new {@link GraphQLSubscription} to a {@link GraphQLApplication} and then saves
+     * the {@link GraphQLProject} to the file system.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @param graphQLSubscriptionDto The dto instance of {@link GraphQLSubscriptionDto} that will be added to the {@link GraphQLApplication}
+     * @return The saved {@link GraphQLSubscriptionDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLSubscription
+     * @see GraphQLSubscriptionDto
+     */
+    GraphQLSubscriptionDto saveGraphQLSubscription(String graphQLProjectId, String graphQLApplicationId, GraphQLSubscriptionDto graphQLSubscriptionDto);
+
+    /**
+     * The method adds a new {@link GraphQLEnumType} to a {@link GraphQLApplication} and then saves
+     * the {@link GraphQLProject} to the file system.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @param graphQLEnumTypeDto The dto instance of {@link GraphQLEnumTypeDto} that will be added to the {@link GraphQLApplication}
+     * @return The saved {@link GraphQLEnumTypeDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLEnumType
+     * @see GraphQLEnumTypeDto
+     */
+    GraphQLEnumTypeDto saveGraphQLEnumType(String graphQLProjectId, String graphQLApplicationId, GraphQLEnumTypeDto graphQLEnumTypeDto);
+
+    /**
+     * The method adds a new {@link GraphQLObjectType} to a {@link GraphQLApplication} and then saves
+     * the {@link GraphQLProject} to the file system.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @param graphQLObjectTypeDto The dto instance of {@link GraphQLObjectTypeDto} that will be added to the {@link GraphQLApplication}
+     * @return The saved {@link GraphQLObjectTypeDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLObjectType
+     * @see GraphQLObjectTypeDto
+     */
+    GraphQLObjectTypeDto saveGraphQLObjectType(String graphQLProjectId, String graphQLApplicationId, GraphQLObjectTypeDto graphQLObjectTypeDto);
+
+    /**
+     * The method adds a new {@link GraphQLMutation} to a {@link GraphQLApplication} and then saves
+     * the {@link GraphQLProject} to the file system.
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @param graphQLMutationDto The dto instance of {@link GraphQLMutationDto} that will be added to the {@link GraphQLApplication}
+     * @return The saved {@link GraphQLMutationDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLMutation
+     * @see GraphQLMutationDto
+     */
+    GraphQLMutationDto saveGraphQLMutation(String graphQLProjectId, String graphQLApplicationId, GraphQLMutationDto graphQLMutationDto);
+
+
+
     /*
      * DELETE OPERATIONS
      */
