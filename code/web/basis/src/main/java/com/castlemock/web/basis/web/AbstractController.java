@@ -56,6 +56,7 @@ public abstract class AbstractController {
     protected static final String EVENT = "event";
     protected static final String MOCK = "mock";
     protected static final String PROJECT = "project";
+    protected static final String APPLICATION = "application";
     protected static final String PROJECTS = "projects";
     protected static final String PROJECT_TYPES = "projectTypes";
     protected static final String ROLES = "roles";

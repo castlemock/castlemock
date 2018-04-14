@@ -23,14 +23,7 @@ import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
 import java.util.List;
 
 public interface GraphQLEventRepository extends Repository<GraphQLEvent, GraphQLEventDto, String> {
-
-    /**
-     * The events for a specific operation id
-     * @param operationId The id of the operation that the event belongs to
-     * @return Returns a list of events
-     */
-    List<GraphQLEventDto> findEventsByOperationId(String operationId);
-
+    
     /**
      * The service finds the oldest event
      * @return The oldest event

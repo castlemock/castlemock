@@ -62,6 +62,10 @@ public class GraphQLResponseGeneratorTest {
 
     @Test
     public void test(){
+        System.out.println(SCHEMA);
+
+        System.out.println(QUERY);
+
         final SchemaGraphQLDefinitionConverter schemaConverter = new SchemaGraphQLDefinitionConverter(null);
         final GraphQLDefinitionConverterResult result = schemaConverter.convertRaw(SCHEMA);
         final GraphQLApplicationDto application = new GraphQLApplicationDto();

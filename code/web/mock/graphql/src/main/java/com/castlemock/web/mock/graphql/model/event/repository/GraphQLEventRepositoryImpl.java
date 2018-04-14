@@ -82,22 +82,6 @@ public class GraphQLEventRepositoryImpl extends RepositoryImpl<GraphQLEvent, Gra
     }
 
     /**
-     * The events for a specific operation id
-     * @param operationId The id of the operation that the event belongs to
-     * @return Returns a list of events
-     */
-    @Override
-    public List<GraphQLEventDto> findEventsByOperationId(String operationId) {
-        final List<GraphQLEvent> events = new ArrayList<GraphQLEvent>();
-        for(GraphQLEvent event : collection.values()){
-            if(event.getOperationId().equals(operationId)){
-                events.add(event);
-            }
-        }
-        return toDtoList(events, GraphQLEventDto.class);
-    }
-
-    /**
      * The service finds the oldest event
      * @return The oldest event
      */

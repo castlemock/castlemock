@@ -32,7 +32,6 @@ public class GraphQLEvent extends Event {
     private GraphQLResponse response;
     private String projectId;
     private String applicationId;
-    private String operationId;
 
     @XmlElement
     public GraphQLRequest getRequest() {
@@ -70,12 +69,4 @@ public class GraphQLEvent extends Event {
         this.applicationId = applicationId;
     }
 
-    @XmlElement
-    public String getOperationId() {
-        return operationId;
-    }
-
-    public void setOperationId(String operationId) {
-        this.operationId = operationId;
-    }
 }

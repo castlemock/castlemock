@@ -22,23 +22,12 @@ import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
 import com.castlemock.web.basis.model.event.service.AbstractEventService;
 import com.castlemock.web.mock.graphql.model.event.repository.GraphQLEventRepository;
 
-import java.util.List;
-
 /**
  * The GraphQL event service is responsible for all the functionality related to the GraphQL events.
  * @author Karl Dahlgren
  * @since 1.9
  */
 public class AbstractGraphQLEventService extends AbstractEventService<GraphQLEvent, GraphQLEventDto, GraphQLEventRepository> {
-
-    /**
-     * The events for a specific operation id
-     * @param operationId The id of the operation that the event belongs to
-     * @return Returns a list of events
-     */
-    protected List<GraphQLEventDto> findEventsByOperationId(final String operationId){
-        return repository.findEventsByOperationId(operationId);
-    }
 
 }
 

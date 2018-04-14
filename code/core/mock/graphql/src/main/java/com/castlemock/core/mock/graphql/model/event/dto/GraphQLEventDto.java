@@ -39,25 +39,20 @@ public class GraphQLEventDto extends EventDto {
     @Mapping("applicationId")
     private String applicationId;
 
-    @Mapping("operationId")
-    private String operationId;
-
-
     /**
      * Constructor for the SOAP event DTO
      * @param request The SOAP request that the event is representing
      * @param projectId The id of the SOAP project that is affected by the provided SOAP request
      * @param applicationId The id of the SOAP port that is affected by the provided SOAP request
-     * @param operationId The id of the SOAP operation that is affected by the provided SOAP request
      * @see com.castlemock.core.mock.graphql.model.project.dto.GraphQLOperationDto
      */
-    public GraphQLEventDto(final String resourceName, final GraphQLRequestDto request,
-                           final String projectId, final String applicationId, final String operationId) {
-        super(resourceName);
+    public GraphQLEventDto(final GraphQLRequestDto request,
+                           final String projectId,
+                           final String applicationId) {
+        super(applicationId);
         this.request = request;
         this.projectId = projectId;
         this.applicationId = applicationId;
-        this.operationId = operationId;
     }
 
 
@@ -103,11 +98,4 @@ public class GraphQLEventDto extends EventDto {
         this.applicationId = applicationId;
     }
 
-    public String getOperationId() {
-        return operationId;
-    }
-
-    public void setOperationId(String operationId) {
-        this.operationId = operationId;
-    }
 }

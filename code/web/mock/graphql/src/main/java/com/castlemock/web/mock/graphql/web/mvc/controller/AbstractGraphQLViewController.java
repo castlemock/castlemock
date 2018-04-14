@@ -61,7 +61,7 @@ public abstract class AbstractGraphQLViewController extends AbstractViewControll
         statuses.add(GraphQLOperationStatus.DISABLED);
 
         if(!demoMode) {
-            statuses.add(GraphQLOperationStatus.FORWARDED);
+            //statuses.add(GraphQLOperationStatus.FORWARDED);
         }
 
         return statuses;
@@ -79,7 +79,7 @@ public abstract class AbstractGraphQLViewController extends AbstractViewControll
     protected String getGraphQLInvokeAddress(final String protocol, int serverPort, final String projectId, final String applicationId){
         try {
             final String hostAddress = getHostAddress();
-            return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + GRAPHQL + SLASH + PROJECT + SLASH + projectId + SLASH + applicationId;
+            return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + GRAPHQL + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId;
         } catch (Exception exception) {
             LOGGER.error("Unable to generate invoke URL", exception);
             throw new IllegalStateException("Unable to generate invoke URL for " + projectId);

@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-
 package com.castlemock.web.mock.graphql.web.graphql.controller;
-
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
