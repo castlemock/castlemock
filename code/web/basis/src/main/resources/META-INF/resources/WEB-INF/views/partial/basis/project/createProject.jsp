@@ -42,7 +42,7 @@
                     <td>
                         <form:select path="projectType">
                             <c:forEach items="${projectTypes}" var="projectType">
-                                <option value="${projectType}">${projectType}</option>
+                                <option value="${projectType}"><spring:message code="general.type.project.${projectType}"/></option>
                             </c:forEach>
                         </form:select>
                     </td>
