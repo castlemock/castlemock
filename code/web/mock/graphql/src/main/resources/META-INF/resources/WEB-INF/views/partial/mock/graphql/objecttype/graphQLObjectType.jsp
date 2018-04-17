@@ -32,7 +32,9 @@
                 <h1><spring:message code="graphql.graphqlobject.header.object" arguments="${graphQLObjectType.name}"/></h1>
             </div>
             <div class="menu" align="right">
-
+                <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLObjectType.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="graphql.graphqlobject.button.updateobject"/></span></a>
+                </sec:authorize>
             </div>
         </div>
         <div class="content-summary">
@@ -63,6 +65,7 @@
                             <th><spring:message code="graphql.graphqlobject.column.name"/></th>
                             <th><spring:message code="graphql.graphqlobject.column.type"/></th>
                             <th><spring:message code="graphql.graphqlobject.column.nullable"/></th>
+                            <th><spring:message code="graphql.graphqlobject.column.value"/></th>
                             <th><spring:message code="graphql.graphqlobject.column.description"/></th>
                         </tr>
 
@@ -86,6 +89,17 @@
                                     </c:choose>
                                 </td>
                                 <td>${graphQLAttribute.nullable}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${graphQLAttribute.attributeType == 'OBJECT_TYPE'}">
+                                        </c:when>
+                                        <c:when test="${graphQLAttribute.attributeType == 'ENUM'}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${graphQLAttribute.value}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                                 <td>${graphQLAttribute.description}</td>
                             </tr>
                         </c:forEach>

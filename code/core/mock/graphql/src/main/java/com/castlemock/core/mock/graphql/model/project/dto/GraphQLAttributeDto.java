@@ -47,6 +47,9 @@ public class GraphQLAttributeDto {
     @Mapping("listable")
     private Boolean listable;
 
+    @Mapping("value")
+    private String value;
+
     @Mapping("attributeType")
     private GraphQLAttributeType attributeType;
 
@@ -107,6 +110,14 @@ public class GraphQLAttributeDto {
 
     public void setListable(Boolean listable) {
         this.listable = listable;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public GraphQLAttributeType getAttributeType() {

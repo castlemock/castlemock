@@ -35,6 +35,7 @@ public class GraphQLAttribute implements Saveable<String> {
     private String typeName;
     private Boolean nullable;
     private Boolean listable;
+    private String value;
     private GraphQLAttributeType attributeType;
     private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
@@ -56,6 +57,15 @@ public class GraphQLAttribute implements Saveable<String> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @XmlElement
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @XmlElement

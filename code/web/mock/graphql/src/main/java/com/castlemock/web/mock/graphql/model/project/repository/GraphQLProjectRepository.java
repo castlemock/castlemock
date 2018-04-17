@@ -140,6 +140,26 @@ public interface GraphQLProjectRepository extends Repository<GraphQLProject, Gra
                                                    String graphQLApplicationId,
                                                    GraphQLApplicationDto application);
 
+
+    /**
+     * The method updates an already existing {@link GraphQLApplicationDto}
+     * @param graphQLProjectId The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId  The id of the {@link GraphQLApplication}
+     * @param graphQLObjectTypeId The id of the {@link GraphQLObjectType}
+     * @param objectTypeDto The updated {@link GraphQLObjectTypeDto)
+     * @return The updated version of the {@link GraphQLObjectTypeDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLObjectType
+     * @see GraphQLObjectTypeDto
+     */
+    GraphQLObjectTypeDto updateGraphQLObjectType(String graphQLProjectId,
+                                                   String graphQLApplicationId,
+                                                   String graphQLObjectTypeId,
+                                                   GraphQLObjectTypeDto objectTypeDto);
+
     /*
      * SAVE OPERATIONS
      */

@@ -24,6 +24,7 @@ import com.castlemock.core.mock.graphql.model.project.dto.*;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
 import graphql.GraphQL;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -54,6 +55,9 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
     private static final String SUBSCRIPTION = "subscription";
     private static final String OBJECT_TYPE = "object";
     private static final String ENUM_TYPE = "enum";
+
+
+    private static final Logger LOGGER = Logger.getLogger(GraphQLProjectRepositoryImpl.class);
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -474,6 +478,48 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
 
         save(graphQLProjectId);
         return mapper.map(updatedApplication, GraphQLApplicationDto.class);
+    }
+
+    /**
+     * The method updates an already existing {@link GraphQLApplicationDto}
+     *
+     * @param graphQLProjectId     The id of the {@link GraphQLProject}
+     * @param graphQLApplicationId The id of the {@link GraphQLApplication}
+     * @param graphQLObjectTypeId    The id of the {@link GraphQLObjectType}
+     * @param objectTypeDto           The updated {@link GraphQLObjectTypeDto )
+     * @return The updated version of the {@link GraphQLObjectTypeDto}
+     * @see GraphQLProject
+     * @see GraphQLProjectDto
+     * @see GraphQLApplication
+     * @see GraphQLApplicationDto
+     * @see GraphQLObjectType
+     * @see GraphQLObjectTypeDto
+     */
+    @Override
+    public GraphQLObjectTypeDto updateGraphQLObjectType(String graphQLProjectId, String graphQLApplicationId, String graphQLObjectTypeId, GraphQLObjectTypeDto objectTypeDto) {
+        final GraphQLObjectType objectType = this.findGraphQLObjectTypeType(graphQLProjectId, graphQLApplicationId, graphQLObjectTypeId);
+        final GraphQLObjectType updateObjectType = this.mapper.map(objectTypeDto, GraphQLObjectType.class);
+
+        for(GraphQLAttribute updateAttribute : updateObjectType.getAttributes()){
+            boolean updated = false;
+            for(GraphQLAttribute attribute : objectType.getAttributes()){
+                if(updateAttribute.getId().equals(attribute.getId())){
+
+                    // Only update the value. The rest of the values
+                    // should be immutable.
+                    attribute.setValue(updateAttribute.getValue());
+                    updated = true;
+                    break;
+                }
+            }
+
+            if(!updated){
+                LOGGER.warn("Unable to update the following attribute: " + updateAttribute.getId());
+            }
+        }
+
+        save(graphQLProjectId);
+        return mapper.map(objectType, GraphQLObjectTypeDto.class);
     }
 
     /**
