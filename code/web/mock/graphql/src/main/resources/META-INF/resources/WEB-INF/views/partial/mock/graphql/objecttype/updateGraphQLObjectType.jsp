@@ -56,16 +56,12 @@
                         <table class="table table-striped table-hover sortable">
                             <col width="10%">
                             <col width="10%">
-                            <col width="10%">
-                            <col width="30%">
-                            <col width="40%">
+                            <col width="80%">
 
                             <tr>
                                 <th><spring:message code="graphql.updategraphqlobject.column.name"/></th>
                                 <th><spring:message code="graphql.updategraphqlobject.column.type"/></th>
-                                <th><spring:message code="graphql.updategraphqlobject.column.nullable"/></th>
                                 <th><spring:message code="graphql.updategraphqlobject.column.value"/></th>
-                                <th><spring:message code="graphql.updategraphqlobject.column.description"/></th>
                             </tr>
 
                             <c:forEach items="${graphQLObjectType.attributes}" var="graphQLAttribute" varStatus="loopStatus">
@@ -87,7 +83,6 @@
                                             <c:when test="${graphQLAttribute.listable == true}">[ ]</c:when>
                                         </c:choose>
                                     </td>
-                                    <td>${graphQLAttribute.nullable}</td>
                                     <td>
                                         <c:choose>
                                             <c:when test="${graphQLAttribute.attributeType == 'OBJECT_TYPE'}">
@@ -96,11 +91,10 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <form:input path="attributes[${loopStatus.index}].id" id="attributes[${loopStatus.index}].id" value="${graphQLAttribute.id}" type="hidden" />
-                                                <form:input path="attributes[${loopStatus.index}].value" id="attributes[${loopStatus.index}].value" value="${graphQLAttribute.value}"/>
+                                                <form:input class="form-control" path="attributes[${loopStatus.index}].value" id="attributes[${loopStatus.index}].value" value="${graphQLAttribute.value}"/>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
-                                    <td>${graphQLAttribute.description}</td>
                                 </tr>
                             </c:forEach>
                         </table>

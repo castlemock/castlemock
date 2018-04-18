@@ -65,8 +65,8 @@
                             <th><spring:message code="graphql.graphqlobject.column.name"/></th>
                             <th><spring:message code="graphql.graphqlobject.column.type"/></th>
                             <th><spring:message code="graphql.graphqlobject.column.nullable"/></th>
-                            <th><spring:message code="graphql.graphqlobject.column.value"/></th>
                             <th><spring:message code="graphql.graphqlobject.column.description"/></th>
+                            <th><spring:message code="graphql.graphqlobject.column.value"/></th>
                         </tr>
 
                         <c:forEach items="${graphQLObjectType.attributes}" var="graphQLAttribute" varStatus="loopStatus">
@@ -89,6 +89,7 @@
                                     </c:choose>
                                 </td>
                                 <td>${graphQLAttribute.nullable}</td>
+                                <td>${graphQLAttribute.description}</td>
                                 <td>
                                     <c:choose>
                                         <c:when test="${graphQLAttribute.attributeType == 'OBJECT_TYPE'}">
@@ -100,7 +101,6 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td>${graphQLAttribute.description}</td>
                             </tr>
                         </c:forEach>
                     </table>
