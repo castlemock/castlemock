@@ -41,8 +41,9 @@ public class DeleteGraphQLProjectService extends AbstractGraphQLProjectService i
     @Override
     public ServiceResult<DeleteGraphQLProjectOutput> process(final ServiceTask<DeleteGraphQLProjectInput> serviceTask) {
         final DeleteGraphQLProjectInput input = serviceTask.getInput();
-        final String restProjectId = input.getGraphQLProjectId();
-        final GraphQLProjectDto project = delete(restProjectId);
+        final String projectId = input.getGraphQLProjectId();
+        final GraphQLProjectDto project = this.deleteProject(projectId);
+
         return createServiceResult(new DeleteGraphQLProjectOutput(project));
     }
 }

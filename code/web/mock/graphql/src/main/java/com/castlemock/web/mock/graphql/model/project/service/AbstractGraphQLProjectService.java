@@ -17,10 +17,15 @@
 package com.castlemock.web.mock.graphql.model.project.service;
 
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLObjectTypeDto;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
 import com.castlemock.web.basis.model.AbstractService;
-import com.castlemock.web.mock.graphql.model.project.repository.GraphQLProjectRepository;
+import com.castlemock.web.mock.graphql.model.project.repository.*;
 import com.google.common.base.Preconditions;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -28,6 +33,50 @@ import com.google.common.base.Preconditions;
  */
 public abstract class AbstractGraphQLProjectService extends AbstractService<GraphQLProject, GraphQLProjectDto, String, GraphQLProjectRepository> {
 
+    @Autowired
+    protected GraphQLApplicationRepository applicationRepository;
+    @Autowired
+    protected GraphQLQueryRepository queryRepository;
+    @Autowired
+    protected GraphQLMutationRepository mutationRepository;
+    @Autowired
+    protected GraphQLSubscriptionRepository subscriptionRepository;
+    @Autowired
+    protected GraphQLObjectTypeRepository objectTypeRepository;
+    @Autowired
+    protected GraphQLEnumTypeRepository enumTypeRepository;
+    @Autowired
+    protected GraphQLAttributeRepository attributeRepository;
+
+    protected GraphQLProjectDto deleteProject(final String projectId){
+        final List<GraphQLApplicationDto> applications = applicationRepository.findWithProjectId(projectId);
+
+        final GraphQLProjectDto project = this.repository.delete(projectId);
+
+        for(GraphQLApplicationDto application : applications){
+            this.deleteApplication(application.getId());
+        }
+
+        return project;
+    }
+
+    protected GraphQLApplicationDto deleteApplication(final String applicationId){
+        final GraphQLApplicationDto application = this.applicationRepository.delete(applicationId);
+
+        final List<GraphQLObjectTypeDto> objectTypes = this.objectTypeRepository.findWithApplicationId(applicationId);
+
+        this.queryRepository.deleteWithApplicationId(applicationId);
+        this.mutationRepository.deleteWithApplicationId(applicationId);
+        this.subscriptionRepository.deleteWithApplicationId(applicationId);
+        this.objectTypeRepository.deleteWithApplicationId(applicationId);
+        this.enumTypeRepository.deleteWithApplicationId(applicationId);
+
+        for(GraphQLObjectTypeDto objectType : objectTypes){
+            this.attributeRepository.deleteWithObjectTypeId(objectType.getId());
+        }
+
+        return application;
+    }
 
     /**
      * Updates a project with new information

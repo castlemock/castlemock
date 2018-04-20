@@ -19,10 +19,7 @@ package com.castlemock.core.mock.graphql.model.project.domain;
 import com.castlemock.core.basis.model.Saveable;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @XmlRootElement
 public class GraphQLApplication implements Saveable<String> {
@@ -30,12 +27,7 @@ public class GraphQLApplication implements Saveable<String> {
     private String id;
     private String name;
     private String description;
-    private List<GraphQLObjectType> objects = new CopyOnWriteArrayList<GraphQLObjectType>();
-    private List<GraphQLEnumType> enums = new CopyOnWriteArrayList<GraphQLEnumType>();
-    private List<GraphQLQuery> queries = new CopyOnWriteArrayList<GraphQLQuery>();
-    private List<GraphQLMutation> mutations = new CopyOnWriteArrayList<GraphQLMutation>();
-    private List<GraphQLSubscription> subscriptions = new CopyOnWriteArrayList<GraphQLSubscription>();
-
+    private String projectId;
 
     @Override
     @XmlElement
@@ -66,55 +58,12 @@ public class GraphQLApplication implements Saveable<String> {
         this.description = description;
     }
 
-    @XmlElementWrapper(name = "objects")
-    @XmlElement(name = "object")
-    public List<GraphQLObjectType> getObjects() {
-        return objects;
+    @XmlElement
+    public String getProjectId() {
+        return projectId;
     }
 
-    public void setObjects(List<GraphQLObjectType> objects) {
-        this.objects = objects;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
-
-    @XmlElementWrapper(name = "enums")
-    @XmlElement(name = "enum")
-    public List<GraphQLEnumType> getEnums() {
-        return enums;
-    }
-
-    public void setEnums(List<GraphQLEnumType> enums) {
-        this.enums = enums;
-    }
-
-
-    @XmlElementWrapper(name = "queries")
-    @XmlElement(name = "query")
-    public List<GraphQLQuery> getQueries() {
-        return queries;
-    }
-
-    public void setQueries(List<GraphQLQuery> queries) {
-        this.queries = queries;
-    }
-
-    @XmlElementWrapper(name = "mutations")
-    @XmlElement(name = "mutation")
-    public List<GraphQLMutation> getMutations() {
-        return mutations;
-    }
-
-    public void setMutations(List<GraphQLMutation> mutations) {
-        this.mutations = mutations;
-    }
-
-    @XmlElementWrapper(name = "subscriptions")
-    @XmlElement(name = "subscription")
-    public List<GraphQLSubscription> getSubscriptions() {
-        return subscriptions;
-    }
-
-    public void setSubscriptions(List<GraphQLSubscription> subscriptions) {
-        this.subscriptions = subscriptions;
-    }
-
 }

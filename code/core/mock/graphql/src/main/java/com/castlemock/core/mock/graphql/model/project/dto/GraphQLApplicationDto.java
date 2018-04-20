@@ -18,6 +18,7 @@ package com.castlemock.core.mock.graphql.model.project.dto;
 
 import org.dozer.Mapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -36,21 +37,14 @@ public class GraphQLApplicationDto {
     @Mapping("description")
     private String description;
 
-    @Mapping("objects")
-    private List<GraphQLObjectTypeDto> objects = new CopyOnWriteArrayList<GraphQLObjectTypeDto>();
+    @Mapping("projectId")
+    private String projectId;
 
-    @Mapping("enums")
-    private List<GraphQLEnumTypeDto> enums = new CopyOnWriteArrayList<GraphQLEnumTypeDto>();
-
-    @Mapping("queries")
-    private List<GraphQLQueryDto> queries = new CopyOnWriteArrayList<GraphQLQueryDto>();
-
-    @Mapping("mutations")
-    private List<GraphQLMutationDto> mutations = new CopyOnWriteArrayList<GraphQLMutationDto>();
-
-    @Mapping("subscriptions")
-    private List<GraphQLSubscriptionDto> subscriptions = new CopyOnWriteArrayList<GraphQLSubscriptionDto>();
-
+    private List<GraphQLObjectTypeDto> objects = new ArrayList<>();
+    private List<GraphQLEnumTypeDto> enums = new ArrayList<>();
+    private List<GraphQLQueryDto> queries = new ArrayList<>();
+    private List<GraphQLMutationDto> mutations = new ArrayList<>();
+    private List<GraphQLSubscriptionDto> subscriptions = new ArrayList<>();
     private String invokeAddress;
 
     public String getId() {
@@ -75,6 +69,14 @@ public class GraphQLApplicationDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     public List<GraphQLObjectTypeDto> getObjects() {

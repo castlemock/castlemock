@@ -18,7 +18,6 @@ package com.castlemock.core.mock.graphql.model.project.dto;
 
 import com.castlemock.core.basis.model.project.dto.ProjectDto;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperationStatus;
-import org.dozer.Mapping;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +30,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class GraphQLProjectDto extends ProjectDto {
 
-    @Mapping("applications")
     private List<GraphQLApplicationDto> applications = new CopyOnWriteArrayList<GraphQLApplicationDto>();
     private Map<GraphQLOperationStatus, Integer> statusCount = new HashMap<GraphQLOperationStatus, Integer>();
 

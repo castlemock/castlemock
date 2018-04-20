@@ -19,6 +19,8 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLAttributeDto;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLObjectTypeDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.UpdateGraphQLObjectTypeInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.UpdateGraphQLObjectTypeOutput;
 
@@ -28,6 +30,7 @@ import com.castlemock.core.mock.graphql.model.project.service.message.output.Upd
  */
 @org.springframework.stereotype.Service
 public class UpdateGraphQLObjectTypeService extends AbstractGraphQLProjectService implements Service<UpdateGraphQLObjectTypeInput, UpdateGraphQLObjectTypeOutput> {
+
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
      * a response based on the incoming serviceTask input
@@ -40,8 +43,11 @@ public class UpdateGraphQLObjectTypeService extends AbstractGraphQLProjectServic
     @Override
     public ServiceResult<UpdateGraphQLObjectTypeOutput> process(final ServiceTask<UpdateGraphQLObjectTypeInput> serviceTask) {
         final UpdateGraphQLObjectTypeInput input = serviceTask.getInput();
-        this.repository.updateGraphQLObjectType(input.getProjectId(),
-                input.getApplicationId(), input.getObjectTypeId(), input.getObjectType());
+        final GraphQLObjectTypeDto objectType = input.getObjectType();
+
+        for(GraphQLAttributeDto attribute : objectType.getAttributes()) {
+            this.attributeRepository.update(attribute.getId(), attribute);
+        }
         return this.createServiceResult(new UpdateGraphQLObjectTypeOutput());
     }
 }

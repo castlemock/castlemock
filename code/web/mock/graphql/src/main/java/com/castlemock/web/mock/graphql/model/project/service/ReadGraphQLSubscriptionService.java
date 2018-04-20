@@ -22,6 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLSubscriptionDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLSubscriptionInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLSubscriptionOutput;
+import com.castlemock.web.mock.graphql.model.project.repository.GraphQLSubscriptionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -30,7 +32,6 @@ import com.castlemock.core.mock.graphql.model.project.service.message.output.Rea
  */
 @org.springframework.stereotype.Service
 public class ReadGraphQLSubscriptionService extends AbstractGraphQLProjectService implements Service<ReadGraphQLSubscriptionInput, ReadGraphQLSubscriptionOutput> {
-
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -44,8 +45,7 @@ public class ReadGraphQLSubscriptionService extends AbstractGraphQLProjectServic
     @Override
     public ServiceResult<ReadGraphQLSubscriptionOutput> process(ServiceTask<ReadGraphQLSubscriptionInput> serviceTask) {
         final ReadGraphQLSubscriptionInput input = serviceTask.getInput();
-        final GraphQLSubscriptionDto subscription = repository.findGraphQLSubscription(
-                input.getGraphQLProjectId(), input.getGraphQLApplicationId(), input.getGraphQLSubscriptionId());
+        final GraphQLSubscriptionDto subscription = subscriptionRepository.findOne(input.getGraphQLSubscriptionId());
         return createServiceResult(new ReadGraphQLSubscriptionOutput(subscription));
     }
 }

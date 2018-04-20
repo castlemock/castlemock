@@ -19,9 +19,11 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.dto.*;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLApplicationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLApplicationOutput;
+
+import java.util.List;
 
 
 /**
@@ -43,7 +45,19 @@ public class ReadGraphQLApplicationService extends AbstractGraphQLProjectService
     public ServiceResult<ReadGraphQLApplicationOutput> process(final ServiceTask<ReadGraphQLApplicationInput> serviceTask) {
         final ReadGraphQLApplicationInput input = serviceTask.getInput();
         final GraphQLApplicationDto application =
-                repository.findGraphQLApplication(input.getGraphQLProjectId(), input.getGraphQLApplicationId());
+                this.applicationRepository.findOne(input.getGraphQLApplicationId());
+
+        final List<GraphQLQueryDto> queries = this.queryRepository.findWithApplicationId(application.getId());
+        final List<GraphQLMutationDto> mutations = this.mutationRepository.findWithApplicationId(application.getId());
+        final List<GraphQLSubscriptionDto> subscriptions = this.subscriptionRepository.findWithApplicationId(application.getId());
+        final List<GraphQLObjectTypeDto> objectTypes = this.objectTypeRepository.findWithApplicationId(application.getId());
+        final List<GraphQLEnumTypeDto> enumTypes = this.enumTypeRepository.findWithApplicationId(application.getId());
+
+        application.setQueries(queries);
+        application.setMutations(mutations);
+        application.setSubscriptions(subscriptions);
+        application.setObjects(objectTypes);
+        application.setEnums(enumTypes);
 
         return createServiceResult(new ReadGraphQLApplicationOutput(application));
     }

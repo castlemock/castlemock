@@ -51,6 +51,7 @@ public class IdentifyGraphQLOperationService extends AbstractGraphQLProjectServi
     @Override
     public ServiceResult<IdentifyGraphQLOperationOutput> process(ServiceTask<IdentifyGraphQLOperationInput> serviceTask) {
         final IdentifyGraphQLOperationInput input = serviceTask.getInput();
+        /*
         final GraphQLApplicationDto application =
                 repository.findGraphQLApplication(input.getGraphQLProjectId(), input.getGraphQLApplicationId());
         final List<GraphQLRequestQueryDto> requestQueries = input.getQueries();
@@ -62,6 +63,8 @@ public class IdentifyGraphQLOperationService extends AbstractGraphQLProjectServi
 
         final IdentifyGraphQLOperationOutput output = new IdentifyGraphQLOperationOutput(application, mapping);
         return createServiceResult(output);
+        */
+        return null;
     }
 
     private void mapOperations(final List<GraphQLRequestQueryDto> requestQueries,

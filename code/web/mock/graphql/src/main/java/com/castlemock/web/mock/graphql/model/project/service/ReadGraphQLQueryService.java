@@ -22,6 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLQueryDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLQueryInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLQueryOutput;
+import com.castlemock.web.mock.graphql.model.project.repository.GraphQLQueryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -30,7 +32,6 @@ import com.castlemock.core.mock.graphql.model.project.service.message.output.Rea
  */
 @org.springframework.stereotype.Service
 public class ReadGraphQLQueryService extends AbstractGraphQLProjectService implements Service<ReadGraphQLQueryInput, ReadGraphQLQueryOutput> {
-
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -44,8 +45,7 @@ public class ReadGraphQLQueryService extends AbstractGraphQLProjectService imple
     @Override
     public ServiceResult<ReadGraphQLQueryOutput> process(ServiceTask<ReadGraphQLQueryInput> serviceTask) {
         final ReadGraphQLQueryInput input = serviceTask.getInput();
-        final GraphQLQueryDto query =
-                repository.findGraphQLQuery(input.getGraphQLProjectId(), input.getGraphQLApplicationId(), input.getGraphQLQueryId());
+        final GraphQLQueryDto query = queryRepository.findOne(input.getGraphQLQueryId());
         return createServiceResult(new ReadGraphQLQueryOutput(query));
     }
 }

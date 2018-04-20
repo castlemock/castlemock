@@ -25,6 +25,7 @@ import com.castlemock.core.mock.graphql.model.project.service.message.output.Imp
 import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverter;
 import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverterFactory;
 import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverterResult;
+import com.castlemock.web.mock.graphql.model.project.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
@@ -52,7 +53,6 @@ public class ImportGraphQLDefinitionService extends AbstractGraphQLProjectServic
         final ImportGraphQLDefinitionInput input = serviceTask.getInput();
         final String projectId = input.getGraphQLProjectId();
         final String applicationId = input.getGraphQLApplicationId();
-        final GraphQLApplicationDto application = repository.findGraphQLApplication(projectId, applicationId);
         final GraphQLDefinitionConverter graphQLDefinitionConverter = definitionConverterFactory.getConverter(input.getDefinitionType());
 
         GraphQLDefinitionConverterResult result = null;
@@ -67,24 +67,34 @@ public class ImportGraphQLDefinitionService extends AbstractGraphQLProjectServic
             }
         }
 
-        for(GraphQLObjectTypeDto graphQLObjectType : result.getObjects()){
-            this.repository.saveGraphQLObjectType(projectId, applicationId, graphQLObjectType);
+        for(GraphQLObjectTypeDto objectType : result.getObjects()){
+            objectType.setApplicationId(applicationId);
+            this.objectTypeRepository.save(objectType);
+
+            for(GraphQLAttributeDto attribute : objectType.getAttributes()){
+                attribute.setObjectTypeId(objectType.getId());
+                attributeRepository.save(attribute);
+            }
         }
 
-        for(GraphQLEnumTypeDto graphQLObject : result.getEnums()){
-            this.repository.saveGraphQLEnumType(projectId, applicationId, graphQLObject);
+        for(GraphQLEnumTypeDto enumType : result.getEnums()){
+            enumType.setApplicationId(applicationId);
+            this.enumTypeRepository.save(enumType);
         }
 
-        for(GraphQLQueryDto graphQLQuery : result.getQueries()){
-            this.repository.saveGraphQLQuery(projectId, applicationId, graphQLQuery);
+        for(GraphQLQueryDto query : result.getQueries()){
+            query.setApplicationId(applicationId);
+            this.queryRepository.save(query);
         }
 
-        for(GraphQLMutationDto graphQLMutation : result.getMutations()){
-            this.repository.saveGraphQLMutation(projectId, applicationId, graphQLMutation);
+        for(GraphQLMutationDto mutation : result.getMutations()){
+            mutation.setApplicationId(applicationId);
+            this.mutationRepository.save(mutation);
         }
 
-        for(GraphQLSubscriptionDto graphQLSubscription : result.getSubscriptions()){
-            this.repository.saveGraphQLSubscription(projectId, applicationId, graphQLSubscription);
+        for(GraphQLSubscriptionDto subscription : result.getSubscriptions()){
+            subscription.setApplicationId(applicationId);
+            this.subscriptionRepository.save(subscription);
         }
 
         return createServiceResult(new ImportGraphQLDefinitionOutput());

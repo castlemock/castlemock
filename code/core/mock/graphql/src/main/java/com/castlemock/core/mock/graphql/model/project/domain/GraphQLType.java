@@ -28,6 +28,7 @@ public abstract class GraphQLType implements Saveable<String> {
     private String id;
     private String name;
     private String description;
+    private String applicationId;
 
     @Override
     @XmlElement
@@ -56,5 +57,14 @@ public abstract class GraphQLType implements Saveable<String> {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @XmlElement
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 }

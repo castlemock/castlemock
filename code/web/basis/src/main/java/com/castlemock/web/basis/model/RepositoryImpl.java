@@ -183,6 +183,19 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
     }
 
     /**
+     * Updates an instance that matches the provided id.
+     *
+     * @param id   The id of the instance that will be updated.
+     * @param type The updated version that will replace the old one.
+     * @return A copy of the replaced value.
+     * @since 1.20
+     */
+    @Override
+    public D update(I id, D type) {
+        return null;
+    }
+
+    /**
      * The method is responsible for retrieving a new write lock.
      * A new write lock will be created if a write lock already doesn't exist and is associated
      * with the provided <code>id</code>.

@@ -31,6 +31,9 @@ public abstract class GraphQLTypeDto {
     @Mapping("description")
     private String description;
 
+    @Mapping("applicationId")
+    private String applicationId;
+
     public String getId() {
         return id;
     }
@@ -53,5 +56,13 @@ public abstract class GraphQLTypeDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 }

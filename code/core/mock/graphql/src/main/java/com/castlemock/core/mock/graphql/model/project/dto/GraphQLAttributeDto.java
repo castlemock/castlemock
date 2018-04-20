@@ -50,6 +50,9 @@ public class GraphQLAttributeDto {
     @Mapping("value")
     private String value;
 
+    @Mapping("objectTypeId")
+    private String objectTypeId;
+
     @Mapping("attributeType")
     private GraphQLAttributeType attributeType;
 
@@ -118,6 +121,14 @@ public class GraphQLAttributeDto {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getObjectTypeId() {
+        return objectTypeId;
+    }
+
+    public void setObjectTypeId(String objectTypeId) {
+        this.objectTypeId = objectTypeId;
     }
 
     public GraphQLAttributeType getAttributeType() {

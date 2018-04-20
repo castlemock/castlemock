@@ -22,6 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLMutationDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLMutationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLMutationOutput;
+import com.castlemock.web.mock.graphql.model.project.repository.GraphQLMutationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -44,8 +46,7 @@ public class ReadGraphQLMutationService extends AbstractGraphQLProjectService im
     public ServiceResult<ReadGraphQLMutationOutput> process(ServiceTask<ReadGraphQLMutationInput> serviceTask) {
         final ReadGraphQLMutationInput input = serviceTask.getInput();
         final GraphQLMutationDto mutation =
-                repository.findGraphQLMutation(
-                        input.getGraphQLProjectId(), input.getGraphQLApplicationId(), input.getGraphQLMutationId());
+                mutationRepository.findOne(input.getGraphQLMutationId());
         return createServiceResult(new ReadGraphQLMutationOutput(mutation));
     }
 }

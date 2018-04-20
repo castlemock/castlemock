@@ -37,6 +37,7 @@ public abstract class GraphQLOperation implements Saveable<String> {
     private String id;
     private String name;
     private String description;
+    private String applicationId;
     private long networkDelay;
     private HttpMethod httpMethod;
     private String forwardedEndpoint;
@@ -46,6 +47,7 @@ public abstract class GraphQLOperation implements Saveable<String> {
     private GraphQLResponseStrategy responseStrategy;
     private GraphQLResult result;
     private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
+
 
     @Override
     @XmlElement
@@ -157,5 +159,14 @@ public abstract class GraphQLOperation implements Saveable<String> {
 
     public void setArguments(List<GraphQLArgument> arguments) {
         this.arguments = arguments;
+    }
+
+    @XmlElement
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 }

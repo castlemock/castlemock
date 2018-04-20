@@ -19,9 +19,12 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLAttributeDto;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLObjectTypeDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLObjectTypeInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLObjectTypeOutput;
+
+import java.util.List;
 
 
 /**
@@ -30,7 +33,6 @@ import com.castlemock.core.mock.graphql.model.project.service.message.output.Rea
  */
 @org.springframework.stereotype.Service
 public class ReadGraphQLObjectTypeService extends AbstractGraphQLProjectService implements Service<ReadGraphQLObjectTypeInput, ReadGraphQLObjectTypeOutput> {
-
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -44,8 +46,11 @@ public class ReadGraphQLObjectTypeService extends AbstractGraphQLProjectService 
     @Override
     public ServiceResult<ReadGraphQLObjectTypeOutput> process(ServiceTask<ReadGraphQLObjectTypeInput> serviceTask) {
         final ReadGraphQLObjectTypeInput input = serviceTask.getInput();
-        final GraphQLObjectTypeDto objectType =
-                repository.findGraphQLObjectType(input.getGraphQLProjectId(), input.getGraphQLApplicationId(), input.getGraphQLObjectTypeId());
+        final GraphQLObjectTypeDto objectType = this.objectTypeRepository.findOne(input.getGraphQLObjectTypeId());
+        final List<GraphQLAttributeDto> attributes = this.attributeRepository.findWithObjectTypeId(input.getGraphQLObjectTypeId());
+
+        objectType.setAttributes(attributes);
+
         return createServiceResult(new ReadGraphQLObjectTypeOutput(objectType));
     }
 }

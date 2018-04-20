@@ -22,6 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.UpdateGraphQLApplicationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.UpdateGraphQLApplicationOutput;
+import com.castlemock.web.mock.graphql.model.project.repository.GraphQLApplicationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Karl Dahlgren
@@ -41,9 +43,7 @@ public class UpdateGraphQLApplicationService extends AbstractGraphQLProjectServi
     @Override
     public ServiceResult<UpdateGraphQLApplicationOutput> process(final ServiceTask<UpdateGraphQLApplicationInput> serviceTask) {
         final UpdateGraphQLApplicationInput input = serviceTask.getInput();
-        final GraphQLApplicationDto updatedGraphQLApplication =
-                repository.updateGraphQLApplication(input.getGraphQLProjectId(),
-                        input.getGraphQLApplicationId(), input.getGraphQLApplication());
+        final GraphQLApplicationDto updatedGraphQLApplication = applicationRepository.save(input.getGraphQLApplication());
         return createServiceResult(new UpdateGraphQLApplicationOutput(updatedGraphQLApplication));
     }
 }

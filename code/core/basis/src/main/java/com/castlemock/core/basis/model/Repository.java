@@ -73,6 +73,15 @@ public interface Repository<T extends Saveable<I>, D, I extends Serializable> {
     D delete(I id);
 
     /**
+     * Updates an instance that matches the provided id.
+     * @param id The id of the instance that will be updated.
+     * @param type The updated version that will replace the old one.
+     * @return A copy of the replaced value.
+     * @since 1.20
+     */
+    D update(I id, D type);
+
+    /**
      * Count all the stored entities for the repository
      * @return The count of entities
      */

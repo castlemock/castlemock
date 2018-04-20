@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.graphql.model.project.domain;
+package com.castlemock.web.mock.graphql.model.project.repository;
 
-import com.castlemock.core.basis.model.project.domain.Project;
+import com.castlemock.core.basis.model.Repository;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
+import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
-/**
- * @author Karl Dahlgren
- * @since 1.19
- */
-@XmlRootElement
-public class GraphQLProject extends Project {
+public interface GraphQLApplicationRepository extends Repository<GraphQLApplication, GraphQLApplicationDto, String> {
+
+    List<GraphQLApplicationDto> findWithProjectId(String projectId);
+
+    void deleteWithProjectId(String projectId);
 
 }
