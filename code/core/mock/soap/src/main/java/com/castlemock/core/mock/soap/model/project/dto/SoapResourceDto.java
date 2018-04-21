@@ -34,6 +34,9 @@ public class SoapResourceDto {
     @Mapping("type")
     private SoapResourceType type;
 
+    @Mapping("projectId")
+    private String projectId;
+
     public String getId() {
         return id;
     }
@@ -56,5 +59,13 @@ public class SoapResourceDto {
 
     public void setType(SoapResourceType type) {
         this.type = type;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 }

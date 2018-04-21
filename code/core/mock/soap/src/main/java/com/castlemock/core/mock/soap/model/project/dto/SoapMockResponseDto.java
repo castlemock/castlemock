@@ -38,6 +38,9 @@ public class SoapMockResponseDto {
     @Mapping("body")
     private String body;
 
+    @Mapping("operationId")
+    private String operationId;
+
     @Mapping("status")
     private SoapMockResponseStatus status;
 
@@ -48,7 +51,7 @@ public class SoapMockResponseDto {
     private boolean usingExpressions;
 
     @Mapping("xpathExpression")
-    private String xpathExpressionDto;
+    private String xpathExpression;
   
     @Mapping("httpHeaders")
     private List<HttpHeaderDto> httpHeaders = new CopyOnWriteArrayList<HttpHeaderDto>();
@@ -79,6 +82,14 @@ public class SoapMockResponseDto {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getOperationId() {
+        return operationId;
+    }
+
+    public void setOperationId(String operationId) {
+        this.operationId = operationId;
     }
 
     public SoapMockResponseStatus getStatus() {
@@ -114,12 +125,12 @@ public class SoapMockResponseDto {
     }
 
 
-    public String getXpathExpressionDto() {
-        return xpathExpressionDto;
+    public String getXpathExpression() {
+        return xpathExpression;
     }
 
-    public void setXpathExpressionDto(String xpathExpressionDto) {
-        this.xpathExpressionDto = xpathExpressionDto;
+    public void setXpathExpression(String xpathExpression) {
+        this.xpathExpression = xpathExpression;
     }
   
     public List<ContentEncoding> getContentEncodings() {

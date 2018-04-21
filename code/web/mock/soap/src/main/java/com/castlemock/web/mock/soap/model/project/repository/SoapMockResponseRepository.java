@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Karl Dahlgren
+ * Copyright 2018 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.soap.model.project.domain;
+package com.castlemock.web.mock.soap.model.project.repository;
 
-import com.castlemock.core.basis.model.project.domain.Project;
+import com.castlemock.core.basis.model.Repository;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
-/**
- * @author Karl Dahlgren
- * @since 1.0
- */
-@XmlRootElement
-public class SoapProject extends Project {
+public interface SoapMockResponseRepository extends Repository<SoapMockResponse, SoapMockResponseDto, String> {
+
+    void deleteWithOperationId(String operationId);
+
+    List<SoapMockResponseDto> findWithOperationId(String operationId);
 
 }

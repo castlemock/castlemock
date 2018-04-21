@@ -40,9 +40,6 @@ public class SoapOperationDto {
     @Mapping("identifier")
     private String identifier;
 
-    @Mapping("mockResponses")
-    private List<SoapMockResponseDto> mockResponses = new CopyOnWriteArrayList<SoapMockResponseDto>();
-
     @Mapping("responseStrategy")
     private SoapResponseStrategy responseStrategy;
 
@@ -76,6 +73,11 @@ public class SoapOperationDto {
     @Mapping("defaultXPathMockResponseId")
     private String defaultXPathMockResponseId;
 
+    @Mapping("portId")
+    private String portId;
+
+    private List<SoapMockResponseDto> mockResponses = new CopyOnWriteArrayList<SoapMockResponseDto>();
+
     private String invokeAddress;
 
     private String defaultXPathResponseName;
@@ -102,6 +104,14 @@ public class SoapOperationDto {
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    public String getPortId() {
+        return portId;
+    }
+
+    public void setPortId(String portId) {
+        this.portId = portId;
     }
 
     public SoapResponseStrategy getResponseStrategy() {

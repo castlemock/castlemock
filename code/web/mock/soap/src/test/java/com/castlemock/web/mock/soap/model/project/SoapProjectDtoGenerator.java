@@ -16,9 +16,6 @@
 
 package com.castlemock.web.mock.soap.model.project;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
@@ -53,7 +50,6 @@ public class SoapProjectDtoGenerator {
         project.setDescription("Project description");
         project.setCreated(new Date());
         project.setUpdated(new Date());
-        project.setPorts(new ArrayList<SoapPort>());
         return project;
     }
 
@@ -74,28 +70,6 @@ public class SoapProjectDtoGenerator {
         soapProject.setDescription("Project description");
         soapProject.setCreated(new Date());
         soapProject.setUpdated(new Date());
-        soapProject.setPorts(new ArrayList<SoapPort>());
-
-        for(int portIndex = 0; portIndex < 3; portIndex++){
-            final SoapPort soapPort = SoapPortDtoGenerator.generateSoapPort();
-            soapPort.setOperations(new ArrayList<SoapOperation>());
-            soapProject.getPorts().add(soapPort);
-
-            for(int operationIndex = 0; operationIndex < 3; operationIndex++){
-                final SoapOperation soapOperation = SoapOperationDtoGenerator.generateSoapOperation();
-                soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
-                soapPort.getOperations().add(soapOperation);
-
-                for(int responseIndex = 0; responseIndex < 3; responseIndex++){
-                    final SoapMockResponse soapMockResponse = SoapMockResponseDtoGenerator.generateSoapMockResponse();
-                    soapOperation.getMockResponses().add(soapMockResponse);
-                }
-
-            }
-        }
-
-
-
         return soapProject;
     }
 

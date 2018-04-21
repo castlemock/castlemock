@@ -20,11 +20,16 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+import com.google.common.base.Preconditions;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,10 +51,35 @@ public class ReadSoapProjectService extends AbstractSoapProjectService implement
     public ServiceResult<ReadSoapProjectOutput> process(final ServiceTask<ReadSoapProjectInput> serviceTask) {
         final ReadSoapProjectInput input = serviceTask.getInput();
         final SoapProjectDto soapProject = find(input.getSoapProjectId());
+        final List<SoapResourceDto> resources = this.resourceRepository.findWithProjectId(input.getSoapProjectId());
+        final List<SoapPortDto> ports = this.portRepository.findWithProjectId(input.getSoapProjectId());
+        soapProject.setResources(resources);
+        soapProject.setPorts(ports);
         for(final SoapPortDto soapPortDto : soapProject.getPorts()){
-            final Map<SoapOperationStatus, Integer> soapOperationStatusCount = getSoapOperationStatusCount(soapPortDto.getOperations());
+            final List<SoapOperationDto> operations = this.operationRepository.findWithPortId(soapPortDto.getId());
+            final Map<SoapOperationStatus, Integer> soapOperationStatusCount = getSoapOperationStatusCount(operations);
             soapPortDto.setStatusCount(soapOperationStatusCount);
         }
         return createServiceResult(new ReadSoapProjectOutput(soapProject));
+    }
+
+
+    /**
+     * Count the operation statuses
+     * @param soapOperations The list of operations, which status will be counted
+     * @return The result of the status count
+     */
+    private Map<SoapOperationStatus, Integer> getSoapOperationStatusCount(final List<SoapOperationDto> soapOperations){
+        Preconditions.checkNotNull(soapOperations, "The operation list cannot be null");
+        final Map<SoapOperationStatus, Integer> statuses = new HashMap<SoapOperationStatus, Integer>();
+
+        for(SoapOperationStatus soapOperationStatus : SoapOperationStatus.values()){
+            statuses.put(soapOperationStatus, 0);
+        }
+        for(SoapOperationDto soapOperation : soapOperations){
+            SoapOperationStatus soapOperationStatus = soapOperation.getStatus();
+            statuses.put(soapOperationStatus, statuses.get(soapOperationStatus)+1);
+        }
+        return statuses;
     }
 }

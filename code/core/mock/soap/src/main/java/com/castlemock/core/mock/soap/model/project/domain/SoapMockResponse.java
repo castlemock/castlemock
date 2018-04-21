@@ -38,6 +38,7 @@ public class SoapMockResponse implements Saveable<String> {
     private String id;
     private String name;
     private String body;
+    private String operationId;
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
     private boolean usingExpressions;
@@ -72,6 +73,15 @@ public class SoapMockResponse implements Saveable<String> {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    @XmlElement
+    public String getOperationId() {
+        return operationId;
+    }
+
+    public void setOperationId(String operationId) {
+        this.operationId = operationId;
     }
 
     @XmlElement

@@ -42,7 +42,7 @@ public class DeleteSoapProjectService extends AbstractSoapProjectService impleme
     public ServiceResult<DeleteSoapProjectOutput> process(final ServiceTask<DeleteSoapProjectInput> serviceTask) {
         final DeleteSoapProjectInput input = serviceTask.getInput();
         final String soapProjectId = input.getSoapProjectId();
-        final SoapProjectDto project = delete(soapProjectId);
+        final SoapProjectDto project = this.deleteProject(soapProjectId);
         return createServiceResult(new DeleteSoapProjectOutput(project));
     }
 }

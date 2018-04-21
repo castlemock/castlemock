@@ -28,7 +28,7 @@ import com.castlemock.web.mock.soap.model.project.SoapMockResponseDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
+import com.castlemock.web.mock.soap.model.project.repository.SoapMockResponseRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class DeleteSoapMockResponseServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private SoapProjectRepository repository;
+    private SoapMockResponseRepository repository;
 
     @InjectMocks
     private DeleteSoapMockResponseService service;
@@ -70,6 +70,6 @@ public class DeleteSoapMockResponseServiceTest {
         final ServiceResult<DeleteSoapMockResponseOutput> serviceResult = service.process(serviceTask);
         serviceResult.getOutput();
 
-        Mockito.verify(repository, Mockito.times(1)).deleteSoapMockResponse(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
     }
 }

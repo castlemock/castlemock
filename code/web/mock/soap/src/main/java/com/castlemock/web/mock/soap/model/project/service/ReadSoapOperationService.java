@@ -19,9 +19,12 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -41,7 +44,9 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ReadSoapOperationOutput> process(final ServiceTask<ReadSoapOperationInput> serviceTask) {
         final ReadSoapOperationInput input = serviceTask.getInput();
-        final SoapOperationDto soapOperationDto = repository.findSoapOperation(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId());
+        final SoapOperationDto soapOperationDto = this.operationRepository.findOne(input.getSoapOperationId());
+        final List<SoapMockResponseDto> mockResponses = this.mockResponseRepository.findWithOperationId(input.getSoapOperationId());
+        soapOperationDto.setMockResponses(mockResponses);
         return createServiceResult(new ReadSoapOperationOutput(soapOperationDto));
     }
 }

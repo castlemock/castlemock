@@ -16,18 +16,15 @@
 
 package com.castlemock.web.mock.soap.model.project.service;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.dto.*;
 import com.castlemock.web.basis.model.AbstractService;
-import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
+import com.castlemock.web.mock.soap.model.project.repository.*;
 import com.google.common.base.Preconditions;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Karl Dahlgren
@@ -35,25 +32,56 @@ import java.util.Map;
  */
 public abstract class AbstractSoapProjectService extends AbstractService<SoapProject, SoapProjectDto, String, SoapProjectRepository> {
 
-    /**
-     * Count the operation statuses
-     * @param soapOperations The list of operations, which status will be counted
-     * @return The result of the status count
-     */
-    protected Map<SoapOperationStatus, Integer> getSoapOperationStatusCount(final List<SoapOperationDto> soapOperations){
-        Preconditions.checkNotNull(soapOperations, "The operation list cannot be null");
-        final Map<SoapOperationStatus, Integer> statuses = new HashMap<SoapOperationStatus, Integer>();
+    @Autowired
+    protected SoapPortRepository portRepository;
+    @Autowired
+    protected SoapOperationRepository operationRepository;
+    @Autowired
+    protected SoapMockResponseRepository mockResponseRepository;
+    @Autowired
+    protected SoapResourceRepository resourceRepository;
 
-        for(SoapOperationStatus soapOperationStatus : SoapOperationStatus.values()){
-            statuses.put(soapOperationStatus, 0);
+    protected SoapProjectDto deleteProject(final String projectId){
+        final List<SoapPortDto> ports = this.portRepository.findWithProjectId(projectId);
+        final List<SoapResourceDto> resources = this.resourceRepository.findWithProjectId(projectId);
+
+        for(SoapPortDto port : ports){
+            this.deletePort(port.getId());
         }
-        for(SoapOperationDto soapOperation : soapOperations){
-            SoapOperationStatus soapOperationStatus = soapOperation.getStatus();
-            statuses.put(soapOperationStatus, statuses.get(soapOperationStatus)+1);
+        for(SoapResourceDto resource : resources){
+            this.deleteResource(resource.getId());
         }
-        return statuses;
+
+        return this.repository.delete(projectId);
     }
 
+    protected SoapPortDto deletePort(final String portId){
+        final List<SoapOperationDto> operations = this.operationRepository.findWithPortId(portId);
+
+        for(SoapOperationDto operation : operations){
+            this.deleteOperation(operation.getId());
+        }
+
+        return this.portRepository.delete(portId);
+    }
+
+    protected SoapOperationDto deleteOperation(final String operationId){
+        final List<SoapMockResponseDto> responses = this.mockResponseRepository.findWithOperationId(operationId);
+
+        for(SoapMockResponseDto response : responses){
+            this.deleteMockResponse(response.getId());
+        }
+
+        return this.operationRepository.delete(operationId);
+    }
+
+    protected SoapMockResponseDto deleteMockResponse(final String mockReponseId){
+        return this.mockResponseRepository.delete(mockReponseId);
+    }
+
+    protected SoapResourceDto deleteResource(final String resourceId){
+        return this.resourceRepository.delete(resourceId);
+    }
 
 
     /**

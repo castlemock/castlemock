@@ -35,8 +35,8 @@ public class SoapOperation implements Saveable<String> {
     private String id;
     private String name;
     private String identifier;
+    private String portId;
     private SoapResponseStrategy responseStrategy;
-    private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<SoapMockResponse>();
     private SoapOperationStatus status;
     private HttpMethod httpMethod;
     private SoapVersion soapVersion;
@@ -77,6 +77,14 @@ public class SoapOperation implements Saveable<String> {
         this.identifier = identifier;
     }
 
+    @XmlElement
+    public String getPortId() {
+        return portId;
+    }
+
+    public void setPortId(String portId) {
+        this.portId = portId;
+    }
 
     @XmlElement
     public SoapResponseStrategy getResponseStrategy() {
@@ -94,16 +102,6 @@ public class SoapOperation implements Saveable<String> {
 
     public void setStatus(SoapOperationStatus status) {
         this.status = status;
-    }
-
-    @XmlElementWrapper(name = "mockResponses")
-    @XmlElement(name = "mockResponse")
-    public List<SoapMockResponse> getMockResponses() {
-        return mockResponses;
-    }
-
-    public void setMockResponses(List<SoapMockResponse> mockResponses) {
-        this.mockResponses = mockResponses;
     }
 
     @XmlElement

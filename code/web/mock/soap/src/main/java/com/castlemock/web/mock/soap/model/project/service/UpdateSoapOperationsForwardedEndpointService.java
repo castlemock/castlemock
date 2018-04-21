@@ -42,9 +42,9 @@ public class UpdateSoapOperationsForwardedEndpointService extends AbstractSoapPr
     public ServiceResult<UpdateSoapOperationsForwardedEndpointOutput> process(final ServiceTask<UpdateSoapOperationsForwardedEndpointInput> serviceTask) {
         final UpdateSoapOperationsForwardedEndpointInput input = serviceTask.getInput();
         for(SoapOperationDto soapOperationDto : input.getSoapOperations()){
-            SoapOperationDto soapOperation = repository.findSoapOperation(input.getSoapProjectId(), input.getSoapPortId(), soapOperationDto.getId());
+            SoapOperationDto soapOperation = this.operationRepository.findOne(soapOperationDto.getId());
             soapOperation.setForwardedEndpoint(input.getForwardedEndpoint());
-            repository.updateSoapOperation(input.getSoapProjectId(), input.getSoapPortId(), soapOperationDto.getId(), soapOperationDto);
+            this.operationRepository.update(soapOperationDto.getId(), soapOperationDto);
         }
         return createServiceResult(new UpdateSoapOperationsForwardedEndpointOutput());
     }

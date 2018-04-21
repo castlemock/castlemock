@@ -39,7 +39,9 @@ public class SoapPortDto {
     @Mapping("uri")
     private String uri;
 
-    @Mapping("operations")
+    @Mapping("projectId")
+    private String projectId;
+
     private List<SoapOperationDto> operations = new CopyOnWriteArrayList<SoapOperationDto>();
 
     private String invokeAddress;
@@ -84,6 +86,14 @@ public class SoapPortDto {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     public String getInvokeAddress() {

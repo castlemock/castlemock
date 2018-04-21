@@ -43,7 +43,6 @@ public class SoapPortDtoGenerator {
         soapPort.setId("SOAP PORT");
         soapPort.setName("Soap port name");
         soapPort.setUri("UrlPath");
-        soapPort.setOperations(new ArrayList<SoapOperation>());
         return soapPort;
     }
 }

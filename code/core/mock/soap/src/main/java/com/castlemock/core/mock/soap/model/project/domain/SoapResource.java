@@ -30,6 +30,7 @@ public class SoapResource implements Saveable<String> {
 
     private String id;
     private String name;
+    private String projectId;
     private SoapResourceType type;
 
     @XmlElement
@@ -59,5 +60,14 @@ public class SoapResource implements Saveable<String> {
 
     public void setType(SoapResourceType type) {
         this.type = type;
+    }
+
+    @XmlElement
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 }

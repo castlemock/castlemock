@@ -67,7 +67,7 @@
                     </tr>
                     <tr>
                         <td class="column1"><label><spring:message code="soap.soapmockresponse.label.xpathExpression"/></label></td>
-                        <td class="column2"><form:input path="xpathExpressionDto" id="xpathExpression" /></td>
+                        <td class="column2"><form:input path="xpathExpression" id="xpathExpression" /></td>
                     </tr>
                 </table>
             </div>

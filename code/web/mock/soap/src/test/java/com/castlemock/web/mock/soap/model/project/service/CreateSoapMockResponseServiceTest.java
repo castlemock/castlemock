@@ -28,6 +28,7 @@ import com.castlemock.web.mock.soap.model.project.SoapMockResponseDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.repository.SoapMockResponseRepository;
 import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
@@ -44,7 +45,7 @@ public class CreateSoapMockResponseServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private SoapProjectRepository repository;
+    private SoapMockResponseRepository repository;
 
     @InjectMocks
     private CreateSoapMockResponseService service;
@@ -61,16 +62,12 @@ public class CreateSoapMockResponseServiceTest {
         final SoapOperationDto soapOperation = SoapOperationDtoGenerator.generateSoapOperationDto();
         final SoapMockResponseDto soapMockResponseDto = SoapMockResponseDtoGenerator.generateSoapMockResponseDto();
 
-        soapProject.getPorts().add(soapPort);
-        soapPort.getOperations().add(soapOperation);
-
-        Mockito.when(repository.findOne(soapProject.getId())).thenReturn(soapProject);
 
         final CreateSoapMockResponseInput input = new CreateSoapMockResponseInput(soapProject.getId(), soapPort.getId(), soapOperation.getId(), soapMockResponseDto);
         final ServiceTask<CreateSoapMockResponseInput> serviceTask = new ServiceTask<>(input);
         final ServiceResult<CreateSoapMockResponseOutput> serviceResult = service.process(serviceTask);
         final CreateSoapMockResponseOutput output = serviceResult.getOutput();
 
-        Mockito.verify(repository, Mockito.times(1)).saveSoapMockResponse(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.any(SoapMockResponseDto.class));
+        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapMockResponseDto.class));
     }
 }

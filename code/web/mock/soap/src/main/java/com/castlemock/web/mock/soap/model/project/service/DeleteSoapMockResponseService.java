@@ -40,7 +40,7 @@ public class DeleteSoapMockResponseService extends AbstractSoapProjectService im
     @Override
     public ServiceResult<DeleteSoapMockResponseOutput> process(final ServiceTask<DeleteSoapMockResponseInput> serviceTask) {
         final DeleteSoapMockResponseInput input = serviceTask.getInput();
-        repository.deleteSoapMockResponse(input.getSoapProjectId(), input.getSoapPortId(), input.getSoapOperationId(), input.getSoapMockResponseId());
+        this.deleteMockResponse(input.getSoapMockResponseId());
         return createServiceResult(new DeleteSoapMockResponseOutput());
     }
 }

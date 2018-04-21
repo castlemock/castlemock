@@ -280,7 +280,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             serviceProcessor.process(new UpdateCurrentMockResponseSequenceIndexInput(soapProjectId, soapPortId, soapOperationDto.getId(), currentSequenceNumber + 1));
         } else if (soapOperationDto.getResponseStrategy().equals(SoapResponseStrategy.XPATH_INPUT)) {
             for (SoapMockResponseDto testedMockResponse : mockResponses) {
-                if (HttpMessageSupport.isValidXPathExpr(request.getBody(), testedMockResponse.getXpathExpressionDto())) {
+                if (HttpMessageSupport.isValidXPathExpr(request.getBody(), testedMockResponse.getXpathExpression())) {
                     mockResponse = testedMockResponse;
                     break;
                 }

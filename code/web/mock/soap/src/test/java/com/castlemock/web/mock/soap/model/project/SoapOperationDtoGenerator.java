@@ -59,7 +59,6 @@ public class SoapOperationDtoGenerator {
         soapOperation.setHttpMethod(HttpMethod.POST);
         soapOperation.setStatus(SoapOperationStatus.MOCKED);
         soapOperation.setSoapVersion(SoapVersion.SOAP11);
-        soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
         return soapOperation;
     }
 }

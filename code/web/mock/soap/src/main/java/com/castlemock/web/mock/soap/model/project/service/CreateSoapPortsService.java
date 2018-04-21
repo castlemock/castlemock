@@ -83,40 +83,58 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         }
 
         for(SoapPortDto newSoapPort : soapPorts){
-            SoapPortDto existingSoapPort = repository.findSoapPortWithName(soapProjectId, newSoapPort.getName());
+            newSoapPort.setProjectId(soapProjectId);
+            SoapPortDto existingSoapPort = this.portRepository.findWithName(soapProjectId, newSoapPort.getName());
 
             if(existingSoapPort == null){
-                repository.saveSoapPort(soapProjectId, newSoapPort);
+                SoapPortDto savedSoapPort = this.portRepository.save(newSoapPort);
+
+                for(SoapOperationDto soapOperation : newSoapPort.getOperations()){
+                    soapOperation.setPortId(savedSoapPort.getId());
+                    SoapOperationDto savedSoapOperation = this.operationRepository.save(soapOperation);
+                    for(SoapMockResponseDto soapMockResponse : soapOperation.getMockResponses()){
+                        soapMockResponse.setOperationId(savedSoapOperation.getId());
+                        this.mockResponseRepository.save(soapMockResponse);
+                    }
+                }
+
                 continue;
             }
 
             for(SoapOperationDto newSoapOperation : newSoapPort.getOperations()){
-                SoapOperationDto existingSoapOperation = repository.findSoapOperationWithName(soapProjectId, existingSoapPort.getId(), newSoapOperation.getName());
+                SoapOperationDto existingSoapOperation =
+                        this.operationRepository.findWithName(existingSoapPort.getId(), newSoapOperation.getName());
 
                 if(existingSoapOperation != null){
                     existingSoapOperation.setOriginalEndpoint(newSoapOperation.getOriginalEndpoint());
                     existingSoapOperation.setSoapVersion(newSoapOperation.getSoapVersion());
-                    repository.updateSoapOperation(soapProjectId, existingSoapPort.getId(), existingSoapOperation.getId(), existingSoapOperation);
+                    this.operationRepository.update(existingSoapOperation.getId(), existingSoapOperation);
                 } else {
-                    repository.saveSoapOperation(soapProjectId, existingSoapPort.getId(), newSoapOperation);
+                    newSoapOperation.setPortId(existingSoapPort.getId());
+                    SoapOperationDto savedSoapOperation = this.operationRepository.save(newSoapOperation);
+                    for(SoapMockResponseDto soapMockResponse : newSoapOperation.getMockResponses()){
+                        soapMockResponse.setOperationId(savedSoapOperation.getId());
+                        this.mockResponseRepository.save(soapMockResponse);
+                    }
                 }
             }
         }
 
         // Should only be one WSDL file
         final Collection<SoapResourceDto> wsdlSoapResources =
-                this.repository.findSoapResources(soapProjectId, SoapResourceType.WSDL);
+                this.resourceRepository.findSoapResources(soapProjectId, SoapResourceType.WSDL);
 
         for(SoapResourceDto wsdlSoapResource : wsdlSoapResources){
-            this.repository.deleteSoapResource(soapProjectId, wsdlSoapResource.getId());
+            this.resourceRepository.delete(wsdlSoapResource.getId());
         }
 
         for(File file : input.getFiles()){
             String resource = fileRepositorySupport.read(file);
             SoapResourceDto soapResourceDto = new SoapResourceDto();
+            soapResourceDto.setProjectId(soapProjectId);
             soapResourceDto.setName(file.getName());
             soapResourceDto.setType(SoapResourceType.WSDL);
-            repository.saveSoapResource(soapProjectId, soapResourceDto, resource);
+            this.resourceRepository.saveSoapResource(soapResourceDto, resource);
         }
 
         return createServiceResult(new CreateSoapPortsOutput());

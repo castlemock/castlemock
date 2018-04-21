@@ -153,7 +153,7 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <spring:message code="soap.soapproject.label.noports" arguments="wsdl"/>
+                        <spring:message code="soap.soapproject.label.noresources" arguments="wsdl"/>
                     </c:otherwise>
                 </c:choose>
             </div>

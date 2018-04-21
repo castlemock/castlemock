@@ -24,6 +24,8 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsForwardedEndpointInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapPortsForwardedEndpointOutput;
 
+import java.util.List;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -43,10 +45,10 @@ public class UpdateSoapPortsForwardedEndpointService extends AbstractSoapProject
     public ServiceResult<UpdateSoapPortsForwardedEndpointOutput> process(final ServiceTask<UpdateSoapPortsForwardedEndpointInput> serviceTask) {
         final UpdateSoapPortsForwardedEndpointInput input = serviceTask.getInput();
         for(SoapPortDto soapPortDto : input.getSoapPorts()){
-            SoapPortDto soapPort = repository.findSoapPort(input.getSoapProjectId(), soapPortDto.getId());
-            for(SoapOperationDto soapOperation : soapPort.getOperations()){
+            List<SoapOperationDto> operations = this.operationRepository.findWithPortId(soapPortDto.getId());
+            for(SoapOperationDto soapOperation : operations){
                 soapOperation.setForwardedEndpoint(input.getForwardedEndpoint());
-                repository.updateSoapOperation(input.getSoapProjectId(), soapPortDto.getId(), soapOperation.getId(), soapOperation);
+                this.operationRepository.update(soapOperation.getId(), soapOperation);
             }
         }
         return createServiceResult(new UpdateSoapPortsForwardedEndpointOutput());

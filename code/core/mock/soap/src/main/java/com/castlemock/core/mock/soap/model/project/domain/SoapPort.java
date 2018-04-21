@@ -20,10 +20,7 @@ package com.castlemock.core.mock.soap.model.project.domain;
 import com.castlemock.core.basis.model.Saveable;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -35,7 +32,7 @@ public class SoapPort implements Saveable<String> {
     private String id;
     private String name;
     private String uri;
-    private List<SoapOperation> operations = new CopyOnWriteArrayList<SoapOperation>();
+    private String projectId;
 
     @XmlElement
     @Override
@@ -46,16 +43,6 @@ public class SoapPort implements Saveable<String> {
     @Override
     public void setId(String id) {
         this.id = id;
-    }
-
-    @XmlElementWrapper(name = "operations")
-    @XmlElement(name = "operation")
-    public List<SoapOperation> getOperations() {
-        return operations;
-    }
-
-    public void setOperations(List<SoapOperation> operations) {
-        this.operations = operations;
     }
 
     @XmlElement
@@ -74,5 +61,14 @@ public class SoapPort implements Saveable<String> {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    @XmlElement
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 }

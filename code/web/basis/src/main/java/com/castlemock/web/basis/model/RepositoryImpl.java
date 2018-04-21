@@ -192,7 +192,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
      */
     @Override
     public D update(I id, D type) {
-        return null;
+        return save(type);
     }
 
     /**

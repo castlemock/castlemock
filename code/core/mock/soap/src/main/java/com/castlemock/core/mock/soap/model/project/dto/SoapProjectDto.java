@@ -18,7 +18,6 @@ package com.castlemock.core.mock.soap.model.project.dto;
 
 import com.castlemock.core.basis.model.project.dto.ProjectDto;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import org.dozer.Mapping;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,9 +31,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class SoapProjectDto extends ProjectDto {
 
-    @Mapping("ports")
     private List<SoapPortDto> ports = new CopyOnWriteArrayList<SoapPortDto>();
-    @Mapping("resources")
     private List<SoapResourceDto> resources = new CopyOnWriteArrayList<SoapResourceDto>();
 
     private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
