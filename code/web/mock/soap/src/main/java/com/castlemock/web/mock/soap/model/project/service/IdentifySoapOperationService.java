@@ -19,13 +19,13 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
+import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.IdentifySoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -45,40 +45,20 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
     @Override
     public ServiceResult<IdentifySoapOperationOutput> process(final ServiceTask<IdentifySoapOperationInput> serviceTask) {
         final IdentifySoapOperationInput input = serviceTask.getInput();
-        final SoapProjectDto project = repository.findOne(input.getSoapProjectId());
-        SoapPortDto soapPort = null;
-        SoapOperationDto soapOperationDto = null;
-        for(SoapPortDto tempSoapPort : project.getPorts()){
-            if(tempSoapPort.getUri().equals(input.getUri())){
-                soapPort = tempSoapPort;
-                soapOperationDto = findSoapOperation(tempSoapPort, input.getHttpMethod(), input.getType(), input.getSoapOperationIdentifier());
-
-                if(soapOperationDto != null){
-                    break;
-                }
-            }
-        }
-        if(soapOperationDto == null){
+        final SoapPortDto port = this.portRepository.findWithUri(input.getSoapProjectId(), input.getUri());
+        final SoapOperationDto operation =
+                this.operationRepository.findWithMethodAndVersionAndIdentifier(
+                        port.getId(), input.getHttpMethod(),
+                        input.getType(), input.getSoapOperationIdentifier());
+        if(operation == null){
             throw new IllegalArgumentException("Unable to identify SOAP operation: " + input.getUri());
         }
 
-        return createServiceResult(new IdentifySoapOperationOutput(project.getId(), soapPort.getId(), soapOperationDto.getId(), soapOperationDto));
+        final List<SoapMockResponseDto> mockResponses = this.mockResponseRepository.findWithOperationId(operation.getId());
+        operation.setMockResponses(mockResponses);
+
+        return createServiceResult(new IdentifySoapOperationOutput(input.getSoapProjectId(), port.getId(), operation.getId(), operation));
     }
 
-    /**
-     * The method finds a specific SOAP operation in a SOAP port and with specific attributes
-     * @param soapPort The SOAP port that is responsible for the SOAP operation
-     * @param httpMethod The SOAP operation method
-     * @param soapOperationVersion The SOAP operation type
-     * @param soapOperationInputMessageName The SOAP operation input message name. The identifier for the SOAP operation
-     * @return The SOAP operation that matches the search criteria. Null otherwise
-     */
-    private SoapOperationDto findSoapOperation(SoapPortDto soapPort, HttpMethod httpMethod, SoapVersion soapOperationVersion, String soapOperationInputMessageName){
-        for(SoapOperationDto soapOperation : soapPort.getOperations()){
-            if(soapOperation.getHttpMethod().equals(httpMethod) && soapOperation.getSoapVersion().equals(soapOperationVersion) && soapOperation.getIdentifier().equalsIgnoreCase(soapOperationInputMessageName)){
-                return soapOperation;
-            }
-        }
-        return null;
-    }
+
 }

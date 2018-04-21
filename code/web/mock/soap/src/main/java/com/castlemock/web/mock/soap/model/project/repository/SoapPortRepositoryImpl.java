@@ -126,4 +126,22 @@ public class SoapPortRepositoryImpl extends RepositoryImpl<SoapPort, SoapPortDto
         }
         return null;
     }
+
+    /**
+     * The method finds a {@link SoapPortDto} with the provided uri
+     *
+     * @param projectId
+     * @param uri       The uri used by the {@link SoapPort}
+     * @return A {@link SoapPort} that matches the provided search criteria.
+     */
+    @Override
+    public SoapPortDto findWithUri(String projectId, String uri) {
+        for(SoapPort soapPort : collection.values()){
+            if(soapPort.getProjectId().equals(projectId) &&
+                    soapPort.getUri().equals(uri)){
+                return mapper.map(soapPort, SoapPortDto.class);
+            }
+        }
+        return null;
+    }
 }

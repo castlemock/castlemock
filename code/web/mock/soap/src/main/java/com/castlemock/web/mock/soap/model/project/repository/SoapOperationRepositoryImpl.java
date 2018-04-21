@@ -19,7 +19,9 @@ package com.castlemock.web.mock.soap.model.project.repository;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
@@ -124,6 +126,29 @@ public class SoapOperationRepositoryImpl extends RepositoryImpl<SoapOperation, S
             if(soapOperation.getPortId().equals(soapPortId) &&
                     soapOperation.getName().equals(soapOperationName)){
                 return mapper.map(soapOperation, SoapOperationDto.class);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Find a {@link SoapOperationDto} with a provided {@link HttpMethod}, {@link SoapVersion}
+     * and an identifier.
+     *
+     * @param method     The HTTP method
+     * @param version    The SOAP version
+     * @param identifier The identifier
+     * @return A {@link SoapOperationDto} that matches the provided search criteria.
+     */
+    @Override
+    public SoapOperationDto findWithMethodAndVersionAndIdentifier(final String portId, final HttpMethod method,
+                                                                  final SoapVersion version, final String identifier) {
+        for(SoapOperation soapOperation : this.collection.values()){
+            if(soapOperation.getPortId().equals(portId) &&
+                    soapOperation.getHttpMethod().equals(method) &&
+                    soapOperation.getSoapVersion().equals(version) &&
+                    soapOperation.getIdentifier().equalsIgnoreCase(identifier)){
+                return this.mapper.map(soapOperation, SoapOperationDto.class);
             }
         }
         return null;

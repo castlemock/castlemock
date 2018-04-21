@@ -36,4 +36,10 @@ public interface SoapPortRepository extends Repository<SoapPort, SoapPortDto, St
      */
     SoapPortDto findWithName(String projectId, String soapPortName);
 
+    /**
+     * The method finds a {@link SoapPortDto} with the provided uri
+     * @param uri The uri used by the {@link SoapPort}
+     * @return A {@link SoapPort} that matches the provided search criteria.
+     */
+    SoapPortDto findWithUri(String projectId, String uri);
 }
