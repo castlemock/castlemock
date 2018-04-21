@@ -23,6 +23,7 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -32,6 +33,8 @@ import java.util.List;
  */
 @org.springframework.stereotype.Service
 public class ReadSoapOperationService extends AbstractSoapProjectService implements Service<ReadSoapOperationInput, ReadSoapOperationOutput> {
+
+    private static final Logger LOGGER = Logger.getLogger(ReadSoapOperationService.class);
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -47,6 +50,29 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
         final SoapOperationDto soapOperationDto = this.operationRepository.findOne(input.getSoapOperationId());
         final List<SoapMockResponseDto> mockResponses = this.mockResponseRepository.findWithOperationId(input.getSoapOperationId());
         soapOperationDto.setMockResponses(mockResponses);
+
+        if(soapOperationDto.getDefaultXPathMockResponseId() != null){
+            // Iterate through all the mocked responses to identify
+            // which has been set to be the default XPath mock response.
+            boolean defaultXpathMockResponseFound = false;
+            for(SoapMockResponseDto mockResponse : mockResponses){
+                if(mockResponse.getId().equals(soapOperationDto.getDefaultXPathMockResponseId())){
+                    soapOperationDto.setDefaultXPathResponseName(mockResponse.getName());
+                    defaultXpathMockResponseFound = true;
+                    break;
+                }
+            }
+
+            if(!defaultXpathMockResponseFound){
+                // Unable to find the default XPath mock response.
+                // Log only an error message for now.
+                LOGGER.error("Unable to find the default XPath mock response with the following id: " +
+                        soapOperationDto.getDefaultXPathMockResponseId());
+            }
+        }
+
+
+
         return createServiceResult(new ReadSoapOperationOutput(soapOperationDto));
     }
 }
