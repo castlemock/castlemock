@@ -19,10 +19,8 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.dto.*;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestDefinitionInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ImportRestDefinitionOutput;
 import com.castlemock.web.mock.rest.converter.RestDefinitionConverter;
@@ -50,7 +48,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
     @Override
     public ServiceResult<ImportRestDefinitionOutput> process(final ServiceTask<ImportRestDefinitionInput> serviceTask) {
         final ImportRestDefinitionInput input = serviceTask.getInput();
-        final RestProjectDto restProject = repository.findOne(input.getRestProjectId());
+        final String projectId = input.getRestProjectId();
+
         final RestDefinitionConverter restDefinitionConverter = RestDefinitionConverterFactory.getConverter(input.getDefinitionType());
 
         List<RestApplicationDto> newRestApplications = new ArrayList<>();
@@ -68,7 +67,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
             }
         }
 
-        final List<RestApplicationDto> existingRestApplications = new ArrayList<>(restProject.getApplications());
+        final List<RestApplicationDto> existingRestApplications =
+                this.applicationRepository.findWithProjectId(input.getRestProjectId());
         final List<RestApplicationDto> restApplications = new ArrayList<>();
 
         // Iterate through all new REST application and see if they match an already
@@ -84,9 +84,27 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
             restApplications.add(existingRestApplication);
         }
 
+        for(RestApplicationDto application : restApplications){
+            application.setProjectId(projectId);
+            RestApplicationDto savedApplication = this.applicationRepository.save(application);
+
+            for(RestResourceDto restResource : application.getResources()){
+                restResource.setApplicationId(savedApplication.getId());
+                RestResourceDto savedResource = this.resourceRepository.save(restResource);
+
+                for(RestMethodDto method : restResource.getMethods()){
+                    method.setResourceId(savedResource.getId());
+                    RestMethodDto savedMethod = this.methodRepository.save(method);
+
+                    for(RestMockResponseDto mockResponse : method.getMockResponses()){
+                        mockResponse.setMethodId(savedMethod.getId());
+                        this.mockResponseRepository.save(mockResponse);
+                    }
+                }
+            }
+        }
+
         // Set the last version of the REST application
-        restProject.setApplications(restApplications);
-        save(restProject);
         return createServiceResult(new ImportRestDefinitionOutput());
     }
 
@@ -109,7 +127,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
             return;
         }
 
-        final List<RestResourceDto> existingRestResources = new ArrayList<RestResourceDto>(existingRestApplication.getResources());
+        final List<RestResourceDto> existingRestResources =
+                this.resourceRepository.findWithApplicationId(existingRestApplication.getId());
         final List<RestResourceDto> resultRestResources = new ArrayList<RestResourceDto>();
         for(RestResourceDto newRestResource : newRestApplication.getResources()) {
             updateRestResource(newRestResource, existingRestResources, resultRestResources);
@@ -145,7 +164,7 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
         // Update resource
         existingRestResource.setUri(newRestResource.getUri());
 
-        final List<RestMethodDto> existingRestMethods = new ArrayList<RestMethodDto>(existingRestResource.getMethods());
+        final List<RestMethodDto> existingRestMethods = this.methodRepository.findWithResourceId(existingRestResource.getId());
         final List<RestMethodDto> resultRestMethods = new ArrayList<RestMethodDto>();
         for(RestMethodDto newRestMethod : newRestResource.getMethods()){
             updateRestMethod(newRestMethod, existingRestMethods, resultRestMethods);

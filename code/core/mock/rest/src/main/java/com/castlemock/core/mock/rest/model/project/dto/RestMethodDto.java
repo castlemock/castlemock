@@ -36,6 +36,9 @@ public class RestMethodDto {
     @Mapping("name")
     private String name;
 
+    @Mapping("resourceId")
+    private String resourceId;
+
     @Mapping("defaultBody")
     private String defaultBody;
 
@@ -51,9 +54,6 @@ public class RestMethodDto {
     @Mapping("responseStrategy")
     private RestResponseStrategy responseStrategy;
 
-    @Mapping("mockResponses")
-    private List<RestMockResponseDto> mockResponses = new CopyOnWriteArrayList<RestMockResponseDto>();
-
     @Mapping("currentResponseSequenceIndex")
     private Integer currentResponseSequenceIndex = 0;
 
@@ -63,6 +63,8 @@ public class RestMethodDto {
     @Mapping("networkDelay")
     private long networkDelay;
 
+    private List<RestMockResponseDto> mockResponses = new CopyOnWriteArrayList<RestMockResponseDto>();
+    
     private String invokeAddress;
 
     public String getId() {
@@ -87,6 +89,14 @@ public class RestMethodDto {
 
     public void setDefaultBody(String defaultBody) {
         this.defaultBody = defaultBody;
+    }
+
+    public String getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
     }
 
     public HttpMethod getHttpMethod() {

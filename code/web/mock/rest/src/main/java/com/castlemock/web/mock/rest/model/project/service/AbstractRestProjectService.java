@@ -18,15 +18,14 @@ package com.castlemock.web.mock.rest.model.project.service;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.dto.*;
 import com.castlemock.web.basis.model.AbstractService;
-import com.castlemock.web.mock.rest.model.project.repository.RestProjectRepository;
+import com.castlemock.web.mock.rest.model.project.repository.*;
 import com.google.common.base.Preconditions;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +33,60 @@ import java.util.Map;
  * @since 1.0
  */
 public abstract class AbstractRestProjectService extends AbstractService<RestProject, RestProjectDto, String, RestProjectRepository> {
+
+    @Autowired
+    protected RestApplicationRepository applicationRepository;
+    @Autowired
+    protected RestResourceRepository resourceRepository;
+    @Autowired
+    protected RestMethodRepository methodRepository;
+    @Autowired
+    protected RestMockResponseRepository mockResponseRepository;
+
+
+    protected RestProjectDto deleteProject(final String projectId){
+        final List<RestApplicationDto> applications = this.applicationRepository.findWithProjectId(projectId);
+
+        for(RestApplicationDto application : applications){
+            this.deleteApplication(application.getId());
+        }
+
+        return this.repository.delete(projectId);
+    }
+
+    protected RestApplicationDto deleteApplication(final String applicationId){
+        final List<RestResourceDto> resources = this.resourceRepository.findWithApplicationId(applicationId);
+
+        for(RestResourceDto resource : resources){
+            this.deleteResource(resource.getId());
+        }
+
+        return this.applicationRepository.delete(applicationId);
+    }
+
+    protected RestResourceDto deleteResource(final String resourceId){
+        final List<RestMethodDto> methods = this.methodRepository.findWithResourceId(resourceId);
+
+        for(RestMethodDto method : methods){
+            this.deleteMethod(method.getId());
+        }
+
+        return this.resourceRepository.delete(resourceId);
+    }
+
+    protected RestMethodDto deleteMethod(final String methodId){
+        final List<RestMockResponseDto> responses = this.mockResponseRepository.findWithMethodId(methodId);
+
+        for(RestMockResponseDto response : responses){
+            this.deleteMockResponse(response.getId());
+        }
+
+        return this.methodRepository.delete(methodId);
+    }
+
+    protected RestMockResponseDto deleteMockResponse(final String mockReponseId){
+        return this.mockResponseRepository.delete(mockReponseId);
+    }
 
 
     /**

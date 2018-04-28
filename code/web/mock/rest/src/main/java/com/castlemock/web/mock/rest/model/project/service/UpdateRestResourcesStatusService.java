@@ -24,6 +24,8 @@ import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesStatusInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestResourcesStatusOutput;
 
+import java.util.List;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -42,10 +44,13 @@ public class UpdateRestResourcesStatusService extends AbstractRestProjectService
     @Override
     public ServiceResult<UpdateRestResourcesStatusOutput> process(final ServiceTask<UpdateRestResourcesStatusInput> serviceTask) {
         final UpdateRestResourcesStatusInput input = serviceTask.getInput();
-        final RestResourceDto restResource = repository.findRestResource(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
-        for(RestMethodDto restMethod : restResource.getMethods()){
-            restMethod.setStatus(input.getRestMethodStatus());
-            repository.updateRestMethod(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), restMethod.getId(), restMethod);
+        final List<RestResourceDto> resources = this.resourceRepository.findWithApplicationId(input.getRestApplicationId());
+        for(RestResourceDto restResource : resources){
+            final List<RestMethodDto> methods = this.methodRepository.findWithResourceId(restResource.getId());
+            for(RestMethodDto restMethod : methods){
+                restMethod.setStatus(input.getRestMethodStatus());
+                this.methodRepository.update(restMethod.getId(), restMethod);
+            }
         }
         return createServiceResult(new UpdateRestResourcesStatusOutput());
     }

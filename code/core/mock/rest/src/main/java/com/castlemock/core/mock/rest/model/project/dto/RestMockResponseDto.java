@@ -38,6 +38,9 @@ public class RestMockResponseDto {
     @Mapping("body")
     private String body;
 
+    @Mapping("methodId")
+    private String methodId;
+
     @Mapping("httpStatusCode")
     private Integer httpStatusCode;
 
@@ -75,6 +78,14 @@ public class RestMockResponseDto {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getMethodId() {
+        return methodId;
+    }
+
+    public void setMethodId(String methodId) {
+        this.methodId = methodId;
     }
 
     public RestMockResponseStatus getStatus() {

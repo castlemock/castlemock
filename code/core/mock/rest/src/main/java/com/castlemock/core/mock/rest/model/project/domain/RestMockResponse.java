@@ -36,6 +36,7 @@ public class RestMockResponse implements Saveable<String> {
     private String id;
     private String name;
     private String body;
+    private String methodId;
     private RestMockResponseStatus status;
     private Integer httpStatusCode;
     private boolean usingExpressions;
@@ -69,6 +70,15 @@ public class RestMockResponse implements Saveable<String> {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    @XmlElement
+    public String getMethodId() {
+        return methodId;
+    }
+
+    public void setMethodId(String methodId) {
+        this.methodId = methodId;
     }
 
     @XmlElement

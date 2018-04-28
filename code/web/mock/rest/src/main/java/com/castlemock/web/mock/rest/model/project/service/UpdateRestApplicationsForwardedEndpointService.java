@@ -25,6 +25,8 @@ import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsForwardedEndpointInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestApplicationsForwardedEndpointOutput;
 
+import java.util.List;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -44,11 +46,12 @@ public class UpdateRestApplicationsForwardedEndpointService extends AbstractRest
     public ServiceResult<UpdateRestApplicationsForwardedEndpointOutput> process(final ServiceTask<UpdateRestApplicationsForwardedEndpointInput> serviceTask) {
         final UpdateRestApplicationsForwardedEndpointInput input = serviceTask.getInput();
         for(RestApplicationDto restApplicationDto : input.getRestApplications()){
-            RestApplicationDto restApplication = repository.findRestApplication(input.getRestProjectId(), restApplicationDto.getId());
-            for(RestResourceDto restResource : restApplication.getResources()){
-                for(RestMethodDto restMethod : restResource.getMethods()){
+            List<RestResourceDto> resources = this.resourceRepository.findWithApplicationId(restApplicationDto.getId());
+            for(RestResourceDto restResource : resources){
+                List<RestMethodDto> methods = this.methodRepository.findWithResourceId(restResource.getId());
+                for(RestMethodDto restMethod : methods){
                     restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
-                    repository.updateRestMethod(input.getRestProjectId(), restApplication.getId(), restResource.getId(), restMethod.getId(), restMethod);
+                    this.methodRepository.update(restMethod.getId(), restMethod);
                 }
             }
         }

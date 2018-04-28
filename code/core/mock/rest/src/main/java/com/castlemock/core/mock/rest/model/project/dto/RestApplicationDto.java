@@ -36,7 +36,9 @@ public class RestApplicationDto {
     @Mapping("name")
     private String name;
 
-    @Mapping("resources")
+    @Mapping("projectId")
+    private String projectId;
+
     private List<RestResourceDto> resources = new CopyOnWriteArrayList<RestResourceDto>();
 
     private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
@@ -55,6 +57,14 @@ public class RestApplicationDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     public List<RestResourceDto> getResources() {

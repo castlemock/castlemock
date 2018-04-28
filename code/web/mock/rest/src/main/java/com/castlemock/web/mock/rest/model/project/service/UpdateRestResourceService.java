@@ -41,7 +41,14 @@ public class UpdateRestResourceService extends AbstractRestProjectService implem
     @Override
     public ServiceResult<UpdateRestResourceOutput> process(final ServiceTask<UpdateRestResourceInput> serviceTask) {
         final UpdateRestResourceInput input = serviceTask.getInput();
-        final RestResourceDto updatedRestResource = repository.updateRestResource(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), input.getRestResource());
+        final RestResourceDto existing = this.resourceRepository.findOne(input.getRestResourceId());
+        final RestResourceDto updatedRestResource = input.getRestResource();
+
+        existing.setName(updatedRestResource.getName());
+        existing.setUri(updatedRestResource.getUri());
+
+        this.resourceRepository.update(input.getRestResourceId(), existing);
+
         return createServiceResult(new UpdateRestResourceOutput(updatedRestResource));
     }
 }

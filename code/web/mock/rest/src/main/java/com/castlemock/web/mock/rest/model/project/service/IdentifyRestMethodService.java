@@ -22,9 +22,12 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.utility.compare.UrlComparer;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.IdentifyRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
+
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -47,10 +50,11 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
     public ServiceResult<IdentifyRestMethodOutput> process(final ServiceTask<IdentifyRestMethodInput> serviceTask) {
         final IdentifyRestMethodInput input = serviceTask.getInput();
         final String[] restResourceUriParts = input.getRestResourceUri().split(SLASH);
-        final RestResourceDto restResource = findRestResource(input.getRestProjectId(), input.getRestApplicationId(), restResourceUriParts);
+        final RestResourceDto restResource = this.findRestResource(input.getRestProjectId(), input.getRestApplicationId(), restResourceUriParts);
         RestMethodDto restMethodDto = null;
         if(restResource != null){
-            for(RestMethodDto restMethod : restResource.getMethods()){
+            final List<RestMethodDto> methods = this.methodRepository.findWithResourceId(restResource.getId());
+            for(RestMethodDto restMethod : methods){
                 if(input.getHttpMethod().equals(restMethod.getHttpMethod())) {
                     restMethodDto = restMethod;
                     break;
@@ -62,6 +66,9 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
             throw new IllegalArgumentException("Unable to identify REST method: " + input.getRestResourceUri() + " (" + input.getHttpMethod() + ")");
         }
 
+        final List<RestMockResponseDto> mockResponses = this.mockResponseRepository.findWithMethodId(restMethodDto.getId());
+        restMethodDto.setMockResponses(mockResponses);
+
         return createServiceResult(new IdentifyRestMethodOutput(input.getRestProjectId(), input.getRestApplicationId(), restResource.getId(), restMethodDto.getId(),  restMethodDto));
     }
 
@@ -72,12 +79,11 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
      * @param otherRestResourceUriParts The set of resources that will be used to identify the REST resource
      * @return A REST resource that matches the search criteria. Null otherwise
      */
-    protected RestResourceDto findRestResource(final String restProjectId, final String restApplicationId, final String[] otherRestResourceUriParts) {
-        final RestApplicationDto restApplication = repository.findRestApplication(restProjectId, restApplicationId);
-
-        for(RestResourceDto restResource : restApplication.getResources()){
-
-
+    protected RestResourceDto findRestResource(final String restProjectId,
+                                               final String restApplicationId,
+                                               final String[] otherRestResourceUriParts) {
+        final List<RestResourceDto> resources = this.resourceRepository.findWithApplicationId(restApplicationId);
+        for(RestResourceDto restResource : resources){
             if(UrlComparer.compareUri(restResource.getUri(), otherRestResourceUriParts)){
                 return restResource;
             }

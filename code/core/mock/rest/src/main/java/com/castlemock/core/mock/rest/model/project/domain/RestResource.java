@@ -35,8 +35,7 @@ public class RestResource implements Saveable<String> {
     private String id;
     private String name;
     private String uri;
-    private List<RestMethod> methods = new CopyOnWriteArrayList<RestMethod>();
-
+    private String applicationId;
 
     @Override
     @XmlElement
@@ -67,13 +66,12 @@ public class RestResource implements Saveable<String> {
         this.uri = uri;
     }
 
-    @XmlElementWrapper(name = "methods")
-    @XmlElement(name = "method")
-    public List<RestMethod> getMethods() {
-        return methods;
+    @XmlElement
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public void setMethods(List<RestMethod> methods) {
-        this.methods = methods;
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 }

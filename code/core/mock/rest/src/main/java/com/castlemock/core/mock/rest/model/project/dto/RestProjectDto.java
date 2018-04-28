@@ -27,7 +27,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class RestProjectDto extends ProjectDto {
 
-    @Mapping("applications")
     private List<RestApplicationDto> applications = new CopyOnWriteArrayList<RestApplicationDto>();
 
     /**

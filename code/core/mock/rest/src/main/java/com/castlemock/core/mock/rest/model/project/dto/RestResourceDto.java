@@ -39,7 +39,9 @@ public class RestResourceDto {
     @Mapping("uri")
     private String uri;
 
-    @Mapping("methods")
+    @Mapping("applicationId")
+    private String applicationId;
+
     private List<RestMethodDto> methods = new CopyOnWriteArrayList<RestMethodDto>();
 
     private String invokeAddress;
@@ -68,6 +70,14 @@ public class RestResourceDto {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 
     public List<RestMethodDto> getMethods() {

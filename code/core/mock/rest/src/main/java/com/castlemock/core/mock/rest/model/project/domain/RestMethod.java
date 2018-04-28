@@ -20,10 +20,7 @@ import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -34,12 +31,12 @@ public class RestMethod implements Saveable<String> {
 
     private String id;
     private String name;
+    private String resourceId;
     private String defaultBody;
     private HttpMethod httpMethod;
     private String forwardedEndpoint;
     private RestMethodStatus status;
     private RestResponseStrategy responseStrategy;
-    private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
     private Integer currentResponseSequenceIndex;
     private boolean simulateNetworkDelay;
     private long networkDelay;
@@ -65,6 +62,15 @@ public class RestMethod implements Saveable<String> {
     }
 
     @XmlElement
+    public String getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    @XmlElement
     public String getDefaultBody() {
         return defaultBody;
     }
@@ -80,16 +86,6 @@ public class RestMethod implements Saveable<String> {
 
     public void setHttpMethod(HttpMethod httpMethod) {
         this.httpMethod = httpMethod;
-    }
-
-    @XmlElementWrapper(name = "mockResponses")
-    @XmlElement(name = "mockResponse")
-    public List<RestMockResponse> getMockResponses() {
-        return mockResponses;
-    }
-
-    public void setMockResponses(List<RestMockResponse> mockResponses) {
-        this.mockResponses = mockResponses;
     }
 
     @XmlElement

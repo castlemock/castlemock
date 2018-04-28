@@ -19,7 +19,6 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateCurrentRestMockResponseSequenceIndexOutput;
 
@@ -41,8 +40,7 @@ public class UpdateCurrentRestMockResponseSequenceIndexService extends AbstractR
     @Override
     public ServiceResult<UpdateCurrentRestMockResponseSequenceIndexOutput> process(final ServiceTask<UpdateCurrentRestMockResponseSequenceIndexInput> serviceTask) {
         final UpdateCurrentRestMockResponseSequenceIndexInput input = serviceTask.getInput();
-        repository.setCurrentResponseSequenceIndex(input.getRestProjectId(), input.getRestApplicationId(),
-                input.getRestResourceId(), input.getRestMethodId(), input.getCurrentRestMockResponseSequenceIndex());
+        this.methodRepository.setCurrentResponseSequenceIndex(input.getRestMethodId(), input.getCurrentRestMockResponseSequenceIndex());
         return createServiceResult(new UpdateCurrentRestMockResponseSequenceIndexOutput());
     }
 }

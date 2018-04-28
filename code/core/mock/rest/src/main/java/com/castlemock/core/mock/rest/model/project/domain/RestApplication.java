@@ -17,20 +17,20 @@
 package com.castlemock.core.mock.rest.model.project.domain;
 
 import com.castlemock.core.basis.model.Saveable;
+
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class RestApplication implements Saveable<String> {
 
     private String id;
     private String name;
-    private List<RestResource> resources = new CopyOnWriteArrayList<RestResource>();
+    private String projectId;
 
     @Override
     @XmlElement
@@ -52,13 +52,13 @@ public class RestApplication implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElementWrapper(name = "resources")
-    @XmlElement(name = "resource")
-    public List<RestResource> getResources() {
-        return resources;
+    @XmlElement
+    public String getProjectId() {
+        return projectId;
     }
 
-    public void setResources(List<RestResource> resources) {
-        this.resources = resources;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
+
 }

@@ -25,6 +25,7 @@ import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,11 +46,13 @@ public class ReadRestApplicationService extends AbstractRestProjectService imple
     @Override
     public ServiceResult<ReadRestApplicationOutput> process(final ServiceTask<ReadRestApplicationInput> serviceTask) {
         final ReadRestApplicationInput input = serviceTask.getInput();
-        final RestApplicationDto restApplicationDto = repository.findRestApplication(input.getRestProjectId(), input.getRestApplicationId());
-        for(RestResourceDto restResourceDto : restApplicationDto.getResources()){
+        final RestApplicationDto application = this.applicationRepository.findOne(input.getRestApplicationId());
+        final List<RestResourceDto> resources = this.resourceRepository.findWithApplicationId(application.getId());
+        for(RestResourceDto restResourceDto : resources){
             Map<RestMethodStatus, Integer> restMethodStatusCount = getRestMethodStatusCount(restResourceDto);
             restResourceDto.setStatusCount(restMethodStatusCount);
         }
-        return createServiceResult(new ReadRestApplicationOutput(restApplicationDto));
+        application.setResources(resources);
+        return createServiceResult(new ReadRestApplicationOutput(application));
     }
 }

@@ -25,6 +25,7 @@ import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,6 +47,8 @@ public class ReadRestProjectService extends AbstractRestProjectService implement
     public ServiceResult<ReadRestProjectOutput> process(final ServiceTask<ReadRestProjectInput> serviceTask) {
         final ReadRestProjectInput input = serviceTask.getInput();
         final RestProjectDto restProject = find(input.getRestProjectId());
+        final List<RestApplicationDto> applications = this.applicationRepository.findWithProjectId(input.getRestProjectId());
+        restProject.setApplications(applications);
         for(final RestApplicationDto restApplicationDto : restProject.getApplications()){
             final Map<RestMethodStatus, Integer> soapOperationStatusCount = getRestMethodStatusCount(restApplicationDto);
             restApplicationDto.setStatusCount(soapOperationStatusCount);

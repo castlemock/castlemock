@@ -42,7 +42,7 @@ public class DeleteRestApplicationsService extends AbstractRestProjectService im
     public ServiceResult<DeleteRestApplicationsOutput> process(final ServiceTask<DeleteRestApplicationsInput> serviceTask) {
         final DeleteRestApplicationsInput input = serviceTask.getInput();
         for(RestApplicationDto restApplication : input.getRestApplications()){
-            repository.deleteRestApplication(input.getRestProjectId(), restApplication.getId());
+            this.deleteApplication(restApplication.getId());
         }
         return createServiceResult(new DeleteRestApplicationsOutput());
     }

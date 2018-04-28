@@ -40,8 +40,7 @@ public class DeleteRestMethodService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<DeleteRestMethodOutput> process(final ServiceTask<DeleteRestMethodInput> serviceTask) {
         final DeleteRestMethodInput input = serviceTask.getInput();
-        repository.deleteRestMethod(input.getRestProjectId(), input.getRestApplicationId(),
-                input.getRestResourceId(), input.getRestMethodId());
+        this.deleteMethod(input.getRestMethodId());
         return createServiceResult(new DeleteRestMethodOutput());
     }
 }

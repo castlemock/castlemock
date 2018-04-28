@@ -42,7 +42,7 @@ public class DeleteRestResourcesService extends AbstractRestProjectService imple
     public ServiceResult<DeleteRestResourcesOutput> process(final ServiceTask<DeleteRestResourcesInput> serviceTask) {
         final DeleteRestResourcesInput input = serviceTask.getInput();
         for(RestResourceDto restResourceDto : input.getRestResources()){
-            repository.deleteRestResource(input.getRestProjectId(), input.getRestApplicationId(), restResourceDto.getId());
+            this.deleteResource(restResourceDto.getId());
         }
         return createServiceResult(new DeleteRestResourcesOutput());
     }
