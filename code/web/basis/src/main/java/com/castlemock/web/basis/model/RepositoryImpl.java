@@ -58,7 +58,7 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
     @Autowired
     protected DozerBeanMapper mapper;
     @Autowired
-    private FileRepositorySupport fileRepositorySupport;
+    protected FileRepositorySupport fileRepositorySupport;
 
     private Class<T> entityClass;
 

@@ -25,6 +25,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
+import java.nio.file.CopyOption;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,20 +54,7 @@ public class FileRepositorySupport {
 
     public String load(String directory, String filename){
         final Path path = FileSystems.getDefault().getPath(directory);
-
-        if(!Files.exists(path)){
-            try {
-                LOGGER.debug("Creating the following directory: " + path);
-                Files.createDirectories(path);
-            } catch (IOException e) {
-                LOGGER.error("Unable to create the following directory: " + path, e);
-                throw new IllegalStateException("Unable to create the following folder: " + directory);
-            }
-        }
-
-        if(!Files.isDirectory(path)){
-            throw new IllegalStateException("The provided path is not a directory: " + path);
-        }
+        this.createDirectory(path);
 
         final File file = new File(directory, filename);
         try {
@@ -80,20 +68,7 @@ public class FileRepositorySupport {
 
     public void save(String directory, String filename, String data){
         final Path path = FileSystems.getDefault().getPath(directory);
-
-        if(!Files.exists(path)){
-            try {
-                LOGGER.debug("Creating the following directory: " + path);
-                Files.createDirectories(path);
-            } catch (IOException e) {
-                LOGGER.error("Unable to create the following directory: " + path, e);
-                throw new IllegalStateException("Unable to create the following folder: " + directory);
-            }
-        }
-
-        if(!Files.isDirectory(path)){
-            throw new IllegalStateException("The provided path is not a directory: " + path);
-        }
+        this.createDirectory(path);
 
         final File file = new File(directory, filename);
 
@@ -117,18 +92,7 @@ public class FileRepositorySupport {
     public <T> Collection<T> load(Class<T> entityClass, String directory, String postfix){
         final Collection<T> loadedTypes = new ArrayList<T>();
         final Path path = FileSystems.getDefault().getPath(directory);
-        if(!Files.exists(path)){
-            try {
-                LOGGER.debug("Creating the following directory: " + path);
-                Files.createDirectories(path);
-            } catch (IOException e) {
-                LOGGER.error("Unable to create the following directory: " + path, e);
-                throw new IllegalStateException("Unable to create the following folder: " + directory);
-            }
-        }
-        if(!Files.isDirectory(path)){
-            throw new IllegalStateException("The provided path is not a directory: " + path);
-        }
+        this.createDirectory(path);
 
         final File folder = new File(directory);
         try {
@@ -186,6 +150,45 @@ public class FileRepositorySupport {
         if(!file.delete()){
             LOGGER.error("Unable to delete the following file: " + filename);
             throw new IllegalStateException("Unable to delete the following file: " + filename);
+        }
+    }
+
+    public void moveAllFiles(String oldDirectory, String newDirectory, String postfix){
+        final Path oldPath = FileSystems.getDefault().getPath(oldDirectory);
+        final Path newPath = FileSystems.getDefault().getPath(newDirectory);
+
+        this.createDirectory(oldPath);
+        this.createDirectory(newPath);
+
+        final File oldFolder = new File(oldDirectory);
+        final File newFolder = new File(newDirectory);
+        for (final File oldFile : oldFolder.listFiles()) {
+            if (oldFile.isFile() && oldFile.getName().endsWith(postfix)) {
+                File newFile = new File(newFolder, oldFile.getName());
+                Path fromPath = oldFile.toPath();
+                Path toPath = newFile.toPath();
+                try {
+                    Files.move(fromPath, toPath);
+                } catch (IOException e) {
+                    LOGGER.debug("Unable to move the following file: " + fromPath);
+                }
+            }
+        }
+    }
+
+
+    private void createDirectory(Path path){
+        if(!Files.exists(path)){
+            try {
+                LOGGER.debug("Creating the following directory: " + path);
+                Files.createDirectories(path);
+            } catch (IOException e) {
+                LOGGER.error("Unable to create the following directory: " + path, e);
+                throw new IllegalStateException("Unable to create the following folder: " + path);
+            }
+        }
+        if(!Files.isDirectory(path)){
+            throw new IllegalStateException("The provided path is not a directory: " + path);
         }
     }
 

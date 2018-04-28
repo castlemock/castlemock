@@ -16,6 +16,7 @@
 
 package com.castlemock.war.config;
 
+import com.castlemock.core.basis.model.LegacyRepository;
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
@@ -95,6 +96,7 @@ public class Application extends SpringBootServletInitializer {
         updateBaseFileDirectory(); // This is required to change the base folder name from .fortmocks to .castlemock
         initializeProcessRegistry();
         initializeRepository();
+        initializeLegacyRepository();
         initializeServiceFacade();
         initializeTokenRepository();
     }
@@ -111,6 +113,21 @@ public class Application extends SpringBootServletInitializer {
         logo.append("Castle Mock (v" + version + ")");
         logo.append("\n");
         System.out.println(logo);
+    }
+
+    /**
+     * The method provides the functionality to retrieve all the repositories and initialize them
+     * @see Repository
+     */
+    protected void initializeLegacyRepository(){
+        final Map<String, Object> repositories = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Repository.class);
+        for(Map.Entry<String, Object> entry : repositories.entrySet()){
+            final Object value = entry.getValue();
+            if(value instanceof LegacyRepository){
+                final LegacyRepository repository = (LegacyRepository) value;
+                repository.initialize();
+            }
+        }
     }
 
     /**

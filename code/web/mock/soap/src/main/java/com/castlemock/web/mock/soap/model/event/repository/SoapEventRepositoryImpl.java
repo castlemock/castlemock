@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEvent
 
     @Value(value = "${soap.event.file.directory}")
     private String soapEventFileDirectory;
+    @Value(value = "${legacy.soap.event.v1.directory}")
+    private String soapEventLegacyV1FileDirectory;
     @Value(value = "${soap.event.file.extension}")
     private String soapEventFileExtension;
 
@@ -65,6 +68,22 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEvent
     @Override
     protected String getFileExtension() {
         return soapEventFileExtension;
+    }
+
+    /**
+     * The initialize method is responsible for initiating the file repository. This procedure involves loading
+     * the types (TYPE) from the file system and store them in the collection.
+     * @see #loadFiles()
+     * @see #postInitiate()
+     */
+    @Override
+    public void initialize(){
+
+        // Move the old event files to the new directory
+        fileRepositorySupport.moveAllFiles(soapEventLegacyV1FileDirectory,
+                soapEventFileDirectory, soapEventFileExtension);
+
+        super.initialize();
     }
 
     /**

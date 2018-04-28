@@ -45,6 +45,8 @@ public class RestEventRepositoryImpl extends RepositoryImpl<RestEvent, RestEvent
 
     @Value(value = "${rest.event.file.directory}")
     private String restEventFileDirectory;
+    @Value(value = "${legacy.rest.event.v1.directory}")
+    private String restEventLegacyV1FileDirectory;
     @Value(value = "${rest.event.file.extension}")
     private String restEventFileExtension;
 
@@ -85,6 +87,23 @@ public class RestEventRepositoryImpl extends RepositoryImpl<RestEvent, RestEvent
         Preconditions.checkNotNull(restEvent.getEndDate(), "Event end date cannot be null");
         Preconditions.checkNotNull(restEvent.getStartDate(), "Event start date cannot be null");
     }
+
+    /**
+     * The initialize method is responsible for initiating the file repository. This procedure involves loading
+     * the types (TYPE) from the file system and store them in the collection.
+     * @see #loadFiles()
+     * @see #postInitiate()
+     */
+    @Override
+    public void initialize(){
+
+        // Move the old event files to the new directory
+        fileRepositorySupport.moveAllFiles(restEventLegacyV1FileDirectory,
+                restEventFileDirectory, restEventFileExtension);
+
+        super.initialize();
+    }
+
 
     /**
      * The service finds the oldest event
