@@ -19,11 +19,17 @@ package com.castlemock.core.basis.model;
 import java.io.Serializable;
 
 
-public interface LegacyRepository<T extends Saveable<I>, I extends Serializable> {
+public interface LegacyRepository<T extends Saveable<I>,D,  I extends Serializable> {
 
     /**
      * The initialize method is responsible for initiating the file repository. This procedure involves loading
      * the types (TYPE) from the file system and store them in the collection.
      */
     void initialize();
+
+    /**
+     * The method provides the functionality to import a entity as a String
+     * @param raw The entity as a String
+     */
+    D importOne(final String raw);
 }

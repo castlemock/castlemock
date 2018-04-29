@@ -22,6 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ImportSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ImportSoapProjectOutput;
+import com.castlemock.web.mock.soap.legacy.repository.project.v1.SoapProjectLegacyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Karl Dahlgren
@@ -29,6 +31,10 @@ import com.castlemock.core.mock.soap.model.project.service.message.output.Import
  */
 @org.springframework.stereotype.Service
 public class ImportSoapProjectService extends AbstractSoapProjectService implements Service<ImportSoapProjectInput, ImportSoapProjectOutput> {
+
+    @Autowired
+    private SoapProjectLegacyRepository legacyRepository;
+
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -41,7 +47,15 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ImportSoapProjectOutput> process(final ServiceTask<ImportSoapProjectInput> serviceTask) {
         final ImportSoapProjectInput input = serviceTask.getInput();
-        final SoapProjectDto project = repository.importOne(input.getProjectRaw());
+
+        // Try to import the project as a legacy project first.
+        SoapProjectDto project = this.legacyRepository.importOne(input.getProjectRaw());
+
+        if(project == null){
+            // Unable to load the project as a legacy project.
+            project = repository.importOne(input.getProjectRaw());
+        }
+
         return createServiceResult(new ImportSoapProjectOutput(project));
     }
 }

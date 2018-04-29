@@ -22,18 +22,38 @@ import com.castlemock.web.basis.support.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @org.springframework.stereotype.Repository
-public abstract class AbstractLegacyRepositoryImpl<T extends Saveable<I>, I extends Serializable> implements LegacyRepository<T, I> {
+public abstract class AbstractLegacyRepositoryImpl<T extends Saveable<I>, D, I extends Serializable> implements LegacyRepository<T, D, I> {
 
     @Autowired
     protected DozerBeanMapper mapper;
     @Autowired
     protected FileRepositorySupport fileRepositorySupport;
+
+    private Class<T> entityClass;
+
+    private Class<D> dtoClass;
+
+    /**
+     * The default constructor for the AbstractRepositoryImpl class. The constructor will extract class instances of the
+     * generic types (TYPE and ID). These instances could later be used to identify the types for when interacting
+     * with the file system.
+     */
+    public AbstractLegacyRepositoryImpl() {
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
+        this.dtoClass = (Class<D>) genericSuperclass.getActualTypeArguments()[1];
+    }
 
     /**
      * The method provides the functionality to convert a Collection of TYPE instances into a list of DTO instances
@@ -50,5 +70,31 @@ public abstract class AbstractLegacyRepositoryImpl<T extends Saveable<I>, I exte
         }
         return dtos;
     }
+
+
+    /**
+     * The method provides the functionality to import a entity as a String
+     * @param raw The entity as a String
+     */
+    @Override
+    public D importOne(final String raw){
+
+        try {
+            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream (raw.getBytes());
+            final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass);
+            final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            final T type = (T) jaxbUnmarshaller.unmarshal(byteArrayInputStream);
+            return save(type);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Save an instance.
+     * @param type The instance that will be saved.
+     */
+    protected abstract D save(T type);
+
 
 }
