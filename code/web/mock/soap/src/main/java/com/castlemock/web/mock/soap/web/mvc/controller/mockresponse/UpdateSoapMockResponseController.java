@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.mvc.controller.mockresponse;
 
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -46,13 +46,13 @@ public class UpdateSoapMockResponseController extends AbstractSoapViewController
      * @param soapPortId The id of the application which the operation belongs to
      * @param soapOperationId The id of the operation that the mocked response belongs to
      * @param soapMockResponseId The id of the mocked response that will be updated
-     * @param soapMockResponseDto Contains all the new information regarding the mocked response with the provided mock response id
+     * @param soapMockResponse Contains all the new information regarding the mocked response with the provided mock response id
      * @return A view and model that redirects the user to the operation main page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/response/{soapMockResponseId}/update", method = RequestMethod.POST)
-    public ModelAndView updateSoapMockResponse(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @PathVariable final String soapMockResponseId,  @ModelAttribute final SoapMockResponseDto soapMockResponseDto) {
-        serviceProcessor.process(new UpdateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId, soapMockResponseDto));
+    public ModelAndView updateSoapMockResponse(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @PathVariable final String soapMockResponseId,  @ModelAttribute final SoapMockResponse soapMockResponse) {
+        serviceProcessor.process(new UpdateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId, soapMockResponse));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 

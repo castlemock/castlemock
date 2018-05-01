@@ -18,7 +18,7 @@ package com.castlemock.core.mock.graphql.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLQueryDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLQuery;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.graphql.model.project.dto.GraphQLQueryDto;
 public class ReadGraphQLQueryOutput implements Output{
 
     @NotNull
-    private GraphQLQueryDto graphQLQuery;
+    private GraphQLQuery graphQLQuery;
 
-    public ReadGraphQLQueryOutput(GraphQLQueryDto graphQLQuery) {
+    public ReadGraphQLQueryOutput(GraphQLQuery graphQLQuery) {
         this.graphQLQuery = graphQLQuery;
     }
 
-    public GraphQLQueryDto getGraphQLQuery() {
+    public GraphQLQuery getGraphQLQuery() {
         return graphQLQuery;
     }
 
-    public void setGraphQLQuery(GraphQLQueryDto graphQLQuery) {
+    public void setGraphQLQuery(GraphQLQuery graphQLQuery) {
         this.graphQLQuery = graphQLQuery;
     }
 }

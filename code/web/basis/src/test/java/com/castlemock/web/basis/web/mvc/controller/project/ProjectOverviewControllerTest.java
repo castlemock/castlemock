@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.project;
 
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.model.project.dto.ProjectDtoGenerator;
 import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
@@ -68,9 +68,9 @@ public class ProjectOverviewControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetServiceValid() throws Exception {
-        final List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
+        final List<Project> projectDtos = new ArrayList<Project>();
         for(int index = 0; index < MAX_PROJECT_COUNT; index++){
-            final ProjectDto projectDto = ProjectDtoGenerator.generateProjectDto();
+            final Project projectDto = ProjectDtoGenerator.generateProjectDto();
             projectDtos.add(projectDto);
         }
 

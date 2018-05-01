@@ -16,10 +16,8 @@
 
 package com.castlemock.web.mock.rest.converter.raml;
 
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
 import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;
@@ -39,45 +37,45 @@ public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link RestApplicationDto}.
-     * @param file The file which will be converted to one or more {@link RestApplicationDto}.
+     * a list of {@link RestApplication}.
+     * @param file The file which will be converted to one or more {@link RestApplication}.
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link RestApplicationDto} based on the provided file.
+     * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplicationDto> convert(final File file, final boolean generateResponse){
+    public List<RestApplication> convert(final File file, final boolean generateResponse){
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(file);
         return convert(ramlModelResult, generateResponse);
     }
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link RestApplicationDto}.
+     * a list of {@link RestApplication}.
      * @param location The location of the definition file
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link RestApplicationDto} based on the provided file.
+     * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplicationDto> convert(final String location, final boolean generateResponse){
+    public List<RestApplication> convert(final String location, final boolean generateResponse){
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(location);
         return convert(ramlModelResult, generateResponse);
     }
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link RestApplicationDto}.
+     * a list of {@link RestApplication}.
      * @param ramlModelResult The RAML model result
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link RestApplicationDto} based on the provided file.
+     * @return A list of {@link RestApplication} based on the provided file.
      * @throws IllegalStateException In case the {@link RamlModelResult} is not parsable.
      */
-    private List<RestApplicationDto> convert(final RamlModelResult ramlModelResult, final boolean generateResponse){
+    private List<RestApplication> convert(final RamlModelResult ramlModelResult, final boolean generateResponse){
         if(!ramlModelResult.getValidationResults().isEmpty()){
             throw new IllegalStateException("Unable to parse the RAML file");
         }
 
         String title = null;
-        List<RestResourceDto> restResources = new ArrayList<>();
+        List<RestResource> restResources = new ArrayList<>();
         if(ramlModelResult.getApiV08() != null){
             org.raml.v2.api.model.v08.api.Api api = ramlModelResult.getApiV08();
             title = api.title();
@@ -88,7 +86,7 @@ public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter
             new RAML10Parser().getResources(api.resources(), restResources, "", generateResponse);
         }
 
-        RestApplicationDto restApplication = new RestApplicationDto();
+        RestApplication restApplication = new RestApplication();
         restApplication.setName(title);
         restApplication.setResources(restResources);
 

@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.web.mvc.command.mockresponse;
 
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 
 import java.util.List;
 
@@ -28,13 +28,13 @@ import java.util.List;
  */
 public class DeleteRestMockResponsesCommand {
 
-    private List<RestMockResponseDto> restMockResponses;
+    private List<RestMockResponse> restMockResponses;
 
-    public List<RestMockResponseDto> getRestMockResponses() {
+    public List<RestMockResponse> getRestMockResponses() {
         return restMockResponses;
     }
 
-    public void setRestMockResponses(List<RestMockResponseDto> restMockResponses) {
+    public void setRestMockResponses(List<RestMockResponse> restMockResponses) {
         this.restMockResponses = restMockResponses;
     }
 }

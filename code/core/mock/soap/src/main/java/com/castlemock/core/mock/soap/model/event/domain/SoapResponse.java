@@ -16,30 +16,37 @@
 
 package com.castlemock.core.mock.soap.model.event.domain;
 
-
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
+
 public class SoapResponse {
 
+    @Mapping("body")
     private String body;
+
+    @Mapping("mockResponseName")
     private String mockResponseName;
+
+    @Mapping("httpStatusCode")
     private Integer httpStatusCode;
+
+    @Mapping("contentType")
     private String contentType;
+
+    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders;
+
+    @Mapping("contentEncodings")
     private List<ContentEncoding> contentEncodings;
 
-    @XmlElement
     public String getBody() {
         return body;
     }
@@ -48,7 +55,6 @@ public class SoapResponse {
         this.body = body;
     }
 
-    @XmlElement
     public String getMockResponseName() {
         return mockResponseName;
     }
@@ -57,7 +63,6 @@ public class SoapResponse {
         this.mockResponseName = mockResponseName;
     }
 
-    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
@@ -66,7 +71,6 @@ public class SoapResponse {
         this.httpStatusCode = httpStatusCode;
     }
 
-    @XmlElement
     public String getContentType() {
         return contentType;
     }
@@ -75,8 +79,6 @@ public class SoapResponse {
         this.contentType = contentType;
     }
 
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
@@ -85,8 +87,6 @@ public class SoapResponse {
         this.httpHeaders = httpHeaders;
     }
 
-    @XmlElementWrapper(name = "contentEncodings")
-    @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
     }

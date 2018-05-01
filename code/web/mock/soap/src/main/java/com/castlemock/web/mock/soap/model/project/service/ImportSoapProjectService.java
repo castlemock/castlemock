@@ -19,7 +19,7 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ImportSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ImportSoapProjectOutput;
 import com.castlemock.web.mock.soap.legacy.repository.project.v1.SoapProjectLegacyRepository;
@@ -49,7 +49,7 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
         final ImportSoapProjectInput input = serviceTask.getInput();
 
         // Try to import the project as a legacy project first.
-        SoapProjectDto project = this.legacyRepository.importOne(input.getProjectRaw());
+        SoapProject project = this.legacyRepository.importOne(input.getProjectRaw());
 
         if(project == null){
             // Unable to load the project as a legacy project.

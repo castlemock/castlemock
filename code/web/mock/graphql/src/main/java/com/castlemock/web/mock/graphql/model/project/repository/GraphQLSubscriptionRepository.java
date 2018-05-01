@@ -18,13 +18,12 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLSubscription;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLSubscriptionDto;
 
 import java.util.List;
 
-public interface GraphQLSubscriptionRepository extends Repository<GraphQLSubscription, GraphQLSubscriptionDto, String> {
+public interface GraphQLSubscriptionRepository extends Repository<GraphQLSubscription, String> {
 
-    List<GraphQLSubscriptionDto> findWithApplicationId(String applicationId);
+    List<GraphQLSubscription> findWithApplicationId(String applicationId);
 
     void deleteWithApplicationId(String applicationId);
 }

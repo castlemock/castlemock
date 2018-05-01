@@ -19,9 +19,8 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsStatusInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestApplicationsStatusOutput;
 
@@ -45,10 +44,10 @@ public class UpdateRestApplicationsStatusService extends AbstractRestProjectServ
     @Override
     public ServiceResult<UpdateRestApplicationsStatusOutput> process(final ServiceTask<UpdateRestApplicationsStatusInput> serviceTask) {
         final UpdateRestApplicationsStatusInput input = serviceTask.getInput();
-        final List<RestResourceDto> resources = this.resourceRepository.findWithApplicationId(input.getRestApplicationId());
-        for(RestResourceDto restResource : resources){
-            final List<RestMethodDto> methods = this.methodRepository.findWithResourceId(restResource.getId());
-            for(RestMethodDto restMethod : methods){
+        final List<RestResource> resources = this.resourceRepository.findWithApplicationId(input.getRestApplicationId());
+        for(RestResource restResource : resources){
+            final List<RestMethod> methods = this.methodRepository.findWithResourceId(restResource.getId());
+            for(RestMethod restMethod : methods){
                 restMethod.setStatus(input.getRestMethodStatus());
                 this.methodRepository.update(restMethod.getId(), restMethod);
             }

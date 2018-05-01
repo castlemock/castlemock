@@ -22,7 +22,7 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.DeleteSoapProjectOutput;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -52,7 +52,7 @@ public class DeleteSoapProjectServiceTest {
     @Test
     @Ignore
     public void testProcess(){
-        final SoapProject soapProject = SoapProjectDtoGenerator.generateSoapProject();
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
 
         Mockito.when(repository.findOne(soapProject.getId())).thenReturn(soapProject);
 

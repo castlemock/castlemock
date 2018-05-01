@@ -18,18 +18,17 @@ package com.castlemock.web.mock.soap.model.project.service;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.CreateSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.CreateSoapMockResponseOutput;
-import com.castlemock.web.mock.soap.model.project.SoapMockResponseDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapMockResponseGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapOperationGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.model.project.repository.SoapMockResponseRepository;
-import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,17 +56,17 @@ public class CreateSoapMockResponseServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapProjectDto soapProject = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPort = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperation = SoapOperationDtoGenerator.generateSoapOperationDto();
-        final SoapMockResponseDto soapMockResponseDto = SoapMockResponseDtoGenerator.generateSoapMockResponseDto();
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
 
 
-        final CreateSoapMockResponseInput input = new CreateSoapMockResponseInput(soapProject.getId(), soapPort.getId(), soapOperation.getId(), soapMockResponseDto);
+        final CreateSoapMockResponseInput input = new CreateSoapMockResponseInput(soapProject.getId(), soapPort.getId(), soapOperation.getId(), soapMockResponse);
         final ServiceTask<CreateSoapMockResponseInput> serviceTask = new ServiceTask<>(input);
         final ServiceResult<CreateSoapMockResponseOutput> serviceResult = service.process(serviceTask);
         final CreateSoapMockResponseOutput output = serviceResult.getOutput();
 
-        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapMockResponseDto.class));
+        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapMockResponse.class));
     }
 }

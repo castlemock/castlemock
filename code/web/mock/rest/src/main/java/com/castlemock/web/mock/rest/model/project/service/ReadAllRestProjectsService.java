@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadAllRestProjectsInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadAllRestProjectsOutput;
 
@@ -42,7 +42,7 @@ public class ReadAllRestProjectsService extends AbstractRestProjectService imple
      */
     @Override
     public ServiceResult<ReadAllRestProjectsOutput> process(final ServiceTask<ReadAllRestProjectsInput> serviceTask) {
-        final List<RestProjectDto> restProjects = findAll();
+        final List<RestProject> restProjects = findAll();
         final ReadAllRestProjectsOutput output = new ReadAllRestProjectsOutput();
         output.setRestProjects(restProjects);
         return createServiceResult(output);

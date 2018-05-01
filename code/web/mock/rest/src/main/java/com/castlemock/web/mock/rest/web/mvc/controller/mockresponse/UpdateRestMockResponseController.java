@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.web.mvc.controller.mockresponse;
 
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -43,8 +43,8 @@ public class UpdateRestMockResponseController extends AbstractRestViewController
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/{restMockResponseId}/update", method = RequestMethod.POST)
-    public ModelAndView updateRestMockResponse(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @PathVariable final String restMockResponseId, @ModelAttribute final RestMockResponseDto restMockResponseDto) {
-        serviceProcessor.process(new UpdateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId, restMockResponseDto));
+    public ModelAndView updateRestMockResponse(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @PathVariable final String restMockResponseId, @ModelAttribute final RestMockResponse restMockResponse) {
+        serviceProcessor.process(new UpdateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId, restMockResponse));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 

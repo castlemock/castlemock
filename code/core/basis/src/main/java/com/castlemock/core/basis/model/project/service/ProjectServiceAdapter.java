@@ -20,7 +20,6 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.ServiceAdapter;
 import com.castlemock.core.basis.model.project.domain.Project;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
 
 import java.util.List;
 
@@ -31,9 +30,8 @@ import java.util.List;
  * @since 1.0
  * @param <D> The dto project type
  * @see Project
- * @see ProjectDto
  */
-public interface ProjectServiceAdapter<D extends ProjectDto> extends ServiceAdapter<ProjectDto, D, String> {
+public interface ProjectServiceAdapter<D extends Project> extends ServiceAdapter<Project, D, String> {
 
     /**
      * The method provides the functionality to export a project and convert it to a String

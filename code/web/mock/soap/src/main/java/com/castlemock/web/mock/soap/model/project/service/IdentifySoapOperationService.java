@@ -19,9 +19,9 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.service.message.input.IdentifySoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
 
@@ -45,8 +45,8 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
     @Override
     public ServiceResult<IdentifySoapOperationOutput> process(final ServiceTask<IdentifySoapOperationInput> serviceTask) {
         final IdentifySoapOperationInput input = serviceTask.getInput();
-        final SoapPortDto port = this.portRepository.findWithUri(input.getSoapProjectId(), input.getUri());
-        final SoapOperationDto operation =
+        final SoapPort port = this.portRepository.findWithUri(input.getSoapProjectId(), input.getUri());
+        final SoapOperation operation =
                 this.operationRepository.findWithMethodAndVersionAndIdentifier(
                         port.getId(), input.getHttpMethod(),
                         input.getType(), input.getSoapOperationIdentifier());
@@ -54,7 +54,7 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
             throw new IllegalArgumentException("Unable to identify SOAP operation: " + input.getUri());
         }
 
-        final List<SoapMockResponseDto> mockResponses = this.mockResponseRepository.findWithOperationId(operation.getId());
+        final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(operation.getId());
         operation.setMockResponses(mockResponses);
 
         return createServiceResult(new IdentifySoapOperationOutput(input.getSoapProjectId(), port.getId(), operation.getId(), operation));

@@ -18,17 +18,17 @@ package com.castlemock.web.mock.soap.web.soap.controller;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.utility.parser.TextParser;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
-import com.castlemock.core.mock.soap.model.event.dto.SoapRequestDto;
-import com.castlemock.core.mock.soap.model.event.dto.SoapResponseDto;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
+import com.castlemock.core.mock.soap.model.event.domain.SoapRequest;
+import com.castlemock.core.mock.soap.model.event.domain.SoapResponse;
 import com.castlemock.core.mock.soap.model.event.service.message.input.CreateSoapEventInput;
 import com.castlemock.core.mock.soap.model.project.domain.*;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.service.message.input.*;
 import com.castlemock.core.mock.soap.model.project.service.message.output.IdentifySoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSoapResourceOutput;
@@ -83,9 +83,9 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
-            final SoapRequestDto request = prepareRequest(projectId, httpServletRequest);
+            final SoapRequest request = prepareRequest(projectId, httpServletRequest);
             final IdentifySoapOperationOutput output = serviceProcessor.process(new IdentifySoapOperationInput(projectId, request.getOperationIdentifier(), request.getUri(), request.getHttpMethod(), request.getSoapVersion()));
-            final SoapOperationDto operation = output.getSoapOperation();
+            final SoapOperation operation = output.getSoapOperation();
             request.setOperationName(operation.getName());
             return process(projectId, output.getSoapPortId(), operation, request, httpServletResponse);
         }catch(Exception exception){
@@ -116,9 +116,9 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
     private String getWsdl(final String projectId){
         final ReadSoapProjectOutput projectOutput = this.serviceProcessor.process(new ReadSoapProjectInput(projectId));
-        final SoapProjectDto soapProject = projectOutput.getSoapProject();
+        final SoapProject soapProject = projectOutput.getSoapProject();
 
-        for(SoapResourceDto soapResource : soapProject.getResources()){
+        for(SoapResource soapResource : soapProject.getResources()){
             if(SoapResourceType.WSDL.equals(soapResource.getType())){
                 final LoadSoapResourceOutput loadOutput =
                         this.serviceProcessor.process(new LoadSoapResourceInput(projectId, soapResource.getId()));
@@ -134,8 +134,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletRequest The incoming request
      * @return A new created project
      */
-    protected SoapRequestDto prepareRequest(final String projectId, final HttpServletRequest httpServletRequest) {
-        final SoapRequestDto request = new SoapRequestDto();
+    protected SoapRequest prepareRequest(final String projectId, final HttpServletRequest httpServletRequest) {
+        final SoapRequest request = new SoapRequest();
         final String body = HttpMessageSupport.getBody(httpServletRequest);
 
         final String identifier;
@@ -153,7 +153,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
 
         final String serviceUri = httpServletRequest.getRequestURI().replace(getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
-        final List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
+        final List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 
         SoapVersion type = SoapVersion.convert(httpServletRequest.getContentType());
         request.setSoapVersion(type);
@@ -172,45 +172,45 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * events and storing them.
      * @param soapProjectId The id of the project that the incoming request belong to
      * @param soapPortId The id of the port that the incoming request belong to
-     * @param soapOperationDto The operation that contain the appropriate mocked response
+     * @param soapOperation The operation that contain the appropriate mocked response
      * @param request The incoming request
      * @param httpServletResponse The outgoing HTTP servlet response
      * @return Returns the response as an String
      */
-    protected ResponseEntity process(final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto, final SoapRequestDto request, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity process(final String soapProjectId, final String soapPortId, final SoapOperation soapOperation, final SoapRequest request, final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(request, "Request cannot be null");
-        if(soapOperationDto == null){
+        if(soapOperation == null){
             throw new SoapException("Soap operation could not be found");
         }
-        SoapEventDto event = null;
-        SoapResponseDto response = null;
+        SoapEvent event = null;
+        SoapResponse response = null;
         try {
-            event = new SoapEventDto(soapOperationDto.getName(), request, soapProjectId, soapPortId, soapOperationDto.getId());
-            if (SoapOperationStatus.DISABLED.equals(soapOperationDto.getStatus())) {
-                throw new SoapException("The requested soap operation, " + soapOperationDto.getName() + ", is disabled");
-            } else if (SoapOperationStatus.FORWARDED.equals(soapOperationDto.getStatus())) {
-                response = forwardRequest(request, soapProjectId, soapPortId, soapOperationDto);
-            } else if (SoapOperationStatus.RECORDING.equals(soapOperationDto.getStatus())) {
-                response = forwardRequestAndRecordResponse(request, soapProjectId, soapPortId, soapOperationDto);
-            } else if (SoapOperationStatus.RECORD_ONCE.equals(soapOperationDto.getStatus())) {
-                response = forwardRequestAndRecordResponseOnce(request, soapProjectId, soapPortId, soapOperationDto);
-            } else if (SoapOperationStatus.ECHO.equals(soapOperationDto.getStatus())) {
+            event = new SoapEvent(soapOperation.getName(), request, soapProjectId, soapPortId, soapOperation.getId());
+            if (SoapOperationStatus.DISABLED.equals(soapOperation.getStatus())) {
+                throw new SoapException("The requested soap operation, " + soapOperation.getName() + ", is disabled");
+            } else if (SoapOperationStatus.FORWARDED.equals(soapOperation.getStatus())) {
+                response = forwardRequest(request, soapProjectId, soapPortId, soapOperation);
+            } else if (SoapOperationStatus.RECORDING.equals(soapOperation.getStatus())) {
+                response = forwardRequestAndRecordResponse(request, soapProjectId, soapPortId, soapOperation);
+            } else if (SoapOperationStatus.RECORD_ONCE.equals(soapOperation.getStatus())) {
+                response = forwardRequestAndRecordResponseOnce(request, soapProjectId, soapPortId, soapOperation);
+            } else if (SoapOperationStatus.ECHO.equals(soapOperation.getStatus())) {
                 response = echoResponse(request);
             } else { // Status.MOCKED
-                response = mockResponse(request, soapProjectId, soapPortId, soapOperationDto);
+                response = mockResponse(request, soapProjectId, soapPortId, soapOperation);
             }
 
             HttpHeaders responseHeaders = new HttpHeaders();
-            for(HttpHeaderDto httpHeader : response.getHttpHeaders()){
+            for(HttpHeader httpHeader : response.getHttpHeaders()){
                 List<String> headerValues = new LinkedList<String>();
                 headerValues.add(httpHeader.getValue());
                 responseHeaders.put(httpHeader.getName(), headerValues);
             }
 
-            if(soapOperationDto.getSimulateNetworkDelay() &&
-                    soapOperationDto.getNetworkDelay() >= 0){
+            if(soapOperation.getSimulateNetworkDelay() &&
+                    soapOperation.getNetworkDelay() >= 0){
                 try {
-                        Thread.sleep(soapOperationDto.getNetworkDelay());
+                        Thread.sleep(soapOperation.getNetworkDelay());
                 } catch (InterruptedException e) {
                     LOGGER.error("Unable to simulate network delay", e);
                 }
@@ -226,22 +226,22 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     }
 
     /**
-     * The method will echo the incoming {@link SoapRequestDto} and create a {@link SoapResponseDto}
+     * The method will echo the incoming {@link SoapRequest} and create a {@link SoapResponse}
      * with the same body, content type and headers.
      *
-     * @param request The incoming {@link SoapRequestDto} that will be echoed back to the
+     * @param request The incoming {@link SoapRequest} that will be echoed back to the
      *                service consumer.
-     * @return A {@link SoapResponseDto} based on the provided {@link SoapRequestDto}.
+     * @return A {@link SoapResponse} based on the provided {@link SoapRequest}.
      * @since 1.14
      */
-    private SoapResponseDto echoResponse(final SoapRequestDto request) {
-        final List<HttpHeaderDto> headers = new ArrayList<HttpHeaderDto>();
-        final HttpHeaderDto contentTypeHeader = new HttpHeaderDto();
+    private SoapResponse echoResponse(final SoapRequest request) {
+        final List<HttpHeader> headers = new ArrayList<HttpHeader>();
+        final HttpHeader contentTypeHeader = new HttpHeader();
         contentTypeHeader.setName(CONTENT_TYPE);
         contentTypeHeader.setValue(request.getContentType());
         headers.add(contentTypeHeader);
 
-        final SoapResponseDto response = new SoapResponseDto();
+        final SoapResponse response = new SoapResponse();
         response.setBody(request.getBody());
         response.setContentType(request.getContentType());
         response.setHttpHeaders(headers);
@@ -253,33 +253,33 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * The method is responsible for retrieving and returning a mocked response for the provided operation
      *
      * @param request
-     * @param soapOperationDto The SOAP operation that is being executed. The response is based on
+     * @param soapOperation The SOAP operation that is being executed. The response is based on
      *                         the provided SOAP operation.
      * @return A mocked response based on the provided SOAP operation
      */
-    private SoapResponseDto mockResponse(SoapRequestDto request, final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto){
-        final List<SoapMockResponseDto> mockResponses = new ArrayList<SoapMockResponseDto>();
-        for(SoapMockResponseDto mockResponse : soapOperationDto.getMockResponses()){
+    private SoapResponse mockResponse(SoapRequest request, final String soapProjectId, final String soapPortId, final SoapOperation soapOperation){
+        final List<SoapMockResponse> mockResponses = new ArrayList<SoapMockResponse>();
+        for(SoapMockResponse mockResponse : soapOperation.getMockResponses()){
             if(mockResponse.getStatus().equals(SoapMockResponseStatus.ENABLED)){
                 mockResponses.add(mockResponse);
             }
         }
 
-        SoapMockResponseDto mockResponse = null;
+        SoapMockResponse mockResponse = null;
         if(mockResponses.isEmpty()){
-            throw new SoapException("No mocked response created for operation " + soapOperationDto.getName());
-        } else if(soapOperationDto.getResponseStrategy().equals(SoapResponseStrategy.RANDOM)){
+            throw new SoapException("No mocked response created for operation " + soapOperation.getName());
+        } else if(soapOperation.getResponseStrategy().equals(SoapResponseStrategy.RANDOM)){
             final Integer responseIndex = RANDOM.nextInt(mockResponses.size());
             mockResponse = mockResponses.get(responseIndex);
-        } else if(soapOperationDto.getResponseStrategy().equals(SoapResponseStrategy.SEQUENCE)){
-            Integer currentSequenceNumber = soapOperationDto.getCurrentResponseSequenceIndex();
+        } else if(soapOperation.getResponseStrategy().equals(SoapResponseStrategy.SEQUENCE)){
+            Integer currentSequenceNumber = soapOperation.getCurrentResponseSequenceIndex();
             if(currentSequenceNumber >= mockResponses.size()){
                 currentSequenceNumber = 0;
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
-            serviceProcessor.process(new UpdateCurrentMockResponseSequenceIndexInput(soapProjectId, soapPortId, soapOperationDto.getId(), currentSequenceNumber + 1));
-        } else if (soapOperationDto.getResponseStrategy().equals(SoapResponseStrategy.XPATH_INPUT)) {
-            for (SoapMockResponseDto testedMockResponse : mockResponses) {
+            serviceProcessor.process(new UpdateCurrentMockResponseSequenceIndexInput(soapProjectId, soapPortId, soapOperation.getId(), currentSequenceNumber + 1));
+        } else if (soapOperation.getResponseStrategy().equals(SoapResponseStrategy.XPATH_INPUT)) {
+            for (SoapMockResponse testedMockResponse : mockResponses) {
                 if (HttpMessageSupport.isValidXPathExpr(request.getBody(), testedMockResponse.getXpathExpression())) {
                     mockResponse = testedMockResponse;
                     break;
@@ -288,13 +288,13 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
             if(mockResponse == null){
                 LOGGER.info("Unable to match the input XPath to a response");
-                final String defaultXPathResponseId = soapOperationDto.getDefaultXPathMockResponseId();
+                final String defaultXPathResponseId = soapOperation.getDefaultXPathMockResponseId();
 
                 if(defaultXPathResponseId != null && !defaultXPathResponseId.isEmpty()){
                     LOGGER.info("Use the default XPath response");
-                    for (SoapMockResponseDto mockResponseDto : mockResponses) {
-                        if(defaultXPathResponseId.equals(mockResponseDto.getId())){
-                            mockResponse = mockResponseDto;
+                    for (SoapMockResponse tmpMockResponse : mockResponses) {
+                        if(defaultXPathResponseId.equals(mockResponse.getId())){
+                            mockResponse = tmpMockResponse;
                             break;
                         }
                     }
@@ -308,7 +308,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
 
         if(mockResponse == null){
-            throw new SoapException("No mocked response created for operation " + soapOperationDto.getName());
+            throw new SoapException("No mocked response created for operation " + soapOperation.getName());
         }
 
         String body = mockResponse.getBody();
@@ -317,7 +317,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             // the mock response is configured to use expressions
             body = TextParser.parse(body);
         }
-        final SoapResponseDto response = new SoapResponseDto();
+        final SoapResponse response = new SoapResponse();
         response.setBody(body);
         response.setMockResponseName(mockResponse.getName());
         response.setHttpHeaders(mockResponse.getHttpHeaders());
@@ -331,20 +331,20 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * The method provides the functionality to forward the incoming request, store the returned the response and
      * return the response to the service consumer.
      * @param request The incoming request that will be forwarded
-     * @param soapOperationDto The SOAP operation that is being executed
+     * @param soapOperation The SOAP operation that is being executed
      * @return The response from the system that the request was forwarded to.
      */
-    private SoapResponseDto forwardRequestAndRecordResponse(final SoapRequestDto request, final String soapProjectId,
-                                                            final String soapPortId, final SoapOperationDto soapOperationDto){
-        final SoapResponseDto response = forwardRequest(request, soapProjectId, soapPortId, soapOperationDto);
-        final SoapMockResponseDto mockResponse = new SoapMockResponseDto();
+    private SoapResponse forwardRequestAndRecordResponse(final SoapRequest request, final String soapProjectId,
+                                                         final String soapPortId, final SoapOperation soapOperation){
+        final SoapResponse response = forwardRequest(request, soapProjectId, soapPortId, soapOperation);
+        final SoapMockResponse mockResponse = new SoapMockResponse();
         final Date date = new Date();
         mockResponse.setBody(response.getBody());
         mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
         mockResponse.setHttpHeaders(response.getHttpHeaders());
-        serviceProcessor.processAsync(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationDto.getId(), mockResponse));
+        serviceProcessor.processAsync(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperation.getId(), mockResponse));
         return response;
     }
 
@@ -353,40 +353,40 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * return the response to the service consumer. The SOAP operation status will be updated
      * to mocked.
      * @param request The incoming request that will be forwarded
-     * @param soapOperationDto The SOAP operation that is being executed
+     * @param soapOperation The SOAP operation that is being executed
      * @return The response from the system that the request was forwarded to.
      */
-    private SoapResponseDto forwardRequestAndRecordResponseOnce(final SoapRequestDto request, final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto){
-        final SoapResponseDto response = forwardRequestAndRecordResponse(request, soapProjectId, soapPortId, soapOperationDto);
-        soapOperationDto.setStatus(SoapOperationStatus.MOCKED);
-        serviceProcessor.process(new UpdateSoapOperationInput(soapProjectId, soapPortId, soapOperationDto.getId(), soapOperationDto));
+    private SoapResponse forwardRequestAndRecordResponseOnce(final SoapRequest request, final String soapProjectId, final String soapPortId, final SoapOperation soapOperation){
+        final SoapResponse response = forwardRequestAndRecordResponse(request, soapProjectId, soapPortId, soapOperation);
+        soapOperation.setStatus(SoapOperationStatus.MOCKED);
+        serviceProcessor.process(new UpdateSoapOperationInput(soapProjectId, soapPortId, soapOperation.getId(), soapOperation));
         return response;
     }
 
     /**
      * The method provides the functionality to forward request to a forwarded endpoint.
      * @param request The request that will be forwarded
-     * @param soapOperationDto The SOAP operation that is being executed
+     * @param soapOperation The SOAP operation that is being executed
      * @return The response from the system that the request was forwarded to.
      */
-    private SoapResponseDto forwardRequest(final SoapRequestDto request, final String soapProjectId, final String soapPortId, final SoapOperationDto soapOperationDto){
+    private SoapResponse forwardRequest(final SoapRequest request, final String soapProjectId, final String soapPortId, final SoapOperation soapOperation){
         if(demoMode){
             // If the application is configured to run in demo mode, then use mocked response instead
-            return mockResponse(request, soapProjectId, soapPortId, soapOperationDto);
+            return mockResponse(request, soapProjectId, soapPortId, soapOperation);
         }
 
-        final SoapResponseDto response = new SoapResponseDto();
+        final SoapResponse response = new SoapResponse();
         HttpURLConnection connection = null;
         try {
             connection = HttpMessageSupport.establishConnection(
-                    soapOperationDto.getForwardedEndpoint(),
+                    soapOperation.getForwardedEndpoint(),
                     request.getHttpMethod(),
                     request.getBody(),
                     request.getHttpHeaders());
 
 
             final List<ContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
-            final List<HttpHeaderDto> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
+            final List<HttpHeader> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
             final String characterEncoding = CharsetUtility.parseHttpHeaders(responseHttpHeaders);
             final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings, characterEncoding);
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);

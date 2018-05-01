@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.event;
 
-import com.castlemock.core.basis.model.event.dto.EventDto;
+import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.model.event.dto.EventDtoGenerator;
 import com.castlemock.web.basis.model.event.service.EventServiceFacadeImpl;
@@ -64,7 +64,7 @@ public class EventOverviewControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetUserWithValidId() throws Exception {
-        List<EventDto> eventDtos = new ArrayList<EventDto>();
+        List<Event> eventDtos = new ArrayList<Event>();
         for(int index = 0; index < EVENT_COUNT; index++){
             eventDtos.add(EventDtoGenerator.generateEventDto());
         }

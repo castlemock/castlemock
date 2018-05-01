@@ -18,7 +18,7 @@ package com.castlemock.web.mock.soap.legacy.repository.project.v1;
 
 import com.castlemock.core.mock.soap.legacy.model.project.v1.converter.SoapProjectConverterV1;
 import com.castlemock.core.mock.soap.legacy.model.project.v1.domain.SoapProjectV1;
-import com.castlemock.core.mock.soap.model.project.dto.*;
+import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.web.basis.model.AbstractLegacyRepositoryImpl;
 import com.castlemock.web.mock.soap.model.project.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
 @Repository
-public class SoapProjectLegacyRepository extends AbstractLegacyRepositoryImpl<SoapProjectV1, SoapProjectDto, String> {
+public class SoapProjectLegacyRepository extends AbstractLegacyRepositoryImpl<SoapProjectV1, SoapProject, String> {
 
     @Value(value = "${legacy.soap.project.v1.directory}")
     private String projectLegacyFileDirectory;
@@ -86,17 +86,17 @@ public class SoapProjectLegacyRepository extends AbstractLegacyRepositoryImpl<So
      * @param type The instance that will be saved.
      */
     @Override
-    protected SoapProjectDto save(final SoapProjectV1 type) {
-        SoapProjectDto project = SoapProjectConverterV1.convert(type);
+    protected SoapProject save(final SoapProjectV1 type) {
+        SoapProject project = SoapProjectConverterV1.convert(type);
         this.projectRepository.save(project);
-        for(SoapResourceDto resource : project.getResources()){
+        for(SoapResource resource : project.getResources()){
             this.resourceRepository.save(resource);
         }
-        for(SoapPortDto port : project.getPorts()){
+        for(SoapPort port : project.getPorts()){
             this.portRepository.save(port);
-            for(SoapOperationDto operation : port.getOperations()){
+            for(SoapOperation operation : port.getOperations()){
                  this.operationRepository.save(operation);
-                for(SoapMockResponseDto mockResponse : operation.getMockResponses()){
+                for(SoapMockResponse mockResponse : operation.getMockResponses()){
                     this.mockResponseRepository.save(mockResponse);
                 }
             }

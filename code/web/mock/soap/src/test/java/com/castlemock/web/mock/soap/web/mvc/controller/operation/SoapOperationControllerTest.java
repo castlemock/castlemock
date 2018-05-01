@@ -17,22 +17,22 @@
 package com.castlemock.web.mock.soap.web.mvc.controller.operation;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.*;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapOperationGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.mvc.command.mockresponse.SoapMockResponseModifierCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Assert;
@@ -89,24 +89,24 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testDefaultPage() throws Exception {
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        when(serviceProcessor.process(isA(ReadSoapPortInput.class))).thenReturn(new ReadSoapPortOutput(soapPortDto));
-        when(serviceProcessor.process(isA(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperationDto));
-        when(serviceProcessor.process(isA(ReadSoapEventsByOperationIdInput.class))).thenReturn(new ReadSoapEventsByOperationIdOutput(new ArrayList<SoapEventDto>()));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH);
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        when(serviceProcessor.process(isA(ReadSoapPortInput.class))).thenReturn(new ReadSoapPortOutput(soapPort));
+        when(serviceProcessor.process(isA(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
+        when(serviceProcessor.process(isA(ReadSoapEventsByOperationIdInput.class))).thenReturn(new ReadSoapEventsByOperationIdOutput(new ArrayList<SoapEvent>()));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH);
         ResultActions result = mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(6 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, soapProjectDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, soapPortDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION, soapOperationDto));
-        SoapOperationDto SoapOperationDtoResponse = (SoapOperationDto) result.andReturn().getModelAndView().getModel().get(SOAP_OPERATION);
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, soapProject.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, soapPort.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION, soapOperation));
+        SoapOperation SoapOperationResponse = (SoapOperation) result.andReturn().getModelAndView().getModel().get(SOAP_OPERATION);
         String hostAddress = serviceController.getHostAddress();
-        Assert.assertEquals(HTTP + hostAddress + COLON + DEFAULT_PORT + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + soapProjectDto.getId() + SLASH + soapPortDto.getUri(), soapOperationDto.getInvokeAddress());
+        Assert.assertEquals(HTTP + hostAddress + COLON + DEFAULT_PORT + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + soapPort.getUri(), soapOperation.getInvokeAddress());
     }
 
 
@@ -118,10 +118,10 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
         final String[] soapMockResponseIds = {"MockResponse1", "MockResponse2"};
 
 
-        final SoapMockResponseDto soapMockResponse1 = new SoapMockResponseDto();
+        final SoapMockResponse soapMockResponse1 = new SoapMockResponse();
         soapMockResponse1.setId("MockResponseId1");
 
-        final SoapMockResponseDto soapMockResponse2 = new SoapMockResponseDto();
+        final SoapMockResponse soapMockResponse2 = new SoapMockResponse();
         soapMockResponse2.setId("MockResponseId2");
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapMockResponseInput.class)))
@@ -155,13 +155,13 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
         final String[] soapMockResponseIds = {"MockResponse1", "MockResponse2"};
 
 
-        final SoapMockResponseDto soapMockResponse1 = new SoapMockResponseDto();
+        final SoapMockResponse soapMockResponse1 = new SoapMockResponse();
         soapMockResponse1.setId("MockResponseId1");
 
-        final SoapMockResponseDto soapMockResponse2 = new SoapMockResponseDto();
+        final SoapMockResponse soapMockResponse2 = new SoapMockResponse();
         soapMockResponse2.setId("MockResponseId2");
 
-        final List<SoapMockResponseDto> mockResponses = Arrays.asList(soapMockResponse1, soapMockResponse2);
+        final List<SoapMockResponse> mockResponses = Arrays.asList(soapMockResponse1, soapMockResponse2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapMockResponseInput.class)))
                 .thenReturn(new ReadSoapMockResponseOutput(soapMockResponse1))
@@ -198,10 +198,10 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
         final String[] soapMockResponseIds = {"MockResponse1", "MockResponse2"};
 
 
-        final SoapMockResponseDto soapMockResponse1 = new SoapMockResponseDto();
+        final SoapMockResponse soapMockResponse1 = new SoapMockResponse();
         soapMockResponse1.setId("MockResponseId1");
 
-        final SoapMockResponseDto soapMockResponse2 = new SoapMockResponseDto();
+        final SoapMockResponse soapMockResponse2 = new SoapMockResponse();
         soapMockResponse2.setId("MockResponseId2");
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapMockResponseInput.class)))

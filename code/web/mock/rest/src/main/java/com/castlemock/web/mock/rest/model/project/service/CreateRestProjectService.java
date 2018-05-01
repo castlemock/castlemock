@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestProjectOutput;
 
@@ -41,8 +41,8 @@ public class CreateRestProjectService extends AbstractRestProjectService impleme
     @Override
     public ServiceResult<CreateRestProjectOutput> process(final ServiceTask<CreateRestProjectInput> serviceTask) {
         final CreateRestProjectInput input = serviceTask.getInput();
-        final RestProjectDto restProject = input.getRestProject();
-        final RestProjectDto savedRestProject = save(restProject);
+        final RestProject restProject = input.getRestProject();
+        final RestProject savedRestProject = save(restProject);
         final CreateRestProjectOutput output = new CreateRestProjectOutput();
         output.setSavedRestProject(savedRestProject);
         return createServiceResult(output);

@@ -19,16 +19,16 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsForwardedEndpointInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapOperationGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;
@@ -77,32 +77,32 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
 
     @Test
     public void updateSoapOperationGet() throws Exception {
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
         final List<SoapOperationStatus> soapOperationStatuses = Arrays.asList(SoapOperationStatus.values());
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapOperationOutput(soapOperationDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + UPDATE + SLASH);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + UPDATE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(6 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, soapProjectDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, soapPortDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_ID, soapOperationDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(COMMAND, soapOperationDto))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, soapProject.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, soapPort.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_ID, soapOperation.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(COMMAND, soapOperation))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_STATUSES, soapOperationStatuses))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_MOCK_RESPONSE_STRATEGIES, SoapResponseStrategy.values()));
     }
 
     @Test
     public void updateSoapOperationPost() throws Exception {
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapOperationOutput(soapOperationDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + UPDATE + SLASH);
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + UPDATE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

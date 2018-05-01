@@ -18,12 +18,11 @@ package com.castlemock.web.mock.rest.web.mvc.controller.resource;
 
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesStatusInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
 import com.castlemock.web.mock.rest.web.mvc.command.method.DeleteRestMethodsCommand;
@@ -72,7 +71,7 @@ public class RestResourceController extends AbstractRestViewController {
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, final ServletRequest request) {
         final ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
-        final RestResourceDto restResource = output.getRestResource();
+        final RestResource restResource = output.getRestResource();
 
         final String protocol = getProtocol(request);
         final String invokeAddress = getRestInvokeAddress(protocol, request.getServerPort(), restProjectId, restApplicationId, restResource.getUri());
@@ -111,17 +110,17 @@ public class RestResourceController extends AbstractRestViewController {
                 final ReadRestMethodOutput readRestMethodOutput =
                         serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
 
-                RestMethodDto restMethodDto = readRestMethodOutput.getRestMethod();
-                restMethodDto.setStatus(restMethodStatus);
+                RestMethod restMethod = readRestMethodOutput.getRestMethod();
+                restMethod.setStatus(restMethodStatus);
 
-                serviceProcessor.process(new UpdateRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMethodDto));
+                serviceProcessor.process(new UpdateRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMethod));
             }
         } if(DELETE_REST_METHODS.equalsIgnoreCase(action)) {
-            final List<RestMethodDto> restMethods = new ArrayList<RestMethodDto>();
+            final List<RestMethod> restMethods = new ArrayList<RestMethod>();
             for(String restMethodId : restMethodModifierCommand.getRestMethodIds()){
                 final ReadRestMethodOutput restMethodOutput = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
-                final RestMethodDto restResourceDto = restMethodOutput.getRestMethod();
-                restMethods.add(restResourceDto);
+                final RestMethod restResource = restMethodOutput.getRestMethod();
+                restMethods.add(restResource);
             }
             final ModelAndView model = createPartialModelAndView(DELETE_REST_METHODS_PAGE);
             model.addObject(REST_PROJECT_ID, restProjectId);
@@ -131,16 +130,16 @@ public class RestResourceController extends AbstractRestViewController {
             model.addObject(DELETE_REST_METHODS_COMMAND, new DeleteRestMethodsCommand());
             return model;
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
-            final List<RestMethodDto> restMethodDtos = new ArrayList<RestMethodDto>();
+            final List<RestMethod> restMethods = new ArrayList<RestMethod>();
             for(String restMethodId : restMethodModifierCommand.getRestMethodIds()){
                 final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
-                restMethodDtos.add(output.getRestMethod());
+                restMethods.add(output.getRestMethod());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_REST_METHODS_ENDPOINT_PAGE);
             model.addObject(REST_PROJECT_ID, restProjectId);
             model.addObject(REST_APPLICATION_ID, restApplicationId);
             model.addObject(REST_RESOURCE_ID, restResourceId);
-            model.addObject(REST_METHODS, restMethodDtos);
+            model.addObject(REST_METHODS, restMethods);
             model.addObject(UPDATE_REST_METHODS_ENDPOINT_COMMAND, new UpdateRestMethodsEndpointCommand());
             return model;
         }

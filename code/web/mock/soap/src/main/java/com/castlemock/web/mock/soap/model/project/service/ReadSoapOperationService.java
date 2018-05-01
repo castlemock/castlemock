@@ -19,8 +19,8 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import org.apache.log4j.Logger;
@@ -47,17 +47,17 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ReadSoapOperationOutput> process(final ServiceTask<ReadSoapOperationInput> serviceTask) {
         final ReadSoapOperationInput input = serviceTask.getInput();
-        final SoapOperationDto soapOperationDto = this.operationRepository.findOne(input.getSoapOperationId());
-        final List<SoapMockResponseDto> mockResponses = this.mockResponseRepository.findWithOperationId(input.getSoapOperationId());
-        soapOperationDto.setMockResponses(mockResponses);
+        final SoapOperation soapOperation = this.operationRepository.findOne(input.getSoapOperationId());
+        final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(input.getSoapOperationId());
+        soapOperation.setMockResponses(mockResponses);
 
-        if(soapOperationDto.getDefaultXPathMockResponseId() != null){
+        if(soapOperation.getDefaultXPathMockResponseId() != null){
             // Iterate through all the mocked responses to identify
             // which has been set to be the default XPath mock response.
             boolean defaultXpathMockResponseFound = false;
-            for(SoapMockResponseDto mockResponse : mockResponses){
-                if(mockResponse.getId().equals(soapOperationDto.getDefaultXPathMockResponseId())){
-                    soapOperationDto.setDefaultXPathResponseName(mockResponse.getName());
+            for(SoapMockResponse mockResponse : mockResponses){
+                if(mockResponse.getId().equals(soapOperation.getDefaultXPathMockResponseId())){
+                    soapOperation.setDefaultXPathResponseName(mockResponse.getName());
                     defaultXpathMockResponseFound = true;
                     break;
                 }
@@ -67,12 +67,12 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
                 // Unable to find the default XPath mock response.
                 // Log only an error message for now.
                 LOGGER.error("Unable to find the default XPath mock response with the following id: " +
-                        soapOperationDto.getDefaultXPathMockResponseId());
+                        soapOperation.getDefaultXPathMockResponseId());
             }
         }
 
 
 
-        return createServiceResult(new ReadSoapOperationOutput(soapOperationDto));
+        return createServiceResult(new ReadSoapOperationOutput(soapOperation));
     }
 }

@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 
 import java.util.List;
 
@@ -33,9 +33,9 @@ public class DeleteRestResourcesInput implements Input{
     @NotNull
     private String restApplicationId;
     @NotNull
-    private List<RestResourceDto> restResources;
+    private List<RestResource> restResources;
 
-    public DeleteRestResourcesInput(String restProjectId, String restApplicationId, List<RestResourceDto> restResources) {
+    public DeleteRestResourcesInput(String restProjectId, String restApplicationId, List<RestResource> restResources) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResources = restResources;
@@ -57,11 +57,11 @@ public class DeleteRestResourcesInput implements Input{
         this.restApplicationId = restApplicationId;
     }
 
-    public List<RestResourceDto> getRestResources() {
+    public List<RestResource> getRestResources() {
         return restResources;
     }
 
-    public void setRestResources(List<RestResourceDto> restResources) {
+    public void setRestResources(List<RestResource> restResources) {
         this.restResources = restResources;
     }
 }

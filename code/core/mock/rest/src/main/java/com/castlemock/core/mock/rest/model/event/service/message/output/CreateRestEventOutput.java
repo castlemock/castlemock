@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.event.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
 public class CreateRestEventOutput implements Output {
 
     @NotNull
-    private RestEventDto createdRestEvent;
+    private RestEvent createdRestEvent;
 
-    public CreateRestEventOutput(RestEventDto createdRestEvent) {
+    public CreateRestEventOutput(RestEvent createdRestEvent) {
         this.createdRestEvent = createdRestEvent;
     }
 
-    public RestEventDto getCreatedRestEvent() {
+    public RestEvent getCreatedRestEvent() {
         return createdRestEvent;
     }
 
-    public void setCreatedRestEvent(RestEventDto createdRestEvent) {
+    public void setCreatedRestEvent(RestEvent createdRestEvent) {
         this.createdRestEvent = createdRestEvent;
     }
 }

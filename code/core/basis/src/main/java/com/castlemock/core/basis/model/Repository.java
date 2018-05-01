@@ -25,13 +25,11 @@ import java.util.List;
  * that involves interacting with the file system, such as saving and loading instances, are done through the file repository.
  * @author Karl Dahlgren
  * @since 1.0
- * @param <T> The type that is being managed by the file repository. This file will both be saved and loaded from the
- *              file system.
  * @param <D> The date transfer class of the type class
  * @param <I> The id is used as an identifier for the type.
  * @see Saveable
  */
-public interface Repository<T extends Saveable<I>, D, I extends Serializable> {
+public interface Repository<D, I extends Serializable> {
 
 
     /**
@@ -44,7 +42,6 @@ public interface Repository<T extends Saveable<I>, D, I extends Serializable> {
      * The method provides the functionality to find a specific instance that matches the provided id
      * @param id The id that an instance has to match in order to be retrieved
      * @return Returns an instance that matches the provided id
-     * @see T
      * @see I
      */
     D findOne(I id);
@@ -52,7 +49,6 @@ public interface Repository<T extends Saveable<I>, D, I extends Serializable> {
     /**
      * Retrieves a list of all the instances of the specific type
      * @return A list that contains all the instances of the type that is managed by the operation
-     * @see T
      * @see I
      */
     List<D> findAll();

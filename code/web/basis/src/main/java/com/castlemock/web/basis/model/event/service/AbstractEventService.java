@@ -18,7 +18,6 @@ package com.castlemock.web.basis.model.event.service;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.event.domain.Event;
-import com.castlemock.core.basis.model.event.dto.EventDto;
 import com.castlemock.web.basis.model.AbstractService;
 
 /**
@@ -26,6 +25,6 @@ import com.castlemock.web.basis.model.AbstractService;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractEventService<T extends Event, D extends EventDto, R extends Repository<T, D, String>> extends AbstractService<T,D,String, R> {
+public abstract class AbstractEventService<D extends Event, R extends Repository<D, String>> extends AbstractService<D,String, R> {
 
 }

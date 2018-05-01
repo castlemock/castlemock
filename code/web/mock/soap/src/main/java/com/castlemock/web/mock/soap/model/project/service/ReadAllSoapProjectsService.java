@@ -19,7 +19,7 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadAllSoapProjectsInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadAllSoapProjectsOutput;
 
@@ -42,7 +42,7 @@ public class ReadAllSoapProjectsService extends AbstractSoapProjectService imple
      */
     @Override
     public ServiceResult<ReadAllSoapProjectsOutput> process(final ServiceTask<ReadAllSoapProjectsInput> serviceTask) {
-        final List<SoapProjectDto> soapProjects = findAll();
+        final List<SoapProject> soapProjects = findAll();
         final ReadAllSoapProjectsOutput output = new ReadAllSoapProjectsOutput();
         output.setSoapProjects(soapProjects);
         return createServiceResult(output);

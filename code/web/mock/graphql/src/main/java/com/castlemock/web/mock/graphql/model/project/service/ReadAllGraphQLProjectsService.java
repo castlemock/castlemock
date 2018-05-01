@@ -19,7 +19,7 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadAllGraphQLProjectsInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadAllGraphQLProjectsOutput;
 
@@ -42,7 +42,7 @@ public class ReadAllGraphQLProjectsService extends AbstractGraphQLProjectService
      */
     @Override
     public ServiceResult<ReadAllGraphQLProjectsOutput> process(final ServiceTask<ReadAllGraphQLProjectsInput> serviceTask) {
-        final List<GraphQLProjectDto> restProjects = findAll();
+        final List<GraphQLProject> restProjects = findAll();
         final ReadAllGraphQLProjectsOutput output = new ReadAllGraphQLProjectsOutput();
         output.setGraphQLProjects(restProjects);
         return createServiceResult(output);

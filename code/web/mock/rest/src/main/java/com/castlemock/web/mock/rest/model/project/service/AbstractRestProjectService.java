@@ -16,9 +16,8 @@
 
 package com.castlemock.web.mock.rest.model.project.service;
 
-import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
-import com.castlemock.core.mock.rest.model.project.dto.*;
 import com.castlemock.web.basis.model.AbstractService;
 import com.castlemock.web.mock.rest.model.project.repository.*;
 import com.google.common.base.Preconditions;
@@ -32,7 +31,7 @@ import java.util.Map;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractRestProjectService extends AbstractService<RestProject, RestProjectDto, String, RestProjectRepository> {
+public abstract class AbstractRestProjectService extends AbstractService<RestProject, String, RestProjectRepository> {
 
     @Autowired
     protected RestApplicationRepository applicationRepository;
@@ -44,47 +43,47 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected RestMockResponseRepository mockResponseRepository;
 
 
-    protected RestProjectDto deleteProject(final String projectId){
-        final List<RestApplicationDto> applications = this.applicationRepository.findWithProjectId(projectId);
+    protected RestProject deleteProject(final String projectId){
+        final List<RestApplication> applications = this.applicationRepository.findWithProjectId(projectId);
 
-        for(RestApplicationDto application : applications){
+        for(RestApplication application : applications){
             this.deleteApplication(application.getId());
         }
 
         return this.repository.delete(projectId);
     }
 
-    protected RestApplicationDto deleteApplication(final String applicationId){
-        final List<RestResourceDto> resources = this.resourceRepository.findWithApplicationId(applicationId);
+    protected RestApplication deleteApplication(final String applicationId){
+        final List<RestResource> resources = this.resourceRepository.findWithApplicationId(applicationId);
 
-        for(RestResourceDto resource : resources){
+        for(RestResource resource : resources){
             this.deleteResource(resource.getId());
         }
 
         return this.applicationRepository.delete(applicationId);
     }
 
-    protected RestResourceDto deleteResource(final String resourceId){
-        final List<RestMethodDto> methods = this.methodRepository.findWithResourceId(resourceId);
+    protected RestResource deleteResource(final String resourceId){
+        final List<RestMethod> methods = this.methodRepository.findWithResourceId(resourceId);
 
-        for(RestMethodDto method : methods){
+        for(RestMethod method : methods){
             this.deleteMethod(method.getId());
         }
 
         return this.resourceRepository.delete(resourceId);
     }
 
-    protected RestMethodDto deleteMethod(final String methodId){
-        final List<RestMockResponseDto> responses = this.mockResponseRepository.findWithMethodId(methodId);
+    protected RestMethod deleteMethod(final String methodId){
+        final List<RestMockResponse> responses = this.mockResponseRepository.findWithMethodId(methodId);
 
-        for(RestMockResponseDto response : responses){
+        for(RestMockResponse response : responses){
             this.deleteMockResponse(response.getId());
         }
 
         return this.methodRepository.delete(methodId);
     }
 
-    protected RestMockResponseDto deleteMockResponse(final String mockReponseId){
+    protected RestMockResponse deleteMockResponse(final String mockReponseId){
         return this.mockResponseRepository.delete(mockReponseId);
     }
 
@@ -96,13 +95,13 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
      * @return The updated version project
      */
     @Override
-    protected RestProjectDto update(final String restProjectId, final RestProjectDto updatedProject){
+    protected RestProject update(final String restProjectId, final RestProject updatedProject){
         Preconditions.checkNotNull(restProjectId, "Project id be null");
         Preconditions.checkNotNull(updatedProject, "Project cannot be null");
         Preconditions.checkArgument(!updatedProject.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
-        final RestProjectDto projectWithNameDto = repository.findRestProjectWithName(updatedProject.getName());
-        Preconditions.checkArgument(projectWithNameDto == null || projectWithNameDto.getId().equals(restProjectId), "Project name is already taken");
-        final RestProjectDto project = find(restProjectId);
+        final RestProject projectWithName = repository.findRestProjectWithName(updatedProject.getName());
+        Preconditions.checkArgument(projectWithName == null || projectWithName.getId().equals(restProjectId), "Project name is already taken");
+        final RestProject project = find(restProjectId);
         project.setName(updatedProject.getName());
         project.setDescription(updatedProject.getDescription());
         return super.save(project);
@@ -110,19 +109,19 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
 
 
     /**
-     * Count the method statuses for {@link RestApplicationDto}
+     * Count the method statuses for {@link RestApplication}
      * @param restApplication The application which statuses will be counted
      * @return The result of the status count
      */
-    protected Map<RestMethodStatus, Integer> getRestMethodStatusCount(final RestApplicationDto restApplication){
+    protected Map<RestMethodStatus, Integer> getRestMethodStatusCount(final RestApplication restApplication){
         Preconditions.checkNotNull(restApplication, "The REST application cannot be null");
         final Map<RestMethodStatus, Integer> statuses = new HashMap<RestMethodStatus, Integer>();
 
         for(RestMethodStatus restMethodStatus : RestMethodStatus.values()){
             statuses.put(restMethodStatus, 0);
         }
-        for(RestResourceDto restResource : restApplication.getResources()){
-            for(RestMethodDto restMethod : restResource.getMethods()){
+        for(RestResource restResource : restApplication.getResources()){
+            for(RestMethod restMethod : restResource.getMethods()){
                 RestMethodStatus restMethodStatus = restMethod.getStatus();
                 statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
             }
@@ -132,18 +131,18 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     }
 
     /**
-     * Count the method statuses for a {@link RestResourceDto}
+     * Count the method statuses for a {@link RestResource}
      * @param restResource The resource which statuses will be counted
      * @return The result of the status count
      */
-    protected Map<RestMethodStatus, Integer> getRestMethodStatusCount(final RestResourceDto restResource){
+    protected Map<RestMethodStatus, Integer> getRestMethodStatusCount(final RestResource restResource){
         Preconditions.checkNotNull(restResource, "The REST resource cannot be null");
         final Map<RestMethodStatus, Integer> statuses = new HashMap<RestMethodStatus, Integer>();
 
         for(RestMethodStatus restMethodStatus : RestMethodStatus.values()){
             statuses.put(restMethodStatus, 0);
         }
-        for(RestMethodDto restMethod : restResource.getMethods()){
+        for(RestMethod restMethod : restResource.getMethods()){
             RestMethodStatus restMethodStatus = restMethod.getStatus();
             statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
         }

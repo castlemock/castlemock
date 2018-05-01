@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.rest.web.mvc.controller.application;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesStatusInput;
@@ -38,8 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The REST resource controller provides functionality to retrieve a specific {@link RestResourceDto}.
- * The controller is also responsible for executing actions on {@link RestMethodDto} related to
+ * The REST resource controller provides functionality to retrieve a specific {@link RestResource}.
+ * The controller is also responsible for executing actions on {@link RestMethod} related to
  * the REST resource.
  * @author Karl Dahlgren
  * @since 1.0
@@ -102,7 +102,7 @@ public class RestApplicationController extends AbstractRestViewController {
                 serviceProcessor.process(new UpdateRestResourcesStatusInput(restProjectId, restApplicationId, restResourceId, restMethodStatus));
             }
         } else if(DELETE_REST_RESOURCES.equalsIgnoreCase(action)) {
-            final List<RestResourceDto> restResources = new ArrayList<RestResourceDto>();
+            final List<RestResource> restResources = new ArrayList<RestResource>();
             for(String restResourceId : restResourceModifierCommand.getRestResourceIds()){
                 ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
                 restResources.add(output.getRestResource());
@@ -114,15 +114,15 @@ public class RestApplicationController extends AbstractRestViewController {
             model.addObject(DELETE_REST_RESOURCES_COMMAND, new DeleteRestResourcesCommand());
             return model;
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
-            final List<RestResourceDto> restResourceDtos = new ArrayList<RestResourceDto>();
+            final List<RestResource> restResources = new ArrayList<RestResource>();
             for(String restResourceId : restResourceModifierCommand.getRestResourceIds()){
                 final ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
-                restResourceDtos.add(output.getRestResource());
+                restResources.add(output.getRestResource());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_REST_RESOURCES_ENDPOINT_PAGE);
             model.addObject(REST_PROJECT_ID, restProjectId);
             model.addObject(REST_APPLICATION_ID, restApplicationId);
-            model.addObject(REST_RESOURCES, restResourceDtos);
+            model.addObject(REST_RESOURCES, restResources);
             model.addObject(UPDATE_REST_RESOURCES_ENDPOINT_COMMAND, new UpdateRestResourcesEndpointCommand());
             return model;
         }

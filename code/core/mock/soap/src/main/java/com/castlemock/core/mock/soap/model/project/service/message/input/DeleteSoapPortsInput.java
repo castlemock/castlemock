@@ -18,7 +18,7 @@ package com.castlemock.core.mock.soap.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 
 import java.util.List;
 
@@ -31,9 +31,9 @@ public class DeleteSoapPortsInput implements Input{
     @NotNull
     private String soapProjectId;
     @NotNull
-    private List<SoapPortDto> soapPorts;
+    private List<SoapPort> soapPorts;
 
-    public DeleteSoapPortsInput(String soapProjectId, List<SoapPortDto> soapPorts) {
+    public DeleteSoapPortsInput(String soapProjectId, List<SoapPort> soapPorts) {
         this.soapProjectId = soapProjectId;
         this.soapPorts = soapPorts;
     }
@@ -46,11 +46,11 @@ public class DeleteSoapPortsInput implements Input{
         this.soapProjectId = soapProjectId;
     }
 
-    public List<SoapPortDto> getSoapPorts() {
+    public List<SoapPort> getSoapPorts() {
         return soapPorts;
     }
 
-    public void setSoapPorts(List<SoapPortDto> soapPorts) {
+    public void setSoapPorts(List<SoapPort> soapPorts) {
         this.soapPorts = soapPorts;
     }
 }

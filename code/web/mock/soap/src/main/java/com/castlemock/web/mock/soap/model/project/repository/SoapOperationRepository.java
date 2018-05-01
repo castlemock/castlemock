@@ -18,18 +18,17 @@ package com.castlemock.web.mock.soap.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 
 import java.util.List;
 
 
-public interface SoapOperationRepository extends Repository<SoapOperation, SoapOperationDto, String> {
+public interface SoapOperationRepository extends Repository<SoapOperation, String> {
 
     void deleteWithPortId(String portId);
 
-    List<SoapOperationDto> findWithPortId(String portId);
+    List<SoapOperation> findWithPortId(String portId);
 
     /**
      * The method provides the functionality to find a SOAP operation with a specific name
@@ -38,18 +37,18 @@ public interface SoapOperationRepository extends Repository<SoapOperation, SoapO
      * @return A SOAP operation that matches the search criteria. If no SOAP operation matches the provided
      * name then null will be returned.
      */
-    SoapOperationDto findWithName(String soapPortId, String soapOperationName);
+    SoapOperation findWithName(String soapPortId, String soapOperationName);
 
     /**
-     * Find a {@link SoapOperationDto} with a provided {@link HttpMethod}, {@link SoapVersion}
+     * Find a {@link SoapOperation} with a provided {@link HttpMethod}, {@link SoapVersion}
      * and an identifier.
      * @param portId The id of the port
      * @param method The HTTP method
      * @param version The SOAP version
      * @param identifier The identifier
-     * @return A {@link SoapOperationDto} that matches the provided search criteria.
+     * @return A {@link SoapOperation} that matches the provided search criteria.
      */
-    SoapOperationDto findWithMethodAndVersionAndIdentifier(String portId, HttpMethod method, SoapVersion version, String identifier);
+    SoapOperation findWithMethodAndVersionAndIdentifier(String portId, HttpMethod method, SoapVersion version, String identifier);
 
     /**
      * Updates the current response sequence index.

@@ -17,26 +17,25 @@
 package com.castlemock.web.basis.web.mvc.command.user;
 
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.dto.UserDto;
 import com.castlemock.web.basis.web.mvc.controller.user.UpdateCurrentUserController;
 
 
 /**
  * The command class is used when a user wants to update their own user information.
  * @see User
- * @see UserDto
+ * @see User
  * @see UpdateCurrentUserController
  */
 public class UpdateCurrentUserCommand {
 
-    private UserDto user = new UserDto();
+    private User user = new User();
     private String verifiedPassword;
 
-    public UserDto getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserDto user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

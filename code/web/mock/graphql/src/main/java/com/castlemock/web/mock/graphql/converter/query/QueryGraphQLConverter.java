@@ -1,8 +1,8 @@
 package com.castlemock.web.mock.graphql.converter.query;
 
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestArgumentDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestFieldDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestQueryDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestArgument;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestField;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
 import graphql.language.*;
 import graphql.parser.Parser;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -13,7 +13,7 @@ import java.util.List;
 public class QueryGraphQLConverter {
 
 
-    public List<GraphQLRequestQueryDto> parseQuery(final String body){
+    public List<GraphQLRequestQuery> parseQuery(final String body){
         Parser parser = new Parser();
         Document document;
         try {
@@ -41,15 +41,15 @@ public class QueryGraphQLConverter {
     }
 
 
-    private List<GraphQLRequestQueryDto> getQuery(final OperationDefinition operationDefinition){
-        final List<GraphQLRequestQueryDto> queries = new ArrayList<>();
+    private List<GraphQLRequestQuery> getQuery(final OperationDefinition operationDefinition){
+        final List<GraphQLRequestQuery> queries = new ArrayList<>();
         for(Selection selection : operationDefinition.getSelectionSet().getSelections()){
             if(selection instanceof Field){
                 Field field = (Field) selection;
 
-                final GraphQLRequestQueryDto query = new GraphQLRequestQueryDto();
-                final List<GraphQLRequestFieldDto> fields = new ArrayList<>();
-                final List<GraphQLRequestArgumentDto> arguments = new ArrayList<>();
+                final GraphQLRequestQuery query = new GraphQLRequestQuery();
+                final List<GraphQLRequestField> fields = new ArrayList<>();
+                final List<GraphQLRequestArgument> arguments = new ArrayList<>();
                 query.setOperationName(field.getName());
                 query.setFields(fields);
                 query.setArguments(arguments);
@@ -57,13 +57,13 @@ public class QueryGraphQLConverter {
                 for(Selection subSelection : field.getSelectionSet().getSelections()){
                     if(subSelection instanceof Field){
                         Field subField = (Field) subSelection;
-                        GraphQLRequestFieldDto subRequestField = getField(subField);
+                        GraphQLRequestField subRequestField = getField(subField);
                         fields.add(subRequestField);
                     }
                 }
 
                 for(Argument argument : field.getArguments()){
-                    GraphQLRequestArgumentDto requestArgument = getArgument(argument);
+                    GraphQLRequestArgument requestArgument = getArgument(argument);
                     arguments.add(requestArgument);
                 }
 
@@ -75,10 +75,10 @@ public class QueryGraphQLConverter {
         return queries;
     }
 
-    private GraphQLRequestFieldDto getField(Field field){
-        final GraphQLRequestFieldDto requestField = new GraphQLRequestFieldDto();
-        final List<GraphQLRequestFieldDto> fields = new ArrayList<>();
-        final List<GraphQLRequestArgumentDto> arguments = new ArrayList<>();
+    private GraphQLRequestField getField(Field field){
+        final GraphQLRequestField requestField = new GraphQLRequestField();
+        final List<GraphQLRequestField> fields = new ArrayList<>();
+        final List<GraphQLRequestArgument> arguments = new ArrayList<>();
         requestField.setName(field.getName());
         requestField.setFields(fields);
 
@@ -86,14 +86,14 @@ public class QueryGraphQLConverter {
             for(Selection selection : field.getSelectionSet().getSelections()){
                 if(selection instanceof Field){
                     Field subField = (Field) selection;
-                    GraphQLRequestFieldDto subRequestField = getField(subField);
+                    GraphQLRequestField subRequestField = getField(subField);
                     fields.add(subRequestField);
                 }
             }
         }
 
         for(Argument argument : field.getArguments()){
-            GraphQLRequestArgumentDto requestArgument = getArgument(argument);
+            GraphQLRequestArgument requestArgument = getArgument(argument);
             arguments.add(requestArgument);
         }
 
@@ -101,8 +101,8 @@ public class QueryGraphQLConverter {
         return requestField;
     }
 
-    private GraphQLRequestArgumentDto getArgument(final Argument argument){
-        final GraphQLRequestArgumentDto requestArgument = new GraphQLRequestArgumentDto();
+    private GraphQLRequestArgument getArgument(final Argument argument){
+        final GraphQLRequestArgument requestArgument = new GraphQLRequestArgument();
         requestArgument.setName(argument.getName());
         return requestArgument;
 

@@ -18,7 +18,7 @@ package com.castlemock.core.mock.graphql.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 
 /**
  * @author Karl Dahlgren
@@ -29,9 +29,9 @@ public class CreateGraphQLApplicationInput implements Input {
     @NotNull
     private String graphQLProjectId;
     @NotNull
-    private GraphQLApplicationDto graphQLApplication;
+    private GraphQLApplication graphQLApplication;
 
-    public CreateGraphQLApplicationInput(String graphQLProjectId, GraphQLApplicationDto graphQLApplication) {
+    public CreateGraphQLApplicationInput(String graphQLProjectId, GraphQLApplication graphQLApplication) {
         this.graphQLProjectId = graphQLProjectId;
         this.graphQLApplication = graphQLApplication;
     }
@@ -44,11 +44,11 @@ public class CreateGraphQLApplicationInput implements Input {
         this.graphQLProjectId = graphQLProjectId;
     }
 
-    public GraphQLApplicationDto getGraphQLApplication() {
+    public GraphQLApplication getGraphQLApplication() {
         return graphQLApplication;
     }
 
-    public void setGraphQLApplication(GraphQLApplicationDto graphQLApplication) {
+    public void setGraphQLApplication(GraphQLApplication graphQLApplication) {
         this.graphQLApplication = graphQLApplication;
     }
 }

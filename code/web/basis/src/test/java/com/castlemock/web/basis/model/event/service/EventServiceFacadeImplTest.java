@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.model.event.service;
 
 import com.castlemock.core.basis.model.TypeIdentifier;
-import com.castlemock.core.basis.model.event.dto.EventDto;
+import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.basis.model.event.service.EventServiceAdapter;
 import com.castlemock.web.basis.model.event.dto.EventDtoGenerator;
 import org.junit.Assert;
@@ -68,10 +68,10 @@ public class EventServiceFacadeImplTest {
 
     @Test
     public void testSave(){
-        final EventDto eventDto = new EventDto();
-        Mockito.when(eventServiceAdapter.convertType(Mockito.any(EventDto.class))).thenReturn(eventDto);
+        final Event eventDto = new Event();
+        Mockito.when(eventServiceAdapter.convertType(Mockito.any(Event.class))).thenReturn(eventDto);
         serviceFacade.save(TYPE, eventDto);
-        Mockito.verify(eventServiceAdapter, Mockito.times(1)).create(Mockito.any(EventDto.class));
+        Mockito.verify(eventServiceAdapter, Mockito.times(1)).create(Mockito.any(Event.class));
     }
 
     @Test
@@ -82,27 +82,27 @@ public class EventServiceFacadeImplTest {
 
     @Test
     public void testUpdate(){
-        final EventDto eventDto = new EventDto();
-        Mockito.when(eventServiceAdapter.convertType(Mockito.any(EventDto.class))).thenReturn(eventDto);
+        final Event eventDto = new Event();
+        Mockito.when(eventServiceAdapter.convertType(Mockito.any(Event.class))).thenReturn(eventDto);
         serviceFacade.update(TYPE_URL, "Id", eventDto);
-        Mockito.verify(eventServiceAdapter, Mockito.times(1)).update(Mockito.anyString(), Mockito.any(EventDto.class));
+        Mockito.verify(eventServiceAdapter, Mockito.times(1)).update(Mockito.anyString(), Mockito.any(Event.class));
     }
 
     @Test
     public void testFindAll(){
-        final EventDto oldEvent = EventDtoGenerator.generateEventDto();
+        final Event oldEvent = EventDtoGenerator.generateEventDto();
         oldEvent.setStartDate(new Date(2016, 1, 1));
-        final EventDto newEvent = EventDtoGenerator.generateEventDto();
+        final Event newEvent = EventDtoGenerator.generateEventDto();
         newEvent.setStartDate(new Date(2016, 1, 2));
-        final List<EventDto> eventDtos = new ArrayList<EventDto>();
+        final List<Event> eventDtos = new ArrayList<Event>();
         eventDtos.add(oldEvent);
         eventDtos.add(newEvent);
         Mockito.when(eventServiceAdapter.readAll()).thenReturn(eventDtos);
 
-        final List<EventDto> returnedEventDtos = serviceFacade.findAll();
+        final List<Event> returnedEventDtos = serviceFacade.findAll();
         Assert.assertEquals(2, returnedEventDtos.size());
 
-        for(EventDto returnedEventDto : returnedEventDtos){
+        for(Event returnedEventDto : returnedEventDtos){
             Assert.assertEquals(TYPE, returnedEventDto.getTypeIdentifier().getType());
         }
 
@@ -112,9 +112,9 @@ public class EventServiceFacadeImplTest {
 
     @Test
     public void testFindOne(){
-        final EventDto eventDto = new EventDto();
+        final Event eventDto = new Event();
         Mockito.when(eventServiceAdapter.read(Mockito.anyString())).thenReturn(eventDto);
-        final EventDto returnedEventDto = serviceFacade.findOne(TYPE_URL, "Id");
+        final Event returnedEventDto = serviceFacade.findOne(TYPE_URL, "Id");
         Assert.assertEquals(eventDto, returnedEventDto);
         Assert.assertEquals(TYPE, eventDto.getTypeIdentifier().getType());
     }

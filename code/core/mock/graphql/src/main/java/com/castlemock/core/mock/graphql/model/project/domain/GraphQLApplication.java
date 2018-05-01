@@ -16,31 +16,44 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.List;
 
-@XmlRootElement
-public class GraphQLApplication implements Saveable<String> {
+/**
+ * @author Karl Dahlgren
+ * @since 1.19
+ */
+public class GraphQLApplication {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("description")
     private String description;
+
+    @Mapping("projectId")
     private String projectId;
 
-    @Override
-    @XmlElement
+    private List<GraphQLObjectType> objects = new ArrayList<>();
+    private List<GraphQLEnumType> enums = new ArrayList<>();
+    private List<GraphQLQuery> queries = new ArrayList<>();
+    private List<GraphQLMutation> mutations = new ArrayList<>();
+    private List<GraphQLSubscription> subscriptions = new ArrayList<>();
+    private String invokeAddress;
+
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -49,7 +62,6 @@ public class GraphQLApplication implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -58,12 +70,59 @@ public class GraphQLApplication implements Saveable<String> {
         this.description = description;
     }
 
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    public List<GraphQLObjectType> getObjects() {
+        return objects;
+    }
+
+    public void setObjects(List<GraphQLObjectType> objects) {
+        this.objects = objects;
+    }
+
+    public List<GraphQLEnumType> getEnums() {
+        return enums;
+    }
+
+    public void setEnums(List<GraphQLEnumType> enums) {
+        this.enums = enums;
+    }
+
+    public List<GraphQLQuery> getQueries() {
+        return queries;
+    }
+
+    public void setQueries(List<GraphQLQuery> queries) {
+        this.queries = queries;
+    }
+
+    public List<GraphQLMutation> getMutations() {
+        return mutations;
+    }
+
+    public void setMutations(List<GraphQLMutation> mutations) {
+        this.mutations = mutations;
+    }
+
+    public List<GraphQLSubscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<GraphQLSubscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public String getInvokeAddress() {
+        return invokeAddress;
+    }
+
+    public void setInvokeAddress(String invokeAddress) {
+        this.invokeAddress = invokeAddress;
     }
 }

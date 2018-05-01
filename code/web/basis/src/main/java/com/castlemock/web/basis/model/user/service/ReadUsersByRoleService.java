@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUsersByRoleInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUsersByRoleOutput;
 
@@ -45,7 +45,7 @@ public class ReadUsersByRoleService extends AbstractUserService implements Servi
     public ServiceResult<ReadUsersByRoleOutput> process(final ServiceTask<ReadUsersByRoleInput> serviceTask) {
         final ReadUsersByRoleInput input = serviceTask.getInput();
         final Role role = input.getRole();
-        final List<UserDto> users = findByRole(role);
+        final List<User> users = findByRole(role);
         final ReadUsersByRoleOutput output = new ReadUsersByRoleOutput();
         output.setUsers(users);
         return createServiceResult(output);

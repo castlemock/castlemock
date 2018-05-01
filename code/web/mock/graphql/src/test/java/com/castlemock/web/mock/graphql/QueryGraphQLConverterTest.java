@@ -17,7 +17,7 @@
 
 package com.castlemock.web.mock.graphql;
 
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestQueryDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
 import com.castlemock.web.mock.graphql.converter.query.QueryGraphQLConverter;
 import org.junit.Assert;
 import org.junit.Test;
@@ -42,7 +42,7 @@ public class QueryGraphQLConverterTest {
     @Test
     public void testQueryParser(){
         final QueryGraphQLConverter converter = new QueryGraphQLConverter();
-        final List<GraphQLRequestQueryDto> queries = converter.parseQuery(QUERY);
+        final List<GraphQLRequestQuery> queries = converter.parseQuery(QUERY);
 
 
         Assert.assertNotNull(queries);

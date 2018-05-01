@@ -19,8 +19,8 @@ package com.castlemock.web.mock.rest.model.event.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.event.dto.EventDtoStartDateComparator;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.basis.model.event.domain.EventStartDateComparator;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
@@ -48,8 +48,8 @@ public class ReadRestEventWithMethodIdService extends AbstractRestEventService i
     @Override
     public ServiceResult<ReadRestEventWithMethodIdOutput> process(ServiceTask<ReadRestEventWithMethodIdInput> serviceTask) {
         final ReadRestEventWithMethodIdInput input = serviceTask.getInput();
-        final List<RestEventDto> events = repository.findEventsByMethodId(input.getRestMethodId());
-        Collections.sort(events, new EventDtoStartDateComparator());
+        final List<RestEvent> events = repository.findEventsByMethodId(input.getRestMethodId());
+        Collections.sort(events, new EventStartDateComparator());
         return createServiceResult(new ReadRestEventWithMethodIdOutput(events));
     }
 }

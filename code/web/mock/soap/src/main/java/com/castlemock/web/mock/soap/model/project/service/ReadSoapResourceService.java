@@ -19,7 +19,7 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapResourceInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapResourceOutput;
 
@@ -41,7 +41,7 @@ public class ReadSoapResourceService extends AbstractSoapProjectService implemen
     @Override
     public ServiceResult<ReadSoapResourceOutput> process(final ServiceTask<ReadSoapResourceInput> serviceTask) {
         final ReadSoapResourceInput input = serviceTask.getInput();
-        final SoapResourceDto soapResource = this.resourceRepository.findOne(input.getSoapResourceId());
+        final SoapResource soapResource = this.resourceRepository.findOne(input.getSoapResourceId());
         return createServiceResult(new ReadSoapResourceOutput(soapResource));
     }
 }

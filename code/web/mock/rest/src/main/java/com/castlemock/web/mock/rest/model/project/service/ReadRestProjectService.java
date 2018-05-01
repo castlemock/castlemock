@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 
@@ -46,12 +46,12 @@ public class ReadRestProjectService extends AbstractRestProjectService implement
     @Override
     public ServiceResult<ReadRestProjectOutput> process(final ServiceTask<ReadRestProjectInput> serviceTask) {
         final ReadRestProjectInput input = serviceTask.getInput();
-        final RestProjectDto restProject = find(input.getRestProjectId());
-        final List<RestApplicationDto> applications = this.applicationRepository.findWithProjectId(input.getRestProjectId());
+        final RestProject restProject = find(input.getRestProjectId());
+        final List<RestApplication> applications = this.applicationRepository.findWithProjectId(input.getRestProjectId());
         restProject.setApplications(applications);
-        for(final RestApplicationDto restApplicationDto : restProject.getApplications()){
-            final Map<RestMethodStatus, Integer> soapOperationStatusCount = getRestMethodStatusCount(restApplicationDto);
-            restApplicationDto.setStatusCount(soapOperationStatusCount);
+        for(final RestApplication restApplication : restProject.getApplications()){
+            final Map<RestMethodStatus, Integer> soapOperationStatusCount = getRestMethodStatusCount(restApplication);
+            restApplication.setStatusCount(soapOperationStatusCount);
         }
         return createServiceResult(new ReadRestProjectOutput(restProject));
     }

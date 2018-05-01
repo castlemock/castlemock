@@ -19,8 +19,7 @@ package com.castlemock.web.basis.model.event.service;
 import com.castlemock.core.basis.model.TypeIdentifiable;
 import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.event.domain.Event;
-import com.castlemock.core.basis.model.event.dto.EventDto;
-import com.castlemock.core.basis.model.event.dto.EventDtoStartDateComparator;
+import com.castlemock.core.basis.model.event.domain.EventStartDateComparator;
 import com.castlemock.core.basis.model.event.service.EventServiceAdapter;
 import com.castlemock.core.basis.model.event.service.EventServiceFacade;
 import com.castlemock.web.basis.model.ServiceFacadeImpl;
@@ -36,10 +35,10 @@ import java.util.Map;
  * @author Karl Dahlgren
  * @since 1.0
  * @see Event
- * @see EventDto
+ * @see Event
  */
 @Service
-public class EventServiceFacadeImpl extends ServiceFacadeImpl<EventDto, String, EventServiceAdapter<EventDto>> implements EventServiceFacade {
+public class EventServiceFacadeImpl extends ServiceFacadeImpl<Event, String, EventServiceAdapter<Event>> implements EventServiceFacade {
 
     /**
      * The initialize method is responsible for for locating all the service instances for a specific module
@@ -61,15 +60,15 @@ public class EventServiceFacadeImpl extends ServiceFacadeImpl<EventDto, String, 
      * @since 1.3
      */
     @Override
-    public List<EventDto> findAll(){
-        final List<EventDto> events = super.findAll();
-        Collections.sort(events, new EventDtoStartDateComparator());
+    public List<Event> findAll(){
+        final List<Event> events = super.findAll();
+        Collections.sort(events, new EventStartDateComparator());
         return events;
     }
 
     public void clearAll(){
-        for(Map.Entry<String, EventServiceAdapter<EventDto>> entry : services.entrySet()){
-            EventServiceAdapter<EventDto> eventDtoEventServiceAdapter = entry.getValue();
+        for(Map.Entry<String, EventServiceAdapter<Event>> entry : services.entrySet()){
+            EventServiceAdapter<Event> eventDtoEventServiceAdapter = entry.getValue();
             eventDtoEventServiceAdapter.clearAll();
         }
     }

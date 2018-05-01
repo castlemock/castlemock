@@ -22,7 +22,6 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.dto.UserDto;
 import com.castlemock.core.basis.model.user.service.message.input.CreateUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.CreateUserOutput;
 import org.dozer.DozerBeanMapper;
@@ -53,14 +52,14 @@ public class CreateUserServiceTest {
 
     @Test
     public void testProcess(){
-        UserDto user = new UserDto();
+        User user = new User();
         user.setUsername("Username");
         user.setPassword("Password");
         user.setStatus(Status.ACTIVE);
         user.setRole(Role.ADMIN);
         user.setEmail("email@email.com");
 
-        UserDto createdUser = new UserDto();
+        User createdUser = new User();
         createdUser.setId(new String());
         createdUser.setPassword("Password");
         createdUser.setUsername("Username");
@@ -68,14 +67,14 @@ public class CreateUserServiceTest {
         createdUser.setRole(Role.ADMIN);
         createdUser.setEmail("email@email.com");
 
-        Mockito.when(repository.save(Mockito.any(UserDto.class))).thenReturn(createdUser);
+        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(createdUser);
         final CreateUserInput input = new CreateUserInput(user);
         final ServiceTask<CreateUserInput> serviceTask = new ServiceTask<CreateUserInput>();
         serviceTask.setInput(input);
         final ServiceResult<CreateUserOutput> serviceResult = service.process(serviceTask);
         final CreateUserOutput output = serviceResult.getOutput();
 
-        final UserDto returnedUser = output.getSavedUser();
+        final User returnedUser = output.getSavedUser();
         Assert.assertNotNull(returnedUser);
         Assert.assertEquals(returnedUser.getId(), createdUser.getId());
         Assert.assertNotEquals(user.getPassword(), returnedUser.getPassword());

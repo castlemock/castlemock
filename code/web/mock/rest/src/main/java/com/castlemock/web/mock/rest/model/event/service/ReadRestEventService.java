@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.event.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventOutput;
 
@@ -41,7 +41,7 @@ public class ReadRestEventService extends AbstractRestEventService implements Se
     @Override
     public ServiceResult<ReadRestEventOutput> process(ServiceTask<ReadRestEventInput> serviceTask) {
         final ReadRestEventInput input = serviceTask.getInput();
-        final RestEventDto restEvent = find(input.getRestEventId());
+        final RestEvent restEvent = find(input.getRestEventId());
         return createServiceResult(new ReadRestEventOutput(restEvent));
     }
 }

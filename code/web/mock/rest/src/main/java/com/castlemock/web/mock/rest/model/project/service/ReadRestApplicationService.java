@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
 
@@ -46,11 +46,11 @@ public class ReadRestApplicationService extends AbstractRestProjectService imple
     @Override
     public ServiceResult<ReadRestApplicationOutput> process(final ServiceTask<ReadRestApplicationInput> serviceTask) {
         final ReadRestApplicationInput input = serviceTask.getInput();
-        final RestApplicationDto application = this.applicationRepository.findOne(input.getRestApplicationId());
-        final List<RestResourceDto> resources = this.resourceRepository.findWithApplicationId(application.getId());
-        for(RestResourceDto restResourceDto : resources){
-            Map<RestMethodStatus, Integer> restMethodStatusCount = getRestMethodStatusCount(restResourceDto);
-            restResourceDto.setStatusCount(restMethodStatusCount);
+        final RestApplication application = this.applicationRepository.findOne(input.getRestApplicationId());
+        final List<RestResource> resources = this.resourceRepository.findWithApplicationId(application.getId());
+        for(RestResource restResource : resources){
+            Map<RestMethodStatus, Integer> restMethodStatusCount = getRestMethodStatusCount(restResource);
+            restResource.setStatusCount(restMethodStatusCount);
         }
         application.setResources(resources);
         return createServiceResult(new ReadRestApplicationOutput(application));

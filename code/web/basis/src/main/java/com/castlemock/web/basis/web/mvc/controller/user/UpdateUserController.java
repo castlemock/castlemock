@@ -18,7 +18,7 @@ package com.castlemock.web.basis.web.mvc.controller.user;
 
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserInput;
 import com.castlemock.core.basis.model.user.service.message.input.UpdateUserInput;
@@ -64,7 +64,7 @@ public class UpdateUserController extends AbstractViewController {
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String userId) {
         final ReadUserOutput readUserOutput = serviceProcessor.process(new ReadUserInput(userId));
-        final UserDto userDto = readUserOutput.getUser();
+        final User userDto = readUserOutput.getUser();
         userDto.setPassword(EMPTY);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(ROLES, Role.values());
@@ -81,12 +81,12 @@ public class UpdateUserController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String userId, @ModelAttribute final UserDto updatedUser) {
+    public ModelAndView update(@PathVariable final String userId, @ModelAttribute final User updatedUser) {
         final String loggedInUsername = getLoggedInUsername();
         final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(new ReadUserByUsernameInput(loggedInUsername));
-        final UserDto loggedInUser = readUserByUsernameOutput.getUser();
+        final User loggedInUser = readUserByUsernameOutput.getUser();
         final UpdateUserOutput updateUserOutput = serviceProcessor.process(new UpdateUserInput(userId, updatedUser));
-        final UserDto savedUser = updateUserOutput.getUpdatedUser();
+        final User savedUser = updateUserOutput.getUpdatedUser();
 
         // Update the current logged in user if the username has been updated
         if(loggedInUser.getId().equals(userId) && !savedUser.getUsername().equals(loggedInUsername)){

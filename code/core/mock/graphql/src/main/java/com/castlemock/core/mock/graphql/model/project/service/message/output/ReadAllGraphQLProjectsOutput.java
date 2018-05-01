@@ -18,7 +18,7 @@ package com.castlemock.core.mock.graphql.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 
 import java.util.List;
 
@@ -29,13 +29,13 @@ import java.util.List;
 public class ReadAllGraphQLProjectsOutput implements Output {
 
     @NotNull
-    private List<GraphQLProjectDto> graphQLProjects;
+    private List<GraphQLProject> graphQLProjects;
 
-    public List<GraphQLProjectDto> getGraphQLProjects() {
+    public List<GraphQLProject> getGraphQLProjects() {
         return graphQLProjects;
     }
 
-    public void setGraphQLProjects(List<GraphQLProjectDto> graphQLProjects) {
+    public void setGraphQLProjects(List<GraphQLProject> graphQLProjects) {
         this.graphQLProjects = graphQLProjects;
     }
 }

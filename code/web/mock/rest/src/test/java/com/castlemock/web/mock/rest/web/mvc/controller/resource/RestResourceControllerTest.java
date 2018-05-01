@@ -17,10 +17,10 @@
 package com.castlemock.web.mock.rest.web.mvc.controller.resource;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
@@ -28,9 +28,9 @@ import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRe
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
-import com.castlemock.web.mock.rest.model.project.RestApplicationDtoGenerator;
-import com.castlemock.web.mock.rest.model.project.RestProjectDtoGenerator;
-import com.castlemock.web.mock.rest.model.project.RestResourceDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
+import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
+import com.castlemock.web.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.web.mock.rest.web.mvc.command.method.RestMethodModifierCommand;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
 import org.junit.Test;
@@ -82,20 +82,20 @@ public class RestResourceControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testGetServiceValid() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
-        final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
-        final RestResourceDto restResourceDto = RestResourceDtoGenerator.generateRestResourceDto();
-        when(serviceProcessor.process(isA(ReadRestResourceInput.class))).thenReturn(new ReadRestResourceOutput(restResourceDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId());
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestResource restResource = RestResourceGenerator.generateRestResource();
+        when(serviceProcessor.process(isA(ReadRestResourceInput.class))).thenReturn(new ReadRestResourceOutput(restResource));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId());
         ResultActions result = mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(5 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProjectDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_APPLICATION_ID, restApplicationDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_RESOURCE, restResourceDto));
-        RestResourceDto restResourceDtoResponse = (RestResourceDto) result.andReturn().getModelAndView().getModel().get(REST_RESOURCE);
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProject.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_APPLICATION_ID, restApplication.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_RESOURCE, restResource));
+        RestResource restResourceResponse = (RestResource) result.andReturn().getModelAndView().getModel().get(REST_RESOURCE);
         String hostAddress = restResourceController.getHostAddress();
     }
 
@@ -110,10 +110,10 @@ public class RestResourceControllerTest extends AbstractRestControllerTest {
         restMethodModifierCommand.setRestMethodIds(restMethodIds);
         restMethodModifierCommand.setRestMethodStatus("MOCKED");
 
-        final RestMethodDto restMethod1 = new RestMethodDto();
+        final RestMethod restMethod1 = new RestMethod();
         restMethod1.setName("restMethod1");
 
-        final RestMethodDto restMethod2 = new RestMethodDto();
+        final RestMethod restMethod2 = new RestMethod();
         restMethod2.setName("restMethod2");
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestMethodInput.class)))
@@ -140,13 +140,13 @@ public class RestResourceControllerTest extends AbstractRestControllerTest {
         final String resourceId = "resourceId";
         final String[] restMethodIds = {"restMethod1", "restMethod2"};
 
-        final RestMethodDto restMethod1 = new RestMethodDto();
+        final RestMethod restMethod1 = new RestMethod();
         restMethod1.setName("restMethod1");
 
-        final RestMethodDto restMethod2 = new RestMethodDto();
+        final RestMethod restMethod2 = new RestMethod();
         restMethod2.setName("restMethod2");
 
-        final List<RestMethodDto> restMethods = Arrays.asList(restMethod1, restMethod2);
+        final List<RestMethod> restMethods = Arrays.asList(restMethod1, restMethod2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestMethodInput.class)))
                 .thenReturn(new ReadRestMethodOutput(restMethod1))
@@ -182,13 +182,13 @@ public class RestResourceControllerTest extends AbstractRestControllerTest {
         final String resourceId = "resourceId";
         final String[] restMethodIds = {"restMethod1", "restMethod2"};
 
-        final RestMethodDto restMethod1 = new RestMethodDto();
+        final RestMethod restMethod1 = new RestMethod();
         restMethod1.setName("restMethod1");
 
-        final RestMethodDto restMethod2 = new RestMethodDto();
+        final RestMethod restMethod2 = new RestMethod();
         restMethod2.setName("restMethod2");
 
-        final List<RestMethodDto> restMethods = Arrays.asList(restMethod1, restMethod2);
+        final List<RestMethod> restMethods = Arrays.asList(restMethod1, restMethod2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestMethodInput.class)))
                 .thenReturn(new ReadRestMethodOutput(restMethod1))

@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.graphql.web.mvc.controller.application;
 
 
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLApplicationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.UpdateGraphQLApplicationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLApplicationOutput;
@@ -55,7 +55,7 @@ public class UpdateGraphQLApplicationController extends AbstractGraphQLViewContr
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String projectId, @PathVariable final String applicationId,  @ModelAttribute final GraphQLApplicationDto graphQLApplication) {
+    public ModelAndView update(@PathVariable final String projectId, @PathVariable final String applicationId,  @ModelAttribute final GraphQLApplication graphQLApplication) {
         serviceProcessor.process(new UpdateGraphQLApplicationInput(projectId, applicationId, graphQLApplication));
         return redirect("/graphql/project/" + projectId + "/application/" + applicationId);
     }

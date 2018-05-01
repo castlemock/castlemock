@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.project;
 
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class UpdateProjectController extends AbstractViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "{projectType}/project/{projectId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String projectType, @PathVariable final String projectId) {
-        final ProjectDto projectDto = projectServiceComponent.findOne(projectType, projectId);
+        final Project projectDto = projectServiceComponent.findOne(projectType, projectId);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(PROJECT, projectDto);
         return model;
@@ -73,7 +73,7 @@ public class UpdateProjectController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "{projectType}/project/{projectId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String projectType, @PathVariable final String projectId, @ModelAttribute final ProjectDto updatedProject) {
+    public ModelAndView update(@PathVariable final String projectType, @PathVariable final String projectId, @ModelAttribute final Project updatedProject) {
         projectServiceComponent.update(projectType, projectId, updatedProject);
         return redirect("/" + projectType + "/project/" + projectId);
     }

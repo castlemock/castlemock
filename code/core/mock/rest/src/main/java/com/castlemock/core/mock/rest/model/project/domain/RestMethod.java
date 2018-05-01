@@ -16,43 +16,63 @@
 
 package com.castlemock.core.mock.rest.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.dozer.Mapping;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class RestMethod implements Saveable<String> {
 
+public class RestMethod {
+
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("resourceId")
     private String resourceId;
+
+    @Mapping("defaultBody")
     private String defaultBody;
+
+    @Mapping("httpMethod")
     private HttpMethod httpMethod;
+
+    @Mapping("forwardedEndpoint")
     private String forwardedEndpoint;
+
+    @Mapping("status")
     private RestMethodStatus status;
+
+    @Mapping("responseStrategy")
     private RestResponseStrategy responseStrategy;
-    private Integer currentResponseSequenceIndex;
+
+    @Mapping("currentResponseSequenceIndex")
+    private Integer currentResponseSequenceIndex = 0;
+
+    @Mapping("simulateNetworkDelay")
     private boolean simulateNetworkDelay;
+
+    @Mapping("networkDelay")
     private long networkDelay;
 
-    @Override
-    @XmlElement
+    private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
+    
+    private String invokeAddress;
+
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -61,16 +81,6 @@ public class RestMethod implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
-    public String getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(String resourceId) {
-        this.resourceId = resourceId;
-    }
-
-    @XmlElement
     public String getDefaultBody() {
         return defaultBody;
     }
@@ -79,7 +89,14 @@ public class RestMethod implements Saveable<String> {
         this.defaultBody = defaultBody;
     }
 
-    @XmlElement
+    public String getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
+    }
+
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
@@ -88,7 +105,14 @@ public class RestMethod implements Saveable<String> {
         this.httpMethod = httpMethod;
     }
 
-    @XmlElement
+    public List<RestMockResponse> getMockResponses() {
+        return mockResponses;
+    }
+
+    public void setMockResponses(List<RestMockResponse> mockResponses) {
+        this.mockResponses = mockResponses;
+    }
+
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
@@ -97,7 +121,6 @@ public class RestMethod implements Saveable<String> {
         this.forwardedEndpoint = forwardedEndpoint;
     }
 
-    @XmlElement
     public RestMethodStatus getStatus() {
         return status;
     }
@@ -106,7 +129,6 @@ public class RestMethod implements Saveable<String> {
         this.status = status;
     }
 
-    @XmlElement
     public RestResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
@@ -115,7 +137,6 @@ public class RestMethod implements Saveable<String> {
         this.responseStrategy = responseStrategy;
     }
 
-    @XmlElement
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
     }
@@ -124,7 +145,14 @@ public class RestMethod implements Saveable<String> {
         this.currentResponseSequenceIndex = currentResponseSequenceIndex;
     }
 
-    @XmlElement
+    public String getInvokeAddress() {
+        return invokeAddress;
+    }
+
+    public void setInvokeAddress(String invokeAddress) {
+        this.invokeAddress = invokeAddress;
+    }
+
     public boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
     }
@@ -133,7 +161,6 @@ public class RestMethod implements Saveable<String> {
         this.simulateNetworkDelay = simulateNetworkDelay;
     }
 
-    @XmlElement
     public long getNetworkDelay() {
         return networkDelay;
     }

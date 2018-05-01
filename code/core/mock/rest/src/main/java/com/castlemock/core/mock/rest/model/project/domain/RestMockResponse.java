@@ -16,13 +16,9 @@
 
 package com.castlemock.core.mock.rest.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.dozer.Mapping;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -30,31 +26,43 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class RestMockResponse implements Saveable<String> {
+public class RestMockResponse {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("body")
     private String body;
+
+    @Mapping("methodId")
     private String methodId;
-    private RestMockResponseStatus status;
+
+    @Mapping("httpStatusCode")
     private Integer httpStatusCode;
+
+    @Mapping("status")
+    private RestMockResponseStatus status;
+
+    @Mapping("usingExpressions")
     private boolean usingExpressions;
+
+    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+
+    @Mapping("contentEncodings")
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
 
-    @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -63,7 +71,6 @@ public class RestMockResponse implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public String getBody() {
         return body;
     }
@@ -72,7 +79,6 @@ public class RestMockResponse implements Saveable<String> {
         this.body = body;
     }
 
-    @XmlElement
     public String getMethodId() {
         return methodId;
     }
@@ -81,7 +87,6 @@ public class RestMockResponse implements Saveable<String> {
         this.methodId = methodId;
     }
 
-    @XmlElement
     public RestMockResponseStatus getStatus() {
         return status;
     }
@@ -90,7 +95,6 @@ public class RestMockResponse implements Saveable<String> {
         this.status = status;
     }
 
-    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
@@ -99,7 +103,6 @@ public class RestMockResponse implements Saveable<String> {
         this.httpStatusCode = httpStatusCode;
     }
 
-    @XmlElement
     public boolean isUsingExpressions() {
         return usingExpressions;
     }
@@ -108,8 +111,6 @@ public class RestMockResponse implements Saveable<String> {
         this.usingExpressions = usingExpressions;
     }
 
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
@@ -118,33 +119,11 @@ public class RestMockResponse implements Saveable<String> {
         this.httpHeaders = httpHeaders;
     }
 
-    @XmlElementWrapper(name = "contentEncodings")
-    @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
     public void setContentEncodings(List<ContentEncoding> contentEncodings) {
         this.contentEncodings = contentEncodings;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof RestMockResponse))
-            return false;
-
-        RestMockResponse that = (RestMockResponse) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }

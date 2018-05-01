@@ -16,20 +16,22 @@
 
 package com.castlemock.web.mock.rest.model.project.repository;
 
+import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class RestApplicationRepositoryImpl extends RepositoryImpl<RestApplication, RestApplicationDto, String> implements RestApplicationRepository {
+public class RestApplicationRepositoryImpl extends RepositoryImpl<RestApplicationRepositoryImpl.RestApplicationFile, RestApplication, String> implements RestApplicationRepository {
 
     @Value(value = "${rest.application.file.directory}")
     private String fileDirectory;
@@ -73,7 +75,7 @@ public class RestApplicationRepositoryImpl extends RepositoryImpl<RestApplicatio
      * @see #save
      */
     @Override
-    protected void checkType(RestApplication type) {
+    protected void checkType(RestApplicationFile type) {
 
     }
 
@@ -96,9 +98,9 @@ public class RestApplicationRepositoryImpl extends RepositoryImpl<RestApplicatio
      */
     @Override
     public void deleteWithProjectId(String projectId) {
-        Iterator<RestApplication> iterator = this.collection.values().iterator();
+        Iterator<RestApplicationFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            RestApplication application = iterator.next();
+            RestApplicationFile application = iterator.next();
             if(application.getProjectId().equals(projectId)){
                 delete(application.getId());
             }
@@ -106,21 +108,60 @@ public class RestApplicationRepositoryImpl extends RepositoryImpl<RestApplicatio
     }
 
     /**
-     * Find all {@link RestApplicationDto} that matches the provided
+     * Find all {@link RestApplication} that matches the provided
      * <code>projectId</code>.
      *
      * @param projectId The id of the project.
-     * @return A list of {@link RestApplicationDto}.
+     * @return A list of {@link RestApplication}.
      */
     @Override
-    public List<RestApplicationDto> findWithProjectId(String projectId) {
-        final List<RestApplicationDto> applications = new ArrayList<>();
-        for(RestApplication application : this.collection.values()){
-            if(application.getProjectId().equals(projectId)){
-                RestApplicationDto applicationDto = this.mapper.map(application, RestApplicationDto.class);
-                applications.add(applicationDto);
+    public List<RestApplication> findWithProjectId(String projectId) {
+        final List<RestApplication> applications = new ArrayList<>();
+        for(RestApplicationFile applicationFile : this.collection.values()){
+            if(applicationFile.getProjectId().equals(projectId)){
+                RestApplication application = this.mapper.map(applicationFile, RestApplication.class);
+                applications.add(application);
             }
         }
         return applications;
     }
+
+    @XmlRootElement(name = "restApplication")
+    protected static class RestApplicationFile implements Saveable<String> {
+
+        private String id;
+        private String name;
+        private String projectId;
+
+        @Override
+        @XmlElement
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getProjectId() {
+            return projectId;
+        }
+
+        public void setProjectId(String projectId) {
+            this.projectId = projectId;
+        }
+
+    }
+
 }

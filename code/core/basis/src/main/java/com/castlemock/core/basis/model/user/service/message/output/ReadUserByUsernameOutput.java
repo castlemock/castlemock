@@ -17,7 +17,7 @@
 package com.castlemock.core.basis.model.user.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 
 /**
@@ -27,17 +27,17 @@ import com.castlemock.core.basis.model.user.service.message.input.ReadUserByUser
  */
 public class ReadUserByUsernameOutput implements Output {
 
-    private UserDto user;
+    private User user;
 
-    public ReadUserByUsernameOutput(UserDto user) {
+    public ReadUserByUsernameOutput(User user) {
         this.user = user;
     }
 
-    public UserDto getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserDto user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

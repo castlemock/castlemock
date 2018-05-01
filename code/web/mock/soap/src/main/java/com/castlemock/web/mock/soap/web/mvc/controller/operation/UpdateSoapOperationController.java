@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.web.mvc.controller.operation;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsForwardedEndpointInput;
@@ -74,13 +74,13 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
      * @param soapProjectId The id of the project that the operation belongs to
      * @param soapPortId The id of the port that the operation belongs to
      * @param soapOperationId The id of the operation that will be updated
-     * @param soapOperationDto The updated version of the operation that will be updated
+     * @param soapOperation The updated version of the operation that will be updated
      * @return Redirects the user to the SOAP operation page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @ModelAttribute final SoapOperationDto soapOperationDto) {
-        serviceProcessor.process(new UpdateSoapOperationInput(soapProjectId, soapPortId, soapOperationId, soapOperationDto));
+    public ModelAndView update(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @ModelAttribute final SoapOperation soapOperation) {
+        serviceProcessor.process(new UpdateSoapOperationInput(soapProjectId, soapPortId, soapOperationId, soapOperation));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 

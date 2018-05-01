@@ -29,6 +29,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.Serializable;
@@ -53,7 +55,7 @@ import java.util.concurrent.Semaphore;
  * @see Saveable
  */
 @org.springframework.stereotype.Repository
-public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Serializable> implements Repository<T, D, I> {
+public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Serializable> implements Repository<D, I> {
 
     @Autowired
     protected DozerBeanMapper mapper;
@@ -61,8 +63,6 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
     protected FileRepositorySupport fileRepositorySupport;
 
     private Class<T> entityClass;
-
-    private Class<I> idClass;
 
     private Class<D> dtoClass;
 
@@ -81,7 +81,6 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
         this.dtoClass = (Class<D>) genericSuperclass.getActualTypeArguments()[1];
-        this.idClass = (Class<I>) genericSuperclass.getActualTypeArguments()[2];
     }
 
 
@@ -387,4 +386,55 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
     protected String generateId(){
         return RandomStringUtils.random(6, true, true);
     }
+
+    @XmlRootElement(name = "httpHeader")
+    protected static class HttpHeaderFile {
+
+        private String name;
+        private String value;
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+    }
+
+    @XmlRootElement(name = "httpParameter")
+    protected static class HttpParameterFile {
+
+        private String name;
+        private String value;
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+    }
+
 }

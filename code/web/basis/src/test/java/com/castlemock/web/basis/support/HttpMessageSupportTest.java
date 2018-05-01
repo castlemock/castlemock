@@ -17,8 +17,8 @@
 package com.castlemock.web.basis.support;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
-import com.castlemock.core.basis.model.http.dto.HttpParameterDto;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.basis.model.http.domain.HttpParameter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -49,13 +49,13 @@ public class HttpMessageSupportTest {
         Mockito.when(httpServletRequest.getHeader("Accept")).thenReturn("application/json");
         Mockito.when(httpServletRequest.getHeader("Content-Length")).thenReturn("1024");
 
-        List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
+        List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 
         Assert.assertEquals(headerNames.size(), httpHeaders.size());
 
-        HttpHeaderDto contentTypeHeader = httpHeaders.get(0);
-        HttpHeaderDto acceptHeader = httpHeaders.get(1);
-        HttpHeaderDto contentLengthHeader = httpHeaders.get(2);
+        HttpHeader contentTypeHeader = httpHeaders.get(0);
+        HttpHeader acceptHeader = httpHeaders.get(1);
+        HttpHeader contentLengthHeader = httpHeaders.get(2);
 
         Assert.assertEquals("Content-Type", contentTypeHeader.getName());
         Assert.assertEquals("application/xml", contentTypeHeader.getValue());
@@ -81,14 +81,14 @@ public class HttpMessageSupportTest {
         final HttpURLConnection httpURLConnection = Mockito.mock(HttpURLConnection.class);
         Mockito.when(httpURLConnection.getHeaderFields()).thenReturn(headers);
 
-        List<HttpHeaderDto> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpURLConnection);
+        List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpURLConnection);
 
         // Should ignore the Content-Length and Transfer-Encoding headers
         Assert.assertEquals(3, httpHeaders.size());
 
-        HttpHeaderDto acceptHeader = httpHeaders.get(0);
-        HttpHeaderDto contentTypeXmlHeader = httpHeaders.get(1);
-        HttpHeaderDto contentTypeJsonHeader = httpHeaders.get(2);
+        HttpHeader acceptHeader = httpHeaders.get(0);
+        HttpHeader contentTypeXmlHeader = httpHeaders.get(1);
+        HttpHeader contentTypeJsonHeader = httpHeaders.get(2);
 
         Assert.assertEquals("Accept", acceptHeader.getName());
         Assert.assertEquals("application/json", acceptHeader.getValue());
@@ -132,12 +132,12 @@ public class HttpMessageSupportTest {
         Mockito.when(httpServletRequest.getParameter("Parameter1")).thenReturn("Value1");
         Mockito.when(httpServletRequest.getParameter("Parameter2")).thenReturn("Value2");
 
-        List<HttpParameterDto> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
+        List<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
 
         Assert.assertEquals(parameterNames.size(), parameters.size());
 
-        HttpParameterDto parameter1 = parameters.get(0);
-        HttpParameterDto parameter2 = parameters.get(1);
+        HttpParameter parameter1 = parameters.get(0);
+        HttpParameter parameter2 = parameters.get(1);
 
         Assert.assertEquals("Parameter1", parameter1.getName());
         Assert.assertEquals("Value1", parameter1.getValue());
@@ -149,11 +149,11 @@ public class HttpMessageSupportTest {
     @Test
     public void testBuildParameterUri(){
 
-        HttpParameterDto parameter1 = new HttpParameterDto();
+        HttpParameter parameter1 = new HttpParameter();
         parameter1.setName("Parameter1");
         parameter1.setValue("Value1");
 
-        HttpParameterDto parameter2 = new HttpParameterDto();
+        HttpParameter parameter2 = new HttpParameter();
         parameter2.setName("Parameter2");
         parameter2.setValue("Value2");
 

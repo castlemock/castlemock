@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.user;
 
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.CreateUserInput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -47,7 +47,7 @@ public class CreateUserController extends AbstractViewController {
      */
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView defaultPage(@ModelAttribute final UserDto userDto) {
+    public ModelAndView defaultPage(@ModelAttribute final User userDto) {
         serviceProcessor.process(new CreateUserInput(userDto));
         return redirect("/user/");
     }

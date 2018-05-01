@@ -18,8 +18,8 @@ package com.castlemock.web.basis.support;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
-import com.castlemock.core.basis.model.http.dto.HttpParameterDto;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.basis.model.http.domain.HttpParameter;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -183,13 +183,13 @@ public class HttpMessageSupport {
      * @param httpServletRequest Incoming Http Servlet Request that contains the headers which will be extracted
      * @return A list of HTTP headers extracted from the provided httpServletRequest
      */
-    public static List<HttpHeaderDto> extractHttpHeaders(final HttpServletRequest httpServletRequest){
-        final List<HttpHeaderDto> httpHeaders = new ArrayList<HttpHeaderDto>();
+    public static List<HttpHeader> extractHttpHeaders(final HttpServletRequest httpServletRequest){
+        final List<HttpHeader> httpHeaders = new ArrayList<HttpHeader>();
         final Enumeration<String> headers = httpServletRequest.getHeaderNames();
         while(headers.hasMoreElements()){
             final String headerName = headers.nextElement();
             final String headerValue = httpServletRequest.getHeader(headerName);
-            final HttpHeaderDto httpHeader = new HttpHeaderDto();
+            final HttpHeader httpHeader = new HttpHeader();
             httpHeader.setName(headerName);
             httpHeader.setValue(headerValue);
             httpHeaders.add(httpHeader);
@@ -202,8 +202,8 @@ public class HttpMessageSupport {
      * @param connection Incoming Http URL connection that contains the headers which will be extracted
      * @return A list of HTTP headers extracted from the provided connection
      */
-    public static List<HttpHeaderDto> extractHttpHeaders(final HttpURLConnection connection){
-        final List<HttpHeaderDto> httpHeaders = new ArrayList<HttpHeaderDto>();
+    public static List<HttpHeader> extractHttpHeaders(final HttpURLConnection connection){
+        final List<HttpHeader> httpHeaders = new ArrayList<HttpHeader>();
         for(Map.Entry<String, List<String>> header : connection.getHeaderFields().entrySet()){
             for(String headerValue : header.getValue()){
                 String headerName = header.getKey();
@@ -219,7 +219,7 @@ public class HttpMessageSupport {
                     continue;
                 }
 
-                final HttpHeaderDto httpHeader = new HttpHeaderDto();
+                final HttpHeader httpHeader = new HttpHeader();
                 httpHeader.setName(headerName);
                 httpHeader.setValue(headerValue);
                 httpHeaders.add(httpHeader);
@@ -235,12 +235,12 @@ public class HttpMessageSupport {
      * @param httpServletRequest The incoming request which contains all the parameters
      * @return A map with the extracted parameters
      */
-    public static List<HttpParameterDto> extractParameters(final HttpServletRequest httpServletRequest){
-        final List<HttpParameterDto> httpParameters = new ArrayList<HttpParameterDto>();
+    public static List<HttpParameter> extractParameters(final HttpServletRequest httpServletRequest){
+        final List<HttpParameter> httpParameters = new ArrayList<HttpParameter>();
 
         final Enumeration<String> enumeration = httpServletRequest.getParameterNames();
         while(enumeration.hasMoreElements()){
-            final HttpParameterDto httpParameter = new HttpParameterDto();
+            final HttpParameter httpParameter = new HttpParameter();
             final String parameterName = enumeration.nextElement();
             final String parameterValue = httpServletRequest.getParameter(parameterName);
             httpParameter.setName(parameterName);
@@ -257,14 +257,14 @@ public class HttpMessageSupport {
      * @param httpParameters The Map of parameters that will be used to build the parameter URI
      * @return A URI that contains the parameters from the provided Map
      */
-    public static String buildParameterUri(List<HttpParameterDto> httpParameters){
+    public static String buildParameterUri(List<HttpParameter> httpParameters){
         if(httpParameters.isEmpty()){
             return EMPTY;
         }
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("?");
         for(int index = 0; index < httpParameters.size(); index++){
-            HttpParameterDto httpParameter = httpParameters.get(index);
+            HttpParameter httpParameter = httpParameters.get(index);
             String parameterName = httpParameter.getName();
             String parameterValue = httpParameter.getValue();
             stringBuilder.append(parameterName + "=" + parameterValue);
@@ -310,14 +310,14 @@ public class HttpMessageSupport {
     public static HttpURLConnection establishConnection(final String endpoint,
                                                         final HttpMethod httpMethod,
                                                         final String body,
-                                                        final List<HttpHeaderDto> headers) throws IOException {
+                                                        final List<HttpHeader> headers) throws IOException {
         OutputStream outputStream = null;
         try {
             final URL url = new URL(endpoint);
             final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod(httpMethod.name());
-            for (HttpHeaderDto httpHeader : headers) {
+            for (HttpHeader httpHeader : headers) {
                 connection.addRequestProperty(httpHeader.getName(), httpHeader.getValue());
             }
 

@@ -19,11 +19,9 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.CreateGraphQLApplicationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.CreateGraphQLApplicationOutput;
-import com.castlemock.web.mock.graphql.model.project.repository.GraphQLApplicationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Karl Dahlgren
@@ -43,9 +41,9 @@ public class CreateGraphQLApplicationService extends AbstractGraphQLProjectServi
     @Override
     public ServiceResult<CreateGraphQLApplicationOutput> process(final ServiceTask<CreateGraphQLApplicationInput> serviceTask) {
         final CreateGraphQLApplicationInput input = serviceTask.getInput();
-        final GraphQLApplicationDto application = input.getGraphQLApplication();
+        final GraphQLApplication application = input.getGraphQLApplication();
         application.setProjectId(input.getGraphQLProjectId());
-        final GraphQLApplicationDto createdGraphQLApplication = applicationRepository.save(application);
+        final GraphQLApplication createdGraphQLApplication = applicationRepository.save(application);
         return createServiceResult(new CreateGraphQLApplicationOutput(createdGraphQLApplication));
     }
 }

@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.user;
 
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.model.user.service.message.input.UpdateCurrentUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
@@ -61,7 +61,7 @@ public class UpdateCurrentUserController extends AbstractViewController {
     public ModelAndView defaultPage() {
         final String loggedInUsername = getLoggedInUsername();
         final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(new ReadUserByUsernameInput(loggedInUsername));
-        final UserDto userDto = readUserByUsernameOutput.getUser();
+        final User userDto = readUserByUsernameOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         final UpdateCurrentUserCommand updateCurrentUserCommand = new UpdateCurrentUserCommand();
         updateCurrentUserCommand.setUser(userDto);
@@ -78,13 +78,13 @@ public class UpdateCurrentUserController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView update(@ModelAttribute final UpdateCurrentUserCommand updateCurrentUserCommand) {
         final String loggedInUser = getLoggedInUsername();
-        final UserDto updatedUser = updateCurrentUserCommand.getUser();
+        final User updatedUser = updateCurrentUserCommand.getUser();
         final String userPassword = updatedUser.getPassword();
         if(userPassword != null){
             Preconditions.checkArgument(userPassword.equals(updateCurrentUserCommand.getVerifiedPassword()), "The password and the verified password does not match");
         }
         final UpdateCurrentUserOutput updateCurrentUserOutput = serviceProcessor.process(new UpdateCurrentUserInput(updatedUser));
-        final UserDto savedUser = updateCurrentUserOutput.getUpdatedUser();
+        final User savedUser = updateCurrentUserOutput.getUpdatedUser();
 
         // Updates the logged in username if the updated user received a new username
         if(!savedUser.getUsername().equals(loggedInUser)){

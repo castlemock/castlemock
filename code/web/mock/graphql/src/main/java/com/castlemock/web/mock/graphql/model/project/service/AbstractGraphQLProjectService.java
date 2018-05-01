@@ -17,9 +17,8 @@
 package com.castlemock.web.mock.graphql.model.project.service;
 
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLObjectTypeDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
 import com.castlemock.web.basis.model.AbstractService;
 import com.castlemock.web.mock.graphql.model.project.repository.*;
 import com.google.common.base.Preconditions;
@@ -31,7 +30,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public abstract class AbstractGraphQLProjectService extends AbstractService<GraphQLProject, GraphQLProjectDto, String, GraphQLProjectRepository> {
+public abstract class AbstractGraphQLProjectService extends AbstractService<GraphQLProject, String, GraphQLProjectRepository> {
 
     @Autowired
     protected GraphQLApplicationRepository applicationRepository;
@@ -48,22 +47,22 @@ public abstract class AbstractGraphQLProjectService extends AbstractService<Grap
     @Autowired
     protected GraphQLAttributeRepository attributeRepository;
 
-    protected GraphQLProjectDto deleteProject(final String projectId){
-        final List<GraphQLApplicationDto> applications = applicationRepository.findWithProjectId(projectId);
+    protected GraphQLProject deleteProject(final String projectId){
+        final List<GraphQLApplication> applications = applicationRepository.findWithProjectId(projectId);
 
-        final GraphQLProjectDto project = this.repository.delete(projectId);
+        final GraphQLProject project = this.repository.delete(projectId);
 
-        for(GraphQLApplicationDto application : applications){
+        for(GraphQLApplication application : applications){
             this.deleteApplication(application.getId());
         }
 
         return project;
     }
 
-    protected GraphQLApplicationDto deleteApplication(final String applicationId){
-        final GraphQLApplicationDto application = this.applicationRepository.delete(applicationId);
+    protected GraphQLApplication deleteApplication(final String applicationId){
+        final GraphQLApplication application = this.applicationRepository.delete(applicationId);
 
-        final List<GraphQLObjectTypeDto> objectTypes = this.objectTypeRepository.findWithApplicationId(applicationId);
+        final List<GraphQLObjectType> objectTypes = this.objectTypeRepository.findWithApplicationId(applicationId);
 
         this.queryRepository.deleteWithApplicationId(applicationId);
         this.mutationRepository.deleteWithApplicationId(applicationId);
@@ -71,7 +70,7 @@ public abstract class AbstractGraphQLProjectService extends AbstractService<Grap
         this.objectTypeRepository.deleteWithApplicationId(applicationId);
         this.enumTypeRepository.deleteWithApplicationId(applicationId);
 
-        for(GraphQLObjectTypeDto objectType : objectTypes){
+        for(GraphQLObjectType objectType : objectTypes){
             this.attributeRepository.deleteWithObjectTypeId(objectType.getId());
         }
 
@@ -85,13 +84,13 @@ public abstract class AbstractGraphQLProjectService extends AbstractService<Grap
      * @return The updated version project
      */
     @Override
-    public GraphQLProjectDto update(final String graphQLProjectId, final GraphQLProjectDto updatedProject){
+    public GraphQLProject update(final String graphQLProjectId, final GraphQLProject updatedProject){
         Preconditions.checkNotNull(graphQLProjectId, "Project id be null");
         Preconditions.checkNotNull(updatedProject, "Project cannot be null");
         Preconditions.checkArgument(!updatedProject.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
-        final GraphQLProjectDto projectWithNameDto = repository.findGraphQLProjectWithName(updatedProject.getName());
-        Preconditions.checkArgument(projectWithNameDto == null || projectWithNameDto.getId().equals(graphQLProjectId), "Project name is already taken");
-        final GraphQLProjectDto project = find(graphQLProjectId);
+        final GraphQLProject projectWithName = repository.findGraphQLProjectWithName(updatedProject.getName());
+        Preconditions.checkArgument(projectWithName == null || projectWithName.getId().equals(graphQLProjectId), "Project name is already taken");
+        final GraphQLProject project = find(graphQLProjectId);
         project.setName(updatedProject.getName());
         project.setDescription(updatedProject.getDescription());
         return super.save(project);

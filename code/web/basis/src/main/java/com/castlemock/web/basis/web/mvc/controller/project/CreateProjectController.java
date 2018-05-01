@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.project;
 
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.command.project.CreateProjectCommand;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
@@ -71,7 +71,7 @@ public class CreateProjectController extends AbstractViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView createProject(@ModelAttribute final CreateProjectCommand createProjectCommand) {
-        final ProjectDto createdProject = projectServiceFacade.save(createProjectCommand.getProjectType(), createProjectCommand.getProject());
+        final Project createdProject = projectServiceFacade.save(createProjectCommand.getProjectType(), createProjectCommand.getProject());
         final String typeUrl = projectServiceFacade.getTypeUrl(createProjectCommand.getProjectType());
         return redirect("/" + typeUrl + "/project/" + createdProject.getId());
     }

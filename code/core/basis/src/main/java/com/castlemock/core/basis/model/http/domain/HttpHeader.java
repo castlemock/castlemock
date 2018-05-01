@@ -16,20 +16,20 @@
 
 package com.castlemock.core.basis.model.http.domain;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.dozer.Mapping;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
 public class HttpHeader {
 
+    @Mapping("name")
     private String name;
+
+    @Mapping("value")
     private String value;
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -38,7 +38,6 @@ public class HttpHeader {
         this.name = name;
     }
 
-    @XmlElement
     public String getValue() {
         return value;
     }

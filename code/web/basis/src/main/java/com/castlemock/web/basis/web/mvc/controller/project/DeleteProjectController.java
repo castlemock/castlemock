@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.project;
 
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.command.project.DeleteProjectsCommand;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
@@ -58,7 +58,7 @@ public class DeleteProjectController extends AbstractViewController {
     @RequestMapping(value = "{projectType}/project/{projectId}/delete", method = RequestMethod.GET)
     public ModelAndView getDeleteConfirmationPage(@PathVariable final String projectType, @PathVariable final String projectId) {
 
-        final ProjectDto projectDto = projectServiceComponent.findOne(projectType, projectId);
+        final Project projectDto = projectServiceComponent.findOne(projectType, projectId);
         if(projectDto == null){
             throw new NullPointerException("Unable to find " + projectType + " project with id " + projectId);
         }

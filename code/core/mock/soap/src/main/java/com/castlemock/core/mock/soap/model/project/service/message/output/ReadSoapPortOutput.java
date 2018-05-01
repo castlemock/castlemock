@@ -17,7 +17,7 @@
 package com.castlemock.core.mock.soap.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 
 /**
  * @author Karl Dahlgren
@@ -25,17 +25,17 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
  */
 public class ReadSoapPortOutput implements Output{
 
-    private SoapPortDto soapPort;
+    private SoapPort soapPort;
 
-    public ReadSoapPortOutput(SoapPortDto soapPort) {
+    public ReadSoapPortOutput(SoapPort soapPort) {
         this.soapPort = soapPort;
     }
 
-    public SoapPortDto getSoapPort() {
+    public SoapPort getSoapPort() {
         return soapPort;
     }
 
-    public void setSoapPort(SoapPortDto soapPort) {
+    public void setSoapPort(SoapPort soapPort) {
         this.soapPort = soapPort;
     }
 }

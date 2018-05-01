@@ -20,8 +20,7 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationDto;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
+import com.castlemock.core.basis.model.configuration.domain.Configuration;
 import com.castlemock.core.basis.model.configuration.service.message.input.UpdateAllConfigurationGroupsInput;
 import com.castlemock.core.basis.model.configuration.service.message.output.UpdateAllConfigurationGroupsOutput;
 import com.google.common.base.Preconditions;
@@ -47,17 +46,17 @@ public class UpdateAllConfigurationGroupsService extends AbstractConfigurationGr
     @Override
     public ServiceResult<UpdateAllConfigurationGroupsOutput> process(final ServiceTask<UpdateAllConfigurationGroupsInput> serviceTask) {
         final UpdateAllConfigurationGroupsInput input = serviceTask.getInput();
-        final List<ConfigurationGroupDto> configurationGroupDtos = input.getConfigurationGroups();
+        final List<ConfigurationGroup> configurationGroupDtos = input.getConfigurationGroups();
         Preconditions.checkNotNull(configurationGroupDtos, "The updated configuration group cannot be null");
-        final List<ConfigurationGroupDto> sourceConfigurationGroups = findAll();
+        final List<ConfigurationGroup> sourceConfigurationGroups = findAll();
         Preconditions.checkNotNull(sourceConfigurationGroups, "The source configuration group cannot be null");
-        final List<ConfigurationGroupDto> updateConfigurations = new ArrayList<ConfigurationGroupDto>();
+        final List<ConfigurationGroup> updateConfigurations = new ArrayList<ConfigurationGroup>();
 
-        for(ConfigurationGroupDto sourceConfigurationGroup : sourceConfigurationGroups){
-            for(ConfigurationGroupDto configurationGroup : configurationGroupDtos){
+        for(ConfigurationGroup sourceConfigurationGroup : sourceConfigurationGroups){
+            for(ConfigurationGroup configurationGroup : configurationGroupDtos){
                 if(sourceConfigurationGroup.getId().equals(configurationGroup.getId())){
                     update(sourceConfigurationGroup, configurationGroup);
-                    ConfigurationGroupDto updateConfigurationGroup = update(sourceConfigurationGroup, configurationGroup);
+                    ConfigurationGroup updateConfigurationGroup = update(sourceConfigurationGroup, configurationGroup);
                     updateConfigurations.add(updateConfigurationGroup);
                     save(updateConfigurationGroup);
                 }
@@ -76,13 +75,13 @@ public class UpdateAllConfigurationGroupsService extends AbstractConfigurationGr
      * @param updatedConfigurationGroupDto The updated version of the configuration group
      * @return The updated version of the configuration group
      * @see ConfigurationGroup
-     * @see ConfigurationGroupDto
+     * @see ConfigurationGroup
      */
-    private ConfigurationGroupDto update(final ConfigurationGroupDto sourceConfigurationGroupDto, final ConfigurationGroupDto updatedConfigurationGroupDto){
+    private ConfigurationGroup update(final ConfigurationGroup sourceConfigurationGroupDto, final ConfigurationGroup updatedConfigurationGroupDto){
         Preconditions.checkNotNull(sourceConfigurationGroupDto, "The source configuration group cannot be null");
         Preconditions.checkNotNull(updatedConfigurationGroupDto, "The updated configuration group cannot be null");
-        for(ConfigurationDto sourceConfigurationDto : sourceConfigurationGroupDto.getConfigurations()){
-            for(ConfigurationDto updatedConfigurationDto : updatedConfigurationGroupDto.getConfigurations()){
+        for(Configuration sourceConfigurationDto : sourceConfigurationGroupDto.getConfigurations()){
+            for(Configuration updatedConfigurationDto : updatedConfigurationGroupDto.getConfigurations()){
                 if(sourceConfigurationDto.getKey().equals(updatedConfigurationDto.getKey())){
                     sourceConfigurationDto.setValue(updatedConfigurationDto.getValue());
                 }

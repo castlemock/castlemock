@@ -17,20 +17,20 @@
 package com.castlemock.web.mock.soap.web.mvc.controller.mockresponse;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.DeleteSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.web.mock.soap.model.project.SoapMockResponseDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapMockResponseGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapOperationGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.mvc.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;
@@ -77,31 +77,31 @@ public class DeleteSoapMockResponseControllerTest extends AbstractSoapController
 
     @Test
     public void testDeleteMockResponse() throws Exception {
-        final SoapProjectDto projectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto applicationDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        final SoapMockResponseDto soapMockResponseDto = SoapMockResponseDtoGenerator.generateSoapMockResponseDto();
-        when(serviceProcessor.process(any(ReadSoapMockResponseInput.class))).thenReturn(new ReadSoapMockResponseOutput(soapMockResponseDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + projectDto.getId() + SLASH + PORT + SLASH + applicationDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + RESPONSE + SLASH + soapMockResponseDto.getId() + SLASH + DELETE);
+        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapPort application = SoapPortGenerator.generateSoapPort();
+        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
+        when(serviceProcessor.process(any(ReadSoapMockResponseInput.class))).thenReturn(new ReadSoapMockResponseOutput(soapMockResponse));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + RESPONSE + SLASH + soapMockResponse.getId() + SLASH + DELETE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(4 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, projectDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, applicationDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_ID, soapOperationDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_MOCK_RESPONSE, soapMockResponseDto));
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, project.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, application.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_ID, soapOperation.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_MOCK_RESPONSE, soapMockResponse));
     }
 
     @Test
     public void testDeleteMockResponseConfirm() throws Exception {
-        final SoapProjectDto projectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto applicationDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        final SoapMockResponseDto soapMockResponseDto = SoapMockResponseDtoGenerator.generateSoapMockResponseDto();
+        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapPort application = SoapPortGenerator.generateSoapPort();
+        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
         when(serviceProcessor.process(any(DeleteSoapMockResponseInput.class))).thenReturn(new DeleteSoapMockResponseOutput());
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + projectDto.getId() + SLASH + PORT + SLASH + applicationDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + RESPONSE + SLASH + soapMockResponseDto.getId() + SLASH + DELETE + SLASH + CONFIRM);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + RESPONSE + SLASH + soapMockResponse.getId() + SLASH + DELETE + SLASH + CONFIRM);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(0));
@@ -111,16 +111,16 @@ public class DeleteSoapMockResponseControllerTest extends AbstractSoapController
 
     @Test
     public void testConfirmDeletationOfMultipleMockResponses() throws Exception {
-        final SoapProjectDto projectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto applicationDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        final SoapMockResponseDto soapMockResponseDto = SoapMockResponseDtoGenerator.generateSoapMockResponseDto();
+        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapPort application = SoapPortGenerator.generateSoapPort();
+        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
         final DeleteSoapMockResponsesCommand deleteSoapMockResponsesCommand = new DeleteSoapMockResponsesCommand();
-        deleteSoapMockResponsesCommand.setSoapMockResponses(new ArrayList<SoapMockResponseDto>());
-        deleteSoapMockResponsesCommand.getSoapMockResponses().add(soapMockResponseDto);
+        deleteSoapMockResponsesCommand.setSoapMockResponses(new ArrayList<SoapMockResponse>());
+        deleteSoapMockResponsesCommand.getSoapMockResponses().add(soapMockResponse);
 
         when(serviceProcessor.process(any(DeleteSoapMockResponseInput.class))).thenReturn(new DeleteSoapMockResponseOutput());
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectDto.getId() + SLASH + PORT + SLASH + applicationDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + RESPONSE + SLASH + DELETE + SLASH + CONFIRM);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + RESPONSE + SLASH + DELETE + SLASH + CONFIRM);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

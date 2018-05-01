@@ -19,19 +19,18 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLSubscription;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLSubscriptionDto;
-import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class GraphQLSubscriptionRepositoryImpl extends RepositoryImpl<GraphQLSubscription, GraphQLSubscriptionDto, String> implements GraphQLSubscriptionRepository {
+public class GraphQLSubscriptionRepositoryImpl extends AbstractGraphQLOperationFileRepository<GraphQLSubscriptionRepositoryImpl.GraphQLSubscriptionFile, GraphQLSubscription> implements GraphQLSubscriptionRepository {
 
     @Autowired
     private MessageSource messageSource;
@@ -76,7 +75,7 @@ public class GraphQLSubscriptionRepositoryImpl extends RepositoryImpl<GraphQLSub
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLSubscription type) {
+    protected void checkType(GraphQLSubscriptionFile type) {
 
     }
 
@@ -92,12 +91,12 @@ public class GraphQLSubscriptionRepositoryImpl extends RepositoryImpl<GraphQLSub
     }
 
     @Override
-    public List<GraphQLSubscriptionDto> findWithApplicationId(final String projectId) {
-        final List<GraphQLSubscriptionDto> subscriptions = new ArrayList<>();
-        for(GraphQLSubscription subscription : this.collection.values()){
+    public List<GraphQLSubscription> findWithApplicationId(final String projectId) {
+        final List<GraphQLSubscription> subscriptions = new ArrayList<>();
+        for(GraphQLSubscriptionFile subscription : this.collection.values()){
             if(subscription.getApplicationId().equals(projectId)){
-                GraphQLSubscriptionDto applicationDto = this.mapper.map(subscription, GraphQLSubscriptionDto.class);
-                subscriptions.add(applicationDto);
+                GraphQLSubscription application = this.mapper.map(subscription, GraphQLSubscription.class);
+                subscriptions.add(application);
             }
         }
         return subscriptions;
@@ -105,13 +104,23 @@ public class GraphQLSubscriptionRepositoryImpl extends RepositoryImpl<GraphQLSub
 
     @Override
     public void deleteWithApplicationId(final String applicationId) {
-        Iterator<GraphQLSubscription> iterator = this.collection.values().iterator();
+        Iterator<GraphQLSubscriptionFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            GraphQLSubscription subscription = iterator.next();
+            GraphQLSubscriptionFile subscription = iterator.next();
             if(subscription.getApplicationId().equals(applicationId)){
                 delete(subscription.getId());
             }
         }
     }
+
+    /**
+     * @author Karl Dahlgren
+     * @since 1.19
+     */
+    @XmlRootElement(name = "graphQLSubscription")
+    protected static class GraphQLSubscriptionFile extends AbstractGraphQLOperationFileRepository.GraphQLOperationFile {
+
+    }
+
 
 }

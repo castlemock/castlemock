@@ -21,7 +21,7 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUserOutput;
 import org.dozer.DozerBeanMapper;
@@ -52,7 +52,7 @@ public class ReadUserServiceTest {
 
     @Test
     public void testProcess(){
-        UserDto user = new UserDto();
+        User user = new User();
         user.setId("UserId");
         user.setUsername("Username");
         user.setStatus(Status.ACTIVE);
@@ -68,7 +68,7 @@ public class ReadUserServiceTest {
         final ServiceResult<ReadUserOutput> serviceResult = service.process(serviceTask);
         final ReadUserOutput output = serviceResult.getOutput();
 
-        final UserDto returnedUser = output.getUser();
+        final User returnedUser = output.getUser();
         Assert.assertNotNull(returnedUser);
         Assert.assertEquals(user.getId(), returnedUser.getId());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());

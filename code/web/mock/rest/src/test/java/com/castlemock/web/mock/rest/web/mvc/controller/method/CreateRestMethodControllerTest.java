@@ -17,20 +17,20 @@
 package com.castlemock.web.mock.rest.web.mvc.controller.method;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestMethodOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
-import com.castlemock.web.mock.rest.model.project.RestApplicationDtoGenerator;
-import com.castlemock.web.mock.rest.model.project.RestMethodDtoGenerator;
-import com.castlemock.web.mock.rest.model.project.RestProjectDtoGenerator;
-import com.castlemock.web.mock.rest.model.project.RestResourceDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
+import com.castlemock.web.mock.rest.model.project.RestMethodGenerator;
+import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
+import com.castlemock.web.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,30 +72,30 @@ public class CreateRestMethodControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testCreateMethod() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
-        final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
-        final RestResourceDto restResourceDto = RestResourceDtoGenerator.generateRestResourceDto();
-        when(serviceProcessor.process(any(ReadRestResourceInput.class))).thenReturn(new ReadRestResourceOutput(restResourceDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + CREATE_METHOD);
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestResource restResource = RestResourceGenerator.generateRestResource();
+        when(serviceProcessor.process(any(ReadRestResourceInput.class))).thenReturn(new ReadRestResourceOutput(restResource));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + CREATE_METHOD);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(5 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProjectDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_APPLICATION_ID, restApplicationDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_RESOURCE_ID, restResourceDto.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProject.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_APPLICATION_ID, restApplication.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_RESOURCE_ID, restResource.getId()))
                 .andExpect(MockMvcResultMatchers.model().attributeExists(REST_METHOD));
     }
 
     @Test
     public void testPostCreateMethod() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
-        final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
-        final RestResourceDto restResourceDto = RestResourceDtoGenerator.generateRestResourceDto();
-        final RestMethodDto restMethodDto = RestMethodDtoGenerator.generateRestMethodDto();
-        when(serviceProcessor.process(any(CreateRestMethodInput.class))).thenReturn(new CreateRestMethodOutput(restMethodDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + CREATE_METHOD);
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestResource restResource = RestResourceGenerator.generateRestResource();
+        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
+        when(serviceProcessor.process(any(CreateRestMethodInput.class))).thenReturn(new CreateRestMethodOutput(restMethod));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + CREATE_METHOD);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

@@ -17,7 +17,7 @@
 package com.castlemock.core.mock.graphql.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 
 /**
  * @author Karl Dahlgren
@@ -25,13 +25,13 @@ import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
  */
 public class ImportGraphQLProjectOutput implements Output{
 
-    private final GraphQLProjectDto project;
+    private final GraphQLProject project;
 
-    public ImportGraphQLProjectOutput(GraphQLProjectDto project) {
+    public ImportGraphQLProjectOutput(GraphQLProject project) {
         this.project = project;
     }
 
-    public GraphQLProjectDto getProject() {
+    public GraphQLProject getProject() {
         return project;
     }
 }

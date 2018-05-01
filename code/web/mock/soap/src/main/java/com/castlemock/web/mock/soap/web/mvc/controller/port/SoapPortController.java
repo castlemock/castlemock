@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.soap.web.mvc.controller.port;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsStatusInput;
@@ -67,7 +67,7 @@ public class SoapPortController extends AbstractSoapViewController {
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}", method = RequestMethod.GET)
     public ModelAndView getSoapPort(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, final ServletRequest request) {
         final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
-        final SoapPortDto soapPort = readSoapPortOutput.getSoapPort();
+        final SoapPort soapPort = readSoapPortOutput.getSoapPort();
         final String protocol = getProtocol(request);
         final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUri());
 
@@ -99,7 +99,7 @@ public class SoapPortController extends AbstractSoapViewController {
                 serviceProcessor.process(new UpdateSoapOperationsStatusInput(soapProjectId, soapPortId, operationId, soapOperationStatus));
             }
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
-            final List<SoapOperationDto> soapOperations = new ArrayList<SoapOperationDto>();
+            final List<SoapOperation> soapOperations = new ArrayList<SoapOperation>();
             for(String soapOperationId : soapOperationModifierCommand.getSoapOperationIds()){
                 final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
                 soapOperations.add(output.getSoapOperation());

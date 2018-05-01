@@ -19,7 +19,7 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.UpdateGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.UpdateGraphQLProjectOutput;
 
@@ -42,8 +42,8 @@ public class UpdateGraphQLProjectService extends AbstractGraphQLProjectService i
     public ServiceResult<UpdateGraphQLProjectOutput> process(final ServiceTask<UpdateGraphQLProjectInput> serviceTask) {
         final UpdateGraphQLProjectInput input = serviceTask.getInput();
         final String restProjectId = input.getGraphQLProjectId();
-        final GraphQLProjectDto restProject = input.getGraphQLProject();
-        final GraphQLProjectDto updatedGraphQLProject = update(restProjectId, restProject);
+        final GraphQLProject restProject = input.getGraphQLProject();
+        final GraphQLProject updatedGraphQLProject = update(restProjectId, restProject);
         final UpdateGraphQLProjectOutput output = new UpdateGraphQLProjectOutput();
         output.setUpdatedGraphQLProject(updatedGraphQLProject);
         return createServiceResult(output);

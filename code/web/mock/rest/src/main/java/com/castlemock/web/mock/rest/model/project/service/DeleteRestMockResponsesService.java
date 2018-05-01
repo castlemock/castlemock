@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.service.message.input.DeleteRestMockResponsesInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.DeleteRestMockResponsesOutput;
 
@@ -41,8 +41,8 @@ public class DeleteRestMockResponsesService extends AbstractRestProjectService i
     @Override
     public ServiceResult<DeleteRestMockResponsesOutput> process(final ServiceTask<DeleteRestMockResponsesInput> serviceTask) {
         final DeleteRestMockResponsesInput input = serviceTask.getInput();
-        for(RestMockResponseDto restMockResponseDto : input.getRestMockResponses()){
-            this.deleteMockResponse(restMockResponseDto.getId());
+        for(RestMockResponse restMockResponse : input.getRestMockResponses()){
+            this.deleteMockResponse(restMockResponse.getId());
         }
         return createServiceResult(new DeleteRestMockResponsesOutput());
     }

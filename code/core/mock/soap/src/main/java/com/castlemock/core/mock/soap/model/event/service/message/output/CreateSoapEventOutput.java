@@ -17,7 +17,7 @@
 package com.castlemock.core.mock.soap.model.event.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 
 /**
  * @author Karl Dahlgren
@@ -25,17 +25,17 @@ import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
  */
 public class CreateSoapEventOutput implements Output {
 
-    private SoapEventDto createdSoapEvent;
+    private SoapEvent createdSoapEvent;
 
-    public CreateSoapEventOutput(SoapEventDto createdSoapEvent) {
+    public CreateSoapEventOutput(SoapEvent createdSoapEvent) {
         this.createdSoapEvent = createdSoapEvent;
     }
 
-    public SoapEventDto getCreatedSoapEvent() {
+    public SoapEvent getCreatedSoapEvent() {
         return createdSoapEvent;
     }
 
-    public void setCreatedSoapEvent(SoapEventDto createdSoapEvent) {
+    public void setCreatedSoapEvent(SoapEvent createdSoapEvent) {
         this.createdSoapEvent = createdSoapEvent;
     }
 }

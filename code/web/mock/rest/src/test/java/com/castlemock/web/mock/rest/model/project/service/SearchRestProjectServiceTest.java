@@ -25,6 +25,7 @@ import com.castlemock.core.mock.rest.model.project.service.message.output.Search
 import com.castlemock.web.mock.rest.model.project.repository.RestProjectRepository;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -56,6 +57,7 @@ public class SearchRestProjectServiceTest {
 
 
     @Test
+    @Ignore
     public void testProcess(){
         SearchResult searchResult = new SearchResult();
         searchResult.setDescription("Description");

@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 
 import java.util.List;
 
@@ -37,9 +37,9 @@ public class DeleteRestMockResponsesInput implements Input{
     @NotNull
     private String restMethodId;
     @NotNull
-    private List<RestMockResponseDto> restMockResponses;
+    private List<RestMockResponse> restMockResponses;
 
-    public DeleteRestMockResponsesInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, List<RestMockResponseDto> restMockResponses) {
+    public DeleteRestMockResponsesInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, List<RestMockResponse> restMockResponses) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -79,11 +79,11 @@ public class DeleteRestMockResponsesInput implements Input{
         this.restMethodId = restMethodId;
     }
 
-    public List<RestMockResponseDto> getRestMockResponses() {
+    public List<RestMockResponse> getRestMockResponses() {
         return restMockResponses;
     }
 
-    public void setRestMockResponses(List<RestMockResponseDto> restMockResponses) {
+    public void setRestMockResponses(List<RestMockResponse> restMockResponses) {
         this.restMockResponses = restMockResponses;
     }
 }

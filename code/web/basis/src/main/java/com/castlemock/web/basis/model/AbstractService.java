@@ -30,7 +30,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractService<T extends Saveable<I>, D, I extends Serializable, R extends Repository<T, D, I>> {
+public abstract class AbstractService<D, I extends Serializable, R extends Repository<D, I>> {
 
     @Autowired
     protected R repository;

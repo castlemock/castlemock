@@ -18,18 +18,17 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
 
-public interface GraphQLProjectRepository extends Repository<GraphQLProject, GraphQLProjectDto, String> {
+public interface GraphQLProjectRepository extends Repository<GraphQLProject, String> {
 
 
     /**
      * Finds a project by a given name
      * @param name The name of the project that should be retrieved
      * @return Returns a project with the provided name
-     * @see GraphQLProjectDto
+     * @see GraphQLProject
      */
-    GraphQLProjectDto findGraphQLProjectWithName(String name);
+    GraphQLProject findGraphQLProjectWithName(String name);
 
 
 }

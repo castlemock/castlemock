@@ -16,21 +16,27 @@
 
 package com.castlemock.web.mock.rest.model.project.repository;
 
+import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
-public class RestMockResponseRepositoryImpl extends RepositoryImpl<RestMockResponse, RestMockResponseDto, String> implements RestMockResponseRepository {
+public class RestMockResponseRepositoryImpl extends RepositoryImpl<RestMockResponseRepositoryImpl.RestMockResponseFile, RestMockResponse, String> implements RestMockResponseRepository {
 
     @Value(value = "${rest.response.file.directory}")
     private String fileDirectory;
@@ -73,7 +79,7 @@ public class RestMockResponseRepositoryImpl extends RepositoryImpl<RestMockRespo
      * @see #save
      */
     @Override
-    protected void checkType(RestMockResponse type) {
+    protected void checkType(RestMockResponseFile type) {
 
     }
 
@@ -89,16 +95,16 @@ public class RestMockResponseRepositoryImpl extends RepositoryImpl<RestMockRespo
     }
 
     /**
-     * Delete all {@link RestMockResponse} that matches the provided
+     * Delete all {@link RestMockResponseFile} that matches the provided
      * <code>methodId</code>.
      *
      * @param methodId The id of the method.
      */
     @Override
     public void deleteWithMethodId(String methodId) {
-        Iterator<RestMockResponse> iterator = this.collection.values().iterator();
+        Iterator<RestMockResponseFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            RestMockResponse response = iterator.next();
+            RestMockResponseFile response = iterator.next();
             if(response.getMethodId().equals(methodId)){
                 delete(response.getId());
             }
@@ -106,22 +112,141 @@ public class RestMockResponseRepositoryImpl extends RepositoryImpl<RestMockRespo
     }
 
     /**
-     * Find all {@link RestMockResponseDto} that matches the provided
+     * Find all {@link RestMockResponse} that matches the provided
      * <code>methodId</code>.
      *
      * @param methodId The id of the method.
-     * @return A list of {@link RestMockResponseDto}.
+     * @return A list of {@link RestMockResponse}.
      */
     @Override
-    public List<RestMockResponseDto> findWithMethodId(String methodId) {
-        final List<RestMockResponseDto> applications = new ArrayList<>();
-        for(RestMockResponse response : this.collection.values()){
-            if(response.getMethodId().equals(methodId)){
-                RestMockResponseDto responseDto = this.mapper.map(response, RestMockResponseDto.class);
-                applications.add(responseDto);
+    public List<RestMockResponse> findWithMethodId(String methodId) {
+        final List<RestMockResponse> applications = new ArrayList<>();
+        for(RestMockResponseFile responseFile : this.collection.values()){
+            if(responseFile.getMethodId().equals(methodId)){
+                RestMockResponse response = this.mapper.map(responseFile, RestMockResponse.class);
+                applications.add(response);
             }
         }
         return applications;
     }
 
+
+    @XmlRootElement(name = "restMockResponse")
+    protected static class RestMockResponseFile implements Saveable<String> {
+
+        private String id;
+        private String name;
+        private String body;
+        private String methodId;
+        private RestMockResponseStatus status;
+        private Integer httpStatusCode;
+        private boolean usingExpressions;
+        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+
+        @Override
+        @XmlElement
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        @XmlElement
+        public String getMethodId() {
+            return methodId;
+        }
+
+        public void setMethodId(String methodId) {
+            this.methodId = methodId;
+        }
+
+        @XmlElement
+        public RestMockResponseStatus getStatus() {
+            return status;
+        }
+
+        public void setStatus(RestMockResponseStatus status) {
+            this.status = status;
+        }
+
+        @XmlElement
+        public Integer getHttpStatusCode() {
+            return httpStatusCode;
+        }
+
+        public void setHttpStatusCode(Integer httpStatusCode) {
+            this.httpStatusCode = httpStatusCode;
+        }
+
+        @XmlElement
+        public boolean isUsingExpressions() {
+            return usingExpressions;
+        }
+
+        public void setUsingExpressions(boolean usingExpressions) {
+            this.usingExpressions = usingExpressions;
+        }
+
+        @XmlElementWrapper(name = "httpHeaders")
+        @XmlElement(name = "httpHeader")
+        public List<HttpHeader> getHttpHeaders() {
+            return httpHeaders;
+        }
+
+        public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+        }
+
+        @XmlElementWrapper(name = "contentEncodings")
+        @XmlElement(name = "contentEncoding")
+        public List<ContentEncoding> getContentEncodings() {
+            return contentEncodings;
+        }
+
+        public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+            this.contentEncodings = contentEncodings;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (!(o instanceof RestMockResponseFile))
+                return false;
+
+            RestMockResponseFile that = (RestMockResponseFile) o;
+
+            if (id != null ? !id.equals(that.id) : that.id != null)
+                return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return id != null ? id.hashCode() : 0;
+        }
+    }
 }

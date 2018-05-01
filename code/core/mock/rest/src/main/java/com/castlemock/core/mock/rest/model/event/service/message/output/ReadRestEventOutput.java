@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.event.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
 public class ReadRestEventOutput implements Output {
 
     @NotNull
-    private RestEventDto restEvent;
+    private RestEvent restEvent;
 
-    public ReadRestEventOutput(RestEventDto restEvent) {
+    public ReadRestEventOutput(RestEvent restEvent) {
         this.restEvent = restEvent;
     }
 
-    public RestEventDto getRestEvent() {
+    public RestEvent getRestEvent() {
         return restEvent;
     }
 
-    public void setRestEvent(RestEventDto restEvent) {
+    public void setRestEvent(RestEvent restEvent) {
         this.restEvent = restEvent;
     }
 }

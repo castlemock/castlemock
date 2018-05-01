@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsStatusInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapPortsStatusOutput;
 
@@ -45,8 +45,8 @@ public class UpdateSoapPortsStatusService extends AbstractSoapProjectService imp
     public ServiceResult<UpdateSoapPortsStatusOutput> process(final ServiceTask<UpdateSoapPortsStatusInput> serviceTask) {
         final UpdateSoapPortsStatusInput input = serviceTask.getInput();
         final SoapOperationStatus soapOperationStatus = input.getSoapOperationStatus();
-        final List<SoapOperationDto> operations = this.operationRepository.findWithPortId(input.getSoapPortId());
-        for(SoapOperationDto soapOperation : operations){
+        final List<SoapOperation> operations = this.operationRepository.findWithPortId(input.getSoapPortId());
+        for(SoapOperation soapOperation : operations){
             soapOperation.setStatus(soapOperationStatus);
             this.operationRepository.update(soapOperation.getId(), soapOperation);
         }

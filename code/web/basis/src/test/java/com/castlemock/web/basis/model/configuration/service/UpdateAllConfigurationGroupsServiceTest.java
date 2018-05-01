@@ -21,8 +21,7 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationDto;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
+import com.castlemock.core.basis.model.configuration.domain.Configuration;
 import com.castlemock.core.basis.model.configuration.service.message.input.UpdateAllConfigurationGroupsInput;
 import com.castlemock.core.basis.model.configuration.service.message.output.UpdateAllConfigurationGroupsOutput;
 import org.dozer.DozerBeanMapper;
@@ -56,35 +55,35 @@ public class UpdateAllConfigurationGroupsServiceTest {
 
     @Test
     public void testProcess(){
-        final List<ConfigurationGroupDto> configurationGroups = new ArrayList<ConfigurationGroupDto>();
-        final ConfigurationGroupDto configurationGroup = new ConfigurationGroupDto();
+        final List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
+        final ConfigurationGroup configurationGroup = new ConfigurationGroup();
         configurationGroup.setId(new String());
         configurationGroup.setName("Configuration group");
-        configurationGroup.setConfigurations(new ArrayList<ConfigurationDto>());
-        final ConfigurationDto configuration = new ConfigurationDto();
+        configurationGroup.setConfigurations(new ArrayList<Configuration>());
+        final Configuration configuration = new Configuration();
         configuration.setKey("Key");
         configuration.setValue("New value");
         configuration.setType(ConfigurationType.BOOLEAN);
         configurationGroup.getConfigurations().add(configuration);
         configurationGroups.add(configurationGroup);
 
-        final List<ConfigurationGroupDto> sourceConfigurationGroups = new ArrayList<ConfigurationGroupDto>();
-        final ConfigurationGroupDto sourceConfigurationGroup = new ConfigurationGroupDto();
+        final List<ConfigurationGroup> sourceConfigurationGroups = new ArrayList<ConfigurationGroup>();
+        final ConfigurationGroup sourceConfigurationGroup = new ConfigurationGroup();
         sourceConfigurationGroup.setId(new String());
         sourceConfigurationGroup.setName("Configuration group");
-        sourceConfigurationGroup.setConfigurations(new ArrayList<ConfigurationDto>());
-        final ConfigurationDto sourceConfiguration = new ConfigurationDto();
+        sourceConfigurationGroup.setConfigurations(new ArrayList<Configuration>());
+        final Configuration sourceConfiguration = new Configuration();
         sourceConfiguration.setKey("Key");
         sourceConfiguration.setValue("Old value");
         sourceConfiguration.setType(ConfigurationType.BOOLEAN);
         sourceConfigurationGroup.getConfigurations().add(sourceConfiguration);
         sourceConfigurationGroups.add(sourceConfigurationGroup);
 
-        final ConfigurationGroupDto updatedConfigurationGroup = new ConfigurationGroupDto();
+        final ConfigurationGroup updatedConfigurationGroup = new ConfigurationGroup();
         updatedConfigurationGroup.setId(new String());
         updatedConfigurationGroup.setName("Configuration group");
-        updatedConfigurationGroup.setConfigurations(new ArrayList<ConfigurationDto>());
-        final ConfigurationDto updatedConfiguration = new ConfigurationDto();
+        updatedConfigurationGroup.setConfigurations(new ArrayList<Configuration>());
+        final Configuration updatedConfiguration = new Configuration();
         updatedConfiguration.setKey("Key");
         updatedConfiguration.setValue("New value");
         updatedConfiguration.setType(ConfigurationType.BOOLEAN);
@@ -101,14 +100,14 @@ public class UpdateAllConfigurationGroupsServiceTest {
 
         Assert.assertNotNull(output);
         Assert.assertNotNull(output.getUpdatedConfigurationGroups());
-        List<ConfigurationGroupDto> returnedConfigurationGroups = output.getUpdatedConfigurationGroups();
+        List<ConfigurationGroup> returnedConfigurationGroups = output.getUpdatedConfigurationGroups();
         Assert.assertEquals(1, returnedConfigurationGroups.size());
-        ConfigurationGroupDto returnedConfigurationGroup = returnedConfigurationGroups.get(0);
+        ConfigurationGroup returnedConfigurationGroup = returnedConfigurationGroups.get(0);
         Assert.assertEquals(updatedConfigurationGroup.getId(), returnedConfigurationGroup.getId());
         Assert.assertEquals(updatedConfigurationGroup.getName(), returnedConfigurationGroup.getName());
         Assert.assertEquals(updatedConfigurationGroup.getConfigurations().size(), returnedConfigurationGroup.getConfigurations().size());
         Assert.assertEquals(1, returnedConfigurationGroup.getConfigurations().size());
-        ConfigurationDto returnedConfiguration = returnedConfigurationGroup.getConfigurations().get(0);
+        Configuration returnedConfiguration = returnedConfigurationGroup.getConfigurations().get(0);
         Assert.assertEquals(returnedConfiguration.getType(), updatedConfiguration.getType());
         Assert.assertEquals(returnedConfiguration.getKey(), updatedConfiguration.getKey());
         Assert.assertEquals(returnedConfiguration.getValue(), updatedConfiguration.getValue());

@@ -18,8 +18,7 @@ package com.castlemock.web.mock.rest.model.project.repository;
 
 
 import com.castlemock.core.basis.model.Repository;
-import com.castlemock.core.mock.rest.model.project.domain.*;
-import com.castlemock.core.mock.rest.model.project.dto.*;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 
 /**
  * The REST project file repository provides the functionality to interact with the file system.
@@ -27,22 +26,20 @@ import com.castlemock.core.mock.rest.model.project.dto.*;
  * REST project is stored as a separate file.
  * @author Karl Dahlgren
  * @since 1.0
- * @see RestProject
  * @see Repository
  */
-public interface RestProjectRepository extends Repository<RestProject, RestProjectDto, String> {
+public interface RestProjectRepository extends Repository<RestProject, String> {
 
     /*
      * FIND OPERATIONS
      */
 
     /**
-     * Finds a {@link RestProjectDto} with a provided REST project name.
+     * Finds a {@link RestProject} with a provided REST project name.
      * @param restProjectName The name of the REST project that will be retrieved.
-     * @return A {@link RestProjectDto} that matches the provided name.
+     * @return A {@link RestProject} that matches the provided name.
      * @see RestProject
-     * @see RestProjectDto
      */
-    RestProjectDto findRestProjectWithName(String restProjectName);
+    RestProject findRestProjectWithName(String restProjectName);
 
 }

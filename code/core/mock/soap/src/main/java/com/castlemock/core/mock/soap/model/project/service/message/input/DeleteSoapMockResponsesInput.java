@@ -18,7 +18,7 @@ package com.castlemock.core.mock.soap.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 
 import java.util.List;
 
@@ -35,9 +35,9 @@ public class DeleteSoapMockResponsesInput implements Input{
     @NotNull
     private String soapOperationId;
     @NotNull
-    private List<SoapMockResponseDto> mockResponses;
+    private List<SoapMockResponse> mockResponses;
 
-    public DeleteSoapMockResponsesInput(String soapProjectId, String soapPortId, String soapOperationId, List<SoapMockResponseDto> mockResponses) {
+    public DeleteSoapMockResponsesInput(String soapProjectId, String soapPortId, String soapOperationId, List<SoapMockResponse> mockResponses) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
         this.soapOperationId = soapOperationId;
@@ -68,11 +68,11 @@ public class DeleteSoapMockResponsesInput implements Input{
         this.soapOperationId = soapOperationId;
     }
 
-    public List<SoapMockResponseDto> getMockResponses() {
+    public List<SoapMockResponse> getMockResponses() {
         return mockResponses;
     }
 
-    public void setMockResponses(List<SoapMockResponseDto> mockResponses) {
+    public void setMockResponses(List<SoapMockResponse> mockResponses) {
         this.mockResponses = mockResponses;
     }
 }

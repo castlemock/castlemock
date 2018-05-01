@@ -19,8 +19,8 @@ package com.castlemock.web.mock.soap.model.event.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.event.dto.EventDtoStartDateComparator;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.basis.model.event.domain.EventStartDateComparator;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
@@ -48,8 +48,8 @@ public class ReadSoapEventsByOperationIdService extends AbstractSoapEventService
     @Override
     public ServiceResult<ReadSoapEventsByOperationIdOutput> process(ServiceTask<ReadSoapEventsByOperationIdInput> serviceTask) {
         final ReadSoapEventsByOperationIdInput input = serviceTask.getInput();
-        final List<SoapEventDto> events = repository.findEventsByOperationId(input.getOperationId());
-        Collections.sort(events, new EventDtoStartDateComparator());
+        final List<SoapEvent> events = repository.findEventsByOperationId(input.getOperationId());
+        Collections.sort(events, new EventStartDateComparator());
         return createServiceResult(new ReadSoapEventsByOperationIdOutput(events));
     }
 }

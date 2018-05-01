@@ -17,7 +17,7 @@
 package com.castlemock.core.mock.soap.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 
 /**
  * @author Karl Dahlgren
@@ -25,13 +25,13 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
  */
 public class CreateSoapProjectOutput implements Output {
 
-    private SoapProjectDto savedSoapProject;
+    private SoapProject savedSoapProject;
 
-    public SoapProjectDto getSavedSoapProject() {
+    public SoapProject getSavedSoapProject() {
         return savedSoapProject;
     }
 
-    public void setSavedSoapProject(SoapProjectDto savedSoapProject) {
+    public void setSavedSoapProject(SoapProject savedSoapProject) {
         this.savedSoapProject = savedSoapProject;
     }
 }

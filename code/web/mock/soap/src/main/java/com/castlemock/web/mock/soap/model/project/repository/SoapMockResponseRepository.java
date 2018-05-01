@@ -18,14 +18,13 @@ package com.castlemock.web.mock.soap.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
 
 import java.util.List;
 
-public interface SoapMockResponseRepository extends Repository<SoapMockResponse, SoapMockResponseDto, String> {
+public interface SoapMockResponseRepository extends Repository<SoapMockResponse, String> {
 
     void deleteWithOperationId(String operationId);
 
-    List<SoapMockResponseDto> findWithOperationId(String operationId);
+    List<SoapMockResponse> findWithOperationId(String operationId);
 
 }

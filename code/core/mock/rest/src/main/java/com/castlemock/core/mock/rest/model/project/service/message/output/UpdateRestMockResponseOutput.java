@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 public class UpdateRestMockResponseOutput implements Output {
 
     @NotNull
-    private RestMockResponseDto updatedRestMockResponse;
+    private RestMockResponse updatedRestMockResponse;
 
-    public UpdateRestMockResponseOutput(RestMockResponseDto updatedRestMockResponse) {
+    public UpdateRestMockResponseOutput(RestMockResponse updatedRestMockResponse) {
         this.updatedRestMockResponse = updatedRestMockResponse;
     }
 
-    public RestMockResponseDto getUpdatedRestMockResponse() {
+    public RestMockResponse getUpdatedRestMockResponse() {
         return updatedRestMockResponse;
     }
 
-    public void setUpdatedRestMockResponse(RestMockResponseDto updatedRestMockResponse) {
+    public void setUpdatedRestMockResponse(RestMockResponse updatedRestMockResponse) {
         this.updatedRestMockResponse = updatedRestMockResponse;
     }
 }

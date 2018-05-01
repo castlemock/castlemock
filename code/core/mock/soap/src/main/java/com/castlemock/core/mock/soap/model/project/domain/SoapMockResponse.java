@@ -16,48 +16,57 @@
 
 package com.castlemock.core.mock.soap.model.project.domain;
 
-
-import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.dozer.Mapping;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Mock response represent a mocked response for a operation
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class SoapMockResponse implements Saveable<String> {
+public class SoapMockResponse {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("body")
     private String body;
+
+    @Mapping("operationId")
     private String operationId;
+
+    @Mapping("status")
     private SoapMockResponseStatus status;
+
+    @Mapping("httpStatusCode")
     private Integer httpStatusCode;
+
+    @Mapping("usingExpressions")
     private boolean usingExpressions;
+
+    @Mapping("xpathExpression")
     private String xpathExpression;
+  
+    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+
+    @Mapping("contentEncodings")
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
 
-    @XmlElement
-    @Override
+
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -66,7 +75,6 @@ public class SoapMockResponse implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public String getBody() {
         return body;
     }
@@ -75,7 +83,6 @@ public class SoapMockResponse implements Saveable<String> {
         this.body = body;
     }
 
-    @XmlElement
     public String getOperationId() {
         return operationId;
     }
@@ -84,7 +91,6 @@ public class SoapMockResponse implements Saveable<String> {
         this.operationId = operationId;
     }
 
-    @XmlElement
     public SoapMockResponseStatus getStatus() {
         return status;
     }
@@ -93,7 +99,6 @@ public class SoapMockResponse implements Saveable<String> {
         this.status = status;
     }
 
-    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
@@ -102,7 +107,6 @@ public class SoapMockResponse implements Saveable<String> {
         this.httpStatusCode = httpStatusCode;
     }
 
-    @XmlElement
     public boolean isUsingExpressions() {
         return usingExpressions;
     }
@@ -111,8 +115,6 @@ public class SoapMockResponse implements Saveable<String> {
         this.usingExpressions = usingExpressions;
     }
 
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
@@ -122,7 +124,6 @@ public class SoapMockResponse implements Saveable<String> {
     }
 
 
-    @XmlElement
     public String getXpathExpression() {
         return xpathExpression;
     }
@@ -131,33 +132,11 @@ public class SoapMockResponse implements Saveable<String> {
         this.xpathExpression = xpathExpression;
     }
   
-    @XmlElementWrapper(name = "contentEncodings")
-    @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
     public void setContentEncodings(List<ContentEncoding> contentEncodings) {
         this.contentEncodings = contentEncodings;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof SoapMockResponse))
-            return false;
-
-        SoapMockResponse that = (SoapMockResponse) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }

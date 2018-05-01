@@ -19,13 +19,9 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.*;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.DeleteGraphQLApplicationsInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.DeleteGraphQLApplicationsOutput;
-import com.castlemock.web.mock.graphql.model.project.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -45,7 +41,7 @@ public class DeleteGraphQLApplicationsService extends AbstractGraphQLProjectServ
     @Override
     public ServiceResult<DeleteGraphQLApplicationsOutput> process(final ServiceTask<DeleteGraphQLApplicationsInput> serviceTask) {
         final DeleteGraphQLApplicationsInput input = serviceTask.getInput();
-        for(GraphQLApplicationDto application : input.getGraphQLApplications()){
+        for(GraphQLApplication application : input.getGraphQLApplications()){
             super.deleteApplication(application.getId());
         }
         return createServiceResult(new DeleteGraphQLApplicationsOutput());

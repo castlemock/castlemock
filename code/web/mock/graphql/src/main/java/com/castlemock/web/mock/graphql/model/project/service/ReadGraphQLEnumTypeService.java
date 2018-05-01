@@ -19,11 +19,9 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLEnumTypeDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumType;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLEnumTypeInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLEnumTypeOutput;
-import com.castlemock.web.mock.graphql.model.project.repository.GraphQLEnumTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -45,7 +43,7 @@ public class ReadGraphQLEnumTypeService extends AbstractGraphQLProjectService im
     @Override
     public ServiceResult<ReadGraphQLEnumTypeOutput> process(ServiceTask<ReadGraphQLEnumTypeInput> serviceTask) {
         final ReadGraphQLEnumTypeInput input = serviceTask.getInput();
-        final GraphQLEnumTypeDto enumType = enumTypeRepository.findOne(input.getGraphQLEnumTypeId());
+        final GraphQLEnumType enumType = enumTypeRepository.findOne(input.getGraphQLEnumTypeId());
         return createServiceResult(new ReadGraphQLEnumTypeOutput(enumType));
     }
 }

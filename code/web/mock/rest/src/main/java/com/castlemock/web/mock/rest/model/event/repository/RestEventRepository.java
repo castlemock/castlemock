@@ -16,10 +16,8 @@
 
 package com.castlemock.web.mock.rest.model.event.repository;
 
-
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
 
 import java.util.List;
 
@@ -29,30 +27,29 @@ import java.util.List;
  * rest event is stored as a separate file.
  * @author Karl Dahlgren
  * @since 1.0
- * @see RestEvent
  * @see Repository
  */
-public interface RestEventRepository extends Repository<RestEvent, RestEventDto, String> {
+public interface RestEventRepository extends Repository<RestEvent, String> {
 
     /**
      * Find events by REST method ID
      * @param restMethodId The id of the REST method
-     * @return A list of {@link RestEventDto} that matches the provided <code>restMethodId</code>
+     * @return A list of {@link RestEvent} that matches the provided <code>restMethodId</code>
      */
-    List<RestEventDto> findEventsByMethodId(String restMethodId);
+    List<RestEvent> findEventsByMethodId(String restMethodId);
 
     /**
      * The service finds the oldest event
      * @return The oldest event
      */
-    RestEventDto getOldestEvent();
+    RestEvent getOldestEvent();
 
     /**
      * The method finds and deletes the oldest event.
      * @return The event that was deleted.
      * @since 1.5
      */
-    RestEventDto deleteOldestEvent();
+    RestEvent deleteOldestEvent();
 
     /**
      * The method clears and deletes all logs.

@@ -16,39 +16,45 @@
 
 package com.castlemock.core.mock.rest.model.project.domain;
 
+import org.dozer.Mapping;
 
-import com.castlemock.core.basis.model.Saveable;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class RestResource implements Saveable<String> {
+public class RestResource {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("uri")
     private String uri;
+
+    @Mapping("applicationId")
     private String applicationId;
 
-    @Override
-    @XmlElement
+    private List<RestMethod> methods = new CopyOnWriteArrayList<RestMethod>();
+
+    private String invokeAddress;
+
+    private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
+
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -57,7 +63,6 @@ public class RestResource implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public String getUri() {
         return uri;
     }
@@ -66,12 +71,35 @@ public class RestResource implements Saveable<String> {
         this.uri = uri;
     }
 
-    @XmlElement
     public String getApplicationId() {
         return applicationId;
     }
 
     public void setApplicationId(String applicationId) {
         this.applicationId = applicationId;
+    }
+
+    public List<RestMethod> getMethods() {
+        return methods;
+    }
+
+    public void setMethods(List<RestMethod> methods) {
+        this.methods = methods;
+    }
+
+    public String getInvokeAddress() {
+        return invokeAddress;
+    }
+
+    public void setInvokeAddress(String invokeAddress) {
+        this.invokeAddress = invokeAddress;
+    }
+
+    public Map<RestMethodStatus, Integer> getStatusCount() {
+        return statusCount;
+    }
+
+    public void setStatusCount(Map<RestMethodStatus, Integer> statusCount) {
+        this.statusCount = statusCount;
     }
 }

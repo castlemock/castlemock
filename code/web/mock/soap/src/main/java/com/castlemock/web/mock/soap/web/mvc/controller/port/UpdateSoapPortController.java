@@ -18,7 +18,7 @@ package com.castlemock.web.mock.soap.web.mvc.controller.port;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsForwardedEndpointInput;
@@ -75,13 +75,13 @@ public class UpdateSoapPortController extends AbstractSoapViewController {
      * The update method is responsible for updating a specific port
      * @param soapProjectId The id of the project that the port belongs to
      * @param soapPortId The id of the port that will be updated
-     * @param soapPortDto The updated version of the port that will be updated
+     * @param soapPort The updated version of the port that will be updated
      * @return Redirects the user to the main page of the port that was updated
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @ModelAttribute final SoapPortDto soapPortDto) {
-        serviceProcessor.process(new UpdateSoapPortInput(soapProjectId, soapPortId, soapPortDto));
+    public ModelAndView update(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @ModelAttribute final SoapPort soapPort) {
+        serviceProcessor.process(new UpdateSoapPortInput(soapProjectId, soapPortId, soapPort));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId);
     }
 

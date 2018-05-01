@@ -17,7 +17,7 @@
 
 package com.castlemock.web.mock.graphql.converter;
 
-import com.castlemock.core.mock.graphql.model.project.dto.*;
+import com.castlemock.core.mock.graphql.model.project.domain.*;
 
 import java.util.List;
 
@@ -28,50 +28,50 @@ import java.util.List;
 public class GraphQLDefinitionConverterResult {
 
 
-    private List<GraphQLObjectTypeDto> objects;
-    private List<GraphQLEnumTypeDto> enums;
-    private List<GraphQLQueryDto> queries;
-    private List<GraphQLMutationDto> mutations;
-    private List<GraphQLSubscriptionDto> subscriptions;
+    private List<GraphQLObjectType> objects;
+    private List<GraphQLEnumType> enums;
+    private List<GraphQLQuery> queries;
+    private List<GraphQLMutation> mutations;
+    private List<GraphQLSubscription> subscriptions;
 
 
-    public List<GraphQLObjectTypeDto> getObjects() {
+    public List<GraphQLObjectType> getObjects() {
         return objects;
     }
 
-    public void setObjects(List<GraphQLObjectTypeDto> objects) {
+    public void setObjects(List<GraphQLObjectType> objects) {
         this.objects = objects;
     }
 
-    public List<GraphQLEnumTypeDto> getEnums() {
+    public List<GraphQLEnumType> getEnums() {
         return enums;
     }
 
-    public void setEnums(List<GraphQLEnumTypeDto> enums) {
+    public void setEnums(List<GraphQLEnumType> enums) {
         this.enums = enums;
     }
 
-    public List<GraphQLQueryDto> getQueries() {
+    public List<GraphQLQuery> getQueries() {
         return queries;
     }
 
-    public void setQueries(List<GraphQLQueryDto> queries) {
+    public void setQueries(List<GraphQLQuery> queries) {
         this.queries = queries;
     }
 
-    public List<GraphQLMutationDto> getMutations() {
+    public List<GraphQLMutation> getMutations() {
         return mutations;
     }
 
-    public void setMutations(List<GraphQLMutationDto> mutations) {
+    public void setMutations(List<GraphQLMutation> mutations) {
         this.mutations = mutations;
     }
 
-    public List<GraphQLSubscriptionDto> getSubscriptions() {
+    public List<GraphQLSubscription> getSubscriptions() {
         return subscriptions;
     }
 
-    public void setSubscriptions(List<GraphQLSubscriptionDto> subscriptions) {
+    public void setSubscriptions(List<GraphQLSubscription> subscriptions) {
         this.subscriptions = subscriptions;
     }
 }

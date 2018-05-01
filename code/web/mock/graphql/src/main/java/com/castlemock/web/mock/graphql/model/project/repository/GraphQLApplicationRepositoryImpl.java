@@ -16,22 +16,24 @@
 
 package com.castlemock.web.mock.graphql.model.project.repository;
 
+import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class GraphQLApplicationRepositoryImpl extends RepositoryImpl<GraphQLApplication, GraphQLApplicationDto, String> implements GraphQLApplicationRepository {
+public class GraphQLApplicationRepositoryImpl extends RepositoryImpl<GraphQLApplicationRepositoryImpl.GraphQLApplicationFile, GraphQLApplication, String> implements GraphQLApplicationRepository {
 
     @Autowired
     private MessageSource messageSource;
@@ -76,7 +78,7 @@ public class GraphQLApplicationRepositoryImpl extends RepositoryImpl<GraphQLAppl
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLApplication type) {
+    protected void checkType(GraphQLApplicationFile type) {
 
     }
 
@@ -92,12 +94,12 @@ public class GraphQLApplicationRepositoryImpl extends RepositoryImpl<GraphQLAppl
     }
 
     @Override
-    public List<GraphQLApplicationDto> findWithProjectId(final String projectId) {
-        final List<GraphQLApplicationDto> applications = new ArrayList<>();
-        for(GraphQLApplication application : this.collection.values()){
-            if(application.getProjectId().equals(projectId)){
-                GraphQLApplicationDto applicationDto = this.mapper.map(application, GraphQLApplicationDto.class);
-                applications.add(applicationDto);
+    public List<GraphQLApplication> findWithProjectId(final String projectId) {
+        final List<GraphQLApplication> applications = new ArrayList<>();
+        for(GraphQLApplicationFile applicationFile : this.collection.values()){
+            if(applicationFile.getProjectId().equals(projectId)){
+                GraphQLApplication application = this.mapper.map(applicationFile, GraphQLApplication.class);
+                applications.add(application);
             }
         }
         return applications;
@@ -105,13 +107,62 @@ public class GraphQLApplicationRepositoryImpl extends RepositoryImpl<GraphQLAppl
 
     @Override
     public void deleteWithProjectId(final String projectId) {
-        Iterator<GraphQLApplication> iterator = this.collection.values().iterator();
+        Iterator<GraphQLApplicationFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            GraphQLApplication application = iterator.next();
+            GraphQLApplicationFile application = iterator.next();
             if(application.getProjectId().equals(projectId)){
                 delete(application.getId());
             }
         }
     }
+
+
+    @XmlRootElement(name = "graphQLApplication")
+    protected static class GraphQLApplicationFile implements Saveable<String> {
+
+        private String id;
+        private String name;
+        private String description;
+        private String projectId;
+
+        @Override
+        @XmlElement
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        @XmlElement
+        public String getProjectId() {
+            return projectId;
+        }
+
+        public void setProjectId(String projectId) {
+            this.projectId = projectId;
+        }
+    }
+
 
 }

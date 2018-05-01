@@ -18,7 +18,7 @@ package com.castlemock.core.mock.graphql.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLSubscriptionDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLSubscription;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.graphql.model.project.dto.GraphQLSubscriptionDto
 public class ReadGraphQLSubscriptionOutput implements Output{
 
     @NotNull
-    private GraphQLSubscriptionDto graphQLSubscription;
+    private GraphQLSubscription graphQLSubscription;
 
-    public ReadGraphQLSubscriptionOutput(GraphQLSubscriptionDto graphQLSubscription) {
+    public ReadGraphQLSubscriptionOutput(GraphQLSubscription graphQLSubscription) {
         this.graphQLSubscription = graphQLSubscription;
     }
 
-    public GraphQLSubscriptionDto getGraphQLSubscription() {
+    public GraphQLSubscription getGraphQLSubscription() {
         return graphQLSubscription;
     }
 
-    public void setGraphQLSubscription(GraphQLSubscriptionDto graphQLSubscription) {
+    public void setGraphQLSubscription(GraphQLSubscription graphQLSubscription) {
         this.graphQLSubscription = graphQLSubscription;
     }
 }

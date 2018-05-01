@@ -17,16 +17,16 @@
 package com.castlemock.web.mock.soap.web.mvc.controller.mockresponse;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapOperationGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,29 +68,29 @@ public class CreateSoapMockResponseControllerTest extends AbstractSoapController
 
     @Test
     public void testCreateResponse() throws Exception {
-        final SoapProjectDto projectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto applicationDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        when(serviceProcessor.process(any(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperationDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + projectDto.getId() + SLASH + PORT + SLASH + applicationDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + CREATE_RESPONSE + SLASH);
+        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapPort application = SoapPortGenerator.generateSoapPort();
+        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        when(serviceProcessor.process(any(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + CREATE_RESPONSE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(5 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, projectDto.getId()))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, applicationDto.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, project.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, application.getId()))
                 .andExpect(MockMvcResultMatchers.model().attribute(DEMO_MODE, false))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION, soapOperationDto));
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION, soapOperation));
     }
 
     @Test
     public void testPostCreateResponse() throws Exception {
-        final SoapProjectDto projectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto applicationDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperationDto = SoapOperationDtoGenerator.generateSoapOperationDto();
-        when(serviceProcessor.process(any(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperationDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectDto.getId() + SLASH + PORT + SLASH + applicationDto.getId() + SLASH + OPERATION + SLASH + soapOperationDto.getId() + SLASH + CREATE_RESPONSE + SLASH);
+        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapPort application = SoapPortGenerator.generateSoapPort();
+        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        when(serviceProcessor.process(any(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + CREATE_RESPONSE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

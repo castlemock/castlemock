@@ -19,8 +19,8 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLProjectOutput;
 
@@ -45,8 +45,8 @@ public class ReadGraphQLProjectService extends AbstractGraphQLProjectService imp
     @Override
     public ServiceResult<ReadGraphQLProjectOutput> process(final ServiceTask<ReadGraphQLProjectInput> serviceTask) {
         final ReadGraphQLProjectInput input = serviceTask.getInput();
-        final GraphQLProjectDto project = this.find(input.getGraphQLProjectId());
-        final List<GraphQLApplicationDto> applications = this.applicationRepository.findWithProjectId(input.getGraphQLProjectId());
+        final GraphQLProject project = this.find(input.getGraphQLProjectId());
+        final List<GraphQLApplication> applications = this.applicationRepository.findWithProjectId(input.getGraphQLProjectId());
         project.setApplications(applications);
         return createServiceResult(new ReadGraphQLProjectOutput(project));
     }

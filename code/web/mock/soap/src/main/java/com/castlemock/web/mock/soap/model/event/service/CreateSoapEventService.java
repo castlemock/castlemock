@@ -19,7 +19,7 @@ package com.castlemock.web.mock.soap.model.event.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.service.message.input.CreateSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.CreateSoapEventOutput;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,11 +46,11 @@ public class CreateSoapEventService extends AbstractSoapEventService implements 
     @Override
     public ServiceResult<CreateSoapEventOutput> process(ServiceTask<CreateSoapEventInput> serviceTask) {
         final CreateSoapEventInput input = serviceTask.getInput();
-        final SoapEventDto soapEventDto = input.getSoapEvent();
+        final SoapEvent soapEvent = input.getSoapEvent();
         if(count() >= soapMaxEventCount){
             repository.deleteOldestEvent();
         }
-        final SoapEventDto createdSoapEvent = save(soapEventDto);
+        final SoapEvent createdSoapEvent = save(soapEvent);
         return createServiceResult(new CreateSoapEventOutput(createdSoapEvent));
     }
 }

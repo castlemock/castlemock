@@ -17,16 +17,16 @@
 package com.castlemock.web.mock.rest.web.mvc.controller.application;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestApplicationOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
-import com.castlemock.web.mock.rest.model.project.RestApplicationDtoGenerator;
-import com.castlemock.web.mock.rest.model.project.RestProjectDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
+import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,24 +68,24 @@ public class CreateRestApplicationControllerTest extends AbstractRestControllerT
 
     @Test
     public void testCreateMethod() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
-        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + CREATE_APPLICATION);
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProject));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + CREATE_APPLICATION);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(2 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProjectDto.getId()))
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProject.getId()))
                 .andExpect(MockMvcResultMatchers.model().attributeExists(REST_APPLICATION));
     }
 
     @Test
     public void testPostCreateMethod() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
-        final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
-        when(serviceProcessor.process(any(CreateRestApplicationInput.class))).thenReturn(new CreateRestApplicationOutput(restApplicationDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + CREATE_APPLICATION);
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        when(serviceProcessor.process(any(CreateRestApplicationInput.class))).thenReturn(new CreateRestApplicationOutput(restApplication));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + CREATE_APPLICATION);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

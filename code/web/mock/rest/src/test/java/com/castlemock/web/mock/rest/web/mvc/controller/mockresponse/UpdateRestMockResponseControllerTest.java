@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.web.mvc.controller.mockresponse;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.dto.*;
+import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestMockResponseOutput;
 import com.castlemock.web.basis.web.AbstractController;
@@ -64,13 +64,13 @@ public class UpdateRestMockResponseControllerTest extends AbstractRestController
 
     @Test
     public void testUpdateMockResponse() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
-        final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
-        final RestResourceDto restResourceDto = RestResourceDtoGenerator.generateRestResourceDto();
-        final RestMethodDto restMethodDto = RestMethodDtoGenerator.generateRestMethodDto();
-        final RestMockResponseDto restMockResponseDto = RestMockResponseDtoGenerator.generateRestMockResponseDto();
-        when(serviceProcessor.process(any(UpdateRestMockResponseInput.class))).thenReturn(new UpdateRestMockResponseOutput(restMockResponseDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProjectDto.getId() + SLASH + APPLICATION + SLASH + restApplicationDto.getId() + SLASH + RESOURCE + SLASH + restResourceDto.getId() + SLASH + METHOD + SLASH + restMethodDto.getId() + SLASH + RESPONSE + SLASH + restMockResponseDto.getId() + SLASH + UPDATE);
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestResource restResource = RestResourceGenerator.generateRestResource();
+        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
+        final RestMockResponse restMockResponse = RestMockResponseGenerator.generateRestMockResponse();
+        when(serviceProcessor.process(any(UpdateRestMockResponseInput.class))).thenReturn(new UpdateRestMockResponseOutput(restMockResponse));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId() + SLASH + RESPONSE + SLASH + restMockResponse.getId() + SLASH + UPDATE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

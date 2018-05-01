@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.support;
 
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -37,19 +37,19 @@ public class CharsetUtility {
     private static final Logger LOGGER = Logger.getLogger(CharsetUtility.class);
 
     /**
-     * Extract the charset from a list of provided {@link HttpHeaderDto}.
+     * Extract the charset from a list of provided {@link HttpHeader}.
      * The method will only take the Content-Type header into consideration.
      * @param headers The list of headers that the charset will be extracted from.
      * @return The extracted charset. The default charset ({@link CharsetUtility#DEFAULT_CHARSET})
      * will be returned if a charset couldn't be extracted.
      * @see CharsetUtility#parseContentType(String)
      */
-    public static String parseHttpHeaders(final List<HttpHeaderDto> headers){
+    public static String parseHttpHeaders(final List<HttpHeader> headers){
         if(headers == null){
             return DEFAULT_CHARSET;
         }
 
-        for(HttpHeaderDto header : headers){
+        for(HttpHeader header : headers){
             if(CONTENT_TYPE.equalsIgnoreCase(header.getName())){
                 return parseContentType(header.getValue());
             }

@@ -17,7 +17,7 @@
 package com.castlemock.core.mock.soap.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 
 /**
  * @author Karl Dahlgren
@@ -25,13 +25,13 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
  */
 public class UpdateSoapOperationsForwardedEndpointOutput implements Output {
 
-    private SoapProjectDto updatedSoapProject;
+    private SoapProject updatedSoapProject;
 
-    public SoapProjectDto getUpdatedSoapProject() {
+    public SoapProject getUpdatedSoapProject() {
         return updatedSoapProject;
     }
 
-    public void setUpdatedSoapProject(SoapProjectDto updatedSoapProject) {
+    public void setUpdatedSoapProject(SoapProject updatedSoapProject) {
         this.updatedSoapProject = updatedSoapProject;
     }
 }

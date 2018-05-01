@@ -17,7 +17,6 @@
 package com.castlemock.web.basis.web.mvc.command.project;
 
 import com.castlemock.core.basis.model.project.domain.Project;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
 
 /**
  * The DeleteProjectsCommand is a command class and is used to identify which projects
@@ -25,7 +24,7 @@ import com.castlemock.core.basis.model.project.dto.ProjectDto;
  * @author Karl Dahlgren
  * @since 1.0
  * @see Project
- * @see ProjectDto
+ * @see Project
  */
 public class DeleteProjectsCommand {
 

@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.web.rest.controller;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
-import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ImportSoapResourceInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ImportSoapResourceOutput;
 import com.castlemock.web.basis.manager.FileManager;
@@ -25,8 +25,6 @@ import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import io.swagger.annotations.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +52,7 @@ public class SoapRestController extends AbstractRestController {
 
     @ApiOperation(value = "Import resource", notes = "The service will upload a SOAP resource. " +
             "Either the project id or the resource id is required. Required authorization: Modifier or Admin.",
-            response = SoapResourceDto.class)
+            response = SoapResource.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully imported SOAP project resource")
     }
@@ -62,7 +60,7 @@ public class SoapRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.POST, value = "/resource")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    SoapResourceDto importResource(
+    SoapResource importResource(
             @ApiParam(name = "projectId", value = "The id of the project")
             @RequestParam(value = "projectId", required = false) final String projectId,
             @ApiParam(name = "resourceId", value = "The id of the resource")
@@ -86,7 +84,7 @@ public class SoapRestController extends AbstractRestController {
             }
 
             final String raw = stringBuilder.toString();
-            final SoapResourceDto resource = new SoapResourceDto();
+            final SoapResource resource = new SoapResource();
             resource.setId(resourceId);
             resource.setType(resourceType);
             ImportSoapResourceInput input = new ImportSoapResourceInput(projectId, resource, raw);

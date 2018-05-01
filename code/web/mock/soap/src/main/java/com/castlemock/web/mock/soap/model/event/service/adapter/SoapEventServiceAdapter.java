@@ -18,10 +18,10 @@ package com.castlemock.web.mock.soap.model.event.service.adapter;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
-import com.castlemock.core.basis.model.event.dto.EventDto;
+import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.basis.model.event.service.EventServiceAdapter;
 import com.castlemock.core.basis.model.event.service.EventServiceFacade;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ClearAllSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadAllSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventInput;
@@ -41,7 +41,7 @@ import java.util.List;
  * @see EventServiceFacade
  */
 @Service
-public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto> {
+public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEvent> {
 
     private static final String SLASH = "/";
     private static final String WEB = "web";
@@ -56,13 +56,13 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
     private SoapTypeIdentifier SOAP_TYPE_IDENTIFIER = new SoapTypeIdentifier();
 
     /**
-     * The method provides the functionality to create and store a DTO instance to a specific service.
+     * The method provides the functionality to create and store a  instance to a specific service.
      * The service is identified with the provided type value.
-     * @param dto The instance that will be created
+     * @param event The instance that will be created
      * @return The saved instance
      */
     @Override
-    public SoapEventDto create(SoapEventDto dto) {
+    public SoapEvent create(SoapEvent event) {
         throw new UnsupportedOperationException();
     }
 
@@ -74,7 +74,7 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public SoapEventDto delete(String id) {
+    public SoapEvent delete(String id) {
         throw new UnsupportedOperationException();
     }
 
@@ -82,14 +82,14 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
      * The method is used to update an already existing instance. The instance type is
      * identified with the provided typeUrl value. When the instance type has been identified, the instance
      * itself has to be identified. This is done with the provided id. The instance with the matching id will be
-     * replaced with the provided dto instance. Please note that not all values will be updated. It depends on the instance
+     * replaced with the provided  instance. Please note that not all values will be updated. It depends on the instance
      * type.
      * @param id The id of the instance that will be updated
-     * @param dto The instance with the new updated values
+     * @param event The instance with the new updated values
      * @return The updated instance
      */
     @Override
-    public SoapEventDto update(String id, SoapEventDto dto) {
+    public SoapEvent update(String id, SoapEvent event) {
         throw new UnsupportedOperationException();
     }
 
@@ -98,12 +98,12 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
      * @return A list containing all the instance independent from type
      */
     @Override
-    public List<SoapEventDto> readAll() {
+    public List<SoapEvent> readAll() {
         final ReadAllSoapEventOutput output = serviceProcessor.process(new ReadAllSoapEventInput());
 
-        for(SoapEventDto soapEventDto : output.getSoapEvents()){
-            final String resourceLink = generateResourceLink(soapEventDto);
-            soapEventDto.setResourceLink(resourceLink);
+        for(SoapEvent soapEvent : output.getSoapEvents()){
+            final String resourceLink = generateResourceLink(soapEvent);
+            soapEvent.setResourceLink(resourceLink);
         }
 
         return output.getSoapEvents();
@@ -118,7 +118,7 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
      *         values, null will be returned.
      */
     @Override
-    public SoapEventDto read(String id) {
+    public SoapEvent read(String id) {
         final ReadSoapEventOutput output = serviceProcessor.process(new ReadSoapEventInput(id));
         return output.getSoapEvent();
     }
@@ -139,8 +139,8 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
      * @return A new instance of the parent, but as a subtype of the parent
      */
     @Override
-    public SoapEventDto convertType(EventDto parent) {
-        return new SoapEventDto(parent);
+    public SoapEvent convertType(Event parent) {
+        return new SoapEvent(parent);
     }
 
     /**
@@ -151,12 +151,12 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEventDto
      *   <li>Port id</li>
      *   <li>Operation id</li>
      * </ul>
-     * @param soapEventDto The incoming SOAP event which will be used to generate the resource link
+     * @param soapEvent The incoming SOAP event which will be used to generate the resource link
      * @return The resource link generated based on the incoming SOAP event
      */
     @Override
-    public String generateResourceLink(SoapEventDto soapEventDto) {
-        return SLASH + WEB + SLASH + SOAP + SLASH + PROJECT + SLASH + soapEventDto.getProjectId() + SLASH + PORT + SLASH + soapEventDto.getPortId() + SLASH + OPERATION + SLASH + soapEventDto.getOperationId();
+    public String generateResourceLink(SoapEvent soapEvent) {
+        return SLASH + WEB + SLASH + SOAP + SLASH + PROJECT + SLASH + soapEvent.getProjectId() + SLASH + PORT + SLASH + soapEvent.getPortId() + SLASH + OPERATION + SLASH + soapEvent.getOperationId();
     }
 
     /**

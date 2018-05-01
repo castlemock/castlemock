@@ -17,33 +17,38 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
-public class GraphQLResult implements Saveable<String> {
+public class GraphQLResult {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("typeName")
     private String typeName;
+
+    @Mapping("typeId")
     private String typeId;
+
+    @Mapping("nullable")
     private Boolean nullable;
+
+    @Mapping("listable")
     private Boolean listable;
+
+    @Mapping("attributeType")
     private GraphQLAttributeType attributeType;
 
-    @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getTypeName() {
         return typeName;
     }
@@ -52,7 +57,6 @@ public class GraphQLResult implements Saveable<String> {
         this.typeName = typeName;
     }
 
-    @XmlElement
     public String getTypeId() {
         return typeId;
     }
@@ -61,7 +65,6 @@ public class GraphQLResult implements Saveable<String> {
         this.typeId = typeId;
     }
 
-    @XmlElement
     public Boolean getNullable() {
         return nullable;
     }
@@ -70,7 +73,6 @@ public class GraphQLResult implements Saveable<String> {
         this.nullable = nullable;
     }
 
-    @XmlElement
     public Boolean getListable() {
         return listable;
     }
@@ -79,7 +81,6 @@ public class GraphQLResult implements Saveable<String> {
         this.listable = listable;
     }
 
-    @XmlElement
     public GraphQLAttributeType getAttributeType() {
         return attributeType;
     }

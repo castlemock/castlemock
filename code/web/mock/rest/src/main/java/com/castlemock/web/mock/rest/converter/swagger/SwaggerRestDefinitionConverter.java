@@ -17,19 +17,18 @@
 package com.castlemock.web.mock.rest.converter.swagger;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.utility.file.FileUtility;
 import com.castlemock.core.basis.utility.parser.expression.*;
-import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentArray;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentString;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -67,36 +66,36 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link RestApplicationDto}.
-     * @param file The file which will be converted to one or more {@link RestApplicationDto}.
+     * a list of {@link RestApplication}.
+     * @param file The file which will be converted to one or more {@link RestApplication}.
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link RestApplicationDto} based on the provided file.
+     * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplicationDto> convert(final File file, final boolean generateResponse){
+    public List<RestApplication> convert(final File file, final boolean generateResponse){
         final String swaggerContent = FileUtility.getFileContent(file);
         final Swagger swagger = new SwaggerParser().parse(swaggerContent);
-        final RestApplicationDto restApplication = convertSwagger(swagger, generateResponse);
+        final RestApplication restApplication = convertSwagger(swagger, generateResponse);
         return Arrays.asList(restApplication);
     }
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link RestApplicationDto}.
+     * a list of {@link RestApplication}.
      * @param location The location of the definition file
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link RestApplicationDto} based on the provided file.
+     * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplicationDto> convert(final String location, final boolean generateResponse){
+    public List<RestApplication> convert(final String location, final boolean generateResponse){
         final Swagger swagger = new SwaggerParser().read(location);
-        final RestApplicationDto restApplication = convertSwagger(swagger, generateResponse);
+        final RestApplication restApplication = convertSwagger(swagger, generateResponse);
         return Arrays.asList(restApplication);
     }
 
 
     /**
-     * The method provides the functionality to convert a Swagger String into a {@link RestApplicationDto}.
+     * The method provides the functionality to convert a Swagger String into a {@link RestApplication}.
      * The following HTTP methods will be extracted from the Swagger content:
      * <ul>
      *     <li>GET</li>
@@ -106,17 +105,17 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      *     <li>HEAD</li>
      *     <li>OPTIONS</li>
      * </ul>
-     * @param swagger The Swagger content which will be generated into a {@link RestApplicationDto}.
+     * @param swagger The Swagger content which will be generated into a {@link RestApplication}.
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A {@link RestApplicationDto} based on the provided Swagger content.
+     * @return A {@link RestApplication} based on the provided Swagger content.
      */
-    private RestApplicationDto convertSwagger(final Swagger swagger, final boolean generateResponse){
+    private RestApplication convertSwagger(final Swagger swagger, final boolean generateResponse){
 
         if(swagger == null){
             throw new IllegalArgumentException("Unable to parse the Swagger content.");
         }
 
-        final RestApplicationDto restApplication = new RestApplicationDto();
+        final RestApplication restApplication = new RestApplication();
         restApplication.setName(swagger.getHost());
 
         final String forwardAddress = getForwardAddress(swagger);
@@ -125,39 +124,39 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         for(Map.Entry<String, Path> pathEntry : swagger.getPaths().entrySet()){
             final String resourceName = pathEntry.getKey();
             final Path resourcePath = pathEntry.getValue();
-            final RestResourceDto restResource = new RestResourceDto();
+            final RestResource restResource = new RestResource();
 
             restResource.setName(resourceName);
             restResource.setUri(resourceName);
 
             if(resourcePath.getGet() != null){
                 Operation operation = resourcePath.getGet();
-                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.GET, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.GET, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getPost() != null){
                 Operation operation = resourcePath.getPost();
-                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.POST, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.POST, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getPut() != null){
                 Operation operation = resourcePath.getPut();
-                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.PUT, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.PUT, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getDelete() != null){
                 Operation operation = resourcePath.getDelete();
-                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.DELETE, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.DELETE, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getHead() != null){
                 Operation operation = resourcePath.getHead();
-                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.HEAD, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.HEAD, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if(resourcePath.getOptions() != null){
                 Operation operation = resourcePath.getOptions();
-                RestMethodDto restMethod = createRestMethod(operation, definitions, HttpMethod.OPTIONS, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.OPTIONS, forwardAddress, generateResponse);
                 restResource.getMethods().add(restMethod);
             }
 
@@ -184,19 +183,19 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
     }
 
     /**
-     * Create a {@link RestMethodDto} based on a Swagger {@link Operation} and a {@link HttpMethod}.
-     * @param operation The Swagger operation that will be converted to a {@link RestMethodDto}.
-     * @param httpMethod The {@link HttpMethod} of the new {@link RestMethodDto}.
+     * Create a {@link RestMethod} based on a Swagger {@link Operation} and a {@link HttpMethod}.
+     * @param operation The Swagger operation that will be converted to a {@link RestMethod}.
+     * @param httpMethod The {@link HttpMethod} of the new {@link RestMethod}.
      * @param forwardAddress The configured forward address. The request for this method will be forwarded to
      *                       this address if the service is configured to be {@link RestMethodStatus#FORWARDED},
      *                       {@link RestMethodStatus#RECORDING} or  {@link RestMethodStatus#RECORD_ONCE}
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A {@link RestMethodDto} based on the provided Swagger {@link Operation} and the {@link HttpMethod}.
+     * @return A {@link RestMethod} based on the provided Swagger {@link Operation} and the {@link HttpMethod}.
      */
-    private RestMethodDto createRestMethod(final Operation operation, final Map<String, Model> definitions,
-                                           final HttpMethod httpMethod, final String forwardAddress,
-                                           final boolean generateResponse){
-        final RestMethodDto restMethod = new RestMethodDto();
+    private RestMethod createRestMethod(final Operation operation, final Map<String, Model> definitions,
+                                        final HttpMethod httpMethod, final String forwardAddress,
+                                        final boolean generateResponse){
+        final RestMethod restMethod = new RestMethod();
 
         String methodName;
         if(operation.getOperationId() != null){
@@ -216,10 +215,10 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
 
         if(generateResponse){
             if(!operation.getResponses().isEmpty()){
-                Collection<RestMockResponseDto> mockResponses = generateResponse(operation.getResponses(), definitions, operation.getProduces());
+                Collection<RestMockResponse> mockResponses = generateResponse(operation.getResponses(), definitions, operation.getProduces());
                 restMethod.getMockResponses().addAll(mockResponses);
             } else {
-                RestMockResponseDto generatedResponse = generateResponse();
+                RestMockResponse generatedResponse = generateResponse();
                 restMethod.getMockResponses().add(generatedResponse);
             }
         }
@@ -230,12 +229,12 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
     /**
      * The method generates a default response.
      * @param responses The Swagger response definitions
-     * @return The newly generated {@link RestMockResponseDto}.
+     * @return The newly generated {@link RestMockResponse}.
      */
-    private Collection<RestMockResponseDto> generateResponse(final Map<String,Response> responses,
-                                                             final Map<String, Model> definitions,
-                                                             final List<String> produces){
-        final List<RestMockResponseDto> mockResponses = new ArrayList<>();
+    private Collection<RestMockResponse> generateResponse(final Map<String,Response> responses,
+                                                          final Map<String, Model> definitions,
+                                                          final List<String> produces){
+        final List<RestMockResponse> mockResponses = new ArrayList<>();
         for(Map.Entry<String, Response> responseEntry : responses.entrySet()){
             Map<String, String> bodies = new HashMap<String, String>();
             Response response = responseEntry.getValue();
@@ -254,17 +253,17 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             int httpStatusCode = extractHttpStatusCode(responseEntry.getKey());
 
             if(bodies.isEmpty()){
-                RestMockResponseDto restMockResponse = generateResponse(httpStatusCode, response);
+                RestMockResponse restMockResponse = generateResponse(httpStatusCode, response);
                 mockResponses.add(restMockResponse);
             } else {
                 for(Map.Entry<String, String> bodyEntry : bodies.entrySet()){
                     String contentType = bodyEntry.getKey();
                     String body = bodyEntry.getValue();
-                    RestMockResponseDto restMockResponse = generateResponse(httpStatusCode, response);
+                    RestMockResponse restMockResponse = generateResponse(httpStatusCode, response);
                     restMockResponse.setName(restMockResponse.getName() + " (" + contentType + ")");
                     restMockResponse.setBody(body);
 
-                    HttpHeaderDto httpHeader = new HttpHeaderDto();
+                    HttpHeader httpHeader = new HttpHeader();
                     httpHeader.setName(CONTENT_TYPE);
                     httpHeader.setValue(contentType);
                     restMockResponse.getHttpHeaders().add(httpHeader);
@@ -282,10 +281,10 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      *                       any mock response with status code different from OK (200), will be
      *                       marked as disabled.
      * @param response The Swagger response that the mocked response will be based on.
-     * @return A new {@link RestMockResponseDto} based on the provided {@link Response}.
+     * @return A new {@link RestMockResponse} based on the provided {@link Response}.
      */
-    private RestMockResponseDto generateResponse(final int httpStatusCode, final Response response){
-        RestMockResponseDto restMockResponse = new RestMockResponseDto();
+    private RestMockResponse generateResponse(final int httpStatusCode, final Response response){
+        RestMockResponse restMockResponse = new RestMockResponse();
         restMockResponse.setName(response.getDescription());
         restMockResponse.setHttpStatusCode(httpStatusCode);
         restMockResponse.setUsingExpressions(true);
@@ -298,7 +297,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         if(response.getHeaders() != null){
             for(Map.Entry<String, Property> headerEntry : response.getHeaders().entrySet()){
                 String headerName = headerEntry.getKey();
-                HttpHeaderDto httpHeader = new HttpHeaderDto();
+                HttpHeader httpHeader = new HttpHeader();
                 httpHeader.setName(headerName);
                 // Swagger does not include an example value for the response.
                 restMockResponse.getHttpHeaders().add(httpHeader);

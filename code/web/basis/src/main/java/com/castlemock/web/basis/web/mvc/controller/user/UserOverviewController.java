@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.mvc.controller.user;
 
 import com.castlemock.core.basis.model.user.domain.Role;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadAllUsersInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadAllUsersOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
@@ -53,11 +53,11 @@ public class UserOverviewController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final ReadAllUsersOutput readAllUsersOutput = serviceProcessor.process(new ReadAllUsersInput());
-        final List<UserDto> users = readAllUsersOutput.getUsers();
+        final List<User> users = readAllUsersOutput.getUsers();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USERS, users);
         model.addObject(ROLES, Role.values());
-        model.addObject(COMMAND, new UserDto());
+        model.addObject(COMMAND, new User());
         return model;
     }
 

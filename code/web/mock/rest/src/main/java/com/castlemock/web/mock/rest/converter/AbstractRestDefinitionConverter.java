@@ -19,12 +19,7 @@ package com.castlemock.web.mock.rest.converter;
 
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
-import com.castlemock.web.mock.rest.converter.swagger.SwaggerRestDefinitionConverter;
-
-import java.io.File;
-import java.util.List;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 
 /**
  * @author Karl Dahlgren
@@ -37,10 +32,10 @@ public abstract class AbstractRestDefinitionConverter implements RestDefinitionC
 
     /**
      * The method generates a default response.
-     * @return The newly generated {@link RestMockResponseDto}.
+     * @return The newly generated {@link RestMockResponse}.
      */
-    protected RestMockResponseDto generateResponse(){
-        RestMockResponseDto restMockResponse = new RestMockResponseDto();
+    protected RestMockResponse generateResponse(){
+        RestMockResponse restMockResponse = new RestMockResponse();
         restMockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
         restMockResponse.setHttpStatusCode(DEFAULT_RESPONSE_CODE);
         restMockResponse.setStatus(RestMockResponseStatus.ENABLED);

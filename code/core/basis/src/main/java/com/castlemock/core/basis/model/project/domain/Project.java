@@ -16,42 +16,64 @@
 
 package com.castlemock.core.basis.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.TypeIdentifiable;
+import com.castlemock.core.basis.model.TypeIdentifier;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
- * The Project class is an abstract class which all the various project types inherit from.
- * The project class is one of the most central classes in Castle Mock and is used to organize
- * all information regarding a specific type of projects.
+ * The Project DTO is a DTO (Data transfer object) class for the project class.
  * @author Karl Dahlgren
  * @since 1.0
- * @see ProjectDto
  */
-@XmlRootElement
-public abstract class Project implements Saveable<String> {
+public class Project implements TypeIdentifiable {
 
+
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
-    private String description;
+
+    @Mapping("updated")
     private Date updated;
+
+    @Mapping("created")
     private Date created;
 
-    @XmlElement
-    @Override
+    @Mapping("description")
+    private String description;
+
+    private TypeIdentifier typeIdentifier;
+
+    /**
+     * The default constructor for the project DTO
+     */
+    public Project() {
+        // Empty constructor
+    }
+
+    /**
+     * The constructor provides the functionality to initialize a new project DTO based on another project DTO
+     * @param projectDto The project DTO that the new project DTO is going to based on
+     */
+    protected Project(Project projectDto){
+        this.id = projectDto.getId();
+        this.name = projectDto.getName();
+        this.updated = projectDto.getUpdated();
+        this.created = projectDto.getCreated();
+        this.description = projectDto.getDescription();
+    }
+
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -60,16 +82,6 @@ public abstract class Project implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @XmlElement
     public Date getUpdated() {
         return updated;
     }
@@ -78,7 +90,6 @@ public abstract class Project implements Saveable<String> {
         this.updated = updated;
     }
 
-    @XmlElement
     public Date getCreated() {
         return created;
     }
@@ -87,4 +98,21 @@ public abstract class Project implements Saveable<String> {
         this.created = created;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public TypeIdentifier getTypeIdentifier() {
+        return typeIdentifier;
+    }
+
+    @Override
+    public void setTypeIdentifier(final TypeIdentifier typeIdentifier) {
+        this.typeIdentifier = typeIdentifier;
+    }
 }

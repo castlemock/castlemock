@@ -19,7 +19,7 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.CreateGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.CreateGraphQLProjectOutput;
 
@@ -41,8 +41,8 @@ public class CreateGraphQLProjectService extends AbstractGraphQLProjectService i
     @Override
     public ServiceResult<CreateGraphQLProjectOutput> process(final ServiceTask<CreateGraphQLProjectInput> serviceTask) {
         final CreateGraphQLProjectInput input = serviceTask.getInput();
-        final GraphQLProjectDto restProject = input.getGraphQLProject();
-        final GraphQLProjectDto savedGraphQLProject = save(restProject);
+        final GraphQLProject restProject = input.getGraphQLProject();
+        final GraphQLProject savedGraphQLProject = save(restProject);
         final CreateGraphQLProjectOutput output = new CreateGraphQLProjectOutput();
         output.setSavedGraphQLProject(savedGraphQLProject);
         return createServiceResult(output);

@@ -21,7 +21,7 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUsersByRoleInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUsersByRoleOutput;
 import org.dozer.DozerBeanMapper;
@@ -55,8 +55,8 @@ public class ReadUsersByRoleServiceTest {
 
     @Test
     public void testProcess(){
-        List<UserDto> users = new ArrayList<UserDto>();
-        UserDto user = new UserDto();
+        List<User> users = new ArrayList<User>();
+        User user = new User();
         user.setId(new String());
         user.setUsername("Username");
         user.setStatus(Status.ACTIVE);
@@ -72,10 +72,10 @@ public class ReadUsersByRoleServiceTest {
         final ServiceResult<ReadUsersByRoleOutput> serviceResult = service.process(serviceTask);
         final ReadUsersByRoleOutput output = serviceResult.getOutput();
 
-        final List<UserDto> returnedUsers = output.getUsers();
+        final List<User> returnedUsers = output.getUsers();
         Assert.assertNotNull(returnedUsers);
         Assert.assertEquals(users.size(), returnedUsers.size());
-        final UserDto returnedUser = returnedUsers.get(0);
+        final User returnedUser = returnedUsers.get(0);
         Assert.assertEquals(user.getId(), returnedUser.getId());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
         Assert.assertEquals(user.getRole(), returnedUser.getRole());

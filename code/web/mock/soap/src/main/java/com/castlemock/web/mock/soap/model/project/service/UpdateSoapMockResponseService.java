@@ -19,7 +19,7 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapMockResponseOutput;
 
@@ -44,8 +44,8 @@ public class UpdateSoapMockResponseService extends AbstractSoapProjectService im
     @Override
     public ServiceResult<UpdateSoapMockResponseOutput> process(final ServiceTask<UpdateSoapMockResponseInput> serviceTask) {
         final UpdateSoapMockResponseInput input = serviceTask.getInput();
-        final SoapMockResponseDto updated = input.getSoapMockResponseDto();
-        final SoapMockResponseDto mockResponse = this.mockResponseRepository.findOne(input.getSoapMockResponseId());
+        final SoapMockResponse updated = input.getSoapMockResponse();
+        final SoapMockResponse mockResponse = this.mockResponseRepository.findOne(input.getSoapMockResponseId());
 
         mockResponse.setName(updated.getName());
         mockResponse.setBody(updated.getBody());
@@ -55,7 +55,7 @@ public class UpdateSoapMockResponseService extends AbstractSoapProjectService im
         mockResponse.setUsingExpressions(updated.isUsingExpressions());
         mockResponse.setXpathExpression(updated.getXpathExpression());
 
-        final SoapMockResponseDto updatedSoapMockResponse = mockResponseRepository.update(input.getSoapMockResponseId(), mockResponse);
+        final SoapMockResponse updatedSoapMockResponse = mockResponseRepository.update(input.getSoapMockResponseId(), mockResponse);
         return createServiceResult(new UpdateSoapMockResponseOutput(updatedSoapMockResponse));
     }
 }

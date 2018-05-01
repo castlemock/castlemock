@@ -18,10 +18,10 @@ package com.castlemock.web.mock.soap.model.project.service;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.CreateSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.CreateSoapProjectOutput;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -51,20 +51,19 @@ public class CreateSoapProjectServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapProjectDto soapProject = SoapProjectDtoGenerator.generateSoapProjectDto();
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
 
-        Mockito.when(repository.save(Mockito.any(SoapProjectDto.class))).thenReturn(soapProject);
+        Mockito.when(repository.save(Mockito.any(SoapProject.class))).thenReturn(soapProject);
 
-        final CreateSoapProjectInput input = new CreateSoapProjectInput(soapProjectDto);
+        final CreateSoapProjectInput input = new CreateSoapProjectInput(soapProject);
         final ServiceTask<CreateSoapProjectInput> serviceTask = new ServiceTask<CreateSoapProjectInput>(input);
         final ServiceResult<CreateSoapProjectOutput> serviceResult = service.process(serviceTask);
         final CreateSoapProjectOutput output = serviceResult.getOutput();
-        final SoapProjectDto returnedSoapProjectDto = output.getSavedSoapProject();
+        final SoapProject returnedSoapProject = output.getSavedSoapProject();
 
-        Assert.assertEquals(soapProjectDto.getName(), returnedSoapProjectDto.getName());
-        Assert.assertEquals(soapProjectDto.getDescription(), returnedSoapProjectDto.getDescription());
+        Assert.assertEquals(soapProject.getName(), returnedSoapProject.getName());
+        Assert.assertEquals(soapProject.getDescription(), returnedSoapProject.getDescription());
 
-        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapProjectDto.class));
+        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapProject.class));
     }
 }

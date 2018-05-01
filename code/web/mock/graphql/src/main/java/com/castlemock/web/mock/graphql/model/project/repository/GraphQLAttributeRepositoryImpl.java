@@ -16,22 +16,28 @@
 
 package com.castlemock.web.mock.graphql.model.project.repository;
 
+import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLArgument;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttribute;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLAttributeDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
-public class GraphQLAttributeRepositoryImpl extends RepositoryImpl<GraphQLAttribute, GraphQLAttributeDto, String> implements GraphQLAttributeRepository {
+public class GraphQLAttributeRepositoryImpl extends RepositoryImpl<GraphQLAttributeRepositoryImpl.GraphQLAttributeFile, GraphQLAttribute, String> implements GraphQLAttributeRepository {
 
     @Autowired
     private MessageSource messageSource;
@@ -76,7 +82,7 @@ public class GraphQLAttributeRepositoryImpl extends RepositoryImpl<GraphQLAttrib
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLAttribute type) {
+    protected void checkType(GraphQLAttributeFile type) {
 
     }
 
@@ -89,8 +95,8 @@ public class GraphQLAttributeRepositoryImpl extends RepositoryImpl<GraphQLAttrib
      * @since 1.20
      */
     @Override
-    public GraphQLAttributeDto update(final String id, final GraphQLAttributeDto type) {
-        final GraphQLAttributeDto existing = this.findOne(id);
+    public GraphQLAttribute update(final String id, final GraphQLAttribute type) {
+        final GraphQLAttribute existing = this.findOne(id);
         existing.setValue(type.getValue());
         this.save(existing);
         return existing;
@@ -108,12 +114,12 @@ public class GraphQLAttributeRepositoryImpl extends RepositoryImpl<GraphQLAttrib
     }
 
     @Override
-    public List<GraphQLAttributeDto> findWithObjectTypeId(final String projectId) {
-        final List<GraphQLAttributeDto> attributes = new ArrayList<>();
-        for(GraphQLAttribute attribute : this.collection.values()){
+    public List<GraphQLAttribute> findWithObjectTypeId(final String projectId) {
+        final List<GraphQLAttribute> attributes = new ArrayList<>();
+        for(GraphQLAttributeFile attribute : this.collection.values()){
             if(attribute.getObjectTypeId().equals(projectId)){
-                GraphQLAttributeDto applicationDto = this.mapper.map(attribute, GraphQLAttributeDto.class);
-                attributes.add(applicationDto);
+                GraphQLAttribute application = this.mapper.map(attribute, GraphQLAttribute.class);
+                attributes.add(application);
             }
         }
         return attributes;
@@ -121,12 +127,130 @@ public class GraphQLAttributeRepositoryImpl extends RepositoryImpl<GraphQLAttrib
 
     @Override
     public void deleteWithObjectTypeId(final String objectTypeId) {
-        Iterator<GraphQLAttribute> iterator = this.collection.values().iterator();
+        Iterator<GraphQLAttributeFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            GraphQLAttribute attribute = iterator.next();
+            GraphQLAttributeFile attribute = iterator.next();
             if(attribute.getObjectTypeId().equals(objectTypeId)){
                 delete(attribute.getId());
             }
+        }
+    }
+
+    @XmlRootElement(name = "graphQLAttribute")
+    protected static class GraphQLAttributeFile implements Saveable<String> {
+
+        private String id;
+        private String name;
+        private String description;
+        private String typeId;
+        private String typeName;
+        private Boolean nullable;
+        private Boolean listable;
+        private String objectTypeId;
+        private String value;
+        private GraphQLAttributeType attributeType;
+        private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
+
+        @Override
+        @XmlElement
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        @XmlElement
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        @XmlElement
+        public String getTypeId() {
+            return typeId;
+        }
+
+        public void setTypeId(String typeId) {
+            this.typeId = typeId;
+        }
+
+        @XmlElement
+        public String getTypeName() {
+            return typeName;
+        }
+
+        public void setTypeName(String typeName) {
+            this.typeName = typeName;
+        }
+
+        @XmlElement
+        public Boolean getNullable() {
+            return nullable;
+        }
+
+        public void setNullable(Boolean nullable) {
+            this.nullable = nullable;
+        }
+
+        @XmlElement
+        public Boolean getListable() {
+            return listable;
+        }
+
+        public void setListable(Boolean listable) {
+            this.listable = listable;
+        }
+
+        @XmlElement
+        public GraphQLAttributeType getAttributeType() {
+            return attributeType;
+        }
+
+        public void setAttributeType(GraphQLAttributeType attributeType) {
+            this.attributeType = attributeType;
+        }
+
+        @XmlElementWrapper(name = "arguments")
+        @XmlElement(name = "argument")
+        public List<GraphQLArgument> getArguments() {
+            return arguments;
+        }
+
+        public void setArguments(List<GraphQLArgument> arguments) {
+            this.arguments = arguments;
+        }
+
+        @XmlElement
+        public String getObjectTypeId() {
+            return objectTypeId;
+        }
+
+        public void setObjectTypeId(String objectTypeId) {
+            this.objectTypeId = objectTypeId;
         }
     }
 

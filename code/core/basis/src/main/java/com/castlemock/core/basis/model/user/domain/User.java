@@ -16,24 +16,18 @@
 
 package com.castlemock.core.basis.model.user.domain;
 
-
-import com.castlemock.core.basis.model.Saveable;
-import com.castlemock.core.basis.model.user.dto.UserDto;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * The User class represent the Castle Mock user and contains all the information about the user, such as username
- * and password. The user class will be used upon authentication towards Castle Mock
+ * The User DTO class is a DTO (Data transfer object) for the user class
  * @author Karl Dahlgren
  * @since 1.0
- * @see UserDto
  */
 @XmlRootElement
-public class User implements Saveable<String> {
+public class User {
+
 
     private String id;
     private String username;
@@ -45,30 +39,18 @@ public class User implements Saveable<String> {
     private Role role;
 
     /**
-     * Default constructor for the User class. The constructor will set the current time to both the created
-     * and updated variables.
-     */
-    public User() {
-        this.created = new Timestamp(new Date().getTime());
-        this.updated = new Timestamp(new Date().getTime());
-    }
-
-    /**
      * Get the user id
      * @return User id
      */
     @XmlElement
-    @Override
     public String getId() {
         return id;
     }
-
 
     /**
      * Set a new value to user id
      * @param id New user id
      */
-    @Override
     public void setId(String id) {
         this.id = id;
     }
@@ -91,23 +73,6 @@ public class User implements Saveable<String> {
     }
 
     /**
-     * Get user email
-     * @return Returns user email
-     */
-    @XmlElement
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * Set a new value to user email
-     * @param email New user email value
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
      * Get the user password
      * @return Returns the user password
      */
@@ -122,6 +87,23 @@ public class User implements Saveable<String> {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * Get user email
+     * @return Returns user email
+     */
+    @XmlElement
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Set a new value to user email
+     * @param email New user email value
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**
@@ -192,4 +174,64 @@ public class User implements Saveable<String> {
         this.role = role;
     }
 
+    /**
+     * Compare the user with another user
+     * @param o The compared object
+     * @return True if the two users are equal towards each other
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+
+        User userDto = (User) o;
+
+        if (created != null ? !created.equals(userDto.created) : userDto.created != null) {
+            return false;
+        }
+        if (email != null ? !email.equals(userDto.email) : userDto.email != null) {
+            return false;
+        }
+        if (id != null ? !id.equals(userDto.id) : userDto.id != null) {
+            return false;
+        }
+        if (password != null ? !password.equals(userDto.password) : userDto.password != null) {
+            return false;
+        }
+        if (role != userDto.role) {
+            return false;
+        }
+        if (status != userDto.status) {
+            return false;
+        }
+        if (updated != null ? !updated.equals(userDto.updated) : userDto.updated != null) {
+            return false;
+        }
+        if (username != null ? !username.equals(userDto.username) : userDto.username != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Generates a hashcode for user
+     * @return Hashcode for the user
+     */
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (updated != null ? updated.hashCode() : 0);
+        result = 31 * result + (created != null ? created.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
+    }
 }

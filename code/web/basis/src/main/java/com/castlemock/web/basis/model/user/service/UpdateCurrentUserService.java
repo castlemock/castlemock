@@ -19,7 +19,7 @@ package com.castlemock.web.basis.model.user.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.UpdateCurrentUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.UpdateCurrentUserOutput;
 import com.google.common.base.Preconditions;
@@ -44,16 +44,16 @@ public class UpdateCurrentUserService extends AbstractUserService implements Ser
     @Override
     public ServiceResult<UpdateCurrentUserOutput> process(final ServiceTask<UpdateCurrentUserInput> serviceTask) {
         final UpdateCurrentUserInput input = serviceTask.getInput();
-        final UserDto user = input.getUser();
+        final User user = input.getUser();
         final String loggedInUsername = serviceTask.getServiceConsumer();
 
         if(!user.getUsername().equalsIgnoreCase(loggedInUsername)){
-            final UserDto existingUser = findByUsername(user.getUsername());
+            final User existingUser = findByUsername(user.getUsername());
             Preconditions.checkArgument(existingUser == null, "Invalid username. Username is already used");
         }
 
 
-        final UserDto loggedInUser = findByUsername(loggedInUsername);
+        final User loggedInUser = findByUsername(loggedInUsername);
         loggedInUser.setUsername(user.getUsername());
         loggedInUser.setEmail(user.getEmail());
         loggedInUser.setPassword(user.getPassword());

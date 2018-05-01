@@ -18,7 +18,7 @@ package com.castlemock.core.mock.graphql.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
 public class CreateGraphQLApplicationOutput implements Output {
 
     @NotNull
-    private GraphQLApplicationDto savedGraphQLApplication;
+    private GraphQLApplication savedGraphQLApplication;
 
-    public CreateGraphQLApplicationOutput(GraphQLApplicationDto savedGraphQLApplication) {
+    public CreateGraphQLApplicationOutput(GraphQLApplication savedGraphQLApplication) {
         this.savedGraphQLApplication = savedGraphQLApplication;
     }
 
-    public GraphQLApplicationDto getSavedGraphQLApplication() {
+    public GraphQLApplication getSavedGraphQLApplication() {
         return savedGraphQLApplication;
     }
 
-    public void setSavedGraphQLApplication(GraphQLApplicationDto savedGraphQLApplication) {
+    public void setSavedGraphQLApplication(GraphQLApplication savedGraphQLApplication) {
         this.savedGraphQLApplication = savedGraphQLApplication;
     }
 }

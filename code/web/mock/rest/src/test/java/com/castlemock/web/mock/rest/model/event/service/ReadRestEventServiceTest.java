@@ -19,10 +19,10 @@ package com.castlemock.web.mock.rest.model.event.service;
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventOutput;
-import com.castlemock.web.mock.rest.model.project.RestEventDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.RestEventGenerator;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,14 +52,14 @@ public class ReadRestEventServiceTest {
 
     @Test
     public void testProcess(){
-        final RestEventDto restEvent = RestEventDtoGenerator.generateRestEventDto();
+        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
         Mockito.when(repository.findOne(restEvent.getId())).thenReturn(restEvent);
 
         final ReadRestEventInput input = new ReadRestEventInput(restEvent.getId());
         final ServiceTask<ReadRestEventInput> serviceTask = new ServiceTask<ReadRestEventInput>(input);
         final ServiceResult<ReadRestEventOutput> serviceResult = service.process(serviceTask);
         final ReadRestEventOutput output = serviceResult.getOutput();
-        final RestEventDto returnedRestEvent = output.getRestEvent();
+        final RestEvent returnedRestEvent = output.getRestEvent();
 
         Assert.assertEquals(restEvent.getId(), returnedRestEvent.getId());
         Assert.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());

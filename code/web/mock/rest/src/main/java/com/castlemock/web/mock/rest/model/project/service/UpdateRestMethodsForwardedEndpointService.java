@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodsForwardedEndpointInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestMethodsForwardedEndpointOutput;
 
@@ -41,8 +41,8 @@ public class UpdateRestMethodsForwardedEndpointService extends AbstractRestProje
     @Override
     public ServiceResult<UpdateRestMethodsForwardedEndpointOutput> process(final ServiceTask<UpdateRestMethodsForwardedEndpointInput> serviceTask) {
         final UpdateRestMethodsForwardedEndpointInput input = serviceTask.getInput();
-        for(RestMethodDto inputRestMethod : input.getRestMethods()){
-            final RestMethodDto restMethod = this.methodRepository.findOne(inputRestMethod.getId());
+        for(RestMethod inputRestMethod : input.getRestMethods()){
+            final RestMethod restMethod = this.methodRepository.findOne(inputRestMethod.getId());
             restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
             this.methodRepository.update(restMethod.getId(), restMethod);
         }

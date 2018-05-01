@@ -17,7 +17,7 @@
 package com.castlemock.core.basis.model.user.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadAllUsersInput;
 import com.castlemock.core.basis.model.validation.NotNull;
 
@@ -31,13 +31,13 @@ import java.util.List;
 public class ReadAllUsersOutput implements Output {
 
     @NotNull
-    private List<UserDto> users;
+    private List<User> users;
 
-    public List<UserDto> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<UserDto> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 }

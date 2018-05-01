@@ -18,7 +18,7 @@ package com.castlemock.web.basis.web.mvc.controller.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.Role;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadAllUsersInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadAllUsersOutput;
 import com.castlemock.web.basis.config.TestApplication;
@@ -72,7 +72,7 @@ public class UserOverviewControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetUsersValid() throws Exception {
-        final List<UserDto> userDtos = new ArrayList<UserDto>();
+        final List<User> userDtos = new ArrayList<User>();
         for(int index = 0; index < USER_COUNT; index++){
             userDtos.add(UserDtoGenerator.generateUserDto());
         }
@@ -86,7 +86,7 @@ public class UserOverviewControllerTest extends AbstractControllerTest {
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(ROLES, Role.values()))
-                .andExpect(MockMvcResultMatchers.model().attribute(COMMAND, new UserDto()))
+                .andExpect(MockMvcResultMatchers.model().attribute(COMMAND, new User()))
                 .andExpect(MockMvcResultMatchers.model().attribute(USERS, userDtos));
     }
 

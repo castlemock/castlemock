@@ -18,28 +18,27 @@ package com.castlemock.web.mock.soap.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 
 import java.util.List;
 
 
-public interface SoapPortRepository extends Repository<SoapPort, SoapPortDto, String> {
+public interface SoapPortRepository extends Repository<SoapPort, String> {
 
     void deleteWithProjectId(String projectId);
 
-    List<SoapPortDto> findWithProjectId(String projectId);
+    List<SoapPort> findWithProjectId(String projectId);
 
     /**
-     * The method finds a {@link SoapPortDto} with the provided name
+     * The method finds a {@link SoapPort} with the provided name
      * @param soapPortName The name of the {@link SoapPort}
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
-    SoapPortDto findWithName(String projectId, String soapPortName);
+    SoapPort findWithName(String projectId, String soapPortName);
 
     /**
-     * The method finds a {@link SoapPortDto} with the provided uri
+     * The method finds a {@link SoapPort} with the provided uri
      * @param uri The uri used by the {@link SoapPort}
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
-    SoapPortDto findWithUri(String projectId, String uri);
+    SoapPort findWithUri(String projectId, String uri);
 }

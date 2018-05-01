@@ -18,10 +18,10 @@ package com.castlemock.web.mock.soap.model.event.service;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
-import com.castlemock.web.mock.soap.model.event.SoapEventDtoGenerator;
+import com.castlemock.web.mock.soap.model.event.SoapEventGenerator;
 import com.castlemock.web.mock.soap.model.event.repository.SoapEventRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -55,9 +55,9 @@ public class ReadSoapEventsByOperationIdServiceTest {
 
     @Test
     public void testProcess(){
-        final List<SoapEventDto> soapEvents = new ArrayList<SoapEventDto>();
+        final List<SoapEvent> soapEvents = new ArrayList<SoapEvent>();
         for(int index = 0; index < 2; index++){
-            final SoapEventDto soapEvent = SoapEventDtoGenerator.generateSoapEventDto();
+            final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
             soapEvents.add(soapEvent);
         }
 
@@ -75,8 +75,8 @@ public class ReadSoapEventsByOperationIdServiceTest {
         Assert.assertEquals(2, output.getSoapEvents().size());
 
         for(int index = 0; index < 2; index++){
-            final SoapEventDto soapEvent = soapEvents.get(index);
-            final SoapEventDto returnedSoapEvent = output.getSoapEvents().get(index);
+            final SoapEvent soapEvent = soapEvents.get(index);
+            final SoapEvent returnedSoapEvent = output.getSoapEvents().get(index);
 
             Assert.assertEquals(soapEvent.getId(), returnedSoapEvent.getId());
             Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());

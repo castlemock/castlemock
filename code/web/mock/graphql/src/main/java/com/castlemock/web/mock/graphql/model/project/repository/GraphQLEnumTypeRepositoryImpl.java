@@ -16,22 +16,26 @@
 
 package com.castlemock.web.mock.graphql.model.project.repository;
 
+import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumValueDefinition;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumType;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLEnumTypeDto;
-import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
-public class GraphQLEnumTypeRepositoryImpl extends RepositoryImpl<GraphQLEnumType, GraphQLEnumTypeDto, String> implements GraphQLEnumTypeRepository {
+public class GraphQLEnumTypeRepositoryImpl extends AbstractGraphQLTypeFileRepository<GraphQLEnumTypeRepositoryImpl.GraphQLEnumTypeFile, GraphQLEnumType> implements GraphQLEnumTypeRepository {
 
     @Autowired
     private MessageSource messageSource;
@@ -76,7 +80,7 @@ public class GraphQLEnumTypeRepositoryImpl extends RepositoryImpl<GraphQLEnumTyp
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLEnumType type) {
+    protected void checkType(GraphQLEnumTypeFile type) {
 
     }
 
@@ -92,12 +96,12 @@ public class GraphQLEnumTypeRepositoryImpl extends RepositoryImpl<GraphQLEnumTyp
     }
 
     @Override
-    public List<GraphQLEnumTypeDto> findWithApplicationId(final String projectId) {
-        final List<GraphQLEnumTypeDto> enumTypes = new ArrayList<>();
-        for(GraphQLEnumType enumType : this.collection.values()){
+    public List<GraphQLEnumType> findWithApplicationId(final String projectId) {
+        final List<GraphQLEnumType> enumTypes = new ArrayList<>();
+        for(GraphQLEnumTypeFile enumType : this.collection.values()){
             if(enumType.getApplicationId().equals(projectId)){
-                GraphQLEnumTypeDto applicationDto = this.mapper.map(enumType, GraphQLEnumTypeDto.class);
-                enumTypes.add(applicationDto);
+                GraphQLEnumType application = this.mapper.map(enumType, GraphQLEnumType.class);
+                enumTypes.add(application);
             }
         }
         return enumTypes;
@@ -105,12 +109,60 @@ public class GraphQLEnumTypeRepositoryImpl extends RepositoryImpl<GraphQLEnumTyp
 
     @Override
     public void deleteWithApplicationId(final String applicationId) {
-        Iterator<GraphQLEnumType> iterator = this.collection.values().iterator();
+        Iterator<GraphQLEnumTypeFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            GraphQLEnumType enumType = iterator.next();
+            GraphQLEnumTypeFile enumType = iterator.next();
             if(enumType.getApplicationId().equals(applicationId)){
                 delete(enumType.getId());
             }
         }
     }
+
+    @XmlRootElement(name = "graphQLEnumType")
+    protected static class GraphQLEnumTypeFile extends AbstractGraphQLTypeFileRepository.GraphQLTypeFile {
+
+        private List<GraphQLEnumValueDefinitionFile> definitions
+                = new CopyOnWriteArrayList<GraphQLEnumValueDefinitionFile>();
+
+
+        @XmlElementWrapper(name = "definitions")
+        @XmlElement(name = "definition")
+        public List<GraphQLEnumValueDefinitionFile> getDefinitions() {
+            return definitions;
+        }
+
+        public void setDefinitions(List<GraphQLEnumValueDefinitionFile> definitions) {
+            this.definitions = definitions;
+        }
+    }
+
+    @XmlRootElement(name = "graphQLEnumValueDefinition")
+    protected static class GraphQLEnumValueDefinitionFile implements Saveable<String> {
+
+        private String id;
+        private String name;
+
+        @Override
+        @XmlElement
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+
+    }
+
 }

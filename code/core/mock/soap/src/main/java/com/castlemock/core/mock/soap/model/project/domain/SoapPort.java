@@ -16,36 +16,61 @@
 
 package com.castlemock.core.mock.soap.model.project.domain;
 
+import org.dozer.Mapping;
 
-import com.castlemock.core.basis.model.Saveable;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class SoapPort implements Saveable<String> {
+public class SoapPort {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("uri")
     private String uri;
+
+    @Mapping("projectId")
     private String projectId;
 
-    @XmlElement
-    @Override
+    private List<SoapOperation> operations = new CopyOnWriteArrayList<SoapOperation>();
+
+    private String invokeAddress;
+
+    private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
+
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
+    public List<SoapOperation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(List<SoapOperation> operations) {
+        this.operations = operations;
+    }
+
+    public Map<SoapOperationStatus, Integer> getStatusCount() {
+        return statusCount;
+    }
+
+    public void setStatusCount(Map<SoapOperationStatus, Integer> statusCount) {
+        this.statusCount = statusCount;
+    }
+
     public String getName() {
         return name;
     }
@@ -54,7 +79,6 @@ public class SoapPort implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public String getUri() {
         return uri;
     }
@@ -63,12 +87,19 @@ public class SoapPort implements Saveable<String> {
         this.uri = uri;
     }
 
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    public String getInvokeAddress() {
+        return invokeAddress;
+    }
+
+    public void setInvokeAddress(String invokeAddress) {
+        this.invokeAddress = invokeAddress;
     }
 }

@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.mvc.controller.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.model.user.service.message.input.UpdateCurrentUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
@@ -70,7 +70,7 @@ public class UpdateCurrentUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDefaultPage() throws Exception {
-        final UserDto userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserDtoGenerator.generateUserDto();
         final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput(userDto);
         when(serviceProcessor.process(any(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
@@ -83,7 +83,7 @@ public class UpdateCurrentUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        final UserDto userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserDtoGenerator.generateUserDto();
 
         final UpdateCurrentUserOutput updateCurrentUserOutput = new UpdateCurrentUserOutput(userDto);
         when(serviceProcessor.process(any(UpdateCurrentUserInput.class))).thenReturn(updateCurrentUserOutput);

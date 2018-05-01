@@ -16,7 +16,7 @@
 
 package com.castlemock.core.mock.soap.legacy.model.project.v1.domain;
 
-import com.castlemock.core.basis.model.project.domain.Project;
+import com.castlemock.core.basis.legacy.model.project.v1.domain.ProjectV1;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -29,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.0
  */
 @XmlRootElement(name = "soapProject")
-public class SoapProjectV1 extends Project {
+public class SoapProjectV1 extends ProjectV1 {
 
     private List<SoapPortV1> ports = new CopyOnWriteArrayList<SoapPortV1>();
     private List<SoapResourceV1> resources = new CopyOnWriteArrayList<SoapResourceV1>();

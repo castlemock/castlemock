@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.web.mvc.command.port;
 
 
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 
 import java.util.List;
 
@@ -29,14 +29,14 @@ import java.util.List;
  */
 public class UpdateSoapPortsEndpointCommand {
 
-    private List<SoapPortDto> soapPorts;
+    private List<SoapPort> soapPorts;
     private String forwardedEndpoint;
 
-    public List<SoapPortDto> getSoapPorts() {
+    public List<SoapPort> getSoapPorts() {
         return soapPorts;
     }
 
-    public void setSoapPorts(List<SoapPortDto> soapPorts) {
+    public void setSoapPorts(List<SoapPort> soapPorts) {
         this.soapPorts = soapPorts;
     }
 

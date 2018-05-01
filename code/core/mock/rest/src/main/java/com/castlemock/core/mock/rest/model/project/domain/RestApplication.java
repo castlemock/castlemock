@@ -16,34 +16,40 @@
 
 package com.castlemock.core.mock.rest.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class RestApplication implements Saveable<String> {
+public class RestApplication {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("projectId")
     private String projectId;
 
-    @Override
-    @XmlElement
+    private List<RestResource> resources = new CopyOnWriteArrayList<RestResource>();
+
+    private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
+
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -52,7 +58,6 @@ public class RestApplication implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }
@@ -61,4 +66,19 @@ public class RestApplication implements Saveable<String> {
         this.projectId = projectId;
     }
 
+    public List<RestResource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<RestResource> resources) {
+        this.resources = resources;
+    }
+
+    public Map<RestMethodStatus, Integer> getStatusCount() {
+        return statusCount;
+    }
+
+    public void setStatusCount(Map<RestMethodStatus, Integer> statusCount) {
+        this.statusCount = statusCount;
+    }
 }

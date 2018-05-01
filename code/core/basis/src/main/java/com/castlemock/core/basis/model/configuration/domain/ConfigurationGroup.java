@@ -16,31 +16,35 @@
 
 package com.castlemock.core.basis.model.configuration.domain;
 
-import com.castlemock.core.basis.model.Saveable;
+import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
- * The configuration group is responsible for grouping configurations together.
+ * The configuration group DTO is a DTO (Data transfer object) class for the configuration group class. The
+ * class contains both an identifier (See {@link #name}) and all the configurations (See {@link #configurations}) that
+ * are being grouped by the configuration group.
  * @author Karl Dahlgren
  * @since 1.0
+ * @see ConfigurationGroup
+ * @see Configuration
  */
-@XmlRootElement
-public class ConfigurationGroup implements Saveable<String> {
+public class ConfigurationGroup {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("configurations")
     private List<Configuration> configurations;
 
     /**
      * Returns the configuration group id
      * @return The configuration group id
      */
-    @XmlElement
-    @Override
     public String getId() {
         return id;
     }
@@ -49,7 +53,6 @@ public class ConfigurationGroup implements Saveable<String> {
      * Sets a new id value for the configuration group
      * @param id The new id for the configuration group
      */
-    @Override
     public void setId(String id) {
         this.id = id;
     }
@@ -58,7 +61,6 @@ public class ConfigurationGroup implements Saveable<String> {
      * Returns the name of the configuration group
      * @return The new of the configuration group
      */
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -75,8 +77,6 @@ public class ConfigurationGroup implements Saveable<String> {
      * Returns a list of configurations the belongs to the group
      * @return Configurations that belongs to the configuration group
      */
-    @XmlElementWrapper(name = "configurations")
-    @XmlElement(name = "configuration")
     public List<Configuration> getConfigurations() {
         return configurations;
     }
@@ -88,5 +88,4 @@ public class ConfigurationGroup implements Saveable<String> {
     public void setConfigurations(List<Configuration> configurations) {
         this.configurations = configurations;
     }
-
 }

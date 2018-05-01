@@ -18,8 +18,6 @@ package com.castlemock.web.basis.model.configuration.dto;
 
 import com.castlemock.core.basis.model.configuration.domain.Configuration;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationDto;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.castlemock.core.basis.model.event.domain.Event;
 
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ import java.util.List;
  */
 public class ConfigurationGroupDtoGenerator {
 
-    public static ConfigurationGroupDto generateConfigurationGroupDto(){
+    public static ConfigurationGroup generateConfigurationGroupDto(){
         return generateConfigurationGroupDto(1);
     }
 
@@ -42,11 +40,11 @@ public class ConfigurationGroupDtoGenerator {
         return generateConfigurationGroup(1);
     }
 
-    public static ConfigurationGroupDto generateConfigurationGroupDto(final int count){
-        final ConfigurationGroupDto configurationGroupDto = new ConfigurationGroupDto();
-        final List<ConfigurationDto> configurationDtos = new ArrayList<ConfigurationDto>();
+    public static ConfigurationGroup generateConfigurationGroupDto(final int count){
+        final ConfigurationGroup configurationGroupDto = new ConfigurationGroup();
+        final List<Configuration> configurationDtos = new ArrayList<Configuration>();
         for(int index = 0; index < count; index++){
-            ConfigurationDto configurationDto = ConfigurationDtoGenerator.generateConfigurationDto();
+            Configuration configurationDto = ConfigurationDtoGenerator.generateConfigurationDto();
             configurationDtos.add(configurationDto);
         }
 

@@ -18,7 +18,7 @@ package com.castlemock.core.mock.soap.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 
 import java.util.List;
 
@@ -33,11 +33,11 @@ public class UpdateSoapOperationsForwardedEndpointInput implements Input {
     @NotNull
     private String soapPortId;
     @NotNull
-    private List<SoapOperationDto> soapOperations;
+    private List<SoapOperation> soapOperations;
     @NotNull
     private String forwardedEndpoint;
 
-    public UpdateSoapOperationsForwardedEndpointInput(String soapProjectId, String soapPortId, List<SoapOperationDto> soapOperations, String forwardedEndpoint) {
+    public UpdateSoapOperationsForwardedEndpointInput(String soapProjectId, String soapPortId, List<SoapOperation> soapOperations, String forwardedEndpoint) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
         this.soapOperations = soapOperations;
@@ -60,11 +60,11 @@ public class UpdateSoapOperationsForwardedEndpointInput implements Input {
         this.soapPortId = soapPortId;
     }
 
-    public List<SoapOperationDto> getSoapOperations() {
+    public List<SoapOperation> getSoapOperations() {
         return soapOperations;
     }
 
-    public void setSoapOperations(List<SoapOperationDto> soapOperations) {
+    public void setSoapOperations(List<SoapOperation> soapOperations) {
         this.soapOperations = soapOperations;
     }
 

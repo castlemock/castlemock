@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.soap.web.mvc.controller.project;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsStatusInput;
@@ -69,7 +69,7 @@ public class SoapProjectController extends AbstractSoapViewController {
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
     public ModelAndView getProject(@PathVariable final String projectId, @RequestParam(value = UPLOAD, required = false) final String upload) {
         final ReadSoapProjectOutput readSoapProjectOutput = serviceProcessor.process(new ReadSoapProjectInput(projectId));
-        final SoapProjectDto project = readSoapProjectOutput.getSoapProject();
+        final SoapProject project = readSoapProjectOutput.getSoapProject();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT, project);
         model.addObject(SOAP_OPERATION_STATUSES, getSoapOperationStatuses());
@@ -105,25 +105,25 @@ public class SoapProjectController extends AbstractSoapViewController {
                 serviceProcessor.process(new UpdateSoapPortsStatusInput(projectId, soapPortId, soapOperationStatus));
             }
         } else if(DELETE_SOAP_PORTS.equalsIgnoreCase(action)) {
-            final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
+            final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
             for(String soapPortId : soapPortModifierCommand.getSoapPortIds()){
                 final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(projectId, soapPortId));
-                soapPortDtos.add(output.getSoapPort());
+                soapPorts.add(output.getSoapPort());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_SOAP_PORTS_PAGE);
             model.addObject(SOAP_PROJECT_ID, projectId);
-            model.addObject(SOAP_PORTS, soapPortDtos);
+            model.addObject(SOAP_PORTS, soapPorts);
             model.addObject(DELETE_SOAP_PORTS_COMMAND, new DeleteSoapPortsCommand());
             return model;
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
-            final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
+            final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
             for(String soapPortId : soapPortModifierCommand.getSoapPortIds()){
                 final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(projectId, soapPortId));
-                soapPortDtos.add(output.getSoapPort());
+                soapPorts.add(output.getSoapPort());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_SOAP_PORTS_ENDPOINT_PAGE);
             model.addObject(SOAP_PROJECT_ID, projectId);
-            model.addObject(SOAP_PORTS, soapPortDtos);
+            model.addObject(SOAP_PORTS, soapPorts);
             model.addObject(UPDATE_SOAP_PORTS_ENDPOINT_COMMAND, new UpdateSoapPortsEndpointCommand());
             return model;
         }

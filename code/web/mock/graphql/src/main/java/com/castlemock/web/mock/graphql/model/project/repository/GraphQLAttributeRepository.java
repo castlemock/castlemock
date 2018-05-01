@@ -18,13 +18,12 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttribute;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLAttributeDto;
 
 import java.util.List;
 
-public interface GraphQLAttributeRepository extends Repository<GraphQLAttribute, GraphQLAttributeDto, String> {
+public interface GraphQLAttributeRepository extends Repository<GraphQLAttribute, String> {
 
-    List<GraphQLAttributeDto> findWithObjectTypeId(String objectTypeId);
+    List<GraphQLAttribute> findWithObjectTypeId(String objectTypeId);
 
     void deleteWithObjectTypeId(String applicationId);
 

@@ -19,7 +19,7 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsStatusInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapOperationsStatusOutput;
 
@@ -41,7 +41,7 @@ public class UpdateSoapOperationsStatusService extends AbstractSoapProjectServic
     @Override
     public ServiceResult<UpdateSoapOperationsStatusOutput> process(final ServiceTask<UpdateSoapOperationsStatusInput> serviceTask) {
         final UpdateSoapOperationsStatusInput input = serviceTask.getInput();
-        final SoapOperationDto soapOperation = this.operationRepository.findOne(input.getSoapOperationId());
+        final SoapOperation soapOperation = this.operationRepository.findOne(input.getSoapOperationId());
         soapOperation.setStatus(input.getSoapOperationStatus());
         this.operationRepository.update(input.getSoapOperationId(), soapOperation);
         return createServiceResult(new UpdateSoapOperationsStatusOutput());

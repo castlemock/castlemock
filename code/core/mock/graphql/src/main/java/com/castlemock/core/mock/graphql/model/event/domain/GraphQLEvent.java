@@ -17,23 +17,56 @@
 package com.castlemock.core.mock.graphql.model.event.domain;
 
 import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperation;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
 
 /**
  * @author Karl Dahlgren
  * @since 1.19
  */
-@XmlRootElement
 public class GraphQLEvent extends Event {
 
+    @Mapping("request")
     private GraphQLRequest request;
+
+    @Mapping("response")
     private GraphQLResponse response;
+
+    @Mapping("projectId")
     private String projectId;
+
+    @Mapping("applicationId")
     private String applicationId;
 
-    @XmlElement
+    /**
+     * Constructor for the SOAP event DTO
+     * @param request The SOAP request that the event is representing
+     * @param projectId The id of the SOAP project that is affected by the provided SOAP request
+     * @param applicationId The id of the SOAP port that is affected by the provided SOAP request
+     * @see GraphQLOperation
+     */
+    public GraphQLEvent(final GraphQLRequest request,
+                        final String projectId,
+                        final String applicationId) {
+        super(applicationId);
+        this.request = request;
+        this.projectId = projectId;
+        this.applicationId = applicationId;
+    }
+
+
+    /**
+     * The finish method is used to sent the response that was sent back, but was also
+     * to set the date/time for when the event ended.
+     * @param response
+     */
+    public void finish(final GraphQLResponse response) {
+        this.response = response;
+        setEndDate(new Date());
+    }
+
     public GraphQLRequest getRequest() {
         return request;
     }
@@ -42,7 +75,6 @@ public class GraphQLEvent extends Event {
         this.request = request;
     }
 
-    @XmlElement
     public GraphQLResponse getResponse() {
         return response;
     }
@@ -51,7 +83,6 @@ public class GraphQLEvent extends Event {
         this.response = response;
     }
 
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }
@@ -60,7 +91,6 @@ public class GraphQLEvent extends Event {
         this.projectId = projectId;
     }
 
-    @XmlElement
     public String getApplicationId() {
         return applicationId;
     }

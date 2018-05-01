@@ -18,8 +18,7 @@ package com.castlemock.core.mock.graphql.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLEnumTypeDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLObjectTypeDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumType;
 
 /**
  * @author Karl Dahlgren
@@ -28,17 +27,17 @@ import com.castlemock.core.mock.graphql.model.project.dto.GraphQLObjectTypeDto;
 public class ReadGraphQLEnumTypeOutput implements Output{
 
     @NotNull
-    private GraphQLEnumTypeDto graphQLEnumType;
+    private GraphQLEnumType graphQLEnumType;
 
-    public ReadGraphQLEnumTypeOutput(GraphQLEnumTypeDto graphQLEnumType) {
+    public ReadGraphQLEnumTypeOutput(GraphQLEnumType graphQLEnumType) {
         this.graphQLEnumType = graphQLEnumType;
     }
 
-    public GraphQLEnumTypeDto getGraphQLEnumType() {
+    public GraphQLEnumType getGraphQLEnumType() {
         return graphQLEnumType;
     }
 
-    public void setGraphQLEnumType(GraphQLEnumTypeDto graphQLEnumType) {
+    public void setGraphQLEnumType(GraphQLEnumType graphQLEnumType) {
         this.graphQLEnumType = graphQLEnumType;
     }
 }

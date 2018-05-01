@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 public class CreateRestMethodOutput implements Output {
 
     @NotNull
-    private RestMethodDto createdRestMethod;
+    private RestMethod createdRestMethod;
 
-    public CreateRestMethodOutput(RestMethodDto createdRestMethod) {
+    public CreateRestMethodOutput(RestMethod createdRestMethod) {
         this.createdRestMethod = createdRestMethod;
     }
 
-    public RestMethodDto getCreatedRestMethod() {
+    public RestMethod getCreatedRestMethod() {
         return createdRestMethod;
     }
 
-    public void setCreatedRestMethod(RestMethodDto createdRestMethod) {
+    public void setCreatedRestMethod(RestMethod createdRestMethod) {
         this.createdRestMethod = createdRestMethod;
     }
 }

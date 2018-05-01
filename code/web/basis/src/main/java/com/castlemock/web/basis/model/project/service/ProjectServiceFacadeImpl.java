@@ -21,7 +21,6 @@ import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.TypeIdentifiable;
 import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.project.domain.Project;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
 import com.castlemock.core.basis.model.project.service.ProjectServiceAdapter;
 import com.castlemock.core.basis.model.project.service.ProjectServiceFacade;
 import com.castlemock.web.basis.model.ServiceFacadeImpl;
@@ -38,10 +37,10 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  * @see Project
- * @see ProjectDto
+ * @see Project
  */
 @Service
-public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, String, ProjectServiceAdapter<ProjectDto>> implements ProjectServiceFacade {
+public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, String, ProjectServiceAdapter<Project>> implements ProjectServiceFacade {
 
     /**
      * The initialize method is responsible for for locating all the service instances for a specific module
@@ -63,7 +62,7 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, Stri
      */
     @Override
     public String exportProject(final String typeUrl, final String id){
-        final ProjectServiceAdapter<ProjectDto> service = findByTypeUrl(typeUrl);
+        final ProjectServiceAdapter<Project> service = findByTypeUrl(typeUrl);
         return service.exportProject(id);
     }
 
@@ -74,8 +73,8 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<ProjectDto, Stri
      * @return The imported project
      */
     @Override
-    public ProjectDto importProject(String type, String rawProject) {
-        final ProjectServiceAdapter<ProjectDto> service = findByType(type);
+    public Project importProject(String type, String rawProject) {
+        final ProjectServiceAdapter<Project> service = findByType(type);
         return service.importProject(rawProject);
     }
 

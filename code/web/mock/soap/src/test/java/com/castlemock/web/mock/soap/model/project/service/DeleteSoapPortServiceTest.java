@@ -18,14 +18,13 @@ package com.castlemock.web.mock.soap.model.project.service;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapPortInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.DeleteSoapPortOutput;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.model.project.repository.SoapPortRepository;
-import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -55,8 +54,8 @@ public class DeleteSoapPortServiceTest {
     @Test
     @Ignore
     public void testProcess(){
-        final SoapProjectDto soapProject = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPort = SoapPortDtoGenerator.generateSoapPortDto();
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
         soapProject.getPorts().add(soapPort);
 
 

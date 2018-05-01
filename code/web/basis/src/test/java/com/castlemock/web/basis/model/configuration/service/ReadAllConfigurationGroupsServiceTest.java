@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationDto;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
+import com.castlemock.core.basis.model.configuration.domain.Configuration;
+import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
 import com.castlemock.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 import org.dozer.DozerBeanMapper;
@@ -55,12 +55,12 @@ public class ReadAllConfigurationGroupsServiceTest {
 
     @Test
     public void testProcess(){
-        List<ConfigurationGroupDto> configurationGroups = new ArrayList<ConfigurationGroupDto>();
-        ConfigurationGroupDto configurationGroup = new ConfigurationGroupDto();
+        List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
+        ConfigurationGroup configurationGroup = new ConfigurationGroup();
         configurationGroup.setId(new String());
         configurationGroup.setName("Configuration group");
-        configurationGroup.setConfigurations(new ArrayList<ConfigurationDto>());
-        ConfigurationDto configuration = new ConfigurationDto();
+        configurationGroup.setConfigurations(new ArrayList<Configuration>());
+        Configuration configuration = new Configuration();
         configuration.setKey("Key");
         configuration.setValue("Value");
         configuration.setType(ConfigurationType.BOOLEAN);
@@ -74,13 +74,13 @@ public class ReadAllConfigurationGroupsServiceTest {
         final ServiceResult<ReadAllConfigurationGroupsOutput> serviceResult = service.process(serviceTask);
         final ReadAllConfigurationGroupsOutput output = serviceResult.getOutput();
 
-        final List<ConfigurationGroupDto> returnedConfigurationGroups = output.getConfigurationGroups();
+        final List<ConfigurationGroup> returnedConfigurationGroups = output.getConfigurationGroups();
         Assert.assertEquals(returnedConfigurationGroups.size(), configurationGroups.size());
-        final ConfigurationGroupDto returnedConfigurationGroup = returnedConfigurationGroups.get(0);
+        final ConfigurationGroup returnedConfigurationGroup = returnedConfigurationGroups.get(0);
         Assert.assertEquals(returnedConfigurationGroup.getId(), configurationGroup.getId());
         Assert.assertEquals(returnedConfigurationGroup.getName(), configurationGroup.getName());
         Assert.assertEquals(returnedConfigurationGroup.getConfigurations().size(), configurationGroup.getConfigurations().size());
-        final ConfigurationDto returnedConfiguration = returnedConfigurationGroup.getConfigurations().get(0);
+        final Configuration returnedConfiguration = returnedConfigurationGroup.getConfigurations().get(0);
         Assert.assertEquals(returnedConfiguration.getType(), configuration.getType());
         Assert.assertEquals(returnedConfiguration.getKey(), configuration.getKey());
         Assert.assertEquals(returnedConfiguration.getValue(), configuration.getValue());

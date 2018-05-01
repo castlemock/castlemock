@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.model.project.repository.AbstractProjectFileRepository;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +29,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,10 +41,9 @@ import java.util.List;
  * @since 1.0
  * @see RestProjectRepository
  * @see RepositoryImpl
- * @see RestProject
  */
 @Repository
-public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestProjectDto, String> implements RestProjectRepository {
+public class RestProjectRepositoryImpl extends AbstractProjectFileRepository<RestProjectRepositoryImpl.RestProjectFile, RestProject> implements RestProjectRepository {
 
     @Autowired
     private MessageSource messageSource;
@@ -89,7 +89,6 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
      * The method is responsible to validate the imported types and make certain that all the collections are
      * initialized.
      * @see #initialize
-     * @see RestProject
      * @since 1.4
      */
     @Override
@@ -107,23 +106,22 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
      * @param restProject The instance of the type that will be checked and controlled before it is allowed to be saved on
      *             the file system.
      * @see #save
-     * @see RestProject
      */
     @Override
-    protected void checkType(RestProject restProject) {
+    protected void checkType(RestProjectFile restProject) {
 
     }
 
     /**
      * The save method provides the functionality to save an instance to the file system.
-     * @param dto The type that will be saved to the file system.
+     * @param project The type that will be saved to the file system.
      * @return The type that was saved to the file system. The main reason for it is being returned is because
      *         there could be modifications of the object during the save process. For example, if the type does not
      *         have an identifier, then the method will generate a new identifier for the type.
      */
     @Override
-    public RestProjectDto save(final RestProject dto) {
-        return super.save(dto);
+    public RestProject save(final RestProjectFile project) {
+        return super.save(project);
     }
 
     /**
@@ -134,7 +132,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
     @Override
     public List<SearchResult> search(SearchQuery query) {
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        for(RestProject restProject : collection.values()){
+        for(RestProjectFile restProject : collection.values()){
             List<SearchResult> restProjectSearchResult = searchRestProject(restProject, query);
             searchResults.addAll(restProjectSearchResult);
         }
@@ -146,19 +144,18 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
      */
 
     /**
-     * Finds a {@link RestProjectDto} with a provided REST project name.
+     * Finds a {@link RestProject} with a provided REST project name.
      * @param restProjectName The name of the REST project that will be retrieved.
-     * @return A {@link RestProjectDto} that matches the provided name.
+     * @return A {@link RestProject} that matches the provided name.
      * @see RestProject
-     * @see RestProjectDto
      */
     @Override
-    public RestProjectDto findRestProjectWithName(final String restProjectName) {
+    public RestProject findRestProjectWithName(final String restProjectName) {
         Preconditions.checkNotNull(restProjectName, "Project name cannot be null");
         Preconditions.checkArgument(!restProjectName.isEmpty(), "Project name cannot be empty");
-        for(RestProject restProject : collection.values()){
+        for(RestProjectFile restProject : collection.values()){
             if(restProject.getName().equalsIgnoreCase(restProjectName)) {
-                return mapper.map(restProject, RestProjectDto.class);
+                return mapper.map(restProject, RestProject.class);
             }
         }
         return null;
@@ -171,7 +168,7 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
      * @param query The provided search query
      * @return A list of search results that matches the provided query
      */
-    private List<SearchResult> searchRestProject(final RestProject restProject, final SearchQuery query){
+    private List<SearchResult> searchRestProject(final RestProjectFile restProject, final SearchQuery query){
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
         if(SearchValidator.validate(restProject.getName(), query.getQuery())){
             final String projectType = messageSource.getMessage("general.type.project", null , LocaleContextHolder.getLocale());
@@ -184,5 +181,11 @@ public class RestProjectRepositoryImpl extends RepositoryImpl<RestProject, RestP
 
         return searchResults;
     }
+
+    @XmlRootElement(name = "restProject")
+    protected static class RestProjectFile extends AbstractProjectFileRepository.ProjectFile {
+
+    }
+
 
 }

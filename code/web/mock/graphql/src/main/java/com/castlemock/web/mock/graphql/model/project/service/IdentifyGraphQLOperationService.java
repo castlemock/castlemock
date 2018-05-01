@@ -21,13 +21,11 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLOperationDto;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLRequestQueryDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperation;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.IdentifyGraphQLOperationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.IdentifyGraphQLOperationOutput;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,10 +50,10 @@ public class IdentifyGraphQLOperationService extends AbstractGraphQLProjectServi
     public ServiceResult<IdentifyGraphQLOperationOutput> process(ServiceTask<IdentifyGraphQLOperationInput> serviceTask) {
         final IdentifyGraphQLOperationInput input = serviceTask.getInput();
         /*
-        final GraphQLApplicationDto application =
+        final GraphQLApplication application =
                 repository.findGraphQLApplication(input.getGraphQLProjectId(), input.getGraphQLApplicationId());
-        final List<GraphQLRequestQueryDto> requestQueries = input.getQueries();
-        final Map<GraphQLRequestQueryDto, GraphQLOperationDto> mapping = new HashMap<>();
+        final List<GraphQLRequestQuery> requestQueries = input.getQueries();
+        final Map<GraphQLRequestQuery, GraphQLOperation> mapping = new HashMap<>();
 
         mapOperations(requestQueries, application.getQueries(), mapping);
         mapOperations(requestQueries, application.getMutations(), mapping);
@@ -67,11 +65,11 @@ public class IdentifyGraphQLOperationService extends AbstractGraphQLProjectServi
         return null;
     }
 
-    private void mapOperations(final List<GraphQLRequestQueryDto> requestQueries,
-                               final List<? extends GraphQLOperationDto> operations,
-                               final Map<GraphQLRequestQueryDto, GraphQLOperationDto> mapping){
-        for(GraphQLRequestQueryDto requestQuery : requestQueries){
-            for(GraphQLOperationDto operation : operations){
+    private void mapOperations(final List<GraphQLRequestQuery> requestQueries,
+                               final List<? extends GraphQLOperation> operations,
+                               final Map<GraphQLRequestQuery, GraphQLOperation> mapping){
+        for(GraphQLRequestQuery requestQuery : requestQueries){
+            for(GraphQLOperation operation : operations){
                 if(requestQuery.getOperationName().equals(operation.getName())){
                     mapping.put(requestQuery, operation);
                     break;

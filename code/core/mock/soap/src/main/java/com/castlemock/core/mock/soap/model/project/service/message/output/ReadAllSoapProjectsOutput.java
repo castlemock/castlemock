@@ -17,7 +17,7 @@
 package com.castlemock.core.mock.soap.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 
 import java.util.List;
 
@@ -27,13 +27,13 @@ import java.util.List;
  */
 public class ReadAllSoapProjectsOutput implements Output {
 
-    private List<SoapProjectDto> soapProjects;
+    private List<SoapProject> soapProjects;
 
-    public List<SoapProjectDto> getSoapProjects() {
+    public List<SoapProject> getSoapProjects() {
         return soapProjects;
     }
 
-    public void setSoapProjects(List<SoapProjectDto> soapProjects) {
+    public void setSoapProjects(List<SoapProject> soapProjects) {
         this.soapProjects = soapProjects;
     }
 }

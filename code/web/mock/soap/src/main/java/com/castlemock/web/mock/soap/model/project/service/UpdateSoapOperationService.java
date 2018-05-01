@@ -19,7 +19,7 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapOperationOutput;
 
@@ -41,8 +41,8 @@ public class UpdateSoapOperationService extends AbstractSoapProjectService imple
     @Override
     public ServiceResult<UpdateSoapOperationOutput> process(final ServiceTask<UpdateSoapOperationInput> serviceTask) {
         final UpdateSoapOperationInput input = serviceTask.getInput();
-        final SoapOperationDto updated = input.getUpdatedSoapOperation();
-        final SoapOperationDto soapOperation = this.operationRepository.findOne(input.getSoapOperationId());
+        final SoapOperation updated = input.getUpdatedSoapOperation();
+        final SoapOperation soapOperation = this.operationRepository.findOne(input.getSoapOperationId());
 
         soapOperation.setStatus(updated.getStatus());
         soapOperation.setForwardedEndpoint(updated.getForwardedEndpoint());
@@ -52,7 +52,7 @@ public class UpdateSoapOperationService extends AbstractSoapProjectService imple
         soapOperation.setCurrentResponseSequenceIndex(updated.getCurrentResponseSequenceIndex());
         soapOperation.setDefaultXPathMockResponseId(updated.getDefaultXPathMockResponseId());
 
-        final SoapOperationDto updatedSoapOperation = this.operationRepository.update(input.getSoapOperationId(), soapOperation);
+        final SoapOperation updatedSoapOperation = this.operationRepository.update(input.getSoapOperationId(), soapOperation);
         return createServiceResult(new UpdateSoapOperationOutput(updatedSoapOperation));
     }
 }

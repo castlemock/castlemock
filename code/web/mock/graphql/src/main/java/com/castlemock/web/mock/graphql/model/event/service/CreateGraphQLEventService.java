@@ -19,7 +19,7 @@ package com.castlemock.web.mock.graphql.model.event.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
+import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
 import com.castlemock.core.mock.graphql.model.event.service.message.input.CreateGraphQLEventInput;
 import com.castlemock.core.mock.graphql.model.event.service.message.output.CreateGraphQLEventOutput;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,11 +41,11 @@ public class CreateGraphQLEventService extends AbstractGraphQLEventService imple
     @Override
     public ServiceResult<CreateGraphQLEventOutput> process(ServiceTask<CreateGraphQLEventInput> serviceTask) {
         final CreateGraphQLEventInput input = serviceTask.getInput();
-        final GraphQLEventDto soapEventDto = input.getGraphQLEvent();
+        final GraphQLEvent soapEvent = input.getGraphQLEvent();
         if(count() >= graphQLMaxEventCount){
             repository.deleteOldestEvent();
         }
-        final GraphQLEventDto createdGraphQLEvent = save(soapEventDto);
+        final GraphQLEvent createdGraphQLEvent = save(soapEvent);
         return createServiceResult(new CreateGraphQLEventOutput(createdGraphQLEvent));
     }
 }

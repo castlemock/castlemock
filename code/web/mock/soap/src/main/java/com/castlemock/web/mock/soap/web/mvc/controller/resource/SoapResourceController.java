@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.mvc.controller.resource;
 
-import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.service.message.input.LoadSoapResourceInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapResourceInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSoapResourceOutput;
@@ -29,8 +29,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.ServletRequest;
 
 /**
  * The SoapResourceController provides functionality to retrieve a specific resource for a project
@@ -57,7 +55,7 @@ public class SoapResourceController extends AbstractSoapViewController {
     public ModelAndView getSoapResource(@PathVariable final String soapProjectId, @PathVariable final String soapResourceId) {
         final ReadSoapResourceOutput readSoapResourceOutput = serviceProcessor.process(new ReadSoapResourceInput(soapProjectId, soapResourceId));
         final LoadSoapResourceOutput loadSoapResourceOutput = serviceProcessor.process(new LoadSoapResourceInput(soapProjectId, soapResourceId));
-        final SoapResourceDto soapResource = readSoapResourceOutput.getSoapResource();
+        final SoapResource soapResource = readSoapResourceOutput.getSoapResource();
         final String resource = loadSoapResourceOutput.getResource();
 
         final ModelAndView model = createPartialModelAndView(PAGE);

@@ -18,14 +18,14 @@ package com.castlemock.web.mock.rest.model.event.service.adapter;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
-import com.castlemock.core.basis.model.event.dto.EventDto;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadAllRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.ReadAllRestEventOutput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventOutput;
 import com.castlemock.web.mock.rest.model.RestTypeIdentifier;
-import com.castlemock.web.mock.rest.model.project.RestEventDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.RestEventGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,39 +56,39 @@ public class RestEventServiceAdapterTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testCreate(){
-        final RestEventDto restEventDto = RestEventDtoGenerator.generateRestEventDto();
-        serviceAdapter.create(restEventDto);
+        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        serviceAdapter.create(restEvent);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testDelete(){
-        final RestEventDto restEventDto = RestEventDtoGenerator.generateRestEventDto();
-        serviceAdapter.delete(restEventDto.getProjectId());
+        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        serviceAdapter.delete(restEvent.getProjectId());
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testUpdate(){
-        final RestEventDto restEventDto = RestEventDtoGenerator.generateRestEventDto();
-        serviceAdapter.update(restEventDto.getProjectId(), restEventDto);
+        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        serviceAdapter.update(restEvent.getProjectId(), restEvent);
     }
 
     @Test
     public void testReadAll(){
-        final List<RestEventDto> restEventDtos = new ArrayList<RestEventDto>();
+        final List<RestEvent> restEvents = new ArrayList<RestEvent>();
         for(int index = 0; index < 3; index++){
-            final RestEventDto restEventDto = RestEventDtoGenerator.generateRestEventDto();
-            restEventDtos.add(restEventDto);
+            final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+            restEvents.add(restEvent);
 
         }
 
-        final ReadAllRestEventOutput output = new ReadAllRestEventOutput(restEventDtos);
+        final ReadAllRestEventOutput output = new ReadAllRestEventOutput(restEvents);
         Mockito.when(serviceProcessor.process(Mockito.any(ReadAllRestEventInput.class))).thenReturn(output);
 
-        final List<RestEventDto> returnedRestEventDtos = serviceAdapter.readAll();
+        final List<RestEvent> returnedRestEvents = serviceAdapter.readAll();
 
         for(int index = 0; index < 3; index++){
-            final RestEventDto restEvent = restEventDtos.get(index);
-            final RestEventDto returnedRestEvent = returnedRestEventDtos.get(index);
+            final RestEvent restEvent = restEvents.get(index);
+            final RestEvent returnedRestEvent = returnedRestEvents.get(index);
 
             Assert.assertEquals(restEvent.getId(), returnedRestEvent.getId());
             Assert.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());
@@ -100,11 +100,11 @@ public class RestEventServiceAdapterTest {
 
     @Test
     public void testRead(){
-        final RestEventDto restEvent = RestEventDtoGenerator.generateRestEventDto();
+        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
         final ReadRestEventOutput output = new ReadRestEventOutput(restEvent);
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestEventInput.class))).thenReturn(output);
 
-        final RestEventDto returnedRestEvent = serviceAdapter.read(restEvent.getId());
+        final RestEvent returnedRestEvent = serviceAdapter.read(restEvent.getId());
 
         Assert.assertEquals(restEvent.getId(), returnedRestEvent.getId());
         Assert.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());
@@ -124,19 +124,19 @@ public class RestEventServiceAdapterTest {
 
     @Test
     public void testConvertType(){
-        EventDto eventDto = RestEventDtoGenerator.generateRestEventDto();
-        RestEventDto returnedRestEventDto = serviceAdapter.convertType(eventDto);
-        Assert.assertEquals(eventDto.getId(), returnedRestEventDto.getId());
-        Assert.assertEquals(eventDto.getEndDate(), returnedRestEventDto.getEndDate());
-        Assert.assertEquals(eventDto.getResourceLink(), returnedRestEventDto.getResourceLink());
-        Assert.assertEquals(eventDto.getStartDate(), returnedRestEventDto.getStartDate());
-        Assert.assertEquals(eventDto.getResourceName(), returnedRestEventDto.getResourceName());
+        Event event = RestEventGenerator.generateRestEvent();
+        RestEvent returnedRestEvent = serviceAdapter.convertType(event);
+        Assert.assertEquals(event.getId(), returnedRestEvent.getId());
+        Assert.assertEquals(event.getEndDate(), returnedRestEvent.getEndDate());
+        Assert.assertEquals(event.getResourceLink(), returnedRestEvent.getResourceLink());
+        Assert.assertEquals(event.getStartDate(), returnedRestEvent.getStartDate());
+        Assert.assertEquals(event.getResourceName(), returnedRestEvent.getResourceName());
     }
 
     @Test
     public void testGenerateResourceLink(){
-        final RestEventDto restEventDto = RestEventDtoGenerator.generateRestEventDto();
-        final String generatedResourceLink = serviceAdapter.generateResourceLink(restEventDto);
-        Assert.assertEquals("/web/rest/project/" + restEventDto.getProjectId() + "/application/" + restEventDto.getApplicationId() + "/resource/" + restEventDto.getResourceId() + "/method/" + restEventDto.getMethodId(), generatedResourceLink);
+        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        final String generatedResourceLink = serviceAdapter.generateResourceLink(restEvent);
+        Assert.assertEquals("/web/rest/project/" + restEvent.getProjectId() + "/application/" + restEvent.getApplicationId() + "/resource/" + restEvent.getResourceId() + "/method/" + restEvent.getMethodId(), generatedResourceLink);
     }
 }

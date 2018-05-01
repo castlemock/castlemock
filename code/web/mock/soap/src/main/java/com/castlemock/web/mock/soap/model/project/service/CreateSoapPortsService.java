@@ -21,10 +21,10 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.soap.model.project.domain.*;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.service.message.input.CreateSoapPortsInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.CreateSoapPortsOutput;
 import com.castlemock.web.basis.support.FileRepositorySupport;
@@ -75,24 +75,24 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
     public ServiceResult<CreateSoapPortsOutput> process(final ServiceTask<CreateSoapPortsInput> serviceTask) {
         final CreateSoapPortsInput input = serviceTask.getInput();
         final String soapProjectId = input.getSoapProjectId();
-        List<SoapPortDto> soapPorts = null;
+        List<SoapPort> soapPorts = null;
         try {
             soapPorts = createPorts(input.getFiles(), input.isGenerateResponse());
         } catch (WSDLException e) {
             throw new IllegalStateException("Unable to parse the WSDL file");
         }
 
-        for(SoapPortDto newSoapPort : soapPorts){
+        for(SoapPort newSoapPort : soapPorts){
             newSoapPort.setProjectId(soapProjectId);
-            SoapPortDto existingSoapPort = this.portRepository.findWithName(soapProjectId, newSoapPort.getName());
+            SoapPort existingSoapPort = this.portRepository.findWithName(soapProjectId, newSoapPort.getName());
 
             if(existingSoapPort == null){
-                SoapPortDto savedSoapPort = this.portRepository.save(newSoapPort);
+                SoapPort savedSoapPort = this.portRepository.save(newSoapPort);
 
-                for(SoapOperationDto soapOperation : newSoapPort.getOperations()){
+                for(SoapOperation soapOperation : newSoapPort.getOperations()){
                     soapOperation.setPortId(savedSoapPort.getId());
-                    SoapOperationDto savedSoapOperation = this.operationRepository.save(soapOperation);
-                    for(SoapMockResponseDto soapMockResponse : soapOperation.getMockResponses()){
+                    SoapOperation savedSoapOperation = this.operationRepository.save(soapOperation);
+                    for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
                         soapMockResponse.setOperationId(savedSoapOperation.getId());
                         this.mockResponseRepository.save(soapMockResponse);
                     }
@@ -101,8 +101,8 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                 continue;
             }
 
-            for(SoapOperationDto newSoapOperation : newSoapPort.getOperations()){
-                SoapOperationDto existingSoapOperation =
+            for(SoapOperation newSoapOperation : newSoapPort.getOperations()){
+                SoapOperation existingSoapOperation =
                         this.operationRepository.findWithName(existingSoapPort.getId(), newSoapOperation.getName());
 
                 if(existingSoapOperation != null){
@@ -111,8 +111,8 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                     this.operationRepository.update(existingSoapOperation.getId(), existingSoapOperation);
                 } else {
                     newSoapOperation.setPortId(existingSoapPort.getId());
-                    SoapOperationDto savedSoapOperation = this.operationRepository.save(newSoapOperation);
-                    for(SoapMockResponseDto soapMockResponse : newSoapOperation.getMockResponses()){
+                    SoapOperation savedSoapOperation = this.operationRepository.save(newSoapOperation);
+                    for(SoapMockResponse soapMockResponse : newSoapOperation.getMockResponses()){
                         soapMockResponse.setOperationId(savedSoapOperation.getId());
                         this.mockResponseRepository.save(soapMockResponse);
                     }
@@ -121,20 +121,20 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         }
 
         // Should only be one WSDL file
-        final Collection<SoapResourceDto> wsdlSoapResources =
+        final Collection<SoapResource> wsdlSoapResources =
                 this.resourceRepository.findSoapResources(soapProjectId, SoapResourceType.WSDL);
 
-        for(SoapResourceDto wsdlSoapResource : wsdlSoapResources){
+        for(SoapResource wsdlSoapResource : wsdlSoapResources){
             this.resourceRepository.delete(wsdlSoapResource.getId());
         }
 
         for(File file : input.getFiles()){
             String resource = fileRepositorySupport.read(file);
-            SoapResourceDto soapResourceDto = new SoapResourceDto();
-            soapResourceDto.setProjectId(soapProjectId);
-            soapResourceDto.setName(file.getName());
-            soapResourceDto.setType(SoapResourceType.WSDL);
-            this.resourceRepository.saveSoapResource(soapResourceDto, resource);
+            SoapResource soapResource = new SoapResource();
+            soapResource.setProjectId(soapProjectId);
+            soapResource.setName(file.getName());
+            soapResource.setType(SoapResourceType.WSDL);
+            this.resourceRepository.saveSoapResource(soapResource, resource);
         }
 
         return createServiceResult(new CreateSoapPortsOutput());
@@ -150,9 +150,9 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
      * @return List of ports generated from the provided definitions.
      * @throws WSDLException Throws an WSDLException if WSDL parsing failed.
      */
-    private List<SoapPortDto> createPorts(final List<File> files, final boolean generateResponse) throws WSDLException {
+    private List<SoapPort> createPorts(final List<File> files, final boolean generateResponse) throws WSDLException {
         try {
-            final List<SoapPortDto> soapPorts = new ArrayList<>();
+            final List<SoapPort> soapPorts = new ArrayList<>();
             final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilderFactory.setValidating(false);
             documentBuilderFactory.setNamespaceAware(true);
@@ -162,7 +162,7 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                 final Document document = documentBuilder.parse(file);
                 document.getDocumentElement().normalize();
 
-                final List<SoapPortDto> fileSoapPorts = getSoapPorts(document, generateResponse);
+                final List<SoapPort> fileSoapPorts = getSoapPorts(document, generateResponse);
                 soapPorts.addAll(fileSoapPorts);
             }
             return soapPorts;
@@ -179,8 +179,8 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
      *                         operation.
      * @return A list of SOAP ports
      */
-    private List<SoapPortDto> getSoapPorts(final Document document, final boolean generateResponse){
-        final List<SoapPortDto> soapPorts = new ArrayList<SoapPortDto>();
+    private List<SoapPort> getSoapPorts(final Document document, final boolean generateResponse){
+        final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         final NodeList serviceNodeList = document.getDocumentElement().getElementsByTagNameNS(WSDL_NAMESPACE, "service");
         for (int serviceIndex = 0; serviceIndex < serviceNodeList.getLength(); serviceIndex++) {
             final Node serviceNode = serviceNodeList.item(serviceIndex);
@@ -206,8 +206,8 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
 
                         final String portName = getAttribute(portElement, "name");
                         final String portBinding = getAttribute(portElement, "binding");
-                        final List<SoapOperationDto> soapOperations = getSoapOperations(document, portBinding, soapOperationAddress, soapOperationVersion, generateResponse);
-                        final SoapPortDto soapPort = new SoapPortDto();
+                        final List<SoapOperation> soapOperations = getSoapOperations(document, portBinding, soapOperationAddress, soapOperationVersion, generateResponse);
+                        final SoapPort soapPort = new SoapPort();
                         soapPort.setName(portName);
                         soapPort.setOperations(soapOperations);
                         soapPort.setUri(portName);
@@ -230,8 +230,8 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
      *                         operation.
      * @return A list of extracted SOAP operations
      */
-    private List<SoapOperationDto> getSoapOperations(final Document document, final String soapPortBinding, final String soapOperationAddress, final SoapVersion soapVersion, final boolean generateResponse){
-        final List<SoapOperationDto> soapOperations = new LinkedList<SoapOperationDto>();
+    private List<SoapOperation> getSoapOperations(final Document document, final String soapPortBinding, final String soapOperationAddress, final SoapVersion soapVersion, final boolean generateResponse){
+        final List<SoapOperation> soapOperations = new LinkedList<SoapOperation>();
         final Element bindingElement = findElement(document, WSDL_NAMESPACE, "binding", soapPortBinding);
         if(bindingElement == null){
             return soapOperations;
@@ -254,7 +254,7 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
             if (operationNode.getNodeType() == Node.ELEMENT_NODE) {
                 final Element operationElement = (Element) operationNode;
                 final String operationName = getAttribute(operationElement, "name");
-                final SoapOperationDto soapOperation = new SoapOperationDto();
+                final SoapOperation soapOperation = new SoapOperation();
                 final String defaultBody = generateDefaultBody(operationName, operationElement.getNamespaceURI());
                 final String inputMessageName = getInputMessageName(operationElement);
                 final String identifier = inputMessageName != null && !inputMessageName.isEmpty() ? inputMessageName : operationName;
@@ -267,11 +267,11 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                 soapOperation.setForwardedEndpoint(soapOperationAddress);
                 soapOperation.setOriginalEndpoint(soapOperationAddress);
                 soapOperation.setSoapVersion(soapVersion);
-                soapOperation.setMockResponses(new ArrayList<SoapMockResponseDto>());
+                soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
                 soapOperation.setDefaultBody(defaultBody);
                 soapOperation.setCurrentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX);
                 if(generateResponse){
-                    final SoapMockResponseDto mockResponse = new SoapMockResponseDto();
+                    final SoapMockResponse mockResponse = new SoapMockResponse();
                     mockResponse.setBody(soapOperation.getDefaultBody());
                     mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
                     mockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);

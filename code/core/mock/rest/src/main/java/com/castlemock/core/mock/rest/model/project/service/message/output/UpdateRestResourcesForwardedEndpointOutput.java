@@ -17,7 +17,7 @@
 package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 
 /**
  * @author Karl Dahlgren
@@ -25,13 +25,13 @@ import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
  */
 public class UpdateRestResourcesForwardedEndpointOutput implements Output {
 
-    private RestProjectDto updatedRestProject;
+    private RestProject updatedRestProject;
 
-    public RestProjectDto getUpdatedRestProject() {
+    public RestProject getUpdatedRestProject() {
         return updatedRestProject;
     }
 
-    public void setUpdatedRestProject(RestProjectDto updatedRestProject) {
+    public void setUpdatedRestProject(RestProject updatedRestProject) {
         this.updatedRestProject = updatedRestProject;
     }
 }

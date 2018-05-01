@@ -17,20 +17,22 @@
 
 package com.castlemock.web.mock.soap.model.project.repository;
 
+import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class SoapPortRepositoryImpl extends RepositoryImpl<SoapPort, SoapPortDto, String> implements SoapPortRepository {
+public class SoapPortRepositoryImpl extends RepositoryImpl<SoapPortRepositoryImpl.SoapPortFile, SoapPort, String> implements SoapPortRepository {
 
     @Value(value = "${soap.port.file.directory}")
     private String fileDirectory;
@@ -73,7 +75,7 @@ public class SoapPortRepositoryImpl extends RepositoryImpl<SoapPort, SoapPortDto
      * @see #save
      */
     @Override
-    protected void checkType(SoapPort type) {
+    protected void checkType(SoapPortFile type) {
 
     }
 
@@ -90,9 +92,9 @@ public class SoapPortRepositoryImpl extends RepositoryImpl<SoapPort, SoapPortDto
 
     @Override
     public void deleteWithProjectId(String projectId) {
-        Iterator<SoapPort> iterator = this.collection.values().iterator();
+        Iterator<SoapPortFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            SoapPort port = iterator.next();
+            SoapPortFile port = iterator.next();
             if(port.getProjectId().equals(projectId)){
                 delete(port.getId());
             }
@@ -100,48 +102,96 @@ public class SoapPortRepositoryImpl extends RepositoryImpl<SoapPort, SoapPortDto
     }
 
     @Override
-    public List<SoapPortDto> findWithProjectId(String projectId) {
-        final List<SoapPortDto> ports = new ArrayList<>();
-        for(SoapPort port : this.collection.values()){
-            if(port.getProjectId().equals(projectId)){
-                SoapPortDto portDto = this.mapper.map(port, SoapPortDto.class);
-                ports.add(portDto);
+    public List<SoapPort> findWithProjectId(String projectId) {
+        final List<SoapPort> ports = new ArrayList<>();
+        for(SoapPortFile portFile : this.collection.values()){
+            if(portFile.getProjectId().equals(projectId)){
+                SoapPort port = this.mapper.map(portFile, SoapPort.class);
+                ports.add(port);
             }
         }
         return ports;
     }
 
     /**
-     * The method finds a {@link SoapPortDto} with the provided name
+     * The method finds a {@link SoapPort} with the provided name
      * @param soapPortName The name of the {@link SoapPort}
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
     @Override
-    public SoapPortDto findWithName(final String projectId, final String soapPortName) {
-        for(SoapPort soapPort : collection.values()){
+    public SoapPort findWithName(final String projectId, final String soapPortName) {
+        for(SoapPortFile soapPort : collection.values()){
             if(soapPort.getProjectId().equals(projectId) &&
                     soapPort.getName().equals(soapPortName)){
-                return mapper.map(soapPort, SoapPortDto.class);
+                return mapper.map(soapPort, SoapPort.class);
             }
         }
         return null;
     }
 
     /**
-     * The method finds a {@link SoapPortDto} with the provided uri
+     * The method finds a {@link SoapPort} with the provided uri
      *
      * @param projectId
      * @param uri       The uri used by the {@link SoapPort}
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
     @Override
-    public SoapPortDto findWithUri(String projectId, String uri) {
-        for(SoapPort soapPort : collection.values()){
+    public SoapPort findWithUri(String projectId, String uri) {
+        for(SoapPortFile soapPort : collection.values()){
             if(soapPort.getProjectId().equals(projectId) &&
                     soapPort.getUri().equals(uri)){
-                return mapper.map(soapPort, SoapPortDto.class);
+                return mapper.map(soapPort, SoapPort.class);
             }
         }
         return null;
     }
+
+    @XmlRootElement(name = "soapPort")
+    protected static class SoapPortFile implements Saveable<String> {
+
+        private String id;
+        private String name;
+        private String uri;
+        private String projectId;
+
+        @XmlElement
+        @Override
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getUri() {
+            return uri;
+        }
+
+        public void setUri(String uri) {
+            this.uri = uri;
+        }
+
+        @XmlElement
+        public String getProjectId() {
+            return projectId;
+        }
+
+        public void setProjectId(String projectId) {
+            this.projectId = projectId;
+        }
+    }
+
 }

@@ -19,8 +19,8 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
 
@@ -44,9 +44,9 @@ public class ReadRestResourceService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<ReadRestResourceOutput> process(final ServiceTask<ReadRestResourceInput> serviceTask) {
         final ReadRestResourceInput input = serviceTask.getInput();
-        final RestResourceDto restResourceDto = this.resourceRepository.findOne(input.getRestResourceId());
-        final List<RestMethodDto> methods = this.methodRepository.findWithResourceId(input.getRestResourceId());
-        restResourceDto.setMethods(methods);
-        return createServiceResult(new ReadRestResourceOutput(restResourceDto));
+        final RestResource restResource = this.resourceRepository.findOne(input.getRestResourceId());
+        final List<RestMethod> methods = this.methodRepository.findWithResourceId(input.getRestResourceId());
+        restResource.setMethods(methods);
+        return createServiceResult(new ReadRestResourceOutput(restResource));
     }
 }

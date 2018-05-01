@@ -16,11 +16,8 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -28,26 +25,28 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.19
  */
-@XmlRootElement
-public class GraphQLRequestQuery implements Saveable<String> {
+public class GraphQLRequestQuery {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("operationName")
     private String operationName;
+
+    @Mapping("fields")
     private List<GraphQLRequestField> fields = new CopyOnWriteArrayList<GraphQLRequestField>();
+
+    @Mapping("arguments")
     private List<GraphQLRequestArgument> arguments = new CopyOnWriteArrayList<GraphQLRequestArgument>();
 
-    @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getOperationName() {
         return operationName;
     }
@@ -56,8 +55,6 @@ public class GraphQLRequestQuery implements Saveable<String> {
         this.operationName = operationName;
     }
 
-    @XmlElementWrapper(name = "fields")
-    @XmlElement(name = "field")
     public List<GraphQLRequestField> getFields() {
         return fields;
     }
@@ -66,8 +63,6 @@ public class GraphQLRequestQuery implements Saveable<String> {
         this.fields = fields;
     }
 
-    @XmlElementWrapper(name = "arguments")
-    @XmlElement(name = "argument")
     public List<GraphQLRequestArgument> getArguments() {
         return arguments;
     }

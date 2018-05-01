@@ -16,24 +16,24 @@
 
 package com.castlemock.web.mock.rest.model.project.repository;
 
+import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class RestResourceRepositoryImpl extends RepositoryImpl<RestResource, RestResourceDto, String> implements RestResourceRepository {
+public class RestResourceRepositoryImpl extends RepositoryImpl<RestResourceRepositoryImpl.RestResourceFile, RestResource, String> implements RestResourceRepository {
 
     @Value(value = "${rest.resource.file.directory}")
     private String fileDirectory;
@@ -76,7 +76,7 @@ public class RestResourceRepositoryImpl extends RepositoryImpl<RestResource, Res
      * @see #save
      */
     @Override
-    protected void checkType(RestResource type) {
+    protected void checkType(RestResourceFile type) {
 
     }
 
@@ -99,9 +99,9 @@ public class RestResourceRepositoryImpl extends RepositoryImpl<RestResource, Res
      */
     @Override
     public void deleteWithApplicationId(String applicationId) {
-        Iterator<RestResource> iterator = this.collection.values().iterator();
+        Iterator<RestResourceFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            RestResource resource = iterator.next();
+            RestResourceFile resource = iterator.next();
             if(resource.getApplicationId().equals(applicationId)){
                 delete(resource.getId());
             }
@@ -109,48 +109,92 @@ public class RestResourceRepositoryImpl extends RepositoryImpl<RestResource, Res
     }
 
     /**
-     * Find all {@link RestResourceDto} that matches the provided
+     * Find all {@link RestResource} that matches the provided
      * <code>applicationId</code>.
      *
      * @param applicationId The id of the applicationId.
-     * @return A list of {@link RestResourceDto}.
+     * @return A list of {@link RestResource}.
      */
     @Override
-    public List<RestResourceDto> findWithApplicationId(String applicationId) {
-        final List<RestResourceDto> applications = new ArrayList<>();
-        for(RestResource resource : this.collection.values()){
-            if(resource.getApplicationId().equals(applicationId)){
-                RestResourceDto resourceDto = this.mapper.map(resource, RestResourceDto.class);
-                applications.add(resourceDto);
+    public List<RestResource> findWithApplicationId(String applicationId) {
+        final List<RestResource> applications = new ArrayList<>();
+        for(RestResourceFile resourceFile : this.collection.values()){
+            if(resourceFile.getApplicationId().equals(applicationId)){
+                RestResource resource = this.mapper.map(resourceFile, RestResource.class);
+                applications.add(resource);
             }
         }
         return applications;
     }
 
     /**
-     * Finds a {@link RestResourceDto} with a URI
+     * Finds a {@link RestResource} with a URI
      *
      * @param applicationId The id of the {@link RestApplication}
      * @param resourceUri   The URI of a {@link RestResource}
-     * @return A {@link RestResourceDto} that matches the search criteria.
+     * @return A {@link RestResource} that matches the search criteria.
      * @see RestProject
-     * @see RestProjectDto
      * @see RestApplication
-     * @see RestApplicationDto
      * @see RestResource
-     * @see RestResourceDto
      */
     @Override
-    public RestResourceDto findRestResourceByUri(String applicationId, String resourceUri) {
-        for(RestResource resource : this.collection.values()){
-            if(resource.getApplicationId().equals(applicationId) &&
-                    resourceUri.equalsIgnoreCase(resource.getUri())){
-                RestResourceDto resourceDto = this.mapper.map(resource, RestResourceDto.class);
-                return resourceDto;
+    public RestResource findRestResourceByUri(String applicationId, String resourceUri) {
+        for(RestResourceFile resourceFile : this.collection.values()){
+            if(resourceFile.getApplicationId().equals(applicationId) &&
+                    resourceUri.equalsIgnoreCase(resourceFile.getUri())){
+                RestResource resource = this.mapper.map(resourceFile, RestResource.class);
+                return resource;
 
             }
         }
         return null;
+    }
+
+    @XmlRootElement(name = "restResource")
+    protected static class RestResourceFile implements Saveable<String> {
+
+        private String id;
+        private String name;
+        private String uri;
+        private String applicationId;
+
+        @Override
+        @XmlElement
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getUri() {
+            return uri;
+        }
+
+        public void setUri(String uri) {
+            this.uri = uri;
+        }
+
+        @XmlElement
+        public String getApplicationId() {
+            return applicationId;
+        }
+
+        public void setApplicationId(String applicationId) {
+            this.applicationId = applicationId;
+        }
     }
 
 }

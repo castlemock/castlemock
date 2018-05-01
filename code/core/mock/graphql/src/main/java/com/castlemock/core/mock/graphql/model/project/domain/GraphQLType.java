@@ -17,31 +17,31 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
-public abstract class GraphQLType implements Saveable<String> {
+public abstract class GraphQLType {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("description")
     private String description;
+
+    @Mapping("applicationId")
     private String applicationId;
 
-    @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -50,7 +50,6 @@ public abstract class GraphQLType implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -59,7 +58,6 @@ public abstract class GraphQLType implements Saveable<String> {
         this.description = description;
     }
 
-    @XmlElement
     public String getApplicationId() {
         return applicationId;
     }

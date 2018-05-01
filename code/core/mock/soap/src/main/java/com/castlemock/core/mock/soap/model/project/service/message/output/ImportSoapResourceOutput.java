@@ -18,7 +18,7 @@ package com.castlemock.core.mock.soap.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 
 /**
  * @author Karl Dahlgren
@@ -27,13 +27,13 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
 public class ImportSoapResourceOutput implements Output{
 
     @NotNull
-    private final SoapResourceDto resource;
+    private final SoapResource resource;
 
-    public ImportSoapResourceOutput(SoapResourceDto resource) {
+    public ImportSoapResourceOutput(SoapResource resource) {
         this.resource = resource;
     }
 
-    public SoapResourceDto getResource() {
+    public SoapResource getResource() {
         return resource;
     }
 }

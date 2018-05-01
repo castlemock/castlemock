@@ -18,9 +18,8 @@ package com.castlemock.core.mock.soap.legacy.model.project.v1.converter;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.mock.soap.legacy.model.project.v1.domain.*;
-import com.castlemock.core.mock.soap.model.project.dto.*;
+import com.castlemock.core.mock.soap.model.project.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +27,8 @@ import java.util.List;
 public class SoapProjectConverterV1 {
 
 
-    public static SoapProjectDto convert(SoapProjectV1 projectV1){
-        SoapProjectDto project = new SoapProjectDto();
+    public static SoapProject convert(SoapProjectV1 projectV1){
+        SoapProject project = new SoapProject();
         project.setCreated(projectV1.getCreated());
         project.setUpdated(projectV1.getUpdated());
         project.setDescription(projectV1.getDescription());
@@ -37,7 +36,7 @@ public class SoapProjectConverterV1 {
         project.setName(projectV1.getName());
 
         for(SoapResourceV1 soapResourceV1 : projectV1.getResources()){
-            SoapResourceDto resource = new SoapResourceDto();
+            SoapResource resource = new SoapResource();
             resource.setName(soapResourceV1.getName());
             resource.setId(soapResourceV1.getId());
             resource.setType(soapResourceV1.getType());
@@ -46,7 +45,7 @@ public class SoapProjectConverterV1 {
         }
 
         for(SoapPortV1 portV1 : projectV1.getPorts()){
-            SoapPortDto port = new SoapPortDto();
+            SoapPort port = new SoapPort();
             port.setName(portV1.getName());
             port.setUri(portV1.getUri());
             port.setId(portV1.getId());
@@ -54,7 +53,7 @@ public class SoapProjectConverterV1 {
             project.getPorts().add(port);
 
             for(SoapOperationV1 operationV1 : portV1.getOperations()){
-                SoapOperationDto operation = new SoapOperationDto();
+                SoapOperation operation = new SoapOperation();
                 operation.setId(operationV1.getId());
                 operation.setName(operationV1.getName());
                 operation.setIdentifier(operationV1.getIdentifier());
@@ -73,7 +72,7 @@ public class SoapProjectConverterV1 {
                 port.getOperations().add(operation);
 
                 for(SoapMockResponseV1 mockResponseV1 : operationV1.getMockResponses()){
-                    SoapMockResponseDto mockResponse = new SoapMockResponseDto();
+                    SoapMockResponse mockResponse = new SoapMockResponse();
                     mockResponse.setId(mockResponseV1.getId());
                     mockResponse.setName(mockResponseV1.getName());
                     mockResponse.setBody(mockResponseV1.getBody());
@@ -83,10 +82,10 @@ public class SoapProjectConverterV1 {
                     mockResponse.setUsingExpressions(mockResponseV1.isUsingExpressions());
                     mockResponse.setXpathExpression(mockResponseV1.getXpathExpression());
 
-                    List<HttpHeaderDto> httpHeaders = new ArrayList<>();
+                    List<HttpHeader> httpHeaders = new ArrayList<>();
                     if(mockResponseV1.getHttpHeaders() != null){
                         for(HttpHeader httpHeader : mockResponseV1.getHttpHeaders()){
-                            HttpHeaderDto httpHeaderDto = new HttpHeaderDto();
+                            HttpHeader httpHeaderDto = new HttpHeader();
                             httpHeaderDto.setName(httpHeader.getName());
                             httpHeaderDto.setValue(httpHeader.getValue());
                             httpHeaders.add(httpHeaderDto);

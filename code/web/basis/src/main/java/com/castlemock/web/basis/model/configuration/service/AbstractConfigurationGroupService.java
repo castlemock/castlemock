@@ -17,7 +17,6 @@
 package com.castlemock.web.basis.model.configuration.service;
 
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.castlemock.core.basis.model.configuration.repository.ConfigurationRepository;
 import com.castlemock.web.basis.model.AbstractService;
 
@@ -25,7 +24,7 @@ import com.castlemock.web.basis.model.AbstractService;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public abstract class AbstractConfigurationGroupService extends AbstractService<ConfigurationGroup, ConfigurationGroupDto, String, ConfigurationRepository> {
+public abstract class AbstractConfigurationGroupService extends AbstractService<ConfigurationGroup, String, ConfigurationRepository> {
 
 
 }

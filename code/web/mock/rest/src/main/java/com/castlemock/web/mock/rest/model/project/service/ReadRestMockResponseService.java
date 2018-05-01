@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
 
@@ -41,7 +41,7 @@ public class ReadRestMockResponseService extends AbstractRestProjectService impl
     @Override
     public ServiceResult<ReadRestMockResponseOutput> process(final ServiceTask<ReadRestMockResponseInput> serviceTask) {
         final ReadRestMockResponseInput input = serviceTask.getInput();
-        final RestMockResponseDto restMockResponseDto = this.mockResponseRepository.findOne(input.getRestMockResponse());
-        return createServiceResult(new ReadRestMockResponseOutput(restMockResponseDto));
+        final RestMockResponse restMockResponse = this.mockResponseRepository.findOne(input.getRestMockResponse());
+        return createServiceResult(new ReadRestMockResponseOutput(restMockResponse));
     }
 }

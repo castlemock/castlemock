@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.mvc.command.port;
 
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 
 import java.util.List;
 
@@ -28,13 +28,13 @@ import java.util.List;
  */
 public class DeleteSoapPortsCommand {
 
-    private List<SoapPortDto> soapPorts;
+    private List<SoapPort> soapPorts;
 
     /**
      * Returns a list of application that will be deleted from the database
      * @return The list of application that will be deleted
      */
-    public List<SoapPortDto> getSoapPorts() {
+    public List<SoapPort> getSoapPorts() {
         return soapPorts;
     }
 
@@ -42,7 +42,7 @@ public class DeleteSoapPortsCommand {
      * Sets a new value for the applications
      * @param soapPorts The new value that will be used for the applications
      */
-    public void setSoapPorts(List<SoapPortDto> soapPorts) {
+    public void setSoapPorts(List<SoapPort> soapPorts) {
         this.soapPorts = soapPorts;
     }
 }

@@ -19,19 +19,18 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLObjectTypeDto;
-import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class GraphQLObjectTypeRepositoryImpl extends RepositoryImpl<GraphQLObjectType, GraphQLObjectTypeDto, String> implements GraphQLObjectTypeRepository {
+public class GraphQLObjectTypeRepositoryImpl extends AbstractGraphQLTypeFileRepository<GraphQLObjectTypeRepositoryImpl.GraphQLObjectTypeFile, GraphQLObjectType> implements GraphQLObjectTypeRepository {
 
     @Autowired
     private MessageSource messageSource;
@@ -76,7 +75,7 @@ public class GraphQLObjectTypeRepositoryImpl extends RepositoryImpl<GraphQLObjec
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLObjectType type) {
+    protected void checkType(GraphQLObjectTypeFile type) {
 
     }
 
@@ -92,12 +91,12 @@ public class GraphQLObjectTypeRepositoryImpl extends RepositoryImpl<GraphQLObjec
     }
 
     @Override
-    public List<GraphQLObjectTypeDto> findWithApplicationId(final String projectId) {
-        final List<GraphQLObjectTypeDto> objectTypes = new ArrayList<>();
-        for(GraphQLObjectType objectType : this.collection.values()){
+    public List<GraphQLObjectType> findWithApplicationId(final String projectId) {
+        final List<GraphQLObjectType> objectTypes = new ArrayList<>();
+        for(GraphQLObjectTypeFile objectType : this.collection.values()){
             if(objectType.getApplicationId().equals(projectId)){
-                GraphQLObjectTypeDto applicationDto = this.mapper.map(objectType, GraphQLObjectTypeDto.class);
-                objectTypes.add(applicationDto);
+                GraphQLObjectType application = this.mapper.map(objectType, GraphQLObjectType.class);
+                objectTypes.add(application);
             }
         }
         return objectTypes;
@@ -105,12 +104,18 @@ public class GraphQLObjectTypeRepositoryImpl extends RepositoryImpl<GraphQLObjec
 
     @Override
     public void deleteWithApplicationId(final String applicationId) {
-        Iterator<GraphQLObjectType> iterator = this.collection.values().iterator();
+        Iterator<GraphQLObjectTypeFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            GraphQLObjectType objectType = iterator.next();
+            GraphQLObjectTypeFile objectType = iterator.next();
             if(objectType.getApplicationId().equals(applicationId)){
                 delete(objectType.getId());
             }
         }
     }
+
+    @XmlRootElement(name = "graphQLObjectType")
+    protected static class GraphQLObjectTypeFile extends AbstractGraphQLTypeFileRepository.GraphQLTypeFile {
+
+    }
+
 }

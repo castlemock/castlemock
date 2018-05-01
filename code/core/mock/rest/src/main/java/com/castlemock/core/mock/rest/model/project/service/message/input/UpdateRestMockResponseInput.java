@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 
 /**
  * @author Karl Dahlgren
@@ -37,9 +37,9 @@ public class UpdateRestMockResponseInput implements Input {
     @NotNull
     private String restMockResponseId;
     @NotNull
-    private RestMockResponseDto restMockResponse;
+    private RestMockResponse restMockResponse;
 
-    public UpdateRestMockResponseInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponseId, RestMockResponseDto restMockResponse) {
+    public UpdateRestMockResponseInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponseId, RestMockResponse restMockResponse) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -88,11 +88,11 @@ public class UpdateRestMockResponseInput implements Input {
         this.restMockResponseId = restMockResponseId;
     }
 
-    public RestMockResponseDto getRestMockResponse() {
+    public RestMockResponse getRestMockResponse() {
         return restMockResponse;
     }
 
-    public void setRestMockResponse(RestMockResponseDto restMockResponse) {
+    public void setRestMockResponse(RestMockResponse restMockResponse) {
         this.restMockResponse = restMockResponse;
     }
 }

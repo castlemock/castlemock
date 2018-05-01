@@ -19,7 +19,6 @@ package com.castlemock.web.basis.model.user.dto;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.dto.UserDto;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -28,12 +27,12 @@ import java.util.Date;
  * @author Karl Dahlgren
  * @since 1.0
  * @see User
- * @see UserDto
+ * @see User
  */
 public class UserDtoGenerator {
 
-    public static UserDto generateUserDto(){
-        final UserDto userDto = new UserDto();
+    public static User generateUserDto(){
+        final User userDto = new User();
         userDto.setUpdated(new Timestamp(new Date().getTime()));
         userDto.setCreated(new Timestamp(new Date().getTime()));
         userDto.setRole(Role.ADMIN);

@@ -17,7 +17,6 @@
 package com.castlemock.web.basis.web.mvc.command.project;
 
 import com.castlemock.core.basis.model.project.domain.Project;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
 import com.castlemock.web.basis.web.mvc.controller.project.CreateProjectController;
 
 /**
@@ -27,19 +26,19 @@ import com.castlemock.web.basis.web.mvc.controller.project.CreateProjectControll
  * @author Karl Dahlgren
  * @since 1.0
  * @see Project
- * @see ProjectDto
+ * @see Project
  * @see CreateProjectController
  */
 public class CreateProjectCommand {
 
-    private ProjectDto project = new ProjectDto();
+    private Project project = new Project();
     private String projectType;
 
-    public ProjectDto getProject() {
+    public Project getProject() {
         return project;
     }
 
-    public void setProject(ProjectDto project) {
+    public void setProject(Project project) {
         this.project = project;
     }
 

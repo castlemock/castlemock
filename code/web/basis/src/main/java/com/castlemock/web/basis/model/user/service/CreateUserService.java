@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Status;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.CreateUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.CreateUserOutput;
 
@@ -44,9 +44,9 @@ public class CreateUserService extends AbstractUserService implements Service<Cr
     @Override
     public ServiceResult<CreateUserOutput> process(final ServiceTask<CreateUserInput> serviceTask) {
         final CreateUserInput input = serviceTask.getInput();
-        final UserDto user = input.getUser();
+        final User user = input.getUser();
 
-        final UserDto existingUser = findByUsername(user.getUsername());
+        final User existingUser = findByUsername(user.getUsername());
         if(existingUser != null){
             throw new IllegalArgumentException("User with the username '" + user.getUsername() + "' already exists.");
         }
@@ -58,7 +58,7 @@ public class CreateUserService extends AbstractUserService implements Service<Cr
         user.setStatus(Status.ACTIVE);
         user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
 
-        final UserDto savedUser = save(user);
+        final User savedUser = save(user);
         final CreateUserOutput output = new CreateUserOutput();
         output.setSavedUser(savedUser);
         return createServiceResult(output);

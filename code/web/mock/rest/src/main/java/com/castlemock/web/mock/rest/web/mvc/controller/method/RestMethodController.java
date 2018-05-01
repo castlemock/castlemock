@@ -19,9 +19,9 @@ package com.castlemock.web.mock.rest.web.mvc.controller.method;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.*;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
@@ -41,8 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The REST method controller provides functionality to retrieve a specific {@link RestMethodDto}.
- * The controller is also responsible for executing actions on {@link RestMockResponseDto} related to
+ * The REST method controller provides functionality to retrieve a specific {@link RestMethod}.
+ * The controller is also responsible for executing actions on {@link RestMockResponse} related to
  * the REST method.
  * @author Karl Dahlgren
  * @since 1.0
@@ -77,8 +77,8 @@ public class RestMethodController extends AbstractRestViewController {
     public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, final ServletRequest request) {
         final ReadRestResourceOutput readRestResourceOutput = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
         final ReadRestMethodOutput restMethodOutput = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
-        final RestResourceDto restResource = readRestResourceOutput.getRestResource();
-        final RestMethodDto restMethod = restMethodOutput.getRestMethod();
+        final RestResource restResource = readRestResourceOutput.getRestResource();
+        final RestMethod restMethod = restMethodOutput.getRestMethod();
         final ReadRestEventWithMethodIdOutput readRestEventWithMethodIdOutput = serviceProcessor.process(new ReadRestEventWithMethodIdInput(restMethodId));
 
         final String protocol = getProtocol(request);
@@ -119,12 +119,12 @@ public class RestMethodController extends AbstractRestViewController {
             final RestMockResponseStatus status = RestMockResponseStatus.valueOf(restMockResponseModifierCommand.getRestMockResponseStatus());
             for(String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
                 ReadRestMockResponseOutput readRestMockResponseOutput = serviceProcessor.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId));
-                RestMockResponseDto restMockResponseDto = readRestMockResponseOutput.getRestMockResponse();
-                restMockResponseDto.setStatus(status);
-                serviceProcessor.process(new UpdateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId, restMockResponseDto));
+                RestMockResponse restMockResponse = readRestMockResponseOutput.getRestMockResponse();
+                restMockResponse.setStatus(status);
+                serviceProcessor.process(new UpdateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId, restMockResponse));
             }
         } else if(DELETE_MOCK_RESPONSES.equalsIgnoreCase(action)) {
-            final List<RestMockResponseDto> mockResponses = new ArrayList<RestMockResponseDto>();
+            final List<RestMockResponse> mockResponses = new ArrayList<RestMockResponse>();
             for(String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
                 final ReadRestMockResponseOutput output = serviceProcessor.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId));
                 mockResponses.add(output.getRestMockResponse());
@@ -143,10 +143,10 @@ public class RestMethodController extends AbstractRestViewController {
                 ReadRestMockResponseOutput readRestMockResponseOutput =
                         serviceProcessor.process(new ReadRestMockResponseInput(restProjectId,
                                 restApplicationId, restResourceId, restMethodId, mockResponseId));
-                RestMockResponseDto restMockResponseDto = readRestMockResponseOutput.getRestMockResponse();
-                restMockResponseDto.setId(null);
-                restMockResponseDto.setName(String.format("%s %s", copyOfLabel, restMockResponseDto.getName()));
-                serviceProcessor.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseDto));
+                RestMockResponse restMockResponse = readRestMockResponseOutput.getRestMockResponse();
+                restMockResponse.setId(null);
+                restMockResponse.setName(String.format("%s %s", copyOfLabel, restMockResponse.getName()));
+                serviceProcessor.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponse));
             }
         }
 

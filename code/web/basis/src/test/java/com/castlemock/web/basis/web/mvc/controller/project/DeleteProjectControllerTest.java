@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.project;
 
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.model.project.dto.ProjectDtoGenerator;
 import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
@@ -65,7 +65,7 @@ public class DeleteProjectControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteProjectWithValidId() throws Exception {
-        final ProjectDto projectDto = ProjectDtoGenerator.generateProjectDto();
+        final Project projectDto = ProjectDtoGenerator.generateProjectDto();
         when(projectServiceComponent.findOne(anyString(), anyString())).thenReturn(projectDto);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + projectDto.getId() + DELETE);
         mockMvc.perform(message)
@@ -78,7 +78,7 @@ public class DeleteProjectControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteConfirmProjectWithValidId() throws Exception {
-        final ProjectDto projectDto = ProjectDtoGenerator.generateProjectDto();
+        final Project projectDto = ProjectDtoGenerator.generateProjectDto();
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + projectDto.getId() + DELETE_CONFIRM);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())

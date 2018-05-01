@@ -16,42 +16,71 @@
 
 package com.castlemock.core.basis.model.event.domain;
 
+import com.castlemock.core.basis.model.TypeIdentifiable;
+import com.castlemock.core.basis.model.TypeIdentifier;
+import org.dozer.Mapping;
 
-import com.castlemock.core.basis.model.Saveable;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
- * The Event class is used to log events on Castle Mock.
- * The Event class is abstract and should be inherited for a specific type of mocking.
+ * The Event DTO is a DTO (Data transfer object) class for the event class
  * @author Karl Dahlgren
  * @since 1.0
+ * @see Event
  */
-@XmlRootElement
-public abstract class Event implements Saveable<String> {
+public class Event implements TypeIdentifiable {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("resourceName")
     private String resourceName;
+
+    @Mapping("startDate")
     private Date startDate;
+
+    @Mapping("endDate")
     private Date endDate;
 
-    public Event() {
+    private TypeIdentifier typeIdentifier;
+
+    private String resourceLink;
+
+    /**
+     * The default constructor for the event DTO
+     */
+    public Event(){
+        // Empty constructor
     }
 
-    @XmlElement
-    @Override
+    /**
+     * The default constructor for the event DTO
+     */
+    public Event(final String resourceName){
+        this.resourceName = resourceName;
+        setStartDate(new Date());
+    }
+
+    /**
+     * The constructor provides the functionality to initialize a new event DTO based on another event DTO
+     * @param eventDto The event DTO that the new event DTO is going to based on
+     */
+    public Event(final Event eventDto){
+        this.resourceName = eventDto.getResourceName();
+        this.resourceLink = eventDto.getResourceLink();
+        this.id = eventDto.getId();
+        this.startDate = eventDto.getStartDate();
+        this.endDate = eventDto.getEndDate();
+    }
+
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getResourceName() {
         return resourceName;
     }
@@ -60,7 +89,6 @@ public abstract class Event implements Saveable<String> {
         this.resourceName = resourceName;
     }
 
-    @XmlElement
     public Date getStartDate() {
         return startDate;
     }
@@ -69,12 +97,29 @@ public abstract class Event implements Saveable<String> {
         this.startDate = startDate;
     }
 
-    @XmlElement
     public Date getEndDate() {
         return endDate;
     }
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public TypeIdentifier getTypeIdentifier() {
+        return typeIdentifier;
+    }
+
+    @Override
+    public void setTypeIdentifier(TypeIdentifier typeIdentifier) {
+        this.typeIdentifier = typeIdentifier;
+    }
+
+    public String getResourceLink() {
+        return resourceLink;
+    }
+
+    public void setResourceLink(String resourceLink) {
+        this.resourceLink = resourceLink;
     }
 }

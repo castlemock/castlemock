@@ -17,7 +17,6 @@
 package com.castlemock.web.basis.model.event.dto;
 
 import com.castlemock.core.basis.model.event.domain.Event;
-import com.castlemock.core.basis.model.event.dto.EventDto;
 
 import java.util.Date;
 import java.util.UUID;
@@ -30,8 +29,8 @@ import java.util.UUID;
  */
 public class EventDtoGenerator {
 
-    public static EventDto generateEventDto(){
-        EventDto eventDto = new EventDto();
+    public static Event generateEventDto(){
+        Event eventDto = new Event();
         eventDto.setId(UUID.randomUUID().toString());
         eventDto.setStartDate(new Date());
         eventDto.setEndDate(new Date());

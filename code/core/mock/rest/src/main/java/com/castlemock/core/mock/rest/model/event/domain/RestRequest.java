@@ -16,30 +16,37 @@
 
 package com.castlemock.core.mock.rest.model.event.domain;
 
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpParameter;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
 public class RestRequest {
 
+    @Mapping("body")
     private String body;
+
+    @Mapping("contentType")
     private String contentType;
+
+    @Mapping("uri")
     private String uri;
+
+    @Mapping("httpMethod")
     private HttpMethod httpMethod;
-    private List<HttpParameter> httpParameters;
+
+    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders;
 
-    @XmlElement
+    @Mapping("httpParameters")
+    private List<HttpParameter> httpParameters;
+
     public String getBody() {
         return body;
     }
@@ -48,7 +55,6 @@ public class RestRequest {
         this.body = body;
     }
 
-    @XmlElement
     public String getContentType() {
         return contentType;
     }
@@ -57,7 +63,6 @@ public class RestRequest {
         this.contentType = contentType;
     }
 
-    @XmlElement
     public String getUri() {
         return uri;
     }
@@ -66,7 +71,6 @@ public class RestRequest {
         this.uri = uri;
     }
 
-    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
@@ -75,8 +79,6 @@ public class RestRequest {
         this.httpMethod = httpMethod;
     }
 
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
@@ -85,8 +87,6 @@ public class RestRequest {
         this.httpHeaders = httpHeaders;
     }
 
-    @XmlElementWrapper(name = "httpParameters")
-    @XmlElement(name = "httpParameter")
     public List<HttpParameter> getHttpParameters() {
         return httpParameters;
     }

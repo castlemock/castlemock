@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.graphql.web.mvc.controller.objecttype;
 
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLObjectTypeDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLObjectTypeInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.UpdateGraphQLObjectTypeInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLObjectTypeOutput;
@@ -70,7 +70,7 @@ public class UpdateGraphQLObjectTypeController extends AbstractGraphQLViewContro
     public ModelAndView update(@PathVariable final String projectId,
                                @PathVariable final String applicationId,
                                @PathVariable final String objectTypeId,
-                               @ModelAttribute final GraphQLObjectTypeDto graphQLObjectType) {
+                               @ModelAttribute final GraphQLObjectType graphQLObjectType) {
         serviceProcessor.process(new UpdateGraphQLObjectTypeInput(projectId, applicationId, objectTypeId, graphQLObjectType));
         return redirect("/graphql/project/" + projectId + "/application/" + applicationId + "/object/" + objectTypeId);
     }

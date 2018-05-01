@@ -20,9 +20,9 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.model.project.service.ProjectServiceAdapter;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.*;
 import com.castlemock.core.mock.soap.model.project.service.message.output.*;
 import com.castlemock.web.mock.soap.model.SoapTypeIdentifier;
@@ -36,24 +36,24 @@ import java.util.List;
  * project services.
  * @author Karl Dahlgren
  * @since 1.0
- * @see SoapProjectDto
+ * @see SoapProject
  */
 @Service
-public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProjectDto> {
+public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProject> {
 
     @Autowired
     private ServiceProcessor serviceProcessor;
     private static final SoapTypeIdentifier SOAP_TYPE_IDENTIFIER = new SoapTypeIdentifier();
 
     /**
-     * The method provides the functionality to create and store a DTO instance to a specific service.
+     * The method provides the functionality to create and store a  instance to a specific service.
      * The service is identified with the provided type value.
-     * @param dto The instance that will be created
+     * @param project The instance that will be created
      * @return The saved instance
      */
     @Override
-    public SoapProjectDto create(SoapProjectDto dto) {
-        final CreateSoapProjectOutput output = serviceProcessor.process(new CreateSoapProjectInput(dto));
+    public SoapProject create(SoapProject project) {
+        final CreateSoapProjectOutput output = serviceProcessor.process(new CreateSoapProjectInput(project));
         return output.getSavedSoapProject();
     }
 
@@ -65,7 +65,7 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public SoapProjectDto delete(String id) {
+    public SoapProject delete(String id) {
         final DeleteSoapProjectOutput output = serviceProcessor.process(new DeleteSoapProjectInput(id));
         return output.getProject();
     }
@@ -74,15 +74,15 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * The method is used to update an already existing instance. The instance type is
      * identified with the provided typeUrl value. When the instance type has been identified, the instance
      * itself has to be identified. This is done with the provided id. The instance with the matching id will be
-     * replaced with the provided dto instance. Please note that not all values will be updated. It depends on the instance
+     * replaced with the provided  instance. Please note that not all values will be updated. It depends on the instance
      * type.
      * @param id The id of the instance that will be updated
-     * @param dto The instance with the new updated values
+     * @param project The instance with the new updated values
      * @return The updated instance
      */
     @Override
-    public SoapProjectDto update(String id, SoapProjectDto dto) {
-        final UpdateSoapProjectOutput output = serviceProcessor.process(new UpdateSoapProjectInput(id, dto));
+    public SoapProject update(String id, SoapProject project) {
+        final UpdateSoapProjectOutput output = serviceProcessor.process(new UpdateSoapProjectInput(id, project));
         return output.getUpdatedSoapProject();
     }
 
@@ -91,7 +91,7 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @return A list containing all the instance independent from type
      */
     @Override
-    public List<SoapProjectDto> readAll() {
+    public List<SoapProject> readAll() {
         final ReadAllSoapProjectsOutput output = serviceProcessor.process(new ReadAllSoapProjectsInput());
         return output.getSoapProjects();
     }
@@ -105,7 +105,7 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      *         values, null will be returned.
      */
     @Override
-    public SoapProjectDto read(String id) {
+    public SoapProject read(String id) {
         final ReadSoapProjectOutput output = serviceProcessor.process(new ReadSoapProjectInput(id));
         return output.getSoapProject();
     }
@@ -126,8 +126,8 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @return A new instance of the parent, but as a subtype of the parent
      */
     @Override
-    public SoapProjectDto convertType(ProjectDto parent) {
-        return new SoapProjectDto(parent);
+    public SoapProject convertType(Project parent) {
+        return new SoapProject(parent);
     }
 
 
@@ -148,7 +148,7 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @return The imported project
      */
     @Override
-    public SoapProjectDto importProject(String projectRaw) {
+    public SoapProject importProject(String projectRaw) {
         final ImportSoapProjectOutput output = serviceProcessor.process(new ImportSoapProjectInput(projectRaw));
         return output.getProject();
     }

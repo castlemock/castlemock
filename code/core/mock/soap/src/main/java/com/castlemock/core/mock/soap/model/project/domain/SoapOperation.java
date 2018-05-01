@@ -16,12 +16,9 @@
 
 package com.castlemock.core.mock.soap.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -29,37 +26,67 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
-public class SoapOperation implements Saveable<String> {
+public class SoapOperation {
 
+    @Mapping("id")
     private String id;
-    private String name;
-    private String identifier;
-    private String portId;
-    private SoapResponseStrategy responseStrategy;
-    private SoapOperationStatus status;
-    private HttpMethod httpMethod;
-    private SoapVersion soapVersion;
-    private String defaultBody;
-    private Integer currentResponseSequenceIndex;
-    private String forwardedEndpoint;
-    private String originalEndpoint;
-    private String defaultXPathMockResponseId;
-    private boolean simulateNetworkDelay;
-    private long networkDelay;
 
-    @XmlElement
-    @Override
+    @Mapping("name")
+    private String name;
+
+    @Mapping("identifier")
+    private String identifier;
+
+    @Mapping("responseStrategy")
+    private SoapResponseStrategy responseStrategy;
+
+    @Mapping("status")
+    private SoapOperationStatus status;
+
+    @Mapping("httpMethod")
+    private HttpMethod httpMethod;
+
+    @Mapping("soapVersion")
+    private SoapVersion soapVersion;
+
+    @Mapping("defaultBody")
+    private String defaultBody;
+
+    @Mapping("currentResponseSequenceIndex")
+    private Integer currentResponseSequenceIndex;
+
+    @Mapping("forwardedEndpoint")
+    private String forwardedEndpoint;
+
+    @Mapping("originalEndpoint")
+    private String originalEndpoint;
+
+    @Mapping("simulateNetworkDelay")
+    private Boolean simulateNetworkDelay;
+
+    @Mapping("networkDelay")
+    private Long networkDelay;
+
+    @Mapping("defaultXPathMockResponseId")
+    private String defaultXPathMockResponseId;
+
+    @Mapping("portId")
+    private String portId;
+
+    private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<SoapMockResponse>();
+
+    private String invokeAddress;
+
+    private String defaultXPathResponseName;
+
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -68,7 +95,6 @@ public class SoapOperation implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public String getIdentifier() {
         return identifier;
     }
@@ -77,7 +103,6 @@ public class SoapOperation implements Saveable<String> {
         this.identifier = identifier;
     }
 
-    @XmlElement
     public String getPortId() {
         return portId;
     }
@@ -86,7 +111,6 @@ public class SoapOperation implements Saveable<String> {
         this.portId = portId;
     }
 
-    @XmlElement
     public SoapResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
@@ -95,7 +119,6 @@ public class SoapOperation implements Saveable<String> {
         this.responseStrategy = responseStrategy;
     }
 
-    @XmlElement
     public SoapOperationStatus getStatus() {
         return status;
     }
@@ -104,25 +127,22 @@ public class SoapOperation implements Saveable<String> {
         this.status = status;
     }
 
-    @XmlElement
-    public HttpMethod getHttpMethod() {
-        return httpMethod;
+    public List<SoapMockResponse> getMockResponses() {
+        return mockResponses;
     }
 
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
+    public void setMockResponses(List<SoapMockResponse> mockResponses) {
+        this.mockResponses = mockResponses;
     }
 
-    @XmlElement
-    public SoapVersion getSoapVersion() {
-        return soapVersion;
+    public String getInvokeAddress() {
+        return invokeAddress;
     }
 
-    public void setSoapVersion(SoapVersion soapVersion) {
-        this.soapVersion = soapVersion;
+    public void setInvokeAddress(String invokeAddress) {
+        this.invokeAddress = invokeAddress;
     }
 
-    @XmlElement
     public String getDefaultBody() {
         return defaultBody;
     }
@@ -131,7 +151,22 @@ public class SoapOperation implements Saveable<String> {
         this.defaultBody = defaultBody;
     }
 
-    @XmlElement
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
+
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
+    }
+
+    public SoapVersion getSoapVersion() {
+        return soapVersion;
+    }
+
+    public void setSoapVersion(SoapVersion soapVersion) {
+        this.soapVersion = soapVersion;
+    }
+
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
     }
@@ -140,7 +175,6 @@ public class SoapOperation implements Saveable<String> {
         this.currentResponseSequenceIndex = currentResponseSequenceIndex;
     }
 
-    @XmlElement
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
@@ -149,7 +183,6 @@ public class SoapOperation implements Saveable<String> {
         this.forwardedEndpoint = forwardedEndpoint;
     }
 
-    @XmlElement
     public String getOriginalEndpoint() {
         return originalEndpoint;
     }
@@ -158,30 +191,35 @@ public class SoapOperation implements Saveable<String> {
         this.originalEndpoint = originalEndpoint;
     }
 
-    @XmlElement
-    public boolean getSimulateNetworkDelay() {
+    public Boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
     }
 
-    public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
+    public void setSimulateNetworkDelay(Boolean simulateNetworkDelay) {
         this.simulateNetworkDelay = simulateNetworkDelay;
     }
 
-    @XmlElement
-    public long getNetworkDelay() {
+    public Long getNetworkDelay() {
         return networkDelay;
     }
 
-    public void setNetworkDelay(long networkDelay) {
+    public void setNetworkDelay(Long networkDelay) {
         this.networkDelay = networkDelay;
     }
 
-    @XmlElement
     public String getDefaultXPathMockResponseId() {
         return defaultXPathMockResponseId;
     }
 
     public void setDefaultXPathMockResponseId(String defaultXPathMockResponseId) {
         this.defaultXPathMockResponseId = defaultXPathMockResponseId;
+    }
+
+    public String getDefaultXPathResponseName() {
+        return defaultXPathResponseName;
+    }
+
+    public void setDefaultXPathResponseName(String defaultXPathResponseName) {
+        this.defaultXPathResponseName = defaultXPathResponseName;
     }
 }

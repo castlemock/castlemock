@@ -18,16 +18,21 @@ package com.castlemock.web.mock.soap.model.event.repository;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.model.event.repository.AbstractEventFileRepository;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,10 +44,9 @@ import java.util.List;
  * @since 1.0
  * @see SoapEventRepositoryImpl
  * @see RepositoryImpl
- * @see SoapEvent
  */
 @Repository
-public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEventDto, String> implements SoapEventRepository {
+public class SoapEventRepositoryImpl extends AbstractEventFileRepository<SoapEventRepositoryImpl.SoapEventFile, SoapEvent> implements SoapEventRepository {
 
     @Value(value = "${soap.event.file.directory}")
     private String soapEventFileDirectory;
@@ -95,10 +99,9 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEvent
      * @param soapEvent The instance of the type that will be checked and controlled before it is allowed to be saved on
      *             the file system.
      * @see #save
-     * @see SoapEvent
      */
     @Override
-    protected void checkType(final SoapEvent soapEvent) {
+    protected void checkType(final SoapEventFile soapEvent) {
         Preconditions.checkNotNull(soapEvent, "Event cannot be null");
         Preconditions.checkNotNull(soapEvent.getId(), "Event id cannot be null");
         Preconditions.checkNotNull(soapEvent.getEndDate(), "Event end date cannot be null");
@@ -111,14 +114,14 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEvent
      * @return Returns a list of events
      */
     @Override
-    public List<SoapEventDto> findEventsByOperationId(String operationId) {
-        final List<SoapEvent> events = new ArrayList<SoapEvent>();
-        for(SoapEvent event : collection.values()){
+    public List<SoapEvent> findEventsByOperationId(String operationId) {
+        final List<SoapEventFile> events = new ArrayList<SoapEventFile>();
+        for(SoapEventFile event : collection.values()){
             if(event.getOperationId().equals(operationId)){
                 events.add(event);
             }
         }
-        return toDtoList(events, SoapEventDto.class);
+        return toDtoList(events, SoapEvent.class);
     }
 
     /**
@@ -126,9 +129,9 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEvent
      * @return The oldest event
      */
     @Override
-    public SoapEventDto getOldestEvent() {
-        Event oldestEvent = null;
-        for(Event event : collection.values()){
+    public SoapEvent getOldestEvent() {
+        EventFile oldestEvent = null;
+        for(EventFile event : collection.values()){
             if(oldestEvent == null){
                 oldestEvent = event;
             } else if(event.getStartDate().before(oldestEvent.getStartDate())){
@@ -136,7 +139,7 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEvent
             }
         }
 
-        return oldestEvent == null ? null : mapper.map(oldestEvent, SoapEventDto.class);
+        return oldestEvent == null ? null : mapper.map(oldestEvent, SoapEvent.class);
     }
 
     /**
@@ -155,10 +158,10 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEvent
      * @since 1.5
      */
     @Override
-    public synchronized SoapEventDto deleteOldestEvent(){
-        SoapEventDto eventDto = getOldestEvent();
-        delete(eventDto.getId());
-        return eventDto;
+    public synchronized SoapEvent deleteOldestEvent(){
+        SoapEvent event = getOldestEvent();
+        delete(event.getId());
+        return event;
     }
 
     /**
@@ -167,10 +170,223 @@ public class SoapEventRepositoryImpl extends RepositoryImpl<SoapEvent, SoapEvent
      */
     @Override
     public void clearAll() {
-        Iterator<SoapEvent> iterator = collection.values().iterator();
+        Iterator<SoapEventFile> iterator = collection.values().iterator();
         while(iterator.hasNext()){
-            SoapEvent soapEvent = iterator.next();
+            SoapEventFile soapEvent = iterator.next();
             delete(soapEvent.getId());
         }
     }
+
+    @XmlRootElement(name = "soapEvent")
+    protected static class SoapEventFile extends AbstractEventFileRepository.EventFile {
+
+        private SoapRequestFile request;
+        private SoapResponseFile response;
+        private String projectId;
+        private String portId;
+        private String operationId;
+
+
+        @XmlElement
+        public SoapRequestFile getRequest() {
+            return request;
+        }
+
+        public void setRequest(SoapRequestFile request) {
+            this.request = request;
+        }
+
+        @XmlElement
+        public SoapResponseFile getResponse() {
+            return response;
+        }
+
+        public void setResponse(SoapResponseFile response) {
+            this.response = response;
+        }
+
+        @XmlElement
+        public String getProjectId() {
+            return projectId;
+        }
+
+        public void setProjectId(String projectId) {
+            this.projectId = projectId;
+        }
+
+        @XmlElement
+        public String getPortId() {
+            return portId;
+        }
+
+        public void setPortId(String portId) {
+            this.portId = portId;
+        }
+
+        @XmlElement
+        public String getOperationId() {
+            return operationId;
+        }
+
+        public void setOperationId(String operationId) {
+            this.operationId = operationId;
+        }
+
+
+    }
+
+    @XmlRootElement(name = "soapRequest")
+    protected static class SoapRequestFile {
+
+        private String body;
+        private String contentType;
+        private String uri;
+        private HttpMethod httpMethod;
+        private String operationName;
+        private String operationIdentifier;
+        private SoapVersion soapVersion;
+        private List<RepositoryImpl.HttpHeaderFile> httpHeaders;
+
+        @XmlElement
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        @XmlElement
+        public String getContentType() {
+            return contentType;
+        }
+
+        public void setContentType(String contentType) {
+            this.contentType = contentType;
+        }
+
+        @XmlElement
+        public String getUri() {
+            return uri;
+        }
+
+        public void setUri(String uri) {
+            this.uri = uri;
+        }
+
+        @XmlElement
+        public HttpMethod getHttpMethod() {
+            return httpMethod;
+        }
+
+        public void setHttpMethod(HttpMethod httpMethod) {
+            this.httpMethod = httpMethod;
+        }
+
+        @XmlElement
+        public String getOperationName() {
+            return operationName;
+        }
+
+        public void setOperationName(String operationName) {
+            this.operationName = operationName;
+        }
+
+        @XmlElement
+        public String getOperationIdentifier() {
+            return operationIdentifier;
+        }
+
+        public void setOperationIdentifier(String operationIdentifier) {
+            this.operationIdentifier = operationIdentifier;
+        }
+
+        @XmlElement
+        public SoapVersion getSoapVersion() {
+            return soapVersion;
+        }
+
+        public void setSoapVersion(SoapVersion soapVersion) {
+            this.soapVersion = soapVersion;
+        }
+
+        @XmlElementWrapper(name = "httpHeaders")
+        @XmlElement(name = "httpHeader")
+        public List<RepositoryImpl.HttpHeaderFile> getHttpHeaders() {
+            return httpHeaders;
+        }
+
+        public void setHttpHeaders(List<RepositoryImpl.HttpHeaderFile> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+        }
+    }
+
+
+    @XmlRootElement(name = "soapResponse")
+    protected static class SoapResponseFile {
+
+        private String body;
+        private String mockResponseName;
+        private Integer httpStatusCode;
+        private String contentType;
+        private List<RepositoryImpl.HttpHeaderFile> httpHeaders;
+        private List<ContentEncoding> contentEncodings;
+
+        @XmlElement
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        @XmlElement
+        public String getMockResponseName() {
+            return mockResponseName;
+        }
+
+        public void setMockResponseName(String mockResponseName) {
+            this.mockResponseName = mockResponseName;
+        }
+
+        @XmlElement
+        public Integer getHttpStatusCode() {
+            return httpStatusCode;
+        }
+
+        public void setHttpStatusCode(Integer httpStatusCode) {
+            this.httpStatusCode = httpStatusCode;
+        }
+
+        @XmlElement
+        public String getContentType() {
+            return contentType;
+        }
+
+        public void setContentType(String contentType) {
+            this.contentType = contentType;
+        }
+
+        @XmlElementWrapper(name = "httpHeaders")
+        @XmlElement(name = "httpHeader")
+        public List<RepositoryImpl.HttpHeaderFile> getHttpHeaders() {
+            return httpHeaders;
+        }
+
+        public void setHttpHeaders(List<RepositoryImpl.HttpHeaderFile> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+        }
+
+        @XmlElementWrapper(name = "contentEncodings")
+        @XmlElement(name = "contentEncoding")
+        public List<ContentEncoding> getContentEncodings() {
+            return contentEncodings;
+        }
+
+        public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+            this.contentEncodings = contentEncodings;
+        }
+    }
+
 }

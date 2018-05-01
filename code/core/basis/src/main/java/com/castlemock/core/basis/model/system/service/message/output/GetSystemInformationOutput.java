@@ -18,9 +18,6 @@ package com.castlemock.core.basis.model.system.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.system.service.dto.SystemInformationDto;
-import com.castlemock.core.basis.model.user.dto.UserDto;
-import com.castlemock.core.basis.model.user.service.message.input.CreateUserInput;
-import com.castlemock.core.basis.model.validation.NotNull;
 
 /**
  * Get system information output

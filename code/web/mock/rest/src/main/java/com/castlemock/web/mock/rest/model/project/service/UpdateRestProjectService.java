@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestProjectOutput;
 
@@ -42,8 +42,8 @@ public class UpdateRestProjectService extends AbstractRestProjectService impleme
     public ServiceResult<UpdateRestProjectOutput> process(final ServiceTask<UpdateRestProjectInput> serviceTask) {
         final UpdateRestProjectInput input = serviceTask.getInput();
         final String restProjectId = input.getRestProjectId();
-        final RestProjectDto restProject = input.getRestProject();
-        final RestProjectDto updatedRestProject = update(restProjectId, restProject);
+        final RestProject restProject = input.getRestProject();
+        final RestProject updatedRestProject = update(restProjectId, restProject);
         final UpdateRestProjectOutput output = new UpdateRestProjectOutput();
         output.setUpdatedRestProject(updatedRestProject);
         return createServiceResult(output);

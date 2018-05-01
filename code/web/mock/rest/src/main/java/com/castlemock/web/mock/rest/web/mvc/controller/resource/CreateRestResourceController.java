@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.web.mvc.controller.resource;
 
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestResourceInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestResourceOutput;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
@@ -44,20 +44,20 @@ public class CreateRestResourceController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/create/resource", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String projectId, @PathVariable final String applicationId) {
-        final RestResourceDto restResourceDto = new RestResourceDto();
-        restResourceDto.setUri(SLASH);
+        final RestResource restResource = new RestResource();
+        restResource.setUri(SLASH);
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
         model.addObject(REST_APPLICATION_ID, applicationId);
-        model.addObject(REST_RESOURCE, restResourceDto);
+        model.addObject(REST_RESOURCE, restResource);
         return model;
     }
 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/create/resource", method = RequestMethod.POST)
-    public ModelAndView createResource(@PathVariable final String projectId, @PathVariable final String applicationId, @ModelAttribute final RestResourceDto restResourceDto) {
-        final CreateRestResourceOutput output = serviceProcessor.process(new CreateRestResourceInput(projectId, applicationId, restResourceDto));
+    public ModelAndView createResource(@PathVariable final String projectId, @PathVariable final String applicationId, @ModelAttribute final RestResource restResource) {
+        final CreateRestResourceOutput output = serviceProcessor.process(new CreateRestResourceInput(projectId, applicationId, restResource));
         return redirect("/rest/project/" + projectId + "/application/" + applicationId + "/resource/" +  output.getCreatedRestResource().getId());
     }
 

@@ -16,14 +16,12 @@
 
 package com.castlemock.web.basis.web.rest.controller;
 
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.model.project.service.ProjectServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
 import io.swagger.annotations.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +32,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 
 /**
  * The {@link CoreRestController} is the REST controller that provides
@@ -63,7 +60,7 @@ public class CoreRestController extends AbstractRestController {
      * @param httpServletResponse The outgoing HTTP servlet response.
      * @return The retrieved project.
      */
-    @ApiOperation(value = "Get project",response = ProjectDto.class,
+    @ApiOperation(value = "Get project",response = Project.class,
             notes = "Get project. Required authorization: Reader, Modifier or Admin.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved project")
@@ -71,7 +68,7 @@ public class CoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/project/{type}/{projectId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ProjectDto getProject(
+    Project getProject(
             @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
             @PathVariable("type") final String type,
             @ApiParam(name = "projectId", value = "The id of the project")
@@ -89,7 +86,7 @@ public class CoreRestController extends AbstractRestController {
      * @param httpServletResponse The outgoing HTTP servlet response.
      * @return The deleted project
      */
-    @ApiOperation(value = "Delete project",response = ProjectDto.class,
+    @ApiOperation(value = "Delete project",response = Project.class,
             notes = "Delete project. Required authorization: Modifier or Admin.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted project")
@@ -97,7 +94,7 @@ public class CoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/project/{type}/{projectId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ProjectDto deleteProject(
+    Project deleteProject(
             @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
             @PathVariable("type") final String type,
             @ApiParam(name = "projectId", value = "The id of the project")
@@ -115,7 +112,7 @@ public class CoreRestController extends AbstractRestController {
      * @param httpServletResponse The outgoing HTTP servlet response.
      * @return A HTTP response.
      */
-    @ApiOperation(value = "Import project",response = ProjectDto.class,
+    @ApiOperation(value = "Import project",response = Project.class,
             notes = "Import project. Required authorization: Modifier or Admin.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully imported project")
@@ -123,7 +120,7 @@ public class CoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.POST, value = "/project/{type}/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ProjectDto importProject(
+    Project importProject(
             @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
             @PathVariable("type") final String type,
             @ApiParam(name = "file", value = "The project file which will be imported.")
@@ -142,7 +139,7 @@ public class CoreRestController extends AbstractRestController {
                 stringBuilder.append(line + "\n");
             }
 
-            ProjectDto project = projectServiceFacade.importProject(type, stringBuilder.toString());
+            Project project = projectServiceFacade.importProject(type, stringBuilder.toString());
             return project;
         } catch (Exception e) {
             LOGGER.error("Unable to import project", e);

@@ -18,23 +18,20 @@ package com.castlemock.web.mock.graphql.model.event.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
-import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
 
-import java.util.List;
-
-public interface GraphQLEventRepository extends Repository<GraphQLEvent, GraphQLEventDto, String> {
+public interface GraphQLEventRepository extends Repository<GraphQLEvent, String> {
     
     /**
      * The service finds the oldest event
      * @return The oldest event
      */
-    GraphQLEventDto getOldestEvent();
+    GraphQLEvent getOldestEvent();
 
     /**
      * The method finds and deletes the oldest event.
      * @return The event that was deleted.
      */
-    GraphQLEventDto deleteOldestEvent();
+    GraphQLEvent deleteOldestEvent();
 
     /**
      * The method clears and deletes all logs.

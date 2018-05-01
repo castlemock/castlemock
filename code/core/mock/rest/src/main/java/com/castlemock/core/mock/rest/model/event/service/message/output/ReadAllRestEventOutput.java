@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.event.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 
 import java.util.List;
 
@@ -29,17 +29,17 @@ import java.util.List;
 public class ReadAllRestEventOutput implements Output {
 
     @NotNull
-    private List<RestEventDto> restEvents;
+    private List<RestEvent> restEvents;
 
-    public ReadAllRestEventOutput(List<RestEventDto> restEvents) {
+    public ReadAllRestEventOutput(List<RestEvent> restEvents) {
         this.restEvents = restEvents;
     }
 
-    public List<RestEventDto> getRestEvents() {
+    public List<RestEvent> getRestEvents() {
         return restEvents;
     }
 
-    public void setRestEvents(List<RestEventDto> restEvents) {
+    public void setRestEvents(List<RestEvent> restEvents) {
         this.restEvents = restEvents;
     }
 }

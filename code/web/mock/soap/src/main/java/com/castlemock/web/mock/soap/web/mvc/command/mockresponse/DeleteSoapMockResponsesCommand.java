@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.web.mvc.command.mockresponse;
 
 
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 
 import java.util.List;
 
@@ -29,13 +29,13 @@ import java.util.List;
  */
 public class DeleteSoapMockResponsesCommand {
 
-    private List<SoapMockResponseDto> soapMockResponses;
+    private List<SoapMockResponse> soapMockResponses;
 
     /**
      * A list of mock responses that will be deleted from the database
      * @return A list of mock responses that will be deleted
      */
-    public List<SoapMockResponseDto> getSoapMockResponses() {
+    public List<SoapMockResponse> getSoapMockResponses() {
         return soapMockResponses;
     }
 
@@ -43,7 +43,7 @@ public class DeleteSoapMockResponsesCommand {
      * Sets a new value to the mock responses variable
      * @param soapMockResponses The new value for mock responses
      */
-    public void setSoapMockResponses(List<SoapMockResponseDto> soapMockResponses) {
+    public void setSoapMockResponses(List<SoapMockResponse> soapMockResponses) {
         this.soapMockResponses = soapMockResponses;
     }
 }

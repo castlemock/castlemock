@@ -19,7 +19,7 @@ package com.castlemock.war.config;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
 import com.castlemock.web.basis.model.user.service.UserDetailSecurityService;
@@ -82,7 +82,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
         final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput(loggedInUsername);
         final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(readUserByUsernameInput);
-        final UserDto loggedInUser = readUserByUsernameOutput.getUser();
+        final User loggedInUser = readUserByUsernameOutput.getUser();
         if(loggedInUser == null){
             LOGGER.info("The following logged in user is not valid anymore: " + loggedInUsername);
             request.logout();

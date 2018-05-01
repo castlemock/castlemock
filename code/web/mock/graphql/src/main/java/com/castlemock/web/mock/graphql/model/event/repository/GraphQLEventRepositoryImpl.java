@@ -18,20 +18,25 @@ package com.castlemock.web.mock.graphql.model.event.repository;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
-import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.model.event.repository.AbstractEventFileRepository;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class GraphQLEventRepositoryImpl extends RepositoryImpl<GraphQLEvent, GraphQLEventDto, String> implements GraphQLEventRepository {
+public class GraphQLEventRepositoryImpl extends AbstractEventFileRepository<GraphQLEventRepositoryImpl.GraphQLEventFile, GraphQLEvent> implements GraphQLEventRepository {
 
     @Value(value = "${graphql.event.file.directory}")
     private String graphQLEventFileDirectory;
@@ -74,7 +79,7 @@ public class GraphQLEventRepositoryImpl extends RepositoryImpl<GraphQLEvent, Gra
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLEvent type) {
+    protected void checkType(GraphQLEventFile type) {
         Preconditions.checkNotNull(type, "Event cannot be null");
         Preconditions.checkNotNull(type.getId(), "Event id cannot be null");
         Preconditions.checkNotNull(type.getEndDate(), "Event end date cannot be null");
@@ -86,9 +91,9 @@ public class GraphQLEventRepositoryImpl extends RepositoryImpl<GraphQLEvent, Gra
      * @return The oldest event
      */
     @Override
-    public GraphQLEventDto getOldestEvent() {
-        Event oldestEvent = null;
-        for(Event event : collection.values()){
+    public GraphQLEvent getOldestEvent() {
+        GraphQLEventFile oldestEvent = null;
+        for(GraphQLEventFile event : collection.values()){
             if(oldestEvent == null){
                 oldestEvent = event;
             } else if(event.getStartDate().before(oldestEvent.getStartDate())){
@@ -96,7 +101,7 @@ public class GraphQLEventRepositoryImpl extends RepositoryImpl<GraphQLEvent, Gra
             }
         }
 
-        return oldestEvent == null ? null : mapper.map(oldestEvent, GraphQLEventDto.class);
+        return oldestEvent == null ? null : mapper.map(oldestEvent, GraphQLEvent.class);
     }
 
     /**
@@ -115,10 +120,10 @@ public class GraphQLEventRepositoryImpl extends RepositoryImpl<GraphQLEvent, Gra
      * @since 1.5
      */
     @Override
-    public synchronized GraphQLEventDto deleteOldestEvent(){
-        GraphQLEventDto eventDto = getOldestEvent();
-        delete(eventDto.getId());
-        return eventDto;
+    public synchronized GraphQLEvent deleteOldestEvent(){
+        GraphQLEvent event = getOldestEvent();
+        delete(event.getId());
+        return event;
     }
 
     /**
@@ -127,10 +132,184 @@ public class GraphQLEventRepositoryImpl extends RepositoryImpl<GraphQLEvent, Gra
      */
     @Override
     public void clearAll() {
-        Iterator<GraphQLEvent> iterator = collection.values().iterator();
+        Iterator<GraphQLEventFile> iterator = collection.values().iterator();
         while(iterator.hasNext()){
-            GraphQLEvent soapEvent = iterator.next();
+            GraphQLEventFile soapEvent = iterator.next();
             delete(soapEvent.getId());
         }
     }
+
+    @XmlRootElement(name = "graphQLEvent")
+    protected static class GraphQLEventFile extends AbstractEventFileRepository.EventFile {
+
+        private GraphQLRequestFile request;
+        private GraphQLResponseFile response;
+        private String projectId;
+        private String applicationId;
+
+        @XmlElement
+        public GraphQLRequestFile getRequest() {
+            return request;
+        }
+
+        public void setRequest(GraphQLRequestFile request) {
+            this.request = request;
+        }
+
+        @XmlElement
+        public GraphQLResponseFile getResponse() {
+            return response;
+        }
+
+        public void setResponse(GraphQLResponseFile response) {
+            this.response = response;
+        }
+
+        @XmlElement
+        public String getProjectId() {
+            return projectId;
+        }
+
+        public void setProjectId(String projectId) {
+            this.projectId = projectId;
+        }
+
+        @XmlElement
+        public String getApplicationId() {
+            return applicationId;
+        }
+
+        public void setApplicationId(String applicationId) {
+            this.applicationId = applicationId;
+        }
+
+    }
+
+    @XmlRootElement(name = "graphQLRequest")
+    protected static class GraphQLRequestFile {
+
+        private String body;
+        private String contentType;
+        private String uri;
+        private HttpMethod httpMethod;
+        private List<GraphQLRequestQuery> queries;
+        private List<RepositoryImpl.HttpHeaderFile> httpHeaders;
+
+        @XmlElement
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        @XmlElement
+        public String getContentType() {
+            return contentType;
+        }
+
+        public void setContentType(String contentType) {
+            this.contentType = contentType;
+        }
+
+        @XmlElement
+        public String getUri() {
+            return uri;
+        }
+
+        public void setUri(String uri) {
+            this.uri = uri;
+        }
+
+        @XmlElement
+        public HttpMethod getHttpMethod() {
+            return httpMethod;
+        }
+
+        public void setHttpMethod(HttpMethod httpMethod) {
+            this.httpMethod = httpMethod;
+        }
+
+
+        @XmlElementWrapper(name = "queries")
+        @XmlElement(name = "query")
+        public List<GraphQLRequestQuery> getQueries() {
+            return queries;
+        }
+
+        public void setQueries(List<GraphQLRequestQuery> queries) {
+            this.queries = queries;
+        }
+
+        @XmlElementWrapper(name = "httpHeaders")
+        @XmlElement(name = "httpHeader")
+        public List<RepositoryImpl.HttpHeaderFile> getHttpHeaders() {
+            return httpHeaders;
+        }
+
+        public void setHttpHeaders(List<RepositoryImpl.HttpHeaderFile> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+        }
+
+    }
+
+    @XmlRootElement(name = "graphQLResponse")
+    protected static class GraphQLResponseFile {
+
+        private String body;
+        private Integer httpStatusCode;
+        private String contentType;
+        private List<RepositoryImpl.HttpHeaderFile> httpHeaders;
+        private List<ContentEncoding> contentEncodings;
+
+        @XmlElement
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        @XmlElement
+        public Integer getHttpStatusCode() {
+            return httpStatusCode;
+        }
+
+        public void setHttpStatusCode(Integer httpStatusCode) {
+            this.httpStatusCode = httpStatusCode;
+        }
+
+        @XmlElement
+        public String getContentType() {
+            return contentType;
+        }
+
+        public void setContentType(String contentType) {
+            this.contentType = contentType;
+        }
+
+        @XmlElementWrapper(name = "httpHeaders")
+        @XmlElement(name = "httpHeader")
+        public List<RepositoryImpl.HttpHeaderFile> getHttpHeaders() {
+            return httpHeaders;
+        }
+
+        public void setHttpHeaders(List<RepositoryImpl.HttpHeaderFile> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+        }
+
+        @XmlElementWrapper(name = "contentEncodings")
+        @XmlElement(name = "contentEncoding")
+        public List<ContentEncoding> getContentEncodings() {
+            return contentEncodings;
+        }
+
+        public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+            this.contentEncodings = contentEncodings;
+        }
+
+    }
+
 }

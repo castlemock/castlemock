@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ImportRestProjectOutput;
 import com.castlemock.web.mock.rest.legacy.repository.project.v1.RestProjectLegacyRepository;
@@ -47,7 +47,7 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
     public ServiceResult<ImportRestProjectOutput> process(final ServiceTask<ImportRestProjectInput> serviceTask) {
         final ImportRestProjectInput input = serviceTask.getInput();
         // Try to import the project as a legacy project first.
-        RestProjectDto project = this.legacyRepository.importOne(input.getProjectRaw());
+        RestProject project = this.legacyRepository.importOne(input.getProjectRaw());
 
         if(project == null){
             // Unable to load the project as a legacy project.

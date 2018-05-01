@@ -20,7 +20,9 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
-import com.castlemock.core.mock.rest.model.project.dto.*;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestDefinitionInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ImportRestDefinitionOutput;
 import com.castlemock.web.mock.rest.converter.RestDefinitionConverter;
@@ -52,51 +54,51 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
 
         final RestDefinitionConverter restDefinitionConverter = RestDefinitionConverterFactory.getConverter(input.getDefinitionType());
 
-        List<RestApplicationDto> newRestApplications = new ArrayList<>();
+        List<RestApplication> newRestApplications = new ArrayList<>();
 
         if(input.getLocation() != null){
-            List<RestApplicationDto> result = restDefinitionConverter.convert(input.getLocation(), input.isGenerateResponse());
+            List<RestApplication> result = restDefinitionConverter.convert(input.getLocation(), input.isGenerateResponse());
             newRestApplications.addAll(result);
         }
 
         // Parse all incoming files and convert them to REST applications
         if(input.getFiles() != null){
             for(File file : input.getFiles()){
-                List<RestApplicationDto> result = restDefinitionConverter.convert(file, input.isGenerateResponse());
+                List<RestApplication> result = restDefinitionConverter.convert(file, input.isGenerateResponse());
                 newRestApplications.addAll(result);
             }
         }
 
-        final List<RestApplicationDto> existingRestApplications =
+        final List<RestApplication> existingRestApplications =
                 this.applicationRepository.findWithProjectId(input.getRestProjectId());
-        final List<RestApplicationDto> restApplications = new ArrayList<>();
+        final List<RestApplication> restApplications = new ArrayList<>();
 
         // Iterate through all new REST application and see if they match an already
         // existing REST application. If so, then it should be updated and replaced
         // with the latest version.
-        for(RestApplicationDto newRestApplication : newRestApplications){
+        for(RestApplication newRestApplication : newRestApplications){
             updateRestApplication(newRestApplication, existingRestApplications, restApplications);
         }
 
         // Iterate through the remaining existing REST applications and add them to the final
         // list of REST applications
-        for(RestApplicationDto existingRestApplication : existingRestApplications){
+        for(RestApplication existingRestApplication : existingRestApplications){
             restApplications.add(existingRestApplication);
         }
 
-        for(RestApplicationDto application : restApplications){
+        for(RestApplication application : restApplications){
             application.setProjectId(projectId);
-            RestApplicationDto savedApplication = this.applicationRepository.save(application);
+            RestApplication savedApplication = this.applicationRepository.save(application);
 
-            for(RestResourceDto restResource : application.getResources()){
+            for(RestResource restResource : application.getResources()){
                 restResource.setApplicationId(savedApplication.getId());
-                RestResourceDto savedResource = this.resourceRepository.save(restResource);
+                RestResource savedResource = this.resourceRepository.save(restResource);
 
-                for(RestMethodDto method : restResource.getMethods()){
+                for(RestMethod method : restResource.getMethods()){
                     method.setResourceId(savedResource.getId());
-                    RestMethodDto savedMethod = this.methodRepository.save(method);
+                    RestMethod savedMethod = this.methodRepository.save(method);
 
-                    for(RestMockResponseDto mockResponse : method.getMockResponses()){
+                    for(RestMockResponse mockResponse : method.getMockResponses()){
                         mockResponse.setMethodId(savedMethod.getId());
                         this.mockResponseRepository.save(mockResponse);
                     }
@@ -110,16 +112,16 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
 
 
     /**
-     * The method will add a new {@link RestApplicationDto} and update an already existing {@link RestApplicationDto}.
-     * @param newRestApplication The new {@link RestApplicationDto} that might be added to the final list of {@link RestApplicationDto} (resultRestApplication).
-     * @param existingRestApplications A list of existing {@link RestApplicationDto}
-     * @param resultRestApplication A list of the result of {@link RestApplicationDto}. These will be the new {@link RestApplicationDto}.
+     * The method will add a new {@link RestApplication} and update an already existing {@link RestApplication}.
+     * @param newRestApplication The new {@link RestApplication} that might be added to the final list of {@link RestApplication} (resultRestApplication).
+     * @param existingRestApplications A list of existing {@link RestApplication}
+     * @param resultRestApplication A list of the result of {@link RestApplication}. These will be the new {@link RestApplication}.
      * @since 1.10
      */
-    private void updateRestApplication(final RestApplicationDto newRestApplication,
-                                       final List<RestApplicationDto> existingRestApplications,
-                                       final List<RestApplicationDto> resultRestApplication){
-        final RestApplicationDto existingRestApplication = findRestApplication(existingRestApplications, newRestApplication.getName());
+    private void updateRestApplication(final RestApplication newRestApplication,
+                                       final List<RestApplication> existingRestApplications,
+                                       final List<RestApplication> resultRestApplication){
+        final RestApplication existingRestApplication = findRestApplication(existingRestApplications, newRestApplication.getName());
 
 
         if(existingRestApplication == null){
@@ -127,10 +129,10 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
             return;
         }
 
-        final List<RestResourceDto> existingRestResources =
+        final List<RestResource> existingRestResources =
                 this.resourceRepository.findWithApplicationId(existingRestApplication.getId());
-        final List<RestResourceDto> resultRestResources = new ArrayList<RestResourceDto>();
-        for(RestResourceDto newRestResource : newRestApplication.getResources()) {
+        final List<RestResource> resultRestResources = new ArrayList<RestResource>();
+        for(RestResource newRestResource : newRestApplication.getResources()) {
             updateRestResource(newRestResource, existingRestResources, resultRestResources);
         }
         resultRestApplication.add(existingRestApplication);
@@ -143,17 +145,17 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
     }
 
     /**
-     * The method will add a new {@link RestResourceDto} and update an already existing {@link RestResourceDto}.
-     * @param newRestResource The new {@link RestResourceDto} that might be added to the final list of {@link RestResourceDto} (resultRestApplication).
-     * @param existingRestResources A list of existing {@link RestResourceDto}
-     * @param resultRestResources A list of the result of {@link RestResourceDto}. These will be the new {@link RestResourceDto}.
+     * The method will add a new {@link RestResource} and update an already existing {@link RestResource}.
+     * @param newRestResource The new {@link RestResource} that might be added to the final list of {@link RestResource} (resultRestApplication).
+     * @param existingRestResources A list of existing {@link RestResource}
+     * @param resultRestResources A list of the result of {@link RestResource}. These will be the new {@link RestResource}.
      * @since 1.10
      */
-    private void updateRestResource(final RestResourceDto newRestResource,
-                                    final List<RestResourceDto> existingRestResources,
-                                    final List<RestResourceDto> resultRestResources){
+    private void updateRestResource(final RestResource newRestResource,
+                                    final List<RestResource> existingRestResources,
+                                    final List<RestResource> resultRestResources){
         // Check if the new REST resource already exists
-        final RestResourceDto existingRestResource = findRestResource(existingRestResources, newRestResource.getName());
+        final RestResource existingRestResource = findRestResource(existingRestResources, newRestResource.getName());
 
         // It doesn't exists. Simply add it to the existing application
         if (existingRestResource == null) {
@@ -164,9 +166,9 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
         // Update resource
         existingRestResource.setUri(newRestResource.getUri());
 
-        final List<RestMethodDto> existingRestMethods = this.methodRepository.findWithResourceId(existingRestResource.getId());
-        final List<RestMethodDto> resultRestMethods = new ArrayList<RestMethodDto>();
-        for(RestMethodDto newRestMethod : newRestResource.getMethods()){
+        final List<RestMethod> existingRestMethods = this.methodRepository.findWithResourceId(existingRestResource.getId());
+        final List<RestMethod> resultRestMethods = new ArrayList<RestMethod>();
+        for(RestMethod newRestMethod : newRestResource.getMethods()){
             updateRestMethod(newRestMethod, existingRestMethods, resultRestMethods);
         }
         resultRestResources.add(existingRestResource);
@@ -174,16 +176,16 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
     }
 
     /**
-     * The method will add a new {@link RestMethodDto} and update an already existing {@link RestMethodDto}.
-     * @param newRestMethod The new {@link RestMethodDto} that might be added to the final list of {@link RestMethodDto} (resultRestApplication).
-     * @param existingRestMethods A list of existing {@link RestMethodDto}
-     * @param resultRestMethods A list of the result of {@link RestMethodDto}. These will be the new {@link RestMethodDto}.
+     * The method will add a new {@link RestMethod} and update an already existing {@link RestMethod}.
+     * @param newRestMethod The new {@link RestMethod} that might be added to the final list of {@link RestMethod} (resultRestApplication).
+     * @param existingRestMethods A list of existing {@link RestMethod}
+     * @param resultRestMethods A list of the result of {@link RestMethod}. These will be the new {@link RestMethod}.
      * @since 1.10
      */
-    private void updateRestMethod(final RestMethodDto newRestMethod,
-                                  final List<RestMethodDto> existingRestMethods,
-                                  final List<RestMethodDto> resultRestMethods) {
-        final RestMethodDto existingRestMethod = findRestMethod(existingRestMethods, newRestMethod.getName());
+    private void updateRestMethod(final RestMethod newRestMethod,
+                                  final List<RestMethod> existingRestMethods,
+                                  final List<RestMethod> resultRestMethods) {
+        final RestMethod existingRestMethod = findRestMethod(existingRestMethods, newRestMethod.getName());
 
         // The new REST method does not exists. Add it to the resource
         if (existingRestMethod == null) {
@@ -204,8 +206,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
      * @param name The name of the REST application
      * @return A REST application that matches the search criteria. Null otherwise.
      */
-    public RestApplicationDto findRestApplication(List<RestApplicationDto> restApplications, String name){
-        for(RestApplicationDto restApplication : restApplications){
+    public RestApplication findRestApplication(List<RestApplication> restApplications, String name){
+        for(RestApplication restApplication : restApplications){
             if(restApplication.getName().equals(name)){
                 return restApplication;
             }
@@ -218,8 +220,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
      * @param name The name of the REST resource
      * @return A REST resource that matches the search criteria. Null otherwise.
      */
-    public RestResourceDto findRestResource(List<RestResourceDto> restResources, String name){
-        for(RestResourceDto restResource : restResources){
+    public RestResource findRestResource(List<RestResource> restResources, String name){
+        for(RestResource restResource : restResources){
             if(restResource.getName().equals(name)){
                 return restResource;
             }
@@ -232,8 +234,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
      * @param name The name of the REST method
      * @return A REST method that matches the search criteria. Null otherwise.
      */
-    public RestMethodDto findRestMethod(List<RestMethodDto> restMethods, String name){
-        for(RestMethodDto restMethod : restMethods){
+    public RestMethod findRestMethod(List<RestMethod> restMethods, String name){
+        for(RestMethod restMethod : restMethods){
             if(restMethod.getName().equals(name)){
                 return restMethod;
             }

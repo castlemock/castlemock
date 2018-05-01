@@ -20,9 +20,9 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.model.project.service.ProjectServiceAdapter;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.service.message.input.*;
 import com.castlemock.core.mock.rest.model.project.service.message.output.*;
 import com.castlemock.web.mock.rest.model.RestTypeIdentifier;
@@ -36,24 +36,24 @@ import java.util.List;
  * project services.
  * @author Karl Dahlgren
  * @since 1.0
- * @see RestProjectDto
+ * @see RestProject
  */
 @Service
-public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProjectDto> {
+public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProject> {
 
     @Autowired
     private ServiceProcessor serviceProcessor;
     private RestTypeIdentifier REST_TYPE_IDENTIFIER = new RestTypeIdentifier();
 
     /**
-     * The method provides the functionality to create and store a DTO instance to a specific service.
+     * The method provides the functionality to create and store a  instance to a specific service.
      * The service is identified with the provided type value.
-     * @param dto The instance that will be created
+     * @param project The instance that will be created
      * @return The saved instance
      */
     @Override
-    public RestProjectDto create(RestProjectDto dto) {
-        final CreateRestProjectOutput output = serviceProcessor.process(new CreateRestProjectInput(dto));
+    public RestProject create(RestProject project) {
+        final CreateRestProjectOutput output = serviceProcessor.process(new CreateRestProjectInput(project));
         return output.getSavedRestProject();
     }
 
@@ -65,7 +65,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public RestProjectDto delete(String id) {
+    public RestProject delete(String id) {
         final DeleteRestProjectOutput output = serviceProcessor.process(new DeleteRestProjectInput(id));
         return output.getProject();
     }
@@ -74,15 +74,15 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      * The method is used to update an already existing instance. The instance type is
      * identified with the provided typeUrl value. When the instance type has been identified, the instance
      * itself has to be identified. This is done with the provided id. The instance with the matching id will be
-     * replaced with the provided dto instance. Please note that not all values will be updated. It depends on the instance
+     * replaced with the provided  instance. Please note that not all values will be updated. It depends on the instance
      * type.
      * @param id The id of the instance that will be updated
-     * @param dto The instance with the new updated values
+     * @param project The instance with the new updated values
      * @return The updated instance
      */
     @Override
-    public RestProjectDto update(String id, RestProjectDto dto) {
-        final UpdateRestProjectOutput output = serviceProcessor.process(new UpdateRestProjectInput(id, dto));
+    public RestProject update(String id, RestProject project) {
+        final UpdateRestProjectOutput output = serviceProcessor.process(new UpdateRestProjectInput(id, project));
         return output.getUpdatedRestProject();
     }
 
@@ -91,7 +91,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      * @return A list containing all the instance independent from type
      */
     @Override
-    public List<RestProjectDto> readAll() {
+    public List<RestProject> readAll() {
         final ReadAllRestProjectsOutput output = serviceProcessor.process(new ReadAllRestProjectsInput());
         return output.getRestProjects();
     }
@@ -105,7 +105,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      *         values, null will be returned.
      */
     @Override
-    public RestProjectDto read(String id) {
+    public RestProject read(String id) {
         final ReadRestProjectOutput output = serviceProcessor.process(new ReadRestProjectInput(id));
         return output.getRestProject();
     }
@@ -126,8 +126,8 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      * @return A new instance of the parent, but as a subtype of the parent
      */
     @Override
-    public RestProjectDto convertType(ProjectDto parent) {
-        return new RestProjectDto(parent);
+    public RestProject convertType(Project parent) {
+        return new RestProject(parent);
     }
 
     /**
@@ -147,7 +147,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      * @return The imported project
      */
     @Override
-    public RestProjectDto importProject(String projectRaw) {
+    public RestProject importProject(String projectRaw) {
         final ImportRestProjectOutput output =serviceProcessor.process(new ImportRestProjectInput(projectRaw));
         return output.getProject();
     }

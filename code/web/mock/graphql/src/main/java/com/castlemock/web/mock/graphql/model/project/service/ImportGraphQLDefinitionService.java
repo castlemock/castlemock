@@ -19,13 +19,12 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.dto.*;
+import com.castlemock.core.mock.graphql.model.project.domain.*;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ImportGraphQLDefinitionInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ImportGraphQLDefinitionOutput;
 import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverter;
 import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverterFactory;
 import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverterResult;
-import com.castlemock.web.mock.graphql.model.project.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
@@ -67,32 +66,32 @@ public class ImportGraphQLDefinitionService extends AbstractGraphQLProjectServic
             }
         }
 
-        for(GraphQLObjectTypeDto objectType : result.getObjects()){
+        for(GraphQLObjectType objectType : result.getObjects()){
             objectType.setApplicationId(applicationId);
             this.objectTypeRepository.save(objectType);
 
-            for(GraphQLAttributeDto attribute : objectType.getAttributes()){
+            for(GraphQLAttribute attribute : objectType.getAttributes()){
                 attribute.setObjectTypeId(objectType.getId());
                 attributeRepository.save(attribute);
             }
         }
 
-        for(GraphQLEnumTypeDto enumType : result.getEnums()){
+        for(GraphQLEnumType enumType : result.getEnums()){
             enumType.setApplicationId(applicationId);
             this.enumTypeRepository.save(enumType);
         }
 
-        for(GraphQLQueryDto query : result.getQueries()){
+        for(GraphQLQuery query : result.getQueries()){
             query.setApplicationId(applicationId);
             this.queryRepository.save(query);
         }
 
-        for(GraphQLMutationDto mutation : result.getMutations()){
+        for(GraphQLMutation mutation : result.getMutations()){
             mutation.setApplicationId(applicationId);
             this.mutationRepository.save(mutation);
         }
 
-        for(GraphQLSubscriptionDto subscription : result.getSubscriptions()){
+        for(GraphQLSubscription subscription : result.getSubscriptions()){
             subscription.setApplicationId(applicationId);
             this.subscriptionRepository.save(subscription);
         }

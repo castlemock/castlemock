@@ -16,35 +16,35 @@
 
 package com.castlemock.core.mock.soap.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
+import org.dozer.Mapping;
 
 /**
  * @author Karl Dahlgren
  * @since 1.16
  */
-@XmlRootElement
-public class SoapResource implements Saveable<String> {
+public class SoapResource {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
-    private String projectId;
+
+    @Mapping("type")
     private SoapResourceType type;
 
-    @XmlElement
-    @Override
+    @Mapping("projectId")
+    private String projectId;
+
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -53,7 +53,6 @@ public class SoapResource implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public SoapResourceType getType() {
         return type;
     }
@@ -62,7 +61,6 @@ public class SoapResource implements Saveable<String> {
         this.type = type;
     }
 
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }

@@ -18,16 +18,16 @@ package com.castlemock.web.mock.soap.model.project.service;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapMockResponseInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.DeleteSoapMockResponseOutput;
-import com.castlemock.web.mock.soap.model.project.SoapMockResponseDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapOperationDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapMockResponseGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapOperationGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.model.project.repository.SoapMockResponseRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
@@ -56,10 +56,10 @@ public class DeleteSoapMockResponseServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapProjectDto soapProject = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPort = SoapPortDtoGenerator.generateSoapPortDto();
-        final SoapOperationDto soapOperation = SoapOperationDtoGenerator.generateSoapOperationDto();
-        final SoapMockResponseDto soapMockResponse = SoapMockResponseDtoGenerator.generateSoapMockResponseDto();
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
 
         soapProject.getPorts().add(soapPort);
         soapPort.getOperations().add(soapOperation);

@@ -17,13 +17,13 @@
 package com.castlemock.web.mock.rest.converter.raml;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import org.apache.log4j.Logger;
 import org.raml.v2.api.model.v10.bodies.Response;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
@@ -43,7 +43,7 @@ class RAML10Parser extends AbstractRAMLParser {
 
     private static final Logger LOGGER = Logger.getLogger(RAML10Parser.class);
 
-    public void getResources(final List<Resource> resources, final List<RestResourceDto> result,
+    public void getResources(final List<Resource> resources, final List<RestResource> result,
                              final String path, final boolean generateResponse){
         if(resources.isEmpty()){
             return;
@@ -54,7 +54,7 @@ class RAML10Parser extends AbstractRAMLParser {
 
             List<Method> methods = resource.methods();
             if(!methods.isEmpty()){
-                RestResourceDto restResource = new RestResourceDto();
+                RestResource restResource = new RestResource();
                 restResource.setName(resource.displayName().value());
                 restResource.setUri(uri);
                 result.add(restResource);
@@ -66,14 +66,14 @@ class RAML10Parser extends AbstractRAMLParser {
                         continue;
                     }
 
-                    RestMethodDto restMethod = new RestMethodDto();
+                    RestMethod restMethod = new RestMethod();
                     restMethod.setName(method.displayName().value());
                     restMethod.setStatus(RestMethodStatus.MOCKED);
                     restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
                     restMethod.setHttpMethod(httpMethod);
 
                     if(generateResponse){
-                        final Collection<RestMockResponseDto> mockResponses = createMockResponses(method.responses());
+                        final Collection<RestMockResponse> mockResponses = createMockResponses(method.responses());
                         restMethod.getMockResponses().addAll(mockResponses);
                     }
 
@@ -86,15 +86,15 @@ class RAML10Parser extends AbstractRAMLParser {
         }
     }
 
-    private Collection<RestMockResponseDto> createMockResponses(List<Response> responses){
-        final List<RestMockResponseDto> mockResponses = new ArrayList<>();
+    private Collection<RestMockResponse> createMockResponses(List<Response> responses){
+        final List<RestMockResponse> mockResponses = new ArrayList<>();
 
 
         for(int index = 0; index < responses.size(); index++){
             Response response = responses.get(index);
             String responseCode = response.code().value();
             int httpStatusCode = super.extractHttpStatusCode(responseCode);
-            RestMockResponseDto restMockResponse = new RestMockResponseDto();
+            RestMockResponse restMockResponse = new RestMockResponse();
             restMockResponse.setName(RESPONSE_NAME_PREFIX + (index + 1));
             restMockResponse.setHttpStatusCode(httpStatusCode);
 
@@ -115,7 +115,7 @@ class RAML10Parser extends AbstractRAMLParser {
 
             if(response.headers() != null){
                 for(TypeDeclaration parameter : response.headers()){
-                    HttpHeaderDto httpHeader = new HttpHeaderDto();
+                    HttpHeader httpHeader = new HttpHeader();
                     httpHeader.setName(parameter.name());
                     httpHeader.setValue(parameter.defaultValue());
                     restMockResponse.getHttpHeaders().add(httpHeader);

@@ -21,7 +21,7 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.UpdateUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.UpdateUserOutput;
 import com.castlemock.web.basis.model.session.token.repository.SessionTokenRepository;
@@ -56,7 +56,7 @@ public class UpdateUserServiceTest {
 
     @Test
     public void testProcess(){
-        UserDto user = new UserDto();
+        User user = new User();
         user.setId(new String());
         user.setPassword("Password");
         user.setUsername("Username");
@@ -64,7 +64,7 @@ public class UpdateUserServiceTest {
         user.setRole(Role.ADMIN);
         user.setEmail("email@email.com");
 
-        UserDto updatedUser = new UserDto();
+        User updatedUser = new User();
         updatedUser.setId(new String());
         updatedUser.setPassword("UpdatedPassword");
         updatedUser.setUsername("UpdatedUsername");
@@ -73,14 +73,14 @@ public class UpdateUserServiceTest {
         updatedUser.setEmail("email@email.com");
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
-        Mockito.when(repository.save(Mockito.any(UserDto.class))).thenReturn(user);
+        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
         final UpdateUserInput input = new UpdateUserInput(new String(), updatedUser);
         final ServiceTask<UpdateUserInput> serviceTask = new ServiceTask<UpdateUserInput>();
         serviceTask.setInput(input);
         final ServiceResult<UpdateUserOutput> serviceResult = service.process(serviceTask);
         final UpdateUserOutput output = serviceResult.getOutput();
 
-        final UserDto returnedUser = output.getUpdatedUser();
+        final User returnedUser = output.getUpdatedUser();
         Assert.assertNotNull(returnedUser);
         Assert.assertEquals(updatedUser.getId(), returnedUser.getId());
         Assert.assertEquals(updatedUser.getPassword(), returnedUser.getPassword());
@@ -88,7 +88,7 @@ public class UpdateUserServiceTest {
         Assert.assertEquals(updatedUser.getRole(), returnedUser.getRole());
         Assert.assertEquals(updatedUser.getStatus(), returnedUser.getStatus());
         Assert.assertEquals(updatedUser.getUsername(), returnedUser.getUsername());
-        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(UserDto.class));
+        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(User.class));
     }
 
 

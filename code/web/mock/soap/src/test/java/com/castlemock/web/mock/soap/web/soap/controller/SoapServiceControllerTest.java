@@ -18,15 +18,15 @@ package com.castlemock.web.mock.soap.web.soap.controller;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.service.message.input.IdentifySoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.LoadSoapResourceInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
@@ -139,7 +139,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperationDto soapOperation = getSoapOperationDto();
+        final SoapOperation soapOperation = getSoapOperation();
         soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput =
@@ -166,7 +166,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperationDto soapOperation = getSoapOperationDto();
+        final SoapOperation soapOperation = getSoapOperation();
         soapOperation.setResponseStrategy(SoapResponseStrategy.RANDOM);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput =
@@ -193,7 +193,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedMultipartHttpServletRequest(REQUEST_MTOM_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperationDto soapOperation = getSoapOperationDto();
+        final SoapOperation soapOperation = getSoapOperation();
         soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput =
@@ -222,7 +222,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperationDto soapOperation = getSoapOperationDto();
+        final SoapOperation soapOperation = getSoapOperation();
         soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
         soapOperation.setStatus(SoapOperationStatus.ECHO);
 
@@ -247,7 +247,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(Arrays.asList("wsdl")));
 
-        final SoapProjectDto soapProject = getSoapProject();
+        final SoapProject soapProject = getSoapProject();
         final ReadSoapProjectOutput readSoapProjectOutput = new ReadSoapProjectOutput(soapProject);
 
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -266,7 +266,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(Arrays.asList("wsdl")));
 
-        final SoapProjectDto soapProject = getSoapProject();
+        final SoapProject soapProject = getSoapProject();
         final ReadSoapProjectOutput readSoapProjectOutput = new ReadSoapProjectOutput(soapProject);
 
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -334,18 +334,18 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         return httpServletResponse;
     }
 
-    private SoapOperationDto getSoapOperationDto(){
+    private SoapOperation getSoapOperation(){
 
-        final HttpHeaderDto contentTypeHeader = new HttpHeaderDto();
+        final HttpHeader contentTypeHeader = new HttpHeader();
         contentTypeHeader.setName(CONTENT_TYPE_HEADER);
         contentTypeHeader.setValue(APPLICATION_XML);
 
-        final HttpHeaderDto acceptHeader = new HttpHeaderDto();
+        final HttpHeader acceptHeader = new HttpHeader();
         acceptHeader.setName(ACCEPT_HEADER);
         acceptHeader.setValue(APPLICATION_XML);
 
         // Mock
-        final SoapMockResponseDto soapMockResponse = new SoapMockResponseDto();
+        final SoapMockResponse soapMockResponse = new SoapMockResponse();
         soapMockResponse.setBody(RESPONSE_BODY);
         soapMockResponse.setContentEncodings(new ArrayList<>());
         soapMockResponse.setHttpHeaders(Arrays.asList(contentTypeHeader, acceptHeader));
@@ -356,7 +356,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         soapMockResponse.setUsingExpressions(false);
 
 
-        final SoapOperationDto soapOperation = new SoapOperationDto();
+        final SoapOperation soapOperation = new SoapOperation();
         soapOperation.setCurrentResponseSequenceIndex(0);
         soapOperation.setForwardedEndpoint(FORWARD_ENDPOINT);
         soapOperation.setHttpMethod(HttpMethod.GET);
@@ -373,9 +373,9 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         return soapOperation;
     }
 
-    private SoapProjectDto getSoapProject(){
-        final SoapProjectDto soapProject = new SoapProjectDto();
-        final SoapResourceDto soapResource = new SoapResourceDto();
+    private SoapProject getSoapProject(){
+        final SoapProject soapProject = new SoapProject();
+        final SoapResource soapResource = new SoapResource();
 
         soapResource.setId("Resource id");
         soapResource.setName("wsdl");

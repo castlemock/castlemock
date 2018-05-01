@@ -17,36 +17,47 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
-public class GraphQLArgument implements Saveable<String> {
+public class GraphQLArgument {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("description")
     private String description;
+
+    @Mapping("typeName")
     private String typeName;
+
+    @Mapping("typeId")
     private String typeId;
+
+    @Mapping("defaultValue")
     private Object defaultValue;
+
+    @Mapping("nullable")
     private Boolean nullable;
+
+    @Mapping("listable")
     private Boolean listable;
+
+    @Mapping("attributeType")
     private GraphQLAttributeType attributeType;
 
-    @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -55,7 +66,6 @@ public class GraphQLArgument implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -64,7 +74,6 @@ public class GraphQLArgument implements Saveable<String> {
         this.description = description;
     }
 
-    @XmlElement
     public String getTypeName() {
         return typeName;
     }
@@ -73,7 +82,6 @@ public class GraphQLArgument implements Saveable<String> {
         this.typeName = typeName;
     }
 
-    @XmlElement
     public String getTypeId() {
         return typeId;
     }
@@ -82,7 +90,6 @@ public class GraphQLArgument implements Saveable<String> {
         this.typeId = typeId;
     }
 
-    @XmlElement
     public Object getDefaultValue() {
         return defaultValue;
     }
@@ -91,7 +98,6 @@ public class GraphQLArgument implements Saveable<String> {
         this.defaultValue = defaultValue;
     }
 
-    @XmlElement
     public Boolean getNullable() {
         return nullable;
     }
@@ -100,7 +106,6 @@ public class GraphQLArgument implements Saveable<String> {
         this.nullable = nullable;
     }
 
-    @XmlElement
     public Boolean getListable() {
         return listable;
     }
@@ -109,7 +114,6 @@ public class GraphQLArgument implements Saveable<String> {
         this.listable = listable;
     }
 
-    @XmlElement
     public GraphQLAttributeType getAttributeType() {
         return attributeType;
     }
@@ -117,5 +121,4 @@ public class GraphQLArgument implements Saveable<String> {
     public void setAttributeType(GraphQLAttributeType attributeType) {
         this.attributeType = attributeType;
     }
-
 }

@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.project;
 
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.model.project.dto.ProjectDtoGenerator;
 import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
@@ -74,8 +74,8 @@ public class CreateProjectControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreateProject() throws Exception {
-        final ProjectDto projectDto = ProjectDtoGenerator.generateProjectDto();
-        when(projectServiceComponent.save(anyString(), any(ProjectDto.class))).thenReturn(projectDto);
+        final Project projectDto = ProjectDtoGenerator.generateProjectDto();
+        when(projectServiceComponent.save(anyString(), any(Project.class))).thenReturn(projectDto);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())

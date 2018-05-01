@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.mvc.controller.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUserOutput;
 import com.castlemock.web.basis.config.TestApplication;
@@ -65,7 +65,7 @@ public class UserControllerTest extends AbstractControllerTest {
     @Test
     public void testGetUserWithValidId() throws Exception {
         final ReadUserOutput readUserOutput = new ReadUserOutput();
-        final UserDto userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserDtoGenerator.generateUserDto();
         readUserOutput.setUser(userDto);
         when(serviceProcessor.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + userDto.getId());

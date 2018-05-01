@@ -20,9 +20,9 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.model.project.service.ProjectServiceAdapter;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.*;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.*;
 import com.castlemock.web.mock.graphql.model.GraphQLTypeIdentifier;
@@ -36,24 +36,24 @@ import java.util.List;
  * project services.
  * @author Karl Dahlgren
  * @since 1.19
- * @see GraphQLProjectDto
+ * @see GraphQLProject
  */
 @Service
-public class GraphQLProjectServiceAdapter implements ProjectServiceAdapter<GraphQLProjectDto> {
+public class GraphQLProjectServiceAdapter implements ProjectServiceAdapter<GraphQLProject> {
 
     @Autowired
     private ServiceProcessor serviceProcessor;
     private GraphQLTypeIdentifier GRAPHQL_TYPE_IDENTIFIER = new GraphQLTypeIdentifier();
 
     /**
-     * The method provides the functionality to create and store a DTO instance to a specific service.
+     * The method provides the functionality to create and store a  instance to a specific service.
      * The service is identified with the provided type value.
-     * @param dto The instance that will be created
+     * @param project The  instance that will be created
      * @return The saved instance
      */
     @Override
-    public GraphQLProjectDto create(GraphQLProjectDto dto) {
-        final CreateGraphQLProjectOutput output = serviceProcessor.process(new CreateGraphQLProjectInput(dto));
+    public GraphQLProject create(GraphQLProject project) {
+        final CreateGraphQLProjectOutput output = serviceProcessor.process(new CreateGraphQLProjectInput(project));
         return output.getSavedGraphQLProject();
     }
 
@@ -65,7 +65,7 @@ public class GraphQLProjectServiceAdapter implements ProjectServiceAdapter<Graph
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public GraphQLProjectDto delete(String id) {
+    public GraphQLProject delete(String id) {
         final DeleteGraphQLProjectOutput output = serviceProcessor.process(new DeleteGraphQLProjectInput(id));
         return output.getProject();
     }
@@ -74,15 +74,15 @@ public class GraphQLProjectServiceAdapter implements ProjectServiceAdapter<Graph
      * The method is used to update an already existing instance. The instance type is
      * identified with the provided typeUrl value. When the instance type has been identified, the instance
      * itself has to be identified. This is done with the provided id. The instance with the matching id will be
-     * replaced with the provided dto instance. Please note that not all values will be updated. It depends on the instance
+     * replaced with the provided  instance. Please note that not all values will be updated. It depends on the instance
      * type.
      * @param id The id of the instance that will be updated
-     * @param dto The instance with the new updated values
+     * @param project The instance with the new updated values
      * @return The updated instance
      */
     @Override
-    public GraphQLProjectDto update(String id, GraphQLProjectDto dto) {
-        final UpdateGraphQLProjectOutput output = serviceProcessor.process(new UpdateGraphQLProjectInput(id, dto));
+    public GraphQLProject update(String id, GraphQLProject project) {
+        final UpdateGraphQLProjectOutput output = serviceProcessor.process(new UpdateGraphQLProjectInput(id, project));
         return output.getUpdatedGraphQLProject();
     }
 
@@ -91,7 +91,7 @@ public class GraphQLProjectServiceAdapter implements ProjectServiceAdapter<Graph
      * @return A list containing all the instance independent from type
      */
     @Override
-    public List<GraphQLProjectDto> readAll() {
+    public List<GraphQLProject> readAll() {
         final ReadAllGraphQLProjectsOutput output = serviceProcessor.process(new ReadAllGraphQLProjectsInput());
         return output.getGraphQLProjects();
     }
@@ -105,7 +105,7 @@ public class GraphQLProjectServiceAdapter implements ProjectServiceAdapter<Graph
      *         values, null will be returned.
      */
     @Override
-    public GraphQLProjectDto read(String id) {
+    public GraphQLProject read(String id) {
         final ReadGraphQLProjectOutput output = serviceProcessor.process(new ReadGraphQLProjectInput(id));
         return output.getGraphQLProject();
     }
@@ -126,8 +126,8 @@ public class GraphQLProjectServiceAdapter implements ProjectServiceAdapter<Graph
      * @return A new instance of the parent, but as a subtype of the parent
      */
     @Override
-    public GraphQLProjectDto convertType(ProjectDto parent) {
-        return new GraphQLProjectDto(parent);
+    public GraphQLProject convertType(Project parent) {
+        return new GraphQLProject(parent);
     }
 
     /**
@@ -146,7 +146,7 @@ public class GraphQLProjectServiceAdapter implements ProjectServiceAdapter<Graph
      * @param projectRaw The project as a String
      */
     @Override
-    public GraphQLProjectDto importProject(String projectRaw) {
+    public GraphQLProject importProject(String projectRaw) {
         final ImportGraphQLProjectOutput output = serviceProcessor.process(new ImportGraphQLProjectInput(projectRaw));
         return output.getProject();
     }

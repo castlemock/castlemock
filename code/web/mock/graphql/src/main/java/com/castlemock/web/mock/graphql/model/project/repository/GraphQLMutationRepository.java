@@ -18,13 +18,12 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLMutation;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLMutationDto;
 
 import java.util.List;
 
-public interface GraphQLMutationRepository extends Repository<GraphQLMutation, GraphQLMutationDto, String> {
+public interface GraphQLMutationRepository extends Repository<GraphQLMutation, String> {
 
-    List<GraphQLMutationDto> findWithApplicationId(String applicationId);
+    List<GraphQLMutation> findWithApplicationId(String applicationId);
 
     void deleteWithApplicationId(String applicationId);
 }

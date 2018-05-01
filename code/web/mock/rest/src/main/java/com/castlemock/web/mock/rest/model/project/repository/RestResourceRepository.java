@@ -20,13 +20,10 @@ import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 
 import java.util.List;
 
-public interface RestResourceRepository extends Repository<RestResource, RestResourceDto, String> {
+public interface RestResourceRepository extends Repository<RestResource, String> {
 
     /**
      * Delete all {@link RestResource} that matches the provided
@@ -36,27 +33,24 @@ public interface RestResourceRepository extends Repository<RestResource, RestRes
     void deleteWithApplicationId(String applicationId);
 
     /**
-     * Find all {@link RestResourceDto} that matches the provided
+     * Find all {@link RestResource} that matches the provided
      * <code>applicationId</code>.
      * @param applicationId The id of the applicationId.
-     * @return A list of {@link RestResourceDto}.
+     * @return A list of {@link RestResource}.
      */
-    List<RestResourceDto> findWithApplicationId(String applicationId);
+    List<RestResource> findWithApplicationId(String applicationId);
 
 
     /**
-     * Finds a {@link RestResourceDto} with a URI
+     * Finds a {@link RestResource} with a URI
      * @param applicationId The id of the {@link RestApplication}
      * @param resourceUri The URI of a {@link RestResource}
-     * @return A {@link RestResourceDto} that matches the search criteria.
+     * @return A {@link RestResource} that matches the search criteria.
      * @see RestProject
-     * @see RestProjectDto
      * @see RestApplication
-     * @see RestApplicationDto
      * @see RestResource
-     * @see RestResourceDto
      */
-    RestResourceDto findRestResourceByUri(String applicationId, String resourceUri);
+    RestResource findRestResourceByUri(String applicationId, String resourceUri);
 
 
 

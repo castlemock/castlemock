@@ -17,7 +17,6 @@
 package com.castlemock.web.basis.web.mvc.command.configuration;
 
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
 
 import java.util.List;
 
@@ -27,17 +26,17 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  * @see ConfigurationGroup
- * @see ConfigurationGroupDto
+ * @see ConfigurationGroup
  */
 public class ConfigurationUpdateCommand {
 
-    private List<ConfigurationGroupDto> configurationGroups;
+    private List<ConfigurationGroup> configurationGroups;
 
     /**
      * Returns the value for configuration groups
      * @return The value for configuration groups
      */
-    public List<ConfigurationGroupDto> getConfigurationGroups() {
+    public List<ConfigurationGroup> getConfigurationGroups() {
         return configurationGroups;
     }
 
@@ -45,7 +44,7 @@ public class ConfigurationUpdateCommand {
      * Set new configuration groups value.
      * @param configurationGroups The new value for configuration groups
      */
-    public void setConfigurationGroups(List<ConfigurationGroupDto> configurationGroups) {
+    public void setConfigurationGroups(List<ConfigurationGroup> configurationGroups) {
         this.configurationGroups = configurationGroups;
     }
 }

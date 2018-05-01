@@ -18,7 +18,7 @@ package com.castlemock.web.mock.rest.legacy.repository.project.v1;
 
 import com.castlemock.core.mock.rest.legacy.model.project.v1.convert.RestProjectConverterV1;
 import com.castlemock.core.mock.rest.legacy.model.project.v1.domain.RestProjectV1;
-import com.castlemock.core.mock.rest.model.project.dto.*;
+import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.web.basis.model.AbstractLegacyRepositoryImpl;
 import com.castlemock.web.mock.rest.model.project.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
 @Repository
-public class RestProjectLegacyRepository extends AbstractLegacyRepositoryImpl<RestProjectV1, RestProjectDto, String> {
+public class RestProjectLegacyRepository extends AbstractLegacyRepositoryImpl<RestProjectV1, RestProject, String> {
 
     @Value(value = "${legacy.rest.project.v1.directory}")
     private String fileDirectory;
@@ -69,16 +69,16 @@ public class RestProjectLegacyRepository extends AbstractLegacyRepositoryImpl<Re
      * @param type The instance that will be saved.
      */
     @Override
-    protected RestProjectDto save(RestProjectV1 type) {
-        RestProjectDto project = RestProjectConverterV1.convert(type);
+    protected RestProject save(RestProjectV1 type) {
+        RestProject project = RestProjectConverterV1.convert(type);
         this.projectRepository.save(project);
-        for(RestApplicationDto application : project.getApplications()) {
+        for(RestApplication application : project.getApplications()) {
             this.applicationRepository.save(application);
-            for (RestResourceDto resource : application.getResources()) {
+            for (RestResource resource : application.getResources()) {
                 this.resourceRepository.save(resource);
-                for (RestMethodDto method : resource.getMethods()) {
+                for (RestMethod method : resource.getMethods()) {
                     this.methodRepository.save(method);
-                    for (RestMockResponseDto mockResponse : method.getMockResponses()) {
+                    for (RestMockResponse mockResponse : method.getMockResponses()) {
                         this.mockResponseRepository.save(mockResponse);
                     }
                 }

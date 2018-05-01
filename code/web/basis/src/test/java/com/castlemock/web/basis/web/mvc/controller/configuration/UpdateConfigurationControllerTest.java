@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.mvc.controller.configuration;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
+import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.service.message.input.UpdateAllConfigurationGroupsInput;
 import com.castlemock.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 import com.castlemock.web.basis.config.TestApplication;
@@ -65,7 +65,7 @@ public class UpdateConfigurationControllerTest extends AbstractControllerTest {
     @Test
     public void testCUpdate() throws Exception {
         final ConfigurationUpdateCommand configurationUpdateCommand = new ConfigurationUpdateCommand();
-        configurationUpdateCommand.setConfigurationGroups(new ArrayList<ConfigurationGroupDto>());
+        configurationUpdateCommand.setConfigurationGroups(new ArrayList<ConfigurationGroup>());
 
         Mockito.when(serviceProcessor.process(any(UpdateAllConfigurationGroupsInput.class))).thenReturn(new ReadAllConfigurationGroupsOutput());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL, configurationUpdateCommand);

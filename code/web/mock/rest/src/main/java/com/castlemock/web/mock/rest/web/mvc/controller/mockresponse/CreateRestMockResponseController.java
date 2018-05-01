@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.web.mvc.controller.mockresponse;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestMockResponseInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
@@ -50,7 +50,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
     public ModelAndView displayCreatePage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId) {
         final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
 
-        final RestMockResponseDto mockResponse = new RestMockResponseDto();
+        final RestMockResponse mockResponse = new RestMockResponse();
         mockResponse.setBody(output.getRestMethod().getDefaultBody());
         mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
         final ModelAndView model = createPartialModelAndView(PAGE);
@@ -66,8 +66,8 @@ public class CreateRestMockResponseController extends AbstractRestViewController
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/create/response", method = RequestMethod.POST)
-    public ModelAndView createResponse(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @ModelAttribute final RestMockResponseDto restMockResponseDto) {
-        serviceProcessor.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseDto));
+    public ModelAndView createResponse(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @ModelAttribute final RestMockResponse restMockResponse) {
+        serviceProcessor.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponse));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 

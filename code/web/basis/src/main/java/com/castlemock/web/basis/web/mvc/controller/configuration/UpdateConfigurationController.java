@@ -17,7 +17,6 @@
 package com.castlemock.web.basis.web.mvc.controller.configuration;
 
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.castlemock.core.basis.model.configuration.service.message.input.UpdateAllConfigurationGroupsInput;
 import com.castlemock.web.basis.web.mvc.command.configuration.ConfigurationUpdateCommand;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
@@ -35,7 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Karl Dahlgren
  * @since 1.0
  * @see ConfigurationGroup
- * @see ConfigurationGroupDto
+ * @see ConfigurationGroup
  */
 @Controller
 @Scope("request")

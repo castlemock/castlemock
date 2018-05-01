@@ -17,7 +17,7 @@
 package com.castlemock.core.mock.soap.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 
 /**
  * @author Karl Dahlgren
@@ -25,17 +25,17 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
  */
 public class ReadSoapMockResponseOutput implements Output{
 
-    private SoapMockResponseDto soapMockResponse;
+    private SoapMockResponse soapMockResponse;
 
-    public ReadSoapMockResponseOutput(SoapMockResponseDto soapMockResponse) {
+    public ReadSoapMockResponseOutput(SoapMockResponse soapMockResponse) {
         this.soapMockResponse = soapMockResponse;
     }
 
-    public SoapMockResponseDto getSoapMockResponse() {
+    public SoapMockResponse getSoapMockResponse() {
         return soapMockResponse;
     }
 
-    public void setSoapMockResponse(SoapMockResponseDto soapMockResponse) {
+    public void setSoapMockResponse(SoapMockResponse soapMockResponse) {
         this.soapMockResponse = soapMockResponse;
     }
 }

@@ -18,11 +18,11 @@ package com.castlemock.web.mock.rest.model.event.service;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
 import com.castlemock.web.mock.rest.model.event.repository.RestEventRepository;
-import com.castlemock.web.mock.rest.model.project.RestEventDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.RestEventGenerator;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,9 +55,9 @@ public class ReadRestEventsByMethodIdServiceTest {
 
     @Test
     public void testProcess(){
-        final List<RestEventDto> restEvents = new ArrayList<RestEventDto>();
+        final List<RestEvent> restEvents = new ArrayList<RestEvent>();
         for(int index = 0; index < 2; index++){
-            final RestEventDto restEvent = RestEventDtoGenerator.generateRestEventDto();
+            final RestEvent restEvent = RestEventGenerator.generateRestEvent();
             restEvents.add(restEvent);
         }
 
@@ -75,8 +75,8 @@ public class ReadRestEventsByMethodIdServiceTest {
         Assert.assertEquals(2, output.getRestEvents().size());
 
         for(int index = 0; index < 2; index++){
-            final RestEventDto restEvent = restEvents.get(index);
-            final RestEventDto returnedRestEvent = output.getRestEvents().get(index);
+            final RestEvent restEvent = restEvents.get(index);
+            final RestEvent returnedRestEvent = output.getRestEvents().get(index);
 
             Assert.assertEquals(restEvent.getId(), returnedRestEvent.getId());
             Assert.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());

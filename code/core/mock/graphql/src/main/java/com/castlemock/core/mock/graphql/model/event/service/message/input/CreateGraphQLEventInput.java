@@ -17,7 +17,7 @@
 package com.castlemock.core.mock.graphql.model.event.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
-import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
+import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
 
 /**
  * @author Karl Dahlgren
@@ -25,17 +25,17 @@ import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
  */
 public class CreateGraphQLEventInput implements Input {
 
-    private GraphQLEventDto graphQLEvent;
+    private GraphQLEvent graphQLEvent;
 
-    public CreateGraphQLEventInput(GraphQLEventDto graphQLEvent) {
+    public CreateGraphQLEventInput(GraphQLEvent graphQLEvent) {
         this.graphQLEvent = graphQLEvent;
     }
 
-    public GraphQLEventDto getGraphQLEvent() {
+    public GraphQLEvent getGraphQLEvent() {
         return graphQLEvent;
     }
 
-    public void setGraphQLEvent(GraphQLEventDto graphQLEvent) {
+    public void setGraphQLEvent(GraphQLEvent graphQLEvent) {
         this.graphQLEvent = graphQLEvent;
     }
 }

@@ -19,8 +19,8 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsForwardedEndpointInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapPortsForwardedEndpointOutput;
 
@@ -44,9 +44,9 @@ public class UpdateSoapPortsForwardedEndpointService extends AbstractSoapProject
     @Override
     public ServiceResult<UpdateSoapPortsForwardedEndpointOutput> process(final ServiceTask<UpdateSoapPortsForwardedEndpointInput> serviceTask) {
         final UpdateSoapPortsForwardedEndpointInput input = serviceTask.getInput();
-        for(SoapPortDto soapPortDto : input.getSoapPorts()){
-            List<SoapOperationDto> operations = this.operationRepository.findWithPortId(soapPortDto.getId());
-            for(SoapOperationDto soapOperation : operations){
+        for(SoapPort soapPort : input.getSoapPorts()){
+            List<SoapOperation> operations = this.operationRepository.findWithPortId(soapPort.getId());
+            for(SoapOperation soapOperation : operations){
                 soapOperation.setForwardedEndpoint(input.getForwardedEndpoint());
                 this.operationRepository.update(soapOperation.getId(), soapOperation);
             }

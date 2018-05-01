@@ -18,13 +18,12 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumType;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLEnumTypeDto;
 
 import java.util.List;
 
-public interface GraphQLEnumTypeRepository extends Repository<GraphQLEnumType, GraphQLEnumTypeDto, String> {
+public interface GraphQLEnumTypeRepository extends Repository<GraphQLEnumType, String> {
 
-    List<GraphQLEnumTypeDto> findWithApplicationId(String applicationId);
+    List<GraphQLEnumType> findWithApplicationId(String applicationId);
 
     void deleteWithApplicationId(String applicationId);
 }

@@ -17,7 +17,6 @@
 package com.castlemock.web.mock.rest.model.event.service;
 
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
 import com.castlemock.web.basis.model.event.service.AbstractEventService;
 import com.castlemock.web.mock.rest.model.event.repository.RestEventRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ import org.springframework.stereotype.Service;
  * @since 1.0
  */
 @Service
-public class AbstractRestEventService extends AbstractEventService<RestEvent, RestEventDto, RestEventRepository> {
+public class AbstractRestEventService extends AbstractEventService<RestEvent, RestEventRepository> {
 
 
 }

@@ -18,7 +18,7 @@ package com.castlemock.core.mock.soap.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 public class CreateSoapProjectInput implements Input {
 
     @NotNull
-    private SoapProjectDto soapProject;
+    private SoapProject soapProject;
 
-    public CreateSoapProjectInput(SoapProjectDto soapProject) {
+    public CreateSoapProjectInput(SoapProject soapProject) {
         this.soapProject = soapProject;
     }
 
-    public SoapProjectDto getSoapProject() {
+    public SoapProject getSoapProject() {
         return soapProject;
     }
 
-    public void setSoapProject(SoapProjectDto soapProject) {
+    public void setSoapProject(SoapProject soapProject) {
         this.soapProject = soapProject;
     }
 }

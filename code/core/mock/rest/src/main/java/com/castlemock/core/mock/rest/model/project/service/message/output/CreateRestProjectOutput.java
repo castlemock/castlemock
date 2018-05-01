@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 
 /**
  * @author Karl Dahlgren
@@ -27,13 +27,13 @@ import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 public class CreateRestProjectOutput implements Output {
 
     @NotNull
-    private RestProjectDto savedRestProject;
+    private RestProject savedRestProject;
 
-    public RestProjectDto getSavedRestProject() {
+    public RestProject getSavedRestProject() {
         return savedRestProject;
     }
 
-    public void setSavedRestProject(RestProjectDto savedRestProject) {
+    public void setSavedRestProject(RestProject savedRestProject) {
         this.savedRestProject = savedRestProject;
     }
 }

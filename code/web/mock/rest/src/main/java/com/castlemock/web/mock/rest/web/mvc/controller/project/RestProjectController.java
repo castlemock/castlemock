@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.web.mvc.controller.project;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsStatusInput;
@@ -28,7 +28,6 @@ import com.castlemock.web.mock.rest.web.mvc.command.application.RestApplicationM
 import com.castlemock.web.mock.rest.web.mvc.command.application.UpdateRestApplicationsEndpointCommand;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.apache.log4j.Logger;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -103,7 +102,7 @@ public class RestProjectController extends AbstractRestViewController {
                 serviceProcessor.process(new UpdateRestApplicationsStatusInput(projectId, restApplicationId, restMethodStatus));
             }
         } else if(DELETE_REST_APPLICATIONS.equalsIgnoreCase(action)) {
-            final List<RestApplicationDto> restApplications = new ArrayList<RestApplicationDto>();
+            final List<RestApplication> restApplications = new ArrayList<RestApplication>();
             for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
                 final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(projectId, restApplicationId));
                 restApplications.add(output.getRestApplication());
@@ -114,14 +113,14 @@ public class RestProjectController extends AbstractRestViewController {
             model.addObject(DELETE_REST_APPLICATIONS_COMMAND, new DeleteRestApplicationsCommand());
             return model;
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
-            final List<RestApplicationDto> restApplicationDtos = new ArrayList<RestApplicationDto>();
+            final List<RestApplication> restApplications = new ArrayList<RestApplication>();
             for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
                 final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(projectId, restApplicationId));
-                restApplicationDtos.add(output.getRestApplication());
+                restApplications.add(output.getRestApplication());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_REST_APPLICATIONS_ENDPOINT_PAGE);
             model.addObject(REST_PROJECT_ID, projectId);
-            model.addObject(REST_APPLICATIONS, restApplicationDtos);
+            model.addObject(REST_APPLICATIONS, restApplications);
             model.addObject(UPDATE_REST_APPLICATIONS_ENDPOINT_COMMAND, new UpdateRestApplicationsEndpointCommand());
             return model;
         }

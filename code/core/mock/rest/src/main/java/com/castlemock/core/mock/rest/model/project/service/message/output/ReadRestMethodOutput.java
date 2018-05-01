@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 
 
 /**
@@ -28,17 +28,17 @@ import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 public class ReadRestMethodOutput implements Output{
 
     @NotNull
-    private RestMethodDto restMethod;
+    private RestMethod restMethod;
 
-    public ReadRestMethodOutput(RestMethodDto restMethod) {
+    public ReadRestMethodOutput(RestMethod restMethod) {
         this.restMethod = restMethod;
     }
 
-    public RestMethodDto getRestMethod() {
+    public RestMethod getRestMethod() {
         return restMethod;
     }
 
-    public void setRestMethod(RestMethodDto restMethod) {
+    public void setRestMethod(RestMethod restMethod) {
         this.restMethod = restMethod;
     }
 }

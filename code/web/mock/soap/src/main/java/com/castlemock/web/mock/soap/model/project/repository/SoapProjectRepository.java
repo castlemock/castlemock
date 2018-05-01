@@ -18,7 +18,6 @@ package com.castlemock.web.mock.soap.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
 
 /**
  * The soap project file repository provides the functionality to interact with the file system.
@@ -26,18 +25,16 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
  * soap project is stored as a separate file.
  * @author Karl Dahlgren
  * @since 1.0
- * @see SoapProject
  * @see Repository
  */
-public interface SoapProjectRepository extends Repository<SoapProject, SoapProjectDto, String> {
+public interface SoapProjectRepository extends Repository<SoapProject, String> {
 
 
     /**
      * Finds a project by a given name
      * @param name The name of the project that should be retrieved
      * @return Returns a project with the provided name
-     * @see SoapProject
      */
-    SoapProjectDto findSoapProjectWithName(String name);
+    SoapProject findSoapProjectWithName(String name);
 
 }

@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.graphql.web.mvc.command.application;
 
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 import java.util.List;
 
 /**
@@ -27,13 +27,13 @@ import java.util.List;
  */
 public class DeleteGraphQLApplicationsCommand {
 
-    private List<GraphQLApplicationDto> graphQLApplications;
+    private List<GraphQLApplication> graphQLApplications;
 
-    public List<GraphQLApplicationDto> getGraphQLApplications() {
+    public List<GraphQLApplication> getGraphQLApplications() {
         return graphQLApplications;
     }
 
-    public void setGraphQLApplications(List<GraphQLApplicationDto> graphQLApplications) {
+    public void setGraphQLApplications(List<GraphQLApplication> graphQLApplications) {
         this.graphQLApplications = graphQLApplications;
     }
 }

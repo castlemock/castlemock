@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
-import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ImportSoapResourceInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ImportSoapResourceOutput;
 
@@ -47,7 +47,7 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
     public ServiceResult<ImportSoapResourceOutput> process(final ServiceTask<ImportSoapResourceInput> serviceTask) {
         final ImportSoapResourceInput input = serviceTask.getInput();
         final String projectId = input.getProjectId();
-        final SoapResourceDto soapResource = input.getResource();
+        final SoapResource soapResource = input.getResource();
         final String raw = input.getRaw();
 
         if(soapResource.getName() == null){
@@ -57,15 +57,15 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
             soapResource.setName(soapResourceName);
         }
 
-        SoapResourceDto result = null;
+        SoapResource result = null;
         if(projectId != null){
 
             if(SoapResourceType.WSDL.equals(soapResource.getType())){
                 // Remove the already existing WSDL file if a new one is being uploaded.
-                final Collection<SoapResourceDto> wsdlSoapResources =
+                final Collection<SoapResource> wsdlSoapResources =
                         this.resourceRepository.findSoapResources(projectId, SoapResourceType.WSDL);
 
-                for(SoapResourceDto wsdlSoapResource : wsdlSoapResources){
+                for(SoapResource wsdlSoapResource : wsdlSoapResources){
                     this.resourceRepository.deleteWithProjectId(wsdlSoapResource.getId());
                 }
             }

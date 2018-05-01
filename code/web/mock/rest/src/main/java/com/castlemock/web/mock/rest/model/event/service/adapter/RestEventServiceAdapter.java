@@ -18,9 +18,9 @@ package com.castlemock.web.mock.rest.model.event.service.adapter;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
-import com.castlemock.core.basis.model.event.dto.EventDto;
+import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.basis.model.event.service.EventServiceAdapter;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ClearAllRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadAllRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
@@ -39,7 +39,7 @@ import java.util.List;
  * @since 1.0
  */
 @Service
-public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto> {
+public class RestEventServiceAdapter implements EventServiceAdapter<RestEvent> {
 
     @Autowired
     private ServiceProcessor serviceProcessor;
@@ -53,13 +53,13 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
     private static final String METHOD = "method";
 
     /**
-     * The method provides the functionality to create and store a DTO instance to a specific service.
+     * The method provides the functionality to create and store a  instance to a specific service.
      * The service is identified with the provided type value.
-     * @param dto The instance that will be created
+     * @param event The instance that will be created
      * @return The saved instance
      */
     @Override
-    public RestEventDto create(RestEventDto dto) {
+    public RestEvent create(RestEvent event) {
         throw new UnsupportedOperationException();
     }
 
@@ -71,7 +71,7 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public RestEventDto delete(String id) {
+    public RestEvent delete(String id) {
         throw new UnsupportedOperationException();
     }
 
@@ -79,14 +79,14 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
      * The method is used to update an already existing instance. The instance type is
      * identified with the provided typeUrl value. When the instance type has been identified, the instance
      * itself has to be identified. This is done with the provided id. The instance with the matching id will be
-     * replaced with the provided dto instance. Please note that not all values will be updated. It depends on the instance
+     * replaced with the provided  instance. Please note that not all values will be updated. It depends on the instance
      * type.
      * @param id The id of the instance that will be updated
-     * @param dto The instance with the new updated values
+     * @param event The instance with the new updated values
      * @return The updated instance
      */
     @Override
-    public RestEventDto update(String id, RestEventDto dto) {
+    public RestEvent update(String id, RestEvent event) {
         throw new UnsupportedOperationException();
     }
 
@@ -95,12 +95,12 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
      * @return A list containing all the instance independent from type
      */
     @Override
-    public List<RestEventDto> readAll() {
+    public List<RestEvent> readAll() {
         final ReadAllRestEventOutput output = serviceProcessor.process(new ReadAllRestEventInput());
 
-        for(RestEventDto restEventDto : output.getRestEvents()){
-            final String resourceLink = generateResourceLink(restEventDto);
-            restEventDto.setResourceLink(resourceLink);
+        for(RestEvent restEvent : output.getRestEvents()){
+            final String resourceLink = generateResourceLink(restEvent);
+            restEvent.setResourceLink(resourceLink);
         }
 
         return output.getRestEvents();
@@ -115,7 +115,7 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
      *         values, null will be returned.
      */
     @Override
-    public RestEventDto read(String id) {
+    public RestEvent read(String id) {
         final ReadRestEventOutput output = serviceProcessor.process(new ReadRestEventInput(id));
         return output.getRestEvent();
     }
@@ -136,8 +136,8 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
      * @return A new instance of the parent, but as a subtype of the parent
      */
     @Override
-    public RestEventDto convertType(EventDto parent) {
-        return new RestEventDto(parent);
+    public RestEvent convertType(Event parent) {
+        return new RestEvent(parent);
     }
 
     /**
@@ -149,12 +149,12 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEventDto
      *   <li>Resource id</li>
      *   <li>Method id</li>
      * </ul>
-     * @param restEventDto The incoming REST event which will be used to generate the resource link
+     * @param restEvent The incoming REST event which will be used to generate the resource link
      * @return The resource link generated based on the incoming REST event
      */
     @Override
-    public String generateResourceLink(RestEventDto restEventDto) {
-        return SLASH + WEB + SLASH + REST + SLASH + PROJECT + SLASH + restEventDto.getProjectId() + SLASH + APPLICATION + SLASH + restEventDto.getApplicationId() + SLASH + RESOURCE + SLASH + restEventDto.getResourceId() + SLASH + METHOD + SLASH + restEventDto.getMethodId();
+    public String generateResourceLink(RestEvent restEvent) {
+        return SLASH + WEB + SLASH + REST + SLASH + PROJECT + SLASH + restEvent.getProjectId() + SLASH + APPLICATION + SLASH + restEvent.getApplicationId() + SLASH + RESOURCE + SLASH + restEvent.getResourceId() + SLASH + METHOD + SLASH + restEvent.getMethodId();
     }
 
     /**

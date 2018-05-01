@@ -18,11 +18,10 @@ package com.castlemock.web.mock.rest.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
 
 import java.util.List;
 
-public interface RestMockResponseRepository extends Repository<RestMockResponse, RestMockResponseDto, String> {
+public interface RestMockResponseRepository extends Repository<RestMockResponse, String> {
 
     /**
      * Delete all {@link RestMockResponse} that matches the provided
@@ -32,11 +31,11 @@ public interface RestMockResponseRepository extends Repository<RestMockResponse,
     void deleteWithMethodId(String methodId);
 
     /**
-     * Find all {@link RestMockResponseDto} that matches the provided
+     * Find all {@link RestMockResponse} that matches the provided
      * <code>methodId</code>.
      * @param methodId The id of the method.
-     * @return A list of {@link RestMockResponseDto}.
+     * @return A list of {@link RestMockResponse}.
      */
-    List<RestMockResponseDto> findWithMethodId(String methodId);
+    List<RestMockResponse> findWithMethodId(String methodId);
 
 }

@@ -19,7 +19,7 @@ package com.castlemock.web.basis.model.user.service;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
 import com.castlemock.web.basis.web.mvc.controller.user.UpdateCurrentUserController;
@@ -30,7 +30,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -65,7 +64,7 @@ public class UserDetailSecurityService implements UserDetailsService {
         Preconditions.checkArgument(!username.isEmpty(), "Username cannot be empty");
         final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput(username);
         final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(readUserByUsernameInput);
-        final UserDto user = readUserByUsernameOutput.getUser();
+        final User user = readUserByUsernameOutput.getUser();
         Preconditions.checkNotNull(user, "Unable to find user");
         final List<GrantedAuthority> authorities = buildUserAuthority(user.getRole());
         return buildUserForAuthentication(user, authorities);
@@ -79,12 +78,12 @@ public class UserDetailSecurityService implements UserDetailsService {
      * @return Returns a new user that contain the same username and password as the provided user dto
      * @throws NullPointerException Throws NullPointerException if provided username or authorities parameters are null
      */
-    private User buildUserForAuthentication(final UserDto user, final List<GrantedAuthority> authorities) {
+    private org.springframework.security.core.userdetails.User buildUserForAuthentication(final User user, final List<GrantedAuthority> authorities) {
         Preconditions.checkNotNull(user, "Username cannot be null");
         Preconditions.checkNotNull(authorities, "Authorities cannot be null");
         boolean locked = user.getStatus().equals(Status.LOCKED);
         boolean inactive = user.getStatus().equals(Status.INACTIVE);
-        return new User(user.getUsername(), user.getPassword(), true, true, !inactive, !locked, authorities);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), true, true, !inactive, !locked, authorities);
     }
 
     /**

@@ -17,7 +17,7 @@
 package com.castlemock.core.basis.model.configuration.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
+import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.service.message.output.UpdateAllConfigurationGroupsOutput;
 import com.castlemock.core.basis.model.validation.NotNull;
 
@@ -31,17 +31,17 @@ import java.util.List;
 public class UpdateAllConfigurationGroupsInput implements Input{
 
     @NotNull
-    private List<ConfigurationGroupDto> configurationGroups;
+    private List<ConfigurationGroup> configurationGroups;
 
-    public UpdateAllConfigurationGroupsInput(List<ConfigurationGroupDto> configurationGroups) {
+    public UpdateAllConfigurationGroupsInput(List<ConfigurationGroup> configurationGroups) {
         this.configurationGroups = configurationGroups;
     }
 
-    public List<ConfigurationGroupDto> getConfigurationGroups() {
+    public List<ConfigurationGroup> getConfigurationGroups() {
         return configurationGroups;
     }
 
-    public void setConfigurationGroups(List<ConfigurationGroupDto> configurationGroups) {
+    public void setConfigurationGroups(List<ConfigurationGroup> configurationGroups) {
         this.configurationGroups = configurationGroups;
     }
 }

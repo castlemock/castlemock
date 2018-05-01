@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.web.mvc.controller.application;
 
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsForwardedEndpointInput;
@@ -58,8 +58,8 @@ public class UpdateRestApplicationController extends AbstractRestViewController 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String projectId, @PathVariable final String applicationId,  @ModelAttribute final RestApplicationDto restApplicationDto) {
-        serviceProcessor.process(new UpdateRestApplicationInput(projectId, applicationId, restApplicationDto));
+    public ModelAndView update(@PathVariable final String projectId, @PathVariable final String applicationId,  @ModelAttribute final RestApplication restApplication) {
+        serviceProcessor.process(new UpdateRestApplicationInput(projectId, applicationId, restApplication));
         return redirect("/rest/project/" + projectId + "/application/" + applicationId);
     }
 

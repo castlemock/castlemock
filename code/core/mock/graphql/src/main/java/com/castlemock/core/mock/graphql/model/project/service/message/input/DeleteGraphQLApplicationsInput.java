@@ -18,7 +18,7 @@ package com.castlemock.core.mock.graphql.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 
 import java.util.List;
 
@@ -31,9 +31,9 @@ public class DeleteGraphQLApplicationsInput implements Input{
     @NotNull
     private String graphQLProjectId;
     @NotNull
-    private List<GraphQLApplicationDto> graphQLApplications;
+    private List<GraphQLApplication> graphQLApplications;
 
-    public DeleteGraphQLApplicationsInput(String graphQLProjectId, List<GraphQLApplicationDto> graphQLApplications) {
+    public DeleteGraphQLApplicationsInput(String graphQLProjectId, List<GraphQLApplication> graphQLApplications) {
         this.graphQLProjectId = graphQLProjectId;
         this.graphQLApplications = graphQLApplications;
     }
@@ -46,11 +46,11 @@ public class DeleteGraphQLApplicationsInput implements Input{
         this.graphQLProjectId = graphQLProjectId;
     }
 
-    public List<GraphQLApplicationDto> getGraphQLApplications() {
+    public List<GraphQLApplication> getGraphQLApplications() {
         return graphQLApplications;
     }
 
-    public void setGraphQLApplications(List<GraphQLApplicationDto> graphQLApplications) {
+    public void setGraphQLApplications(List<GraphQLApplication> graphQLApplications) {
         this.graphQLApplications = graphQLApplications;
     }
 }

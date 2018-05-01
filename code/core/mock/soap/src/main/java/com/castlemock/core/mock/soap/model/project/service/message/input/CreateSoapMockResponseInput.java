@@ -18,7 +18,7 @@ package com.castlemock.core.mock.soap.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.dto.SoapMockResponseDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 
 /**
  * @author Karl Dahlgren
@@ -33,13 +33,13 @@ public class CreateSoapMockResponseInput implements Input {
     @NotNull
     private String soapOperationId;
     @NotNull
-    private SoapMockResponseDto soapMockResponseDto;
+    private SoapMockResponse soapMockResponse;
 
-    public CreateSoapMockResponseInput(String soapProjectId, String soapPortId, String soapOperationId, SoapMockResponseDto soapMockResponseDto) {
+    public CreateSoapMockResponseInput(String soapProjectId, String soapPortId, String soapOperationId, SoapMockResponse soapMockResponse) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
         this.soapOperationId = soapOperationId;
-        this.soapMockResponseDto = soapMockResponseDto;
+        this.soapMockResponse = soapMockResponse;
     }
 
     public String getSoapProjectId() {
@@ -66,11 +66,11 @@ public class CreateSoapMockResponseInput implements Input {
         this.soapOperationId = soapOperationId;
     }
 
-    public SoapMockResponseDto getSoapMockResponseDto() {
-        return soapMockResponseDto;
+    public SoapMockResponse getSoapMockResponse() {
+        return soapMockResponse;
     }
 
-    public void setSoapMockResponseDto(SoapMockResponseDto soapMockResponseDto) {
-        this.soapMockResponseDto = soapMockResponseDto;
+    public void setSoapMockResponse(SoapMockResponse soapMockResponse) {
+        this.soapMockResponse = soapMockResponse;
     }
 }

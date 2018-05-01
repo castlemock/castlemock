@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.event.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.service.message.input.CreateRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.CreateRestEventOutput;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +48,7 @@ public class CreateRestEventService extends AbstractRestEventService implements 
         if(count() >= restMaxEventCount){
             repository.deleteOldestEvent();
         }
-        final RestEventDto createdRestEvent = save(input.getRestEvent());
+        final RestEvent createdRestEvent = save(input.getRestEvent());
         return createServiceResult(new CreateRestEventOutput(createdRestEvent));
     }
 }

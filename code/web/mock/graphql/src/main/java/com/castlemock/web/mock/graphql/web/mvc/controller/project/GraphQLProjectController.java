@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.graphql.web.mvc.controller.project;
 
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLApplicationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLApplicationOutput;
@@ -93,7 +93,7 @@ public class GraphQLProjectController extends AbstractGraphQLViewController {
                                                  @RequestParam final String action,
                                                  @ModelAttribute final GraphQLApplicationModifierCommand command) {
         if (DELETE_GRAPHQL_APPLICATIONS.equalsIgnoreCase(action)) {
-            final List<GraphQLApplicationDto> applications = new ArrayList<GraphQLApplicationDto>();
+            final List<GraphQLApplication> applications = new ArrayList<GraphQLApplication>();
             for (String applicationId : command.getGraphQLApplicationIds()) {
                 ReadGraphQLApplicationOutput output =
                         serviceProcessor.process(new ReadGraphQLApplicationInput(projectId, applicationId));

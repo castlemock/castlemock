@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.web.mvc.controller.resource;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.service.message.input.LoadSoapResourceInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapResourceInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSoapResourceOutput;
@@ -68,9 +68,9 @@ public class SoapResourceControllerTest extends AbstractSoapControllerTest {
     public void testGetServiceValid() throws Exception {
         final String projectId = "ProjectId";
         final String resourceId = "ResourceId";
-        final SoapResourceDto soapResourceDto = new SoapResourceDto();
-        soapResourceDto.setName("SOAP resource name");
-        final ReadSoapResourceOutput readSoapResourceOutput = new ReadSoapResourceOutput(soapResourceDto);
+        final SoapResource soapResource = new SoapResource();
+        soapResource.setName("SOAP resource name");
+        final ReadSoapResourceOutput readSoapResourceOutput = new ReadSoapResourceOutput(soapResource);
 
         final String resource = "Resource";
         final LoadSoapResourceOutput loadSoapResourceOutput = new LoadSoapResourceOutput(resource);
@@ -85,7 +85,7 @@ public class SoapResourceControllerTest extends AbstractSoapControllerTest {
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, projectId))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_RESOURCE, soapResourceDto))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_RESOURCE, soapResource))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_RESOURCE_DATA, resource));
 
     }

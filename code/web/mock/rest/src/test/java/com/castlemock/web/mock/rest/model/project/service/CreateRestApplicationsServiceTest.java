@@ -16,9 +16,9 @@
 
 package com.castlemock.web.mock.rest.model.project.service;
 
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
-import com.castlemock.web.mock.rest.model.project.RestApplicationDtoGenerator;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
 import com.castlemock.web.mock.rest.model.project.repository.RestProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
@@ -52,14 +52,14 @@ public class CreateRestApplicationsServiceTest {
     @Test
     @Ignore
     public void testProcess(){
-        final RestProjectDto restProject = new RestProjectDto();
-        restProject.setApplications(new ArrayList<RestApplicationDto>());
+        final RestProject restProject = new RestProject();
+        restProject.setApplications(new ArrayList<RestApplication>());
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(restProject);
 
-        final List<RestApplicationDto> restApplications = new ArrayList<RestApplicationDto>();
+        final List<RestApplication> restApplications = new ArrayList<RestApplication>();
         for(int index = 0; index < 3; index++){
-            final RestApplicationDto restApplicationDto = RestApplicationDtoGenerator.generateRestApplicationDto();
-            restApplications.add(restApplicationDto);
+            final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+            restApplications.add(restApplication);
         }
         /*
 
@@ -67,7 +67,7 @@ public class CreateRestApplicationsServiceTest {
         final ServiceTask<CreateRestApplicationsInput> serviceTask = new ServiceTask<CreateRestApplicationsInput>(input);
         service.process(serviceTask);
 
-        Mockito.verify(repository, Mockito.timeout(1)).save(Mockito.any(RestProjectDto.class));
+        Mockito.verify(repository, Mockito.timeout(1)).save(Mockito.any(RestProject.class));
         */
     }
 

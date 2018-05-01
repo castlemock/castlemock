@@ -19,7 +19,6 @@ package com.castlemock.web.mock.soap.model.event.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
 
 import java.util.List;
 
@@ -29,30 +28,29 @@ import java.util.List;
  * soap event is stored as a separate file.
  * @author Karl Dahlgren
  * @since 1.0
- * @see SoapEvent
  * @see Repository
  */
-public interface SoapEventRepository extends Repository<SoapEvent, SoapEventDto, String> {
+public interface SoapEventRepository extends Repository<SoapEvent, String> {
 
     /**
      * The events for a specific operation id
      * @param operationId The id of the operation that the event belongs to
      * @return Returns a list of events
      */
-    List<SoapEventDto> findEventsByOperationId(String operationId);
+    List<SoapEvent> findEventsByOperationId(String operationId);
 
     /**
      * The service finds the oldest event
      * @return The oldest event
      */
-    SoapEventDto getOldestEvent();
+    SoapEvent getOldestEvent();
 
     /**
      * The method finds and deletes the oldest event.
      * @return The event that was deleted.
      * @since 1.5
      */
-    SoapEventDto deleteOldestEvent();
+    SoapEvent deleteOldestEvent();
 
     /**
      * The method clears and deletes all logs.

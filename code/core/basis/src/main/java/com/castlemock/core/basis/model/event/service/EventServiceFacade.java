@@ -18,7 +18,6 @@ package com.castlemock.core.basis.model.event.service;
 
 import com.castlemock.core.basis.model.ServiceFacade;
 import com.castlemock.core.basis.model.event.domain.Event;
-import com.castlemock.core.basis.model.event.dto.EventDto;
 
 /**
  * The Event service facade is used to assembly all the events service layers and interact with them
@@ -26,7 +25,7 @@ import com.castlemock.core.basis.model.event.dto.EventDto;
  * @author Karl Dahlgren
  * @since 1.0
  * @see Event
- * @see EventDto
+ * @see Event
  */
-public interface EventServiceFacade extends ServiceFacade<EventDto, String> {
+public interface EventServiceFacade extends ServiceFacade<Event, String> {
 }

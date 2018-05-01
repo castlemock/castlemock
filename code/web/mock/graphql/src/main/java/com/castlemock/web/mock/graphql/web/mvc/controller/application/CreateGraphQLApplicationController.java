@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.graphql.web.mvc.controller.application;
 
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.CreateGraphQLApplicationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.CreateGraphQLApplicationOutput;
 import com.castlemock.web.mock.graphql.web.mvc.controller.AbstractGraphQLViewController;
@@ -47,15 +47,15 @@ public class CreateGraphQLApplicationController extends AbstractGraphQLViewContr
     public ModelAndView defaultPage(@PathVariable final String projectId) {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_PROJECT_ID, projectId);
-        model.addObject(GRAPHQL_APPLICATION, new GraphQLApplicationDto());
+        model.addObject(GRAPHQL_APPLICATION, new GraphQLApplication());
         return model;
     }
 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/create/application", method = RequestMethod.POST)
-    public ModelAndView createProject(@PathVariable final String projectId, @ModelAttribute final GraphQLApplicationDto applicationDto) {
-        final CreateGraphQLApplicationOutput output = serviceProcessor.process(new CreateGraphQLApplicationInput(projectId, applicationDto));
+    public ModelAndView createProject(@PathVariable final String projectId, @ModelAttribute final GraphQLApplication application) {
+        final CreateGraphQLApplicationOutput output = serviceProcessor.process(new CreateGraphQLApplicationInput(projectId, application));
         return redirect("/graphql/project/" + projectId + "/application/" + output.getSavedGraphQLApplication().getId());
     }
 

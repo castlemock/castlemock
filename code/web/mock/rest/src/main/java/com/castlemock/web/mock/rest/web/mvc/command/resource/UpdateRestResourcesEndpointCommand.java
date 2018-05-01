@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.web.mvc.command.resource;
 
 
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 
 import java.util.List;
 
@@ -29,14 +29,14 @@ import java.util.List;
  */
 public class UpdateRestResourcesEndpointCommand {
 
-    private List<RestResourceDto> restResources;
+    private List<RestResource> restResources;
     private String forwardedEndpoint;
 
-    public List<RestResourceDto> getRestResources() {
+    public List<RestResource> getRestResources() {
         return restResources;
     }
 
-    public void setRestResources(List<RestResourceDto> restResources) {
+    public void setRestResources(List<RestResource> restResources) {
         this.restResources = restResources;
     }
 

@@ -20,10 +20,10 @@ package com.castlemock.web.mock.rest.converter.wadl;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
 import org.apache.log4j.Logger;
@@ -55,14 +55,14 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
     private static final Logger LOGGER = Logger.getLogger(WADLRestDefinitionConverter.class);
 
     /**
-     * The method is responsible for parsing a {@link File} and converting into a list of {@link RestApplicationDto}.
-     * @param file The {@link File} be parsed and converted into a list of {@link RestApplicationDto}.
+     * The method is responsible for parsing a {@link File} and converting into a list of {@link RestApplication}.
+     * @param file The {@link File} be parsed and converted into a list of {@link RestApplication}.
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link RestApplicationDto} based on the provided file.
+     * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplicationDto> convert(final File file, final boolean generateResponse){
-        List<RestApplicationDto> applications = new LinkedList<RestApplicationDto>();
+    public List<RestApplication> convert(final File file, final boolean generateResponse){
+        List<RestApplication> applications = new LinkedList<RestApplication>();
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -74,37 +74,37 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
             for(Element applicationElement : applicationElements){
                 final String applicationName = file.getName().replace(".wadl", "");
                 final String baseUri = resourceBase(applicationElement);
-                final RestApplicationDto restApplicationDto = new RestApplicationDto();
-                restApplicationDto.setName(applicationName);
-                applications.add(restApplicationDto);
+                final RestApplication restApplication = new RestApplication();
+                restApplication.setName(applicationName);
+                applications.add(restApplication);
 
                 final List<Element> resourceElements = getResources(applicationElement);
                 for(Element resourceElement : resourceElements){
                     final String resourceName = resourceElement.getAttribute("path");
-                    final RestResourceDto restResourceDto = new RestResourceDto();
-                    restResourceDto.setName(resourceName);
-                    restResourceDto.setUri(baseUri + resourceName);
-                    restApplicationDto.getResources().add(restResourceDto);
+                    final RestResource restResource = new RestResource();
+                    restResource.setName(resourceName);
+                    restResource.setUri(baseUri + resourceName);
+                    restApplication.getResources().add(restResource);
 
                     final List<Element> methodElements = getMethods(resourceElement);
                     for(Element methodElement : methodElements){
                         final String methodName = methodElement.getAttribute("id");
                         final String methodType = methodElement.getAttribute("name");
 
-                        final RestMethodDto restMethodDto = new RestMethodDto();
-                        restMethodDto.setName(methodName);
-                        restMethodDto.setHttpMethod(HttpMethod.valueOf(methodType));
-                        restMethodDto.setStatus(RestMethodStatus.MOCKED);
-                        restMethodDto.setResponseStrategy(RestResponseStrategy.RANDOM);
-                        restMethodDto.setMockResponses(new ArrayList<RestMockResponseDto>());
+                        final RestMethod restMethod = new RestMethod();
+                        restMethod.setName(methodName);
+                        restMethod.setHttpMethod(HttpMethod.valueOf(methodType));
+                        restMethod.setStatus(RestMethodStatus.MOCKED);
+                        restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
+                        restMethod.setMockResponses(new ArrayList<RestMockResponse>());
 
 
                         if(generateResponse){
-                            RestMockResponseDto restMockResponse = generateResponse();
-                            restMethodDto.getMockResponses().add(restMockResponse);
+                            RestMockResponse restMockResponse = generateResponse();
+                            restMethod.getMockResponses().add(restMockResponse);
                         }
 
-                        restResourceDto.getMethods().add(restMethodDto);
+                        restResource.getMethods().add(restMethod);
                     }
                 }
             }
@@ -117,22 +117,22 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
-     * a list of {@link RestApplicationDto}.
+     * a list of {@link RestApplication}.
      *
      * @param location         The location of the definition file
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
-     * @return A list of {@link RestApplicationDto} based on the provided file.
+     * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplicationDto> convert(final String location, boolean generateResponse) {
+    public List<RestApplication> convert(final String location, boolean generateResponse) {
 
-        final List<RestApplicationDto> restApplications = new ArrayList<>();
+        final List<RestApplication> restApplications = new ArrayList<>();
         List<File> files = null;
         try {
             files = fileManager.uploadFiles(location);
 
             for(File file : files){
-                List<RestApplicationDto> convertedRestApplications = convert(file, generateResponse);
+                List<RestApplication> convertedRestApplications = convert(file, generateResponse);
                 restApplications.addAll(convertedRestApplications);
             }
         } catch (IOException e) {

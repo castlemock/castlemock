@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.support;
 
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,17 +32,17 @@ public class CharsetUtilityTest {
 
     @Test
     public void testParseHttpHeaders(){
-        final List<HttpHeaderDto> httpHeaders = new ArrayList<>();
+        final List<HttpHeader> httpHeaders = new ArrayList<>();
 
-        HttpHeaderDto contentLength = new HttpHeaderDto();
+        HttpHeader contentLength = new HttpHeader();
         contentLength.setName("Content-Length");
         contentLength.setValue("100");
 
-        HttpHeaderDto contentEncoding = new HttpHeaderDto();
+        HttpHeader contentEncoding = new HttpHeader();
         contentEncoding.setName("Content-Encoding");
         contentEncoding.setValue("gzip");
 
-        HttpHeaderDto contentType = new HttpHeaderDto();
+        HttpHeader contentType = new HttpHeader();
         contentEncoding.setName("Content-Type");
         contentEncoding.setValue("text/xml;charset=iso-8859-1");
 
@@ -62,13 +62,13 @@ public class CharsetUtilityTest {
 
     @Test
     public void testParseHttpHeadersMissingHeader(){
-        final List<HttpHeaderDto> httpHeaders = new ArrayList<>();
+        final List<HttpHeader> httpHeaders = new ArrayList<>();
 
-        HttpHeaderDto contentLength = new HttpHeaderDto();
+        HttpHeader contentLength = new HttpHeader();
         contentLength.setName("Content-Length");
         contentLength.setValue("100");
 
-        HttpHeaderDto contentEncoding = new HttpHeaderDto();
+        HttpHeader contentEncoding = new HttpHeader();
         contentEncoding.setName("Content-Encoding");
         contentEncoding.setValue("gzip");
 

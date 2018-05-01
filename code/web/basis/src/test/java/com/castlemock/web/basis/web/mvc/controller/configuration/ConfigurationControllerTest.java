@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.mvc.controller.configuration;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
+import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
 import com.castlemock.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 import com.castlemock.web.basis.config.TestApplication;
@@ -66,8 +66,8 @@ public class ConfigurationControllerTest extends AbstractControllerTest {
 
     @Test
     public void testConfigurationValid() throws Exception {
-        final List<ConfigurationGroupDto> configurationGroups = new ArrayList<ConfigurationGroupDto>();
-        final ConfigurationGroupDto configurationGroupDto = ConfigurationGroupDtoGenerator.generateConfigurationGroupDto();
+        final List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
+        final ConfigurationGroup configurationGroupDto = ConfigurationGroupDtoGenerator.generateConfigurationGroupDto();
         configurationGroups.add(configurationGroupDto);
 
         final ReadAllConfigurationGroupsOutput readAllConfigurationGroupsOutput = new ReadAllConfigurationGroupsOutput();

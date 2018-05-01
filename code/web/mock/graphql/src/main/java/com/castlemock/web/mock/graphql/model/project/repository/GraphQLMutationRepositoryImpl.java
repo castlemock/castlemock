@@ -19,20 +19,18 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLMutation;
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLMutationDto;
-import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class GraphQLMutationRepositoryImpl extends RepositoryImpl<GraphQLMutation, GraphQLMutationDto, String> implements GraphQLMutationRepository {
+public class GraphQLMutationRepositoryImpl extends AbstractGraphQLOperationFileRepository<GraphQLMutationRepositoryImpl.GraphQLMutationFile, GraphQLMutation> implements GraphQLMutationRepository {
 
     @Autowired
     private MessageSource messageSource;
@@ -77,7 +75,7 @@ public class GraphQLMutationRepositoryImpl extends RepositoryImpl<GraphQLMutatio
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLMutation type) {
+    protected void checkType(GraphQLMutationFile type) {
 
     }
 
@@ -93,12 +91,12 @@ public class GraphQLMutationRepositoryImpl extends RepositoryImpl<GraphQLMutatio
     }
 
     @Override
-    public List<GraphQLMutationDto> findWithApplicationId(final String projectId) {
-        final List<GraphQLMutationDto> mutations = new ArrayList<>();
-        for(GraphQLMutation mutation : this.collection.values()){
+    public List<GraphQLMutation> findWithApplicationId(final String projectId) {
+        final List<GraphQLMutation> mutations = new ArrayList<>();
+        for(GraphQLMutationFile mutation : this.collection.values()){
             if(mutation.getApplicationId().equals(projectId)){
-                GraphQLMutationDto applicationDto = this.mapper.map(mutation, GraphQLMutationDto.class);
-                mutations.add(applicationDto);
+                GraphQLMutation application = this.mapper.map(mutation, GraphQLMutation.class);
+                mutations.add(application);
             }
         }
         return mutations;
@@ -106,12 +104,23 @@ public class GraphQLMutationRepositoryImpl extends RepositoryImpl<GraphQLMutatio
 
     @Override
     public void deleteWithApplicationId(final String applicationId) {
-        Iterator<GraphQLMutation> iterator = this.collection.values().iterator();
+        Iterator<GraphQLMutationFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            GraphQLMutation mutation = iterator.next();
+            GraphQLMutationFile mutation = iterator.next();
             if(mutation.getApplicationId().equals(applicationId)){
                 delete(mutation.getId());
             }
         }
     }
+
+    /**
+     * @author Karl Dahlgren
+     * @since 1.19
+     */
+    @XmlRootElement(name = "graphQLMutation")
+    protected static class GraphQLMutationFile extends AbstractGraphQLOperationFileRepository.GraphQLOperationFile {
+
+
+    }
+
 }

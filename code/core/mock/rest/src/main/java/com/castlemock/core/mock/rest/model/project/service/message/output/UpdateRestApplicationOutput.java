@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 public class UpdateRestApplicationOutput implements Output {
 
     @NotNull
-    private RestApplicationDto updatedRestApplication;
+    private RestApplication updatedRestApplication;
 
-    public UpdateRestApplicationOutput(RestApplicationDto updatedRestApplication) {
+    public UpdateRestApplicationOutput(RestApplication updatedRestApplication) {
         this.updatedRestApplication = updatedRestApplication;
     }
 
-    public RestApplicationDto getUpdatedRestApplication() {
+    public RestApplication getUpdatedRestApplication() {
         return updatedRestApplication;
     }
 
-    public void setUpdatedRestApplication(RestApplicationDto updatedRestApplication) {
+    public void setUpdatedRestApplication(RestApplication updatedRestApplication) {
         this.updatedRestApplication = updatedRestApplication;
     }
 }

@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestMockResponseOutput;
 
@@ -42,8 +42,8 @@ public class UpdateRestMockResponseService extends AbstractRestProjectService im
     @Override
     public ServiceResult<UpdateRestMockResponseOutput> process(final ServiceTask<UpdateRestMockResponseInput> serviceTask) {
         final UpdateRestMockResponseInput input = serviceTask.getInput();
-        final RestMockResponseDto existing = this.mockResponseRepository.findOne(input.getRestMockResponseId());
-        final RestMockResponseDto updatedRestMockResponse = input.getRestMockResponse();
+        final RestMockResponse existing = this.mockResponseRepository.findOne(input.getRestMockResponseId());
+        final RestMockResponse updatedRestMockResponse = input.getRestMockResponse();
 
         existing.setName(updatedRestMockResponse.getName());
         existing.setBody(updatedRestMockResponse.getBody());

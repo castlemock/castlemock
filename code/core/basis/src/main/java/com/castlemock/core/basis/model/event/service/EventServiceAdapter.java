@@ -18,7 +18,6 @@ package com.castlemock.core.basis.model.event.service;
 
 import com.castlemock.core.basis.model.ServiceAdapter;
 import com.castlemock.core.basis.model.event.domain.Event;
-import com.castlemock.core.basis.model.event.dto.EventDto;
 
 /**
  * The event service adapter provides the functionality to translate incoming
@@ -27,9 +26,9 @@ import com.castlemock.core.basis.model.event.dto.EventDto;
  * @since 1.0
  * @param <D> The dto event type
  * @see Event
- * @see EventDto
+ * @see Event
  */
-public interface EventServiceAdapter<D extends EventDto> extends ServiceAdapter<EventDto, D, String> {
+public interface EventServiceAdapter<D extends Event> extends ServiceAdapter<Event, D, String> {
 
     /**
      * The method provides the functionality to generate resource link for an incoming

@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 
 /**
  * @author Karl Dahlgren
@@ -31,9 +31,9 @@ public class UpdateRestApplicationInput implements Input {
     @NotNull
     private String restApplicationId;
     @NotNull
-    private RestApplicationDto restApplication;
+    private RestApplication restApplication;
 
-    public UpdateRestApplicationInput(String restProjectId, String restApplicationId, RestApplicationDto restApplication) {
+    public UpdateRestApplicationInput(String restProjectId, String restApplicationId, RestApplication restApplication) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restApplication = restApplication;
@@ -55,11 +55,11 @@ public class UpdateRestApplicationInput implements Input {
         this.restApplicationId = restApplicationId;
     }
 
-    public RestApplicationDto getRestApplication() {
+    public RestApplication getRestApplication() {
         return restApplication;
     }
 
-    public void setRestApplication(RestApplicationDto restApplication) {
+    public void setRestApplication(RestApplication restApplication) {
         this.restApplication = restApplication;
     }
 }

@@ -19,9 +19,9 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsForwardedEndpointInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestApplicationsForwardedEndpointOutput;
 
@@ -45,11 +45,11 @@ public class UpdateRestApplicationsForwardedEndpointService extends AbstractRest
     @Override
     public ServiceResult<UpdateRestApplicationsForwardedEndpointOutput> process(final ServiceTask<UpdateRestApplicationsForwardedEndpointInput> serviceTask) {
         final UpdateRestApplicationsForwardedEndpointInput input = serviceTask.getInput();
-        for(RestApplicationDto restApplicationDto : input.getRestApplications()){
-            List<RestResourceDto> resources = this.resourceRepository.findWithApplicationId(restApplicationDto.getId());
-            for(RestResourceDto restResource : resources){
-                List<RestMethodDto> methods = this.methodRepository.findWithResourceId(restResource.getId());
-                for(RestMethodDto restMethod : methods){
+        for(RestApplication restApplication : input.getRestApplications()){
+            List<RestResource> resources = this.resourceRepository.findWithApplicationId(restApplication.getId());
+            for(RestResource restResource : resources){
+                List<RestMethod> methods = this.methodRepository.findWithResourceId(restResource.getId());
+                for(RestMethod restMethod : methods){
                     restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
                     this.methodRepository.update(restMethod.getId(), restMethod);
                 }

@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 
 import java.util.List;
 
@@ -29,13 +29,13 @@ import java.util.List;
 public class ReadAllRestProjectsOutput implements Output {
 
     @NotNull
-    private List<RestProjectDto> restProjects;
+    private List<RestProject> restProjects;
 
-    public List<RestProjectDto> getRestProjects() {
+    public List<RestProject> getRestProjects() {
         return restProjects;
     }
 
-    public void setRestProjects(List<RestProjectDto> restProjects) {
+    public void setRestProjects(List<RestProject> restProjects) {
         this.restProjects = restProjects;
     }
 }

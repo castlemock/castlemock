@@ -17,13 +17,13 @@
 package com.castlemock.web.mock.rest.web.mvc.controller.project;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
-import com.castlemock.web.mock.rest.model.project.RestProjectDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.web.mock.rest.web.mvc.command.project.RestDefinitionFileUploadForm;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestControllerTest;
 import org.junit.Test;
@@ -84,9 +84,9 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
 
     @Test
     public void testImportWADLGet() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
-        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT).param(TYPE_PARAMETER, WADL);
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProject));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + IMPORT).param(TYPE_PARAMETER, WADL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(4 + GLOBAL_VIEW_MODEL_COUNT))
@@ -94,14 +94,14 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(DEFINITION_TYPE, WADL))
                 .andExpect(MockMvcResultMatchers.model().attribute(DEFINITION_DISPLAY_NAME, WADL))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProjectDto.getId()));
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProject.getId()));
     }
 
     @Test
     public void testImportSwaggerGet() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
-        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT).param(TYPE_PARAMETER, SWAGGER);
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProject));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + IMPORT).param(TYPE_PARAMETER, SWAGGER);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(4 + GLOBAL_VIEW_MODEL_COUNT))
@@ -109,14 +109,14 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(DEFINITION_TYPE, SWAGGER))
                 .andExpect(MockMvcResultMatchers.model().attribute(DEFINITION_DISPLAY_NAME, "Swagger"))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProjectDto.getId()));
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProject.getId()));
     }
 
     @Test
     public void testImportRAMLGet() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
-        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT).param(TYPE_PARAMETER, RAML);
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProject));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + IMPORT).param(TYPE_PARAMETER, RAML);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(4 + GLOBAL_VIEW_MODEL_COUNT))
@@ -124,20 +124,20 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(DEFINITION_TYPE, RAML))
                 .andExpect(MockMvcResultMatchers.model().attribute(DEFINITION_DISPLAY_NAME, RAML))
-                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProjectDto.getId()));
+                .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProject.getId()));
     }
 
     @Test
     public void testImportPostFile() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
         final List<File> files = new ArrayList<File>();
         final RestDefinitionFileUploadForm uploadForm = new RestDefinitionFileUploadForm();
         final List<MultipartFile> uploadedFiles = new ArrayList<>();
         uploadForm.setFiles(uploadedFiles);
 
-        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
+        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProject));
         when(fileManager.uploadFiles(anyListOf(MultipartFile.class))).thenReturn(files);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT).param(TYPE_PARAMETER, FILE).requestAttr("uploadForm", uploadForm);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + IMPORT).param(TYPE_PARAMETER, FILE).requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
@@ -146,15 +146,15 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
 
     @Test
     public void testImportPostLink() throws Exception {
-        final RestProjectDto restProjectDto = RestProjectDtoGenerator.generateRestProjectDto();
+        final RestProject restProject = RestProjectGenerator.generateRestProject();
         final List<File> files = new ArrayList<File>();
         final RestDefinitionFileUploadForm uploadForm = new RestDefinitionFileUploadForm();
         final List<MultipartFile> uploadedFiles = new ArrayList<>();
         uploadForm.setFiles(uploadedFiles);
 
-        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProjectDto));
+        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProject));
         when(fileManager.uploadFiles(anyString())).thenReturn(files);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProjectDto.getId() + SLASH + IMPORT).param(TYPE_PARAMETER, LING).requestAttr("uploadForm", uploadForm);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + restProject.getId() + SLASH + IMPORT).param(TYPE_PARAMETER, LING).requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

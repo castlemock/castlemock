@@ -19,7 +19,7 @@ package com.castlemock.web.basis.model.project.service;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.TypeIdentifier;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.model.project.service.ProjectServiceAdapter;
 import org.junit.Assert;
 import org.junit.Before;
@@ -119,10 +119,10 @@ public class ProjectServiceFacadeImplTest {
 
     @Test
     public void testSave(){
-        final ProjectDto projectDto = new ProjectDto();
-        Mockito.when(projectServiceAdapter.convertType(Mockito.any(ProjectDto.class))).thenReturn(projectDto);
+        final Project projectDto = new Project();
+        Mockito.when(projectServiceAdapter.convertType(Mockito.any(Project.class))).thenReturn(projectDto);
         serviceFacade.save(TYPE, projectDto);
-        Mockito.verify(projectServiceAdapter, Mockito.times(1)).create(Mockito.any(ProjectDto.class));
+        Mockito.verify(projectServiceAdapter, Mockito.times(1)).create(Mockito.any(Project.class));
     }
 
     @Test
@@ -133,32 +133,32 @@ public class ProjectServiceFacadeImplTest {
 
     @Test
     public void testUpdate(){
-        final ProjectDto projectDto = new ProjectDto();
-        Mockito.when(projectServiceAdapter.convertType(Mockito.any(ProjectDto.class))).thenReturn(projectDto);
+        final Project projectDto = new Project();
+        Mockito.when(projectServiceAdapter.convertType(Mockito.any(Project.class))).thenReturn(projectDto);
         serviceFacade.update(TYPE_URL, "Id", projectDto);
-        Mockito.verify(projectServiceAdapter, Mockito.times(1)).update(Mockito.anyString(), Mockito.any(ProjectDto.class));
+        Mockito.verify(projectServiceAdapter, Mockito.times(1)).update(Mockito.anyString(), Mockito.any(Project.class));
     }
 
     @Test
     public void testFindAll(){
-        final ProjectDto projectDto = new ProjectDto();
-        final List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
+        final Project projectDto = new Project();
+        final List<Project> projectDtos = new ArrayList<Project>();
         projectDtos.add(projectDto);
         Mockito.when(projectServiceAdapter.readAll()).thenReturn(projectDtos);
 
-        final List<ProjectDto> returnedProjectDtos = serviceFacade.findAll();
+        final List<Project> returnedProjectDtos = serviceFacade.findAll();
         Assert.assertEquals(1, returnedProjectDtos.size());
 
-        for(ProjectDto returnedProjectDto : returnedProjectDtos){
+        for(Project returnedProjectDto : returnedProjectDtos){
             Assert.assertEquals(TYPE, returnedProjectDto.getTypeIdentifier().getType());
         }
     }
 
     @Test
     public void testFindOne(){
-        final ProjectDto projectDto = new ProjectDto();
+        final Project projectDto = new Project();
         Mockito.when(projectServiceAdapter.read(Mockito.anyString())).thenReturn(projectDto);
-        final ProjectDto returnedProjectDto = serviceFacade.findOne(TYPE_URL, "Id");
+        final Project returnedProjectDto = serviceFacade.findOne(TYPE_URL, "Id");
         Assert.assertEquals(projectDto, returnedProjectDto);
         Assert.assertEquals(TYPE, projectDto.getTypeIdentifier().getType());
     }

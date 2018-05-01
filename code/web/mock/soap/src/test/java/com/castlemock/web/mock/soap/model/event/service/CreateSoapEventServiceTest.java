@@ -19,10 +19,10 @@ package com.castlemock.web.mock.soap.model.event.service;
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.service.message.input.CreateSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.CreateSoapEventOutput;
-import com.castlemock.web.mock.soap.model.event.SoapEventDtoGenerator;
+import com.castlemock.web.mock.soap.model.event.SoapEventGenerator;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,20 +53,20 @@ public class CreateSoapEventServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapEventDto();
-        Mockito.when(repository.save(Mockito.any(SoapEventDto.class))).thenReturn(soapEventDto);
+        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        Mockito.when(repository.save(Mockito.any(SoapEvent.class))).thenReturn(soapEvent);
 
-        final CreateSoapEventInput input = new CreateSoapEventInput(soapEventDto);
-        input.setSoapEvent(soapEventDto);
+        final CreateSoapEventInput input = new CreateSoapEventInput(soapEvent);
+        input.setSoapEvent(soapEvent);
 
         final ServiceTask<CreateSoapEventInput> serviceTask = new ServiceTask<CreateSoapEventInput>(input);
         final ServiceResult<CreateSoapEventOutput> serviceResult = service.process(serviceTask);
         final CreateSoapEventOutput createRestApplicationOutput = serviceResult.getOutput();
-        final SoapEventDto returnedSoapEventDto = createRestApplicationOutput.getCreatedSoapEvent();
+        final SoapEvent returnedSoapEvent = createRestApplicationOutput.getCreatedSoapEvent();
 
-        Assert.assertEquals(soapEventDto.getOperationId(), returnedSoapEventDto.getOperationId());
-        Assert.assertEquals(soapEventDto.getPortId(), returnedSoapEventDto.getPortId());
-        Assert.assertEquals(soapEventDto.getProjectId(), returnedSoapEventDto.getProjectId());
+        Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
+        Assert.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());
+        Assert.assertEquals(soapEvent.getProjectId(), returnedSoapEvent.getProjectId());
     }
 
 }

@@ -16,27 +16,32 @@
 
 package com.castlemock.core.basis.model.configuration.domain;
 
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.castlemock.core.basis.model.configuration.domain.Configuration;
+import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
+import org.dozer.Mapping;
 
 /**
- * The configuration class contains a specific configuration. A key is used to retrieve the actual configured value.
+ * The configuration DTO is a DTO (Data transfer object) class for the configuration class. The configuration class
+ * represent an individual configuration and contains both the identifier (key) and the value
  * @author Karl Dahlgren
  * @since 1.0
+ * @see Configuration
  */
-@XmlRootElement
 public class Configuration {
 
+    @Mapping("key")
     private String key;
+
+    @Mapping("value")
     private String value;
+
+    @Mapping("type")
     private ConfigurationType type;
 
     /**
      * Returns the identifier for the configuration
      * @return The configuration key
      */
-    @XmlElement
     public String getKey() {
         return key;
     }
@@ -45,7 +50,7 @@ public class Configuration {
      * Sets the configuration key
      * @param key The new configuration key
      */
-    public void setKey(String key) {
+    public void setKey(final String key) {
         this.key = key;
     }
 
@@ -53,7 +58,6 @@ public class Configuration {
      * Returns the value for the configuration
      * @return Configuration value
      */
-    @XmlElement
     public String getValue() {
         return value;
     }
@@ -62,7 +66,7 @@ public class Configuration {
      * Sets the configuration value
      * @param value The new configuration value
      */
-    public void setValue(String value) {
+    public void setValue(final String value) {
         this.value = value;
     }
 
@@ -70,7 +74,6 @@ public class Configuration {
      * Returns the configuration type
      * @return The configuration type
      */
-    @XmlElement
     public ConfigurationType getType() {
         return type;
     }
@@ -82,7 +85,4 @@ public class Configuration {
     public void setType(ConfigurationType type) {
         this.type = type;
     }
-
 }
-
-

@@ -17,12 +17,12 @@
 package com.castlemock.web.mock.soap.web.mvc.controller.event;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.web.mock.soap.model.event.SoapEventDtoGenerator;
+import com.castlemock.web.mock.soap.model.event.SoapEventGenerator;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,15 +62,15 @@ public class SoapEventControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testGetServiceValid() throws Exception {
-        final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapEventDto();
-        when(serviceProcessor.process(any(ReadSoapEventInput.class))).thenReturn(new ReadSoapEventOutput(soapEventDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + EVENT + SLASH + soapEventDto.getId());
+        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        when(serviceProcessor.process(any(ReadSoapEventInput.class))).thenReturn(new ReadSoapEventOutput(soapEvent));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + EVENT + SLASH + soapEvent.getId());
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(1 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(EVENT, soapEventDto));
+                .andExpect(MockMvcResultMatchers.model().attribute(EVENT, soapEvent));
 
     }
 

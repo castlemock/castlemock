@@ -18,7 +18,7 @@ package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 public class CreateRestResourceOutput implements Output {
 
     @NotNull
-    private RestResourceDto createdRestResource;
+    private RestResource createdRestResource;
 
-    public CreateRestResourceOutput(RestResourceDto createdRestResource) {
+    public CreateRestResourceOutput(RestResource createdRestResource) {
         this.createdRestResource = createdRestResource;
     }
 
-    public RestResourceDto getCreatedRestResource() {
+    public RestResource getCreatedRestResource() {
         return createdRestResource;
     }
 
-    public void setCreatedRestResource(RestResourceDto createdRestResource) {
+    public void setCreatedRestResource(RestResource createdRestResource) {
         this.createdRestResource = createdRestResource;
     }
 }

@@ -18,16 +18,16 @@ package com.castlemock.web.mock.soap.web.mvc.controller.project;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsStatusInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.mvc.command.port.SoapPortModifierCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;
@@ -78,31 +78,31 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void getProject() throws Exception {
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
-        soapPortDtos.add(soapPortDto);
-        soapProjectDto.setPorts(soapPortDtos);
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH);
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
+        soapPorts.add(soapPort);
+        soapProject.setPorts(soapPorts);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProject));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(3 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT, soapProjectDto));
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT, soapProject));
 
     }
 
     @Test
     public void getProjectUploadError() throws Exception {
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
-        soapPortDtos.add(soapPortDto);
-        soapProjectDto.setPorts(soapPortDtos);
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH)
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
+        soapPorts.add(soapPort);
+        soapProject.setPorts(soapPorts);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProject));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH)
                 .param("upload", "error");
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -110,19 +110,19 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute("upload", "error"))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT, soapProjectDto));
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT, soapProject));
 
     }
 
     @Test
     public void getProjectUploadSuccess() throws Exception {
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final List<SoapPortDto> soapPortDtos = new ArrayList<SoapPortDto>();
-        soapPortDtos.add(soapPortDto);
-        soapProjectDto.setPorts(soapPortDtos);
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProjectDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH)
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
+        soapPorts.add(soapPort);
+        soapProject.setPorts(soapPorts);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProject));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH)
                 .param("upload", "success");
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -130,7 +130,7 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute("upload", "success"))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT, soapProjectDto));
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT, soapProject));
 
     }
 
@@ -161,13 +161,13 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
         final String projectId = "projectId";
         final String[] soapPortIds = {"soapPort1", "soapPort2"};
 
-        final SoapPortDto soapPort1 = new SoapPortDto();
+        final SoapPort soapPort1 = new SoapPort();
         soapPort1.setName("soapPort1");
 
-        final SoapPortDto soapPort2 = new SoapPortDto();
+        final SoapPort soapPort2 = new SoapPort();
         soapPort1.setName("soapPort2");
 
-        final List<SoapPortDto> soapPorts = Arrays.asList(soapPort1, soapPort2);
+        final List<SoapPort> soapPorts = Arrays.asList(soapPort1, soapPort2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapPortInput.class)))
                 .thenReturn(new ReadSoapPortOutput(soapPort1))
@@ -200,13 +200,13 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
         final String projectId = "projectId";
         final String[] soapPortIds = {"soapPort1", "soapPort2"};
 
-        final SoapPortDto soapPort1 = new SoapPortDto();
+        final SoapPort soapPort1 = new SoapPort();
         soapPort1.setName("soapPort1");
 
-        final SoapPortDto soapPort2 = new SoapPortDto();
+        final SoapPort soapPort2 = new SoapPort();
         soapPort1.setName("soapPort2");
 
-        final List<SoapPortDto> soapPorts = Arrays.asList(soapPort1, soapPort2);
+        final List<SoapPort> soapPorts = Arrays.asList(soapPort1, soapPort2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapPortInput.class)))
                 .thenReturn(new ReadSoapPortOutput(soapPort1))

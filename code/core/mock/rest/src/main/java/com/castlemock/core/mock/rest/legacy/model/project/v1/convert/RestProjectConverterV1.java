@@ -18,9 +18,8 @@ package com.castlemock.core.mock.rest.legacy.model.project.v1.convert;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
 import com.castlemock.core.mock.rest.legacy.model.project.v1.domain.*;
-import com.castlemock.core.mock.rest.model.project.dto.*;
+import com.castlemock.core.mock.rest.model.project.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +27,8 @@ import java.util.List;
 public class RestProjectConverterV1 {
 
 
-    public static RestProjectDto convert(RestProjectV1 projectV1){
-        RestProjectDto project = new RestProjectDto();
+    public static RestProject convert(RestProjectV1 projectV1){
+        RestProject project = new RestProject();
         project.setCreated(projectV1.getCreated());
         project.setUpdated(projectV1.getUpdated());
         project.setDescription(projectV1.getDescription());
@@ -37,14 +36,14 @@ public class RestProjectConverterV1 {
         project.setName(projectV1.getName());
 
         for(RestApplicationV1 applicationV1 : projectV1.getApplications()){
-            RestApplicationDto application = new RestApplicationDto();
+            RestApplication application = new RestApplication();
             application.setId(applicationV1.getId());
             application.setName(applicationV1.getName());
             application.setProjectId(project.getId());
             project.getApplications().add(application);
 
             for(RestResourceV1 restResourceV1 : applicationV1.getResources()){
-                RestResourceDto resource = new RestResourceDto();
+                RestResource resource = new RestResource();
                 resource.setUri(restResourceV1.getUri());
                 resource.setName(restResourceV1.getName());
                 resource.setId(restResourceV1.getId());
@@ -52,7 +51,7 @@ public class RestProjectConverterV1 {
                 application.getResources().add(resource);
 
                 for(RestMethodV1 methodV1 : restResourceV1.getMethods()){
-                    RestMethodDto restMethod = new RestMethodDto();
+                    RestMethod restMethod = new RestMethod();
                     restMethod.setStatus(methodV1.getStatus());
                     restMethod.setSimulateNetworkDelay(methodV1.getSimulateNetworkDelay());
                     restMethod.setNetworkDelay(methodV1.getNetworkDelay());
@@ -67,7 +66,7 @@ public class RestProjectConverterV1 {
                     resource.getMethods().add(restMethod);
 
                     for(RestMockResponseV1 mockResponseV1 : methodV1.getMockResponses()){
-                        RestMockResponseDto mockResponse = new RestMockResponseDto();
+                        RestMockResponse mockResponse = new RestMockResponse();
                         mockResponse.setId(mockResponseV1.getId());
                         mockResponse.setName(mockResponseV1.getName());
                         mockResponse.setBody(mockResponseV1.getBody());
@@ -75,10 +74,10 @@ public class RestProjectConverterV1 {
                         mockResponse.setHttpStatusCode(mockResponseV1.getHttpStatusCode());
                         mockResponse.setUsingExpressions(mockResponseV1.isUsingExpressions());
 
-                        List<HttpHeaderDto> httpHeaders = new ArrayList<>();
+                        List<HttpHeader> httpHeaders = new ArrayList<>();
                         if(mockResponseV1.getHttpHeaders() != null){
                             for(HttpHeader httpHeader : mockResponseV1.getHttpHeaders()){
-                                HttpHeaderDto httpHeaderDto = new HttpHeaderDto();
+                                HttpHeader httpHeaderDto = new HttpHeader();
                                 httpHeaderDto.setName(httpHeader.getName());
                                 httpHeaderDto.setValue(httpHeader.getValue());
                                 httpHeaders.add(httpHeaderDto);

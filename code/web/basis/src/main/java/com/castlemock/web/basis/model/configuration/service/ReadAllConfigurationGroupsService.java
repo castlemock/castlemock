@@ -19,7 +19,7 @@ package com.castlemock.web.basis.model.configuration.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
+import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
 import com.castlemock.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 
@@ -42,7 +42,7 @@ public class ReadAllConfigurationGroupsService extends AbstractConfigurationGrou
      */
     @Override
     public ServiceResult<ReadAllConfigurationGroupsOutput> process(final ServiceTask<ReadAllConfigurationGroupsInput> serviceTask) {
-        final List<ConfigurationGroupDto> configurationGroups = findAll();
+        final List<ConfigurationGroup> configurationGroups = findAll();
         final ReadAllConfigurationGroupsOutput output = new ReadAllConfigurationGroupsOutput();
         output.setConfigurationGroups(configurationGroups);
         return createServiceResult(output);

@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.mvc.command.operation;
 
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 
 import java.util.List;
 
@@ -28,14 +28,14 @@ import java.util.List;
  */
 public class UpdateSoapOperationsEndpointCommand {
 
-    private List<SoapOperationDto> soapOperations;
+    private List<SoapOperation> soapOperations;
     private String forwardedEndpoint;
 
-    public List<SoapOperationDto> getSoapOperations() {
+    public List<SoapOperation> getSoapOperations() {
         return soapOperations;
     }
 
-    public void setSoapOperations(List<SoapOperationDto> soapOperations) {
+    public void setSoapOperations(List<SoapOperation> soapOperations) {
         this.soapOperations = soapOperations;
     }
 

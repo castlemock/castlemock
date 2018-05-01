@@ -16,21 +16,25 @@
 
 package com.castlemock.web.mock.rest.model.project.repository;
 
+import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class RestMethodRepositoryImpl extends RepositoryImpl<RestMethod, RestMethodDto, String> implements RestMethodRepository {
+public class RestMethodRepositoryImpl extends RepositoryImpl<RestMethodRepositoryImpl.RestMethodFile, RestMethod, String> implements RestMethodRepository {
 
     @Value(value = "${rest.method.file.directory}")
     private String fileDirectory;
@@ -73,7 +77,7 @@ public class RestMethodRepositoryImpl extends RepositoryImpl<RestMethod, RestMet
      * @see #save
      */
     @Override
-    protected void checkType(RestMethod type) {
+    protected void checkType(RestMethodFile type) {
 
     }
 
@@ -99,7 +103,7 @@ public class RestMethodRepositoryImpl extends RepositoryImpl<RestMethod, RestMet
     @Override
     public void setCurrentResponseSequenceIndex(final String restMethodId,
                                                 final Integer index) {
-        RestMethod restMethod = this.collection.get(restMethodId);
+        RestMethodFile restMethod = this.collection.get(restMethodId);
         restMethod.setCurrentResponseSequenceIndex(index);
     }
 
@@ -111,9 +115,9 @@ public class RestMethodRepositoryImpl extends RepositoryImpl<RestMethod, RestMet
      */
     @Override
     public void deleteWithResourceId(String resourceId) {
-        Iterator<RestMethod> iterator = this.collection.values().iterator();
+        Iterator<RestMethodFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            RestMethod method = iterator.next();
+            RestMethodFile method = iterator.next();
             if(method.getResourceId().equals(resourceId)){
                 delete(method.getId());
             }
@@ -121,21 +125,138 @@ public class RestMethodRepositoryImpl extends RepositoryImpl<RestMethod, RestMet
     }
 
     /**
-     * Find all {@link RestMethodDto} that matches the provided
+     * Find all {@link RestMethod} that matches the provided
      * <code>resourceId</code>.
      *
      * @param resourceId The id of the resource.
-     * @return A list of {@link RestMethodDto}.
+     * @return A list of {@link RestMethod}.
      */
     @Override
-    public List<RestMethodDto> findWithResourceId(String resourceId) {
-        final List<RestMethodDto> applications = new ArrayList<>();
-        for(RestMethod method : this.collection.values()){
-            if(method.getResourceId().equals(resourceId)){
-                RestMethodDto methodDto = this.mapper.map(method, RestMethodDto.class);
-                applications.add(methodDto);
+    public List<RestMethod> findWithResourceId(String resourceId) {
+        final List<RestMethod> applications = new ArrayList<>();
+        for(RestMethodFile methodFile : this.collection.values()){
+            if(methodFile.getResourceId().equals(resourceId)){
+                RestMethod method = this.mapper.map(methodFile, RestMethod.class);
+                applications.add(method);
             }
         }
         return applications;
+    }
+
+    @XmlRootElement(name = "restMethod")
+    protected static class RestMethodFile implements Saveable<String> {
+
+        private String id;
+        private String name;
+        private String resourceId;
+        private String defaultBody;
+        private HttpMethod httpMethod;
+        private String forwardedEndpoint;
+        private RestMethodStatus status;
+        private RestResponseStrategy responseStrategy;
+        private Integer currentResponseSequenceIndex;
+        private boolean simulateNetworkDelay;
+        private long networkDelay;
+
+        @Override
+        @XmlElement
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getResourceId() {
+            return resourceId;
+        }
+
+        public void setResourceId(String resourceId) {
+            this.resourceId = resourceId;
+        }
+
+        @XmlElement
+        public String getDefaultBody() {
+            return defaultBody;
+        }
+
+        public void setDefaultBody(String defaultBody) {
+            this.defaultBody = defaultBody;
+        }
+
+        @XmlElement
+        public HttpMethod getHttpMethod() {
+            return httpMethod;
+        }
+
+        public void setHttpMethod(HttpMethod httpMethod) {
+            this.httpMethod = httpMethod;
+        }
+
+        @XmlElement
+        public String getForwardedEndpoint() {
+            return forwardedEndpoint;
+        }
+
+        public void setForwardedEndpoint(String forwardedEndpoint) {
+            this.forwardedEndpoint = forwardedEndpoint;
+        }
+
+        @XmlElement
+        public RestMethodStatus getStatus() {
+            return status;
+        }
+
+        public void setStatus(RestMethodStatus status) {
+            this.status = status;
+        }
+
+        @XmlElement
+        public RestResponseStrategy getResponseStrategy() {
+            return responseStrategy;
+        }
+
+        public void setResponseStrategy(RestResponseStrategy responseStrategy) {
+            this.responseStrategy = responseStrategy;
+        }
+
+        @XmlElement
+        public Integer getCurrentResponseSequenceIndex() {
+            return currentResponseSequenceIndex;
+        }
+
+        public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
+            this.currentResponseSequenceIndex = currentResponseSequenceIndex;
+        }
+
+        @XmlElement
+        public boolean getSimulateNetworkDelay() {
+            return simulateNetworkDelay;
+        }
+
+        public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
+            this.simulateNetworkDelay = simulateNetworkDelay;
+        }
+
+        @XmlElement
+        public long getNetworkDelay() {
+            return networkDelay;
+        }
+
+        public void setNetworkDelay(long networkDelay) {
+            this.networkDelay = networkDelay;
+        }
     }
 }

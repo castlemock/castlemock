@@ -19,11 +19,9 @@ package com.castlemock.web.mock.soap.model.project.repository;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
-import com.castlemock.core.basis.model.http.domain.ContentEncoding;
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.*;
-import com.castlemock.core.mock.soap.model.project.dto.*;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.model.project.repository.AbstractProjectFileRepository;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
@@ -33,9 +31,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -45,10 +42,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.0
  * @see SoapProjectRepository
  * @see RepositoryImpl
- * @see SoapProject
  */
 @Repository
-public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapProjectDto, String> implements SoapProjectRepository {
+public class SoapProjectRepositoryImpl extends AbstractProjectFileRepository<SoapProjectRepositoryImpl.SoapProjectFile, SoapProject> implements SoapProjectRepository {
 
     private static final String SLASH = "/";
     private static final String SOAP = "soap";
@@ -100,15 +96,14 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
      * Finds a project by a given name
      * @param name The name of the project that should be retrieved
      * @return Returns a project with the provided name
-     * @see SoapProject
      */
     @Override
-    public SoapProjectDto findSoapProjectWithName(final String name) {
+    public SoapProject findSoapProjectWithName(final String name) {
         Preconditions.checkNotNull(name, "Project name cannot be null");
         Preconditions.checkArgument(!name.isEmpty(), "Project name cannot be empty");
-        for(SoapProject soapProject : collection.values()){
+        for(SoapProjectFile soapProject : collection.values()){
             if(soapProject.getName().equalsIgnoreCase(name)) {
-                return mapper.map(soapProject, SoapProjectDto.class);
+                return mapper.map(soapProject, SoapProject.class);
             }
         }
         return null;
@@ -123,10 +118,9 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
      * @param soapProject The instance of the type that will be checked and controlled before it is allowed to be saved on
      *             the file system.
      * @see #save
-     * @see SoapProject
      */
     @Override
-    protected void checkType(SoapProject soapProject) {
+    protected void checkType(SoapProjectFile soapProject) {
 
     }
 
@@ -135,9 +129,9 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
      * @param soapProjectId The instance that matches the provided id will be deleted in the database
      */
     @Override
-    public SoapProjectDto delete(final String soapProjectId) {
+    public SoapProject delete(final String soapProjectId) {
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
-        final SoapProject soapProject = collection.get(soapProjectId);
+        final SoapProjectFile soapProject = collection.get(soapProjectId);
 
         if(soapProject == null){
             throw new IllegalArgumentException("Unable to find a SOAP project with id " + soapProjectId);
@@ -154,7 +148,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
     @Override
     public List<SearchResult> search(final SearchQuery query) {
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        for(SoapProject soapProject : collection.values()){
+        for(SoapProjectFile soapProject : collection.values()){
             List<SearchResult> soapProjectSearchResult = searchSoapProject(soapProject, query);
             searchResults.addAll(soapProjectSearchResult);
         }
@@ -168,7 +162,7 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
      * @param query The provided search query
      * @return A list of search results that matches the provided query
      */
-    private List<SearchResult> searchSoapProject(final SoapProject soapProject, final SearchQuery query){
+    private List<SearchResult> searchSoapProject(final SoapProjectFile soapProject, final SearchQuery query){
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
         if(SearchValidator.validate(soapProject.getName(), query.getQuery())){
             final String projectType = messageSource.getMessage("general.type.project", null , LocaleContextHolder.getLocale());
@@ -182,5 +176,9 @@ public class SoapProjectRepositoryImpl extends RepositoryImpl<SoapProject, SoapP
         return searchResults;
     }
 
+    @XmlRootElement(name = "soapProject")
+    protected static class SoapProjectFile extends AbstractProjectFileRepository.ProjectFile {
+
+    }
 
 }

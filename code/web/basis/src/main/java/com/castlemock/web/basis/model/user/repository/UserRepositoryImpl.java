@@ -16,20 +16,24 @@
 
 package com.castlemock.web.basis.model.user.repository;
 
+import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.dto.UserDto;
 import com.castlemock.core.basis.model.user.repository.UserRepository;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -41,11 +45,11 @@ import java.util.List;
  * @since 1.0
  * @see UserRepository
  * @see RepositoryImpl
+ * @see UserFile
  * @see User
- * @see UserDto
  */
 @Repository
-public class UserRepositoryImpl extends RepositoryImpl<User, UserDto, String> implements UserRepository {
+public class UserRepositoryImpl extends RepositoryImpl<UserRepositoryImpl.UserFile, User, String> implements UserRepository {
 
     @Value(value = "${user.file.directory}")
     private String userFileDirectory;
@@ -58,12 +62,12 @@ public class UserRepositoryImpl extends RepositoryImpl<User, UserDto, String> im
      * and saving it to the file system in case of no user is registered on application startup. This is
      * a typical scenario for when users are using Castle Mock for the first time after the installation.
      * @see #initialize
-     * @see User
+     * @see UserFile
      */
     @Override
     protected void postInitiate() {
         if(collection.isEmpty()){
-            final UserDto user = new UserDto();
+            final User user = new User();
             user.setId(generateId());
             user.setUsername("admin");
             user.setPassword(PASSWORD_ENCODER.encode("admin"));
@@ -104,10 +108,10 @@ public class UserRepositoryImpl extends RepositoryImpl<User, UserDto, String> im
      * @param user The instance of the type that will be checked and controlled before it is allowed to be saved on
      *             the file system.
      * @see #save
-     * @see User
+     * @see UserFile
      */
     @Override
-    protected void checkType(final User user) {
+    protected void checkType(final UserFile user) {
         Preconditions.checkNotNull(user, "User cannot be null");
         Preconditions.checkNotNull(user.getId());
         Preconditions.checkNotNull(user.getCreated());
@@ -125,4 +129,176 @@ public class UserRepositoryImpl extends RepositoryImpl<User, UserDto, String> im
     public List<SearchResult> search(SearchQuery query) {
         throw new UnsupportedOperationException("Search method is not supported in the User repository");
     }
+
+
+    @XmlRootElement(name = "user")
+    protected static class UserFile implements Saveable<String> {
+
+        @Mapping("id")
+        private String id;
+        @Mapping("username")
+        private String username;
+        @Mapping("password")
+        private String password;
+        @Mapping("email")
+        private String email;
+        @Mapping("updated")
+        private Date updated;
+        @Mapping("created")
+        private Date created;
+        @Mapping("status")
+        private Status status;
+        @Mapping("role")
+        private Role role;
+
+        /**
+         * Default constructor for the User class. The constructor will set the current time to both the created
+         * and updated variables.
+         */
+        public UserFile() {
+            this.created = new Timestamp(new Date().getTime());
+            this.updated = new Timestamp(new Date().getTime());
+        }
+
+        /**
+         * Get the user id
+         * @return User id
+         */
+        @XmlElement
+        @Override
+        public String getId() {
+            return id;
+        }
+
+
+        /**
+         * Set a new value to user id
+         * @param id New user id
+         */
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        /**
+         * Get the user username
+         * @return User username
+         */
+        @XmlElement
+        public String getUsername() {
+            return username;
+        }
+
+        /**
+         * Set a new value to the user username
+         * @param username New username value
+         */
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        /**
+         * Get user email
+         * @return Returns user email
+         */
+        @XmlElement
+        public String getEmail() {
+            return email;
+        }
+
+        /**
+         * Set a new value to user email
+         * @param email New user email value
+         */
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        /**
+         * Get the user password
+         * @return Returns the user password
+         */
+        @XmlElement
+        public String getPassword() {
+            return password;
+        }
+
+        /**
+         * Set a new password for the user
+         * @param password New password value
+         */
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        /**
+         * Return the timestamp for when the user was updated
+         * @return Updated timestamp
+         */
+        @XmlElement
+        public Date getUpdated() {
+            return updated;
+        }
+
+        /**
+         * Sets a new updated timestamp
+         * @param updated New updated timestamp value
+         */
+        public void setUpdated(Date updated) {
+            this.updated = updated;
+        }
+
+        /**
+         * Returns the timestamp of when the user was created
+         * @return Created timestamp
+         */
+        @XmlElement
+        public Date getCreated() {
+            return created;
+        }
+
+        /**
+         * Sets a new created timestamp
+         * @param created New created timestamp
+         */
+        public void setCreated(Date created) {
+            this.created = created;
+        }
+
+        /**
+         * Get the current status of user
+         * @return User status
+         */
+        @XmlElement
+        public Status getStatus() {
+            return status;
+        }
+
+        /**
+         * Set a new status to the user
+         * @param status New status value
+         */
+        public void setStatus(Status status) {
+            this.status = status;
+        }
+
+        /**
+         * Returns the users current role
+         * @return User role
+         */
+        @XmlElement
+        public Role getRole() {
+            return role;
+        }
+
+        /**
+         * Set a new value to the role value
+         * @param role New role value
+         */
+        public void setRole(Role role) {
+            this.role = role;
+        }
+
+    }
+
 }

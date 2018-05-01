@@ -19,7 +19,7 @@ package com.castlemock.web.mock.soap.model.event.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadAllSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.ReadAllSoapEventOutput;
 
@@ -35,7 +35,7 @@ public class ReadAllSoapEventService extends AbstractSoapEventService implements
 
     @Override
     public ServiceResult<ReadAllSoapEventOutput> process(final ServiceTask<ReadAllSoapEventInput> serviceTask) {
-        final List<SoapEventDto> soapEvents = findAll();
+        final List<SoapEvent> soapEvents = findAll();
         return createServiceResult(new ReadAllSoapEventOutput(soapEvents));
     }
 }

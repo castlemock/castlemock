@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.graphql.web.mvc.controller.application;
 
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLApplicationDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLApplicationInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLApplicationOutput;
 import com.castlemock.web.mock.graphql.web.mvc.command.project.GraphQLMutationModifierCommand;
@@ -65,7 +65,7 @@ public class GraphQLApplicationController extends AbstractGraphQLViewController 
                                         @RequestParam(value = UPLOAD, required = false) final String upload,
                                        final ServletRequest request) {
         final ReadGraphQLApplicationOutput output =  serviceProcessor.process(new ReadGraphQLApplicationInput(projectId, applicationId));
-        final GraphQLApplicationDto application = output.getGraphQLApplication();
+        final GraphQLApplication application = output.getGraphQLApplication();
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_PROJECT_ID, projectId);

@@ -16,12 +16,15 @@
 
 package com.castlemock.web.mock.graphql.model.project.repository;
 
+import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
-import com.castlemock.core.mock.graphql.model.project.domain.*;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLProjectDto;
-import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestArgument;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestField;
+import com.castlemock.web.basis.model.project.repository.AbstractProjectFileRepository;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +33,15 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
-public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject, GraphQLProjectDto, String> implements GraphQLProjectRepository {
+public class GraphQLProjectRepositoryImpl extends AbstractProjectFileRepository<GraphQLProjectRepositoryImpl.GraphQLProjectFile, GraphQLProject> implements GraphQLProjectRepository {
 
     @Autowired
     private MessageSource messageSource;
@@ -93,7 +100,7 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLProject type) {
+    protected void checkType(GraphQLProjectFile type) {
 
     }
 
@@ -105,7 +112,7 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
     @Override
     public List<SearchResult> search(SearchQuery query) {
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        for(GraphQLProject project : collection.values()){
+        for(GraphQLProjectFile project : collection.values()){
             List<SearchResult> graphQLProjectSearchResult = searchProject(project, query);
             searchResults.addAll(graphQLProjectSearchResult);
         }
@@ -118,7 +125,7 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      * @param query The provided search query
      * @return A list of search results that matches the provided query
      */
-    private List<SearchResult> searchProject(final GraphQLProject project, final SearchQuery query){
+    private List<SearchResult> searchProject(final GraphQLProjectFile project, final SearchQuery query){
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
         if(SearchValidator.validate(project.getName(), query.getQuery())){
             final String projectType = messageSource.getMessage("general.type.project", null , LocaleContextHolder.getLocale());
@@ -133,111 +140,6 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
 
 
     /**
-     * Search through a GraphQL query and all its resources
-     * @param graphQLProject The GraphQL project which will be searched
-     * @param graphQLQuery The GraphQL application which will be searched
-     * @param query The provided search query
-     * @return A list of search results that matches the provided query
-     */
-    private List<SearchResult> searchQuery(final GraphQLProject graphQLProject, final GraphQLQuery graphQLQuery, final SearchQuery query){
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        if(SearchValidator.validate(graphQLQuery.getName(), query.getQuery())){
-            final String queryType = messageSource.getMessage("graphql.type.query", null , LocaleContextHolder.getLocale());
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(graphQLQuery.getName());
-            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + graphQLProject.getId() + SLASH + QUERY + SLASH + graphQLQuery.getId());
-            searchResult.setDescription(GRAPHQL_TYPE + COMMA + queryType);
-            searchResults.add(searchResult);
-        }
-        return searchResults;
-    }
-
-    /**
-     * Search through a GraphQL mutation and all its resources
-     * @param graphQLProject The GraphQL project which will be searched
-     * @param graphQLMutation The GraphQL mutation which will be searched
-     * @param query The provided search query
-     * @return A list of search results that matches the provided query
-     */
-    private List<SearchResult> searchMutation(final GraphQLProject graphQLProject, final GraphQLMutation graphQLMutation, final SearchQuery query){
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        if(SearchValidator.validate(graphQLMutation.getName(), query.getQuery())){
-            final String type = messageSource.getMessage("graphql.type.mutation", null , LocaleContextHolder.getLocale());
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(graphQLMutation.getName());
-            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + graphQLProject.getId() + SLASH + MUTATION + SLASH + graphQLMutation.getId());
-            searchResult.setDescription(GRAPHQL_TYPE + COMMA + type);
-            searchResults.add(searchResult);
-        }
-        return searchResults;
-    }
-
-    /**
-     * Search through a GraphQL subscription and all its resources
-     * @param graphQLProject The GraphQL project which will be searched
-     * @param graphQLSubscription The GraphQL subscription which will be searched
-     * @param query The provided search query
-     * @return A list of search results that matches the provided query
-     */
-    private List<SearchResult> searchSubscription(final GraphQLProject graphQLProject, final GraphQLSubscription graphQLSubscription, final SearchQuery query){
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        if(SearchValidator.validate(graphQLSubscription.getName(), query.getQuery())){
-            final String queryType = messageSource.getMessage("graphql.type.subscription", null , LocaleContextHolder.getLocale());
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(graphQLSubscription.getName());
-            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + graphQLProject.getId() + SLASH + SUBSCRIPTION + SLASH + graphQLSubscription.getId());
-            searchResult.setDescription(GRAPHQL_TYPE + COMMA + queryType);
-            searchResults.add(searchResult);
-        }
-        return searchResults;
-    }
-
-
-    /**
-     * Search through a GraphQL subscription and all its resources
-     * @param graphQLProject The GraphQL project which will be searched
-     * @param graphQLObjectType The GraphQL subscription which will be searched
-     * @param query The provided search query
-     * @return A list of search results that matches the provided query
-     */
-    private List<SearchResult> searchObject(final GraphQLProject graphQLProject, final GraphQLObjectType graphQLObjectType, final SearchQuery query){
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        if(SearchValidator.validate(graphQLObjectType.getName(), query.getQuery())){
-            final String queryType = messageSource.getMessage("graphql.type.object", null , LocaleContextHolder.getLocale());
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(graphQLObjectType.getName());
-            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + graphQLProject.getId() + SLASH + OBJECT_TYPE + SLASH + graphQLObjectType.getId());
-            searchResult.setDescription(GRAPHQL_TYPE + COMMA + queryType);
-            searchResults.add(searchResult);
-        }
-        return searchResults;
-    }
-
-    /**
-     * Search through a GraphQL enum and all its resources
-     * @param graphQLProject The GraphQL project which will be searched
-     * @param graphQLEnumType The GraphQL enum which will be searched
-     * @param query The provided search query
-     * @return A list of search results that matches the provided query
-     */
-    private List<SearchResult> searchEnum(final GraphQLProject graphQLProject, final GraphQLEnumType graphQLEnumType, final SearchQuery query){
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        if(SearchValidator.validate(graphQLEnumType.getName(), query.getQuery())){
-            final String queryType = messageSource.getMessage("graphql.type.enum", null , LocaleContextHolder.getLocale());
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(graphQLEnumType.getName());
-            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + graphQLProject.getId() + SLASH + ENUM_TYPE + SLASH + graphQLEnumType.getId());
-            searchResult.setDescription(GRAPHQL_TYPE + COMMA + queryType);
-            searchResults.add(searchResult);
-        }
-        return searchResults;
-    }
-
-
-
-
-
-    /**
      * The save method provides the functionality to save an instance to the file system.
      * @param project The type that will be saved to the file system.
      * @return The type that was saved to the file system. The main reason for it is being returned is because
@@ -245,7 +147,7 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      *         have an identifier, then the method will generate a new identifier for the type.
      */
     @Override
-    public GraphQLProjectDto save(final GraphQLProject project) {
+    public GraphQLProject save(final GraphQLProjectFile project) {
         return super.save(project);
     }
 
@@ -255,19 +157,346 @@ public class GraphQLProjectRepositoryImpl extends RepositoryImpl<GraphQLProject,
      *
      * @param name The name of the project that should be retrieved
      * @return Returns a project with the provided name
-     * @see GraphQLProjectDto
+     * @see GraphQLProject
      */
     @Override
-    public GraphQLProjectDto findGraphQLProjectWithName(String name) {
+    public GraphQLProject findGraphQLProjectWithName(String name) {
         Preconditions.checkNotNull(name, "Project name cannot be null");
         Preconditions.checkArgument(!name.isEmpty(), "Project name cannot be empty");
-        for(GraphQLProject graphQLProject : collection.values()){
+        for(GraphQLProjectFile graphQLProject : collection.values()){
             if(graphQLProject.getName().equalsIgnoreCase(name)) {
-                return mapper.map(graphQLProject, GraphQLProjectDto.class);
+                return mapper.map(graphQLProject, GraphQLProject.class);
             }
         }
         return null;
     }
 
-    
+    @XmlRootElement(name = "graphQLProject")
+    protected static class GraphQLProjectFile extends AbstractProjectFileRepository.ProjectFile {
+
+    }
+
+    /**
+     * @author Karl Dahlgren
+     * @since 1.19
+     */
+    @XmlRootElement(name = "graphQLRequestQuery")
+    protected static class GraphQLRequestQueryFile implements Saveable<String> {
+
+        private String id;
+        private String operationName;
+        private List<GraphQLRequestField> fields = new CopyOnWriteArrayList<GraphQLRequestField>();
+        private List<GraphQLRequestArgument> arguments = new CopyOnWriteArrayList<GraphQLRequestArgument>();
+
+        @Override
+        @XmlElement
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getOperationName() {
+            return operationName;
+        }
+
+        public void setOperationName(String operationName) {
+            this.operationName = operationName;
+        }
+
+        @XmlElementWrapper(name = "fields")
+        @XmlElement(name = "field")
+        public List<GraphQLRequestField> getFields() {
+            return fields;
+        }
+
+        public void setFields(List<GraphQLRequestField> fields) {
+            this.fields = fields;
+        }
+
+        @XmlElementWrapper(name = "arguments")
+        @XmlElement(name = "argument")
+        public List<GraphQLRequestArgument> getArguments() {
+            return arguments;
+        }
+
+        public void setArguments(List<GraphQLRequestArgument> arguments) {
+            this.arguments = arguments;
+        }
+    }
+
+    @XmlRootElement(name = "graphQLAttribute")
+    protected static class GraphQLAttributeFile implements Saveable<String> {
+
+        private String id;
+        private String name;
+        private String description;
+        private String typeId;
+        private String typeName;
+        private Boolean nullable;
+        private Boolean listable;
+        private String objectTypeId;
+        private String value;
+        private GraphQLAttributeType attributeType;
+        private List<GraphQLArgumentFile> arguments = new CopyOnWriteArrayList<GraphQLArgumentFile>();
+
+        @Override
+        @XmlElement
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        @XmlElement
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        @XmlElement
+        public String getTypeId() {
+            return typeId;
+        }
+
+        public void setTypeId(String typeId) {
+            this.typeId = typeId;
+        }
+
+        @XmlElement
+        public String getTypeName() {
+            return typeName;
+        }
+
+        public void setTypeName(String typeName) {
+            this.typeName = typeName;
+        }
+
+        @XmlElement
+        public Boolean getNullable() {
+            return nullable;
+        }
+
+        public void setNullable(Boolean nullable) {
+            this.nullable = nullable;
+        }
+
+        @XmlElement
+        public Boolean getListable() {
+            return listable;
+        }
+
+        public void setListable(Boolean listable) {
+            this.listable = listable;
+        }
+
+        @XmlElement
+        public GraphQLAttributeType getAttributeType() {
+            return attributeType;
+        }
+
+        public void setAttributeType(GraphQLAttributeType attributeType) {
+            this.attributeType = attributeType;
+        }
+
+        @XmlElementWrapper(name = "arguments")
+        @XmlElement(name = "argument")
+        public List<GraphQLArgumentFile> getArguments() {
+            return arguments;
+        }
+
+        public void setArguments(List<GraphQLArgumentFile> arguments) {
+            this.arguments = arguments;
+        }
+
+        @XmlElement
+        public String getObjectTypeId() {
+            return objectTypeId;
+        }
+
+        public void setObjectTypeId(String objectTypeId) {
+            this.objectTypeId = objectTypeId;
+        }
+    }
+
+    @XmlRootElement(name = "graphQLRequestArgument")
+    protected static class GraphQLRequestArgumentFile {
+
+        private String name;
+        private List<GraphQLRequestArgumentFile> arguments = new CopyOnWriteArrayList<GraphQLRequestArgumentFile>();
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElementWrapper(name = "arguments")
+        @XmlElement(name = "argument")
+        public List<GraphQLRequestArgumentFile> getArguments() {
+            return arguments;
+        }
+
+        public void setArguments(List<GraphQLRequestArgumentFile> arguments) {
+            this.arguments = arguments;
+        }
+    }
+
+    @XmlRootElement(name = "graphQLRequestField")
+    public class GraphQLRequestFieldFile {
+
+        private String name;
+        private List<GraphQLRequestFieldFile> fields = new CopyOnWriteArrayList<GraphQLRequestFieldFile>();
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElementWrapper(name = "fields")
+        @XmlElement(name = "field")
+        public List<GraphQLRequestFieldFile> getFields() {
+            return fields;
+        }
+
+        public void setFields(List<GraphQLRequestFieldFile> fields) {
+            this.fields = fields;
+        }
+    }
+
+
+    @XmlRootElement(name = "graphQLArgument")
+    protected static class GraphQLArgumentFile implements Saveable<String> {
+
+        private String id;
+        private String name;
+        private String description;
+        private String typeName;
+        private String typeId;
+        private Object defaultValue;
+        private Boolean nullable;
+        private Boolean listable;
+        private GraphQLAttributeType attributeType;
+
+        @Override
+        @XmlElement
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        @XmlElement
+        public String getTypeName() {
+            return typeName;
+        }
+
+        public void setTypeName(String typeName) {
+            this.typeName = typeName;
+        }
+
+        @XmlElement
+        public String getTypeId() {
+            return typeId;
+        }
+
+        public void setTypeId(String typeId) {
+            this.typeId = typeId;
+        }
+
+        @XmlElement
+        public Object getDefaultValue() {
+            return defaultValue;
+        }
+
+        public void setDefaultValue(Object defaultValue) {
+            this.defaultValue = defaultValue;
+        }
+
+        @XmlElement
+        public Boolean getNullable() {
+            return nullable;
+        }
+
+        public void setNullable(Boolean nullable) {
+            this.nullable = nullable;
+        }
+
+        @XmlElement
+        public Boolean getListable() {
+            return listable;
+        }
+
+        public void setListable(Boolean listable) {
+            this.listable = listable;
+        }
+
+        @XmlElement
+        public GraphQLAttributeType getAttributeType() {
+            return attributeType;
+        }
+
+        public void setAttributeType(GraphQLAttributeType attributeType) {
+            this.attributeType = attributeType;
+        }
+
+    }
+
+
 }

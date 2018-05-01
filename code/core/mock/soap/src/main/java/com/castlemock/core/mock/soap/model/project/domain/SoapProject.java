@@ -18,13 +18,84 @@ package com.castlemock.core.mock.soap.model.project.domain;
 
 import com.castlemock.core.basis.model.project.domain.Project;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * The DTO class for the Project class
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlRootElement
 public class SoapProject extends Project {
+
+    private List<SoapPort> ports = new CopyOnWriteArrayList<SoapPort>();
+    private List<SoapResource> resources = new CopyOnWriteArrayList<SoapResource>();
+
+    private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
+
+    /**
+     * The default SOAP project constructor
+     */
+    public SoapProject() {
+    }
+
+    /**
+     * The constructor will create a new SOAP project DTO based on the provided projectDto
+     * @param projectDto The new SOAP project DTO will be based on the provided project DTO and contain
+     *                   the same information as the provided project DTO
+     */
+    public SoapProject(final Project projectDto){
+        super(projectDto);
+    }
+
+    /**
+     * Returns all the SOAP ports
+     * @return The SOAP ports for the SOAP project
+     */
+    public List<SoapPort> getPorts() {
+        return ports;
+    }
+
+    /**
+     * Set new value to the variable ports
+     * @param ports The new value to ports
+     */
+    public void setPorts(List<SoapPort> ports) {
+        this.ports = ports;
+    }
+
+    /**
+     * Returns all the SOAP resources
+     * @return The SOAP resources for the SOAP resources
+     */
+    public List<SoapResource> getResources() {
+        return resources;
+    }
+
+    /**
+     * Set new value to the variable resources
+     * @param resources The new value to resources
+     */
+    public void setResources(List<SoapResource> resources) {
+        this.resources = resources;
+    }
+
+    /**
+     * The status count is used in the GUI to information the user on the SOAP operation status distribution.
+     * @return The status counts.
+     */
+    public Map<SoapOperationStatus, Integer> getStatusCount() {
+        return statusCount;
+    }
+
+    /**
+     * Sets a new value to the statusCount variable
+     * @param statusCount The new value to statusCount
+     */
+    public void setStatusCount(Map<SoapOperationStatus, Integer> statusCount) {
+        this.statusCount = statusCount;
+    }
 
 }

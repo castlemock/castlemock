@@ -16,10 +16,10 @@
 
 package com.castlemock.web.mock.soap.model.project.service;
 
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.model.project.repository.SoapProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
@@ -53,11 +53,11 @@ public class CreateSoapPortsServiceTest {
     @Test
     @Ignore
     public void testProcess(){
-        final SoapProjectDto soapProject = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final List<SoapPortDto> soapPorts = new ArrayList<SoapPortDto>();
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         for(int index = 0; index < 3; index++){
-            final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-            soapPorts.add(soapPortDto);
+            final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+            soapPorts.add(soapPort);
         }
 
         Mockito.when(repository.findOne(soapProject.getId())).thenReturn(soapProject);
@@ -70,7 +70,7 @@ public class CreateSoapPortsServiceTest {
 
         Assert.assertNotNull(output);
 
-        Mockito.verify(repository, Mockito.times(3)).saveSoapPort(Mockito.anyString(), Mockito.any(SoapPortDto.class));
+        Mockito.verify(repository, Mockito.times(3)).saveSoapPort(Mockito.anyString(), Mockito.any(SoapPort.class));
         */
     }
 }

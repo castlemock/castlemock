@@ -2,7 +2,6 @@ package com.castlemock.web.basis.model.user.repository;
 
 
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.dto.UserDto;
 import com.castlemock.web.basis.model.user.dto.UserDtoGenerator;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
@@ -46,13 +45,13 @@ public class UserRepositoryTest {
         users.add(user);
         Mockito.when(fileRepositorySupport.load(User.class, DIRECTORY, EXTENSION)).thenReturn(users);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(User.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(UserRepositoryImpl.UserFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test
     public void testFindOne(){
-        final UserDto user = save();
-        final UserDto returnedUser = repository.findOne(user.getId());
+        final User user = save();
+        final User returnedUser = repository.findOne(user.getId());
         Assert.assertEquals(user.getId(), returnedUser.getId());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
         Assert.assertEquals(user.getPassword(), returnedUser.getPassword());
@@ -63,34 +62,34 @@ public class UserRepositoryTest {
 
     @Test
     public void testFindAll(){
-        final UserDto user = save();
-        final List<UserDto> users = repository.findAll();
+        final User user = save();
+        final List<User> users = repository.findAll();
         Assert.assertEquals(users.size(), 1);
         Assert.assertEquals(users.get(0), user);
     }
 
     @Test
     public void testSave(){
-        final UserDto user = save();
+        final User user = save();
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(User.class), Mockito.anyString());
     }
 
     @Test
     public void testDelete(){
-        final UserDto user = save();
+        final User user = save();
         repository.delete(user.getId());
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).delete(DIRECTORY + File.separator + user.getId() + EXTENSION);
     }
 
     @Test
     public void testCount(){
-        final UserDto user = save();
+        final User user = save();
         final Integer count = repository.count();
         Assert.assertEquals(new Integer(1), count);
     }
 
-    private UserDto save(){
-        final UserDto user = UserDtoGenerator.generateUserDto();
+    private User save(){
+        final User user = UserDtoGenerator.generateUserDto();
         repository.save(user);
         return user;
     }

@@ -18,7 +18,6 @@ package com.castlemock.web.mock.graphql.model.event.service;
 
 
 import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
-import com.castlemock.core.mock.graphql.model.event.dto.GraphQLEventDto;
 import com.castlemock.web.basis.model.event.service.AbstractEventService;
 import com.castlemock.web.mock.graphql.model.event.repository.GraphQLEventRepository;
 
@@ -27,7 +26,7 @@ import com.castlemock.web.mock.graphql.model.event.repository.GraphQLEventReposi
  * @author Karl Dahlgren
  * @since 1.9
  */
-public class AbstractGraphQLEventService extends AbstractEventService<GraphQLEvent, GraphQLEventDto, GraphQLEventRepository> {
+public class AbstractGraphQLEventService extends AbstractEventService<GraphQLEvent, GraphQLEventRepository> {
 
 }
 

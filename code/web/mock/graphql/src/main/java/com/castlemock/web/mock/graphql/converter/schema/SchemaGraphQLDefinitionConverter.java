@@ -17,14 +17,12 @@
 
 package com.castlemock.web.mock.graphql.converter.schema;
 
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
-import com.castlemock.core.mock.graphql.model.project.dto.*;
+import com.castlemock.core.mock.graphql.model.project.domain.*;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.graphql.converter.AbstractGraphQLDefinitionConverter;
 import com.castlemock.web.mock.graphql.converter.GraphQLDefinitionConverterResult;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLSchema;
-import graphql.schema.GraphQLType;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
@@ -55,26 +53,26 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         final SchemaGenerator schemaGenerator = new SchemaGenerator();
         final GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
 
-        final List<GraphQLQueryDto> queries = new ArrayList<>();
-        final List<GraphQLMutationDto> mutations = new ArrayList<>();
-        final List<GraphQLSubscriptionDto> subscriptions = new ArrayList<>();
-        final List<GraphQLObjectTypeDto> objects = new ArrayList<>();
-        final List<GraphQLEnumTypeDto> enums = new ArrayList<>();
+        final List<GraphQLQuery> queries = new ArrayList<>();
+        final List<GraphQLMutation> mutations = new ArrayList<>();
+        final List<GraphQLSubscription> subscriptions = new ArrayList<>();
+        final List<GraphQLObjectType> objects = new ArrayList<>();
+        final List<GraphQLEnumType> enums = new ArrayList<>();
 
-        for(GraphQLType graphQLType : graphQLSchema.getAllTypesAsList()){
-            GraphQLTypeDto type = GraphQLObjectTypeFactory.parse(graphQLType);
+        for(graphql.schema.GraphQLType graphQLType : graphQLSchema.getAllTypesAsList()){
+            GraphQLType type = GraphQLObjectTypeFactory.parse(graphQLType);
 
-            if(type instanceof GraphQLObjectTypeDto){
-                GraphQLObjectTypeDto objectType = (GraphQLObjectTypeDto) type;
+            if(type instanceof GraphQLObjectType){
+                GraphQLObjectType objectType = (GraphQLObjectType) type;
                 objects.add(objectType);
-            } else if(type instanceof GraphQLEnumTypeDto){
-                GraphQLEnumTypeDto enumType = (GraphQLEnumTypeDto) type;
+            } else if(type instanceof GraphQLEnumType){
+                GraphQLEnumType enumType = (GraphQLEnumType) type;
                 enums.add(enumType);
             }
         }
 
-        for(GraphQLObjectTypeDto objectType : objects){
-            for(GraphQLAttributeDto attribute : objectType.getAttributes()){
+        for(GraphQLObjectType objectType : objects){
+            for(GraphQLAttribute attribute : objectType.getAttributes()){
                 String typeId = getId(attribute.getTypeName(), attribute.getAttributeType(), objects, enums);
                 attribute.setTypeId(typeId);
             }
@@ -84,7 +82,7 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         if(graphQLSchema.getQueryType() != null){
             List<GraphQLFieldDefinition> fieldQueries = graphQLSchema.getQueryType().getFieldDefinitions();
             for(GraphQLFieldDefinition fieldQuery : fieldQueries){
-                GraphQLQueryDto query = GraphQLObjectTypeFactory.query(fieldQuery);
+                GraphQLQuery query = GraphQLObjectTypeFactory.query(fieldQuery);
                 mapTypes(query, objects, enums);
                 queries.add(query);
             }
@@ -93,7 +91,7 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         if(graphQLSchema.getMutationType() != null){
             List<GraphQLFieldDefinition> fieldMutations = graphQLSchema.getMutationType().getFieldDefinitions();
             for(GraphQLFieldDefinition fieldMutation : fieldMutations){
-                GraphQLMutationDto mutation = GraphQLObjectTypeFactory.mutation(fieldMutation);
+                GraphQLMutation mutation = GraphQLObjectTypeFactory.mutation(fieldMutation);
                 mapTypes(mutation, objects, enums);
                 mutations.add(mutation);
             }
@@ -102,7 +100,7 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         if(graphQLSchema.getSubscriptionType() != null){
             List<GraphQLFieldDefinition> fieldSubscriptions = graphQLSchema.getSubscriptionType().getFieldDefinitions();
             for(GraphQLFieldDefinition fieldSubscription : fieldSubscriptions){
-                GraphQLSubscriptionDto subscription = GraphQLObjectTypeFactory.subscription(fieldSubscription);
+                GraphQLSubscription subscription = GraphQLObjectTypeFactory.subscription(fieldSubscription);
                 mapTypes(subscription, objects, enums);
                 subscriptions.add(subscription);
             }
@@ -118,14 +116,14 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
         return result;
     }
 
-    private void mapTypes(final GraphQLOperationDto operation,
-                          final List<GraphQLObjectTypeDto> objects,
-                          final List<GraphQLEnumTypeDto> enums){
-        final GraphQLResultDto result = operation.getResult();
+    private void mapTypes(final GraphQLOperation operation,
+                          final List<GraphQLObjectType> objects,
+                          final List<GraphQLEnumType> enums){
+        final GraphQLResult result = operation.getResult();
         final String typeId = getId(result.getTypeName(), result.getAttributeType(), objects, enums);
         result.setTypeId(typeId);
 
-        for(GraphQLArgumentDto argument : operation.getArguments()){
+        for(GraphQLArgument argument : operation.getArguments()){
             String argumentTypeId = getId(argument.getTypeName(), argument.getAttributeType(), objects, enums);
             argument.setTypeId(argumentTypeId);
         }
@@ -134,16 +132,16 @@ public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionC
 
     private String getId(final String typeName,
                           final GraphQLAttributeType attributeType,
-                          final List<GraphQLObjectTypeDto> objects,
-                          final List<GraphQLEnumTypeDto> enums){
+                          final List<GraphQLObjectType> objects,
+                          final List<GraphQLEnumType> enums){
         if(GraphQLAttributeType.OBJECT_TYPE.equals(attributeType)){
-            for(GraphQLObjectTypeDto otherObjectType : objects){
+            for(GraphQLObjectType otherObjectType : objects){
                 if(typeName.equals(otherObjectType.getName())){
                     return otherObjectType.getId();
                 }
             }
         } else if(GraphQLAttributeType.ENUM.equals(attributeType)){
-            for(GraphQLEnumTypeDto enumType : enums){
+            for(GraphQLEnumType enumType : enums){
                 if(typeName.equals(enumType.getName())){
                     return enumType.getId();
                 }

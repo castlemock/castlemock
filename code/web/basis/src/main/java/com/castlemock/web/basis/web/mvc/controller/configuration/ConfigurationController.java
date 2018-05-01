@@ -17,7 +17,6 @@
 package com.castlemock.web.basis.web.mvc.controller.configuration;
 
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationGroupDto;
 import com.castlemock.core.basis.model.configuration.service.message.input.ReadAllConfigurationGroupsInput;
 import com.castlemock.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
 import com.castlemock.web.basis.web.mvc.command.configuration.ConfigurationUpdateCommand;
@@ -37,7 +36,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  * @see ConfigurationGroup
- * @see ConfigurationGroupDto
+ * @see ConfigurationGroup
  */
 @Controller
 @Scope("request")
@@ -55,7 +54,7 @@ public class ConfigurationController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final ReadAllConfigurationGroupsOutput output = serviceProcessor.process(new ReadAllConfigurationGroupsInput());
-        final List<ConfigurationGroupDto> configurationGroupDtos = output.getConfigurationGroups();
+        final List<ConfigurationGroup> configurationGroupDtos = output.getConfigurationGroups();
         final ConfigurationUpdateCommand configurationUpdateCommand = new ConfigurationUpdateCommand();
         configurationUpdateCommand.setConfigurationGroups(configurationGroupDtos);
         final ModelAndView model = createPartialModelAndView(PAGE);

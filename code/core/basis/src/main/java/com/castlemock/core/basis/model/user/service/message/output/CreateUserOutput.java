@@ -17,7 +17,7 @@
 package com.castlemock.core.basis.model.user.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.CreateUserInput;
 import com.castlemock.core.basis.model.validation.NotNull;
 
@@ -29,13 +29,13 @@ import com.castlemock.core.basis.model.validation.NotNull;
 public class CreateUserOutput implements Output {
 
     @NotNull
-    private UserDto savedUser;
+    private User savedUser;
 
-    public UserDto getSavedUser() {
+    public User getSavedUser() {
         return savedUser;
     }
 
-    public void setSavedUser(UserDto savedUser) {
+    public void setSavedUser(User savedUser) {
         this.savedUser = savedUser;
     }
 }

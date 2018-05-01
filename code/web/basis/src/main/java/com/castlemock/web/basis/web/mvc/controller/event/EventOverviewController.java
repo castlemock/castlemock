@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.event;
 
-import com.castlemock.core.basis.model.event.dto.EventDto;
+import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.web.basis.model.event.service.EventServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class EventOverviewController extends AbstractViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
-        final List<EventDto> events = eventServiceFacade.findAll();
+        final List<Event> events = eventServiceFacade.findAll();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(EVENTS, events);
         return model;

@@ -19,10 +19,10 @@ package com.castlemock.web.mock.rest.model.event.service;
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.event.dto.RestEventDto;
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.service.message.input.CreateRestEventInput;
 import com.castlemock.core.mock.rest.model.event.service.message.output.CreateRestEventOutput;
-import com.castlemock.web.mock.rest.model.project.RestEventDtoGenerator;
+import com.castlemock.web.mock.rest.model.project.RestEventGenerator;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,21 +53,21 @@ public class CreateRestEventServiceTest {
 
     @Test
     public void testProcess(){
-        final RestEventDto restEventDto = RestEventDtoGenerator.generateRestEventDto();
-        Mockito.when(repository.save(Mockito.any(RestEventDto.class))).thenReturn(RestEventDtoGenerator.generateRestEventDto());
+        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        Mockito.when(repository.save(Mockito.any(RestEvent.class))).thenReturn(RestEventGenerator.generateRestEvent());
 
-        final CreateRestEventInput input = new CreateRestEventInput(restEventDto);
-        input.setRestEvent(restEventDto);
+        final CreateRestEventInput input = new CreateRestEventInput(restEvent);
+        input.setRestEvent(restEvent);
 
         final ServiceTask<CreateRestEventInput> serviceTask = new ServiceTask<CreateRestEventInput>(input);
         final ServiceResult<CreateRestEventOutput> serviceResult = service.process(serviceTask);
         final CreateRestEventOutput createRestApplicationOutput = serviceResult.getOutput();
-        final RestEventDto returnedRestEventDto = createRestApplicationOutput.getCreatedRestEvent();
+        final RestEvent returnedRestEvent = createRestApplicationOutput.getCreatedRestEvent();
 
-        Assert.assertEquals(restEventDto.getApplicationId(), returnedRestEventDto.getApplicationId());
-        Assert.assertEquals(restEventDto.getMethodId(), returnedRestEventDto.getMethodId());
-        Assert.assertEquals(restEventDto.getProjectId(), returnedRestEventDto.getProjectId());
-        Assert.assertEquals(restEventDto.getResourceId(), returnedRestEventDto.getResourceId());
+        Assert.assertEquals(restEvent.getApplicationId(), returnedRestEvent.getApplicationId());
+        Assert.assertEquals(restEvent.getMethodId(), returnedRestEvent.getMethodId());
+        Assert.assertEquals(restEvent.getProjectId(), returnedRestEvent.getProjectId());
+        Assert.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());
     }
 
 }

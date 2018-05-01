@@ -18,14 +18,14 @@ package com.castlemock.web.mock.soap.web.mvc.controller.port;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapPortOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.web.mock.soap.model.project.SoapPortDtoGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectDtoGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapControllerTest;
 import org.junit.Test;
@@ -71,26 +71,26 @@ public class UpdateSoapPortControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testUpdatePortWithValidId() throws Exception {
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
 
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapPortOutput(soapPortDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + UPDATE);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapPortOutput(soapPort));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + UPDATE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(5 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
-                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT, soapPortDto));
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT, soapPort));
     }
 
 
     @Test
     public void testUpdateConfirmPortWithValidId() throws Exception {
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new UpdateSoapPortOutput(soapPortDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT + SLASH + soapPortDto.getId() + SLASH + UPDATE, soapPortDto);
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new UpdateSoapPortOutput(soapPort));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + UPDATE, soapPort);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
@@ -99,15 +99,15 @@ public class UpdateSoapPortControllerTest extends AbstractSoapControllerTest {
     @Test
     public void testUpdatePortEndpoint() throws Exception {
         final UpdateSoapPortsEndpointCommand command = new UpdateSoapPortsEndpointCommand();
-        final SoapProjectDto soapProjectDto = SoapProjectDtoGenerator.generateSoapProjectDto();
-        final SoapPortDto soapPortDto = SoapPortDtoGenerator.generateSoapPortDto();
-        final List<SoapPortDto> soapPorts = new ArrayList<SoapPortDto>();
-        soapPorts.add(soapPortDto);
+        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
+        soapPorts.add(soapPort);
         command.setSoapPorts(soapPorts);
         command.setForwardedEndpoint("/new/endpoint");
 
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new UpdateSoapPortOutput(soapPortDto));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProjectDto.getId() + SLASH + PORT +  SLASH + UPDATE + SLASH + CONFIRM, command);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(new UpdateSoapPortOutput(soapPort));
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT +  SLASH + UPDATE + SLASH + CONFIRM, command);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

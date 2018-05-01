@@ -19,7 +19,6 @@ package com.castlemock.web.basis.model.configuration.dto;
 
 import com.castlemock.core.basis.model.configuration.domain.Configuration;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
-import com.castlemock.core.basis.model.configuration.dto.ConfigurationDto;
 import com.castlemock.core.basis.model.event.domain.Event;
 
 /**
@@ -30,8 +29,8 @@ import com.castlemock.core.basis.model.event.domain.Event;
  */
 public class ConfigurationDtoGenerator {
 
-    public static ConfigurationDto generateConfigurationDto(){
-        final ConfigurationDto configurationDto = new ConfigurationDto();
+    public static Configuration generateConfigurationDto(){
+        final Configuration configurationDto = new Configuration();
         configurationDto.setType(ConfigurationType.STRING);
         configurationDto.setKey("Key");
         configurationDto.setValue("Value");

@@ -16,19 +16,19 @@
 
 package com.castlemock.web.basis.model.project.dto;
 
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 
 import java.util.Date;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
- * @see ProjectDto
+ * @see Project
  */
 public class ProjectDtoGenerator {
 
-    public static ProjectDto generateProjectDto(){
-        final ProjectDto projectDto = new ProjectDto();
+    public static Project generateProjectDto(){
+        final Project projectDto = new Project();
         projectDto.setId("SoapProject");
         projectDto.setName("Project name");
         projectDto.setDescription("Project description");

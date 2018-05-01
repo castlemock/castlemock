@@ -18,11 +18,10 @@ package com.castlemock.web.mock.rest.model.project.repository;
 
 import com.castlemock.core.basis.model.Repository;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 
 import java.util.List;
 
-public interface RestMethodRepository extends Repository<RestMethod, RestMethodDto, String> {
+public interface RestMethodRepository extends Repository<RestMethod, String> {
 
     /**
      * Updates the current response sequence index.
@@ -41,11 +40,11 @@ public interface RestMethodRepository extends Repository<RestMethod, RestMethodD
     void deleteWithResourceId(String resourceId);
 
     /**
-     * Find all {@link RestMethodDto} that matches the provided
+     * Find all {@link RestMethod} that matches the provided
      * <code>resourceId</code>.
      * @param resourceId The id of the resource.
-     * @return A list of {@link RestMethodDto}.
+     * @return A list of {@link RestMethod}.
      */
-    List<RestMethodDto> findWithResourceId(String resourceId);
+    List<RestMethod> findWithResourceId(String resourceId);
 
 }

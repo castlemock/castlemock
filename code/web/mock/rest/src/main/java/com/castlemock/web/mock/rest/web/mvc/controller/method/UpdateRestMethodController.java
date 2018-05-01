@@ -18,7 +18,7 @@ package com.castlemock.web.mock.rest.web.mvc.controller.method;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodsForwardedEndpointInput;
@@ -66,8 +66,8 @@ public class UpdateRestMethodController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @ModelAttribute final RestMethodDto restMethodDto) {
-        serviceProcessor.process(new UpdateRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMethodDto));
+    public ModelAndView update(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @ModelAttribute final RestMethod restMethod) {
+        serviceProcessor.process(new UpdateRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMethod));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 

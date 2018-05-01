@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.project;
 
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
+import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.command.project.DeleteProjectsCommand;
@@ -81,7 +81,7 @@ public class ProjectsOverviewController extends AbstractViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
-        final List<ProjectDto> projects = new LinkedList<ProjectDto>();
+        final List<Project> projects = new LinkedList<Project>();
         projects.addAll(projectServiceFacade.findAll());
         ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(PROJECTS, projects);
@@ -154,7 +154,7 @@ public class ProjectsOverviewController extends AbstractViewController {
                 fileManager.deleteUploadedFile(outputFilename);
             }
         } else if(DELETE_PROJECTS.equalsIgnoreCase(action)) {
-            List<ProjectDto> projects = new LinkedList<ProjectDto>();
+            List<Project> projects = new LinkedList<Project>();
             for(String project : projectModifierCommand.getProjects()){
                 final String[] projectData = project.split(SLASH);
 
@@ -164,7 +164,7 @@ public class ProjectsOverviewController extends AbstractViewController {
 
                 final String projectTypeUrl = projectData[0];
                 final String projectId = projectData[1];
-                final ProjectDto projectDto = projectServiceFacade.findOne(projectTypeUrl, projectId);
+                final Project projectDto = projectServiceFacade.findOne(projectTypeUrl, projectId);
                 projects.add(projectDto);
             }
             ModelAndView model = createPartialModelAndView(DELETE_PROJECTS_PAGE);

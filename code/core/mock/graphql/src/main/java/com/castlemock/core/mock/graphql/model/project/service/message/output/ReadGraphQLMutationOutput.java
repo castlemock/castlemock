@@ -18,7 +18,7 @@ package com.castlemock.core.mock.graphql.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLMutationDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLMutation;
 
 /**
  * @author Karl Dahlgren
@@ -27,17 +27,17 @@ import com.castlemock.core.mock.graphql.model.project.dto.GraphQLMutationDto;
 public class ReadGraphQLMutationOutput implements Output{
 
     @NotNull
-    private GraphQLMutationDto graphQLMutation;
+    private GraphQLMutation graphQLMutation;
 
-    public ReadGraphQLMutationOutput(GraphQLMutationDto graphQLMutation) {
+    public ReadGraphQLMutationOutput(GraphQLMutation graphQLMutation) {
         this.graphQLMutation = graphQLMutation;
     }
 
-    public GraphQLMutationDto getGraphQLMutation() {
+    public GraphQLMutation getGraphQLMutation() {
         return graphQLMutation;
     }
 
-    public void setGraphQLMutation(GraphQLMutationDto graphQLMutation) {
+    public void setGraphQLMutation(GraphQLMutation graphQLMutation) {
         this.graphQLMutation = graphQLMutation;
     }
 }

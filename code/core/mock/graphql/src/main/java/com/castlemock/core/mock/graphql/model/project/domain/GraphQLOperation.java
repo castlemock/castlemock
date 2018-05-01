@@ -16,13 +16,9 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -30,37 +26,55 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.19
  */
-@XmlRootElement
-@XmlSeeAlso({GraphQLQuery.class, GraphQLMutation.class, GraphQLSubscription.class})
-public abstract class GraphQLOperation implements Saveable<String> {
+public class GraphQLOperation {
 
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("description")
     private String description;
+
+    @Mapping("applicationId")
     private String applicationId;
-    private long networkDelay;
-    private HttpMethod httpMethod;
-    private String forwardedEndpoint;
-    private String originalEndpoint;
-    private boolean simulateNetworkDelay;
-    private GraphQLOperationStatus status;
+
+    @Mapping("responseStrategy")
     private GraphQLResponseStrategy responseStrategy;
-    private GraphQLResult result;
+
+    @Mapping("status")
+    private GraphQLOperationStatus status;
+
+    @Mapping("httpMethod")
+    private HttpMethod httpMethod;
+
+    @Mapping("forwardedEndpoint")
+    private String forwardedEndpoint;
+
+    @Mapping("originalEndpoint")
+    private String originalEndpoint;
+
+    @Mapping("simulateNetworkDelay")
+    private Boolean simulateNetworkDelay;
+
+    @Mapping("networkDelay")
+    private Long networkDelay;
+
+    @Mapping("arguments")
     private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
+    @Mapping("result")
+    private GraphQLResult result;
 
-    @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -69,7 +83,6 @@ public abstract class GraphQLOperation implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -78,7 +91,14 @@ public abstract class GraphQLOperation implements Saveable<String> {
         this.description = description;
     }
 
-    @XmlElement
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
+    }
+
     public GraphQLResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
@@ -87,7 +107,6 @@ public abstract class GraphQLOperation implements Saveable<String> {
         this.responseStrategy = responseStrategy;
     }
 
-    @XmlElement
     public GraphQLOperationStatus getStatus() {
         return status;
     }
@@ -96,63 +115,6 @@ public abstract class GraphQLOperation implements Saveable<String> {
         this.status = status;
     }
 
-    @XmlElement
-    public long getNetworkDelay() {
-        return networkDelay;
-    }
-
-    public void setNetworkDelay(long networkDelay) {
-        this.networkDelay = networkDelay;
-    }
-
-    @XmlElement
-    public HttpMethod getHttpMethod() {
-        return httpMethod;
-    }
-
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-    }
-
-    @XmlElement
-    public String getForwardedEndpoint() {
-        return forwardedEndpoint;
-    }
-
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
-
-    @XmlElement
-    public String getOriginalEndpoint() {
-        return originalEndpoint;
-    }
-
-    public void setOriginalEndpoint(String originalEndpoint) {
-        this.originalEndpoint = originalEndpoint;
-    }
-
-    @XmlElement
-    public boolean isSimulateNetworkDelay() {
-        return simulateNetworkDelay;
-    }
-
-    public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
-        this.simulateNetworkDelay = simulateNetworkDelay;
-    }
-
-
-    @XmlElement
-    public GraphQLResult getResult() {
-        return result;
-    }
-
-    public void setResult(GraphQLResult result) {
-        this.result = result;
-    }
-
-    @XmlElementWrapper(name = "arguments")
-    @XmlElement(name = "argument")
     public List<GraphQLArgument> getArguments() {
         return arguments;
     }
@@ -161,12 +123,51 @@ public abstract class GraphQLOperation implements Saveable<String> {
         this.arguments = arguments;
     }
 
-    @XmlElement
-    public String getApplicationId() {
-        return applicationId;
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setApplicationId(String applicationId) {
-        this.applicationId = applicationId;
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
+    }
+
+    public String getForwardedEndpoint() {
+        return forwardedEndpoint;
+    }
+
+    public void setForwardedEndpoint(String forwardedEndpoint) {
+        this.forwardedEndpoint = forwardedEndpoint;
+    }
+
+    public String getOriginalEndpoint() {
+        return originalEndpoint;
+    }
+
+    public void setOriginalEndpoint(String originalEndpoint) {
+        this.originalEndpoint = originalEndpoint;
+    }
+
+    public Boolean getSimulateNetworkDelay() {
+        return simulateNetworkDelay;
+    }
+
+    public void setSimulateNetworkDelay(Boolean simulateNetworkDelay) {
+        this.simulateNetworkDelay = simulateNetworkDelay;
+    }
+
+    public Long getNetworkDelay() {
+        return networkDelay;
+    }
+
+    public void setNetworkDelay(Long networkDelay) {
+        this.networkDelay = networkDelay;
+    }
+
+    public GraphQLResult getResult() {
+        return result;
+    }
+
+    public void setResult(GraphQLResult result) {
+        this.result = result;
     }
 }

@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.web.mvc.command.method;
 
 
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 
 import java.util.List;
 
@@ -29,14 +29,14 @@ import java.util.List;
  */
 public class UpdateRestMethodsEndpointCommand {
 
-    private List<RestMethodDto> restMethods;
+    private List<RestMethod> restMethods;
     private String forwardedEndpoint;
 
-    public List<RestMethodDto> getRestMethods() {
+    public List<RestMethod> getRestMethods() {
         return restMethods;
     }
 
-    public void setRestMethods(List<RestMethodDto> restMethods) {
+    public void setRestMethods(List<RestMethod> restMethods) {
         this.restMethods = restMethods;
     }
 

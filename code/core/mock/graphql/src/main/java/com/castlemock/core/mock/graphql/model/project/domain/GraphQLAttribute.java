@@ -17,41 +17,55 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import com.castlemock.core.basis.model.Saveable;
+import org.dozer.Mapping;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@XmlRootElement
-public class GraphQLAttribute implements Saveable<String> {
 
+public class GraphQLAttribute {
+
+    @Mapping("id")
     private String id;
+
+    @Mapping("name")
     private String name;
+
+    @Mapping("description")
     private String description;
-    private String typeId;
+
+    @Mapping("typeName")
     private String typeName;
+
+    @Mapping("typeId")
+    private String typeId;
+
+    @Mapping("nullable")
     private Boolean nullable;
+
+    @Mapping("listable")
     private Boolean listable;
-    private String objectTypeId;
+
+    @Mapping("value")
     private String value;
+
+    @Mapping("objectTypeId")
+    private String objectTypeId;
+
+    @Mapping("attributeType")
     private GraphQLAttributeType attributeType;
+
+    @Mapping("arguments")
     private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
-    @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -60,16 +74,6 @@ public class GraphQLAttribute implements Saveable<String> {
         this.name = name;
     }
 
-    @XmlElement
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -78,7 +82,6 @@ public class GraphQLAttribute implements Saveable<String> {
         this.description = description;
     }
 
-    @XmlElement
     public String getTypeId() {
         return typeId;
     }
@@ -87,7 +90,6 @@ public class GraphQLAttribute implements Saveable<String> {
         this.typeId = typeId;
     }
 
-    @XmlElement
     public String getTypeName() {
         return typeName;
     }
@@ -96,7 +98,6 @@ public class GraphQLAttribute implements Saveable<String> {
         this.typeName = typeName;
     }
 
-    @XmlElement
     public Boolean getNullable() {
         return nullable;
     }
@@ -105,7 +106,6 @@ public class GraphQLAttribute implements Saveable<String> {
         this.nullable = nullable;
     }
 
-    @XmlElement
     public Boolean getListable() {
         return listable;
     }
@@ -114,7 +114,22 @@ public class GraphQLAttribute implements Saveable<String> {
         this.listable = listable;
     }
 
-    @XmlElement
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getObjectTypeId() {
+        return objectTypeId;
+    }
+
+    public void setObjectTypeId(String objectTypeId) {
+        this.objectTypeId = objectTypeId;
+    }
+
     public GraphQLAttributeType getAttributeType() {
         return attributeType;
     }
@@ -123,22 +138,11 @@ public class GraphQLAttribute implements Saveable<String> {
         this.attributeType = attributeType;
     }
 
-    @XmlElementWrapper(name = "arguments")
-    @XmlElement(name = "argument")
     public List<GraphQLArgument> getArguments() {
         return arguments;
     }
 
     public void setArguments(List<GraphQLArgument> arguments) {
         this.arguments = arguments;
-    }
-
-    @XmlElement
-    public String getObjectTypeId() {
-        return objectTypeId;
-    }
-
-    public void setObjectTypeId(String objectTypeId) {
-        this.objectTypeId = objectTypeId;
     }
 }

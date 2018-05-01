@@ -19,7 +19,7 @@ package com.castlemock.web.basis.model.user.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
 
@@ -42,7 +42,7 @@ public class ReadUserByUsernameService extends AbstractUserService implements Se
     public ServiceResult<ReadUserByUsernameOutput> process(final ServiceTask<ReadUserByUsernameInput> serviceTask) {
         final ReadUserByUsernameInput input = serviceTask.getInput();
         final String username = input.getUsername();
-        final UserDto user = findByUsername(username);
+        final User user = findByUsername(username);
         return createServiceResult(new ReadUserByUsernameOutput(user));
     }
 }

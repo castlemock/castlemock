@@ -18,7 +18,7 @@ package com.castlemock.core.mock.soap.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 
 /**
  * @author Karl Dahlgren
@@ -28,11 +28,11 @@ public class ImportSoapResourceInput implements Input {
 
     private String projectId;
     @NotNull
-    private SoapResourceDto resource;
+    private SoapResource resource;
     @NotNull
     private String raw;
 
-    public ImportSoapResourceInput(final SoapResourceDto resource,
+    public ImportSoapResourceInput(final SoapResource resource,
                                    final String raw) {
         this.projectId = projectId;
         this.resource = resource;
@@ -40,7 +40,7 @@ public class ImportSoapResourceInput implements Input {
     }
 
     public ImportSoapResourceInput(final String projectId,
-                                   final SoapResourceDto resource,
+                                   final SoapResource resource,
                                    final String raw) {
         this.projectId = projectId;
         this.resource = resource;
@@ -55,11 +55,11 @@ public class ImportSoapResourceInput implements Input {
         this.projectId = projectId;
     }
 
-    public SoapResourceDto getResource() {
+    public SoapResource getResource() {
         return resource;
     }
 
-    public void setResource(SoapResourceDto resource) {
+    public void setResource(SoapResource resource) {
         this.resource = resource;
     }
 

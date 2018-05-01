@@ -19,7 +19,7 @@ package com.castlemock.web.basis.model.user.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.user.dto.UserDto;
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.UpdateUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.UpdateUserOutput;
 
@@ -42,7 +42,7 @@ public class UpdateUserService extends AbstractUserService implements Service<Up
     public ServiceResult<UpdateUserOutput> process(final ServiceTask<UpdateUserInput> serviceTask) {
         final UpdateUserInput input = serviceTask.getInput();
         final String userId = input.getUserId();
-        final UserDto user = input.getUser();
+        final User user = input.getUser();
         update(userId, user);
         return createServiceResult(new UpdateUserOutput(user));
     }

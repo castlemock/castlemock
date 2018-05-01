@@ -18,7 +18,7 @@ package com.castlemock.core.mock.soap.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 
 /**
  * @author Karl Dahlgren
@@ -31,9 +31,9 @@ public class UpdateSoapPortInput implements Input {
     @NotNull
     private String soapPortId;
     @NotNull
-    private SoapPortDto updatedSoapPort;
+    private SoapPort updatedSoapPort;
 
-    public UpdateSoapPortInput(String soapProjectId, String soapPortId, SoapPortDto updatedSoapPort) {
+    public UpdateSoapPortInput(String soapProjectId, String soapPortId, SoapPort updatedSoapPort) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
         this.updatedSoapPort = updatedSoapPort;
@@ -47,7 +47,7 @@ public class UpdateSoapPortInput implements Input {
         return soapPortId;
     }
 
-    public SoapPortDto getUpdatedSoapPort() {
+    public SoapPort getUpdatedSoapPort() {
         return updatedSoapPort;
     }
 }

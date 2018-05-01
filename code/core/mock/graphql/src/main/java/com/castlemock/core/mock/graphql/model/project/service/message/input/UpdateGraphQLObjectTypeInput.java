@@ -18,7 +18,7 @@ package com.castlemock.core.mock.graphql.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLObjectTypeDto;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
 
 /**
  * @author Karl Dahlgren
@@ -36,20 +36,20 @@ public class UpdateGraphQLObjectTypeInput implements Input {
     private final String objectTypeId;
 
     @NotNull
-    private final GraphQLObjectTypeDto objectType;
+    private final GraphQLObjectType objectType;
 
 
     public UpdateGraphQLObjectTypeInput(String projectId,
                                         String applicationId,
                                         String objectTypeId,
-                                        GraphQLObjectTypeDto objectType) {
+                                        GraphQLObjectType objectType) {
         this.projectId = projectId;
         this.applicationId = applicationId;
         this.objectTypeId = objectTypeId;
         this.objectType = objectType;
     }
 
-    public GraphQLObjectTypeDto getObjectType() {
+    public GraphQLObjectType getObjectType() {
         return objectType;
     }
 

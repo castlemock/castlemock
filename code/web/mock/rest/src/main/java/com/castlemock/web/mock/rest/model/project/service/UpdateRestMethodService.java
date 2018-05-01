@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestMethodOutput;
 
@@ -41,8 +41,8 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<UpdateRestMethodOutput> process(final ServiceTask<UpdateRestMethodInput> serviceTask) {
         final UpdateRestMethodInput input = serviceTask.getInput();
-        final RestMethodDto updatedRestMethod = input.getRestMethod();
-        final RestMethodDto existing = this.methodRepository.findOne(input.getRestMethodId());
+        final RestMethod updatedRestMethod = input.getRestMethod();
+        final RestMethod existing = this.methodRepository.findOne(input.getRestMethodId());
 
         existing.setCurrentResponseSequenceIndex(updatedRestMethod.getCurrentResponseSequenceIndex());
         existing.setName(updatedRestMethod.getName());

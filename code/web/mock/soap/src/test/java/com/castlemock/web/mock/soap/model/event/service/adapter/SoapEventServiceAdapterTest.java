@@ -18,14 +18,14 @@ package com.castlemock.web.mock.soap.model.event.service.adapter;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
-import com.castlemock.core.basis.model.event.dto.EventDto;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadAllSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.ReadAllSoapEventOutput;
 import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventOutput;
 import com.castlemock.web.mock.soap.model.SoapTypeIdentifier;
-import com.castlemock.web.mock.soap.model.event.SoapEventDtoGenerator;
+import com.castlemock.web.mock.soap.model.event.SoapEventGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,39 +56,39 @@ public class SoapEventServiceAdapterTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testCreate(){
-        final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapEventDto();
-        serviceAdapter.create(soapEventDto);
+        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        serviceAdapter.create(soapEvent);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testDelete(){
-        final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapEventDto();
-        serviceAdapter.delete(soapEventDto.getProjectId());
+        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        serviceAdapter.delete(soapEvent.getProjectId());
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testUpdate(){
-        final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapEventDto();
-        serviceAdapter.update(soapEventDto.getProjectId(), soapEventDto);
+        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        serviceAdapter.update(soapEvent.getProjectId(), soapEvent);
     }
 
     @Test
     public void testReadAll(){
-        final List<SoapEventDto> soapEventDtos = new ArrayList<SoapEventDto>();
+        final List<SoapEvent> soapEvents = new ArrayList<SoapEvent>();
         for(int index = 0; index < 3; index++){
-            final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapEventDto();
-            soapEventDtos.add(soapEventDto);
+            final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+            soapEvents.add(soapEvent);
 
         }
 
-        final ReadAllSoapEventOutput output = new ReadAllSoapEventOutput(soapEventDtos);
+        final ReadAllSoapEventOutput output = new ReadAllSoapEventOutput(soapEvents);
         Mockito.when(serviceProcessor.process(Mockito.any(ReadAllSoapEventInput.class))).thenReturn(output);
 
-        final List<SoapEventDto> returnedSoapEventDtos = serviceAdapter.readAll();
+        final List<SoapEvent> returnedSoapEvents = serviceAdapter.readAll();
 
         for(int index = 0; index < 3; index++){
-            final SoapEventDto soapEvent = soapEventDtos.get(index);
-            final SoapEventDto returnedSoapEvent = returnedSoapEventDtos.get(index);
+            final SoapEvent soapEvent = soapEvents.get(index);
+            final SoapEvent returnedSoapEvent = returnedSoapEvents.get(index);
 
             Assert.assertEquals(soapEvent.getId(), returnedSoapEvent.getId());
             Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
@@ -99,11 +99,11 @@ public class SoapEventServiceAdapterTest {
 
     @Test
     public void testRead(){
-        final SoapEventDto soapEvent = SoapEventDtoGenerator.generateSoapEventDto();
+        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
         final ReadSoapEventOutput output = new ReadSoapEventOutput(soapEvent);
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapEventInput.class))).thenReturn(output);
 
-        final SoapEventDto returnedSoapEvent = serviceAdapter.read(soapEvent.getId());
+        final SoapEvent returnedSoapEvent = serviceAdapter.read(soapEvent.getId());
 
         Assert.assertEquals(soapEvent.getId(), returnedSoapEvent.getId());
         Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
@@ -122,19 +122,19 @@ public class SoapEventServiceAdapterTest {
 
     @Test
     public void testConvertType(){
-        EventDto eventDto = SoapEventDtoGenerator.generateSoapEventDto();
-        SoapEventDto returnedSoapEventDto = serviceAdapter.convertType(eventDto);
-        Assert.assertEquals(eventDto.getId(), returnedSoapEventDto.getId());
-        Assert.assertEquals(eventDto.getEndDate(), returnedSoapEventDto.getEndDate());
-        Assert.assertEquals(eventDto.getResourceLink(), returnedSoapEventDto.getResourceLink());
-        Assert.assertEquals(eventDto.getStartDate(), returnedSoapEventDto.getStartDate());
-        Assert.assertEquals(eventDto.getResourceName(), returnedSoapEventDto.getResourceName());
+        Event event = SoapEventGenerator.generateSoapEvent();
+        SoapEvent returnedSoapEvent = serviceAdapter.convertType(event);
+        Assert.assertEquals(event.getId(), returnedSoapEvent.getId());
+        Assert.assertEquals(event.getEndDate(), returnedSoapEvent.getEndDate());
+        Assert.assertEquals(event.getResourceLink(), returnedSoapEvent.getResourceLink());
+        Assert.assertEquals(event.getStartDate(), returnedSoapEvent.getStartDate());
+        Assert.assertEquals(event.getResourceName(), returnedSoapEvent.getResourceName());
     }
 
     @Test
     public void testGenerateResourceLink(){
-        final SoapEventDto soapEventDto = SoapEventDtoGenerator.generateSoapEventDto();
-        final String generatedResourceLink = serviceAdapter.generateResourceLink(soapEventDto);
-        Assert.assertEquals("/web/soap/project/" + soapEventDto.getProjectId() + "/port/" + soapEventDto.getPortId() + "/operation/" + soapEventDto.getOperationId(), generatedResourceLink);
+        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        final String generatedResourceLink = serviceAdapter.generateResourceLink(soapEvent);
+        Assert.assertEquals("/web/soap/project/" + soapEvent.getProjectId() + "/port/" + soapEvent.getPortId() + "/operation/" + soapEvent.getOperationId(), generatedResourceLink);
     }
 }

@@ -20,7 +20,6 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.ServiceFacade;
 import com.castlemock.core.basis.model.project.domain.Project;
-import com.castlemock.core.basis.model.project.dto.ProjectDto;
 
 import java.util.List;
 
@@ -33,9 +32,8 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  * @see Project
- * @see ProjectDto
  */
-public interface ProjectServiceFacade extends ServiceFacade<ProjectDto, String> {
+public interface ProjectServiceFacade extends ServiceFacade<Project, String> {
 
     /**
      * The method provides the functionality to export a project and convert it to a String
@@ -51,7 +49,7 @@ public interface ProjectServiceFacade extends ServiceFacade<ProjectDto, String> 
      * @param rawProject The imported project file
      * @return The imported project
      */
-    ProjectDto importProject(String type, String rawProject);
+    Project importProject(String type, String rawProject);
 
     /**
      * Searches for resources that matches the provided query. The matching resources will

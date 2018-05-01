@@ -19,19 +19,18 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLQuery;
-import com.castlemock.core.mock.graphql.model.project.dto.GraphQLQueryDto;
-import com.castlemock.web.basis.model.RepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class GraphQLQueryRepositoryImpl extends RepositoryImpl<GraphQLQuery, GraphQLQueryDto, String> implements GraphQLQueryRepository {
+public class GraphQLQueryRepositoryImpl extends AbstractGraphQLOperationFileRepository<GraphQLQueryRepositoryImpl.GraphQLQueryFile, GraphQLQuery> implements GraphQLQueryRepository {
 
     @Autowired
     private MessageSource messageSource;
@@ -76,7 +75,7 @@ public class GraphQLQueryRepositoryImpl extends RepositoryImpl<GraphQLQuery, Gra
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLQuery type) {
+    protected void checkType(GraphQLQueryFile type) {
 
     }
 
@@ -92,12 +91,12 @@ public class GraphQLQueryRepositoryImpl extends RepositoryImpl<GraphQLQuery, Gra
     }
 
     @Override
-    public List<GraphQLQueryDto> findWithApplicationId(final String projectId) {
-        final List<GraphQLQueryDto> queries = new ArrayList<>();
-        for(GraphQLQuery query : this.collection.values()){
+    public List<GraphQLQuery> findWithApplicationId(final String projectId) {
+        final List<GraphQLQuery> queries = new ArrayList<>();
+        for(GraphQLQueryFile query : this.collection.values()){
             if(query.getApplicationId().equals(projectId)){
-                GraphQLQueryDto applicationDto = this.mapper.map(query, GraphQLQueryDto.class);
-                queries.add(applicationDto);
+                GraphQLQuery application = this.mapper.map(query, GraphQLQuery.class);
+                queries.add(application);
             }
         }
         return queries;
@@ -105,12 +104,23 @@ public class GraphQLQueryRepositoryImpl extends RepositoryImpl<GraphQLQuery, Gra
 
     @Override
     public void deleteWithApplicationId(final String applicationId) {
-        Iterator<GraphQLQuery> iterator = this.collection.values().iterator();
+        Iterator<GraphQLQueryFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            GraphQLQuery query = iterator.next();
+            GraphQLQueryFile query = iterator.next();
             if(query.getApplicationId().equals(applicationId)){
                 delete(query.getId());
             }
         }
     }
+
+
+    /**
+     * @author Karl Dahlgren
+     * @since 1.19
+     */
+    @XmlRootElement(name = "graphQLQuery")
+    protected static class GraphQLQueryFile extends AbstractGraphQLOperationFileRepository.GraphQLOperationFile {
+
+    }
+
 }

@@ -18,12 +18,12 @@ package com.castlemock.web.mock.rest.web.rest.controller;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.basis.model.http.dto.HttpHeaderDto;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
-import com.castlemock.core.mock.rest.model.project.dto.RestMockResponseDto;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.service.message.input.IdentifyRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
 import com.castlemock.web.basis.web.AbstractController;
@@ -87,7 +87,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethodDto restMethod = getMockedRestMethod();
+        final RestMethod restMethod = getMockedRestMethod();
 
         restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
 
@@ -114,7 +114,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethodDto restMethod = getMockedRestMethod();
+        final RestMethod restMethod = getMockedRestMethod();
 
         restMethod.setResponseStrategy(RestResponseStrategy.SEQUENCE);
 
@@ -137,7 +137,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethodDto restMethod = getMockedRestMethod();
+        final RestMethod restMethod = getMockedRestMethod();
 
         restMethod.setStatus(RestMethodStatus.ECHO);
 
@@ -234,18 +234,18 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         return httpServletResponse;
     }
 
-    private RestMethodDto getMockedRestMethod(){
+    private RestMethod getMockedRestMethod(){
 
-        final HttpHeaderDto contentTypeHeader = new HttpHeaderDto();
+        final HttpHeader contentTypeHeader = new HttpHeader();
         contentTypeHeader.setName(CONTENT_TYPE_HEADER);
         contentTypeHeader.setValue(APPLICATION_XML);
 
-        final HttpHeaderDto acceptHeader = new HttpHeaderDto();
+        final HttpHeader acceptHeader = new HttpHeader();
         acceptHeader.setName(ACCEPT_HEADER);
         acceptHeader.setValue(APPLICATION_XML);
 
         // Mock
-        final RestMockResponseDto restMockResponse = new RestMockResponseDto();
+        final RestMockResponse restMockResponse = new RestMockResponse();
         restMockResponse.setBody(RESPONSE_BODY);
         restMockResponse.setContentEncodings(new ArrayList<>());
         restMockResponse.setHttpHeaders(Arrays.asList(contentTypeHeader, acceptHeader));
@@ -256,7 +256,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         restMockResponse.setUsingExpressions(false);
 
 
-        final RestMethodDto restMethod = new RestMethodDto();
+        final RestMethod restMethod = new RestMethod();
         restMethod.setCurrentResponseSequenceIndex(0);
         restMethod.setForwardedEndpoint(FORWARD_ENDPOINT);
         restMethod.setHttpMethod(HttpMethod.GET);

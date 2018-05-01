@@ -17,7 +17,7 @@
 package com.castlemock.core.mock.soap.model.event.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.soap.model.event.dto.SoapEventDto;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 
 import java.util.List;
 
@@ -27,17 +27,17 @@ import java.util.List;
  */
 public class ReadSoapEventsByOperationIdOutput implements Output {
 
-    private List<SoapEventDto> soapEvents;
+    private List<SoapEvent> soapEvents;
 
-    public ReadSoapEventsByOperationIdOutput(List<SoapEventDto> soapEvents) {
+    public ReadSoapEventsByOperationIdOutput(List<SoapEvent> soapEvents) {
         this.soapEvents = soapEvents;
     }
 
-    public List<SoapEventDto> getSoapEvents() {
+    public List<SoapEvent> getSoapEvents() {
         return soapEvents;
     }
 
-    public void setSoapEvents(List<SoapEventDto> soapEvents) {
+    public void setSoapEvents(List<SoapEvent> soapEvents) {
         this.soapEvents = soapEvents;
     }
 }
