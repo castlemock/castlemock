@@ -22,7 +22,7 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ImportRestProjectOutput;
-import com.castlemock.web.mock.rest.legacy.repository.project.v1.RestProjectLegacyRepository;
+import com.castlemock.web.mock.rest.legacy.repository.project.v1.RestProjectV1LegacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -33,7 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ImportRestProjectService extends AbstractRestProjectService implements Service<ImportRestProjectInput, ImportRestProjectOutput> {
 
     @Autowired
-    private RestProjectLegacyRepository legacyRepository;
+    private RestProjectV1LegacyRepository legacyRepository;
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate

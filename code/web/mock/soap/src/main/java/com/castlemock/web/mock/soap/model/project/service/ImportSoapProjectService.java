@@ -22,7 +22,7 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ImportSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ImportSoapProjectOutput;
-import com.castlemock.web.mock.soap.legacy.repository.project.v1.SoapProjectLegacyRepository;
+import com.castlemock.web.mock.soap.legacy.repository.project.v1.SoapProjectV1LegacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -33,7 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ImportSoapProjectService extends AbstractSoapProjectService implements Service<ImportSoapProjectInput, ImportSoapProjectOutput> {
 
     @Autowired
-    private SoapProjectLegacyRepository legacyRepository;
+    private SoapProjectV1LegacyRepository legacyRepository;
 
 
     /**
