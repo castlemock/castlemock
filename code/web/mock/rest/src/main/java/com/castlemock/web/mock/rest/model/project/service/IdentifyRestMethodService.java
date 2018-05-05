@@ -55,7 +55,7 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
             final List<RestMethod> methods = this.methodRepository.findWithResourceId(restResource.getId());
             for(RestMethod restMethod : methods){
                 if(input.getHttpMethod().equals(restMethod.getHttpMethod())) {
-                    foundRestMethod = foundRestMethod;
+                    foundRestMethod = restMethod;
                     break;
                 }
             }
