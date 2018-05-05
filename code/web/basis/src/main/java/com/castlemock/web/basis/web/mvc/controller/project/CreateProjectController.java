@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /**
  * The CreateProjectController controller provides functionality to
  * create a new project
@@ -57,7 +59,13 @@ public class CreateProjectController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(PROJECT_TYPES, projectServiceFacade.getTypes());
+        final List<String> types = projectServiceFacade.getTypes();
+
+        // Temporary.
+        // GraphQL is currently only in a beta mode.
+        types.remove("GRAPHQL");
+
+        model.addObject(PROJECT_TYPES, types);
         model.addObject(COMMAND, new CreateProjectCommand());
         return model;
     }
