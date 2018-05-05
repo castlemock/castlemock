@@ -18,7 +18,6 @@ package com.castlemock.core.mock.graphql.model.event.domain;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import org.dozer.Mapping;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
@@ -30,19 +29,10 @@ import java.util.List;
 @XmlRootElement
 public class GraphQLResponse {
 
-    @Mapping("body")
     private String body;
-
-    @Mapping("httpStatusCode")
     private Integer httpStatusCode;
-
-    @Mapping("contentType")
     private String contentType;
-
-    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders;
-
-    @Mapping("contentEncodings")
     private List<ContentEncoding> contentEncodings;
 
     public String getBody() {

@@ -28,7 +28,6 @@ import java.util.Date;
 @XmlRootElement
 public class User {
 
-
     private String id;
     private String username;
     private String password;

@@ -24,6 +24,7 @@ import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.repository.ConfigurationRepository;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.google.common.base.Preconditions;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -104,8 +105,11 @@ public class ConfigurationRepositoryImpl extends RepositoryImpl<ConfigurationRep
     @XmlRootElement(name = "configuration")
     protected static class ConfigurationFile {
 
+        @Mapping("key")
         private String key;
+        @Mapping("value")
         private String value;
+        @Mapping("type")
         private ConfigurationType type;
 
         /**
@@ -168,8 +172,11 @@ public class ConfigurationRepositoryImpl extends RepositoryImpl<ConfigurationRep
     @XmlRootElement(name = "configurationGroup")
     protected static class ConfigurationGroupFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("configurations")
         private List<ConfigurationFile> configurations;
 
         /**

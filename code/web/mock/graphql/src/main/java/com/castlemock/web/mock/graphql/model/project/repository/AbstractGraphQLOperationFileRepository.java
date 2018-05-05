@@ -4,6 +4,7 @@ import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.graphql.model.project.domain.*;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -22,18 +23,31 @@ public abstract class AbstractGraphQLOperationFileRepository<T extends AbstractG
     @XmlSeeAlso({GraphQLQueryRepositoryImpl.GraphQLQueryFile.class, GraphQLMutation.class, GraphQLSubscription.class})
     protected static abstract class GraphQLOperationFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("description")
         private String description;
+        @Mapping("applicationId")
         private String applicationId;
+        @Mapping("networkDelay")
         private long networkDelay;
+        @Mapping("httpMethod")
         private HttpMethod httpMethod;
+        @Mapping("forwardedEndpoint")
         private String forwardedEndpoint;
+        @Mapping("originalEndpoint")
         private String originalEndpoint;
+        @Mapping("simulateNetworkDelay")
         private boolean simulateNetworkDelay;
+        @Mapping("status")
         private GraphQLOperationStatus status;
+        @Mapping("responseStrategy")
         private GraphQLResponseStrategy responseStrategy;
+        @Mapping("result")
         private GraphQLResultFile result;
+        @Mapping("arguments")
         private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
 
@@ -162,11 +176,17 @@ public abstract class AbstractGraphQLOperationFileRepository<T extends AbstractG
     @XmlRootElement
     protected static class GraphQLResultFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("typeName")
         private String typeName;
+        @Mapping("typeId")
         private String typeId;
+        @Mapping("nullable")
         private Boolean nullable;
+        @Mapping("listable")
         private Boolean listable;
+        @Mapping("attributeType")
         private GraphQLAttributeType attributeType;
 
         @Override

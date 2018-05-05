@@ -16,25 +16,15 @@
 
 package com.castlemock.core.mock.soap.model.project.domain;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
-import org.dozer.Mapping;
-
 /**
  * @author Karl Dahlgren
  * @since 1.16
  */
 public class SoapResource {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("type")
     private SoapResourceType type;
-
-    @Mapping("projectId")
     private String projectId;
 
     public String getId() {

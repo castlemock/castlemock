@@ -18,8 +18,6 @@ package com.castlemock.core.mock.graphql.model.event.domain;
 
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperation;
-import org.dozer.Mapping;
-
 import java.util.Date;
 
 /**
@@ -28,16 +26,9 @@ import java.util.Date;
  */
 public class GraphQLEvent extends Event {
 
-    @Mapping("request")
     private GraphQLRequest request;
-
-    @Mapping("response")
     private GraphQLResponse response;
-
-    @Mapping("projectId")
     private String projectId;
-
-    @Mapping("applicationId")
     private String applicationId;
 
     /**

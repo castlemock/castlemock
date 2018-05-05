@@ -17,45 +17,22 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import org.dozer.Mapping;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class GraphQLAttribute {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("description")
     private String description;
-
-    @Mapping("typeName")
     private String typeName;
-
-    @Mapping("typeId")
     private String typeId;
-
-    @Mapping("nullable")
     private Boolean nullable;
-
-    @Mapping("listable")
     private Boolean listable;
-
-    @Mapping("value")
     private String value;
-
-    @Mapping("objectTypeId")
     private String objectTypeId;
-
-    @Mapping("attributeType")
     private GraphQLAttributeType attributeType;
-
-    @Mapping("arguments")
     private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
     public String getId() {

@@ -14,17 +14,11 @@
  * limitations under the License.
  */
 
-
 package com.castlemock.core.mock.graphql.model.project.domain;
-
-import org.dozer.Mapping;
 
 public class GraphQLEnumValueDefinition {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
 
     public String getId() {

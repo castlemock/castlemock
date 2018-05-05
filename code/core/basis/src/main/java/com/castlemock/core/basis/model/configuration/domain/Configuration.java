@@ -16,10 +16,6 @@
 
 package com.castlemock.core.basis.model.configuration.domain;
 
-import com.castlemock.core.basis.model.configuration.domain.Configuration;
-import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
-import org.dozer.Mapping;
-
 /**
  * The configuration DTO is a DTO (Data transfer object) class for the configuration class. The configuration class
  * represent an individual configuration and contains both the identifier (key) and the value
@@ -29,13 +25,13 @@ import org.dozer.Mapping;
  */
 public class Configuration {
 
-    @Mapping("key")
+
     private String key;
 
-    @Mapping("value")
+
     private String value;
 
-    @Mapping("type")
+
     private ConfigurationType type;
 
     /**

@@ -18,8 +18,6 @@ package com.castlemock.core.mock.soap.model.event.domain;
 
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import org.dozer.Mapping;
-
 import java.util.Date;
 
 /**
@@ -28,19 +26,10 @@ import java.util.Date;
  */
 public class SoapEvent extends Event {
 
-    @Mapping("request")
     private SoapRequest request;
-
-    @Mapping("response")
     private SoapResponse response;
-
-    @Mapping("projectId")
     private String projectId;
-
-    @Mapping("portId")
     private String portId;
-
-    @Mapping("operationId")
     private String operationId;
 
     /**

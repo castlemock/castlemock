@@ -18,7 +18,6 @@ package com.castlemock.core.basis.model.event.domain;
 
 import com.castlemock.core.basis.model.TypeIdentifiable;
 import com.castlemock.core.basis.model.TypeIdentifier;
-import org.dozer.Mapping;
 
 import java.util.Date;
 
@@ -30,20 +29,11 @@ import java.util.Date;
  */
 public class Event implements TypeIdentifiable {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("resourceName")
     private String resourceName;
-
-    @Mapping("startDate")
     private Date startDate;
-
-    @Mapping("endDate")
     private Date endDate;
-
     private TypeIdentifier typeIdentifier;
-
     private String resourceLink;
 
     /**

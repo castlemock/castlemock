@@ -18,8 +18,6 @@ package com.castlemock.core.mock.soap.model.event.domain;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import org.dozer.Mapping;
-
 import java.util.List;
 
 /**
@@ -29,22 +27,11 @@ import java.util.List;
 
 public class SoapResponse {
 
-    @Mapping("body")
     private String body;
-
-    @Mapping("mockResponseName")
     private String mockResponseName;
-
-    @Mapping("httpStatusCode")
     private Integer httpStatusCode;
-
-    @Mapping("contentType")
     private String contentType;
-
-    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders;
-
-    @Mapping("contentEncodings")
     private List<ContentEncoding> contentEncodings;
 
     public String getBody() {

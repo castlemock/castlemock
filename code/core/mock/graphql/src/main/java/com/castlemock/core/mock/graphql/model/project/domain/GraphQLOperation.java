@@ -17,8 +17,6 @@
 package com.castlemock.core.mock.graphql.model.project.domain;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import org.dozer.Mapping;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -28,43 +26,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class GraphQLOperation {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("description")
     private String description;
-
-    @Mapping("applicationId")
     private String applicationId;
-
-    @Mapping("responseStrategy")
     private GraphQLResponseStrategy responseStrategy;
-
-    @Mapping("status")
     private GraphQLOperationStatus status;
-
-    @Mapping("httpMethod")
     private HttpMethod httpMethod;
-
-    @Mapping("forwardedEndpoint")
     private String forwardedEndpoint;
-
-    @Mapping("originalEndpoint")
     private String originalEndpoint;
-
-    @Mapping("simulateNetworkDelay")
     private Boolean simulateNetworkDelay;
-
-    @Mapping("networkDelay")
     private Long networkDelay;
-
-    @Mapping("arguments")
     private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
-
-    @Mapping("result")
     private GraphQLResult result;
 
     public String getId() {

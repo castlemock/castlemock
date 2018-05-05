@@ -16,9 +16,6 @@
 
 package com.castlemock.core.basis.model.configuration.domain;
 
-import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import org.dozer.Mapping;
-
 import java.util.List;
 
 /**
@@ -32,13 +29,13 @@ import java.util.List;
  */
 public class ConfigurationGroup {
 
-    @Mapping("id")
+
     private String id;
 
-    @Mapping("name")
+
     private String name;
 
-    @Mapping("configurations")
+
     private List<Configuration> configurations;
 
     /**

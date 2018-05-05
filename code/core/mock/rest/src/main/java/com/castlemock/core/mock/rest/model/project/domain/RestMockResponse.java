@@ -18,7 +18,6 @@ package com.castlemock.core.mock.rest.model.project.domain;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import org.dozer.Mapping;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -28,31 +27,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class RestMockResponse {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("body")
     private String body;
-
-    @Mapping("methodId")
     private String methodId;
-
-    @Mapping("httpStatusCode")
     private Integer httpStatusCode;
-
-    @Mapping("status")
     private RestMockResponseStatus status;
-
-    @Mapping("usingExpressions")
     private boolean usingExpressions;
-
-    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
-
-    @Mapping("contentEncodings")
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
 
     public String getId() {

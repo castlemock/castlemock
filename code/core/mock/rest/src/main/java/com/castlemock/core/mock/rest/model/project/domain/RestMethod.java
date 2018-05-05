@@ -17,7 +17,6 @@
 package com.castlemock.core.mock.rest.model.project.domain;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import org.dozer.Mapping;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -28,37 +27,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class RestMethod {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("resourceId")
     private String resourceId;
-
-    @Mapping("defaultBody")
     private String defaultBody;
-
-    @Mapping("httpMethod")
     private HttpMethod httpMethod;
-
-    @Mapping("forwardedEndpoint")
     private String forwardedEndpoint;
-
-    @Mapping("status")
     private RestMethodStatus status;
-
-    @Mapping("responseStrategy")
     private RestResponseStrategy responseStrategy;
-
-    @Mapping("currentResponseSequenceIndex")
     private Integer currentResponseSequenceIndex = 0;
-
-    @Mapping("simulateNetworkDelay")
     private boolean simulateNetworkDelay;
-
-    @Mapping("networkDelay")
     private long networkDelay;
 
     private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();

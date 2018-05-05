@@ -17,8 +17,6 @@
 package com.castlemock.core.mock.soap.model.project.domain;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import org.dozer.Mapping;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -28,49 +26,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class SoapOperation {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("identifier")
     private String identifier;
-
-    @Mapping("responseStrategy")
     private SoapResponseStrategy responseStrategy;
-
-    @Mapping("status")
     private SoapOperationStatus status;
-
-    @Mapping("httpMethod")
     private HttpMethod httpMethod;
-
-    @Mapping("soapVersion")
     private SoapVersion soapVersion;
-
-    @Mapping("defaultBody")
     private String defaultBody;
-
-    @Mapping("currentResponseSequenceIndex")
     private Integer currentResponseSequenceIndex;
-
-    @Mapping("forwardedEndpoint")
     private String forwardedEndpoint;
-
-    @Mapping("originalEndpoint")
     private String originalEndpoint;
-
-    @Mapping("simulateNetworkDelay")
     private Boolean simulateNetworkDelay;
-
-    @Mapping("networkDelay")
     private Long networkDelay;
-
-    @Mapping("defaultXPathMockResponseId")
     private String defaultXPathMockResponseId;
-
-    @Mapping("portId")
     private String portId;
 
     private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<SoapMockResponse>();

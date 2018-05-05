@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -120,9 +121,13 @@ public class GraphQLApplicationRepositoryImpl extends RepositoryImpl<GraphQLAppl
     @XmlRootElement(name = "graphQLApplication")
     protected static class GraphQLApplicationFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("description")
         private String description;
+        @Mapping("projectId")
         private String projectId;
 
         @Override

@@ -18,7 +18,6 @@ package com.castlemock.core.mock.soap.model.project.domain;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import org.dozer.Mapping;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -28,36 +27,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class SoapMockResponse {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("body")
     private String body;
-
-    @Mapping("operationId")
     private String operationId;
-
-    @Mapping("status")
     private SoapMockResponseStatus status;
-
-    @Mapping("httpStatusCode")
     private Integer httpStatusCode;
-
-    @Mapping("usingExpressions")
     private boolean usingExpressions;
-
-    @Mapping("xpathExpression")
     private String xpathExpression;
-  
-    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
-
-    @Mapping("contentEncodings")
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
-
 
     public String getId() {
         return id;

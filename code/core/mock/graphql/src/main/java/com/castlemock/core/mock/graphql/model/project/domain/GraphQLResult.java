@@ -14,31 +14,15 @@
  * limitations under the License.
  */
 
-
 package com.castlemock.core.mock.graphql.model.project.domain;
-
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
-import org.dozer.Mapping;
-
 
 public class GraphQLResult {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("typeName")
     private String typeName;
-
-    @Mapping("typeId")
     private String typeId;
-
-    @Mapping("nullable")
     private Boolean nullable;
-
-    @Mapping("listable")
     private Boolean listable;
-
-    @Mapping("attributeType")
     private GraphQLAttributeType attributeType;
 
     public String getId() {

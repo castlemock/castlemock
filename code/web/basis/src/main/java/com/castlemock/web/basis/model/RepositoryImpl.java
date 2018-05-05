@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.xml.bind.JAXBContext;
@@ -390,7 +391,9 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
     @XmlRootElement(name = "httpHeader")
     protected static class HttpHeaderFile {
 
+        @Mapping("name")
         private String name;
+        @Mapping("value")
         private String value;
 
         @XmlElement
@@ -415,7 +418,9 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
     @XmlRootElement(name = "httpParameter")
     protected static class HttpParameterFile {
 
+        @Mapping("name")
         private String name;
+        @Mapping("value")
         private String value;
 
         @XmlElement

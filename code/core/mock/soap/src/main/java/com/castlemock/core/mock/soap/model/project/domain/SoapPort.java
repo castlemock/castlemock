@@ -16,8 +16,6 @@
 
 package com.castlemock.core.mock.soap.model.project.domain;
 
-import org.dozer.Mapping;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,16 +27,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class SoapPort {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("uri")
     private String uri;
-
-    @Mapping("projectId")
     private String projectId;
 
     private List<SoapOperation> operations = new CopyOnWriteArrayList<SoapOperation>();

@@ -19,8 +19,6 @@ package com.castlemock.core.mock.soap.model.event.domain;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
-import org.dozer.Mapping;
-
 import java.util.List;
 
 /**
@@ -29,28 +27,13 @@ import java.util.List;
  */
 public class SoapRequest {
 
-    @Mapping("body")
     private String body;
-
-    @Mapping("contentType")
     private String contentType;
-
-    @Mapping("uri")
     private String uri;
-
-    @Mapping("httpMethod")
     private HttpMethod httpMethod;
-
-    @Mapping("operationName")
     private String operationName;
-
-    @Mapping("operationIdentifier")
     private String operationIdentifier;
-
-    @Mapping("soapVersion")
     private SoapVersion soapVersion;
-
-    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders;
 
     public String getBody() {

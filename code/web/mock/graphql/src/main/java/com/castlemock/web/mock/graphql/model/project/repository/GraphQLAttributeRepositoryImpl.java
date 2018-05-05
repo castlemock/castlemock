@@ -23,6 +23,7 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLArgument;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttribute;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -139,16 +140,27 @@ public class GraphQLAttributeRepositoryImpl extends RepositoryImpl<GraphQLAttrib
     @XmlRootElement(name = "graphQLAttribute")
     protected static class GraphQLAttributeFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("description")
         private String description;
+        @Mapping("typeId")
         private String typeId;
+        @Mapping("typeName")
         private String typeName;
+        @Mapping("nullable")
         private Boolean nullable;
+        @Mapping("listable")
         private Boolean listable;
+        @Mapping("objectTypeId")
         private String objectTypeId;
+        @Mapping("value")
         private String value;
+        @Mapping("attributeType")
         private GraphQLAttributeType attributeType;
+        @Mapping("arguments")
         private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
         @Override

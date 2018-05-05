@@ -26,6 +26,7 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.castlemock.web.basis.model.event.repository.AbstractEventFileRepository;
 import com.google.common.base.Preconditions;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -142,9 +143,13 @@ public class GraphQLEventRepositoryImpl extends AbstractEventFileRepository<Grap
     @XmlRootElement(name = "graphQLEvent")
     protected static class GraphQLEventFile extends AbstractEventFileRepository.EventFile {
 
+        @Mapping("request")
         private GraphQLRequestFile request;
+        @Mapping("response")
         private GraphQLResponseFile response;
+        @Mapping("projectId")
         private String projectId;
+        @Mapping("applicationId")
         private String applicationId;
 
         @XmlElement
@@ -188,11 +193,17 @@ public class GraphQLEventRepositoryImpl extends AbstractEventFileRepository<Grap
     @XmlRootElement(name = "graphQLRequest")
     protected static class GraphQLRequestFile {
 
+        @Mapping("body")
         private String body;
+        @Mapping("contentType")
         private String contentType;
+        @Mapping("uri")
         private String uri;
+        @Mapping("httpMethod")
         private HttpMethod httpMethod;
+        @Mapping("queries")
         private List<GraphQLRequestQuery> queries;
+        @Mapping("httpHeaders")
         private List<RepositoryImpl.HttpHeaderFile> httpHeaders;
 
         @XmlElement
@@ -257,10 +268,15 @@ public class GraphQLEventRepositoryImpl extends AbstractEventFileRepository<Grap
     @XmlRootElement(name = "graphQLResponse")
     protected static class GraphQLResponseFile {
 
+        @Mapping("body")
         private String body;
+        @Mapping("httpStatusCode")
         private Integer httpStatusCode;
+        @Mapping("contentType")
         private String contentType;
+        @Mapping("httpHeaders")
         private List<RepositoryImpl.HttpHeaderFile> httpHeaders;
+        @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings;
 
         @XmlElement

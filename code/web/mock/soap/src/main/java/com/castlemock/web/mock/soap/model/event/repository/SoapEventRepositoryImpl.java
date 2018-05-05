@@ -26,6 +26,7 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.castlemock.web.basis.model.event.repository.AbstractEventFileRepository;
 import com.google.common.base.Preconditions;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -180,10 +181,15 @@ public class SoapEventRepositoryImpl extends AbstractEventFileRepository<SoapEve
     @XmlRootElement(name = "soapEvent")
     protected static class SoapEventFile extends AbstractEventFileRepository.EventFile {
 
+        @Mapping("request")
         private SoapRequestFile request;
+        @Mapping("response")
         private SoapResponseFile response;
+        @Mapping("projectId")
         private String projectId;
+        @Mapping("portId")
         private String portId;
+        @Mapping("operationId")
         private String operationId;
 
 
@@ -238,13 +244,21 @@ public class SoapEventRepositoryImpl extends AbstractEventFileRepository<SoapEve
     @XmlRootElement(name = "soapRequest")
     protected static class SoapRequestFile {
 
+        @Mapping("body")
         private String body;
+        @Mapping("contentType")
         private String contentType;
+        @Mapping("uri")
         private String uri;
+        @Mapping("httpMethod")
         private HttpMethod httpMethod;
+        @Mapping("operationName")
         private String operationName;
+        @Mapping("operationIdentifier")
         private String operationIdentifier;
+        @Mapping("soapVersion")
         private SoapVersion soapVersion;
+        @Mapping("httpHeaders")
         private List<RepositoryImpl.HttpHeaderFile> httpHeaders;
 
         @XmlElement
@@ -325,11 +339,17 @@ public class SoapEventRepositoryImpl extends AbstractEventFileRepository<SoapEve
     @XmlRootElement(name = "soapResponse")
     protected static class SoapResponseFile {
 
+        @Mapping("body")
         private String body;
+        @Mapping("mockResponseName")
         private String mockResponseName;
+        @Mapping("httpStatusCode")
         private Integer httpStatusCode;
+        @Mapping("contentType")
         private String contentType;
+        @Mapping("httpHeaders")
         private List<RepositoryImpl.HttpHeaderFile> httpHeaders;
+        @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings;
 
         @XmlElement

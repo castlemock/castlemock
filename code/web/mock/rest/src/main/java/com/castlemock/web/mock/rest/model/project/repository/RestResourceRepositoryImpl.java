@@ -23,6 +23,7 @@ import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -153,9 +154,13 @@ public class RestResourceRepositoryImpl extends RepositoryImpl<RestResourceRepos
     @XmlRootElement(name = "restResource")
     protected static class RestResourceFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("uri")
         private String uri;
+        @Mapping("applicationId")
         private String applicationId;
 
         @Override

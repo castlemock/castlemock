@@ -26,6 +26,7 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -174,20 +175,35 @@ public class SoapOperationRepositoryImpl extends RepositoryImpl<SoapOperationRep
     @XmlRootElement(name = "soapOperation")
     protected static class SoapOperationFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("identifier")
         private String identifier;
+        @Mapping("portId")
         private String portId;
+        @Mapping("responseStrategy")
         private SoapResponseStrategy responseStrategy;
+        @Mapping("status")
         private SoapOperationStatus status;
+        @Mapping("httpMethod")
         private HttpMethod httpMethod;
+        @Mapping("soapVersion")
         private SoapVersion soapVersion;
+        @Mapping("defaultBody")
         private String defaultBody;
+        @Mapping("currentResponseSequenceIndex")
         private Integer currentResponseSequenceIndex;
+        @Mapping("forwardedEndpoint")
         private String forwardedEndpoint;
+        @Mapping("originalEndpoint")
         private String originalEndpoint;
+        @Mapping("defaultXPathMockResponseId")
         private String defaultXPathMockResponseId;
+        @Mapping("simulateNetworkDelay")
         private boolean simulateNetworkDelay;
+        @Mapping("networkDelay")
         private long networkDelay;
 
         @XmlElement

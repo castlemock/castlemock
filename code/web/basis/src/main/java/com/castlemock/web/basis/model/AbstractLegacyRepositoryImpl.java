@@ -23,14 +23,10 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @org.springframework.stereotype.Repository
 public abstract class AbstractLegacyRepositoryImpl<T extends Saveable<I>, D, I extends Serializable> implements LegacyRepository<T, D, I> {
@@ -42,8 +38,6 @@ public abstract class AbstractLegacyRepositoryImpl<T extends Saveable<I>, D, I e
 
     private Class<T> entityClass;
 
-    private Class<D> dtoClass;
-
     /**
      * The default constructor for the AbstractRepositoryImpl class. The constructor will extract class instances of the
      * generic types (TYPE and ID). These instances could later be used to identify the types for when interacting
@@ -52,25 +46,7 @@ public abstract class AbstractLegacyRepositoryImpl<T extends Saveable<I>, D, I e
     public AbstractLegacyRepositoryImpl() {
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-        this.dtoClass = (Class<D>) genericSuperclass.getActualTypeArguments()[1];
     }
-
-    /**
-     * The method provides the functionality to convert a Collection of TYPE instances into a list of DTO instances
-     * @param types The collection that will be converted into a list of DTO
-     * @param clazz CLass of the DTO type (D)
-     * @param <T> The type that the operation is managing
-     * @param <D> The DTO (Data transfer object) version of the type (TYPE)
-     * @return The provided collection but converted into the DTO class
-     */
-    protected <T, D> List toDtoList(final Collection<T> types, Class<D> clazz) {
-        final List<D> dtos = new ArrayList<D>();
-        for (T type : types) {
-            dtos.add(mapper.map(type, clazz));
-        }
-        return dtos;
-    }
-
 
     /**
      * The method provides the functionality to import a entity as a String

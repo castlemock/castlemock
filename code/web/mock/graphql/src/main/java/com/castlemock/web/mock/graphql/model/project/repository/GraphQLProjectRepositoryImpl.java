@@ -27,6 +27,7 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestField
 import com.castlemock.web.basis.model.project.repository.AbstractProjectFileRepository;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -183,9 +184,13 @@ public class GraphQLProjectRepositoryImpl extends AbstractProjectFileRepository<
     @XmlRootElement(name = "graphQLRequestQuery")
     protected static class GraphQLRequestQueryFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("operationName")
         private String operationName;
+        @Mapping("fields")
         private List<GraphQLRequestField> fields = new CopyOnWriteArrayList<GraphQLRequestField>();
+        @Mapping("arguments")
         private List<GraphQLRequestArgument> arguments = new CopyOnWriteArrayList<GraphQLRequestArgument>();
 
         @Override
@@ -350,7 +355,9 @@ public class GraphQLProjectRepositoryImpl extends AbstractProjectFileRepository<
     @XmlRootElement(name = "graphQLRequestArgument")
     protected static class GraphQLRequestArgumentFile {
 
+        @Mapping("name")
         private String name;
+        @Mapping("arguments")
         private List<GraphQLRequestArgumentFile> arguments = new CopyOnWriteArrayList<GraphQLRequestArgumentFile>();
 
         @XmlElement
@@ -376,7 +383,9 @@ public class GraphQLProjectRepositoryImpl extends AbstractProjectFileRepository<
     @XmlRootElement(name = "graphQLRequestField")
     public class GraphQLRequestFieldFile {
 
+        @Mapping("name")
         private String name;
+        @Mapping("fields")
         private List<GraphQLRequestFieldFile> fields = new CopyOnWriteArrayList<GraphQLRequestFieldFile>();
 
         @XmlElement
@@ -403,14 +412,23 @@ public class GraphQLProjectRepositoryImpl extends AbstractProjectFileRepository<
     @XmlRootElement(name = "graphQLArgument")
     protected static class GraphQLArgumentFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("description")
         private String description;
+        @Mapping("typeName")
         private String typeName;
+        @Mapping("typeId")
         private String typeId;
+        @Mapping("defaultValue")
         private Object defaultValue;
+        @Mapping("nullable")
         private Boolean nullable;
+        @Mapping("listable")
         private Boolean listable;
+        @Mapping("attributeType")
         private GraphQLAttributeType attributeType;
 
         @Override

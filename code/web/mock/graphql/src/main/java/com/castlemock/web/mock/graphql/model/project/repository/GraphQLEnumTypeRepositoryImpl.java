@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumValueDefinition;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumType;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -121,6 +122,7 @@ public class GraphQLEnumTypeRepositoryImpl extends AbstractGraphQLTypeFileReposi
     @XmlRootElement(name = "graphQLEnumType")
     protected static class GraphQLEnumTypeFile extends AbstractGraphQLTypeFileRepository.GraphQLTypeFile {
 
+        @Mapping("definitions")
         private List<GraphQLEnumValueDefinitionFile> definitions
                 = new CopyOnWriteArrayList<GraphQLEnumValueDefinitionFile>();
 
@@ -139,7 +141,9 @@ public class GraphQLEnumTypeRepositoryImpl extends AbstractGraphQLTypeFileReposi
     @XmlRootElement(name = "graphQLEnumValueDefinition")
     protected static class GraphQLEnumValueDefinitionFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
 
         @Override

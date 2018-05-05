@@ -19,8 +19,6 @@ package com.castlemock.core.mock.rest.model.event.domain;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpParameter;
-import org.dozer.Mapping;
-
 import java.util.List;
 
 /**
@@ -29,22 +27,11 @@ import java.util.List;
  */
 public class RestRequest {
 
-    @Mapping("body")
     private String body;
-
-    @Mapping("contentType")
     private String contentType;
-
-    @Mapping("uri")
     private String uri;
-
-    @Mapping("httpMethod")
     private HttpMethod httpMethod;
-
-    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders;
-
-    @Mapping("httpParameters")
     private List<HttpParameter> httpParameters;
 
     public String getBody() {

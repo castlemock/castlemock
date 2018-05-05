@@ -24,6 +24,7 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -146,16 +147,27 @@ public class RestMethodRepositoryImpl extends RepositoryImpl<RestMethodRepositor
     @XmlRootElement(name = "restMethod")
     protected static class RestMethodFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("resourceId")
         private String resourceId;
+        @Mapping("defaultBody")
         private String defaultBody;
+        @Mapping("httpMethod")
         private HttpMethod httpMethod;
+        @Mapping("forwardedEndpoint")
         private String forwardedEndpoint;
+        @Mapping("status")
         private RestMethodStatus status;
+        @Mapping("responseStrategy")
         private RestResponseStrategy responseStrategy;
+        @Mapping("currentResponseSequenceIndex")
         private Integer currentResponseSequenceIndex;
+        @Mapping("simulateNetworkDelay")
         private boolean simulateNetworkDelay;
+        @Mapping("networkDelay")
         private long networkDelay;
 
         @Override

@@ -17,17 +17,13 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import org.dozer.Mapping;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GraphQLEnumType extends GraphQLType {
 
-    @Mapping("definitions")
     private List<GraphQLEnumValueDefinition> definitions
             = new CopyOnWriteArrayList<GraphQLEnumValueDefinition>();
-
 
     public List<GraphQLEnumValueDefinition> getDefinitions() {
         return definitions;

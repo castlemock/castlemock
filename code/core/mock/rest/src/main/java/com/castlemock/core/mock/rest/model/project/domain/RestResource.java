@@ -16,8 +16,6 @@
 
 package com.castlemock.core.mock.rest.model.project.domain;
 
-import org.dozer.Mapping;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,16 +27,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class RestResource {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("uri")
     private String uri;
-
-    @Mapping("applicationId")
     private String applicationId;
 
     private List<RestMethod> methods = new CopyOnWriteArrayList<RestMethod>();

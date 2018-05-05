@@ -24,6 +24,7 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -134,14 +135,23 @@ public class RestMockResponseRepositoryImpl extends RepositoryImpl<RestMockRespo
     @XmlRootElement(name = "restMockResponse")
     protected static class RestMockResponseFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("body")
         private String body;
+        @Mapping("methodId")
         private String methodId;
+        @Mapping("status")
         private RestMockResponseStatus status;
+        @Mapping("httpStatusCode")
         private Integer httpStatusCode;
+        @Mapping("usingExpressions")
         private boolean usingExpressions;
+        @Mapping("httpHeaders")
         private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+        @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
 
         @Override

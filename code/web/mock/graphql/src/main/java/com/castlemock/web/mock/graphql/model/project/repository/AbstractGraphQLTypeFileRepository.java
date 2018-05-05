@@ -2,6 +2,7 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -11,9 +12,13 @@ public abstract class AbstractGraphQLTypeFileRepository<T extends AbstractGraphQ
     @XmlRootElement(name = "graphQLType")
     protected static abstract class GraphQLTypeFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("description")
         private String description;
+        @Mapping("applicationId")
         private String applicationId;
 
         @Override

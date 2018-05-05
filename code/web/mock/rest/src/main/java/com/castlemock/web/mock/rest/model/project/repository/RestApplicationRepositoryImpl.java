@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -129,8 +130,11 @@ public class RestApplicationRepositoryImpl extends RepositoryImpl<RestApplicatio
     @XmlRootElement(name = "restApplication")
     protected static class RestApplicationFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("projectId")
         private String projectId;
 
         @Override

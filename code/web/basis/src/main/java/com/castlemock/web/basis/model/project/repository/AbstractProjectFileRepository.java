@@ -2,6 +2,7 @@ package com.castlemock.web.basis.model.project.repository;
 
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,10 +13,19 @@ public abstract class AbstractProjectFileRepository<T extends AbstractProjectFil
     @XmlRootElement(name = "project")
     public static abstract class ProjectFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+
+        @Mapping("name")
         private String name;
+
+        @Mapping("updated")
         private String description;
+
+        @Mapping("created")
         private Date updated;
+
+        @Mapping("description")
         private Date created;
 
         @XmlElement

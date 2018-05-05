@@ -18,8 +18,6 @@ package com.castlemock.core.basis.model.project.domain;
 
 import com.castlemock.core.basis.model.TypeIdentifiable;
 import com.castlemock.core.basis.model.TypeIdentifier;
-import org.dozer.Mapping;
-
 import java.util.Date;
 
 /**
@@ -30,19 +28,10 @@ import java.util.Date;
 public class Project implements TypeIdentifiable {
 
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("updated")
     private Date updated;
-
-    @Mapping("created")
     private Date created;
-
-    @Mapping("description")
     private String description;
 
     private TypeIdentifier typeIdentifier;

@@ -26,6 +26,7 @@ import com.castlemock.web.basis.model.RepositoryImpl;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -248,9 +249,13 @@ public class SoapResourceRepositoryImpl extends RepositoryImpl<SoapResourceRepos
     @XmlRootElement(name = "soapResource")
     protected static class SoapResourceFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("projectId")
         private String projectId;
+        @Mapping("type")
         private SoapResourceType type;
 
         @XmlElement

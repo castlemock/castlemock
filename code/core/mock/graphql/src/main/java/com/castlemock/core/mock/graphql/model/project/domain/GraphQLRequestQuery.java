@@ -16,8 +16,6 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import org.dozer.Mapping;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -27,16 +25,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class GraphQLRequestQuery {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("operationName")
     private String operationName;
-
-    @Mapping("fields")
     private List<GraphQLRequestField> fields = new CopyOnWriteArrayList<GraphQLRequestField>();
-
-    @Mapping("arguments")
     private List<GraphQLRequestArgument> arguments = new CopyOnWriteArrayList<GraphQLRequestArgument>();
 
     public String getId() {

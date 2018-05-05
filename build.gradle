@@ -49,6 +49,7 @@ subprojects {
     ext.cxfVersion = "3.2.1"
     ext.springfoxVersion = "2.8.0"
     ext.graphqlVersion = "8.0"
+    ext.commonsLangVersion = "3.7"
 
 	compileJava {
 		sourceCompatibility = 1.8
@@ -63,10 +64,6 @@ subprojects {
 	dependencies {
         compile(group: 'com.google.guava', name: 'guava', version: guavaVersion)
         compile(group: 'log4j', name: 'log4j', version: log4jVersion)
-        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
-            exclude(group:'org.slf4j', module:'slf4j-log4j12')
-            exclude(group:'log4j', module:'log4j')
-        }
         testCompile(group: 'org.mockito', name: 'mockito-all', version: mockitoVersion)
         testCompile(group: 'junit', name: 'junit', version: junitVersion) {
             exclude(group:'org.hamcrest', module:'hamcrest-core')
@@ -109,6 +106,8 @@ project(':code:core:basis') {
 
     dependencies {
         compile(project(":code:core:expression"))
+        compile(group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion)
+
     }
 
 }
@@ -164,6 +163,11 @@ project(':code:web:basis') {
         compile(group: 'io.springfox', name: 'springfox-swagger2', version: springfoxVersion)
         compile(group: 'io.springfox', name: 'springfox-swagger-ui', version: springfoxVersion)
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+
+        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
+            exclude(group:'org.slf4j', module:'slf4j-log4j12')
+            exclude(group:'log4j', module:'log4j')
+        }
     }
 }
 

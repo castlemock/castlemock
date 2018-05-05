@@ -2,6 +2,7 @@ package com.castlemock.web.basis.model.event.repository;
 
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,9 +13,13 @@ public abstract class AbstractEventFileRepository<T extends AbstractEventFileRep
     @XmlRootElement(name = "event")
     public static abstract class EventFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("resourceName")
         private String resourceName;
+        @Mapping("startDate")
         private Date startDate;
+        @Mapping("endDate")
         private Date endDate;
 
         public EventFile() {

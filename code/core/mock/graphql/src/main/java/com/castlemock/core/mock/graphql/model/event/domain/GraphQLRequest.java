@@ -19,8 +19,6 @@ package com.castlemock.core.mock.graphql.model.event.domain;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
-import org.dozer.Mapping;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -31,22 +29,11 @@ import java.util.List;
 @XmlRootElement
 public class GraphQLRequest {
 
-    @Mapping("body")
     private String body;
-
-    @Mapping("contentType")
     private String contentType;
-
-    @Mapping("uri")
     private String uri;
-
-    @Mapping("httpMethod")
     private HttpMethod httpMethod;
-
-    @Mapping("queries")
     private List<GraphQLRequestQuery> queries;
-
-    @Mapping("httpHeaders")
     private List<HttpHeader> httpHeaders;
 
     public String getBody() {

@@ -16,8 +16,6 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
-import org.dozer.Mapping;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,16 +25,9 @@ import java.util.List;
  */
 public class GraphQLApplication {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("description")
     private String description;
-
-    @Mapping("projectId")
     private String projectId;
 
     private List<GraphQLObjectType> objects = new ArrayList<>();

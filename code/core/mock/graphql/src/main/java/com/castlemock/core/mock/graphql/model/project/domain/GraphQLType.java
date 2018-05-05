@@ -14,24 +14,13 @@
  * limitations under the License.
  */
 
-
 package com.castlemock.core.mock.graphql.model.project.domain;
-
-import org.dozer.Mapping;
-
 
 public abstract class GraphQLType {
 
-    @Mapping("id")
     private String id;
-
-    @Mapping("name")
     private String name;
-
-    @Mapping("description")
     private String description;
-
-    @Mapping("applicationId")
     private String applicationId;
 
     public String getId() {

@@ -247,11 +247,17 @@ public class RestEventRepositoryImpl extends AbstractEventFileRepository<RestEve
     @XmlRootElement(name = "restRequest")
     protected static class RestRequestFile {
 
+        @Mapping("body")
         private String body;
+        @Mapping("contentType")
         private String contentType;
+        @Mapping("uri")
         private String uri;
+        @Mapping("httpMethod")
         private HttpMethod httpMethod;
+        @Mapping("httpParameters")
         private List<RepositoryImpl.HttpParameterFile> httpParameters;
+        @Mapping("httpHeaders")
         private List<RepositoryImpl.HttpHeaderFile> httpHeaders;
 
         @XmlElement
@@ -314,11 +320,17 @@ public class RestEventRepositoryImpl extends AbstractEventFileRepository<RestEve
     @XmlRootElement(name = "restResponse")
     protected static class RestResponseFile {
 
+        @Mapping("body")
         private String body;
+        @Mapping("mockResponseName")
         private String mockResponseName;
+        @Mapping("httpStatusCode")
         private Integer httpStatusCode;
+        @Mapping("contentType")
         private String contentType;
+        @Mapping("httpHeaders")
         private List<RepositoryImpl.HttpHeaderFile> httpHeaders;
+        @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings;
 
         @XmlElement

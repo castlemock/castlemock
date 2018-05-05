@@ -25,6 +25,7 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.web.basis.model.RepositoryImpl;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -150,15 +151,25 @@ public class SoapMockResponseRepositoryImpl extends RepositoryImpl<SoapMockRespo
     @XmlRootElement(name = "soapMockResponse")
     protected static class SoapMockResponseFile implements Saveable<String> {
 
+        @Mapping("id")
         private String id;
+        @Mapping("name")
         private String name;
+        @Mapping("body")
         private String body;
+        @Mapping("operationId")
         private String operationId;
+        @Mapping("status")
         private SoapMockResponseStatus status;
+        @Mapping("httpStatusCode")
         private Integer httpStatusCode;
+        @Mapping("usingExpressions")
         private boolean usingExpressions;
+        @Mapping("xpathExpression")
         private String xpathExpression;
+        @Mapping("httpHeaders")
         private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+        @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
 
         @XmlElement

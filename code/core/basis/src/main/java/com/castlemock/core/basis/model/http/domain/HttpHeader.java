@@ -16,18 +16,13 @@
 
 package com.castlemock.core.basis.model.http.domain;
 
-import org.dozer.Mapping;
-
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 public class HttpHeader {
 
-    @Mapping("name")
     private String name;
-
-    @Mapping("value")
     private String value;
 
     public String getName() {
