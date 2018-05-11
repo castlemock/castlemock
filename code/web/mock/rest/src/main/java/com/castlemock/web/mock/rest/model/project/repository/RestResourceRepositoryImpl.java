@@ -19,6 +19,7 @@ package com.castlemock.web.mock.rest.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
@@ -31,6 +32,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -88,8 +90,15 @@ public class RestResourceRepositoryImpl extends RepositoryImpl<RestResourceRepos
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<RestResource> search(SearchQuery query) {
+        final List<RestResource> result = new LinkedList<RestResource>();
+        for(RestResourceFile restResourceFile : collection.values()){
+            if(SearchValidator.validate(restResourceFile.getName(), query.getQuery())){
+                RestResource restResource = mapper.map(restResourceFile, RestResource.class);
+                result.add(restResource);
+            }
+        }
+        return result;
     }
 
     /**
@@ -149,6 +158,24 @@ public class RestResourceRepositoryImpl extends RepositoryImpl<RestResourceRepos
             }
         }
         return null;
+    }
+
+    /**
+     * Retrieve the {@link RestApplication} id
+     * for the {@link RestResource} with the provided id.
+     *
+     * @param resourceId The id of the {@link RestResource}.
+     * @return The id of the application.
+     * @since 1.20
+     */
+    @Override
+    public String getApplicationId(String resourceId) {
+        final RestResourceFile resourceFile = this.collection.get(resourceId);
+
+        if(resourceFile == null){
+            throw new IllegalArgumentException("Unable to find a resource with the following id: " + resourceId);
+        }
+        return resourceFile.getApplicationId();
     }
 
     @XmlRootElement(name = "restResource")

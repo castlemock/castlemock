@@ -61,4 +61,14 @@ public interface SoapResourceRepository extends Repository<SoapResource, String>
      */
     Collection<SoapResource> findSoapResources(String soapProjectId, SoapResourceType type);
 
+
+    /**
+     * Retrieve the {@link com.castlemock.core.mock.soap.model.project.domain.SoapProject} id
+     * for the {@link SoapResource} with the provided id.
+     * @param portId The id of the {@link SoapResource}.
+     * @return The id of the project.
+     * @since 1.20
+     */
+    String getProjectId(String portId);
+
 }

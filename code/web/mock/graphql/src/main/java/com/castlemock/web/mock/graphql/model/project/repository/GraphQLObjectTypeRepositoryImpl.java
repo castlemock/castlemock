@@ -18,7 +18,9 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
+import com.castlemock.web.mock.graphql.converter.schema.GraphQLObjectTypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -86,8 +89,15 @@ public class GraphQLObjectTypeRepositoryImpl extends AbstractGraphQLTypeFileRepo
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<GraphQLObjectType> search(SearchQuery query) {
+        final List<GraphQLObjectType> result = new LinkedList<GraphQLObjectType>();
+        for(GraphQLObjectTypeFile graphQLObjectTypeFile : collection.values()){
+            if(SearchValidator.validate(graphQLObjectTypeFile.getName(), query.getQuery())){
+                GraphQLObjectType graphQLObjectType = mapper.map(graphQLObjectTypeFile, GraphQLObjectType.class);
+                result.add(graphQLObjectType);
+            }
+        }
+        return result;
     }
 
     @Override

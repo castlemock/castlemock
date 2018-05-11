@@ -19,6 +19,7 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumValueDefinition;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumType;
 import org.dozer.Mapping;
@@ -32,6 +33,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -92,8 +94,15 @@ public class GraphQLEnumTypeRepositoryImpl extends AbstractGraphQLTypeFileReposi
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<GraphQLEnumType> search(SearchQuery query) {
+        final List<GraphQLEnumType> result = new LinkedList<GraphQLEnumType>();
+        for(GraphQLEnumTypeFile graphQLEnumTypeFile : collection.values()){
+            if(SearchValidator.validate(graphQLEnumTypeFile.getName(), query.getQuery())){
+                GraphQLEnumType graphQLEnumType = mapper.map(graphQLEnumTypeFile, GraphQLEnumType.class);
+                result.add(graphQLEnumType);
+            }
+        }
+        return result;
     }
 
     @Override

@@ -111,7 +111,7 @@ public class GraphQLEventRepositoryImpl extends AbstractEventFileRepository<Grap
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
+    public List<GraphQLEvent> search(SearchQuery query) {
         throw new UnsupportedOperationException();
     }
 

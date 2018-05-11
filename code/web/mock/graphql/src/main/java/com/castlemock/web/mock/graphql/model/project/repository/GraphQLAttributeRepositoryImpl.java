@@ -19,6 +19,7 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLArgument;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttribute;
@@ -34,6 +35,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -110,8 +112,15 @@ public class GraphQLAttributeRepositoryImpl extends RepositoryImpl<GraphQLAttrib
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<GraphQLAttribute> search(SearchQuery query) {
+        final List<GraphQLAttribute> result = new LinkedList<GraphQLAttribute>();
+        for(GraphQLAttributeFile graphQLAttributeFile : collection.values()){
+            if(SearchValidator.validate(graphQLAttributeFile.getName(), query.getQuery())){
+                GraphQLAttribute graphQLAttribute = mapper.map(graphQLAttributeFile, GraphQLAttribute.class);
+                result.add(graphQLAttribute);
+            }
+        }
+        return result;
     }
 
     @Override

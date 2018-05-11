@@ -19,7 +19,9 @@ package com.castlemock.web.mock.rest.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -87,8 +90,15 @@ public class RestApplicationRepositoryImpl extends RepositoryImpl<RestApplicatio
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<RestApplication> search(SearchQuery query) {
+        final List<RestApplication> result = new LinkedList<RestApplication>();
+        for(RestApplicationFile restApplicationFile : collection.values()){
+            if(SearchValidator.validate(restApplicationFile.getName(), query.getQuery())){
+                RestApplication restApplication = mapper.map(restApplicationFile, RestApplication.class);
+                result.add(restApplication);
+            }
+        }
+        return result;
     }
 
     /**
@@ -125,6 +135,24 @@ public class RestApplicationRepositoryImpl extends RepositoryImpl<RestApplicatio
             }
         }
         return applications;
+    }
+
+    /**
+     * Retrieve the {@link RestProject} id
+     * for the {@link RestApplication} with the provided id.
+     *
+     * @param applicationId The id of the {@link RestApplication}.
+     * @return The id of the project.
+     * @since 1.20
+     */
+    @Override
+    public String getProjectId(String applicationId) {
+        final RestApplicationFile applicationFile = this.collection.get(applicationId);
+
+        if(applicationFile == null){
+            throw new IllegalArgumentException("Unable to find an application with the following id: " + applicationId);
+        }
+        return applicationFile.getProjectId();
     }
 
     @XmlRootElement(name = "restApplication")

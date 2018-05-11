@@ -38,4 +38,12 @@ public interface RestMockResponseRepository extends Repository<RestMockResponse,
      */
     List<RestMockResponse> findWithMethodId(String methodId);
 
+    /**
+     * Retrieve the {@link com.castlemock.core.mock.rest.model.project.domain.RestMethod} id
+     * for the {@link RestMockResponse} with the provided id.
+     * @param mockResponseId The id of the {@link RestMockResponse}.
+     * @return The id of the method.
+     * @since 1.20
+     */
+    String getMethodId(String mockResponseId);
 }

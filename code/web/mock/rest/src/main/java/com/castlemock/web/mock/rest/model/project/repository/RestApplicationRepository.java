@@ -38,4 +38,13 @@ public interface RestApplicationRepository extends Repository<RestApplication, S
      */
     List<RestApplication> findWithProjectId(String projectId);
 
+    /**
+     * Retrieve the {@link com.castlemock.core.mock.rest.model.project.domain.RestProject} id
+     * for the {@link RestApplication} with the provided id.
+     * @param applicationId The id of the {@link RestApplication}.
+     * @return The id of the project.
+     * @since 1.20
+     */
+    String getProjectId(String applicationId);
+
 }

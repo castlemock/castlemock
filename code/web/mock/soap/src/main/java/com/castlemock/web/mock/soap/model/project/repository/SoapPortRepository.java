@@ -41,4 +41,13 @@ public interface SoapPortRepository extends Repository<SoapPort, String> {
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
     SoapPort findWithUri(String projectId, String uri);
+
+    /**
+     * Retrieve the {@link com.castlemock.core.mock.soap.model.project.domain.SoapProject} id
+     * for the {@link SoapPort} with the provided id.
+     * @param portId The id of the {@link SoapPort}.
+     * @return The id of the project.
+     * @since 1.20
+     */
+    String getProjectId(String portId);
 }

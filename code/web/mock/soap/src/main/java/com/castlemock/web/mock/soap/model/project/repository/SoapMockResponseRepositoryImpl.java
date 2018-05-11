@@ -20,10 +20,12 @@ package com.castlemock.web.mock.soap.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +36,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -121,8 +124,15 @@ public class SoapMockResponseRepositoryImpl extends RepositoryImpl<SoapMockRespo
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<SoapMockResponse> search(SearchQuery query) {
+        final List<SoapMockResponse> result = new LinkedList<SoapMockResponse>();
+        for(SoapMockResponseFile soapMockResponseFile : collection.values()){
+            if(SearchValidator.validate(soapMockResponseFile.getName(), query.getQuery())){
+                SoapMockResponse mockResponse = mapper.map(soapMockResponseFile, SoapMockResponse.class);
+                result.add(mockResponse);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -146,6 +156,24 @@ public class SoapMockResponseRepositoryImpl extends RepositoryImpl<SoapMockRespo
             }
         }
         return mockResponses;
+    }
+
+    /**
+     * Retrieve the {@link SoapOperation} id
+     * for the {@link SoapMockResponse} with the provided id.
+     *
+     * @param mockResponseId The id of the {@link SoapMockResponse}.
+     * @return The id of the operation.
+     * @since 1.20
+     */
+    @Override
+    public String getOperationId(String mockResponseId) {
+        final SoapMockResponseFile mockResponse = this.collection.get(mockResponseId);
+
+        if(mockResponse == null){
+            throw new IllegalArgumentException("Unable to find a mock response with the following id: " + mockResponseId);
+        }
+        return mockResponse.getOperationId();
     }
 
     @XmlRootElement(name = "soapMockResponse")

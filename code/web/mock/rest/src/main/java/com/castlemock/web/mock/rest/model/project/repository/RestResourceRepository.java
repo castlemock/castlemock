@@ -52,6 +52,13 @@ public interface RestResourceRepository extends Repository<RestResource, String>
      */
     RestResource findRestResourceByUri(String applicationId, String resourceUri);
 
-
+    /**
+     * Retrieve the {@link com.castlemock.core.mock.rest.model.project.domain.RestApplication} id
+     * for the {@link RestResource} with the provided id.
+     * @param resourceId The id of the {@link RestResource}.
+     * @return The id of the application.
+     * @since 1.20
+     */
+    String getApplicationId(String resourceId);
 
 }

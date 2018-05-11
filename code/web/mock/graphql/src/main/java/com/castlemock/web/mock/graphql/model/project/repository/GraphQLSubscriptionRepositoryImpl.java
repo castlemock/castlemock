@@ -18,6 +18,7 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLSubscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -86,8 +88,15 @@ public class GraphQLSubscriptionRepositoryImpl extends AbstractGraphQLOperationF
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<GraphQLSubscription> search(SearchQuery query) {
+        final List<GraphQLSubscription> result = new LinkedList<GraphQLSubscription>();
+        for(GraphQLSubscriptionFile graphQLSubscriptionFile : collection.values()){
+            if(SearchValidator.validate(graphQLSubscriptionFile.getName(), query.getQuery())){
+                GraphQLSubscription graphQLSubscription = mapper.map(graphQLSubscriptionFile, GraphQLSubscription.class);
+                result.add(graphQLSubscription);
+            }
+        }
+        return result;
     }
 
     @Override

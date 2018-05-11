@@ -20,6 +20,8 @@ package com.castlemock.web.mock.soap.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.web.basis.model.RepositoryImpl;
@@ -34,10 +36,7 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class SoapResourceRepositoryImpl extends RepositoryImpl<SoapResourceRepositoryImpl.SoapResourceFile, SoapResource, String> implements SoapResourceRepository {
@@ -101,8 +100,15 @@ public class SoapResourceRepositoryImpl extends RepositoryImpl<SoapResourceRepos
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<SoapResource> search(SearchQuery query) {
+        final List<SoapResource> result = new LinkedList<SoapResource>();
+        for(SoapResourceFile soapResourceFile : collection.values()){
+            if(SearchValidator.validate(soapResourceFile.getName(), query.getQuery())){
+                SoapResource soapResource = mapper.map(soapResourceFile, SoapResource.class);
+                result.add(soapResource);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -244,6 +250,24 @@ public class SoapResourceRepositoryImpl extends RepositoryImpl<SoapResourceRepos
 
         }
         return soapResources;
+    }
+
+    /**
+     * Retrieve the {@link SoapProject} id
+     * for the {@link SoapResource} with the provided id.
+     *
+     * @param portId The id of the {@link SoapResource}.
+     * @return The id of the project.
+     * @since 1.20
+     */
+    @Override
+    public String getProjectId(String portId) {
+        final SoapResourceFile resourceFile = this.collection.get(portId);
+
+        if(resourceFile == null){
+            throw new IllegalArgumentException("Unable to find a resource with the following id: " + portId);
+        }
+        return resourceFile.getProjectId();
     }
 
     @XmlRootElement(name = "soapResource")

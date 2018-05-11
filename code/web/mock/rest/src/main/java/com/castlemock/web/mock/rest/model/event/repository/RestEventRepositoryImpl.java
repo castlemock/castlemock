@@ -150,7 +150,7 @@ public class RestEventRepositoryImpl extends AbstractEventFileRepository<RestEve
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
+    public List<RestEvent> search(SearchQuery query) {
         throw new UnsupportedOperationException();
     }
 

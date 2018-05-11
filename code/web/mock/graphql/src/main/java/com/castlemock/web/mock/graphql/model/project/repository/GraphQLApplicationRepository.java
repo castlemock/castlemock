@@ -27,4 +27,13 @@ public interface GraphQLApplicationRepository extends Repository<GraphQLApplicat
 
     void deleteWithProjectId(String projectId);
 
+    /**
+     * Retrieve the {@link com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject} id
+     * for the {@link GraphQLApplication} with the provided id.
+     * @param applicationId The id of the {@link GraphQLApplication}.
+     * @return The id of the project.
+     * @since 1.20
+     */
+    String getProjectId(String applicationId);
+
 }

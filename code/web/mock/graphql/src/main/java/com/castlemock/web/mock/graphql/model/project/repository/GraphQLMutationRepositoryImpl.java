@@ -18,6 +18,7 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLMutation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -86,8 +88,15 @@ public class GraphQLMutationRepositoryImpl extends AbstractGraphQLOperationFileR
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<GraphQLMutation> search(SearchQuery query) {
+        final List<GraphQLMutation> result = new LinkedList<GraphQLMutation>();
+        for(GraphQLMutationFile graphQLMutationFile : collection.values()){
+            if(SearchValidator.validate(graphQLMutationFile.getName(), query.getQuery())){
+                GraphQLMutation graphQLMutation = mapper.map(graphQLMutationFile, GraphQLMutation.class);
+                result.add(graphQLMutation);
+            }
+        }
+        return result;
     }
 
     @Override

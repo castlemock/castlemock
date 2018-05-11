@@ -19,8 +19,10 @@ package com.castlemock.web.mock.rest.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.web.basis.model.RepositoryImpl;
@@ -33,6 +35,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -91,8 +94,15 @@ public class RestMockResponseRepositoryImpl extends RepositoryImpl<RestMockRespo
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<RestMockResponse> search(SearchQuery query) {
+        final List<RestMockResponse> result = new LinkedList<RestMockResponse>();
+        for(RestMockResponseFile restMockResponseFile : collection.values()){
+            if(SearchValidator.validate(restMockResponseFile.getName(), query.getQuery())){
+                RestMockResponse restMockResponse = mapper.map(restMockResponseFile, RestMockResponse.class);
+                result.add(restMockResponse);
+            }
+        }
+        return result;
     }
 
     /**
@@ -129,6 +139,24 @@ public class RestMockResponseRepositoryImpl extends RepositoryImpl<RestMockRespo
             }
         }
         return applications;
+    }
+
+    /**
+     * Retrieve the {@link RestMethod} id
+     * for the {@link RestMockResponse} with the provided id.
+     *
+     * @param mockResponseId The id of the {@link RestMockResponse}.
+     * @return The id of the method.
+     * @since 1.20
+     */
+    @Override
+    public String getMethodId(String mockResponseId) {
+        final RestMockResponseFile mockResponseFile = this.collection.get(mockResponseId);
+
+        if(mockResponseFile == null){
+            throw new IllegalArgumentException("Unable to find a mock response with the following id: " + mockResponseId);
+        }
+        return mockResponseFile.getMethodId();
     }
 
 

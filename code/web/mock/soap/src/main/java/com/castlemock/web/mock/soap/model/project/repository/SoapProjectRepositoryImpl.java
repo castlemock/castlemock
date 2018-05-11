@@ -19,20 +19,16 @@ package com.castlemock.web.mock.soap.model.project.repository;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
-import com.castlemock.core.mock.soap.model.project.domain.*;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import com.castlemock.web.basis.model.project.repository.AbstractProjectFileRepository;
-import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.google.common.base.Preconditions;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -46,24 +42,6 @@ import java.util.*;
 @Repository
 public class SoapProjectRepositoryImpl extends AbstractProjectFileRepository<SoapProjectRepositoryImpl.SoapProjectFile, SoapProject> implements SoapProjectRepository {
 
-    private static final String SLASH = "/";
-    private static final String SOAP = "soap";
-    private static final String PROJECT = "project";
-    private static final String PORT = "port";
-    private static final String OPERATION = "operation";
-    private static final String RESPONSE = "response";
-    private static final String COMMA = ", ";
-    private static final String SOAP_TYPE = "SOAP";
-    private static final String WSDL_DIRECTORY = "wsdl";
-    private static final String SCHEMA_DIRECTORY = "wsdl";
-
-    private static final Logger LOGGER = Logger.getLogger(SoapProjectRepositoryImpl.class);
-
-    @Autowired
-    private FileRepositorySupport fileRepositorySupport;
-
-    @Autowired
-    private MessageSource messageSource;
     @Value(value = "${soap.project.file.directory}")
     private String soapProjectFileDirectory;
     @Value(value = "${soap.project.file.extension}")
@@ -146,34 +124,15 @@ public class SoapProjectRepositoryImpl extends AbstractProjectFileRepository<Soa
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(final SearchQuery query) {
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        for(SoapProjectFile soapProject : collection.values()){
-            List<SearchResult> soapProjectSearchResult = searchSoapProject(soapProject, query);
-            searchResults.addAll(soapProjectSearchResult);
+    public List<SoapProject> search(final SearchQuery query) {
+        final List<SoapProject> soapProjects = new LinkedList<SoapProject>();
+        for(SoapProjectFile soapProjectFile : collection.values()){
+            if(SearchValidator.validate(soapProjectFile.getName(), query.getQuery())){
+                SoapProject soapProject = mapper.map(soapProjectFile, SoapProject.class);
+                soapProjects.add(soapProject);
+            }
         }
-        return searchResults;
-    }
-
-
-    /**
-     * Search through a SOAP project and all its resources
-     * @param soapProject The SOAP project which will be searched
-     * @param query The provided search query
-     * @return A list of search results that matches the provided query
-     */
-    private List<SearchResult> searchSoapProject(final SoapProjectFile soapProject, final SearchQuery query){
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        if(SearchValidator.validate(soapProject.getName(), query.getQuery())){
-            final String projectType = messageSource.getMessage("general.type.project", null , LocaleContextHolder.getLocale());
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(soapProject.getName());
-            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + soapProject.getId());
-            searchResult.setDescription(SOAP_TYPE + COMMA + projectType);
-            searchResults.add(searchResult);
-        }
-
-        return searchResults;
+        return soapProjects;
     }
 
     @XmlRootElement(name = "soapProject")

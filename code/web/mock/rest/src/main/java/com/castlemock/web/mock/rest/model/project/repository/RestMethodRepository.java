@@ -47,4 +47,13 @@ public interface RestMethodRepository extends Repository<RestMethod, String> {
      */
     List<RestMethod> findWithResourceId(String resourceId);
 
+
+    /**
+     * Retrieve the {@link com.castlemock.core.mock.rest.model.project.domain.RestResource} id
+     * for the {@link RestMethod} with the provided id.
+     * @param methodId The id of the {@link RestMethod}.
+     * @return The id of the resource.
+     * @since 1.20
+     */
+    String getResourceId(String methodId);
 }

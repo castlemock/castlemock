@@ -111,34 +111,16 @@ public class GraphQLProjectRepositoryImpl extends AbstractProjectFileRepository<
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        for(GraphQLProjectFile project : collection.values()){
-            List<SearchResult> graphQLProjectSearchResult = searchProject(project, query);
-            searchResults.addAll(graphQLProjectSearchResult);
+    public List<GraphQLProject> search(SearchQuery query) {
+        final List<GraphQLProject> result = new LinkedList<GraphQLProject>();
+        for(GraphQLProjectFile graphQLProjectFile : collection.values()){
+            if(SearchValidator.validate(graphQLProjectFile.getName(), query.getQuery())){
+                GraphQLProject graphQLProject = mapper.map(graphQLProjectFile, GraphQLProject.class);
+                result.add(graphQLProject);
+            }
         }
-        return searchResults;
+        return result;
     }
-
-    /**
-     * Search through a GraphQL project and all its resources
-     * @param project The GraphQL project which will be searched
-     * @param query The provided search query
-     * @return A list of search results that matches the provided query
-     */
-    private List<SearchResult> searchProject(final GraphQLProjectFile project, final SearchQuery query){
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        if(SearchValidator.validate(project.getName(), query.getQuery())){
-            final String projectType = messageSource.getMessage("general.type.project", null , LocaleContextHolder.getLocale());
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(project.getName());
-            searchResult.setLink(GRAPHQL + SLASH + PROJECT + SLASH + project.getId());
-            searchResult.setDescription(GRAPHQL_TYPE + COMMA + projectType);
-            searchResults.add(searchResult);
-        }
-        return searchResults;
-    }
-
 
     /**
      * The save method provides the functionality to save an instance to the file system.

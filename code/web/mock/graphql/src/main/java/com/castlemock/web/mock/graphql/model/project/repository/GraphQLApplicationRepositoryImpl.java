@@ -19,7 +19,9 @@ package com.castlemock.web.mock.graphql.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -90,8 +93,15 @@ public class GraphQLApplicationRepositoryImpl extends RepositoryImpl<GraphQLAppl
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<GraphQLApplication> search(SearchQuery query) {
+        final List<GraphQLApplication> result = new LinkedList<GraphQLApplication>();
+        for(GraphQLApplicationFile graphQLApplicationFile : collection.values()){
+            if(SearchValidator.validate(graphQLApplicationFile.getName(), query.getQuery())){
+                GraphQLApplication graphQLApplication = mapper.map(graphQLApplicationFile, GraphQLApplication.class);
+                result.add(graphQLApplication);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -115,6 +125,24 @@ public class GraphQLApplicationRepositoryImpl extends RepositoryImpl<GraphQLAppl
                 delete(application.getId());
             }
         }
+    }
+
+    /**
+     * Retrieve the {@link GraphQLProject} id
+     * for the {@link GraphQLApplication} with the provided id.
+     *
+     * @param applicationId The id of the {@link GraphQLApplication}.
+     * @return The id of the project.
+     * @since 1.20
+     */
+    @Override
+    public String getProjectId(String applicationId) {
+        final GraphQLApplicationFile applicationFile = this.collection.get(applicationId);
+
+        if(applicationFile == null){
+            throw new IllegalArgumentException("Unable to find an application with the following id: " + applicationId);
+        }
+        return applicationFile.getProjectId();
     }
 
 

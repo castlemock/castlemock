@@ -20,11 +20,9 @@ package com.castlemock.web.mock.soap.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +32,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -91,8 +90,15 @@ public class SoapOperationRepositoryImpl extends RepositoryImpl<SoapOperationRep
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<SoapOperation> search(SearchQuery query) {
+        final List<SoapOperation> result = new LinkedList<SoapOperation>();
+        for(SoapOperationFile soapOperationFile : collection.values()){
+            if(SearchValidator.validate(soapOperationFile.getName(), query.getQuery())){
+                SoapOperation soapOperation = mapper.map(soapOperationFile, SoapOperation.class);
+                result.add(soapOperation);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -170,6 +176,24 @@ public class SoapOperationRepositoryImpl extends RepositoryImpl<SoapOperationRep
     public void setCurrentResponseSequenceIndex(final String soapOperationId, final Integer index) {
         SoapOperationFile soapOperation = collection.get(soapOperationId);
         soapOperation.setCurrentResponseSequenceIndex(index);
+    }
+
+    /**
+     * Retrieve the {@link SoapPort} id
+     * for the {@link SoapOperation} with the provided id.
+     *
+     * @param operationId The id of the {@link SoapOperation}.
+     * @return The id of the port.
+     * @since 1.20
+     */
+    @Override
+    public String getPortId(String operationId) {
+        final SoapOperationFile operationFile = this.collection.get(operationId);
+
+        if(operationFile == null){
+            throw new IllegalArgumentException("Unable to find an operation with the following id: " + operationId);
+        }
+        return operationFile.getPortId();
     }
 
     @XmlRootElement(name = "soapOperation")

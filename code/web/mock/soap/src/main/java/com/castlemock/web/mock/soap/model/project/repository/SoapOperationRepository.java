@@ -58,4 +58,14 @@ public interface SoapOperationRepository extends Repository<SoapOperation, Strin
      */
     void setCurrentResponseSequenceIndex(String soapOperationId, Integer index);
 
+
+    /**
+     * Retrieve the {@link com.castlemock.core.mock.soap.model.project.domain.SoapPort} id
+     * for the {@link SoapOperation} with the provided id.
+     * @param operationId The id of the {@link SoapOperation}.
+     * @return The id of the port.
+     * @since 1.20
+     */
+    String getPortId(String operationId);
+
 }

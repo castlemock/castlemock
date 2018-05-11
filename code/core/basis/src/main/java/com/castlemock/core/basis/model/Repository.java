@@ -88,7 +88,7 @@ public interface Repository<D, I extends Serializable> {
      * @param query The search query
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
-    List<SearchResult> search(SearchQuery query);
+    List<D> search(SearchQuery query);
 
     /**
      * The method provides the functionality to export an entity and convert it to a String

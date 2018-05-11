@@ -45,19 +45,6 @@ import java.util.List;
 @Repository
 public class RestProjectRepositoryImpl extends AbstractProjectFileRepository<RestProjectRepositoryImpl.RestProjectFile, RestProject> implements RestProjectRepository {
 
-    @Autowired
-    private MessageSource messageSource;
-
-    private static final String SLASH = "/";
-    private static final String REST = "rest";
-    private static final String PROJECT = "project";
-    private static final String APPLICATION = "application";
-    private static final String RESOURCE = "resource";
-    private static final String METHOD = "method";
-    private static final String RESPONSE = "response";
-    private static final String COMMA = ", ";
-    private static final String REST_TYPE = "REST";
-
     @Value(value = "${rest.project.file.directory}")
     private String restProjectFileDirectory;
     @Value(value = "${rest.project.file.extension}")
@@ -130,18 +117,16 @@ public class RestProjectRepositoryImpl extends AbstractProjectFileRepository<Res
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        for(RestProjectFile restProject : collection.values()){
-            List<SearchResult> restProjectSearchResult = searchRestProject(restProject, query);
-            searchResults.addAll(restProjectSearchResult);
+    public List<RestProject> search(SearchQuery query) {
+        final List<RestProject> result = new LinkedList<RestProject>();
+        for(RestProjectFile restProjectFile : collection.values()){
+            if(SearchValidator.validate(restProjectFile.getName(), query.getQuery())){
+                RestProject restProject = mapper.map(restProjectFile, RestProject.class);
+                result.add(restProject);
+            }
         }
-        return searchResults;
+        return result;
     }
-
-    /*
-     * FIND OPERATIONS
-     */
 
     /**
      * Finds a {@link RestProject} with a provided REST project name.
@@ -159,27 +144,6 @@ public class RestProjectRepositoryImpl extends AbstractProjectFileRepository<Res
             }
         }
         return null;
-    }
-
-
-    /**
-     * Search through a REST project and all its resources
-     * @param restProject The REST project which will be searched
-     * @param query The provided search query
-     * @return A list of search results that matches the provided query
-     */
-    private List<SearchResult> searchRestProject(final RestProjectFile restProject, final SearchQuery query){
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        if(SearchValidator.validate(restProject.getName(), query.getQuery())){
-            final String projectType = messageSource.getMessage("general.type.project", null , LocaleContextHolder.getLocale());
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(restProject.getName());
-            searchResult.setLink(REST + SLASH + PROJECT + SLASH + restProject.getId());
-            searchResult.setDescription(REST_TYPE + COMMA + projectType);
-            searchResults.add(searchResult);
-        }
-
-        return searchResults;
     }
 
     @XmlRootElement(name = "restProject")

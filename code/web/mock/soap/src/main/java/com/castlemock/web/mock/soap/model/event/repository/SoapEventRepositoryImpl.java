@@ -149,7 +149,7 @@ public class SoapEventRepositoryImpl extends AbstractEventFileRepository<SoapEve
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
+    public List<SoapEvent> search(SearchQuery query) {
         throw new UnsupportedOperationException();
     }
 

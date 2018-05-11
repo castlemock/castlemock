@@ -20,9 +20,11 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.service.message.input.SearchRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.SearchRestProjectOutput;
-import com.castlemock.web.mock.rest.model.project.repository.RestProjectRepository;
+import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
+import com.castlemock.web.mock.rest.model.project.repository.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -32,8 +34,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Karl Dahlgren
@@ -46,6 +50,14 @@ public class SearchRestProjectServiceTest {
 
     @Mock
     private RestProjectRepository repository;
+    @Mock
+    private RestApplicationRepository applicationRepository;
+    @Mock
+    private RestResourceRepository resourceRepository;
+    @Mock
+    private RestMethodRepository methodRepository;
+    @Mock
+    private RestMockResponseRepository mockResponseRepository;
 
     @InjectMocks
     private SearchRestProjectService service;
@@ -59,12 +71,15 @@ public class SearchRestProjectServiceTest {
     @Test
     @Ignore
     public void testProcess(){
-        SearchResult searchResult = new SearchResult();
-        searchResult.setDescription("Description");
-        searchResult.setLink("Link");
-        searchResult.setTitle("Title");
+        RestProject restProject = RestProjectGenerator.generateRestProject();
 
-        Mockito.when(repository.search(Mockito.any(SearchQuery.class))).thenReturn(Arrays.asList(searchResult));
+        Mockito.when(repository.search(Mockito.any(SearchQuery.class))).thenReturn(Arrays.asList(restProject));
+        Mockito.when(applicationRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());
+        Mockito.when(resourceRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());
+        Mockito.when(methodRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());
+        Mockito.when(mockResponseRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());
+
+        Mockito.when(messageSource.getMessage("general.type.project", null, LocaleContextHolder.getLocale())).thenReturn("Project");
 
         final String query = "Query";
         final SearchQuery searchQuery = new SearchQuery();
@@ -82,8 +97,8 @@ public class SearchRestProjectServiceTest {
 
         SearchResult returnedSearchResult = searchRestProjectOutput.getSearchResults().get(0);
 
-        Assert.assertEquals("Description", returnedSearchResult.getDescription());
-        Assert.assertEquals("Link", returnedSearchResult.getLink());
-        Assert.assertEquals("Title", returnedSearchResult.getTitle());
+        Assert.assertEquals("REST, Project", returnedSearchResult.getDescription());
+        Assert.assertEquals("rest/project/" + restProject.getId(), returnedSearchResult.getLink());
+        Assert.assertEquals(restProject.getName(), returnedSearchResult.getTitle());
     }
 }

@@ -19,6 +19,7 @@ package com.castlemock.web.basis.model.configuration.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.configuration.domain.Configuration;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.repository.ConfigurationRepository;
@@ -98,7 +99,7 @@ public class ConfigurationRepositoryImpl extends RepositoryImpl<ConfigurationRep
     }
 
     @Override
-    public List<SearchResult> search(SearchQuery query) {
+    public List<ConfigurationGroup> search(SearchQuery query) {
         throw new UnsupportedOperationException("Search method is not supported in the Configuration repository");
     }
 

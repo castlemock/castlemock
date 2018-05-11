@@ -20,7 +20,9 @@ package com.castlemock.web.mock.soap.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.web.basis.model.RepositoryImpl;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +32,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -87,8 +90,15 @@ public class SoapPortRepositoryImpl extends RepositoryImpl<SoapPortRepositoryImp
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<SoapPort> search(SearchQuery query) {
+        final List<SoapPort> result = new LinkedList<SoapPort>();
+        for(SoapPortFile soapPortFile : collection.values()){
+            if(SearchValidator.validate(soapPortFile.getName(), query.getQuery())){
+                SoapPort soapPort = mapper.map(soapPortFile, SoapPort.class);
+                result.add(soapPort);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -146,6 +156,24 @@ public class SoapPortRepositoryImpl extends RepositoryImpl<SoapPortRepositoryImp
             }
         }
         return null;
+    }
+
+    /**
+     * Retrieve the {@link SoapProject} id
+     * for the {@link SoapPort} with the provided id.
+     *
+     * @param portId The id of the {@link SoapPort}.
+     * @return The id of the project.
+     * @since 1.20
+     */
+    @Override
+    public String getProjectId(String portId) {
+        final SoapPortFile portFile = this.collection.get(portId);
+
+        if(portFile == null){
+            throw new IllegalArgumentException("Unable to find a port with the following id: " + portId);
+        }
+        return portFile.getProjectId();
     }
 
     @XmlRootElement(name = "soapPort")

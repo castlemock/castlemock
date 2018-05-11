@@ -19,8 +19,10 @@ package com.castlemock.web.mock.rest.model.project.repository;
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.web.basis.model.RepositoryImpl;
@@ -32,6 +34,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -89,8 +92,15 @@ public class RestMethodRepositoryImpl extends RepositoryImpl<RestMethodRepositor
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SearchResult> search(SearchQuery query) {
-        return null;
+    public List<RestMethod> search(SearchQuery query) {
+        final List<RestMethod> result = new LinkedList<RestMethod>();
+        for(RestMethodFile restMethodFile : collection.values()){
+            if(SearchValidator.validate(restMethodFile.getName(), query.getQuery())){
+                RestMethod restMethod = mapper.map(restMethodFile, RestMethod.class);
+                result.add(restMethod);
+            }
+        }
+        return result;
     }
 
 
@@ -142,6 +152,24 @@ public class RestMethodRepositoryImpl extends RepositoryImpl<RestMethodRepositor
             }
         }
         return applications;
+    }
+
+    /**
+     * Retrieve the {@link RestResource} id
+     * for the {@link RestMethod} with the provided id.
+     *
+     * @param methodId The id of the {@link RestMethod}.
+     * @return The id of the resource.
+     * @since 1.20
+     */
+    @Override
+    public String getResourceId(String methodId) {
+        final RestMethodFile methodFile = this.collection.get(methodId);
+
+        if(methodFile == null){
+            throw new IllegalArgumentException("Unable to find a method with the following id: " + methodId);
+        }
+        return methodFile.getResourceId();
     }
 
     @XmlRootElement(name = "restMethod")

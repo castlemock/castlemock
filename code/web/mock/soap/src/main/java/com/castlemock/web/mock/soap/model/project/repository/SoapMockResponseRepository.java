@@ -27,4 +27,13 @@ public interface SoapMockResponseRepository extends Repository<SoapMockResponse,
 
     List<SoapMockResponse> findWithOperationId(String operationId);
 
+    /**
+     * Retrieve the {@link com.castlemock.core.mock.soap.model.project.domain.SoapOperation} id
+     * for the {@link SoapMockResponse} with the provided id.
+     * @param mockResponseId The id of the {@link SoapMockResponse}.
+     * @return The id of the operation.
+     * @since 1.20
+     */
+    String getOperationId(String mockResponseId);
+
 }

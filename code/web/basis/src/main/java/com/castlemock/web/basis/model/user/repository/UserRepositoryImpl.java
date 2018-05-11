@@ -126,7 +126,7 @@ public class UserRepositoryImpl extends RepositoryImpl<UserRepositoryImpl.UserFi
     }
 
     @Override
-    public List<SearchResult> search(SearchQuery query) {
+    public List<User> search(SearchQuery query) {
         throw new UnsupportedOperationException("Search method is not supported in the User repository");
     }
 
