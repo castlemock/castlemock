@@ -18,6 +18,10 @@ package com.castlemock.core.mock.soap.model.project.domain;
 
 import com.castlemock.core.basis.model.project.domain.Project;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +32,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement(name = "soapProject")
 public class SoapProject extends Project {
 
     private List<SoapPort> ports = new CopyOnWriteArrayList<SoapPort>();
@@ -54,6 +59,8 @@ public class SoapProject extends Project {
      * Returns all the SOAP ports
      * @return The SOAP ports for the SOAP project
      */
+    @XmlElementWrapper(name = "ports")
+    @XmlElement(name = "port")
     public List<SoapPort> getPorts() {
         return ports;
     }
@@ -70,6 +77,8 @@ public class SoapProject extends Project {
      * Returns all the SOAP resources
      * @return The SOAP resources for the SOAP resources
      */
+    @XmlElementWrapper(name = "resources")
+    @XmlElement(name = "resource")
     public List<SoapResource> getResources() {
         return resources;
     }
@@ -86,6 +95,7 @@ public class SoapProject extends Project {
      * The status count is used in the GUI to information the user on the SOAP operation status distribution.
      * @return The status counts.
      */
+    @XmlTransient
     public Map<SoapOperationStatus, Integer> getStatusCount() {
         return statusCount;
     }

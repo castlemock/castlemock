@@ -16,15 +16,20 @@
 
 package com.castlemock.core.basis.model.http.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class HttpParameter {
 
     private String name;
     private String value;
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -33,6 +38,7 @@ public class HttpParameter {
         this.name = name;
     }
 
+    @XmlElement
     public String getValue() {
         return value;
     }

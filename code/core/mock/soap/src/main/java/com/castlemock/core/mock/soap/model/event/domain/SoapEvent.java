@@ -18,12 +18,16 @@ package com.castlemock.core.mock.soap.model.event.domain;
 
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class SoapEvent extends Event {
 
     private SoapRequest request;
@@ -75,6 +79,7 @@ public class SoapEvent extends Event {
      * Returns the SOAP request
      * @return The SOAP request
      */
+    @XmlElement
     public SoapRequest getRequest() {
         return request;
     }
@@ -91,6 +96,7 @@ public class SoapEvent extends Event {
      * Returns the SOAP response variable
      * @return The SOAP response variable. The SOAP response will be null if the event has not yet finished
      */
+    @XmlElement
     public SoapResponse getResponse() {
         return response;
     }
@@ -107,6 +113,7 @@ public class SoapEvent extends Event {
      * Returns the SOAP operation id
      * @return The SOAP operation id
      */
+    @XmlElement
     public String getOperationId() {
         return operationId;
     }
@@ -124,6 +131,7 @@ public class SoapEvent extends Event {
      * event spans from
      * @return The id of the project which the event affected
      */
+    @XmlElement
     public String getProjectId() {
         return projectId;
     }
@@ -141,6 +149,7 @@ public class SoapEvent extends Event {
      * event spans from
      * @return The id of the port which the event affected
      */
+    @XmlElement
     public String getPortId() {
         return portId;
     }

@@ -18,6 +18,10 @@ package com.castlemock.core.mock.soap.model.project.domain;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -25,6 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class SoapMockResponse {
 
     private String id;
@@ -38,6 +43,7 @@ public class SoapMockResponse {
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -46,6 +52,7 @@ public class SoapMockResponse {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -54,6 +61,7 @@ public class SoapMockResponse {
         this.name = name;
     }
 
+    @XmlElement
     public String getBody() {
         return body;
     }
@@ -62,6 +70,7 @@ public class SoapMockResponse {
         this.body = body;
     }
 
+    @XmlElement
     public String getOperationId() {
         return operationId;
     }
@@ -70,6 +79,7 @@ public class SoapMockResponse {
         this.operationId = operationId;
     }
 
+    @XmlElement
     public SoapMockResponseStatus getStatus() {
         return status;
     }
@@ -78,6 +88,7 @@ public class SoapMockResponse {
         this.status = status;
     }
 
+    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
@@ -86,6 +97,7 @@ public class SoapMockResponse {
         this.httpStatusCode = httpStatusCode;
     }
 
+    @XmlElement
     public boolean isUsingExpressions() {
         return usingExpressions;
     }
@@ -94,6 +106,8 @@ public class SoapMockResponse {
         this.usingExpressions = usingExpressions;
     }
 
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
@@ -102,7 +116,7 @@ public class SoapMockResponse {
         this.httpHeaders = httpHeaders;
     }
 
-
+    @XmlElement
     public String getXpathExpression() {
         return xpathExpression;
     }
@@ -110,7 +124,9 @@ public class SoapMockResponse {
     public void setXpathExpression(String xpathExpression) {
         this.xpathExpression = xpathExpression;
     }
-  
+
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
     }

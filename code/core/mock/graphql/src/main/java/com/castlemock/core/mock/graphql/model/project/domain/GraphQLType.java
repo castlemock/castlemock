@@ -16,6 +16,8 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+
 public abstract class GraphQLType {
 
     private String id;
@@ -23,6 +25,7 @@ public abstract class GraphQLType {
     private String description;
     private String applicationId;
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -31,6 +34,7 @@ public abstract class GraphQLType {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -39,6 +43,7 @@ public abstract class GraphQLType {
         this.name = name;
     }
 
+    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -47,6 +52,7 @@ public abstract class GraphQLType {
         this.description = description;
     }
 
+    @XmlElement
     public String getApplicationId() {
         return applicationId;
     }

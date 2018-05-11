@@ -16,6 +16,9 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.19
  */
+@XmlRootElement
 public class GraphQLApplication {
 
     private String id;
@@ -37,6 +41,7 @@ public class GraphQLApplication {
     private List<GraphQLSubscription> subscriptions = new ArrayList<>();
     private String invokeAddress;
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -45,6 +50,7 @@ public class GraphQLApplication {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -53,6 +59,7 @@ public class GraphQLApplication {
         this.name = name;
     }
 
+    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -61,6 +68,7 @@ public class GraphQLApplication {
         this.description = description;
     }
 
+    @XmlElement
     public String getProjectId() {
         return projectId;
     }
@@ -69,6 +77,8 @@ public class GraphQLApplication {
         this.projectId = projectId;
     }
 
+    @XmlElementWrapper(name = "objects")
+    @XmlElement(name = "object")
     public List<GraphQLObjectType> getObjects() {
         return objects;
     }
@@ -77,6 +87,8 @@ public class GraphQLApplication {
         this.objects = objects;
     }
 
+    @XmlElementWrapper(name = "enums")
+    @XmlElement(name = "enum")
     public List<GraphQLEnumType> getEnums() {
         return enums;
     }
@@ -85,6 +97,8 @@ public class GraphQLApplication {
         this.enums = enums;
     }
 
+    @XmlElementWrapper(name = "queries")
+    @XmlElement(name = "query")
     public List<GraphQLQuery> getQueries() {
         return queries;
     }
@@ -93,6 +107,8 @@ public class GraphQLApplication {
         this.queries = queries;
     }
 
+    @XmlElementWrapper(name = "mutations")
+    @XmlElement(name = "mutation")
     public List<GraphQLMutation> getMutations() {
         return mutations;
     }
@@ -101,6 +117,8 @@ public class GraphQLApplication {
         this.mutations = mutations;
     }
 
+    @XmlElementWrapper(name = "subscriptions")
+    @XmlElement(name = "subscription")
     public List<GraphQLSubscription> getSubscriptions() {
         return subscriptions;
     }
@@ -109,6 +127,7 @@ public class GraphQLApplication {
         this.subscriptions = subscriptions;
     }
 
+    @XmlElement
     public String getInvokeAddress() {
         return invokeAddress;
     }

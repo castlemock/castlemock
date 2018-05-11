@@ -16,6 +16,10 @@
 
 package com.castlemock.core.mock.soap.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class SoapPort {
 
     private String id;
@@ -38,6 +43,7 @@ public class SoapPort {
 
     private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -46,6 +52,8 @@ public class SoapPort {
         this.id = id;
     }
 
+    @XmlElementWrapper(name = "operations")
+    @XmlElement(name = "operation")
     public List<SoapOperation> getOperations() {
         return operations;
     }
@@ -54,6 +62,7 @@ public class SoapPort {
         this.operations = operations;
     }
 
+    @XmlTransient
     public Map<SoapOperationStatus, Integer> getStatusCount() {
         return statusCount;
     }
@@ -62,6 +71,7 @@ public class SoapPort {
         this.statusCount = statusCount;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -70,6 +80,7 @@ public class SoapPort {
         this.name = name;
     }
 
+    @XmlElement
     public String getUri() {
         return uri;
     }
@@ -78,6 +89,7 @@ public class SoapPort {
         this.uri = uri;
     }
 
+    @XmlElement
     public String getProjectId() {
         return projectId;
     }
@@ -86,6 +98,7 @@ public class SoapPort {
         this.projectId = projectId;
     }
 
+    @XmlTransient
     public String getInvokeAddress() {
         return invokeAddress;
     }

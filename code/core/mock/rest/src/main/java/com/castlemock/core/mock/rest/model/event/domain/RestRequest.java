@@ -19,12 +19,17 @@ package com.castlemock.core.mock.rest.model.event.domain;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpParameter;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class RestRequest {
 
     private String body;
@@ -34,6 +39,7 @@ public class RestRequest {
     private List<HttpHeader> httpHeaders;
     private List<HttpParameter> httpParameters;
 
+    @XmlElement
     public String getBody() {
         return body;
     }
@@ -42,6 +48,7 @@ public class RestRequest {
         this.body = body;
     }
 
+    @XmlElement
     public String getContentType() {
         return contentType;
     }
@@ -50,6 +57,7 @@ public class RestRequest {
         this.contentType = contentType;
     }
 
+    @XmlElement
     public String getUri() {
         return uri;
     }
@@ -58,6 +66,7 @@ public class RestRequest {
         this.uri = uri;
     }
 
+    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
@@ -66,6 +75,8 @@ public class RestRequest {
         this.httpMethod = httpMethod;
     }
 
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
@@ -74,6 +85,8 @@ public class RestRequest {
         this.httpHeaders = httpHeaders;
     }
 
+    @XmlElementWrapper(name = "httpParameters")
+    @XmlElement(name = "httpParameter")
     public List<HttpParameter> getHttpParameters() {
         return httpParameters;
     }

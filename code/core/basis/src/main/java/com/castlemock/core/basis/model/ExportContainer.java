@@ -14,32 +14,15 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.graphql.model.project.domain;
+package com.castlemock.core.basis.model;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * The {@link ExportContainer} is a container class for entities that will be exported.
+ * @author Karl Dahlgren
+ * @since 12.0
+ */
 @XmlRootElement
-public class GraphQLEnumValueDefinition {
-
-    private String id;
-    private String name;
-
-    @XmlElement
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @XmlElement
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+public class ExportContainer {
 }

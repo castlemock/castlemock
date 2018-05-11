@@ -16,6 +16,10 @@
 
 package com.castlemock.core.mock.rest.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class RestApplication {
 
     private String id;
@@ -35,6 +40,7 @@ public class RestApplication {
 
     private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -43,6 +49,7 @@ public class RestApplication {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -51,6 +58,7 @@ public class RestApplication {
         this.name = name;
     }
 
+    @XmlElement
     public String getProjectId() {
         return projectId;
     }
@@ -59,6 +67,8 @@ public class RestApplication {
         this.projectId = projectId;
     }
 
+    @XmlElementWrapper(name = "resources")
+    @XmlElement(name = "resource")
     public List<RestResource> getResources() {
         return resources;
     }
@@ -67,6 +77,7 @@ public class RestApplication {
         this.resources = resources;
     }
 
+    @XmlTransient
     public Map<RestMethodStatus, Integer> getStatusCount() {
         return statusCount;
     }

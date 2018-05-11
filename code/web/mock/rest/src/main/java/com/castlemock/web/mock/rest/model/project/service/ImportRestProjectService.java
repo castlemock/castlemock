@@ -19,7 +19,9 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.basis.utility.serializer.ExportContainerSerializer;
+import com.castlemock.core.mock.rest.model.RestExportContainer;
+import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ImportRestProjectOutput;
 import com.castlemock.web.mock.rest.legacy.repository.project.v1.RestProjectV1LegacyRepository;
@@ -51,7 +53,27 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
 
         if(project == null){
             // Unable to load the project as a legacy project.
-            project = repository.importOne(input.getProjectRaw());
+            RestExportContainer exportContainer = ExportContainerSerializer.deserialize(input.getProjectRaw(), RestExportContainer.class);
+
+            project = exportContainer.getProject();
+
+            this.repository.save(project);
+
+            for(RestApplication application : exportContainer.getApplications()){
+                this.applicationRepository.save(application);
+            }
+
+            for(RestResource resource : exportContainer.getResources()){
+                this.resourceRepository.save(resource);
+            }
+
+            for(RestMethod method : exportContainer.getMethods()){
+                this.methodRepository.save(method);
+            }
+
+            for(RestMockResponse mockResponse : exportContainer.getMockResponses()){
+                this.mockResponseRepository.save(mockResponse);
+            }
         }
         return createServiceResult(new ImportRestProjectOutput(project));
     }

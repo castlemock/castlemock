@@ -16,6 +16,9 @@
 
 package com.castlemock.core.basis.model.configuration.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * The configuration DTO is a DTO (Data transfer object) class for the configuration class. The configuration class
  * represent an individual configuration and contains both the identifier (key) and the value
@@ -23,6 +26,7 @@ package com.castlemock.core.basis.model.configuration.domain;
  * @since 1.0
  * @see Configuration
  */
+@XmlRootElement
 public class Configuration {
 
 
@@ -38,6 +42,7 @@ public class Configuration {
      * Returns the identifier for the configuration
      * @return The configuration key
      */
+    @XmlElement
     public String getKey() {
         return key;
     }
@@ -54,6 +59,7 @@ public class Configuration {
      * Returns the value for the configuration
      * @return Configuration value
      */
+    @XmlElement
     public String getValue() {
         return value;
     }
@@ -70,6 +76,7 @@ public class Configuration {
      * Returns the configuration type
      * @return The configuration type
      */
+    @XmlElement
     public ConfigurationType getType() {
         return type;
     }

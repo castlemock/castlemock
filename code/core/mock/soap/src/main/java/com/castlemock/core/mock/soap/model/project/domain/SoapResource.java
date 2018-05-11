@@ -16,17 +16,23 @@
 
 package com.castlemock.core.mock.soap.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author Karl Dahlgren
  * @since 1.16
  */
+@XmlRootElement
 public class SoapResource {
 
     private String id;
     private String name;
     private SoapResourceType type;
     private String projectId;
+    private String content;
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -35,6 +41,7 @@ public class SoapResource {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -43,6 +50,7 @@ public class SoapResource {
         this.name = name;
     }
 
+    @XmlElement
     public SoapResourceType getType() {
         return type;
     }
@@ -51,11 +59,21 @@ public class SoapResource {
         this.type = type;
     }
 
+    @XmlElement
     public String getProjectId() {
         return projectId;
     }
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    @XmlElement
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

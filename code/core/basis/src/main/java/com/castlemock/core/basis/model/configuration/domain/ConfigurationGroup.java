@@ -16,6 +16,9 @@
 
 package com.castlemock.core.basis.model.configuration.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
@@ -27,6 +30,7 @@ import java.util.List;
  * @see ConfigurationGroup
  * @see Configuration
  */
+@XmlRootElement
 public class ConfigurationGroup {
 
 
@@ -42,6 +46,7 @@ public class ConfigurationGroup {
      * Returns the configuration group id
      * @return The configuration group id
      */
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -58,6 +63,7 @@ public class ConfigurationGroup {
      * Returns the name of the configuration group
      * @return The new of the configuration group
      */
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -74,6 +80,8 @@ public class ConfigurationGroup {
      * Returns a list of configurations the belongs to the group
      * @return Configurations that belongs to the configuration group
      */
+    @XmlElementWrapper(name = "configurations")
+    @XmlElement(name = "configuration")
     public List<Configuration> getConfigurations() {
         return configurations;
     }

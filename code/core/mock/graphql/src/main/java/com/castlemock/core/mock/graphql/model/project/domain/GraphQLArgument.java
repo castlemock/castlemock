@@ -17,6 +17,10 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class GraphQLArgument {
 
     private String id;
@@ -29,6 +33,7 @@ public class GraphQLArgument {
     private Boolean listable;
     private GraphQLAttributeType attributeType;
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -37,6 +42,7 @@ public class GraphQLArgument {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -45,6 +51,7 @@ public class GraphQLArgument {
         this.name = name;
     }
 
+    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -53,6 +60,7 @@ public class GraphQLArgument {
         this.description = description;
     }
 
+    @XmlElement
     public String getTypeName() {
         return typeName;
     }
@@ -61,6 +69,7 @@ public class GraphQLArgument {
         this.typeName = typeName;
     }
 
+    @XmlElement
     public String getTypeId() {
         return typeId;
     }
@@ -69,6 +78,7 @@ public class GraphQLArgument {
         this.typeId = typeId;
     }
 
+    @XmlElement
     public Object getDefaultValue() {
         return defaultValue;
     }
@@ -77,6 +87,7 @@ public class GraphQLArgument {
         this.defaultValue = defaultValue;
     }
 
+    @XmlElement
     public Boolean getNullable() {
         return nullable;
     }
@@ -85,6 +96,7 @@ public class GraphQLArgument {
         this.nullable = nullable;
     }
 
+    @XmlElement
     public Boolean getListable() {
         return listable;
     }
@@ -93,6 +105,7 @@ public class GraphQLArgument {
         this.listable = listable;
     }
 
+    @XmlElement
     public GraphQLAttributeType getAttributeType() {
         return attributeType;
     }

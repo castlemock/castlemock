@@ -17,14 +17,19 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
+@XmlRootElement
 public class GraphQLObjectType extends GraphQLType {
 
     private List<GraphQLAttribute> attributes = new CopyOnWriteArrayList<GraphQLAttribute>();
 
+    @XmlElementWrapper(name = "attributes")
+    @XmlElement(name = "attribute")
     public List<GraphQLAttribute> getAttributes() {
         return attributes;
     }

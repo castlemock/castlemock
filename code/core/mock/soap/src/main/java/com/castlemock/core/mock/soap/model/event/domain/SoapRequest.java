@@ -19,12 +19,16 @@ package com.castlemock.core.mock.soap.model.event.domain;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class SoapRequest {
 
     private String body;
@@ -36,6 +40,7 @@ public class SoapRequest {
     private SoapVersion soapVersion;
     private List<HttpHeader> httpHeaders;
 
+    @XmlElement
     public String getBody() {
         return body;
     }
@@ -44,6 +49,7 @@ public class SoapRequest {
         this.body = body;
     }
 
+    @XmlElement
     public String getContentType() {
         return contentType;
     }
@@ -52,6 +58,7 @@ public class SoapRequest {
         this.contentType = contentType;
     }
 
+    @XmlElement
     public String getUri() {
         return uri;
     }
@@ -60,6 +67,7 @@ public class SoapRequest {
         this.uri = uri;
     }
 
+    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
@@ -68,6 +76,7 @@ public class SoapRequest {
         this.httpMethod = httpMethod;
     }
 
+    @XmlElement
     public String getOperationName() {
         return operationName;
     }
@@ -76,6 +85,7 @@ public class SoapRequest {
         this.operationName = operationName;
     }
 
+    @XmlElement
     public String getOperationIdentifier() {
         return operationIdentifier;
     }
@@ -84,6 +94,7 @@ public class SoapRequest {
         this.operationIdentifier = operationIdentifier;
     }
 
+    @XmlElement
     public SoapVersion getSoapVersion() {
         return soapVersion;
     }
@@ -92,6 +103,7 @@ public class SoapRequest {
         this.soapVersion = soapVersion;
     }
 
+    @XmlElement
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }

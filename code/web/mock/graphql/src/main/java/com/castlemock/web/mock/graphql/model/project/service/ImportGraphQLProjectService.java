@@ -19,7 +19,9 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
+import com.castlemock.core.basis.utility.serializer.ExportContainerSerializer;
+import com.castlemock.core.mock.graphql.model.GraphQLExportContainer;
+import com.castlemock.core.mock.graphql.model.project.domain.*;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ImportGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ImportGraphQLProjectOutput;
 
@@ -41,7 +43,37 @@ public class ImportGraphQLProjectService extends AbstractGraphQLProjectService i
     @Override
     public ServiceResult<ImportGraphQLProjectOutput> process(final ServiceTask<ImportGraphQLProjectInput> serviceTask) {
         final ImportGraphQLProjectInput input = serviceTask.getInput();
-        final GraphQLProject project = repository.importOne(input.getProjectRaw());
+
+        GraphQLExportContainer exportContainer = ExportContainerSerializer.deserialize(input.getProjectRaw(), GraphQLExportContainer.class);
+
+        GraphQLProject project = exportContainer.getProject();
+
+        this.repository.save(project);
+
+        for(GraphQLApplication application : exportContainer.getApplications()){
+            this.applicationRepository.save(application);
+        }
+
+        for(GraphQLQuery query : exportContainer.getQueries()){
+            this.queryRepository.save(query);
+        }
+
+        for(GraphQLSubscription subscription : exportContainer.getSubscriptions()){
+            this.subscriptionRepository.save(subscription);
+        }
+
+        for(GraphQLMutation mutation : exportContainer.getMutations()){
+            this.mutationRepository.save(mutation);
+        }
+
+        for(GraphQLObjectType objectType : exportContainer.getObjectTypes()){
+            this.objectTypeRepository.save(objectType);
+        }
+
+        for(GraphQLEnumType enumType : exportContainer.getEnumTypes()){
+            this.enumTypeRepository.save(enumType);
+        }
+
         return createServiceResult(new ImportGraphQLProjectOutput(project));
     }
 }

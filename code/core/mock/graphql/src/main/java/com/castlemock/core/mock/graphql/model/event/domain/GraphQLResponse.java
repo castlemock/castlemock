@@ -19,6 +19,8 @@ package com.castlemock.core.mock.graphql.model.event.domain;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class GraphQLResponse {
     private List<HttpHeader> httpHeaders;
     private List<ContentEncoding> contentEncodings;
 
+    @XmlElement
     public String getBody() {
         return body;
     }
@@ -43,6 +46,7 @@ public class GraphQLResponse {
         this.body = body;
     }
 
+    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
@@ -51,6 +55,7 @@ public class GraphQLResponse {
         this.httpStatusCode = httpStatusCode;
     }
 
+    @XmlElement
     public String getContentType() {
         return contentType;
     }
@@ -59,6 +64,8 @@ public class GraphQLResponse {
         this.contentType = contentType;
     }
 
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
@@ -67,6 +74,8 @@ public class GraphQLResponse {
         this.httpHeaders = httpHeaders;
     }
 
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
     }

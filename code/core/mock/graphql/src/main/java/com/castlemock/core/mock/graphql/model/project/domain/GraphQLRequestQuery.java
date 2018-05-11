@@ -16,6 +16,9 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -23,6 +26,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.19
  */
+@XmlRootElement
 public class GraphQLRequestQuery {
 
     private String id;
@@ -30,6 +34,7 @@ public class GraphQLRequestQuery {
     private List<GraphQLRequestField> fields = new CopyOnWriteArrayList<GraphQLRequestField>();
     private List<GraphQLRequestArgument> arguments = new CopyOnWriteArrayList<GraphQLRequestArgument>();
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -38,6 +43,7 @@ public class GraphQLRequestQuery {
         this.id = id;
     }
 
+    @XmlElement
     public String getOperationName() {
         return operationName;
     }
@@ -46,6 +52,8 @@ public class GraphQLRequestQuery {
         this.operationName = operationName;
     }
 
+    @XmlElementWrapper(name = "fields")
+    @XmlElement(name = "field")
     public List<GraphQLRequestField> getFields() {
         return fields;
     }
@@ -54,6 +62,8 @@ public class GraphQLRequestQuery {
         this.fields = fields;
     }
 
+    @XmlElementWrapper(name = "arguments")
+    @XmlElement(name = "argument")
     public List<GraphQLRequestArgument> getArguments() {
         return arguments;
     }

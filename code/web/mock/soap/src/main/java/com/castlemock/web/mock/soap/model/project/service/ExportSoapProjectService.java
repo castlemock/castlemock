@@ -19,8 +19,14 @@ package com.castlemock.web.mock.soap.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.basis.utility.serializer.ExportContainerSerializer;
+import com.castlemock.core.mock.soap.model.SoapExportContainer;
+import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ExportSoapProjectInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ExportSoapProjectOutput;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -40,7 +46,36 @@ public class ExportSoapProjectService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ExportSoapProjectOutput> process(final ServiceTask<ExportSoapProjectInput> serviceTask) {
         final ExportSoapProjectInput input = serviceTask.getInput();
-        final String rawProjet = repository.exportOne(input.getRestProjectId());
-        return createServiceResult(new ExportSoapProjectOutput(rawProjet));
+        final SoapProject project = repository.findOne(input.getRestProjectId());
+        final List<SoapPort> ports = this.portRepository.findWithProjectId(input.getRestProjectId());
+        final List<SoapResource> resources = this.resourceRepository.findWithProjectId(input.getRestProjectId());
+        final List<SoapOperation> operations = new ArrayList<>();
+        final List<SoapMockResponse> mockResponses = new ArrayList<>();
+
+        for(SoapResource resource : resources){
+            String content = this.resourceRepository.loadSoapResource(resource.getId());
+            resource.setContent(content);
+        }
+
+        for(SoapPort port : ports){
+            List<SoapOperation> tempOperations = this.operationRepository.findWithPortId(port.getId());
+            operations.addAll(tempOperations);
+
+            for(SoapOperation tempOperation : tempOperations){
+                List<SoapMockResponse> tempMockResponses = this.mockResponseRepository.findWithOperationId(tempOperation.getId());
+                mockResponses.addAll(tempMockResponses);
+            }
+        }
+
+        final SoapExportContainer exportContainer = new SoapExportContainer();
+        exportContainer.setProject(project);
+        exportContainer.setPorts(ports);
+        exportContainer.setResources(resources);
+        exportContainer.setOperations(operations);
+        exportContainer.setMockResponses(mockResponses);
+
+        final String serialized = ExportContainerSerializer.serialize(exportContainer);
+        return createServiceResult(new ExportSoapProjectOutput(serialized));
     }
+
 }

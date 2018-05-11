@@ -18,12 +18,16 @@ package com.castlemock.core.mock.graphql.model.event.domain;
 
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperation;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
  * @author Karl Dahlgren
  * @since 1.19
  */
+@XmlRootElement
 public class GraphQLEvent extends Event {
 
     private GraphQLRequest request;
@@ -58,6 +62,7 @@ public class GraphQLEvent extends Event {
         setEndDate(new Date());
     }
 
+    @XmlElement
     public GraphQLRequest getRequest() {
         return request;
     }
@@ -66,6 +71,7 @@ public class GraphQLEvent extends Event {
         this.request = request;
     }
 
+    @XmlElement
     public GraphQLResponse getResponse() {
         return response;
     }
@@ -74,6 +80,7 @@ public class GraphQLEvent extends Event {
         this.response = response;
     }
 
+    @XmlElement
     public String getProjectId() {
         return projectId;
     }
@@ -82,6 +89,7 @@ public class GraphQLEvent extends Event {
         this.projectId = projectId;
     }
 
+    @XmlElement
     public String getApplicationId() {
         return applicationId;
     }

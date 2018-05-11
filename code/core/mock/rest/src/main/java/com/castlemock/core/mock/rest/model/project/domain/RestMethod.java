@@ -17,6 +17,10 @@
 package com.castlemock.core.mock.rest.model.project.domain;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -24,7 +28,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
-
+@XmlRootElement
 public class RestMethod {
 
     private String id;
@@ -43,6 +47,7 @@ public class RestMethod {
     
     private String invokeAddress;
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -51,6 +56,7 @@ public class RestMethod {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -59,6 +65,7 @@ public class RestMethod {
         this.name = name;
     }
 
+    @XmlElement
     public String getDefaultBody() {
         return defaultBody;
     }
@@ -67,6 +74,7 @@ public class RestMethod {
         this.defaultBody = defaultBody;
     }
 
+    @XmlElement
     public String getResourceId() {
         return resourceId;
     }
@@ -75,6 +83,7 @@ public class RestMethod {
         this.resourceId = resourceId;
     }
 
+    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
@@ -83,6 +92,8 @@ public class RestMethod {
         this.httpMethod = httpMethod;
     }
 
+    @XmlElementWrapper(name = "mockResponses")
+    @XmlElement(name = "mockResponse")
     public List<RestMockResponse> getMockResponses() {
         return mockResponses;
     }
@@ -91,6 +102,7 @@ public class RestMethod {
         this.mockResponses = mockResponses;
     }
 
+    @XmlElement
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
@@ -99,6 +111,7 @@ public class RestMethod {
         this.forwardedEndpoint = forwardedEndpoint;
     }
 
+    @XmlElement
     public RestMethodStatus getStatus() {
         return status;
     }
@@ -107,6 +120,7 @@ public class RestMethod {
         this.status = status;
     }
 
+    @XmlElement
     public RestResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
@@ -115,6 +129,7 @@ public class RestMethod {
         this.responseStrategy = responseStrategy;
     }
 
+    @XmlElement
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
     }
@@ -123,6 +138,7 @@ public class RestMethod {
         this.currentResponseSequenceIndex = currentResponseSequenceIndex;
     }
 
+    @XmlElement
     public String getInvokeAddress() {
         return invokeAddress;
     }
@@ -131,6 +147,7 @@ public class RestMethod {
         this.invokeAddress = invokeAddress;
     }
 
+    @XmlElement
     public boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
     }
@@ -139,6 +156,7 @@ public class RestMethod {
         this.simulateNetworkDelay = simulateNetworkDelay;
     }
 
+    @XmlElement
     public long getNetworkDelay() {
         return networkDelay;
     }

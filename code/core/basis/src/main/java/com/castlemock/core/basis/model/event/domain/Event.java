@@ -19,6 +19,8 @@ package com.castlemock.core.basis.model.event.domain;
 import com.castlemock.core.basis.model.TypeIdentifiable;
 import com.castlemock.core.basis.model.TypeIdentifier;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
@@ -27,6 +29,7 @@ import java.util.Date;
  * @since 1.0
  * @see Event
  */
+@XmlRootElement
 public class Event implements TypeIdentifiable {
 
     private String id;
@@ -63,6 +66,7 @@ public class Event implements TypeIdentifiable {
         this.endDate = eventDto.getEndDate();
     }
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -71,6 +75,7 @@ public class Event implements TypeIdentifiable {
         this.id = id;
     }
 
+    @XmlElement
     public String getResourceName() {
         return resourceName;
     }
@@ -79,6 +84,7 @@ public class Event implements TypeIdentifiable {
         this.resourceName = resourceName;
     }
 
+    @XmlElement
     public Date getStartDate() {
         return startDate;
     }
@@ -87,6 +93,7 @@ public class Event implements TypeIdentifiable {
         this.startDate = startDate;
     }
 
+    @XmlElement
     public Date getEndDate() {
         return endDate;
     }
@@ -96,6 +103,7 @@ public class Event implements TypeIdentifiable {
     }
 
     @Override
+    @XmlElement
     public TypeIdentifier getTypeIdentifier() {
         return typeIdentifier;
     }
@@ -105,6 +113,7 @@ public class Event implements TypeIdentifiable {
         this.typeIdentifier = typeIdentifier;
     }
 
+    @XmlElement
     public String getResourceLink() {
         return resourceLink;
     }

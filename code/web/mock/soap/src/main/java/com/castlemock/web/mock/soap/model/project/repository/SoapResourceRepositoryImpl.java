@@ -39,7 +39,7 @@ import java.io.File;
 import java.util.*;
 
 @Repository
-public class SoapResourceRepositoryImpl extends RepositoryImpl<SoapResourceRepositoryImpl.SoapResourceFile, SoapResource, String> implements SoapResourceRepository {
+public class  SoapResourceRepositoryImpl extends RepositoryImpl<SoapResourceRepositoryImpl.SoapResourceFile, SoapResource, String> implements SoapResourceRepository {
 
     private static final String WSDL_DIRECTORY = "wsdl";
     private static final String SCHEMA_DIRECTORY = "schema";

@@ -18,12 +18,15 @@ package com.castlemock.core.mock.rest.model.event.domain;
 
 import com.castlemock.core.basis.model.event.domain.Event;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class RestEvent extends Event {
 
 
@@ -74,6 +77,7 @@ public class RestEvent extends Event {
         setEndDate(new Date());
     }
 
+    @XmlElement
     public RestRequest getRequest() {
         return request;
     }
@@ -82,10 +86,16 @@ public class RestEvent extends Event {
         this.request = request;
     }
 
+    @XmlElement
     public RestResponse getResponse() {
         return response;
     }
 
+    public void setResponse(RestResponse response) {
+        this.response = response;
+    }
+
+    @XmlElement
     public String getProjectId() {
         return projectId;
     }
@@ -94,6 +104,7 @@ public class RestEvent extends Event {
         this.projectId = projectId;
     }
 
+    @XmlElement
     public String getApplicationId() {
         return applicationId;
     }
@@ -102,10 +113,7 @@ public class RestEvent extends Event {
         this.applicationId = applicationId;
     }
 
-    public void setResponse(RestResponse response) {
-        this.response = response;
-    }
-
+    @XmlElement
     public String getResourceId() {
         return resourceId;
     }
@@ -114,6 +122,7 @@ public class RestEvent extends Event {
         this.resourceId = resourceId;
     }
 
+    @XmlElement
     public String getMethodId() {
         return methodId;
     }

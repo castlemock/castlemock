@@ -17,6 +17,10 @@
 package com.castlemock.core.mock.graphql.model.project.domain;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -24,6 +28,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.19
  */
+@XmlRootElement
 public class GraphQLOperation {
 
     private String id;
@@ -40,6 +45,7 @@ public class GraphQLOperation {
     private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
     private GraphQLResult result;
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -48,6 +54,7 @@ public class GraphQLOperation {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -56,6 +63,7 @@ public class GraphQLOperation {
         this.name = name;
     }
 
+    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -64,6 +72,7 @@ public class GraphQLOperation {
         this.description = description;
     }
 
+    @XmlElement
     public String getApplicationId() {
         return applicationId;
     }
@@ -72,6 +81,7 @@ public class GraphQLOperation {
         this.applicationId = applicationId;
     }
 
+    @XmlElement
     public GraphQLResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
@@ -80,6 +90,7 @@ public class GraphQLOperation {
         this.responseStrategy = responseStrategy;
     }
 
+    @XmlElement
     public GraphQLOperationStatus getStatus() {
         return status;
     }
@@ -88,6 +99,8 @@ public class GraphQLOperation {
         this.status = status;
     }
 
+    @XmlElementWrapper(name = "arguments")
+    @XmlElement(name = "argument")
     public List<GraphQLArgument> getArguments() {
         return arguments;
     }
@@ -96,6 +109,7 @@ public class GraphQLOperation {
         this.arguments = arguments;
     }
 
+    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
@@ -104,6 +118,7 @@ public class GraphQLOperation {
         this.httpMethod = httpMethod;
     }
 
+    @XmlElement
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
@@ -112,6 +127,7 @@ public class GraphQLOperation {
         this.forwardedEndpoint = forwardedEndpoint;
     }
 
+    @XmlElement
     public String getOriginalEndpoint() {
         return originalEndpoint;
     }
@@ -120,6 +136,7 @@ public class GraphQLOperation {
         this.originalEndpoint = originalEndpoint;
     }
 
+    @XmlElement
     public Boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
     }
@@ -128,6 +145,7 @@ public class GraphQLOperation {
         this.simulateNetworkDelay = simulateNetworkDelay;
     }
 
+    @XmlElement
     public Long getNetworkDelay() {
         return networkDelay;
     }
@@ -136,6 +154,7 @@ public class GraphQLOperation {
         this.networkDelay = networkDelay;
     }
 
+    @XmlElement
     public GraphQLResult getResult() {
         return result;
     }

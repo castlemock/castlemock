@@ -17,6 +17,11 @@
 package com.castlemock.core.mock.soap.model.project.domain;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -24,6 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class SoapOperation {
 
     private String id;
@@ -48,6 +54,7 @@ public class SoapOperation {
 
     private String defaultXPathResponseName;
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -56,6 +63,7 @@ public class SoapOperation {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -64,6 +72,7 @@ public class SoapOperation {
         this.name = name;
     }
 
+    @XmlElement
     public String getIdentifier() {
         return identifier;
     }
@@ -72,6 +81,7 @@ public class SoapOperation {
         this.identifier = identifier;
     }
 
+    @XmlElement
     public String getPortId() {
         return portId;
     }
@@ -80,6 +90,7 @@ public class SoapOperation {
         this.portId = portId;
     }
 
+    @XmlElement
     public SoapResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
@@ -88,6 +99,7 @@ public class SoapOperation {
         this.responseStrategy = responseStrategy;
     }
 
+    @XmlElement
     public SoapOperationStatus getStatus() {
         return status;
     }
@@ -96,6 +108,8 @@ public class SoapOperation {
         this.status = status;
     }
 
+    @XmlElementWrapper(name = "mockResponses")
+    @XmlElement(name = "mockResponse")
     public List<SoapMockResponse> getMockResponses() {
         return mockResponses;
     }
@@ -104,6 +118,7 @@ public class SoapOperation {
         this.mockResponses = mockResponses;
     }
 
+    @XmlElement
     public String getInvokeAddress() {
         return invokeAddress;
     }
@@ -112,6 +127,7 @@ public class SoapOperation {
         this.invokeAddress = invokeAddress;
     }
 
+    @XmlElement
     public String getDefaultBody() {
         return defaultBody;
     }
@@ -120,6 +136,7 @@ public class SoapOperation {
         this.defaultBody = defaultBody;
     }
 
+    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
@@ -128,6 +145,7 @@ public class SoapOperation {
         this.httpMethod = httpMethod;
     }
 
+    @XmlElement
     public SoapVersion getSoapVersion() {
         return soapVersion;
     }
@@ -136,6 +154,7 @@ public class SoapOperation {
         this.soapVersion = soapVersion;
     }
 
+    @XmlTransient
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
     }
@@ -144,6 +163,7 @@ public class SoapOperation {
         this.currentResponseSequenceIndex = currentResponseSequenceIndex;
     }
 
+    @XmlElement
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
@@ -152,6 +172,7 @@ public class SoapOperation {
         this.forwardedEndpoint = forwardedEndpoint;
     }
 
+    @XmlElement
     public String getOriginalEndpoint() {
         return originalEndpoint;
     }
@@ -160,6 +181,7 @@ public class SoapOperation {
         this.originalEndpoint = originalEndpoint;
     }
 
+    @XmlElement
     public Boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
     }
@@ -168,6 +190,7 @@ public class SoapOperation {
         this.simulateNetworkDelay = simulateNetworkDelay;
     }
 
+    @XmlElement
     public Long getNetworkDelay() {
         return networkDelay;
     }
@@ -176,6 +199,7 @@ public class SoapOperation {
         this.networkDelay = networkDelay;
     }
 
+    @XmlElement
     public String getDefaultXPathMockResponseId() {
         return defaultXPathMockResponseId;
     }
@@ -184,6 +208,7 @@ public class SoapOperation {
         this.defaultXPathMockResponseId = defaultXPathMockResponseId;
     }
 
+    @XmlElement
     public String getDefaultXPathResponseName() {
         return defaultXPathResponseName;
     }

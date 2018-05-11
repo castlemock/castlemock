@@ -17,10 +17,13 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
+@XmlRootElement
 public class GraphQLAttribute {
 
     private String id;
@@ -35,6 +38,7 @@ public class GraphQLAttribute {
     private GraphQLAttributeType attributeType;
     private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -43,6 +47,7 @@ public class GraphQLAttribute {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -51,6 +56,7 @@ public class GraphQLAttribute {
         this.name = name;
     }
 
+    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -59,6 +65,7 @@ public class GraphQLAttribute {
         this.description = description;
     }
 
+    @XmlElement
     public String getTypeId() {
         return typeId;
     }
@@ -67,6 +74,7 @@ public class GraphQLAttribute {
         this.typeId = typeId;
     }
 
+    @XmlElement
     public String getTypeName() {
         return typeName;
     }
@@ -75,6 +83,7 @@ public class GraphQLAttribute {
         this.typeName = typeName;
     }
 
+    @XmlElement
     public Boolean getNullable() {
         return nullable;
     }
@@ -83,6 +92,7 @@ public class GraphQLAttribute {
         this.nullable = nullable;
     }
 
+    @XmlElement
     public Boolean getListable() {
         return listable;
     }
@@ -91,6 +101,7 @@ public class GraphQLAttribute {
         this.listable = listable;
     }
 
+    @XmlElement
     public String getValue() {
         return value;
     }
@@ -99,6 +110,7 @@ public class GraphQLAttribute {
         this.value = value;
     }
 
+    @XmlElement
     public String getObjectTypeId() {
         return objectTypeId;
     }
@@ -107,6 +119,7 @@ public class GraphQLAttribute {
         this.objectTypeId = objectTypeId;
     }
 
+    @XmlElement
     public GraphQLAttributeType getAttributeType() {
         return attributeType;
     }
@@ -115,6 +128,8 @@ public class GraphQLAttribute {
         this.attributeType = attributeType;
     }
 
+    @XmlElementWrapper(name = "arguments")
+    @XmlElement(name = "argument")
     public List<GraphQLArgument> getArguments() {
         return arguments;
     }

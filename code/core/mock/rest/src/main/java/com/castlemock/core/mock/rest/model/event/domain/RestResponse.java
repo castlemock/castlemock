@@ -18,13 +18,17 @@ package com.castlemock.core.mock.rest.model.event.domain;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-
+@XmlRootElement
 public class RestResponse {
 
     private String body;
@@ -34,6 +38,7 @@ public class RestResponse {
     private List<HttpHeader> httpHeaders;
     private List<ContentEncoding> contentEncodings;
 
+    @XmlElement
     public String getBody() {
         return body;
     }
@@ -42,6 +47,7 @@ public class RestResponse {
         this.body = body;
     }
 
+    @XmlElement
     public String getMockResponseName() {
         return mockResponseName;
     }
@@ -50,6 +56,7 @@ public class RestResponse {
         this.mockResponseName = mockResponseName;
     }
 
+    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
@@ -58,6 +65,7 @@ public class RestResponse {
         this.httpStatusCode = httpStatusCode;
     }
 
+    @XmlElement
     public String getContentType() {
         return contentType;
     }
@@ -66,6 +74,8 @@ public class RestResponse {
         this.contentType = contentType;
     }
 
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
@@ -74,6 +84,8 @@ public class RestResponse {
         this.httpHeaders = httpHeaders;
     }
 
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
     }

@@ -16,6 +16,10 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class GraphQLResult {
 
     private String id;
@@ -25,6 +29,7 @@ public class GraphQLResult {
     private Boolean listable;
     private GraphQLAttributeType attributeType;
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -33,6 +38,7 @@ public class GraphQLResult {
         this.id = id;
     }
 
+    @XmlElement
     public String getTypeName() {
         return typeName;
     }
@@ -41,6 +47,7 @@ public class GraphQLResult {
         this.typeName = typeName;
     }
 
+    @XmlElement
     public String getTypeId() {
         return typeId;
     }
@@ -49,6 +56,7 @@ public class GraphQLResult {
         this.typeId = typeId;
     }
 
+    @XmlElement
     public Boolean getNullable() {
         return nullable;
     }
@@ -57,6 +65,7 @@ public class GraphQLResult {
         this.nullable = nullable;
     }
 
+    @XmlElement
     public Boolean getListable() {
         return listable;
     }
@@ -65,6 +74,7 @@ public class GraphQLResult {
         this.listable = listable;
     }
 
+    @XmlElement
     public GraphQLAttributeType getAttributeType() {
         return attributeType;
     }

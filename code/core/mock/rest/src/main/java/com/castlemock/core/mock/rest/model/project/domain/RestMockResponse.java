@@ -18,6 +18,10 @@ package com.castlemock.core.mock.rest.model.project.domain;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -25,6 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class RestMockResponse {
 
     private String id;
@@ -37,6 +42,7 @@ public class RestMockResponse {
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -45,6 +51,7 @@ public class RestMockResponse {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -53,6 +60,7 @@ public class RestMockResponse {
         this.name = name;
     }
 
+    @XmlElement
     public String getBody() {
         return body;
     }
@@ -61,6 +69,7 @@ public class RestMockResponse {
         this.body = body;
     }
 
+    @XmlElement
     public String getMethodId() {
         return methodId;
     }
@@ -69,6 +78,7 @@ public class RestMockResponse {
         this.methodId = methodId;
     }
 
+    @XmlElement
     public RestMockResponseStatus getStatus() {
         return status;
     }
@@ -77,6 +87,7 @@ public class RestMockResponse {
         this.status = status;
     }
 
+    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
@@ -85,6 +96,7 @@ public class RestMockResponse {
         this.httpStatusCode = httpStatusCode;
     }
 
+    @XmlElement
     public boolean isUsingExpressions() {
         return usingExpressions;
     }
@@ -93,6 +105,8 @@ public class RestMockResponse {
         this.usingExpressions = usingExpressions;
     }
 
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
@@ -101,6 +115,8 @@ public class RestMockResponse {
         this.httpHeaders = httpHeaders;
     }
 
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
     }

@@ -16,6 +16,9 @@
 
 package com.castlemock.core.mock.graphql.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -23,11 +26,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.19
  */
+@XmlRootElement
 public class GraphQLRequestField {
 
     private String name;
     private List<GraphQLRequestField> fields = new CopyOnWriteArrayList<GraphQLRequestField>();
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -36,6 +41,8 @@ public class GraphQLRequestField {
         this.name = name;
     }
 
+    @XmlElementWrapper(name = "fields")
+    @XmlElement(name = "field")
     public List<GraphQLRequestField> getFields() {
         return fields;
     }

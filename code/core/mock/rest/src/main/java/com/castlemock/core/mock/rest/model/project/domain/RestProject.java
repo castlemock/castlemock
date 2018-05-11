@@ -18,6 +18,9 @@ package com.castlemock.core.mock.rest.model.project.domain;
 
 import com.castlemock.core.basis.model.project.domain.Project;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -25,6 +28,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class RestProject extends Project {
 
     private List<RestApplication> applications = new CopyOnWriteArrayList<RestApplication>();
@@ -44,6 +48,8 @@ public class RestProject extends Project {
         super(projectDto);
     }
 
+    @XmlElementWrapper(name = "applications")
+    @XmlElement(name = "application")
     public List<RestApplication> getApplications() {
         return applications;
     }

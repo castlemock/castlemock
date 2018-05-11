@@ -16,6 +16,10 @@
 
 package com.castlemock.core.mock.rest.model.project.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class RestResource {
 
     private String id;
@@ -38,6 +43,7 @@ public class RestResource {
 
     private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -46,6 +52,7 @@ public class RestResource {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -54,6 +61,7 @@ public class RestResource {
         this.name = name;
     }
 
+    @XmlElement
     public String getUri() {
         return uri;
     }
@@ -62,6 +70,7 @@ public class RestResource {
         this.uri = uri;
     }
 
+    @XmlElement
     public String getApplicationId() {
         return applicationId;
     }
@@ -70,6 +79,8 @@ public class RestResource {
         this.applicationId = applicationId;
     }
 
+    @XmlElementWrapper(name = "methods")
+    @XmlElement(name = "method")
     public List<RestMethod> getMethods() {
         return methods;
     }
@@ -78,6 +89,7 @@ public class RestResource {
         this.methods = methods;
     }
 
+    @XmlElement
     public String getInvokeAddress() {
         return invokeAddress;
     }
@@ -86,6 +98,7 @@ public class RestResource {
         this.invokeAddress = invokeAddress;
     }
 
+    @XmlTransient
     public Map<RestMethodStatus, Integer> getStatusCount() {
         return statusCount;
     }

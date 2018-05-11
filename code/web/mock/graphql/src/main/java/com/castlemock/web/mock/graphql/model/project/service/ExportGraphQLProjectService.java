@@ -19,8 +19,14 @@ package com.castlemock.web.mock.graphql.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.basis.utility.serializer.ExportContainerSerializer;
+import com.castlemock.core.mock.graphql.model.GraphQLExportContainer;
+import com.castlemock.core.mock.graphql.model.project.domain.*;
 import com.castlemock.core.mock.graphql.model.project.service.message.input.ExportGraphQLProjectInput;
 import com.castlemock.core.mock.graphql.model.project.service.message.output.ExportGraphQLProjectOutput;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -40,7 +46,41 @@ public class ExportGraphQLProjectService extends AbstractGraphQLProjectService i
     @Override
     public ServiceResult<ExportGraphQLProjectOutput> process(final ServiceTask<ExportGraphQLProjectInput> serviceTask) {
         final ExportGraphQLProjectInput input = serviceTask.getInput();
-        final String rawProjet = repository.exportOne(input.getGraphQLProjectId());
-        return createServiceResult(new ExportGraphQLProjectOutput(rawProjet));
+        final GraphQLProject project = repository.findOne(input.getGraphQLProjectId());
+        final List<GraphQLApplication> applications = this.applicationRepository.findWithProjectId(input.getGraphQLProjectId());
+
+        final List<GraphQLObjectType> objectTypes = new ArrayList<>();
+        final List<GraphQLEnumType> enumTypes = new ArrayList<>();
+        final List<GraphQLQuery> queries = new ArrayList<>();
+        final List<GraphQLMutation> mutations = new ArrayList<>();
+        final List<GraphQLSubscription> subscriptions = new ArrayList<>();
+
+
+
+        for(GraphQLApplication application : applications){
+            List<GraphQLObjectType> tempObjectTypes = this.objectTypeRepository.findWithApplicationId(application.getId());
+            List<GraphQLEnumType> tempEnumTypes = this.enumTypeRepository.findWithApplicationId(application.getId());
+            List<GraphQLQuery> tempQueries = this.queryRepository.findWithApplicationId(application.getId());
+            List<GraphQLMutation> tempMutations = this.mutationRepository.findWithApplicationId(application.getId());
+            List<GraphQLSubscription> tempSubscriptions = this.subscriptionRepository.findWithApplicationId(application.getId());
+
+            objectTypes.addAll(tempObjectTypes);
+            enumTypes.addAll(tempEnumTypes);
+            queries.addAll(tempQueries);
+            mutations.addAll(tempMutations);
+            subscriptions.addAll(tempSubscriptions);
+        }
+
+        final GraphQLExportContainer exportContainer = new GraphQLExportContainer();
+        exportContainer.setProject(project);
+        exportContainer.setApplications(applications);
+        exportContainer.setObjectTypes(objectTypes);
+        exportContainer.setEnumTypes(enumTypes);
+        exportContainer.setQueries(queries);
+        exportContainer.setMutations(mutations);
+        exportContainer.setSubscriptions(subscriptions);
+
+        final String serialized = ExportContainerSerializer.serialize(exportContainer);
+        return createServiceResult(new ExportGraphQLProjectOutput(serialized));
     }
 }

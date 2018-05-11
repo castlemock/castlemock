@@ -17,10 +17,13 @@
 package com.castlemock.core.mock.graphql.model.project.domain;
 
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author Karl Dahlgren
  * @since 1.19
  */
+@XmlRootElement
 public class GraphQLSubscription extends GraphQLOperation {
 
 

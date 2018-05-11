@@ -18,6 +18,10 @@ package com.castlemock.core.mock.graphql.model.project.domain;
 
 import com.castlemock.core.basis.model.project.domain.Project;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +31,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.19
  */
+@XmlRootElement
 public class GraphQLProject extends Project {
 
     private List<GraphQLApplication> applications = new CopyOnWriteArrayList<GraphQLApplication>();
@@ -45,6 +50,8 @@ public class GraphQLProject extends Project {
         super(projectDto);
     }
 
+    @XmlElementWrapper(name = "applications")
+    @XmlElement(name = "application")
     public List<GraphQLApplication> getApplications() {
         return applications;
     }
@@ -53,6 +60,7 @@ public class GraphQLProject extends Project {
         this.applications = applications;
     }
 
+    @XmlTransient
     public Map<GraphQLOperationStatus, Integer> getStatusCount() {
         return statusCount;
     }

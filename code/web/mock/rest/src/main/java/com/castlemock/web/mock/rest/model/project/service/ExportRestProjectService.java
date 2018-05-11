@@ -19,8 +19,13 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.basis.utility.serializer.ExportContainerSerializer;
+import com.castlemock.core.mock.rest.model.RestExportContainer;
+import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ExportRestProjectInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ExportRestProjectOutput;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -40,7 +45,36 @@ public class ExportRestProjectService extends AbstractRestProjectService impleme
     @Override
     public ServiceResult<ExportRestProjectOutput> process(final ServiceTask<ExportRestProjectInput> serviceTask) {
         final ExportRestProjectInput input = serviceTask.getInput();
-        final String rawProjet = repository.exportOne(input.getRestProjectId());
-        return createServiceResult(new ExportRestProjectOutput(rawProjet));
+        final RestProject project = repository.findOne(input.getRestProjectId());
+        final List<RestApplication> applications = this.applicationRepository.findWithProjectId(input.getRestProjectId());
+        final List<RestResource> resources = new ArrayList<>();
+        final List<RestMethod> methods = new ArrayList<>();
+        final List<RestMockResponse> mockResponses = new ArrayList<>();
+
+
+        for(RestApplication application : applications){
+            List<RestResource> tempResources = this.resourceRepository.findWithApplicationId(application.getId());
+            resources.addAll(tempResources);
+
+            for(RestResource tempResource : tempResources){
+                List<RestMethod> tempMethods = this.methodRepository.findWithResourceId(tempResource.getId());
+                methods.addAll(tempMethods);
+
+                for(RestMethod tempMethod : tempMethods){
+                    List<RestMockResponse> tempMockResponses = this.mockResponseRepository.findWithMethodId(tempMethod.getId());
+                    mockResponses.addAll(tempMockResponses);
+                }
+            }
+        }
+
+        final RestExportContainer exportContainer = new RestExportContainer();
+        exportContainer.setProject(project);
+        exportContainer.setApplications(applications);
+        exportContainer.setResources(resources);
+        exportContainer.setMethods(methods);
+        exportContainer.setMockResponses(mockResponses);
+
+        final String serialized = ExportContainerSerializer.serialize(exportContainer);
+        return createServiceResult(new ExportRestProjectOutput(serialized));
     }
 }

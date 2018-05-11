@@ -18,6 +18,10 @@ package com.castlemock.core.basis.model.project.domain;
 
 import com.castlemock.core.basis.model.TypeIdentifiable;
 import com.castlemock.core.basis.model.TypeIdentifier;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.Date;
 
 /**
@@ -25,6 +29,7 @@ import java.util.Date;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@XmlRootElement
 public class Project implements TypeIdentifiable {
 
 
@@ -55,6 +60,7 @@ public class Project implements TypeIdentifiable {
         this.description = projectDto.getDescription();
     }
 
+    @XmlElement
     public String getId() {
         return id;
     }
@@ -63,6 +69,7 @@ public class Project implements TypeIdentifiable {
         this.id = id;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -71,6 +78,7 @@ public class Project implements TypeIdentifiable {
         this.name = name;
     }
 
+    @XmlElement
     public Date getUpdated() {
         return updated;
     }
@@ -79,6 +87,7 @@ public class Project implements TypeIdentifiable {
         this.updated = updated;
     }
 
+    @XmlElement
     public Date getCreated() {
         return created;
     }
@@ -87,6 +96,7 @@ public class Project implements TypeIdentifiable {
         this.created = created;
     }
 
+    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -96,6 +106,7 @@ public class Project implements TypeIdentifiable {
     }
 
     @Override
+    @XmlTransient
     public TypeIdentifier getTypeIdentifier() {
         return typeIdentifier;
     }
