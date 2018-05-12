@@ -56,7 +56,7 @@
 
         <div class="upload-file">
             <form:form method="POST" enctype="multipart/form-data" action="${import_url}" modelAttribute="uploadForm">
-                <input type="file" id="files" name="files" multiple="multiple"/>
+                <input type="file" id="files" name="files"/>
 
                 <div id="messages">
                 </div>
