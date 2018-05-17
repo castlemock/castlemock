@@ -29,51 +29,51 @@ public class UrlComparerTest {
 
     @Test
     public void compareTest1(){
-        Assert.assertTrue(UrlComparer.compareUri("/user", "/user"));
+        Assert.assertTrue(UrlUtility.compareUri("/user", "/user"));
     }
 
     @Test
     public void compareTest2(){
-        Assert.assertTrue(UrlComparer.compareUri("/user/id", "/user/id"));
+        Assert.assertTrue(UrlUtility.compareUri("/user/id", "/user/id"));
     }
 
 
     @Test
     public void compareTest3(){
-        Assert.assertTrue(UrlComparer.compareUri("/user/id.json", "/user/id.json"));
+        Assert.assertTrue(UrlUtility.compareUri("/user/id.json", "/user/id.json"));
     }
 
     @Test
     public void compareTest4(){
-        Assert.assertTrue(UrlComparer.compareUri("/user/{id}", "/user/1"));
+        Assert.assertTrue(UrlUtility.compareUri("/user/{id}", "/user/1"));
     }
 
     @Test
     public void compareTest5(){
-        Assert.assertTrue(UrlComparer.compareUri("/user/{id}.json", "/user/1.json"));
+        Assert.assertTrue(UrlUtility.compareUri("/user/{id}.json", "/user/1.json"));
     }
 
     @Test
     public void compareTest6(){
-        Assert.assertTrue(UrlComparer.compareUri("/user/1.{format}", "/user/1.json"));
-        Assert.assertTrue(UrlComparer.compareUri("/user/1.{format}", "/user/1.xml"));
-        Assert.assertFalse(UrlComparer.compareUri("/user/1.{format}", "/user/2.xml"));
+        Assert.assertTrue(UrlUtility.compareUri("/user/1.{format}", "/user/1.json"));
+        Assert.assertTrue(UrlUtility.compareUri("/user/1.{format}", "/user/1.xml"));
+        Assert.assertFalse(UrlUtility.compareUri("/user/1.{format}", "/user/2.xml"));
     }
 
     @Test
     public void compareTest7(){
-        Assert.assertTrue(UrlComparer.compareUri("/user/{id}.{format}", "/user/1.json"));
-        Assert.assertTrue(UrlComparer.compareUri("/user/{id}.{format}", "/user/2.xml"));
+        Assert.assertTrue(UrlUtility.compareUri("/user/{id}.{format}", "/user/1.json"));
+        Assert.assertTrue(UrlUtility.compareUri("/user/{id}.{format}", "/user/2.xml"));
     }
 
     @Test
     public void compareTest8(){
-        Assert.assertTrue(UrlComparer.compareUri("/company/{company}/user/{id}.{format}", "/company/Castle Mock/user/1.json"));
+        Assert.assertTrue(UrlUtility.compareUri("/company/{company}/user/{id}.{format}", "/company/Castle Mock/user/1.json"));
     }
 
     @Test
     public void compareTest9(){
-        Assert.assertFalse(UrlComparer.compareUri("/user/{id", "/user/1"));
+        Assert.assertFalse(UrlUtility.compareUri("/user/{id", "/user/1"));
     }
 
 }

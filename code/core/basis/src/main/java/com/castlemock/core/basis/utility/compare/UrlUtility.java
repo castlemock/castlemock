@@ -16,15 +16,19 @@
 
 package com.castlemock.core.basis.utility.compare;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Karl Dahlgren
  * @since 1.8
  */
-public class UrlComparer {
+public class UrlUtility {
 
-    protected static final String SLASH = "/";
-    protected static final char START_BRACKET = '{';
-    protected static final char END_BRACKET = '}';
+    private static final String SLASH = "/";
+    private static final String EMPTY_STRING = "";
+    private static final char START_BRACKET = '{';
+    private static final char END_BRACKET = '}';
 
     public static boolean compareUri(String uri1, String[] uriParts2){
         final String[] uriParts1 = uri1.split(SLASH);
@@ -106,6 +110,33 @@ public class UrlComparer {
         }
 
         return false;
+    }
+
+
+    public static Map<String, String> getPathParameters(final String uri1, final String[] uriParts2){
+        final Map<String, String> pathParameters = new HashMap<>();
+        final String[] uriParts1 = uri1.split(SLASH);
+
+        if(uriParts1.length != uriParts2.length){
+            return pathParameters;
+        }
+        for(int index = 0; index < uriParts1.length; index++){
+            String uriPart1 = uriParts1[index];
+            String uriPart2 = uriParts2[index];
+
+            int startBracketIndex = uriPart1.indexOf(START_BRACKET);
+            int endBracketIndex = uriPart1.indexOf(END_BRACKET);
+
+            if(startBracketIndex != -1 && endBracketIndex != -1
+                    && startBracketIndex < endBracketIndex){
+                uriPart1 = uriPart1.replaceAll("\\{", EMPTY_STRING);
+                uriPart1 = uriPart1.replaceAll("\\}", EMPTY_STRING);
+
+                pathParameters.put(uriPart1, uriPart2);
+            }
+        }
+
+        return pathParameters;
     }
 
 

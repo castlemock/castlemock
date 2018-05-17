@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.model.project.service;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.utility.compare.UrlComparer;
+import com.castlemock.core.basis.utility.compare.UrlUtility;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
@@ -27,6 +27,7 @@ import com.castlemock.core.mock.rest.model.project.service.message.input.Identif
 import com.castlemock.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Karl Dahlgren
@@ -65,10 +66,15 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
             throw new IllegalArgumentException("Unable to identify REST method: " + input.getRestResourceUri() + " (" + input.getHttpMethod() + ")");
         }
 
+        final Map<String, String> pathParameters =
+                UrlUtility.getPathParameters(restResource.getUri(), restResourceUriParts);
+
         final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(foundRestMethod.getId());
         foundRestMethod.setMockResponses(mockResponses);
 
-        return createServiceResult(new IdentifyRestMethodOutput(input.getRestProjectId(), input.getRestApplicationId(), restResource.getId(), foundRestMethod.getId(),  foundRestMethod));
+        return createServiceResult(new IdentifyRestMethodOutput(input.getRestProjectId(),
+                input.getRestApplicationId(), restResource.getId(),
+                foundRestMethod.getId(),  foundRestMethod, pathParameters));
     }
 
     /**
@@ -83,11 +89,12 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
                                             final String[] otherRestResourceUriParts) {
         final List<RestResource> resources = this.resourceRepository.findWithApplicationId(restApplicationId);
         for(RestResource restResource : resources){
-            if(UrlComparer.compareUri(restResource.getUri(), otherRestResourceUriParts)){
+            if(UrlUtility.compareUri(restResource.getUri(), otherRestResourceUriParts)){
                 return restResource;
             }
         }
 
         return null;
     }
+
 }

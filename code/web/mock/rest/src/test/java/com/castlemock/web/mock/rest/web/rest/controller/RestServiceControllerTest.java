@@ -71,6 +71,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private static final String APPLICATION_JSON = "application/json";
     private static final String CONTENT_TYPE_HEADER = "Content-type";
     private static final String ACCEPT_HEADER = "Accept";
+    private static final Map<String, String> PATH_PARAMETERS = new HashMap<>();
+
+    static {
+        PATH_PARAMETERS.put("Path", "Valud");
+    }
 
     private static final String REQUEST_BODY = "<request>\n" +
             "\t<variable>Value 1</variable>\n" +
@@ -91,7 +96,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
         restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
 
-        final IdentifyRestMethodOutput identifyRestMethodOutput = new IdentifyRestMethodOutput(PROJECT_ID, APPLICATION_ID, RESOURCE_ID, METHOD_ID, restMethod);
+        final IdentifyRestMethodOutput identifyRestMethodOutput = new IdentifyRestMethodOutput(PROJECT_ID, APPLICATION_ID, RESOURCE_ID, METHOD_ID, restMethod, PATH_PARAMETERS);
 
 
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
@@ -118,7 +123,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
         restMethod.setResponseStrategy(RestResponseStrategy.SEQUENCE);
 
-        final IdentifyRestMethodOutput identifyRestMethodOutput = new IdentifyRestMethodOutput(PROJECT_ID, APPLICATION_ID, RESOURCE_ID, METHOD_ID, restMethod);
+        final IdentifyRestMethodOutput identifyRestMethodOutput = new IdentifyRestMethodOutput(PROJECT_ID, APPLICATION_ID, RESOURCE_ID, METHOD_ID, restMethod, PATH_PARAMETERS);
 
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
 
@@ -141,7 +146,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
         restMethod.setStatus(RestMethodStatus.ECHO);
 
-        final IdentifyRestMethodOutput identifyRestMethodOutput = new IdentifyRestMethodOutput(PROJECT_ID, APPLICATION_ID, RESOURCE_ID, METHOD_ID, restMethod);
+        final IdentifyRestMethodOutput identifyRestMethodOutput = new IdentifyRestMethodOutput(PROJECT_ID, APPLICATION_ID, RESOURCE_ID, METHOD_ID, restMethod, PATH_PARAMETERS);
 
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + REST + SLASH + PROJECT +

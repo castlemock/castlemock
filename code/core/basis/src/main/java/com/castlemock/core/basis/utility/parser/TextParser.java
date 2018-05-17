@@ -19,6 +19,7 @@ package com.castlemock.core.basis.utility.parser;
 import com.castlemock.core.basis.utility.parser.expression.*;
 import com.castlemock.core.basis.utility.parser.expression.ExpressionInput;
 import com.castlemock.core.basis.utility.parser.expression.ExpressionInputParser;
+import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -39,8 +40,6 @@ import java.util.regex.Pattern;
  */
 public class TextParser {
 
-    private static final String START_EXPRESSION = "${";
-    private static final String END_EXPRESSION = "}";
     private static final Map<String,Expression> EXPRESSIONS = new HashMap<>();
     private static final Logger LOGGER = Logger.getLogger(TextParser.class);
 
@@ -58,6 +57,7 @@ public class TextParser {
         EXPRESSIONS.put(RandomPasswordExpression.IDENTIFIER, new RandomDecimalExpression());
         EXPRESSIONS.put(RandomDateTimeExpression.IDENTIFIER, new RandomDateTimeExpression());
         EXPRESSIONS.put(RandomEnumExpression.IDENTIFIER, new RandomEnumExpression());
+        EXPRESSIONS.put(PathParameterExpression.IDENTIFIER, new PathParameterExpression());
 
     }
 
@@ -71,6 +71,20 @@ public class TextParser {
      *          were found in the provided text.
      */
     public static String parse(final String text){
+        return parse(text, null);
+    }
+
+    /**
+     * The parse method is responsible for parsing a provided text and transform the text
+     * with the help of {@link Expression}. {@link Expression} in the texts will be transformed
+     * and replaced with new values. The transformed text will be returned.
+     * @param text The provided text that will be transformed.
+     * @return A transformed text. All expressions will be replaced by new values.
+     *          Please note that the same text will be returned if no expressions
+     *          were found in the provided text.
+     */
+    public static String parse(final String text,
+                               final Map<String, ExpressionArgument<?>> arguments){
         if(text == null){
             return null;
         }
@@ -80,6 +94,13 @@ public class TextParser {
         while (matcher.find()){
             String match = matcher.group();
             ExpressionInput expressionInput = ExpressionInputParser.parse(match);
+
+            if(arguments != null){
+                for(Map.Entry<String, ExpressionArgument<?>> argumentEntry : arguments.entrySet()){
+                    expressionInput.addArgument(argumentEntry.getKey(), argumentEntry.getValue());
+                }
+            }
+
             Expression expression = EXPRESSIONS.get(expressionInput.getName());
 
             if(expression == null){

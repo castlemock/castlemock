@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 
+import java.util.Map;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,12 +43,18 @@ public class IdentifyRestMethodOutput implements Output{
     @NotNull
     private RestMethod restMethod;
 
-    public IdentifyRestMethodOutput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, RestMethod restMethod) {
+    @NotNull
+    private Map<String, String> pathParameters;
+
+    public IdentifyRestMethodOutput(String restProjectId, String restApplicationId,
+                                    String restResourceId, String restMethodId,
+                                    RestMethod restMethod, Map<String, String> pathParameters) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
         this.restMethodId = restMethodId;
         this.restMethod = restMethod;
+        this.pathParameters = pathParameters;
     }
 
     public RestMethod getRestMethod() {
@@ -87,5 +95,13 @@ public class IdentifyRestMethodOutput implements Output{
 
     public void setRestMethodId(String restMethodId) {
         this.restMethodId = restMethodId;
+    }
+
+    public Map<String, String> getPathParameters() {
+        return pathParameters;
+    }
+
+    public void setPathParameters(Map<String, String> pathParameters) {
+        this.pathParameters = pathParameters;
     }
 }
