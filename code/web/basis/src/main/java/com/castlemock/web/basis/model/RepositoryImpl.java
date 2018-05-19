@@ -162,7 +162,9 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
         I id = type.getId();
 
         if(id == null){
-            id = (I)generateId();
+            do {
+                id = (I)generateId();
+            } while (exists(id));
             type.setId(id);
         }
         checkType(type);
