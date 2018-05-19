@@ -88,6 +88,10 @@
                     <td class="column1"><label path="defaultXPathResponse"><spring:message code="soap.soapoperation.label.defaultxpathresponse"/></label></td>
                     <td class="column2"><label path="defaultXPathResponse">${soapOperation.defaultXPathResponseName}</label></td>
                 </tr>
+                <tr>
+                    <td class="column1"><label path="mockOnFailure"><spring:message code="soap.soapoperation.label.mockonfailure"/></label></td>
+                    <td class="column2"><span class="checkbox"><input type="checkbox" path="mockOnFailure" ${soapOperation.mockOnFailure == 'true' ? 'checked' : ''} disabled /></span></td>
+                </tr>
             </table>
         </div>
 

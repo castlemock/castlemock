@@ -67,6 +67,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     private static final String FORWARDED_RESPONSE_NAME = "Forwarded response";
     private static final Random RANDOM = new Random();
     private static final String SOAP = "soap";
+    private static final int ERROR_CODE = 500;
     private static final Logger LOGGER = Logger.getLogger(AbstractSoapServiceController.class);
 
     /**
@@ -188,12 +189,10 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             event = new SoapEvent(soapOperation.getName(), request, soapProjectId, soapPortId, soapOperation.getId());
             if (SoapOperationStatus.DISABLED.equals(soapOperation.getStatus())) {
                 throw new SoapException("The requested soap operation, " + soapOperation.getName() + ", is disabled");
-            } else if (SoapOperationStatus.FORWARDED.equals(soapOperation.getStatus())) {
+            } else if (SoapOperationStatus.FORWARDED.equals(soapOperation.getStatus()) ||
+                    SoapOperationStatus.RECORDING.equals(soapOperation.getStatus()) ||
+                    SoapOperationStatus.RECORD_ONCE.equals(soapOperation.getStatus())) {
                 response = forwardRequest(request, soapProjectId, soapPortId, soapOperation);
-            } else if (SoapOperationStatus.RECORDING.equals(soapOperation.getStatus())) {
-                response = forwardRequestAndRecordResponse(request, soapProjectId, soapPortId, soapOperation);
-            } else if (SoapOperationStatus.RECORD_ONCE.equals(soapOperation.getStatus())) {
-                response = forwardRequestAndRecordResponseOnce(request, soapProjectId, soapPortId, soapOperation);
             } else if (SoapOperationStatus.ECHO.equals(soapOperation.getStatus())) {
                 response = echoResponse(request);
             } else { // Status.MOCKED
@@ -328,54 +327,19 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     }
 
     /**
-     * The method provides the functionality to forward the incoming request, store the returned the response and
-     * return the response to the service consumer.
-     * @param request The incoming request that will be forwarded
-     * @param soapOperation The SOAP operation that is being executed
-     * @return The response from the system that the request was forwarded to.
-     */
-    private SoapResponse forwardRequestAndRecordResponse(final SoapRequest request, final String soapProjectId,
-                                                         final String soapPortId, final SoapOperation soapOperation){
-        final SoapResponse response = forwardRequest(request, soapProjectId, soapPortId, soapOperation);
-        final SoapMockResponse mockResponse = new SoapMockResponse();
-        final Date date = new Date();
-        mockResponse.setBody(response.getBody());
-        mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
-        mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
-        mockResponse.setHttpStatusCode(response.getHttpStatusCode());
-        mockResponse.setHttpHeaders(response.getHttpHeaders());
-        serviceProcessor.processAsync(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperation.getId(), mockResponse));
-        return response;
-    }
-
-    /**
-     * The method provides the functionality to forward the incoming request, store the returned the response and
-     * return the response to the service consumer. The SOAP operation status will be updated
-     * to mocked.
-     * @param request The incoming request that will be forwarded
-     * @param soapOperation The SOAP operation that is being executed
-     * @return The response from the system that the request was forwarded to.
-     */
-    private SoapResponse forwardRequestAndRecordResponseOnce(final SoapRequest request, final String soapProjectId, final String soapPortId, final SoapOperation soapOperation){
-        final SoapResponse response = forwardRequestAndRecordResponse(request, soapProjectId, soapPortId, soapOperation);
-        soapOperation.setStatus(SoapOperationStatus.MOCKED);
-        serviceProcessor.process(new UpdateSoapOperationInput(soapProjectId, soapPortId, soapOperation.getId(), soapOperation));
-        return response;
-    }
-
-    /**
      * The method provides the functionality to forward request to a forwarded endpoint.
      * @param request The request that will be forwarded
      * @param soapOperation The SOAP operation that is being executed
      * @return The response from the system that the request was forwarded to.
      */
-    private SoapResponse forwardRequest(final SoapRequest request, final String soapProjectId, final String soapPortId, final SoapOperation soapOperation){
+    private SoapResponse forwardRequest(final SoapRequest request, final String soapProjectId,
+                                        final String soapPortId, final SoapOperation soapOperation){
         if(demoMode){
             // If the application is configured to run in demo mode, then use mocked response instead
             return mockResponse(request, soapProjectId, soapPortId, soapOperation);
         }
 
-        final SoapResponse response = new SoapResponse();
+
         HttpURLConnection connection = null;
         try {
             connection = HttpMessageSupport.establishConnection(
@@ -384,19 +348,62 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                     request.getBody(),
                     request.getHttpHeaders());
 
-
+            final Integer responseCode = connection.getResponseCode();
             final List<ContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
             final List<HttpHeader> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
             final String characterEncoding = CharsetUtility.parseHttpHeaders(responseHttpHeaders);
             final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings, characterEncoding);
+            final SoapResponse response = new SoapResponse();
             response.setMockResponseName(FORWARDED_RESPONSE_NAME);
             response.setBody(responseBody);
             response.setHttpHeaders(responseHttpHeaders);
-            response.setHttpStatusCode(connection.getResponseCode());
+            response.setHttpStatusCode(responseCode);
             response.setContentEncodings(encodings);
+            
+            if(response.getHttpStatusCode() >= ERROR_CODE){
+                // Check if the response code is an error code
+                // If so, then we should check if we should mock
+                // instead.
+                if(soapOperation.getMockOnFailure()){
+                    // Instead of using the forwarded
+                    LOGGER.debug("SOAP Operation with the following id has been configured" +
+                            " to mock response upon error: " + soapOperation.getId());
+                    return this.mockResponse(request, soapProjectId, soapPortId, soapOperation);
+                }
+            }
+
+            if(SoapOperationStatus.RECORDING.equals(soapOperation.getStatus()) ||
+                    SoapOperationStatus.RECORD_ONCE.equals(soapOperation.getStatus())){
+                final SoapMockResponse mockResponse = new SoapMockResponse();
+                final Date date = new Date();
+                mockResponse.setBody(response.getBody());
+                mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
+                mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
+                mockResponse.setHttpStatusCode(response.getHttpStatusCode());
+                mockResponse.setHttpHeaders(response.getHttpHeaders());
+                serviceProcessor.processAsync(new CreateSoapMockResponseInput(soapProjectId,
+                        soapPortId, soapOperation.getId(), mockResponse));
+
+
+                if(SoapOperationStatus.RECORD_ONCE.equals(soapOperation.getStatus())){
+                    // Change the operation status to mocked if the
+                    // operation has been configured to only record once.
+                    soapOperation.setStatus(SoapOperationStatus.MOCKED);
+                    serviceProcessor.process(new UpdateSoapOperationInput(soapProjectId,
+                            soapPortId, soapOperation.getId(), soapOperation));
+                }
+            }
+
             return response;
-        } catch (IOException exception) {
+        }catch (IOException exception){
             LOGGER.error("Unable to forward request", exception);
+
+            if(soapOperation.getMockOnFailure()){
+                LOGGER.debug("SOAP Operation with the following id has been configured" +
+                        " to mock response upon error: " + soapOperation.getId());
+                return this.mockResponse(request, soapProjectId, soapPortId, soapOperation);
+            }
+
             throw new SoapException("Unable to forward request to configured endpoint");
         } finally {
             if(connection != null){

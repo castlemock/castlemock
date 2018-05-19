@@ -51,6 +51,7 @@ public class UpdateSoapOperationService extends AbstractSoapProjectService imple
         soapOperation.setNetworkDelay(updated.getNetworkDelay());
         soapOperation.setCurrentResponseSequenceIndex(updated.getCurrentResponseSequenceIndex());
         soapOperation.setDefaultXPathMockResponseId(updated.getDefaultXPathMockResponseId());
+        soapOperation.setMockOnFailure(updated.getMockOnFailure());
 
         final SoapOperation updatedSoapOperation = this.operationRepository.update(input.getSoapOperationId(), soapOperation);
         return createServiceResult(new UpdateSoapOperationOutput(updatedSoapOperation));

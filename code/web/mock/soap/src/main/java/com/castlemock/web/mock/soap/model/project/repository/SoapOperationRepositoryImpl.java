@@ -229,6 +229,8 @@ public class SoapOperationRepositoryImpl extends RepositoryImpl<SoapOperationRep
         private boolean simulateNetworkDelay;
         @Mapping("networkDelay")
         private long networkDelay;
+        @Mapping("mockOnFailure")
+        private boolean mockOnFailure;
 
         @XmlElement
         @Override
@@ -365,6 +367,15 @@ public class SoapOperationRepositoryImpl extends RepositoryImpl<SoapOperationRep
 
         public void setDefaultXPathMockResponseId(String defaultXPathMockResponseId) {
             this.defaultXPathMockResponseId = defaultXPathMockResponseId;
+        }
+
+        @XmlElement
+        public boolean getMockOnFailure() {
+            return mockOnFailure;
+        }
+
+        public void setMockOnFailure(boolean mockOnFailure) {
+            this.mockOnFailure = mockOnFailure;
         }
     }
 

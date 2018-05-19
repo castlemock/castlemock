@@ -47,6 +47,7 @@ public class SoapOperation {
     private Long networkDelay;
     private String defaultXPathMockResponseId;
     private String portId;
+    private Boolean mockOnFailure;
 
     private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<SoapMockResponse>();
 
@@ -215,5 +216,14 @@ public class SoapOperation {
 
     public void setDefaultXPathResponseName(String defaultXPathResponseName) {
         this.defaultXPathResponseName = defaultXPathResponseName;
+    }
+
+    @XmlElement
+    public Boolean getMockOnFailure() {
+        return mockOnFailure;
+    }
+
+    public void setMockOnFailure(Boolean mockOnFailure) {
+        this.mockOnFailure = mockOnFailure;
     }
 }
