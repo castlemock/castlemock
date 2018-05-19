@@ -296,6 +296,16 @@ public abstract class RepositoryImpl<T extends Saveable<I>, D, I extends Seriali
     }
 
     /**
+     * Checks if the provided <code>id</code> already exists.
+     * @param id The id that will be checked if it is already being used.
+     * @return <code>true</code> if the id exists. <code>false</code> otherwise.
+     * @since 1.20
+     */
+    public boolean exists(I id){
+        return this.collection.containsKey(id);
+    }
+
+    /**
      * The method creates a new file name based on the provided <code>id</code>.
      * @param id The id will be the foundation of the generated file name.
      * @return A file name based on the provided id.

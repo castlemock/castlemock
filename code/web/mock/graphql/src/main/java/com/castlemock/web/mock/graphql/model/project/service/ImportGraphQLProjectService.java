@@ -48,29 +48,57 @@ public class ImportGraphQLProjectService extends AbstractGraphQLProjectService i
 
         GraphQLProject project = exportContainer.getProject();
 
+        if(this.repository.exists(project.getId())){
+            throw new IllegalArgumentException("A project with the following key already exists: " + project.getId());
+        }
+
         this.repository.save(project);
 
         for(GraphQLApplication application : exportContainer.getApplications()){
+            if(this.applicationRepository.exists(application.getId())){
+                throw new IllegalArgumentException("An application with the following key already exists: " + application.getId());
+            }
+
             this.applicationRepository.save(application);
         }
 
         for(GraphQLQuery query : exportContainer.getQueries()){
+            if(this.queryRepository.exists(query.getId())){
+                throw new IllegalArgumentException("A query with the following key already exists: " + query.getId());
+            }
+
             this.queryRepository.save(query);
         }
 
         for(GraphQLSubscription subscription : exportContainer.getSubscriptions()){
+            if(this.subscriptionRepository.exists(subscription.getId())){
+                throw new IllegalArgumentException("A subscription with the following key already exists: " + subscription.getId());
+            }
+
             this.subscriptionRepository.save(subscription);
         }
 
         for(GraphQLMutation mutation : exportContainer.getMutations()){
+            if(this.mutationRepository.exists(mutation.getId())){
+                throw new IllegalArgumentException("A mutation with the following key already exists: " + mutation.getId());
+            }
+
             this.mutationRepository.save(mutation);
         }
 
         for(GraphQLObjectType objectType : exportContainer.getObjectTypes()){
+            if(this.objectTypeRepository.exists(objectType.getId())){
+                throw new IllegalArgumentException("An object with the following key already exists: " + objectType.getId());
+            }
+
             this.objectTypeRepository.save(objectType);
         }
 
         for(GraphQLEnumType enumType : exportContainer.getEnumTypes()){
+            if(this.enumTypeRepository.exists(enumType.getId())){
+                throw new IllegalArgumentException("An enum with the following key already exists: " + enumType.getId());
+            }
+
             this.enumTypeRepository.save(enumType);
         }
 

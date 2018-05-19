@@ -57,21 +57,41 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
 
             project = exportContainer.getProject();
 
+            if(this.repository.exists(project.getId())){
+                throw new IllegalArgumentException("A project with the following key already exists: " + project.getId());
+            }
+
             this.repository.save(project);
 
             for(RestApplication application : exportContainer.getApplications()){
+                if(this.applicationRepository.exists(application.getId())){
+                    throw new IllegalArgumentException("An application with the following key already exists: " + application.getId());
+                }
+
                 this.applicationRepository.save(application);
             }
 
             for(RestResource resource : exportContainer.getResources()){
+                if(this.resourceRepository.exists(resource.getId())){
+                    throw new IllegalArgumentException("A resource with the following key already exists: " + resource.getId());
+                }
+
                 this.resourceRepository.save(resource);
             }
 
             for(RestMethod method : exportContainer.getMethods()){
+                if(this.methodRepository.exists(method.getId())){
+                    throw new IllegalArgumentException("A method with the following key already exists: " + method.getId());
+                }
+
                 this.methodRepository.save(method);
             }
 
             for(RestMockResponse mockResponse : exportContainer.getMockResponses()){
+                if(this.mockResponseRepository.exists(mockResponse.getId())){
+                    throw new IllegalArgumentException("A mocked response with the following key already exists: " + mockResponse.getId());
+                }
+
                 this.mockResponseRepository.save(mockResponse);
             }
         }

@@ -103,4 +103,12 @@ public interface Repository<D, I extends Serializable> {
      */
     D importOne(String raw);
 
+    /**
+     * Checks if the provided <code>id</code> already exists.
+     * @param id The id that will be checked if it is already being used.
+     * @return <code>true</code> if the id exists. <code>false</code> otherwise.
+     * @since 1.20
+     */
+    boolean exists(I id);
+
 }

@@ -62,21 +62,41 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
 
             project = exportContainer.getProject();
 
+            if(this.repository.exists(project.getId())){
+                throw new IllegalArgumentException("A project with the following key already exists: " + project.getId());
+            }
+
             this.repository.save(project);
 
             for(SoapPort port : exportContainer.getPorts()){
+                if(this.portRepository.exists(port.getId())){
+                    throw new IllegalArgumentException("A port with the following key already exists: " + port.getId());
+                }
+
                 this.portRepository.save(port);
             }
 
             for(SoapResource resource : exportContainer.getResources()){
+                if(this.resourceRepository.exists(resource.getId())){
+                    throw new IllegalArgumentException("A resource with the following key already exists: " + resource.getId());
+                }
+
                 this.resourceRepository.saveSoapResource(resource, resource.getContent());
             }
 
             for(SoapOperation operation : exportContainer.getOperations()){
+                if(this.operationRepository.exists(operation.getId())){
+                    throw new IllegalArgumentException("An operation with the following key already exists: " + operation.getId());
+                }
+
                 this.operationRepository.save(operation);
             }
 
             for(SoapMockResponse mockResponse : exportContainer.getMockResponses()){
+                if(this.mockResponseRepository.exists(mockResponse.getId())){
+                    throw new IllegalArgumentException("A mocked response with the following key already exists: " + mockResponse.getId());
+                }
+
                 this.mockResponseRepository.save(mockResponse);
             }
         }

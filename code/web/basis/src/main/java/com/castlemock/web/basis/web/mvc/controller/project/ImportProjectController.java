@@ -67,8 +67,13 @@ public class ImportProjectController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final ModelAndView model = createPartialModelAndView(PAGE);
+        final List<String> types = projectServiceFacade.getTypes();
+
+        // Temporary.
+        // GraphQL is currently only in a beta mode.
+        types.remove("GRAPHQL");
         model.addObject(FILE_UPLOAD_FORM, new ProjectFileUploadForm());
-        model.addObject(PROJECT_TYPES, projectServiceFacade.getTypes());
+        model.addObject(PROJECT_TYPES, types);
         return model;
     }
 

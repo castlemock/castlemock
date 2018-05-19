@@ -153,14 +153,35 @@ public class RestProjectV1LegacyRepository extends AbstractLegacyRepositoryImpl<
     @Override
     protected RestProject save(RestProjectV1 type) {
         RestProject project = convert(type);
+
+        if(this.projectRepository.exists(project.getId())){
+            throw new IllegalArgumentException("A project with the following key already exists: " + project.getId());
+        }
+
         this.projectRepository.save(project);
         for(RestApplication application : project.getApplications()) {
+            if(this.applicationRepository.exists(application.getId())){
+                throw new IllegalArgumentException("An application with the following key already exists: " + application.getId());
+            }
+
             this.applicationRepository.save(application);
             for (RestResource resource : application.getResources()) {
+                if(this.resourceRepository.exists(resource.getId())){
+                    throw new IllegalArgumentException("A resource with the following key already exists: " + resource.getId());
+                }
+
                 this.resourceRepository.save(resource);
                 for (RestMethod method : resource.getMethods()) {
+                    if(this.methodRepository.exists(method.getId())){
+                        throw new IllegalArgumentException("A method with the following key already exists: " + method.getId());
+                    }
+
                     this.methodRepository.save(method);
                     for (RestMockResponse mockResponse : method.getMockResponses()) {
+                        if(this.mockResponseRepository.exists(mockResponse.getId())){
+                            throw new IllegalArgumentException("A mock response with the following key already exists: " + mockResponse.getId());
+                        }
+
                         this.mockResponseRepository.save(mockResponse);
                     }
                 }
