@@ -27,10 +27,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,14 +54,14 @@ public class SoapRestController extends AbstractRestController {
             @ApiResponse(code = 200, message = "Successfully imported SOAP project resource")
     }
     )
-    @RequestMapping(method = RequestMethod.POST, value = "/resource")
+    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/resource/{resourceId}/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     SoapResource importResource(
             @ApiParam(name = "projectId", value = "The id of the project")
-            @RequestParam(value = "projectId", required = false) final String projectId,
+            @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "resourceId", value = "The id of the resource")
-            @RequestParam(value = "resourceId", required = false) final String resourceId,
+            @PathVariable(value = "resourceId") final String resourceId,
             @ApiParam(name = "resourceType", value = "The resource type", allowableValues = "WSDL,SCHEMA")
             @RequestParam("resourceType") final SoapResourceType resourceType,
             @ApiParam(name = "file", value = "The project file which will be imported.")
