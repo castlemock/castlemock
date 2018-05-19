@@ -44,8 +44,18 @@ public interface RestMethodRepository extends Repository<RestMethod, String> {
      * <code>resourceId</code>.
      * @param resourceId The id of the resource.
      * @return A list of {@link RestMethod}.
+     * @since 1.20
      */
     List<RestMethod> findWithResourceId(String resourceId);
+
+    /**
+     * Find all {@link RestMethod} ids that matches the provided
+     * <code>resourceId</code>.
+     * @param resourceId The id of the resource.
+     * @return A list of {@link RestMethod} ids.
+     * @since 1.20
+     */
+    List<String> findIdsWithResourceId(String resourceId);
 
 
     /**

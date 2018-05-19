@@ -37,8 +37,18 @@ public interface RestResourceRepository extends Repository<RestResource, String>
      * <code>applicationId</code>.
      * @param applicationId The id of the applicationId.
      * @return A list of {@link RestResource}.
+     * @since 1.20
      */
     List<RestResource> findWithApplicationId(String applicationId);
+
+    /**
+     * Find all {@link RestResource} ids that matches the provided
+     * <code>applicationId</code>.
+     * @param applicationId The id of the applicationId.
+     * @return A list of {@link RestResource} ids.
+     * @since 1.20
+     */
+    List<String> findIdsWithApplicationId(String applicationId);
 
 
     /**

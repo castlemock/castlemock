@@ -120,8 +120,12 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         for(RestMethodStatus restMethodStatus : RestMethodStatus.values()){
             statuses.put(restMethodStatus, 0);
         }
-        for(RestResource restResource : restApplication.getResources()){
-            for(RestMethod restMethod : restResource.getMethods()){
+
+        final List<String> resourceIds = this.resourceRepository.findIdsWithApplicationId(restApplication.getId());
+
+        for(String resourceId : resourceIds){
+            final List<RestMethod> methods = this.methodRepository.findWithResourceId(resourceId);
+            for(RestMethod restMethod : methods){
                 RestMethodStatus restMethodStatus = restMethod.getStatus();
                 statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
             }
@@ -142,7 +146,8 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         for(RestMethodStatus restMethodStatus : RestMethodStatus.values()){
             statuses.put(restMethodStatus, 0);
         }
-        for(RestMethod restMethod : restResource.getMethods()){
+        final List<RestMethod> methods = this.methodRepository.findWithResourceId(restResource.getId());
+        for(RestMethod restMethod : methods){
             RestMethodStatus restMethodStatus = restMethod.getStatus();
             statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
         }

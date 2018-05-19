@@ -141,17 +141,37 @@ public class RestMethodRepositoryImpl extends RepositoryImpl<RestMethodRepositor
      *
      * @param resourceId The id of the resource.
      * @return A list of {@link RestMethod}.
+     * @since 1.20
      */
     @Override
     public List<RestMethod> findWithResourceId(String resourceId) {
-        final List<RestMethod> applications = new ArrayList<>();
+        final List<RestMethod> methods = new ArrayList<>();
         for(RestMethodFile methodFile : this.collection.values()){
             if(methodFile.getResourceId().equals(resourceId)){
                 RestMethod method = this.mapper.map(methodFile, RestMethod.class);
-                applications.add(method);
+                methods.add(method);
             }
         }
-        return applications;
+        return methods;
+    }
+
+    /**
+     * Find all {@link RestMethod} ids that matches the provided
+     * <code>resourceId</code>.
+     *
+     * @param resourceId The id of the resource.
+     * @return A list of {@link RestMethod} ids.
+     * @since 1.20
+     */
+    @Override
+    public List<String> findIdsWithResourceId(String resourceId) {
+        final List<String> ids = new ArrayList<>();
+        for(RestMethodFile methodFile : this.collection.values()){
+            if(methodFile.getResourceId().equals(resourceId)){
+                ids.add(methodFile.getId());
+            }
+        }
+        return ids;
     }
 
     /**

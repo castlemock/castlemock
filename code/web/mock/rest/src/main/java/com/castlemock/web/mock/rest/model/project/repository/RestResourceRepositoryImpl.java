@@ -124,17 +124,37 @@ public class RestResourceRepositoryImpl extends RepositoryImpl<RestResourceRepos
      *
      * @param applicationId The id of the applicationId.
      * @return A list of {@link RestResource}.
+     * @since 1.20
      */
     @Override
     public List<RestResource> findWithApplicationId(String applicationId) {
-        final List<RestResource> applications = new ArrayList<>();
+        final List<RestResource> resources = new ArrayList<>();
         for(RestResourceFile resourceFile : this.collection.values()){
             if(resourceFile.getApplicationId().equals(applicationId)){
                 RestResource resource = this.mapper.map(resourceFile, RestResource.class);
-                applications.add(resource);
+                resources.add(resource);
             }
         }
-        return applications;
+        return resources;
+    }
+
+    /**
+     * Find all {@link RestResource} ids that matches the provided
+     * <code>applicationId</code>.
+     *
+     * @param applicationId The id of the applicationId.
+     * @return A list of {@link RestResource} ids.
+     * @since 1.20
+     */
+    @Override
+    public List<String> findIdsWithApplicationId(String applicationId) {
+        final List<String> ids = new ArrayList<>();
+        for(RestResourceFile resourceFile : this.collection.values()){
+            if(resourceFile.getApplicationId().equals(applicationId)){
+                ids.add(resourceFile.getId());
+            }
+        }
+        return ids;
     }
 
     /**
