@@ -229,23 +229,21 @@ project(':code:web:war') {
     group = "com.castlemock.web"
 
     bootWar {
+        archiveName = 'castlemock.war'
+        baseName = 'castlemock'
         mainClassName = "com.castlemock.war.config.Application"
+        rootSpec.eachFile {
+            if (it.name == 'application.properties') {
+                ant.replace(file: it.file, token: "\${project.version}", value: version)
+            }
+        }
+        from('../../../') {
+            include 'LICENSE-3RD-PARTY'
+            include 'LICENSE'
+            include 'AUTHORS'
+        }
     }
 
-    war {
-      archiveName = 'castlemock.war'
-      baseName = 'castlemock'
-      rootSpec.eachFile {
-        if (it.name == 'application.properties') {
-          ant.replace(file: it.file, token: "\${project.version}", value: version)
-        }
-      }
-      from('../../../') {
-          include 'LICENSE-3RD-PARTY'
-          include 'LICENSE'
-          include 'AUTHORS'
-      }
-    }
 
     dependencies {
         compile(project(":code:web:basis"))
