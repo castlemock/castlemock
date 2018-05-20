@@ -8,7 +8,7 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '4.7'
 }
 
 subprojects {
@@ -34,18 +34,18 @@ subprojects {
     ext.log4jVersion = "1.2.17"
     ext.guavaVersion = "17.0"
     ext.mockitoVersion = "1.10.19"
-    ext.dozerVersion = "5.4.0"
+    ext.dozerVersion = "5.5.1"
     ext.springSecurityVersion = "5.0.5.RELEASE"
     ext.springFrameworkVersion = "5.0.6.RELEASE"
     ext.wsdl4jVersion = "1.6.3"
     ext.jacksonVersion = "1.9.13"
-    ext.tomcatEmbedVersion = "8.0.28"
+    ext.tomcatEmbedVersion = "8.5.31"
     ext.jstlVersion = "1.2"
     ext.servletApiVersion = "3.1.0"
     ext.servletJspVersion = "2.2"
-    ext.swaggerVersion = "1.0.25"
-    ext.ramlVersion = "1.0.6"
-    ext.antlrVersion = "4.7"
+    ext.swaggerVersion = "1.0.35"
+    ext.ramlVersion = "1.0.22"
+    ext.antlrVersion = "4.7.1"
     ext.cxfVersion = "3.2.1"
     ext.springfoxVersion = "2.8.0"
     ext.graphqlVersion = "8.0"
