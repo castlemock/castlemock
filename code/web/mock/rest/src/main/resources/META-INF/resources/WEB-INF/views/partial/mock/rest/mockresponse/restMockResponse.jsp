@@ -38,7 +38,7 @@
                 </sec:authorize>
             </div>
         </div>
-        <form:form action="${update_response_url}" method="POST" commandName="restMockResponse">
+        <form:form action="${update_response_url}" method="POST" modelAttribute="restMockResponse">
             <div class="content-summary">
                 <table class="formTable">
                     <tr>

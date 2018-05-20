@@ -29,7 +29,7 @@
         <div class="content-top">
             <h1><spring:message code="soap.updatesoapport.header.updateport" arguments="${soapPort.name}"/></h1>
         </div>
-        <form:form action="${update_soap_port_url}" method="POST" commandName="soapPort">
+        <form:form action="${update_soap_port_url}" method="POST" modelAttribute="soapPort">
             <table class="formTable">
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="soap.updatesoapport.label.name"/></label></td>

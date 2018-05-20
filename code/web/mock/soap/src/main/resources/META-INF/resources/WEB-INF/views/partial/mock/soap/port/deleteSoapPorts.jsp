@@ -31,7 +31,7 @@
         <c:choose>
             <c:when test="${soapPorts.size() > 0}">
                 <p><spring:message code="soap.deletesoapports.label.confirmation"/></p>
-                <form:form action="${delete_ports_url}" method="POST" commandName="deleteSoapPortsCommand">
+                <form:form action="${delete_ports_url}" method="POST" modelAttribute="deleteSoapPortsCommand">
                     <ul>
                         <c:forEach items="${soapPorts}" var="soapPort" varStatus="loopStatus">
                             <li>${soapPort.name}</li>

@@ -60,7 +60,7 @@
         <h2 class="decorated"><span><spring:message code="soap.soapport.header.operations"/></span></h2>
         <c:choose>
             <c:when test="${soapPort.operations.size() > 0}">
-                <form:form action="${operation_update_url}" method="POST"  commandName="soapOperationModifierCommand">
+                <form:form action="${operation_update_url}" method="POST"  modelAttribute="soapOperationModifierCommand">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover sortable">
                             <col width="10%">

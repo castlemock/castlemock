@@ -35,7 +35,7 @@
 
             </div>
         </div>
-        <form:form action="${graphql_resource_update_url}" method="POST" commandName="graphQLObjectType">
+        <form:form action="${graphql_resource_update_url}" method="POST" modelAttribute="graphQLObjectType">
             <div class="content-summary">
                 <table class="formTable">
                     <tr>

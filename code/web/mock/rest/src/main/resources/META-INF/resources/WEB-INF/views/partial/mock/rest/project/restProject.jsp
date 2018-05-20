@@ -83,7 +83,7 @@
         <h2 class="decorated"><span><spring:message code="rest.restproject.header.applications"/></span></h2>
         <c:choose>
             <c:when test="${restProject.applications.size() > 0}">
-                <form:form action="${rest_resource_update_url}/" method="POST"  commandName="restApplicationModifierCommand">
+                <form:form action="${rest_resource_update_url}/" method="POST"  modelAttribute="restApplicationModifierCommand">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover sortable">
                             <col width="10%">

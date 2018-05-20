@@ -38,7 +38,7 @@
                 </sec:authorize>
             </div>
         </div>
-        <form:form action="${update_response_url}" method="POST" commandName="soapMockResponse" name="soapMockResponseForm">
+        <form:form action="${update_response_url}" method="POST" modelAttribute="soapMockResponse" name="soapMockResponseForm">
             <div class="content-summary">
                 <table class="formTable">
                     <tr>

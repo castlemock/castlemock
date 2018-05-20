@@ -28,7 +28,7 @@
         <div class="content-top">
             <h1><spring:message code="rest.createapplication.header.application"/></h1>
         </div>
-        <form:form action="${create_rest_application_url}" method="POST" commandName="restApplication">
+        <form:form action="${create_rest_application_url}" method="POST" modelAttribute="restApplication">
             <table class="formTable">
                 <tr>
                     <td class="column1"><label><spring:message code="rest.createapplication.label.name"/></label></td>

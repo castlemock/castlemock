@@ -106,7 +106,7 @@
                 <c:choose>
 
                     <c:when test="${soapOperation.mockResponses.size() > 0}">
-                        <form:form action="${soap_mock_response_update_url}" method="POST"  commandName="soapMockResponseModifierCommand">
+                        <form:form action="${soap_mock_response_update_url}" method="POST"  modelAttribute="soapMockResponseModifierCommand">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover sortable">
                                     <col width="10%">

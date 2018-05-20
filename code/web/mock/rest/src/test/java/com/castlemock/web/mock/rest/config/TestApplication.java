@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.config;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
  * @author Karl Dahlgren

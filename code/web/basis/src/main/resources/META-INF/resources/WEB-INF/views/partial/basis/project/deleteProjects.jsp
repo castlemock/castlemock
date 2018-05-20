@@ -30,7 +30,7 @@
         <c:choose>
             <c:when test="${projects.size() > 0}">
                 <p><spring:message code="general.deleteprojects.label.confirmation"/></p>
-                <form:form action="${delete_projects_url}" method="POST" commandName="deleteProjectsCommand">
+                <form:form action="${delete_projects_url}" method="POST" modelAttribute="deleteProjectsCommand">
                     <ul>
                         <c:forEach items="${projects}" var="project" varStatus="loopStatus">
                             <li>${project.name}</li>

@@ -31,7 +31,7 @@
         <div class="content-top">
             <h1><spring:message code="rest.createrestmockresponse.header.createmockresponse"/></h1>
         </div>
-        <form:form action="${create_rest_mock_response_url}" method="POST" commandName="restMockResponse">
+        <form:form action="${create_rest_mock_response_url}" method="POST" modelAttribute="restMockResponse">
             <div class="content-summary">
                 <table class="formTable">
                     <tr>

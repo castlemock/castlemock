@@ -88,7 +88,7 @@
                 <h2 class="decorated"><span><spring:message code="soap.soapproject.header.ports"/></span></h2>
                 <c:choose>
                     <c:when test="${soapProject.ports.size() > 0}">
-                        <form:form action="${soap_port_update_url}/" method="POST"  commandName="soapPortModifierCommand">
+                        <form:form action="${soap_port_update_url}/" method="POST"  modelAttribute="soapPortModifierCommand">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover sortable">
                                     <col width="10%">

@@ -30,7 +30,7 @@
         <div class="content-top">
             <h1><spring:message code="rest.updateresource.header.updateresource" arguments="${restResource.name}"/></h1>
         </div>
-        <form:form action="${update_rest_resource_url}" method="POST" commandName="restResource">
+        <form:form action="${update_rest_resource_url}" method="POST" modelAttribute="restResource">
             <table class="formTable">
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="rest.updateresource.label.name"/></label></td>

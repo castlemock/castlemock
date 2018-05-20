@@ -32,7 +32,7 @@
         <c:choose>
             <c:when test="${restResources.size() > 0}">
                 <p><spring:message code="rest.deleteresources.label.confirmation"/></p>
-                <form:form action="${delete_resources_url}" method="POST" commandName="deleteRestResourcesCommand">
+                <form:form action="${delete_resources_url}" method="POST" modelAttribute="deleteRestResourcesCommand">
                     <ul>
                         <c:forEach items="${restResources}" var="restResource" varStatus="loopStatus">
                             <li>${restResource.name}</li>

@@ -29,7 +29,7 @@
         <div class="content-top">
             <h1><spring:message code="rest.createresource.header.resource"/></h1>
         </div>
-        <form:form action="${create_rest_resource_url}" method="POST" commandName="restResource">
+        <form:form action="${create_rest_resource_url}" method="POST" modelAttribute="restResource">
             <table class="formTable">
                 <tr>
                     <td class="column1"><label><spring:message code="rest.createresource.label.name"/></label></td>

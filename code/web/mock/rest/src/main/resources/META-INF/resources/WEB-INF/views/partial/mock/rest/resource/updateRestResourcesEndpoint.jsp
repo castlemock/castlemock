@@ -32,7 +32,7 @@
         <c:choose>
             <c:when test="${restResources.size() > 0}">
                 <p><spring:message code="rest.updaterestresourcesendpoint.label.confirmation"/></p>
-                <form:form action="${update_resources_endpoint_url}" method="POST" commandName="updateRestResourcesEndpointCommand">
+                <form:form action="${update_resources_endpoint_url}" method="POST" modelAttribute="updateRestResourcesEndpointCommand">
                     <ul>
                         <c:forEach items="${restResources}" var="restResource" varStatus="loopStatus">
                             <li>${restResource.name}</li>

@@ -29,7 +29,7 @@
         <div class="content-top">
             <h1><spring:message code="graphql.updategraphqlapplication.header.updateapplication" arguments="${graphQLApplication.name}"/></h1>
         </div>
-        <form:form action="${update_graphql_application_url}" method="POST" commandName="graphQLApplication">
+        <form:form action="${update_graphql_application_url}" method="POST" modelAttribute="graphQLApplication">
             <table class="formTable">
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="graphql.updategraphqlapplication.label.name"/></label></td>

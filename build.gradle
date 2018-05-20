@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
     }
 }
 
@@ -30,13 +30,13 @@ subprojects {
         }
     }
 
-    ext.junitVersion = "4.11"
+    ext.junitVersion = "4.12"
     ext.log4jVersion = "1.2.17"
     ext.guavaVersion = "17.0"
     ext.mockitoVersion = "1.10.19"
     ext.dozerVersion = "5.4.0"
-    ext.springSecurityVersion = "4.0.4.RELEASE"
-    ext.springFrameworkVersion = "4.2.5.RELEASE"
+    ext.springSecurityVersion = "5.0.5.RELEASE"
+    ext.springFrameworkVersion = "5.0.6.RELEASE"
     ext.wsdl4jVersion = "1.6.3"
     ext.jacksonVersion = "1.9.13"
     ext.tomcatEmbedVersion = "8.0.28"
@@ -138,16 +138,12 @@ project(':code:core:mock:graphql') {
 
 project(':code:web:basis') {
     description = "Castle Mock web: Basis"
-    apply plugin: 'spring-boot'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
     group = "com.castlemock.web"
 
-    bootRepackage {
-        enabled = false
-    }
-
-    bootRun {
-        enabled = false
-    }
+    bootJar.enabled = false
+    jar.enabled = true
 
     configurations {
         providedRuntime
@@ -173,16 +169,12 @@ project(':code:web:basis') {
 
 project(':code:web:mock:rest') {
     description = "Castle Mock web: Mock REST"
-    apply plugin: 'spring-boot'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
     group = "com.castlemock.web"
 
-    bootRepackage {
-        enabled = false
-    }
-
-    bootRun {
-        enabled = false
-    }
+    bootJar.enabled = false
+    jar.enabled = true
 
     dependencies {
         compile(project(":code:web:basis"))
@@ -196,16 +188,13 @@ project(':code:web:mock:rest') {
 
 project(':code:web:mock:graphql') {
     description = "Castle Mock web: Mock GraphQL"
-    apply plugin: 'spring-boot'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
     group = "com.castlemock.web"
 
-    bootRepackage {
-        enabled = false
-    }
+    bootJar.enabled = false
+    jar.enabled = true
 
-    bootRun {
-        enabled = false
-    }
 
     dependencies {
         compile(project(":code:web:basis"))
@@ -216,16 +205,12 @@ project(':code:web:mock:graphql') {
 
 project(':code:web:mock:soap') {
     description = "Castle Mock web: Mock SOAP"
-    apply plugin: 'spring-boot'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
     group = "com.castlemock.web"
 
-    bootRepackage {
-        enabled = false
-    }
-
-    bootRun {
-        enabled = false
-    }
+    bootJar.enabled = false
+    jar.enabled = true
 
     dependencies {
         compile(group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxws', version: cxfVersion)
@@ -238,12 +223,13 @@ project(':code:web:mock:soap') {
 
 project(':code:web:war') {
     description = "Castle Mock web: WAR"
-    apply plugin: 'spring-boot'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
     apply plugin: 'war'
     group = "com.castlemock.web"
 
-    bootRepackage {
-      mainClass = "com.castlemock.war.config.Application"
+    bootWar {
+        mainClassName = "com.castlemock.war.config.Application"
     }
 
     war {

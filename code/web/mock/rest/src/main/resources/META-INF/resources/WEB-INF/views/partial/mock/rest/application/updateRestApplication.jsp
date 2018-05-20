@@ -29,7 +29,7 @@
         <div class="content-top">
             <h1><spring:message code="rest.updaterestapplication.header.updateapplication" arguments="${restApplication.name}"/></h1>
         </div>
-        <form:form action="${update_rest_application_url}" method="POST" commandName="restApplication">
+        <form:form action="${update_rest_application_url}" method="POST" modelAttribute="restApplication">
             <table class="formTable">
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="rest.updaterestapplication.label.name"/></label></td>

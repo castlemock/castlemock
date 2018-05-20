@@ -32,7 +32,7 @@
         <c:choose>
             <c:when test="${soapOperations.size() > 0}">
                 <p><spring:message code="soap.updatesoapoperationsendpoint.label.confirmation"/></p>
-                <form:form action="${update_operations_endpoint_url}" method="POST" commandName="updateSoapOperationsEndpointCommand">
+                <form:form action="${update_operations_endpoint_url}" method="POST" modelAttribute="updateSoapOperationsEndpointCommand">
                     <ul>
                         <c:forEach items="${soapOperations}" var="soapOperation" varStatus="loopStatus">
                             <li>${soapOperation.name}</li>

@@ -28,7 +28,7 @@
         <div class="content-top">
             <h1><spring:message code="graphql.createapplication.header.application"/></h1>
         </div>
-        <form:form action="${create_graphql_graphql_url}" method="POST" commandName="graphQLApplication">
+        <form:form action="${create_graphql_graphql_url}" method="POST" modelAttribute="graphQLApplication">
             <table class="formTable">
                 <tr>
                     <td class="column1"><label><spring:message code="graphql.createapplication.label.name"/></label></td>

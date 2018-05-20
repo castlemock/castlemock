@@ -31,7 +31,7 @@
         <div class="content-top">
             <h1><spring:message code="rest.updatemethod.header.updatemethod" arguments="${restMethod.name}"/></h1>
         </div>
-        <form:form action="${update_rest_method_url}" method="POST" commandName="restMethod">
+        <form:form action="${update_rest_method_url}" method="POST" modelAttribute="restMethod">
             <table class="formTable">
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.name"/></label></td>

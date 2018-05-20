@@ -33,7 +33,7 @@
         <c:choose>
             <c:when test="${restMethods.size() > 0}">
                 <p><spring:message code="rest.updaterestmethodsendpoint.label.confirmation"/></p>
-                <form:form action="${update_methods_endpoint_url}" method="POST" commandName="updateRestMethodsEndpointCommand">
+                <form:form action="${update_methods_endpoint_url}" method="POST" modelAttribute="updateRestMethodsEndpointCommand">
                     <ul>
                         <c:forEach items="${restMethods}" var="restMethod" varStatus="loopStatus">
                             <li>${restMethod.name}</li>

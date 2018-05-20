@@ -88,7 +88,7 @@
                 <c:choose>
 
                     <c:when test="${restMethod.mockResponses.size() > 0}">
-                        <form:form action="${rest_mock_response_update_url}" method="POST"  commandName="restMockResponseModifierCommand">
+                        <form:form action="${rest_mock_response_update_url}" method="POST"  modelAttribute="restMockResponseModifierCommand">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover sortable">
                                     <col width="10%">

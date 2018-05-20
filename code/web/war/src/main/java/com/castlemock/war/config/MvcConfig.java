@@ -18,11 +18,16 @@ package com.castlemock.war.config;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.MimeMappings;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -31,7 +36,9 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * The MvcConfig class is responsible for configuring the MVC related configurations
@@ -178,5 +185,21 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         super.configureContentNegotiation(configurer);
         configurer.favorPathExtension(false);
+    }
+
+    @Bean
+    public ConfigurableServletWebServerFactory webServerFactory() {
+        final TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+
+        final Set<ErrorPage> errorPages = new HashSet<>();
+        errorPages.add(new ErrorPage(HttpStatus.NOT_FOUND, "/web/error/404"));
+        factory.setErrorPages(errorPages);
+
+        final MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
+        mappings.add("xsd", "text/xml; charset=utf-8");
+        mappings.add("ico", "image/x-icon");
+        factory.setMimeMappings(mappings);
+
+        return factory;
     }
 }

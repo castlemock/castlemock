@@ -33,7 +33,7 @@
         <c:choose>
             <c:when test="${soapMockResponses.size() > 0}">
                 <p><spring:message code="soap.deletesoapmockresponses.label.confirmation"/></p>
-                <form:form action="${delete_soap_mock_responses_url}" method="POST" commandName="deleteSoapMockResponsesCommand">
+                <form:form action="${delete_soap_mock_responses_url}" method="POST" modelAttribute="deleteSoapMockResponsesCommand">
                     <ul>
                         <c:forEach items="${soapMockResponses}" var="soapMockResponse" varStatus="loopStatus">
                             <li>${soapMockResponse.name}</li>

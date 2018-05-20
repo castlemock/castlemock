@@ -31,7 +31,7 @@
         <c:choose>
             <c:when test="${soapPorts.size() > 0}">
                 <p><spring:message code="soap.updatesoapportsendpoint.label.confirmation"/></p>
-                <form:form action="${update_ports_endpoint_url}" method="POST" commandName="updateSoapPortsEndpointCommand">
+                <form:form action="${update_ports_endpoint_url}" method="POST" modelAttribute="updateSoapPortsEndpointCommand">
                     <ul>
                         <c:forEach items="${soapPorts}" var="soapPort" varStatus="loopStatus">
                             <li>${soapPort.name}</li>

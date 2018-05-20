@@ -28,7 +28,7 @@
         <div class="content-top">
             <h1><spring:message code="general.updateproject.header.updateproject" arguments="${project.name}"/></h1>
         </div>
-        <form:form action="${update_project_url}" method="POST" commandName="project">
+        <form:form action="${update_project_url}" method="POST" modelAttribute="project">
             <table class="formTable">
                 <tr>
                     <td class="column1"><form:label path="name"><spring:message code="general.updateproject.label.name"/></form:label></td>

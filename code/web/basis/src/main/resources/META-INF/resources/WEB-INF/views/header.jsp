@@ -34,7 +34,7 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="links nav navbar-nav navbar-right">
-                    <form:form action="${searchUrl}" method="POST" commandName="searchCommand" class="navbar-form navbar-left search">
+                    <form:form action="${searchUrl}" method="POST" modelAttribute="searchCommand" class="navbar-form navbar-left search">
                         <div class="form-group">
                             <form:input onfocus="this.placeholder = ''" type="text" path="query" placeholder="${searchPlaceholder}"></form:input>
                         </div>

@@ -81,7 +81,7 @@
         <h2 class="decorated"><span><spring:message code="graphql.graphqlapplication.header.operations"/></span></h2>
         <c:choose>
             <c:when test="${graphQLApplication.queries.size() > 0 || graphQLApplication.mutations.size() > 0 || graphQLApplication.subscriptions.size() > 0}">
-                <form:form action="${graphql_resource_update_url}/" method="POST"  commandName="graphQLQueryModifierCommand">
+                <form:form action="${graphql_resource_update_url}/" method="POST"  modelAttribute="graphQLQueryModifierCommand">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover sortable">
                             <col width="10%">
