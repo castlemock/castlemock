@@ -19,13 +19,13 @@ public abstract class AbstractProjectFileRepository<T extends AbstractProjectFil
         @Mapping("name")
         private String name;
 
-        @Mapping("updated")
+        @Mapping("description")
         private String description;
 
-        @Mapping("created")
+        @Mapping("updated")
         private Date updated;
 
-        @Mapping("description")
+        @Mapping("created")
         private Date created;
 
         @XmlElement
