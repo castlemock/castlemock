@@ -48,7 +48,7 @@ import java.util.Set;
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = { "com.castlemock" })
-public class MvcConfig extends WebMvcConfigurerAdapter {
+public class MvcConfig implements WebMvcConfigurer {
 
     private static final int STANDARD_CACHE_PERIOD = 86400; // One day
     private static final int FONT_CACHE_PERIOD = 604800; // One week
@@ -183,7 +183,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        super.configureContentNegotiation(configurer);
         configurer.favorPathExtension(false);
     }
 
