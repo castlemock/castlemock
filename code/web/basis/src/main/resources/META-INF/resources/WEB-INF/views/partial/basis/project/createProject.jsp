@@ -31,16 +31,16 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><label><spring:message code="general.createproject.label.name"/></label></td>
-                    <td class="column2"><form:input id="projectNameInput" path="project.name"  />
+                    <td class="column2"><form:input id="projectNameInput" class="form-control" path="project.name"  />
                 </tr>
                 <tr>
                     <td class="column1"><spring:message code="general.createproject.label.description"/></td>
-                    <td class="column2"><form:textarea rows="4" path="project.description"></form:textarea></td>
+                    <td class="column2"><form:textarea rows="4" class="form-control" path="project.description"></form:textarea></td>
                 </tr>
                 <tr>
                     <td class="column1"><spring:message code="general.createproject.label.projecttype"/></td>
                     <td>
-                        <form:select path="projectType">
+                        <form:select class="form-control" path="projectType">
                             <c:forEach items="${projectTypes}" var="projectType">
                                 <option value="${projectType}"><spring:message code="general.type.project.${projectType}"/></option>
                             </c:forEach>

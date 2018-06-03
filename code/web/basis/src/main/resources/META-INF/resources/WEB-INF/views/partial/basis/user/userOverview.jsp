@@ -36,20 +36,20 @@
                     <table class="formTable">
                         <tr>
                             <td class="column1"><form:label path="username"><spring:message code="general.useroverview.label.username"/></form:label></td>
-                            <td class="column2"><form:input path="username" id="userUsernameInput" />
+                            <td class="column2"><form:input class="form-control" path="username" id="userUsernameInput" />
                         </tr>
                         <tr>
                             <td class="column1"><form:label path="password"><spring:message code="general.useroverview.label.password"/></form:label></td>
-                            <td class="column2"><form:password path="password" id="userPasswordInput"/>
+                            <td class="column2"><form:password class="form-control" path="password" id="userPasswordInput"/>
                         </tr>
                         <tr>
                             <td class="column1"><form:label path="email"><spring:message code="general.useroverview.label.email"/></form:label></td>
-                            <td class="column2"><form:input path="email" />
+                            <td class="column2"><form:input class="form-control" path="email" />
                         </tr>
                         <tr>
                             <td class="column1"><spring:message code="general.useroverview.label.role"/></td>
                             <td>
-                                <form:select path="role">
+                                <form:select class="form-control" path="role">
                                     <c:forEach items="${roles}" var="role">
                                         <option value="${role}"><spring:message code="general.type.role.${role}"/></option>
                                     </c:forEach>

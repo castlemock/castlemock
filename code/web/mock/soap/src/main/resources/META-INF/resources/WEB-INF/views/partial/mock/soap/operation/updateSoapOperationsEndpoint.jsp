@@ -42,7 +42,7 @@
                     <table class="formTable">
                         <tr>
                             <td class="column1"><label path="forwardedEndpoint"><spring:message code="soap.updatesoapoperationsendpoint.label.forwardedendpoint"/></label></td>
-                            <td class="column2"><form:input path="forwardedEndpoint" value="${updateSoapOperationsEndpointCommand.forwardedEndpoint}"/></td>
+                            <td class="column2"><form:input class="form-control" path="forwardedEndpoint" value="${updateSoapOperationsEndpointCommand.forwardedEndpoint}"/></td>
                         </tr>
                     </table>
                     <button class="btn btn-success"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.updatesoapoperationsendpoint.button.updateoperation"/></span></button>

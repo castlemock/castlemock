@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.user.service.message.input.DeleteUserInpu
 import com.castlemock.core.basis.model.user.service.message.input.ReadUserInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadUserOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,6 +58,7 @@ public class DeleteUserController extends AbstractViewController {
         final User userDto = readUserOutput.getUser();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(USER, userDto);
+        model.addObject(SELECTED_MENU, MenuItem.USER);
         return model;
     }
 

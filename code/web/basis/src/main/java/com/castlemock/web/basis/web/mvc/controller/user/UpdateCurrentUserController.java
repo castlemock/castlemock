@@ -24,6 +24,7 @@ import com.castlemock.core.basis.model.user.service.message.output.UpdateCurrent
 import com.castlemock.web.basis.model.user.service.UserDetailSecurityService;
 import com.castlemock.web.basis.web.mvc.command.user.UpdateCurrentUserCommand;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -66,6 +67,7 @@ public class UpdateCurrentUserController extends AbstractViewController {
         final UpdateCurrentUserCommand updateCurrentUserCommand = new UpdateCurrentUserCommand();
         updateCurrentUserCommand.setUser(userDto);
         model.addObject(COMMAND, updateCurrentUserCommand);
+        model.addObject(SELECTED_MENU, MenuItem.ME);
         return model;
     }
 

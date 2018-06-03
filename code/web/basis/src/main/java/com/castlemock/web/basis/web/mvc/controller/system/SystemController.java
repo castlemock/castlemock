@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.system.service.dto.SystemInformationDto;
 import com.castlemock.core.basis.model.system.service.message.input.GetSystemInformationInput;
 import com.castlemock.core.basis.model.system.service.message.output.GetSystemInformationOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -53,6 +54,7 @@ public class SystemController extends AbstractViewController {
         final SystemInformationDto systemInformationDto = output.getSystemInformation();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SYSTEM_INFORMATION, systemInformationDto);
+        model.addObject(SELECTED_MENU, MenuItem.SYSTEM);
         return model;
     }
 

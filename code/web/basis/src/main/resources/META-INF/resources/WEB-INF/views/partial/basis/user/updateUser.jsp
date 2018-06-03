@@ -33,20 +33,20 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><form:label path="username"><spring:message code="general.updateuser.label.username"/></form:label></td>
-                    <td class="column2"><form:input path="username" id="userUsernameInput" />
+                    <td class="column2"><form:input class="form-control" path="username" id="userUsernameInput" />
                 </tr>
                 <tr>
                     <td class="column1"><form:label path="password"><spring:message code="general.updateuser.label.password"/></form:label></td>
-                    <td class="column2"><form:password path="password" id="usePasswordInput" />
+                    <td class="column2"><form:password class="form-control" path="password" id="usePasswordInput" />
                 </tr>
                 <tr>
                     <td class="column1"><form:label path="email"><spring:message code="general.updateuser.label.email"/></form:label></td>
-                    <td class="column2"><form:input path="email" />
+                    <td class="column2"><form:input class="form-control" path="email" />
                 </tr>
                 <tr>
                     <td class="column1"><b><spring:message code="general.updateuser.label.status"/></b></td>
                     <td>
-                        <form:select path="status">
+                        <form:select class="form-control" path="status">
                             <c:forEach items="${userStatuses}" var="userStatus">
                                 <spring:message var="label" code="general.type.status.${userStatus}"/>
                                 <form:option value="${userStatus}" label="${label}"/>
@@ -57,7 +57,7 @@
                 <tr>
                     <td class="column1"><b><spring:message code="general.updateuser.label.role"/></b></td>
                     <td>
-                        <form:select path="role">
+                        <form:select class="form-control" path="role">
                             <c:forEach items="${roles}" var="role">
                                 <spring:message var="label" code="general.type.role.${role}"/>
                                 <form:option value="${role}" label="${label}"/>

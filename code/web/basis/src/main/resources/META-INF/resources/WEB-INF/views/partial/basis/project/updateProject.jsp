@@ -32,11 +32,11 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><form:label path="name"><spring:message code="general.updateproject.label.name"/></form:label></td>
-                    <td class="column2"><form:input path="name" id="projectNameInput" value="${project.name}"/></td>
+                    <td class="column2"><form:input path="name" class="form-control" id="projectNameInput" value="${project.name}"/></td>
                 </tr>
                 <tr>
                     <td class="column1"><spring:message code="general.updateproject.label.description"/></td>
-                    <td class="column2"><form:textarea rows="4" path="description"></form:textarea></td>
+                    <td class="column2"><form:textarea class="form-control" rows="4" path="description"></form:textarea></td>
                 </tr>
             </table>
             <button class="btn btn-success"><i class="fa fa-check-circle"></i> <spring:message code="general.updateproject.button.updateproject"/></button>

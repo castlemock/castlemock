@@ -18,6 +18,7 @@ package com.castlemock.web.basis.web.mvc.controller.event;
 
 import com.castlemock.web.basis.model.event.service.EventServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,6 +51,7 @@ public class ClearEventController extends AbstractViewController {
     @RequestMapping(value = "clear", method = RequestMethod.GET)
     public ModelAndView getClearAllConfirmationPage() {
         final ModelAndView model = createPartialModelAndView(PAGE);
+        model.addObject(SELECTED_MENU, MenuItem.EVENT);
         return model;
     }
 

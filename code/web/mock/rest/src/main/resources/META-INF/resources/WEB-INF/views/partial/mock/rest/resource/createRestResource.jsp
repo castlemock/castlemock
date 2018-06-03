@@ -33,11 +33,11 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><label><spring:message code="rest.createresource.label.name"/></label></td>
-                    <td class="column2"><form:input id="restResourceNameInput" path="name" /></td>
+                    <td class="column2"><form:input class="form-control" id="restResourceNameInput" path="name" /></td>
                 </tr>
                 <tr>
                     <td class="column1"><label><spring:message code="rest.createresource.label.uri"/></label></td>
-                    <td class="column2"><form:input id="restResourceUriInput" path="uri" /></td>
+                    <td class="column2"><form:input class="form-control" id="restResourceUriInput" path="uri" /></td>
                     <td class="information" title="<spring:message code="rest.createresource.tooltip.uri"/>"><i class="fa fa-question-circle fa-1x"></i></td>
                 </tr>
             </table>

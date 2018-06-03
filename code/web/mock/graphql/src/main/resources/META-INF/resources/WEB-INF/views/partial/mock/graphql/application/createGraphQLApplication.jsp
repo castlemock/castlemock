@@ -32,11 +32,11 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><label><spring:message code="graphql.createapplication.label.name"/></label></td>
-                    <td class="column2"><form:input id="graphQLApplicationNameInput" path="name" /></td>
+                    <td class="column2"><form:input class="form-control" id="graphQLApplicationNameInput" path="name" /></td>
                 </tr>
                 <tr>
                     <td class="column1"><spring:message code="graphql.createapplication.label.description"/></td>
-                    <td class="column2"><form:textarea rows="4" path="description"></form:textarea></td>
+                    <td class="column2"><form:textarea class="form-control" rows="4" path="description"></form:textarea></td>
                 </tr>
             </table>
 

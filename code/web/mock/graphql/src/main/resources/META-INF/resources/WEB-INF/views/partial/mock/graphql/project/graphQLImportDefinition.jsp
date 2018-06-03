@@ -43,7 +43,7 @@
                 <table class="formTable">
                     <tr>
                         <td class="column1"><form:label path="link"><spring:message code="graphql.graphqlimportdefinition.label.link"  arguments="${definitionDisplayName}"/></form:label></td>
-                        <td class="column2"><form:input path="link" type="text" name="linkInput" id="linkInput" size="100"/>
+                        <td class="column2"><form:input class="form-control" path="link" type="text" name="linkInput" id="linkInput" size="100"/>
                     </tr>
                 </table>
                 <button class="btn btn-success" type="submit" name="type" value="link"><i class="fa fa-upload"></i> <span><spring:message code="graphql.graphqlimportdefinition.button.link" arguments="${definitionDisplayName}"/></span></button>

@@ -33,19 +33,19 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><label><spring:message code="general.updatecurrentuser.label.username"/></label></td>
-                    <td class="column2"><form:input path="user.username" id="userUsernameInput"/>
+                    <td class="column2"><form:input class="form-control" path="user.username" id="userUsernameInput"/>
                 </tr>
                 <tr>
                     <td class="column1"><label><spring:message code="general.updatecurrentuser.label.email"/></label></td>
-                    <td class="column2"><form:input path="user.email"  />
+                    <td class="column2"><form:input class="form-control" path="user.email"  />
                 </tr>
                 <tr>
                     <td class="column1"><label><spring:message code="general.updatecurrentuser.label.password"/></label></td>
-                    <td class="column2"><form:password path="user.password" />
+                    <td class="column2"><form:password class="form-control" path="user.password" />
                 </tr>
                 <tr>
                     <td class="column1"><label><spring:message code="general.updatecurrentuser.label.verifypassword"/></label></td>
-                    <td class="column2"><form:password path="verifiedPassword" />
+                    <td class="column2"><form:password class="form-control" path="verifiedPassword" />
                 </tr>
             </table>
             <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="general.updatecurrentuser.button.updateuser"/></button>

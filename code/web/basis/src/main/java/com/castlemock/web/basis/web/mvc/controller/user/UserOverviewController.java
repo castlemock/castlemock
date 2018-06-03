@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.service.message.input.ReadAllUsersInput;
 import com.castlemock.core.basis.model.user.service.message.output.ReadAllUsersOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -58,6 +59,7 @@ public class UserOverviewController extends AbstractViewController {
         model.addObject(USERS, users);
         model.addObject(ROLES, Role.values());
         model.addObject(COMMAND, new User());
+        model.addObject(SELECTED_MENU, MenuItem.USER);
         return model;
     }
 

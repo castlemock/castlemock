@@ -37,7 +37,7 @@
                 </tr>
                 <tr>
                     <td class="column1"><label path="uri"><spring:message code="soap.updatesoapport.label.uri"/></label></td>
-                    <td class="column2"><form:input path="uri" value="${soapPort.uri}"/></td>
+                    <td class="column2"><form:input class="form-control" path="uri" value="${soapPort.uri}"/></td>
                 </tr>
             </table>
 

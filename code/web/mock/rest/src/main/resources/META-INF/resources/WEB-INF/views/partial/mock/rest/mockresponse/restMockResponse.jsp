@@ -43,17 +43,17 @@
                 <table class="formTable">
                     <tr>
                         <td class="column1"><form:label path="name"><spring:message code="rest.restmockresponse.label.name"/></form:label></td>
-                        <td class="column2"><form:input path="name" id="restMockResponseNameInput" /></td>
+                        <td class="column2"><form:input class="form-control" path="name" id="restMockResponseNameInput" /></td>
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.restmockresponse.label.httpstatuscode"/></form:label></td>
-                        <td class="column2"><form:input path="httpStatusCode" id="restMockResponseHttpResponseCodeInput"/></td>
+                        <td class="column2"><form:input class="form-control" path="httpStatusCode" id="restMockResponseHttpResponseCodeInput"/></td>
                         <td><label id="httpCodeDefinitionLabel"><spring:message code="soap.restmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="status"><spring:message code="rest.restmockresponse.label.status"/></form:label></td>
                         <td>
-                            <form:select path="status">
+                            <form:select class="form-control" path="status">
                                 <c:forEach items="${restMockResponseStatuses}" var="restMockResponseStatus">
                                     <spring:message var="label" code="rest.type.restmockresponsestatus.${restMockResponseStatus}"/>
                                     <form:option value="${restMockResponseStatus}" label="${label}"/>
@@ -63,7 +63,7 @@
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="usingExpressions"><spring:message code="rest.restmockresponse.label.useexpressions"/></form:label></td>
-                        <td class="column2"><span class="checkbox"><form:checkbox path="usingExpressions"/></span></td>
+                        <td class="column2"><span class="checkbox"><form:checkbox class="form-control" path="usingExpressions"/></span></td>
                     </tr>
                 </table>
             </div>
@@ -78,7 +78,7 @@
                     <div>
                         <h2 class="decorated"><span><spring:message code="rest.restmockresponse.header.body"/></span></h2>
                         <div class="editor">
-                            <form:textarea id="body" path="body"/>
+                            <form:textarea class="form-control" id="body" path="body"/>
                             <div class="editorButtons">
                                 <button id="formatXmlButton" type="button"><spring:message code="rest.restmockresponse.button.formatxml"/></button>
                                 <button id="formatJsonButton" type="button"><spring:message code="rest.restmockresponse.button.formatjson"/></button>
@@ -96,11 +96,11 @@
                             <table class="formTable">
                                 <tr>
                                     <td class="column1"><form:label path="name"><spring:message code="rest.restmockresponse.label.headername"/></form:label></td>
-                                    <td class="column2"><input type="text" name="headerName" id="headerNameInput"></td>
+                                    <td class="column2"><input type="text" class="form-control" name="headerName" id="headerNameInput"></td>
                                 </tr>
                                 <tr>
                                     <td class="column1"><form:label path="name"><spring:message code="rest.restmockresponse.label.headervalue"/></form:label></td>
-                                    <td class="column2"><input type="text" name="headerValue" id="headerValueInput"></td>
+                                    <td class="column2"><input type="text" class="form-control" name="headerValue" id="headerValueInput"></td>
                                 </tr>
                             </table>
                             <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="rest.restmockresponse.button.addheader"/></span></button>

@@ -16,9 +16,9 @@
 
 <%@ include file="includes.jspf"%>
 <div class="sideMenu">
-    <a href="${context}/web/me">
-        <div class="sideMenuItem sideMenuItemFirst sideMenuItemSelected">
-            <div class="sideMenuItemContent sideMenuItemContentSelected">
+    <a href="${context}/web">
+        <div class="sideMenuItem sideMenuItemFirst ${selectedMenu == "PROJECT" ? 'sideMenuItemSelected' : ''}">
+            <div class="sideMenuItemContent ${selectedMenu == "PROJECT" ? 'sideMenuItemContentSelected' : ''}">
                 <div class="sideMenuItemContentIcon">
                     <i class="fa fa-tachometer fa-2x"></i>
                 </div>
@@ -28,9 +28,9 @@
             </div>
         </div>
     </a>
-    <a href="${context}/web/me">
-        <div class="sideMenuItem">
-            <div class="sideMenuItemContent">
+    <a href="${context}/web/event">
+        <div class="sideMenuItem ${selectedMenu == "EVENT" ? 'sideMenuItemSelected' : ''}">
+            <div class="sideMenuItemContent ${selectedMenu == "EVENT" ? 'sideMenuItemContentSelected' : ''}">
                 <div class="sideMenuItemContentIcon">
                     <i class="fa fa-archive fa-2x"></i>
                 </div>
@@ -41,9 +41,9 @@
         </div>
     </a>
     <sec:authorize access="hasAuthority('ADMIN')">
-        <a href="${context}/web/me">
-            <div class="sideMenuItem">
-                <div class="sideMenuItemContent">
+        <a href="${context}/web/user">
+            <div class="sideMenuItem ${selectedMenu == "USER" ? 'sideMenuItemSelected' : ''}">
+                <div class="sideMenuItemContent ${selectedMenu == "USER" ? 'sideMenuItemContentSelected' : ''}">
                     <div class="sideMenuItemContentIcon">
                         <i class="fa fa-users fa-2x"></i>
                     </div>
@@ -55,9 +55,9 @@
         </a>
     </sec:authorize>
     <sec:authorize access="hasAuthority('ADMIN')">
-    <a href="${context}/web/me">
-        <div class="sideMenuItem">
-            <div class="sideMenuItemContent">
+    <a href="${context}/web/system">
+        <div class="sideMenuItem ${selectedMenu == "SYSTEM" ? 'sideMenuItemSelected' : ''}">
+            <div class="sideMenuItemContent ${selectedMenu == "SYSTEM" ? 'sideMenuItemContentSelected' : ''}">
                 <div class="sideMenuItemContentIcon">
                     <i class="fa fa-cogs fa-2x"></i>
                 </div>

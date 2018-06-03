@@ -53,7 +53,7 @@
                                 <div class="avatar-username">
                                 </div>
                                 <div class="avatar-circle">
-                                    <span class="initials">A</span>
+                                    <span class="initials"><c:out value="${fn:substring(loggedInUser, 0, 1)}" /> </span>
                                 </div>
                             </a>
                         </div>

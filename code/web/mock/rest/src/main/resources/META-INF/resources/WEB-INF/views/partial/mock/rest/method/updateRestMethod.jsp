@@ -35,12 +35,12 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.name"/></label></td>
-                    <td class="column2"><form:input path="name" id="restMethodNameInput" value="${restMethod.name}"/></td>
+                    <td class="column2"><form:input class="form-control" path="name" id="restMethodNameInput" value="${restMethod.name}"/></td>
                 </tr>
                 <tr>
                     <td class="column1"><spring:message code="rest.updatemethod.label.methodtype"/></td>
                     <td>
-                        <form:select path="httpMethod">
+                        <form:select class="form-control" path="httpMethod">
                             <c:forEach items="${restMethodTypes}" var="type">
                                 <form:option value="${type}" label="${type}"/>
                             </c:forEach>
@@ -50,7 +50,7 @@
                 <tr>
                     <td class="column1"><spring:message code="rest.updatemethod.label.methodstatus"/></td>
                     <td>
-                        <form:select path="status">
+                        <form:select class="form-control" path="status">
                             <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
                                 <spring:message var="label" code="rest.type.restmethodstatus.${restMethodStatus}"/>
                                 <form:option value="${restMethodStatus}" label="${label}"/>
@@ -61,7 +61,7 @@
                 <tr>
                     <td class="column1"><spring:message code="rest.updatemethod.label.responsestrategy"/></td>
                     <td>
-                        <form:select path="responseStrategy">
+                        <form:select class="form-control" path="responseStrategy">
                             <c:forEach items="${restResponsestrategies}" var="restResponseStrategy">
                                 <spring:message var="label" code="rest.type.responsestrategy.${restResponseStrategy}"/>
                                 <form:option value="${restResponseStrategy}" label="${label}"/>
@@ -71,15 +71,15 @@
                 </tr>
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.forwardedendpoint"/></label></td>
-                    <td class="column2"><form:input path="forwardedEndpoint" value="${restMethod.forwardedEndpoint}"/></td>
+                    <td class="column2"><form:input class="form-control" path="forwardedEndpoint" value="${restMethod.forwardedEndpoint}"/></td>
                 </tr>
                 <tr>
                     <td class="column1"><form:label path="simulateNetworkDelay"><spring:message code="rest.updatemethod.label.simulatenetworkdelay"/></form:label></td>
-                    <td class="column2"><span class="checkbox"><form:checkbox path="simulateNetworkDelay"/></span></td>
+                    <td class="column2"><span class="checkbox"><form:checkbox class="form-control" path="simulateNetworkDelay"/></span></td>
                 </tr>
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.networkdelay"/> (ms)</label></td>
-                    <td class="column2"><form:input path="networkDelay" value="${restMethod.networkDelay}"/></td>
+                    <td class="column2"><form:input class="form-control" path="networkDelay" value="${restMethod.networkDelay}"/></td>
                 </tr>
             </table>
 

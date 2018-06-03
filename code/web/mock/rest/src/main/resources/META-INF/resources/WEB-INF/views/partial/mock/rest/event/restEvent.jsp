@@ -63,7 +63,7 @@
                 <h2 class="decorated"><span><spring:message code="rest.event.header.request"/></span></h2>
                 <h3><span><spring:message code="rest.event.header.body"/></span></h3>
                 <div class="eventMessage">
-                    <textarea id="requestBody" readonly><c:out value="${event.request.body}"/></textarea>
+                    <textarea id="requestBody" class="form-control" readonly><c:out value="${event.request.body}"/></textarea>
                 </div>
                 <c:choose>
                     <c:when test="${event.request.httpParameters.size() > 0}">
@@ -115,7 +115,7 @@
                 </table>
                 <h3><span><spring:message code="rest.event.header.body"/></span></h3>
                 <div class="eventMessage">
-                    <textarea id="responseBody" readonly><c:out value="${event.response.body}"/></textarea>
+                    <textarea id="responseBody" class="form-control" readonly><c:out value="${event.response.body}"/></textarea>
                 </div>
 
                 <c:choose>

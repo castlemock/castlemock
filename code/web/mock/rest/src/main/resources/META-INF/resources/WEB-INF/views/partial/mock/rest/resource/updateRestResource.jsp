@@ -34,11 +34,11 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="rest.updateresource.label.name"/></label></td>
-                    <td class="column2"><form:input path="name" id="restResourceNameInput" value="${restResource.name}"/></td>
+                    <td class="column2"><form:input class="form-control" path="name" id="restResourceNameInput" value="${restResource.name}"/></td>
                 </tr>
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="rest.updateresource.label.uri"/></label></td>
-                    <td class="column2"><form:input path="uri" id="restResourceUriInput" value="${restResource.uri}"/></td>
+                    <td class="column2"><form:input class="form-control" path="uri" id="restResourceUriInput" value="${restResource.uri}"/></td>
                 </tr>
             </table>
 

@@ -55,6 +55,7 @@ public abstract class AbstractViewController extends AbstractController {
     private static final String SEARCH_COMMAND = "searchCommand";
     private static final String CONTEXT = "context";
     private static final String DATE_FORMAT = "dd MMM yyyy HH:mm:ss z";
+    protected static final String SELECTED_MENU = "selectedMenu";
 
     /**
      * The method create a ModelAndView instance with the index page set as the view name
@@ -97,6 +98,7 @@ public abstract class AbstractViewController extends AbstractController {
         modelAndView.addObject(LOGGED_IN_USER, getLoggedInUsername());
         modelAndView.addObject(SEARCH_COMMAND, new SearchCommand());
         modelAndView.addObject(DEMO_MODE, demoMode);
+        modelAndView.addObject(SELECTED_MENU, MenuItem.PROJECT);
         modelAndView.addObject(CONTEXT, getContext());
         return modelAndView;
     }

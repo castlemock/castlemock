@@ -27,6 +27,7 @@ import com.castlemock.core.basis.model.user.service.message.output.ReadUserOutpu
 import com.castlemock.core.basis.model.user.service.message.output.UpdateUserOutput;
 import com.castlemock.web.basis.model.user.service.UserDetailSecurityService;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;
@@ -70,6 +71,7 @@ public class UpdateUserController extends AbstractViewController {
         model.addObject(ROLES, Role.values());
         model.addObject(USER_STATUSES, Status.values());
         model.addObject(COMMAND, userDto);
+        model.addObject(SELECTED_MENU, MenuItem.USER);
         return model;
     }
 

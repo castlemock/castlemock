@@ -232,7 +232,7 @@ a {
         padding-top: 0px;
         padding-bottom: 0px; }
     .main-header .links .fa-2x {
-      font-size: 1.6em; }
+      font-size: 28px; }
     .main-header .links i:hover {
       color: #ddd; }
     .main-header .links .title {
@@ -241,8 +241,8 @@ a {
   .main-header .avatar-username {
     float: left; }
   .main-header .avatar-circle {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     background-color: #1b76b9;
     text-align: center;
     border-radius: 50%;
@@ -252,8 +252,8 @@ a {
     margin-right: 10px; }
   .main-header .initials {
     position: relative;
-    top: 6px;
-    font-size: 20px;
+    top: 10px;
+    font-size: 30px;
     line-height: 20px;
     color: #fff;
     font-family: "Courier New", monospace;

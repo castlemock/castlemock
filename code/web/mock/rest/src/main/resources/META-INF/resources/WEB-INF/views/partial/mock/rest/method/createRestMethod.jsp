@@ -34,12 +34,12 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><label><spring:message code="rest.restresource.label.name"/></label></td>
-                    <td class="column2"><form:input id="restMethodNameInput" path="restMethod.name" />
+                    <td class="column2"><form:input class="form-control" id="restMethodNameInput" path="restMethod.name" />
                 </tr>
                 <tr>
                     <td class="column1"><spring:message code="rest.createmethod.label.methodtype"/></td>
                     <td>
-                        <form:select path="restMethod.httpMethod">
+                        <form:select class="form-control" path="restMethod.httpMethod">
                             <c:forEach items="${restMethodTypes}" var="type">
                                 <option value="${type}">${type}</option>
                             </c:forEach>

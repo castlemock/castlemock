@@ -33,7 +33,7 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="rest.updaterestapplication.label.name"/></label></td>
-                    <td class="column2"><form:input path="name" id="restApplicationNameInput" value="${restApplication.name}"/></td>
+                    <td class="column2"><form:input class="form-control" path="name" id="restApplicationNameInput" value="${restApplication.name}"/></td>
                 </tr>
             </table>
 

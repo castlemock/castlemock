@@ -43,17 +43,17 @@
                 <table class="formTable">
                     <tr>
                         <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.name"/></form:label></td>
-                        <td class="column2"><form:input path="name" id="soapMockResponseNameInput" /></td>
+                        <td class="column2"><form:input class="form-control" path="name" id="soapMockResponseNameInput" /></td>
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="httpStatusCode"><spring:message code="soap.soapmockresponse.label.httpstatuscode"/></form:label></td>
-                        <td class="column2"><form:input path="httpStatusCode" id="soapMockResponseHttpStatusCodeInput" /></td>
+                        <td class="column2"><form:input class="form-control" path="httpStatusCode" id="soapMockResponseHttpStatusCodeInput" /></td>
                         <td><label id="httpCodeDefinitionLabel"><spring:message code="soap.soapmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="status"><spring:message code="soap.soapmockresponse.label.status"/></form:label></td>
                         <td>
-                            <form:select path="status">
+                            <form:select class="form-control" path="status">
                                 <c:forEach items="${soapMockResponseStatuses}" var="soapMockResponseStatus">
                                     <spring:message var="label" code="soap.type.soapmockresponsestatus.${soapMockResponseStatus}"/>
                                     <form:option value="${soapMockResponseStatus}" label="${label}"/>
@@ -63,11 +63,11 @@
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="usingExpressions"><spring:message code="soap.soapmockresponse.label.useexpressions"/></form:label></td>
-                        <td class="column2"><span class="checkbox"><form:checkbox path="usingExpressions"/></span></td>
+                        <td class="column2"><span class="checkbox"><form:checkbox class="form-control" path="usingExpressions"/></span></td>
                     </tr>
                     <tr>
                         <td class="column1"><label><spring:message code="soap.soapmockresponse.label.xpathExpression"/></label></td>
-                        <td class="column2"><form:input path="xpathExpression" id="xpathExpression" /></td>
+                        <td class="column2"><form:input class="form-control" path="xpathExpression" id="xpathExpression" /></td>
                     </tr>
                 </table>
             </div>
@@ -81,7 +81,7 @@
             <div id="tab-body" class="tab-pane fade in active">
                 <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.header.body"/></span></h2>
                 <div class="editor">
-                    <form:textarea id="body" path="body"/>
+                    <form:textarea class="form-control" id="body" path="body"/>
                     <div class="editorButtons">
                         <button id="formatXmlButton" type="button"><spring:message code="soap.soapmockresponse.button.formatxml"/></button>
                         <button id="formatJsonButton" type="button"><spring:message code="soap.soapmockresponse.button.formatjson"/></button>
@@ -99,11 +99,11 @@
                         <table class="formTable">
                             <tr>
                                 <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headername"/></form:label></td>
-                                <td class="column2"><input type="text" name="headerName" id="headerNameInput"></td>
+                                <td class="column2"><input type="text" class="form-control" name="headerName" id="headerNameInput"></td>
                             </tr>
                             <tr>
                                 <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headervalue"/></form:label></td>
-                                <td class="column2"><input type="text" name="headerValue" id="headerValueInput"></td>
+                                <td class="column2"><input type="text" class="form-control" name="headerValue" id="headerValueInput"></td>
                             </tr>
                         </table>
                         <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="soap.soapmockresponse.button.addheader"/></span></button>

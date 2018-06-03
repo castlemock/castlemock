@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.project.service.ProjectServiceFacade;
 import com.castlemock.web.basis.web.mvc.command.search.SearchCommand;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -58,6 +59,7 @@ public class SearchController extends AbstractViewController {
         final List<SearchResult> searchResults = projectServiceFacade.search(searchQuery);
         ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SEARCH_RESULTS, searchResults);
+        model.addObject(SELECTED_MENU, MenuItem.SEARCH);
         return model;
     }
 

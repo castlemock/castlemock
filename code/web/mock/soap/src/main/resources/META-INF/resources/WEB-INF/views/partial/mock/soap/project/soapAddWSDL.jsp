@@ -42,11 +42,11 @@
                 <table class="formTable">
                     <tr>
                         <td class="column1"><form:label path="link"><spring:message code="soap.soapaddwsdl.label.link" arguments="WSDL"/></form:label></td>
-                        <td class="column2"><form:input path="link" type="text" name="wsdlLinkInput" id="wsdlLinkInput" size="100"/>
+                        <td class="column2"><form:input class="form-control" path="link" type="text" name="wsdlLinkInput" id="wsdlLinkInput" size="100"/>
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="generateResponse"><spring:message code="soap.soapaddwsdl.label.generateresponse"/></form:label></td>
-                        <td class="column1"><form:checkbox path="generateResponse" title="Generate response"></form:checkbox></td>
+                        <td class="column1"><form:checkbox class="form-control" path="generateResponse" title="Generate response"></form:checkbox></td>
                     </tr>
                 </table>
                 <button class="btn btn-success" type="submit" name="type" value="link"><i class="fa fa-upload"></i> <span><spring:message code="soap.soapaddwsdl.button.linkwsdl"/></span></button>
@@ -67,7 +67,7 @@
                 <table class="formTable">
                     <tr>
                         <td class="column1"><form:label path="generateResponse"><spring:message code="soap.soapaddwsdl.label.generateresponse"/></form:label></td>
-                        <td class="column1"><form:checkbox path="generateResponse" title="Generate response"></form:checkbox></td>
+                        <td class="column1"><form:checkbox class="form-control" path="generateResponse" title="Generate response"></form:checkbox></td>
                     </tr>
                 </table>
 
