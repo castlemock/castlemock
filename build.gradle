@@ -19,6 +19,8 @@ subprojects {
     group = "com.castlemock"
     version = '1.21-SNAPSHOT'
 
+    archivesBaseName = "${it.group}-${it.name}"
+
     repositories {
         mavenCentral()
     }
@@ -51,24 +53,24 @@ subprojects {
     ext.graphqlVersion = "8.0"
     ext.commonsLangVersion = "3.7"
 
-	compileJava {
-		sourceCompatibility = 1.8
-		targetCompatibility = 1.8
-	}
+    compileJava {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 
-	compileTestJava {
-		sourceCompatibility = 1.8
-		targetCompatibility = 1.8
-	}
+    compileTestJava {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 
-	dependencies {
+    dependencies {
         compile(group: 'com.google.guava', name: 'guava', version: guavaVersion)
         compile(group: 'log4j', name: 'log4j', version: log4jVersion)
         testCompile(group: 'org.mockito', name: 'mockito-all', version: mockitoVersion)
         testCompile(group: 'junit', name: 'junit', version: junitVersion) {
             exclude(group:'org.hamcrest', module:'hamcrest-core')
         }
-	}
+    }
 
     sourceSets {
         main {
@@ -88,6 +90,8 @@ project(':code:core:expression') {
     description = "Castle Mock core: Expression"
     group = "com.castlemock.core"
 
+    archivesBaseName = "${it.group}-${it.name}"
+
     dependencies {
         antlr group: "org.antlr", name: "antlr4", version: antlrVersion
     }
@@ -104,6 +108,8 @@ project(':code:core:basis') {
     description = "Castle Mock core: Basis"
     group = "com.castlemock.core"
 
+    archivesBaseName = "${it.group}-${it.name}"
+
     dependencies {
         compile(project(":code:core:expression"))
         compile(group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion)
@@ -115,6 +121,9 @@ project(':code:core:basis') {
 project(':code:core:mock:rest') {
     description = "Castle Mock core: Mock REST"
     group = "com.castlemock.core"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
     dependencies {
         compile(project(":code:core:basis"))
     }
@@ -123,6 +132,9 @@ project(':code:core:mock:rest') {
 project(':code:core:mock:soap') {
     description = "Castle Mock core: Mock SOAP"
     group = "com.castlemock.core"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
     dependencies {
         compile(project(":code:core:basis"))
     }
@@ -131,6 +143,9 @@ project(':code:core:mock:soap') {
 project(':code:core:mock:graphql') {
     description = "Castle Mock core: Mock GraphQL"
     group = "com.castlemock.core"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
     dependencies {
         compile(project(":code:core:basis"))
     }
@@ -141,6 +156,8 @@ project(':code:web:basis') {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     group = "com.castlemock.web"
+
+    archivesBaseName = "${it.group}-${it.name}"
 
     bootJar.enabled = false
     jar.enabled = true
@@ -173,6 +190,8 @@ project(':code:web:mock:rest') {
     apply plugin: 'io.spring.dependency-management'
     group = "com.castlemock.web"
 
+    archivesBaseName = "${it.group}-${it.name}"
+
     bootJar.enabled = false
     jar.enabled = true
 
@@ -192,6 +211,8 @@ project(':code:web:mock:graphql') {
     apply plugin: 'io.spring.dependency-management'
     group = "com.castlemock.web"
 
+    archivesBaseName = "${it.group}-${it.name}"
+
     bootJar.enabled = false
     jar.enabled = true
 
@@ -208,6 +229,8 @@ project(':code:web:mock:soap') {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     group = "com.castlemock.web"
+
+    archivesBaseName = "${it.group}-${it.name}"
 
     bootJar.enabled = false
     jar.enabled = true
@@ -227,6 +250,8 @@ project(':code:web:war') {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'war'
     group = "com.castlemock.web"
+
+    archivesBaseName = "${it.group}-${it.name}"
 
     bootWar {
         archiveName = 'castlemock.war'
