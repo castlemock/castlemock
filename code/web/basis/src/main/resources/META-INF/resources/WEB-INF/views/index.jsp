@@ -33,6 +33,7 @@
   </head>
     <body>
         <jsp:include page="header.jsp" />
+        <jsp:include page="menu.jsp" />
         <jsp:include page="${partial}" />
         <jsp:include page="footer.jsp" />
     </body>

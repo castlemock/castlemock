@@ -8,12 +8,13 @@
 
 .main-header {
   width: 100%;
-  background: #3E444D;
+  background: #1dafec;
   color: #fff;
-  border: 0px solid #3E444D;
+  border: 0px solid #1dafec;
   top: 0px;
   font-size: 13px;
   z-index: 1;
+  height: 60px;
 
   .navbar-toggle {
     border: none;
@@ -54,7 +55,6 @@
     }
   }
 
-
   .navbar-default {
     background-color: inherit;
     border-color: inherit;
@@ -66,7 +66,6 @@
     }
 
     .container-fluid {
-
 
       .navbar-collapse {
         border: 0px solid #3E444D;
@@ -96,7 +95,6 @@
     }
   }
 
-
   .logo {
     float: left;
     margin-top: 2px;
@@ -105,16 +103,16 @@
       color: #fff;
       &:hover {
         text-decoration: none;
+      }
     }
   }
-}
 
   #header-logo {
     height: 30px;
     margin-top: -10px;
   }
 
-  .search  {
+  .search {
     input[type=text] {
       width: 200px;
       padding: 5px;
@@ -160,5 +158,93 @@
       visibility: hidden;
       display: none;
     }
+  }
+
+  .avatar-username {
+    float:left;
+  }
+
+  .avatar-circle {
+    width: 30px;
+    height: 30px;
+    background-color: #1b76b9;
+    text-align: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+  .initials {
+    position: relative;
+    top: 6px;
+    font-size: 20px;
+    line-height: 20px;
+    color: #fff;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .searchNew {
+    border-radius: 55px 50px;
+    color: #FFFFFF;
+    background: #46BCEF !important;
+    border-color: #46BCEF !important;
+    width: 80%;
+    height: 35px;
+  }
+
+  .stylish-input-group {
+    width: 30%;
+    top: 10px;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: white;
+      opacity: 1; /* Firefox */
+    }
+
+    ::-webkit-input-placeholder {
+      text-align: center;
+    }
+
+    :-moz-placeholder { /* Firefox 18- */
+      text-align: center;
+    }
+
+    ::-moz-placeholder {  /* Firefox 19+ */
+      text-align: center;
+    }
+
+    :-ms-input-placeholder {
+      text-align: center;
+      color: white;
+    }
+  }
+
+  .input-group-addon{
+    background: #46BCEF !important;
+    border-color: #46BCEF !important;
+    color: #FFFFFF;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+    width: 20%;
+    height: 35px;
+  }
+  .stylish-input-group .form-control{
+    border-right:0;
+    box-shadow:0 0 0;
+    border-color:#ccc;
+  }
+  .stylish-input-group button{
+    border:0;
+    background:transparent;
   }
 }

@@ -21,8 +21,7 @@ footer {
   font-size: 12px;
   height: 30px;
   text-align: center;
-  background-color: #F0F0F0;
-  border-top: 1px solid #8b8f86; }
+  background-color: #f5f5f5; }
   footer .push {
     height: 4em; }
   footer .languages {
@@ -152,12 +151,13 @@ a {
   src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url("../font/roboto/Roboto-ThinItalic.ttf"); }
 .main-header {
   width: 100%;
-  background: #3E444D;
+  background: #1dafec;
   color: #fff;
-  border: 0px solid #3E444D;
+  border: 0px solid #1dafec;
   top: 0px;
   font-size: 13px;
-  z-index: 1; }
+  z-index: 1;
+  height: 60px; }
   .main-header .navbar-toggle {
     border: none;
     background: transparent !important;
@@ -238,6 +238,73 @@ a {
     .main-header .links .title {
       visibility: hidden;
       display: none; }
+  .main-header .avatar-username {
+    float: left; }
+  .main-header .avatar-circle {
+    width: 30px;
+    height: 30px;
+    background-color: #1b76b9;
+    text-align: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    margin-top: 10px;
+    margin-right: 10px; }
+  .main-header .initials {
+    position: relative;
+    top: 6px;
+    font-size: 20px;
+    line-height: 20px;
+    color: #fff;
+    font-family: "Courier New", monospace;
+    font-weight: bold; }
+    .main-header .initials:hover {
+      cursor: pointer; }
+  .main-header .searchNew {
+    border-radius: 55px 50px;
+    color: #FFFFFF;
+    background: #46BCEF !important;
+    border-color: #46BCEF !important;
+    width: 80%;
+    height: 35px; }
+  .main-header .stylish-input-group {
+    width: 30%;
+    top: 10px;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0; }
+    .main-header .stylish-input-group ::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: white;
+      opacity: 1;
+      /* Firefox */ }
+    .main-header .stylish-input-group ::-webkit-input-placeholder {
+      text-align: center; }
+    .main-header .stylish-input-group :-moz-placeholder {
+      /* Firefox 18- */
+      text-align: center; }
+    .main-header .stylish-input-group ::-moz-placeholder {
+      /* Firefox 19+ */
+      text-align: center; }
+    .main-header .stylish-input-group :-ms-input-placeholder {
+      text-align: center;
+      color: white; }
+  .main-header .input-group-addon {
+    background: #46BCEF !important;
+    border-color: #46BCEF !important;
+    color: #FFFFFF;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+    width: 20%;
+    height: 35px; }
+  .main-header .stylish-input-group .form-control {
+    border-right: 0;
+    box-shadow: 0 0 0;
+    border-color: #ccc; }
+  .main-header .stylish-input-group button {
+    border: 0;
+    background: transparent; }
 
 a {
   text-decoration: none; }
@@ -362,16 +429,23 @@ body {
   color: #fff;
   font-size: 10px; }
 
+.breadcrumb {
+  border-radius: 0px; }
+
 .container {
   width: 85%;
   height: 75%;
   margin: 0 auto;
+  padding-left: 150px;
   absolute: relative; }
 
 .navigation {
   width: 100%;
-  left: 0px;
-  right: 0px; }
+  left: 150px;
+  right: 0px;
+  height: 60px;
+  padding-left: 150px;
+  overflow-x: hidden; }
   .navigation a {
     color: #666666; }
 
@@ -539,3 +613,44 @@ select {
 
 .pure-button {
   margin-top: 3px; }
+
+.sideMenu {
+  position: absolute;
+  overflow-x: hidden;
+  background: #f5f5f5;
+  height: 100%;
+  width: 150px;
+  left: 0;
+  top: 60px; }
+  .sideMenu .sideMenuItem {
+    height: 80px;
+    width: 150px; }
+    .sideMenu .sideMenuItem .sideMenuItemContent {
+      align-content: center;
+      margin: auto;
+      width: 70%;
+      height: 80px;
+      padding-top: 5px; }
+      .sideMenu .sideMenuItem .sideMenuItemContent:hover {
+        background-color: #ffffff; }
+      .sideMenu .sideMenuItem .sideMenuItemContent .sideMenuItemContentIcon {
+        font-size: 20px;
+        text-align: center; }
+      .sideMenu .sideMenuItem .sideMenuItemContent .sideMenuItemContentTitle {
+        margin-top: 5px;
+        font-size: 15px;
+        text-align: center; }
+    .sideMenu .sideMenuItem .sideMenuItemContentSelected {
+      border-bottom: none; }
+    .sideMenu .sideMenuItem:hover {
+      cursor: pointer;
+      background-color: #ffffff; }
+  .sideMenu a {
+    color: #666666; }
+    .sideMenu a:hover {
+      text-decoration: none; }
+  .sideMenu .sideMenuItemFirst {
+    margin-top: 36px; }
+  .sideMenu .sideMenuItemSelected {
+    background-color: #ffffff;
+    border-left: 4px solid #b81d22; }

@@ -32,20 +32,33 @@
                 <a class="navbar-brand logo" href="${context}/web">Castle Mock  <img src="${context}/resources/images/logo-landscape-white.png" id="header-logo"/></a>
             </div>
 
+
+            <div class="input-group stylish-input-group">
+                <form:form action="${searchUrl}" method="POST" modelAttribute="searchCommand">
+                    <form:input onfocus="this.placeholder = ''" type="text" path="query" class="form-control searchNew"  placeholder="Search" ></form:input>
+                    <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="fa fa-search"></span>
+                        </button>
+                    </span>
+                </form:form>
+            </div>
+
+
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="links nav navbar-nav navbar-right">
-                    <form:form action="${searchUrl}" method="POST" modelAttribute="searchCommand" class="navbar-form navbar-left search">
-                        <div class="form-group">
-                            <form:input onfocus="this.placeholder = ''" type="text" path="query" placeholder="${searchPlaceholder}"></form:input>
+                    <li>
+                        <div>
+                            <a href="${context}/web/me">
+                                <div class="avatar-username">
+                                </div>
+                                <div class="avatar-circle">
+                                    <span class="initials">A</span>
+                                </div>
+                            </a>
                         </div>
-                    </form:form>
-                    <li><a href="${context}/web" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.home"/>"><i class="fa fa-home fa-2x"></i><span class="title"> <spring:message code="general.menu.home"/></span></a></li>
-                    <li><a href="${context}/web/me" data-toggle="tooltip" data-placement="bottom" title="${loggedInUser}"><i class="fa fa-user fa-2x"></i><span class="title"> ${loggedInUser}</span></a></li>
-                    <li><a href="${context}/web/event" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.events"/>"><i class="fa fa-file-text fa-2x"></i><span class="title"> <spring:message code="general.menu.events"/></span></a></li>
-                    <!--<sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/configuration" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.configuration"/>"><i class="fa fa-cogs fa-2x"></i><span class="title"> <spring:message code="general.menu.configuration"/></span></a></li></sec:authorize> -->
-                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/user" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.users"/>"><i class="fa fa-users fa-2x"></i><span class="title"> <spring:message code="general.menu.users"/></span></a></li></sec:authorize>
-                    <sec:authorize access="hasAuthority('ADMIN')"><li><a href="${context}/web/system" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.system"/>"><i class="fa fa-desktop fa-2x"></i><span class="title"> <spring:message code="general.menu.system"/></span></a></li></sec:authorize>
-                    <li><a href="${context}/web/logout" data-toggle="tooltip" data-placement="bottom" title="<spring:message code="general.menu.logout"/>"><i class="fa fa-sign-out fa-2x"></i><span class="title"> <spring:message code="general.menu.logout"/></span></a></li>
+                    </li>
+                    <li><a href="${context}/web/logout"><i class="fa fa-sign-out fa-2x"></i></a></li>
                 </ul>
             </div>
         </div>
