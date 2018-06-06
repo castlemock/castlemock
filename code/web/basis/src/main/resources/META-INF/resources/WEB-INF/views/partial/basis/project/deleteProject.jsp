@@ -29,8 +29,8 @@
         </div>
         <spring:message code="general.deleteproject.label.confirmation" arguments="${project.name}"/>
         <p>
-        <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="general.deleteproject.button.deleteproject"/></a>
-        <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.deleteproject.button.cancel"/></a>
+        <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}/delete/confirm"/>" class="btn btn-danger"><i class="fas fa-trash"></i> <spring:message code="general.deleteproject.button.deleteproject"/></a>
+        <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="general.deleteproject.button.cancel"/></a>
         </p>
     </section>
 </div>

@@ -40,8 +40,8 @@
                 </tr>
             </table>
 
-            <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="graphql.createapplication.button.createapplication"/></span></button>
-            <a href="<c:url value="/web/graphql/project/${graphQLProjectId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="graphql.createapplication.button.cancel"/></span></a>
+            <button class="btn btn-success" type="submit" name="submit"><i class="fas fa-plus"></i> <span><spring:message code="graphql.createapplication.button.createapplication"/></span></button>
+            <a href="<c:url value="/web/graphql/project/${graphQLProjectId}"/>" class="btn btn-danger"><i class="fas fa-times"></i> <span><spring:message code="graphql.createapplication.button.cancel"/></span></a>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form:form>
         <script>

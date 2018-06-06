@@ -30,7 +30,7 @@
         </div>
 
         <div class="upload-information">
-            <i class="fa fa-info-circle fa-4x"></i>
+            <i class="fas fa-info-circle fa-4x"></i>
             <p>
                 <spring:message code="rest.restimportdefinition.header.description" arguments="${definitionDisplayName}"/>
             </p>
@@ -49,7 +49,7 @@
                         <td class="column1"><form:checkbox class="form-control" path="generateResponse" title="Generate response"></form:checkbox></td>
                     </tr>
                 </table>
-                <button class="btn btn-success" type="submit" name="type" value="link"><i class="fa fa-upload"></i> <span><spring:message code="rest.restimportdefinition.button.link" arguments="${definitionDisplayName}"/></span></button>
+                <button class="btn btn-success" type="submit" name="type" value="link"><i class="fas fa-upload"></i> <span><spring:message code="rest.restimportdefinition.button.link" arguments="${definitionDisplayName}"/></span></button>
                 <input type="hidden" name="definitionType" value="${definitionType}"/>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form:form>
@@ -72,8 +72,8 @@
                 </table>
 
 
-                <button class="btn btn-success" name="type" value="file"><i class="fa fa-upload"></i> <span><spring:message code="rest.restimportdefinition.button.uploadfiles"/></span></button>
-                <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.restimportdefinition.button.cancel"/></a>
+                <button class="btn btn-success" name="type" value="file"><i class="fas fa-upload"></i> <span><spring:message code="rest.restimportdefinition.button.uploadfiles"/></span></button>
+                <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="rest.restimportdefinition.button.cancel"/></a>
                 <input type="hidden" name="definitionType" value="${definitionType}"/>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form:form>

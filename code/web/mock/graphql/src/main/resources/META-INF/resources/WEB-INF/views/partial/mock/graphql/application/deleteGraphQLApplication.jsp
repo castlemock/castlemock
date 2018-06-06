@@ -31,8 +31,8 @@
         <spring:message code="graphql.deleteapplication.label.confirmation" arguments="${graphQLApplication.name}"/>
 
         <p>
-        <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplication.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="graphql.deleteapplication.button.deleteapplication"/></a>
-        <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplication.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="graphql.deleteapplication.button.cancel"/></a>
+        <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplication.id}/delete/confirm"/>" class="btn btn-danger"><i class="fas fa-trash"></i> <spring:message code="graphql.deleteapplication.button.deleteapplication"/></a>
+        <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplication.id}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="graphql.deleteapplication.button.cancel"/></a>
         </p>
     </section>
 </div>

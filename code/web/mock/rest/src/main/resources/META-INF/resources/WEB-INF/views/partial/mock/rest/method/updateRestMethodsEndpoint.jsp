@@ -46,13 +46,13 @@
                             <td class="column2"><form:input class="form-control" path="forwardedEndpoint" value="${updateRestMethodsEndpointCommand.forwardedEndpoint}"/></td>
                         </tr>
                     </table>
-                    <button class="btn btn-success"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.updaterestmethodsendpoint.button.updatemethods"/></span></button>
-                    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.updaterestmethodsendpoint.button.cancel"/></a>
+                    <button class="btn btn-success"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.updaterestmethodsendpoint.button.updatemethods"/></span></button>
+                    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="rest.updaterestmethodsendpoint.button.cancel"/></a>
                 </form:form>
             </c:when>
             <c:otherwise>
                 <p><spring:message code="rest.updaterestmethodsendpoint.label.nomethods"/></p>
-                <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.updaterestmethodsendpoint.button.cancel"/></a>
+                <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="rest.updaterestmethodsendpoint.button.cancel"/></a>
             </c:otherwise>
         </c:choose>
     </section>

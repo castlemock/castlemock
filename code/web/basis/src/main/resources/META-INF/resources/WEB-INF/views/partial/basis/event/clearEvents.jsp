@@ -31,8 +31,8 @@
             <spring:message code="general.clearevents.label.confirmation"/>
         </p>
         <p>
-            <a href="<c:url value="/web/event/clear/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="general.clearevents.button.clearlogs"/></a>
-            <a href="<c:url value="/web/event"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.clearevents.button.cancel"/></a>
+            <a href="<c:url value="/web/event/clear/confirm"/>" class="btn btn-danger"><i class="fas fa-trash"></i> <spring:message code="general.clearevents.button.clearlogs"/></a>
+            <a href="<c:url value="/web/event"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="general.clearevents.button.cancel"/></a>
         </p>
     </section>
 </div>

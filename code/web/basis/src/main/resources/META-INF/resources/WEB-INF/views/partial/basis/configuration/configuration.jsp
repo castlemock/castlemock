@@ -50,8 +50,8 @@
                             </div>
                             <br/>
                         </c:forEach>
-                    <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="general.configuration.button.save"/></span></button>
-                    <a href="<c:url value="/web"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.configuration.button.discard"/></a>
+                    <button class="btn btn-success" type="submit" name="submit"><i class="fas fa-plus"></i> <span><spring:message code="general.configuration.button.save"/></span></button>
+                    <a href="<c:url value="/web"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="general.configuration.button.discard"/></a>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
                 </form:form>

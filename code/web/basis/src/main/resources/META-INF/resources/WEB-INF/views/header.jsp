@@ -35,10 +35,10 @@
 
             <div class="input-group stylish-input-group">
                 <form:form action="${searchUrl}" method="POST" modelAttribute="searchCommand">
-                    <form:input onfocus="this.placeholder = ''" type="text" path="query" class="form-control searchNew"  placeholder="Search" ></form:input>
+                    <form:input onfocus="this.placeholder = ''" type="text" path="query" class="form-control search"  placeholder="Search" ></form:input>
                     <span class="input-group-addon">
                         <button type="submit">
-                            <span class="fa fa-search"></span>
+                            <span class="fas fa-search"></span>
                         </button>
                     </span>
                 </form:form>
@@ -53,12 +53,12 @@
                                 <div class="avatar-username">
                                 </div>
                                 <div class="avatar-circle">
-                                    <span class="initials"><c:out value="${fn:substring(loggedInUser, 0, 1)}" /> </span>
+                                    <i class="fas fa-user fa-2x"></i>
                                 </div>
                             </a>
                         </div>
                     </li>
-                    <li><a href="${context}/web/logout"><i class="fa fa-sign-out fa-2x"></i></a></li>
+                    <li><a href="${context}/web/logout"><i class="fas fa-sign-out-alt fa-2x"></i></a></li>
                 </ul>
             </div>
         </div>

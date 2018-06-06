@@ -99,7 +99,7 @@
                                     <td class="column2"><input class="form-control" type="text" name="headerValue" id="headerValueInput"></td>
                                 </tr>
                             </table>
-                            <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fa fa-plus"></i>  <span><spring:message code="soap.createsoapmockresponse.button.addheader"/></span></button>
+                            <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fas fa-plus"></i>  <span><spring:message code="soap.createsoapmockresponse.button.addheader"/></span></button>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -117,9 +117,9 @@
                 </div>
             </div>
             <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i>  <span><spring:message code="soap.createsoapmockresponse.button.createmockresponse"/></span></button>
+                <button class="btn btn-success" type="submit" name="submit"><i class="fas fa-plus"></i>  <span><spring:message code="soap.createsoapmockresponse.button.createmockresponse"/></span></button>
             </sec:authorize>
-            <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="soap.createsoapmockresponse.button.cancel"/></span></a>
+            <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}"/>" class="btn btn-danger"><i class="fas fa-times"></i> <span><spring:message code="soap.createsoapmockresponse.button.cancel"/></span></a>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form:form>
     </section>

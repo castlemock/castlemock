@@ -99,8 +99,8 @@
                             </c:forEach>
                         </table>
 
-                        <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="graphql.updategraphqlobject.button.updateapplication"/></button>
-                        <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLObjectType.id}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <spring:message code="graphql.updategraphqlobject.button.cancel"/></a>
+                        <button class="btn btn-success" type="submit" name="submit"><i class="fas fa-check-circle"></i><spring:message code="graphql.updategraphqlobject.button.updateapplication"/></button>
+                        <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLObjectType.id}"/>" class="btn btn-danger"><i class="fas fa-times"></i> <spring:message code="graphql.updategraphqlobject.button.cancel"/></a>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </div>
                 </c:when>

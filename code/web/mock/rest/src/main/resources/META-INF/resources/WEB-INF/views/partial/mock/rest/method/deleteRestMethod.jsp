@@ -32,8 +32,8 @@
         <spring:message code="rest.deletemethod.label.confirmation" arguments="${restMethod.name}"/>
 
         <p>
-        <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="rest.deletemethod.button.deletemethod"/></a>
-        <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}"/>" class="btn btn-primary"><i class="fa fa-timese"></i> <spring:message code="rest.deletemethod.button.cancel"/></a>
+        <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/delete/confirm"/>" class="btn btn-danger"><i class="fas fa-trash"></i> <spring:message code="rest.deletemethod.button.deletemethod"/></a>
+        <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}"/>" class="btn btn-primary"><i class="fas fa-timese"></i> <spring:message code="rest.deletemethod.button.cancel"/></a>
         </p>
     </section>
 </div>

@@ -29,8 +29,8 @@
                 <h1><spring:message code="general.user.header.user" arguments="${user.username}"/></h1>
             </div>
             <div class="menu" align="right">
-                <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/user/${user.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="general.user.button.updateuser"/></span></a>
-                <a class="btn btn-danger demo-button-disabled" href="<c:url value="/web/user/${user.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="general.user.button.deleteuser"/></span></a>
+                <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/user/${user.id}/update"/>"><i class="fas fa-file"></i> <span><spring:message code="general.user.button.updateuser"/></span></a>
+                <a class="btn btn-danger demo-button-disabled" href="<c:url value="/web/user/${user.id}/delete"/>"><i class="fas fa-trash"></i> <span><spring:message code="general.user.button.deleteuser"/></span></a>
             </div>
         </div>
         <table class="formTable">

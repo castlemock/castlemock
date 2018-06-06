@@ -20,7 +20,7 @@
       <title><spring:message code="general.index.title.title"/></title>
       <link rel="icon" href="<c:url value="/favicon.ico"/>" type="image/x-icon" />
       <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/bootstrap.min.css"/>">
-      <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome/css/font-awesome.css"/>">
+      <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome/css/fontawesome-all.min.css"/>">
       <link rel="stylesheet" href="<c:url value="/resources/css/main-stylesheet.css"/>">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <script>var demoMode =<c:out value="${demoMode}"/></script>

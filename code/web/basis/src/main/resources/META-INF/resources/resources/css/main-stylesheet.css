@@ -151,9 +151,9 @@ a {
   src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url("../font/roboto/Roboto-ThinItalic.ttf"); }
 .main-header {
   width: 100%;
-  background: #1dafec;
+  background: #1696cc;
   color: #fff;
-  border: 0px solid #1dafec;
+  border: 0px solid #1696cc;
   top: 0px;
   font-size: 13px;
   z-index: 1;
@@ -210,18 +210,6 @@ a {
   .main-header #header-logo {
     height: 30px;
     margin-top: -10px; }
-  .main-header .search input[type=text] {
-    width: 200px;
-    padding: 5px;
-    outline: none;
-    margin-top: 1px;
-    border: 2px solid #9EA1A6;
-    background-color: #9EA1A6;
-    font-size: 12px;
-    border-radius: 5px;
-    color: #fff; }
-    .main-header .search input[type=text]::-webkit-input-placeholder {
-      color: #fff; }
   .main-header .links {
     float: right; }
     .main-header .links a {
@@ -248,23 +236,21 @@ a {
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
-    margin-top: 10px;
+    margin-top: 9px;
     margin-right: 10px; }
-  .main-header .initials {
-    position: relative;
-    top: 10px;
-    font-size: 30px;
-    line-height: 20px;
-    color: #fff;
-    font-family: "Courier New", monospace;
-    font-weight: bold; }
-    .main-header .initials:hover {
-      cursor: pointer; }
-  .main-header .searchNew {
+    .main-header .avatar-circle .fa-2x {
+      font-size: 24px;
+      position: relative;
+      top: 10px;
+      line-height: 20px;
+      color: #fff; }
+      .main-header .avatar-circle .fa-2x:hover {
+        cursor: pointer; }
+  .main-header .search {
     border-radius: 55px 50px;
     color: #FFFFFF;
-    background: #46BCEF !important;
-    border-color: #46BCEF !important;
+    background: #3ca8d6 !important;
+    border-color: #3ca8d6 !important;
     width: 80%;
     height: 35px; }
   .main-header .stylish-input-group {
@@ -291,8 +277,8 @@ a {
       text-align: center;
       color: white; }
   .main-header .input-group-addon {
-    background: #46BCEF !important;
-    border-color: #46BCEF !important;
+    background: #3ca8d6 !important;
+    border-color: #3ca8d6 !important;
     color: #FFFFFF;
     border-bottom-right-radius: 50px;
     border-top-right-radius: 50px;
@@ -646,7 +632,7 @@ select {
       cursor: pointer;
       background-color: #ffffff; }
   .sideMenu a {
-    color: #666666; }
+    color: #8d8d8d; }
     .sideMenu a:hover {
       text-decoration: none; }
   .sideMenu .sideMenuItemFirst {

@@ -20,10 +20,10 @@
         <div class="sideMenuItem sideMenuItemFirst ${selectedMenu == "PROJECT" ? 'sideMenuItemSelected' : ''}">
             <div class="sideMenuItemContent ${selectedMenu == "PROJECT" ? 'sideMenuItemContentSelected' : ''}">
                 <div class="sideMenuItemContentIcon">
-                    <i class="fa fa-tachometer fa-2x"></i>
+                    <i class="fas fa-tachometer-alt fa-2x"></i>
                 </div>
                 <div class="sideMenuItemContentTitle">
-                    <spring:message code="general.menu.home"/>
+                    <spring:message code="general.menu.projects"/>
                 </div>
             </div>
         </div>
@@ -32,10 +32,10 @@
         <div class="sideMenuItem ${selectedMenu == "EVENT" ? 'sideMenuItemSelected' : ''}">
             <div class="sideMenuItemContent ${selectedMenu == "EVENT" ? 'sideMenuItemContentSelected' : ''}">
                 <div class="sideMenuItemContentIcon">
-                    <i class="fa fa-archive fa-2x"></i>
+                    <i class="fas fa-chart-bar fa-2x"></i>
                 </div>
                 <div class="sideMenuItemContentTitle">
-                    <spring:message code="general.menu.events"/>
+                    <spring:message code="general.menu.logs"/>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="sideMenuItem ${selectedMenu == "USER" ? 'sideMenuItemSelected' : ''}">
                 <div class="sideMenuItemContent ${selectedMenu == "USER" ? 'sideMenuItemContentSelected' : ''}">
                     <div class="sideMenuItemContentIcon">
-                        <i class="fa fa-users fa-2x"></i>
+                        <i class="fas fa-users-cog fa-2x"></i>
                     </div>
                     <div class="sideMenuItemContentTitle">
                         <spring:message code="general.menu.users"/>
@@ -59,7 +59,7 @@
         <div class="sideMenuItem ${selectedMenu == "SYSTEM" ? 'sideMenuItemSelected' : ''}">
             <div class="sideMenuItemContent ${selectedMenu == "SYSTEM" ? 'sideMenuItemContentSelected' : ''}">
                 <div class="sideMenuItemContentIcon">
-                    <i class="fa fa-cogs fa-2x"></i>
+                    <i class="fas fa-cogs fa-2x"></i>
                 </div>
                 <div class="sideMenuItemContentTitle">
                     <spring:message code="general.menu.system"/>

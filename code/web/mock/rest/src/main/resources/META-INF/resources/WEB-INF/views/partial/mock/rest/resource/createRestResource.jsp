@@ -38,12 +38,12 @@
                 <tr>
                     <td class="column1"><label><spring:message code="rest.createresource.label.uri"/></label></td>
                     <td class="column2"><form:input class="form-control" id="restResourceUriInput" path="uri" /></td>
-                    <td class="information" title="<spring:message code="rest.createresource.tooltip.uri"/>"><i class="fa fa-question-circle fa-1x"></i></td>
+                    <td class="information" title="<spring:message code="rest.createresource.tooltip.uri"/>"><i class="fas fa-question-circle fa-1x"></i></td>
                 </tr>
             </table>
 
-            <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-plus"></i> <span><spring:message code="rest.createresource.button.createresource"/></span></button>
-            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <span><spring:message code="rest.createresource.button.cancel"/></span></a>
+            <button class="btn btn-success" type="submit" name="submit"><i class="fas fa-plus"></i> <span><spring:message code="rest.createresource.button.createresource"/></span></button>
+            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}"/>" class="btn btn-danger"><i class="fas fa-times"></i> <span><spring:message code="rest.createresource.button.cancel"/></span></a>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form:form>
     </section>

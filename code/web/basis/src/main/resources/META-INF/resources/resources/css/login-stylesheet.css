@@ -150,9 +150,21 @@ a {
   font-family: robotoItalicFont;
   src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url("../font/roboto/Roboto-ThinItalic.ttf"); }
 body {
-  background-color: #fbfbfb;
+  background-color: #1696cc;
   font-family: robotoRegularFont;
-  color: #666666; }
+  color: #FFFFFF; }
+  body footer {
+    background-color: #1696cc; }
+    body footer .rest-api a {
+      color: #FFFFFF; }
+    body footer .info {
+      text-align: right;
+      padding-right: 20px;
+      padding-top: 8px; }
+      body footer .info a {
+        text-decoration: underline;
+        font-size: 11px;
+        color: #FFFFFF; }
 
 #login-box {
   width: 350px;
@@ -160,20 +172,37 @@ body {
   margin: 5% auto;
   font-size: 12px;
   text-align: center;
-  background: #fff; }
+  background-color: #1696cc; }
   #login-box #logo {
     width: 150px;
     height: auto;
     margin: 10px 0 20px 0;
-    background: #fff;
+    background-color: #1696cc;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     text-align: center; }
-  #login-box #logo-text {
+  #login-box #logo-title {
     font-size: 35px;
-    font-weight: bold;
     text-align: center;
     margin-bottom: 10px; }
+  #login-box #logo-meta-text {
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: robotoThinFont;
+    font-weight: bold; }
+  #login-box #login-remember-me {
+    margin-top: 10px;
+    float: left; }
+  #login-box #login-button {
+    margin-top: 10px;
+    float: right; }
+  #login-box .btn-success {
+    background-color: #FFFFFF;
+    color: #1696cc; }
+    #login-box .btn-success:hover {
+      background-color: #E9E9E9;
+      color: #1696cc; }
   #login-box input[type=text], #login-box input[type=password] {
     padding: 5px;
     margin: 3px 0;

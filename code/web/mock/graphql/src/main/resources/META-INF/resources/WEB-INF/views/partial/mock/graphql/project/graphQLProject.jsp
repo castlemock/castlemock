@@ -31,10 +31,10 @@
             </div>
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                    <a class="btn btn-success demo-button-disabled"  href="<c:url value="/web/graphql/project/${graphQLProject.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="graphql.graphqlproject.button.updateproject"/></span></a>
-                    <a class="btn btn-primary demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProject.id}/create/application"/>"><i class="fa fa-plus"></i> <span><spring:message code="graphql.graphqlproject.button.createapplication"/></span></a>
-                    <a class="btn btn-primary" href="<c:url value="/web/graphql/project/${graphQLProject.id}/export"/>"><i class="fa fa-cloud-download"></i> <span><spring:message code="graphql.graphqlproject.button.export"/></span></a>
-                    <a class="btn btn-danger demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProject.id}/delete"/>"><i class="fa fa-trash"></i> <span><spring:message code="graphql.graphqlproject.button.delete"/></span></a>
+                    <a class="btn btn-success demo-button-disabled"  href="<c:url value="/web/graphql/project/${graphQLProject.id}/update"/>"><i class="fas fa-file"></i> <span><spring:message code="graphql.graphqlproject.button.updateproject"/></span></a>
+                    <a class="btn btn-primary demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProject.id}/create/application"/>"><i class="fas fa-plus"></i> <span><spring:message code="graphql.graphqlproject.button.createapplication"/></span></a>
+                    <a class="btn btn-primary" href="<c:url value="/web/graphql/project/${graphQLProject.id}/export"/>"><i class="fas fa-cloud-download-alt"></i> <span><spring:message code="graphql.graphqlproject.button.export"/></span></a>
+                    <a class="btn btn-danger demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProject.id}/delete"/>"><i class="fas fa-trash"></i> <span><spring:message code="graphql.graphqlproject.button.delete"/></span></a>
                 </sec:authorize>
             </div>
         </div>
@@ -83,7 +83,7 @@
                         </table>
                     </div>
                     <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                        <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="graphql.graphqlproject.button.deleteapplication"/></span></button>
+                        <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="graphql.graphqlproject.button.deleteapplication"/></span></button>
                     </sec:authorize>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form:form>

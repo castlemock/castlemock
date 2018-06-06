@@ -39,14 +39,14 @@
                         </c:forEach>
                     </ul>
 
-                    <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i> <span><spring:message code="graphql.deleteapplications.button.deleteapplications"/></span></button>
-                    <a href="<c:url value="/web/graphql/project/${graphQLProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="graphql.deleteapplications.button.cancel"/></a>
+                    <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i> <span><spring:message code="graphql.deleteapplications.button.deleteapplications"/></span></button>
+                    <a href="<c:url value="/web/graphql/project/${graphQLProjectId}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="graphql.deleteapplications.button.cancel"/></a>
                 </form:form>
             </c:when>
             <c:otherwise>
                 <spring:message code="graphql.deleteapplications.label.noapplications"/>
                 <p>
-                <a href="<c:url value="/web/graphql/project/${graphQLProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="graphql.deleteapplications.button.cancel"/></a>
+                <a href="<c:url value="/web/graphql/project/${graphQLProjectId}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="graphql.deleteapplications.button.cancel"/></a>
                 </p>
             </c:otherwise>
         </c:choose>

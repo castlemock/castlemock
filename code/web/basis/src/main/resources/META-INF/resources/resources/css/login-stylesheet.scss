@@ -9,9 +9,31 @@
 // - - - - - - - - - - - - - - - - - - - - -//
 
 body {
-    background-color: rgb(251,251,251);
+    background-color: #1696cc;
     font-family: robotoRegularFont;
-    color: #666666;
+    color: #FFFFFF;
+
+    footer {
+        background-color: #1696cc;
+
+        .rest-api {
+            a {
+                color: #FFFFFF;
+            }
+        }
+
+        .info {
+            text-align: right;
+            padding-right:20px;
+            padding-top: 8px;
+
+            a {
+                text-decoration: underline;
+                font-size: 11px;
+                color: #FFFFFF;
+            }
+        }
+    }
 }
 
 #login-box {
@@ -20,24 +42,51 @@ body {
     margin: 5% auto;
     font-size: 12px;
     text-align: center;
-    background: #fff; 
+    background-color: #1696cc;
 
     
     #logo {
         width: 150px;
         height: auto;
         margin: 10px 0 20px 0;
-        background: #fff;
+        background-color: #1696cc;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
         text-align: center;
     }
 
-    #logo-text {
+    #logo-title {
         font-size: 35px;
-        font-weight: bold;
         text-align: center;
         margin-bottom: 10px;
+    }
+
+    #logo-meta-text {
+        font-size: 15px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-family: robotoThinFont;
+        font-weight: bold;
+    }
+
+    #login-remember-me {
+        margin-top: 10px;
+        float: left;
+    }
+
+    #login-button {
+        margin-top: 10px;
+        float: right;
+    }
+
+    .btn-success {
+        background-color: #FFFFFF;
+        color: #1696cc;
+
+        &:hover {
+            background-color: #E9E9E9;
+            color: #1696cc;
+        }
     }
     
     input[type=text], input[type=password] {

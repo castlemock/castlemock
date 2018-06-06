@@ -31,8 +31,8 @@
         <spring:message code="general.deleteuser.label.confirmation" arguments="${user.username}"/>
 
         <p>
-            <a href="<c:url value="/web/user/${user.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="general.deleteuser.button.deleteuser"/></a>
-            <a href="<c:url value="/web/user/${user.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.deleteuser.button.cancel"/></a>
+            <a href="<c:url value="/web/user/${user.id}/delete/confirm"/>" class="btn btn-danger"><i class="fas fa-trash"></i> <spring:message code="general.deleteuser.button.deleteuser"/></a>
+            <a href="<c:url value="/web/user/${user.id}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="general.deleteuser.button.cancel"/></a>
         </p>
     </section>
 </div>

@@ -39,8 +39,8 @@
                     <td class="column2"><form:textarea class="form-control" rows="4" path="description"></form:textarea></td>
                 </tr>
             </table>
-            <button class="btn btn-success"><i class="fa fa-check-circle"></i> <spring:message code="general.updateproject.button.updateproject"/></button>
-            <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="general.updateproject.button.discardchanges"/></a>
+            <button class="btn btn-success"><i class="fas fa-check-circle"></i> <spring:message code="general.updateproject.button.updateproject"/></button>
+            <a href="<c:url value="/web/${project.typeIdentifier.typeUrl}/project/${project.id}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="general.updateproject.button.discardchanges"/></a>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form:form>
         <script>

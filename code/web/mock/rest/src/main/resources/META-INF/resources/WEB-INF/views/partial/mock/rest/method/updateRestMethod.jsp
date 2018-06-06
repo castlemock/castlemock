@@ -83,8 +83,8 @@
                 </tr>
             </table>
 
-            <button class="btn btn-success" type="submit" name="submit"><i class="fa fa-check-circle"></i><spring:message code="rest.updatemethod.button.updatemethod"/></button>
-            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}"/>" class="btn btn-danger"><i class="fa fa-times"></i> <spring:message code="rest.updatemethod.button.cancel"/></a>
+            <button class="btn btn-success" type="submit" name="submit"><i class="fas fa-check-circle"></i><spring:message code="rest.updatemethod.button.updatemethod"/></button>
+            <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}"/>" class="btn btn-danger"><i class="fas fa-times"></i> <spring:message code="rest.updatemethod.button.cancel"/></a>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form:form>
     </section>

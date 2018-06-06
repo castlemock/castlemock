@@ -33,7 +33,7 @@
             </div>
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLObjectType.id}/update"/>"><i class="fa fa-file"></i> <span><spring:message code="graphql.graphqlobject.button.updateobject"/></span></a>
+                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLObjectType.id}/update"/>"><i class="fas fa-file"></i> <span><spring:message code="graphql.graphqlobject.button.updateobject"/></span></a>
                 </sec:authorize>
             </div>
         </div>

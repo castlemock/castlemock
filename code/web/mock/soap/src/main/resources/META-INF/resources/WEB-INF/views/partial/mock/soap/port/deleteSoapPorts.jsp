@@ -39,14 +39,14 @@
                         </c:forEach>
                     </ul>
 
-                    <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i> <span><spring:message code="soap.deletesoapports.button.deleteports"/></span></button>
-                    <a href="<c:url value="/web/soap/project/${soapProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="soap.deletesoapports.button.cancel"/></a>
+                    <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i> <span><spring:message code="soap.deletesoapports.button.deleteports"/></span></button>
+                    <a href="<c:url value="/web/soap/project/${soapProjectId}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="soap.deletesoapports.button.cancel"/></a>
                 </form:form>
             </c:when>
             <c:otherwise>
                 <spring:message code="soap.deletesoapports.label.noports"/>
                 <p>
-                <a href="<c:url value="/web/soap/project/${soapProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="soap.deletesoapports.button.cancel"/></a>
+                <a href="<c:url value="/web/soap/project/${soapProjectId}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="soap.deletesoapports.button.cancel"/></a>
                 </p>
             </c:otherwise>
         </c:choose>

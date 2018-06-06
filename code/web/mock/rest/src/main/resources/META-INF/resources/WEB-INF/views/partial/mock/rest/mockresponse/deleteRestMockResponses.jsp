@@ -42,14 +42,14 @@
                         </c:forEach>
                     </ul>
 
-                    <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i> <span><spring:message code="rest.deleterestmockresponses.button.deleteresponses"/></span></button>
-                    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.deleterestmockresponses.button.cancel"/></a>
+                    <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i> <span><spring:message code="rest.deleterestmockresponses.button.deleteresponses"/></span></button>
+                    <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="rest.deleterestmockresponses.button.cancel"/></a>
                 </form:form>
             </c:when>
             <c:otherwise>
                 <spring:message code="rest.deleterestmockresponses.label.nomockedresponses"/>
                 <p>
-                <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.deleterestmockresponses.button.cancel"/></a>
+                <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="rest.deleterestmockresponses.button.cancel"/></a>
                 </p>
             </c:otherwise>
         </c:choose>

@@ -31,8 +31,8 @@
         <spring:message code="soap.deletesoapport.label.confirmation" arguments="${soapPort.name}"/>
 
         <p>
-        <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/delete/confirm"/>" class="btn btn-danger"><i class="fa fa-trash"></i> <spring:message code="soap.deletesoapport.button.deleteport"/></a>
-        <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="soap.deletesoapport.button.cancel"/></a>
+        <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/delete/confirm"/>" class="btn btn-danger"><i class="fas fa-trash"></i> <spring:message code="soap.deletesoapport.button.deleteport"/></a>
+        <a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}"/>" class="btn btn-primary"><i class="fas fa-times"></i> <spring:message code="soap.deletesoapport.button.cancel"/></a>
         </p>
     </section>
 </div>
