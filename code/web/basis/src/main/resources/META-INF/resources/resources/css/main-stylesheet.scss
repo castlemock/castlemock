@@ -411,23 +411,23 @@ select {
             }
         }
 
-    }
 
-    a {
-        color: #8d8d8d;
+        .sideMenuItemFirst {
+            margin-top: 36px;
+        }
 
-        &:hover {
-            text-decoration: none;
+        .sideMenuItemSelected {
+            background-color: #ffffff;
+            border-left: 4px solid #b81d22;
+        }
+
+
+        a {
+            color: #8d8d8d;
+
+            &:hover {
+                text-decoration: none;
+            }
         }
     }
-
-    .sideMenuItemFirst {
-        margin-top: 36px;
-    }
-
-    .sideMenuItemSelected {
-        background-color: #ffffff;
-        border-left: 4px solid #b81d22;
-    }
-
 }

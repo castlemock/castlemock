@@ -284,7 +284,8 @@ a {
     border-bottom-right-radius: 50px;
     border-top-right-radius: 50px;
     width: 20%;
-    height: 35px; }
+    height: 35px;
+    float: right; }
   .main-header .stylish-input-group .form-control {
     border-right: 0;
     box-shadow: 0 0 0;
@@ -651,12 +652,12 @@ select {
       .sideMenu .sideMenuContent .sideMenuItem:hover {
         cursor: pointer;
         background-color: #ffffff; }
-  .sideMenu a {
-    color: #8d8d8d; }
-    .sideMenu a:hover {
-      text-decoration: none; }
-  .sideMenu .sideMenuItemFirst {
-    margin-top: 36px; }
-  .sideMenu .sideMenuItemSelected {
-    background-color: #ffffff;
-    border-left: 4px solid #b81d22; }
+    .sideMenu .sideMenuContent .sideMenuItemFirst {
+      margin-top: 36px; }
+    .sideMenu .sideMenuContent .sideMenuItemSelected {
+      background-color: #ffffff;
+      border-left: 4px solid #b81d22; }
+    .sideMenu .sideMenuContent a {
+      color: #8d8d8d; }
+      .sideMenu .sideMenuContent a:hover {
+        text-decoration: none; }
