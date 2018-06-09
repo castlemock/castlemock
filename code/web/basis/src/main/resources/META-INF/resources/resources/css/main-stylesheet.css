@@ -150,14 +150,15 @@ a {
   font-family: robotoItalicFont;
   src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url("../font/roboto/Roboto-ThinItalic.ttf"); }
 .main-header {
-  width: 100%;
   background: #1696cc;
   color: #fff;
   border: 0px solid #1696cc;
   top: 0px;
   font-size: 13px;
   z-index: 1;
-  height: 60px; }
+  height: 60px;
+  min-width: 100%;
+  position: absolute; }
   .main-header .navbar-toggle {
     border: none;
     background: transparent !important;
@@ -388,10 +389,21 @@ a {
 @font-face {
   font-family: robotoItalicFont;
   src: local("Roboto ThinItalic"), local("Roboto-ThinItalic"), url("../font/roboto/Roboto-ThinItalic.ttf"); }
+html {
+  min-height: 100%;
+  min-width: 100%;
+  position: relative;
+  top: 0;
+  bottom: 0; }
+
 body {
   margin: 0px;
   font-family: robotoRegularFont;
-  color: #666666; }
+  color: #666666;
+  min-height: 100%;
+  min-width: 100%;
+  top: 0;
+  bottom: 0; }
   body h1 {
     color: #4b4b4b;
     font-size: 2em; }
@@ -422,16 +434,17 @@ body {
   width: 85%;
   height: 75%;
   margin: 0 auto;
-  padding-left: 150px;
-  absolute: relative; }
+  left: 80px;
+  position: relative; }
 
 .navigation {
-  width: 100%;
+  position: absolute;
+  top: 60px;
   left: 150px;
   right: 0px;
   height: 60px;
-  padding-left: 150px;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  z-index: 1; }
   .navigation a {
     color: #666666; }
 
@@ -469,6 +482,7 @@ body {
 
 section {
   width: 100%;
+  margin-top: 100px;
   position: relative;
   font-size: 12px;
   min-height: 100%;
@@ -602,35 +616,41 @@ select {
 
 .sideMenu {
   position: absolute;
-  overflow-x: hidden;
   background: #f5f5f5;
-  height: 100%;
   width: 150px;
   left: 0;
-  top: 60px; }
-  .sideMenu .sideMenuItem {
-    height: 80px;
-    width: 150px; }
-    .sideMenu .sideMenuItem .sideMenuItemContent {
-      align-content: center;
-      margin: auto;
-      width: 70%;
+  min-height: 100% !important;
+  top: 0;
+  bottom: 0; }
+  .sideMenu .sideMenuContent {
+    position: absolute;
+    top: 60px;
+    z-index: 1; }
+    .sideMenu .sideMenuContent .sideMenuItem {
       height: 80px;
-      padding-top: 5px; }
-      .sideMenu .sideMenuItem .sideMenuItemContent:hover {
+      width: 150px;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent; }
+      .sideMenu .sideMenuContent .sideMenuItem .sideMenuItemContent {
+        align-content: center;
+        margin: auto;
+        width: 70%;
+        height: 80px;
+        padding-top: 5px; }
+        .sideMenu .sideMenuContent .sideMenuItem .sideMenuItemContent:hover {
+          background-color: #ffffff; }
+        .sideMenu .sideMenuContent .sideMenuItem .sideMenuItemContent .sideMenuItemContentIcon {
+          font-size: 20px;
+          text-align: center; }
+        .sideMenu .sideMenuContent .sideMenuItem .sideMenuItemContent .sideMenuItemContentTitle {
+          margin-top: 5px;
+          font-size: 15px;
+          text-align: center; }
+      .sideMenu .sideMenuContent .sideMenuItem .sideMenuItemContentSelected {
+        border-bottom: none; }
+      .sideMenu .sideMenuContent .sideMenuItem:hover {
+        cursor: pointer;
         background-color: #ffffff; }
-      .sideMenu .sideMenuItem .sideMenuItemContent .sideMenuItemContentIcon {
-        font-size: 20px;
-        text-align: center; }
-      .sideMenu .sideMenuItem .sideMenuItemContent .sideMenuItemContentTitle {
-        margin-top: 5px;
-        font-size: 15px;
-        text-align: center; }
-    .sideMenu .sideMenuItem .sideMenuItemContentSelected {
-      border-bottom: none; }
-    .sideMenu .sideMenuItem:hover {
-      cursor: pointer;
-      background-color: #ffffff; }
   .sideMenu a {
     color: #8d8d8d; }
     .sideMenu a:hover {

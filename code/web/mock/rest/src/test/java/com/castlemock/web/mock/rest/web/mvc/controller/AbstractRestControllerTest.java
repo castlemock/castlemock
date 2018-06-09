@@ -48,6 +48,6 @@ public abstract class AbstractRestControllerTest extends AbstractControllerTest 
 
     protected static final String EVENT = "event";
 
-    protected static final Integer GLOBAL_VIEW_MODEL_COUNT = 7;
+    protected static final Integer GLOBAL_VIEW_MODEL_COUNT = 8;
 
 }
