@@ -18,11 +18,19 @@ package com.castlemock.web.mock.soap.service.project;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.domain.*;
-import com.castlemock.core.mock.soap.service.project.input.DeleteSoapProjectInput;
-import com.castlemock.core.mock.soap.service.project.output.DeleteSoapProjectOutput;
-import com.castlemock.web.mock.soap.model.project.*;
-import com.castlemock.web.mock.soap.repository.project.*;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.service.project.input.DeleteSoapPortsInput;
+import com.castlemock.core.mock.soap.service.project.output.DeleteSoapPortsOutput;
+import com.castlemock.web.mock.soap.model.project.SoapMockResponseGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapOperationGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
+import com.castlemock.web.mock.soap.repository.project.SoapMockResponseRepository;
+import com.castlemock.web.mock.soap.repository.project.SoapOperationRepository;
+import com.castlemock.web.mock.soap.repository.project.SoapPortRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +42,7 @@ import java.util.Arrays;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteSoapProjectServiceTest {
+public class DeleteSoapPortsServiceTest {
 
     @Spy
     private DozerBeanMapper mapper;
@@ -43,19 +51,13 @@ public class DeleteSoapProjectServiceTest {
     private SoapPortRepository portRepository;
 
     @Mock
-    private SoapProjectRepository repository;
-
-    @Mock
     private SoapOperationRepository operationRepository;
 
     @Mock
     private SoapMockResponseRepository mockResponseRepository;
 
-    @Mock
-    private SoapResourceRepository resourceRepository;
-
     @InjectMocks
-    private DeleteSoapProjectService service;
+    private DeleteSoapPortsService service;
 
     @Before
     public void setup() {
@@ -67,27 +69,17 @@ public class DeleteSoapProjectServiceTest {
         final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
         final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
         final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
-        final SoapResource soapResource = SoapResourceGenerator.generateSoapResource();
         final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
 
-        Mockito.when(portRepository.findWithProjectId(soapProject.getId())).thenReturn(Arrays.asList(soapPort));
-        Mockito.when(resourceRepository.findWithProjectId(soapProject.getId())).thenReturn(Arrays.asList(soapResource));
         Mockito.when(operationRepository.findWithPortId(soapPort.getId())).thenReturn(Arrays.asList(soapOperation));
         Mockito.when(mockResponseRepository.findWithOperationId(soapOperation.getId())).thenReturn(Arrays.asList(soapMockResponse));
 
-        final DeleteSoapProjectInput input = new DeleteSoapProjectInput(soapProject.getId());
-        final ServiceTask<DeleteSoapProjectInput> serviceTask = new ServiceTask<DeleteSoapProjectInput>(input);
-        final ServiceResult<DeleteSoapProjectOutput> serviceResult = service.process(serviceTask);
+        final DeleteSoapPortsInput input = new DeleteSoapPortsInput(soapProject.getId(), Arrays.asList(soapPort));
+        final ServiceTask<DeleteSoapPortsInput> serviceTask = new ServiceTask<DeleteSoapPortsInput>(input);
+        final ServiceResult<DeleteSoapPortsOutput> serviceResult = service.process(serviceTask);
 
-        Mockito.verify(repository, Mockito.times(1)).delete(soapProject.getId());
         Mockito.verify(portRepository, Mockito.times(1)).delete(soapPort.getId());
-        Mockito.verify(resourceRepository, Mockito.times(1)).delete(soapResource.getId());
         Mockito.verify(operationRepository, Mockito.times(1)).delete(soapOperation.getId());
         Mockito.verify(mockResponseRepository, Mockito.times(1)).delete(soapMockResponse.getId());
-
-        Mockito.verify(portRepository, Mockito.times(1)).findWithProjectId(soapProject.getId());
-        Mockito.verify(resourceRepository, Mockito.times(1)).findWithProjectId(soapProject.getId());
-        Mockito.verify(operationRepository, Mockito.times(1)).findWithPortId(soapPort.getId());
-        Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithOperationId(soapOperation.getId());
     }
 }

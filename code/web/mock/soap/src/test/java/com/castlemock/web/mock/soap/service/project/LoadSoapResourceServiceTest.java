@@ -3,19 +3,15 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
-import com.castlemock.core.mock.soap.service.project.input.DeleteSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.input.LoadSoapResourceInput;
-import com.castlemock.core.mock.soap.service.project.output.DeleteSoapProjectOutput;
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
 import com.castlemock.web.mock.soap.model.project.SoapResourceGenerator;
-import com.castlemock.web.mock.soap.repository.project.*;
+import com.castlemock.web.mock.soap.repository.project.SoapResourceRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
-
-import java.util.Arrays;
 
 public class LoadSoapResourceServiceTest {
 

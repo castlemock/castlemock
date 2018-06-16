@@ -25,13 +25,14 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
  */
 public class UpdateSoapProjectOutput implements Output {
 
-    private SoapProject updatedSoapProject;
+    private final SoapProject updatedSoapProject;
+
+    public UpdateSoapProjectOutput(SoapProject updatedSoapProject) {
+        this.updatedSoapProject = updatedSoapProject;
+    }
 
     public SoapProject getUpdatedSoapProject() {
         return updatedSoapProject;
     }
 
-    public void setUpdatedSoapProject(SoapProject updatedSoapProject) {
-        this.updatedSoapProject = updatedSoapProject;
-    }
 }

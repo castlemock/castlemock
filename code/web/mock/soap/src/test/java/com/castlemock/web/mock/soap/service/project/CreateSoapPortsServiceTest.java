@@ -21,7 +21,6 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.repository.project.SoapProjectRepository;
-import com.castlemock.web.mock.soap.service.project.CreateSoapPortsService;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Ignore;

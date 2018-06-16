@@ -44,8 +44,7 @@ public class UpdateSoapProjectService extends AbstractSoapProjectService impleme
         final String soapProjectId = input.getSoapProjectId();
         final SoapProject soapProject = input.getSoapProject();
         final SoapProject updatedSoapProject = update(soapProjectId, soapProject);
-        final UpdateSoapProjectOutput output = new UpdateSoapProjectOutput();
-        output.setUpdatedSoapProject(updatedSoapProject);
+        final UpdateSoapProjectOutput output = new UpdateSoapProjectOutput(updatedSoapProject);
         return createServiceResult(output);
     }
 }

@@ -23,7 +23,6 @@ import com.castlemock.core.mock.soap.service.project.input.UpdateSoapProjectInpu
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapProjectOutput;
 import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.repository.project.SoapProjectRepository;
-import com.castlemock.web.mock.soap.service.project.UpdateSoapProjectService;
 import junit.framework.Assert;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;

@@ -43,8 +43,7 @@ public class ReadAllSoapProjectsService extends AbstractSoapProjectService imple
     @Override
     public ServiceResult<ReadAllSoapProjectsOutput> process(final ServiceTask<ReadAllSoapProjectsInput> serviceTask) {
         final List<SoapProject> soapProjects = findAll();
-        final ReadAllSoapProjectsOutput output = new ReadAllSoapProjectsOutput();
-        output.setSoapProjects(soapProjects);
+        final ReadAllSoapProjectsOutput output = new ReadAllSoapProjectsOutput(soapProjects);
         return createServiceResult(output);
     }
 }

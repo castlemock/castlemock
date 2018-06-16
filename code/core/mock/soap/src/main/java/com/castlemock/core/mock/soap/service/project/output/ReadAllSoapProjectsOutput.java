@@ -27,13 +27,14 @@ import java.util.List;
  */
 public class ReadAllSoapProjectsOutput implements Output {
 
-    private List<SoapProject> soapProjects;
+    private final List<SoapProject> soapProjects;
+
+    public ReadAllSoapProjectsOutput(List<SoapProject> soapProjects) {
+        this.soapProjects = soapProjects;
+    }
 
     public List<SoapProject> getSoapProjects() {
         return soapProjects;
     }
 
-    public void setSoapProjects(List<SoapProject> soapProjects) {
-        this.soapProjects = soapProjects;
-    }
 }

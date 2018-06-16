@@ -16,13 +16,15 @@
 
 package com.castlemock.web.mock.soap.service.project;
 
-import com.castlemock.core.basis.model.*;
+import com.castlemock.core.basis.model.SearchQuery;
+import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.ServiceResult;
+import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.service.project.input.SearchSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.output.SearchSoapProjectOutput;
 import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.repository.project.*;
-import com.castlemock.web.mock.soap.service.project.SearchSoapProjectService;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
