@@ -1,4 +1,4 @@
-package com.castlemock.web.basis.model.user.repository;
+package com.castlemock.web.basis.repository.user;
 
 
 import com.castlemock.core.basis.model.user.domain.User;

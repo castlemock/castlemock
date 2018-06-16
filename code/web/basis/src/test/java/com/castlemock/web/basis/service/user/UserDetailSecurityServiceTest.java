@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.basis.model.user.service;
+package com.castlemock.web.basis.service.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.User;

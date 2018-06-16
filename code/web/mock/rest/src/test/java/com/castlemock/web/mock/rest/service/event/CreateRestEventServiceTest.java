@@ -16,13 +16,13 @@
 
 package com.castlemock.web.mock.rest.service.event;
 
-import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.service.event.input.CreateRestEventInput;
 import com.castlemock.core.mock.rest.service.event.output.CreateRestEventOutput;
 import com.castlemock.web.mock.rest.model.project.RestEventGenerator;
+import com.castlemock.web.mock.rest.repository.event.RestEventRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class CreateRestEventServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private Repository repository;
+    private RestEventRepository repository;
 
     @InjectMocks
     private CreateRestEventService service;
@@ -68,6 +68,27 @@ public class CreateRestEventServiceTest {
         Assert.assertEquals(restEvent.getMethodId(), returnedRestEvent.getMethodId());
         Assert.assertEquals(restEvent.getProjectId(), returnedRestEvent.getProjectId());
         Assert.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());
+    }
+
+
+    @Test
+    public void testMaxCountReached(){
+        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        Mockito.when(repository.save(Mockito.any(RestEvent.class))).thenReturn(restEvent);
+        Mockito.when(repository.count()).thenReturn(6);
+
+        final CreateRestEventInput input = new CreateRestEventInput(restEvent);
+        input.setRestEvent(restEvent);
+
+        final ServiceTask<CreateRestEventInput> serviceTask = new ServiceTask<CreateRestEventInput>(input);
+        final ServiceResult<CreateRestEventOutput> serviceResult = service.process(serviceTask);
+        final CreateRestEventOutput output = serviceResult.getOutput();
+        final RestEvent returnedSoapEvent = output.getCreatedRestEvent();
+
+        Mockito.verify(repository, Mockito.times(1)).deleteOldestEvent();
+        Mockito.verify(repository, Mockito.times(1)).save(restEvent);
+
+        Assert.assertEquals(restEvent.getProjectId(), returnedSoapEvent.getProjectId());
     }
 
 }

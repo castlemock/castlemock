@@ -45,7 +45,7 @@ public class DeleteSoapMockResponseServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private SoapMockResponseRepository repository;
+    private SoapMockResponseRepository mockResponseRepository;
 
     @InjectMocks
     private DeleteSoapMockResponseService service;
@@ -71,6 +71,6 @@ public class DeleteSoapMockResponseServiceTest {
         final ServiceResult<DeleteSoapMockResponseOutput> serviceResult = service.process(serviceTask);
         serviceResult.getOutput();
 
-        Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
+        Mockito.verify(mockResponseRepository, Mockito.times(1)).delete(Mockito.anyString());
     }
 }

@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
+import com.castlemock.core.mock.rest.service.event.input.ClearAllRestEventInput;
 import com.castlemock.core.mock.rest.service.event.input.ReadAllRestEventInput;
 import com.castlemock.core.mock.rest.service.event.input.ReadRestEventInput;
 import com.castlemock.core.mock.rest.service.event.output.ReadAllRestEventOutput;
@@ -138,5 +139,11 @@ public class RestEventServiceAdapterTest {
         final RestEvent restEvent = RestEventGenerator.generateRestEvent();
         final String generatedResourceLink = serviceAdapter.generateResourceLink(restEvent);
         Assert.assertEquals("/web/rest/project/" + restEvent.getProjectId() + "/application/" + restEvent.getApplicationId() + "/resource/" + restEvent.getResourceId() + "/method/" + restEvent.getMethodId(), generatedResourceLink);
+    }
+
+    @Test
+    public void testClearAll(){
+        serviceAdapter.clearAll();
+        Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(ClearAllRestEventInput.class));
     }
 }

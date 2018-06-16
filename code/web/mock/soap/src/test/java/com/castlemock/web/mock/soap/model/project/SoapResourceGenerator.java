@@ -14,21 +14,24 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.service.event;
+package com.castlemock.web.mock.soap.model.project;
 
-
-import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
-import com.castlemock.web.basis.service.event.AbstractEventService;
-import com.castlemock.web.mock.soap.repository.event.SoapEventRepository;
-
-import java.util.List;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
 
 /**
- * The SOAP event service is responsible for all the functionality related to the SOAP events.
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class AbstractSoapEventService extends AbstractEventService<SoapEvent, SoapEventRepository> {
+public class SoapResourceGenerator {
 
+    public static SoapResource generateSoapResource(){
+        final SoapResource soapResource = new SoapResource();
+        soapResource.setId("SOAP RESOURCE");
+        soapResource.setName("Soap resource name");
+        soapResource.setProjectId("Project id");
+        soapResource.setType(SoapResourceType.WSDL);
+        soapResource.setContent("");
+        return soapResource;
+    }
 }
-

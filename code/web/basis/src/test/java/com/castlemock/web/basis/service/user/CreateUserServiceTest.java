@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.basis.model.user.service;
+package com.castlemock.web.basis.service.user;
 
 import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
@@ -22,23 +22,20 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.input.ReadUsersByRoleInput;
-import com.castlemock.core.basis.service.user.output.ReadUsersByRoleOutput;
-import com.castlemock.web.basis.service.user.ReadUsersByRoleService;
+import com.castlemock.core.basis.service.user.input.CreateUserInput;
+import com.castlemock.core.basis.service.user.output.CreateUserOutput;
+import com.castlemock.web.basis.service.user.CreateUserService;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadUsersByRoleServiceTest {
+public class CreateUserServiceTest {
 
     @Spy
     private DozerBeanMapper mapper;
@@ -47,7 +44,7 @@ public class ReadUsersByRoleServiceTest {
     private Repository repository;
 
     @InjectMocks
-    private ReadUsersByRoleService service;
+    private CreateUserService service;
 
     @Before
     public void setup() {
@@ -56,32 +53,37 @@ public class ReadUsersByRoleServiceTest {
 
     @Test
     public void testProcess(){
-        List<User> users = new ArrayList<User>();
         User user = new User();
-        user.setId(new String());
         user.setUsername("Username");
+        user.setPassword("Password");
         user.setStatus(Status.ACTIVE);
         user.setRole(Role.ADMIN);
         user.setEmail("email@email.com");
-        users.add(user);
 
+        User createdUser = new User();
+        createdUser.setId(new String());
+        createdUser.setPassword("Password");
+        createdUser.setUsername("Username");
+        createdUser.setStatus(Status.ACTIVE);
+        createdUser.setRole(Role.ADMIN);
+        createdUser.setEmail("email@email.com");
 
-        Mockito.when(repository.findAll()).thenReturn(users);
-        final ReadUsersByRoleInput input = new ReadUsersByRoleInput(Role.ADMIN);
-        final ServiceTask<ReadUsersByRoleInput> serviceTask = new ServiceTask<ReadUsersByRoleInput>();
+        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(createdUser);
+        final CreateUserInput input = new CreateUserInput(user);
+        final ServiceTask<CreateUserInput> serviceTask = new ServiceTask<CreateUserInput>();
         serviceTask.setInput(input);
-        final ServiceResult<ReadUsersByRoleOutput> serviceResult = service.process(serviceTask);
-        final ReadUsersByRoleOutput output = serviceResult.getOutput();
+        final ServiceResult<CreateUserOutput> serviceResult = service.process(serviceTask);
+        final CreateUserOutput output = serviceResult.getOutput();
 
-        final List<User> returnedUsers = output.getUsers();
-        Assert.assertNotNull(returnedUsers);
-        Assert.assertEquals(users.size(), returnedUsers.size());
-        final User returnedUser = returnedUsers.get(0);
-        Assert.assertEquals(user.getId(), returnedUser.getId());
+        final User returnedUser = output.getSavedUser();
+        Assert.assertNotNull(returnedUser);
+        Assert.assertEquals(returnedUser.getId(), createdUser.getId());
+        Assert.assertNotEquals(user.getPassword(), returnedUser.getPassword());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
         Assert.assertEquals(user.getRole(), returnedUser.getRole());
         Assert.assertEquals(user.getStatus(), returnedUser.getStatus());
         Assert.assertEquals(user.getUsername(), returnedUser.getUsername());
+        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(User.class));
     }
 
 

@@ -16,13 +16,13 @@
 
 package com.castlemock.web.mock.soap.service.event;
 
-import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.service.event.input.CreateSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.CreateSoapEventOutput;
 import com.castlemock.web.mock.soap.model.event.SoapEventGenerator;
+import com.castlemock.web.mock.soap.repository.event.SoapEventRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class CreateSoapEventServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private Repository repository;
+    private SoapEventRepository repository;
 
     @InjectMocks
     private CreateSoapEventService service;
@@ -55,6 +55,7 @@ public class CreateSoapEventServiceTest {
     public void testProcess(){
         final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
         Mockito.when(repository.save(Mockito.any(SoapEvent.class))).thenReturn(soapEvent);
+        Mockito.when(repository.count()).thenReturn(0);
 
         final CreateSoapEventInput input = new CreateSoapEventInput(soapEvent);
         input.setSoapEvent(soapEvent);
@@ -63,6 +64,31 @@ public class CreateSoapEventServiceTest {
         final ServiceResult<CreateSoapEventOutput> serviceResult = service.process(serviceTask);
         final CreateSoapEventOutput createRestApplicationOutput = serviceResult.getOutput();
         final SoapEvent returnedSoapEvent = createRestApplicationOutput.getCreatedSoapEvent();
+
+        Mockito.verify(repository, Mockito.times(0)).deleteOldestEvent();
+        Mockito.verify(repository, Mockito.times(1)).save(soapEvent);
+
+        Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
+        Assert.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());
+        Assert.assertEquals(soapEvent.getProjectId(), returnedSoapEvent.getProjectId());
+    }
+
+    @Test
+    public void testMaxCountReached(){
+        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        Mockito.when(repository.save(Mockito.any(SoapEvent.class))).thenReturn(soapEvent);
+        Mockito.when(repository.count()).thenReturn(6);
+
+        final CreateSoapEventInput input = new CreateSoapEventInput(soapEvent);
+        input.setSoapEvent(soapEvent);
+
+        final ServiceTask<CreateSoapEventInput> serviceTask = new ServiceTask<CreateSoapEventInput>(input);
+        final ServiceResult<CreateSoapEventOutput> serviceResult = service.process(serviceTask);
+        final CreateSoapEventOutput createRestApplicationOutput = serviceResult.getOutput();
+        final SoapEvent returnedSoapEvent = createRestApplicationOutput.getCreatedSoapEvent();
+
+        Mockito.verify(repository, Mockito.times(1)).deleteOldestEvent();
+        Mockito.verify(repository, Mockito.times(1)).save(soapEvent);
 
         Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
         Assert.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());

@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
+import com.castlemock.core.mock.soap.service.event.input.ClearAllSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.input.ReadAllSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ReadAllSoapEventOutput;
@@ -136,5 +137,11 @@ public class SoapEventServiceAdapterTest {
         final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
         final String generatedResourceLink = serviceAdapter.generateResourceLink(soapEvent);
         Assert.assertEquals("/web/soap/project/" + soapEvent.getProjectId() + "/port/" + soapEvent.getPortId() + "/operation/" + soapEvent.getOperationId(), generatedResourceLink);
+    }
+
+    @Test
+    public void testClearAll(){
+        serviceAdapter.clearAll();
+        Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(ClearAllSoapEventInput.class));
     }
 }

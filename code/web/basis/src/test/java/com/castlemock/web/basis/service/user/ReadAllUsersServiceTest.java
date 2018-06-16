@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.basis.model.user.service;
+package com.castlemock.web.basis.service.user;
 
 import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
@@ -22,20 +22,23 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.input.ReadUserInput;
-import com.castlemock.core.basis.service.user.output.ReadUserOutput;
-import com.castlemock.web.basis.service.user.ReadUserService;
+import com.castlemock.core.basis.service.user.input.ReadAllUsersInput;
+import com.castlemock.core.basis.service.user.output.ReadAllUsersOutput;
+import com.castlemock.web.basis.service.user.ReadAllUsersService;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadUserServiceTest {
+public class ReadAllUsersServiceTest {
 
     @Spy
     private DozerBeanMapper mapper;
@@ -44,7 +47,7 @@ public class ReadUserServiceTest {
     private Repository repository;
 
     @InjectMocks
-    private ReadUserService service;
+    private ReadAllUsersService service;
 
     @Before
     public void setup() {
@@ -53,24 +56,26 @@ public class ReadUserServiceTest {
 
     @Test
     public void testProcess(){
+        List<User> users = new ArrayList<User>();
         User user = new User();
-        user.setId("UserId");
+        user.setId(new String());
         user.setUsername("Username");
         user.setStatus(Status.ACTIVE);
         user.setRole(Role.ADMIN);
         user.setEmail("email@email.com");
+        users.add(user);
 
 
-        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
-        final ReadUserInput input = Mockito.mock(ReadUserInput.class);
-        Mockito.when(input.getUserId()).thenReturn("UserId");
-        final ServiceTask<ReadUserInput> serviceTask = new ServiceTask<ReadUserInput>();
+        Mockito.when(repository.findAll()).thenReturn(users);
+        final ReadAllUsersInput input = Mockito.mock(ReadAllUsersInput.class);
+        final ServiceTask<ReadAllUsersInput> serviceTask = new ServiceTask<ReadAllUsersInput>();
         serviceTask.setInput(input);
-        final ServiceResult<ReadUserOutput> serviceResult = service.process(serviceTask);
-        final ReadUserOutput output = serviceResult.getOutput();
+        final ServiceResult<ReadAllUsersOutput> serviceResult = service.process(serviceTask);
+        final ReadAllUsersOutput output = serviceResult.getOutput();
 
-        final User returnedUser = output.getUser();
-        Assert.assertNotNull(returnedUser);
+        final List<User> returnedUsers = output.getUsers();
+        Assert.assertEquals(returnedUsers.size(), users.size());
+        final User returnedUser = returnedUsers.get(0);
         Assert.assertEquals(user.getId(), returnedUser.getId());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
         Assert.assertEquals(user.getRole(), returnedUser.getRole());

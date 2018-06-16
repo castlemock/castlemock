@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.basis.model.event.service;
+package com.castlemock.web.basis.service.event;
 
 import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.event.domain.Event;

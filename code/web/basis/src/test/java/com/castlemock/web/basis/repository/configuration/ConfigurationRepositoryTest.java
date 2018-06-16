@@ -1,4 +1,4 @@
-package com.castlemock.web.basis.model.configuration.repository;
+package com.castlemock.web.basis.repository.configuration;
 
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.web.basis.model.configuration.dto.ConfigurationGroupDtoGenerator;

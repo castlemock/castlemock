@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.basis.model.project.service;
+package com.castlemock.web.basis.service.project;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
