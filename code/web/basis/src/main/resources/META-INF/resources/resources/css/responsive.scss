@@ -1,10 +1,29 @@
 @media screen and (max-width: 850px) {
     .container {
         width: 100%;
+        left: 0;
 
         section {
             width: 100%;
         }
+    }
+
+    .navigation {
+        left: 0;
+    }
+
+    .stylish-input-group {
+        visibility: hidden;
+        clear: both;
+        float: left;
+        display: none;
+    }
+
+    .sideMenu {
+        visibility: hidden;
+        clear: both;
+        float: left;
+        display: none;
     }
 
     .header-nav {
@@ -47,5 +66,4 @@
             display: none;
         }
     }
-
 }

@@ -48,28 +48,31 @@
             </table>
         </div>
 
-
-        <h2 class="decorated"><span><spring:message code="graphql.graphqlenum.header.definitions"/></span></h2>
-        <c:choose>
-            <c:when test="${graphQLEnumType.definitions.size() > 0}">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover sortable">
-                        <col width="100%">
-                        <tr>
-                            <th><spring:message code="graphql.graphqlenum.column.name"/></th>
-                        </tr>
-
-                        <c:forEach items="${graphQLEnumType.definitions}" var="graphQLDefinition" varStatus="loopStatus">
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
+                <h3 class="panel-title"><spring:message code="graphql.graphqlenum.header.definitions"/></h3>
+            </div>
+            <c:choose>
+                <c:when test="${graphQLEnumType.definitions.size() > 0}">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover sortable">
+                            <col width="100%">
                             <tr>
-                                <td>${graphQLDefinition.name}</td>
+                                <th><spring:message code="graphql.graphqlenum.column.name"/></th>
                             </tr>
-                        </c:forEach>
-                    </table>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <spring:message code="graphql.graphqlenum.label.nodefinitions"/>
-            </c:otherwise>
-        </c:choose>
+
+                            <c:forEach items="${graphQLEnumType.definitions}" var="graphQLDefinition" varStatus="loopStatus">
+                                <tr>
+                                    <td>${graphQLDefinition.name}</td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="graphql.graphqlenum.label.nodefinitions"/>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </section>
 </div>

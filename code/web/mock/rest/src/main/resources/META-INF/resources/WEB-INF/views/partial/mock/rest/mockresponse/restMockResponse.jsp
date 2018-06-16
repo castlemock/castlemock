@@ -103,7 +103,7 @@
                                     <td class="column2"><input type="text" class="form-control" name="headerValue" id="headerValueInput"></td>
                                 </tr>
                             </table>
-                            <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fas fa-plus"></i>  <span><spring:message code="rest.restmockresponse.button.addheader"/></span></button>
+                            <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.restmockresponse.button.addheader"/></span></button>
                         </div>
                     </div>
 
@@ -129,7 +129,7 @@
                 </div>
             </div>
             <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                <button class="btn btn-success demo-button-disabled" type="submit" name="submit"><i class="fas fa-plus"></i>  <span><spring:message code="rest.restmockresponse.button.updateresponse"/></span></button>
+                <button class="btn btn-success demo-button-disabled" type="submit" name="submit"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.restmockresponse.button.updateresponse"/></span></button>
             </sec:authorize>
             <a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethodId}"/>" class="btn btn-danger"><i class="fas fa-times"></i> <span><spring:message code="rest.restmockresponse.button.discardchanges"/></span></a>
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

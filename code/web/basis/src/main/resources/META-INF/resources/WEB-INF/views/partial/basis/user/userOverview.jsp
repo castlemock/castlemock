@@ -57,7 +57,7 @@
                             </td>
                         </tr>
                     </table>
-                    <button class="btn btn-success demo-button-disabled" type="submit" name="submit"><i class="fas fa-plus"></i> <span><spring:message code="general.useroverview.button.createuser"/></span></button>
+                    <button class="btn btn-success demo-button-disabled" type="submit" name="submit"><i class="fas fa-plus-circle"></i> <span><spring:message code="general.useroverview.button.createuser"/></span></button>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form:form>
             </div>

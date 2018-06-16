@@ -34,8 +34,8 @@
             </div>
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/update"/>"><i class="fas fa-file"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
-                    <a class="btn btn-primary demo-button-disabled" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/create/response"/>"><i class="fas fa-plus"></i> <span><spring:message code="rest.restmethod.button.createresponse"/></span></a>
+                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/update"/>"><i class="fas fa-edit"></i> <span><spring:message code="rest.restmethod.button.update"/></span></a>
+                    <a class="btn btn-primary demo-button-disabled" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/create/response"/>"><i class="fas fa-plus-circle"></i> <span><spring:message code="rest.restmethod.button.createresponse"/></span></a>
                     <a class="btn btn-danger demo-button-disabled" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/delete"/>"><i class="fas fa-trash"></i> <span><spring:message code="rest.restmethod.button.delete"/></span></a>
                 </sec:authorize>
             </div>
@@ -77,91 +77,89 @@
             </table>
         </div>
 
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#responses"><span><spring:message code="rest.restmethod.header.mockresponses"/></a></li>
-            <li><a data-toggle="tab" href="#events"><span><spring:message code="rest.restmethod.header.events"/></a></li>
-        </ul>
 
-        <div class="tab-content">
-            <div id="responses" class="tab-pane fade in active">
-                <h2 class="decorated"><span><spring:message code="rest.restmethod.header.mockresponses"/></span></h2>
-                <c:choose>
 
-                    <c:when test="${restMethod.mockResponses.size() > 0}">
-                        <form:form action="${rest_mock_response_update_url}" method="POST"  modelAttribute="restMockResponseModifierCommand">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover sortable">
-                                    <col width="10%">
-                                    <col width="50%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <tr>
-                                        <th><spring:message code="rest.restmethod.column.selected"/></th>
-                                        <th><spring:message code="rest.restmethod.column.responsename"/></th>
-                                        <th><spring:message code="rest.restmethod.column.status"/></th>
-                                        <th><spring:message code="rest.restmethod.column.httpstatuscode"/></th>
-                                    </tr>
-                                    <c:forEach items="${restMethod.mockResponses}" var="restMockResponse" varStatus="loopStatus">
-                                        <tr>
-                                            <td><form:checkbox path="restMockResponseIds" name="${restMockResponse.id}" value="${restMockResponse.id}"/></td>
-                                            <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
-                                            <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.status}"/></td>
-                                            <td>${restMockResponse.httpStatusCode}</td>
-                                        </tr>
-                                    </c:forEach>
-                                </table>
-                            </div>
-                            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                                <form:select path="restMockResponseStatus">
-                                    <c:forEach items="${restMockResponseStatuses}" var="restMockResponseStatus">
-                                        <form:option value="${restMockResponseStatus}"><spring:message code="rest.type.restmockresponsestatus.${restMockResponseStatus}"/></form:option>
-                                    </c:forEach>
-                                </form:select>
-                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.restmethod.button.update"/></span></button>
-                                <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="duplicate"><i class="fas fa-copy"></i> <span><spring:message code="rest.restmethod.button.duplicate"/></span></button>
-                                <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="rest.restmethod.button.deletemockresponses"/></span></button>
-                            </sec:authorize>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form:form>
-                    </c:when>
-                    <c:otherwise>
-                        <spring:message code="rest.restmethod.label.noresponses"/>
-                    </c:otherwise>
-                </c:choose>
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
+                <h3 class="panel-title"><spring:message code="rest.restmethod.header.mockresponses"/></h3>
             </div>
-
-            <div id="events" class="tab-pane fade">
-                <h2 class="decorated"><span><spring:message code="rest.restmethod.header.events"/></span></h2>
-                <c:choose>
-                    <c:when test="${restEvents.size() > 0}">
+            <c:choose>
+                <c:when test="${restMethod.mockResponses.size() > 0}">
+                    <form:form action="${rest_mock_response_update_url}" method="POST"  modelAttribute="restMockResponseModifierCommand">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover sortable">
                                 <col width="10%">
-                                <col width="40%">
-                                <col width="25%">
-                                <col width="25%">
+                                <col width="50%">
+                                <col width="20%">
+                                <col width="20%">
                                 <tr>
-                                    <th><spring:message code="rest.restmethod.column.id"/></th>
-                                    <th><spring:message code="rest.restmethod.column.mockedresponse"/></th>
-                                    <th><spring:message code="rest.restmethod.column.startdate"/></th>
-                                    <th><spring:message code="rest.restmethod.column.enddate"/></th>
+                                    <th><spring:message code="rest.restmethod.column.selected"/></th>
+                                    <th><spring:message code="rest.restmethod.column.responsename"/></th>
+                                    <th><spring:message code="rest.restmethod.column.status"/></th>
+                                    <th><spring:message code="rest.restmethod.column.httpstatuscode"/></th>
                                 </tr>
-                                <c:forEach items="${restEvents}" var="event" varStatus="loopStatus">
+                                <c:forEach items="${restMethod.mockResponses}" var="restMockResponse" varStatus="loopStatus">
                                     <tr>
-                                        <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.id}</a></td>
-                                        <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.response.mockResponseName}</a></td>
-                                        <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.startDate}</a></td>
-                                        <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.endDate}</a></td>
+                                        <td><form:checkbox path="restMockResponseIds" name="${restMockResponse.id}" value="${restMockResponse.id}"/></td>
+                                        <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResourceId}/method/${restMethod.id}/response/${restMockResponse.id}"/>">${restMockResponse.name}</a></td>
+                                        <td><spring:message code="rest.type.restmockresponsestatus.${restMockResponse.status}"/></td>
+                                        <td>${restMockResponse.httpStatusCode}</td>
                                     </tr>
                                 </c:forEach>
                             </table>
                         </div>
-                    </c:when>
-                    <c:otherwise>
-                        <spring:message code="rest.restmethod.label.noevent"/>
-                    </c:otherwise>
-                </c:choose>
+                        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                            <form:select path="restMockResponseStatus">
+                                <c:forEach items="${restMockResponseStatuses}" var="restMockResponseStatus">
+                                    <form:option value="${restMockResponseStatus}"><spring:message code="rest.type.restmockresponsestatus.${restMockResponseStatus}"/></form:option>
+                                </c:forEach>
+                            </form:select>
+                            <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.restmethod.button.update"/></span></button>
+                            <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="duplicate"><i class="fas fa-copy"></i> <span><spring:message code="rest.restmethod.button.duplicate"/></span></button>
+                            <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="rest.restmethod.button.deletemockresponses"/></span></button>
+                        </sec:authorize>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form:form>
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="rest.restmethod.label.noresponses"/>
+                </c:otherwise>
+            </c:choose>
+        </div>
+
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
+                <h3 class="panel-title"><spring:message code="rest.restmethod.header.events"/></h3>
             </div>
+            <c:choose>
+                <c:when test="${restEvents.size() > 0}">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover sortable">
+                            <col width="10%">
+                            <col width="40%">
+                            <col width="25%">
+                            <col width="25%">
+                            <tr>
+                                <th><spring:message code="rest.restmethod.column.id"/></th>
+                                <th><spring:message code="rest.restmethod.column.mockedresponse"/></th>
+                                <th><spring:message code="rest.restmethod.column.startdate"/></th>
+                                <th><spring:message code="rest.restmethod.column.enddate"/></th>
+                            </tr>
+                            <c:forEach items="${restEvents}" var="event" varStatus="loopStatus">
+                                <tr>
+                                    <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.id}</a></td>
+                                    <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.response.mockResponseName}</a></td>
+                                    <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.startDate}</a></td>
+                                    <td><a href="<c:url value="/web/rest/event/${event.id}"/>">${event.endDate}</a></td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="rest.restmethod.label.noevent"/>
+                </c:otherwise>
+            </c:choose>
         </div>
     </section>
 </div>

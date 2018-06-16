@@ -32,8 +32,8 @@
             </div>
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/update"/>"><i class="fas fa-file"></i> <span><spring:message code="soap.soapoperation.button.updateoperation"/></span></a>
-                    <a class="btn btn-primary demo-button-disabled" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/create/response"/>"><i class="fas fa-plus"></i> <span><spring:message code="soap.soapoperation.button.createresponse"/></span></a>
+                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/update"/>"><i class="fas fa-edit"></i> <span><spring:message code="soap.soapoperation.button.updateoperation"/></span></a>
+                    <a class="btn btn-primary demo-button-disabled" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/create/response"/>"><i class="fas fa-plus-circle"></i> <span><spring:message code="soap.soapoperation.button.createresponse"/></span></a>
                 </sec:authorize>
             </div>
         </div>
@@ -95,92 +95,87 @@
             </table>
         </div>
 
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#responses"><span><spring:message code="soap.soapoperation.header.mockresponses"/></a></li>
-            <li><a data-toggle="tab" href="#events"><span><spring:message code="soap.soapoperation.header.events"/></a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="responses" class="tab-pane fade in active">
-                <h2 class="decorated"><span><spring:message code="soap.soapoperation.header.mockresponses"/></span></h2>
-                <c:choose>
-
-                    <c:when test="${soapOperation.mockResponses.size() > 0}">
-                        <form:form action="${soap_mock_response_update_url}" method="POST"  modelAttribute="soapMockResponseModifierCommand">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover sortable">
-                                    <col width="10%">
-                                    <col width="50%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <tr>
-                                        <th><spring:message code="soap.soapoperation.column.selected"/></th>
-                                        <th><spring:message code="soap.soapoperation.column.responsename"/></th>
-                                        <th><spring:message code="soap.soapoperation.column.status"/></th>
-                                        <th><spring:message code="soap.soapoperation.column.httpstatuscode"/></th>
-                                    </tr>
-                                    <c:forEach items="${soapOperation.mockResponses}" var="soapMockResponse" varStatus="loopStatus">
-                                        <tr>
-                                            <td><form:checkbox path="soapMockResponseIds" name="${soapMockResponse.id}" value="${soapMockResponse.id}"/></td>
-                                            <td><a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/response/${soapMockResponse.id}"/>">${soapMockResponse.name}</a></td>
-                                            <td><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponse.status}"/></td>
-                                            <td>${soapMockResponse.httpStatusCode}</td>
-                                        </tr>
-                                    </c:forEach>
-                                </table>
-                            </div>
-                            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                                <form:select path="soapMockResponseStatus">
-                                    <c:forEach items="${soapMockResponseStatuses}" var="soapMockResponseStatus">
-                                        <form:option value="${soapMockResponseStatus}"><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponseStatus}"/></form:option>
-                                    </c:forEach>
-                                </form:select>
-                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="soap.soapoperation.button.update"/></span></button>
-                                <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="duplicate"><i class="fas fa-copy"></i> <span><spring:message code="soap.soapoperation.button.duplicate"/></span></button>
-                                <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="soap.soapoperation.button.deletemockresponse"/></span></button>
-                            </sec:authorize>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form:form>
-                    </c:when>
-                    <c:otherwise>
-                        <spring:message code="soap.soapoperation.label.noresponse"/>
-                    </c:otherwise>
-                </c:choose>
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
+                <h3 class="panel-title"><spring:message code="soap.soapoperation.header.mockresponses"/></h3>
             </div>
+            <c:choose>
+                <c:when test="${soapOperation.mockResponses.size() > 0}">
+                    <form:form action="${soap_mock_response_update_url}" method="POST"  modelAttribute="soapMockResponseModifierCommand">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover sortable">
+                                <col width="0%">
+                                <col width="50%">
+                                <col width="20%">
+                                <col width="20%">
+                                <tr>
+                                    <th></th>
+                                    <th><spring:message code="soap.soapoperation.column.responsename"/></th>
+                                    <th><spring:message code="soap.soapoperation.column.status"/></th>
+                                    <th><spring:message code="soap.soapoperation.column.httpstatuscode"/></th>
+                                </tr>
+                                <c:forEach items="${soapOperation.mockResponses}" var="soapMockResponse" varStatus="loopStatus">
+                                    <tr>
+                                        <td><form:checkbox path="soapMockResponseIds" name="${soapMockResponse.id}" value="${soapMockResponse.id}"/></td>
+                                        <td><a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/operation/${soapOperation.id}/response/${soapMockResponse.id}"/>">${soapMockResponse.name}</a></td>
+                                        <td><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponse.status}"/></td>
+                                        <td>${soapMockResponse.httpStatusCode}</td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                            <form:select path="soapMockResponseStatus">
+                                <c:forEach items="${soapMockResponseStatuses}" var="soapMockResponseStatus">
+                                    <form:option value="${soapMockResponseStatus}"><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponseStatus}"/></form:option>
+                                </c:forEach>
+                            </form:select>
+                            <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="soap.soapoperation.button.update"/></span></button>
+                            <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="duplicate"><i class="fas fa-copy"></i> <span><spring:message code="soap.soapoperation.button.duplicate"/></span></button>
+                            <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="soap.soapoperation.button.deletemockresponse"/></span></button>
+                        </sec:authorize>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form:form>
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="soap.soapoperation.label.noresponse"/>
+                </c:otherwise>
+            </c:choose>
+        </div>
 
-            <div id="events" class="tab-pane fade">
-
-                <h2 class="decorated"><span><spring:message code="soap.soapoperation.header.events"/></span></h2>
-                <c:choose>
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
+                <h3 class="panel-title"><spring:message code="soap.soapoperation.header.events"/></h3>
+            </div>
+            <c:choose>
                 <c:when test="${soapEvents.size() > 0}">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover sortable">
-                        <col width="10%">
-                        <col width="40%">
-                        <col width="25%">
-                        <col width="25%">
-                        <tr>
-                            <th><spring:message code="soap.soapoperation.column.id"/></th>
-                            <th><spring:message code="soap.soapoperation.column.mockedresponse"/></th>
-                            <th><spring:message code="soap.soapoperation.column.startdate"/></th>
-                            <th><spring:message code="soap.soapoperation.column.enddate"/></th>
-                        </tr>
-                        <c:forEach items="${soapEvents}" var="event" varStatus="loopStatus">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover sortable">
+                            <col width="10%">
+                            <col width="40%">
+                            <col width="25%">
+                            <col width="25%">
                             <tr>
-                                <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.id}</a></td>
-                                <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.response.mockResponseName}</a></td>
-                                <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.startDate}</a></td>
-                                <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.endDate}</a></td>
+                                <th><spring:message code="soap.soapoperation.column.id"/></th>
+                                <th><spring:message code="soap.soapoperation.column.mockedresponse"/></th>
+                                <th><spring:message code="soap.soapoperation.column.startdate"/></th>
+                                <th><spring:message code="soap.soapoperation.column.enddate"/></th>
                             </tr>
-                        </c:forEach>
-                    </table>
-                </div>
+                            <c:forEach items="${soapEvents}" var="event" varStatus="loopStatus">
+                                <tr>
+                                    <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.id}</a></td>
+                                    <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.response.mockResponseName}</a></td>
+                                    <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.startDate}</a></td>
+                                    <td><a href="<c:url value="/web/soap/event/${event.id}"/>">${event.endDate}</a></td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
                 </c:when>
                 <c:otherwise>
                     <spring:message code="soap.soapoperation.label.noevent"/>
                 </c:otherwise>
-                </c:choose>
-            <div>
+            </c:choose>
         </div>
     </section>
 </div>

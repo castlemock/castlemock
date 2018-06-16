@@ -53,11 +53,24 @@
                                 <div class="avatar-username">
                                 </div>
                                 <div class="avatar-circle">
-                                    <i class="fas fa-user fa-2x"></i>
+                                    <div class="avatar-inner-circle">
+                                        <i class="fas fa-user fa-2x"></i>
+                                    </div>
                                 </div>
                             </a>
                         </div>
                     </li>
+
+                    <div class="headerMenu">
+                        <li><a href="${context}/web/web"><i class="fas fa-tachometer-alt fa-2x"></i> <spring:message code="general.menu.projects"/></a></li>
+                        <li><a href="${context}/web/event"><i class="fas fa-chart-bar fa-2x"></i><spring:message code="general.menu.logs"/></a></li>
+
+                        <sec:authorize access="hasAuthority('ADMIN')">
+                            <li><a href="${context}/web/user"><i class="fas fa-users-cog fa-2x"></i><spring:message code="general.menu.users"/></a></li>
+                            <li><a href="${context}/web/system"><i class="fas fas fa-cogs fa-2x"></i><spring:message code="general.menu.system"/></a></li>
+                        </sec:authorize>
+                    </div>
+
                     <li><a href="${context}/web/logout"><i class="fas fa-sign-out-alt fa-2x"></i></a></li>
                 </ul>
             </div>

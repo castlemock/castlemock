@@ -108,9 +108,25 @@ a {
 
 @media screen and (max-width: 850px) {
   .container {
-    width: 100%; }
+    width: 100%;
+    left: 0; }
     .container section {
       width: 100%; }
+
+  .navigation {
+    left: 0; }
+
+  .stylish-input-group {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none; }
+
+  .sideMenu {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none; }
 
   .header-nav {
     visibility: hidden;
@@ -232,21 +248,30 @@ a {
   .main-header .avatar-circle {
     width: 40px;
     height: 40px;
-    background-color: #1b76b9;
-    text-align: center;
+    background-color: #FFFFFF;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     margin-top: 9px;
-    margin-right: 10px; }
-    .main-header .avatar-circle .fa-2x {
-      font-size: 24px;
-      position: relative;
-      top: 10px;
-      line-height: 20px;
-      color: #fff; }
-      .main-header .avatar-circle .fa-2x:hover {
-        cursor: pointer; }
+    margin-right: 10px;
+    padding-top: 3px;
+    padding-left: 3px; }
+    .main-header .avatar-circle .avatar-inner-circle {
+      text-align: center;
+      width: 34px;
+      height: 34px;
+      background-color: #1b76b9;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%; }
+      .main-header .avatar-circle .avatar-inner-circle .fa-2x {
+        font-size: 27px;
+        position: relative;
+        top: 11px;
+        line-height: 20px;
+        color: #fff; }
+        .main-header .avatar-circle .avatar-inner-circle .fa-2x:hover {
+          cursor: pointer; }
   .main-header .search {
     border-radius: 55px 50px;
     color: #FFFFFF;
@@ -292,7 +317,19 @@ a {
     border-color: #ccc; }
   .main-header .stylish-input-group button {
     border: 0;
-    background: transparent; }
+    background: transparent;
+    margin-top: 3px; }
+  .main-header .headerMenu {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none; }
+    @media screen and (max-width: 850px) {
+      .main-header .headerMenu {
+        visibility: visible;
+        clear: none;
+        float: left;
+        display: inline; } }
 
 a {
   text-decoration: none; }
@@ -349,9 +386,25 @@ a {
 
 @media screen and (max-width: 850px) {
   .container {
-    width: 100%; }
+    width: 100%;
+    left: 0; }
     .container section {
       width: 100%; }
+
+  .navigation {
+    left: 0; }
+
+  .stylish-input-group {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none; }
+
+  .sideMenu {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none; }
 
   .header-nav {
     visibility: hidden;
@@ -437,6 +490,9 @@ body {
   margin: 0 auto;
   left: 80px;
   position: relative; }
+  @media screen and (max-width: 850px) {
+    .container {
+      left: 0; } }
 
 .navigation {
   position: absolute;
@@ -448,6 +504,10 @@ body {
   z-index: 1; }
   .navigation a {
     color: #666666; }
+  @media screen and (max-width: 850px) {
+    .navigation {
+      left: 0;
+      z-index: 0; } }
 
 .header-nav {
   font-size: 13px;
@@ -572,7 +632,7 @@ section {
     text-align: left;
     padding-top: 5px;
     padding-bottom: 4px;
-    background-color: #f0f0f0;
+    background-color: #f5f5f5;
     border-collapse: collapse;
     color: #666666;
     cursor: pointer; }
@@ -656,8 +716,19 @@ select {
       margin-top: 36px; }
     .sideMenu .sideMenuContent .sideMenuItemSelected {
       background-color: #ffffff;
-      border-left: 4px solid #b81d22; }
+      border-left: 4px solid #b81d22;
+      color: #3ca8d6; }
     .sideMenu .sideMenuContent a {
       color: #8d8d8d; }
       .sideMenu .sideMenuContent a:hover {
         text-decoration: none; }
+
+.table-panel {
+  border-color: #3ca8d6 !important; }
+
+.table-panel-heading {
+  border-color: #3ca8d6 !important;
+  background-color: #3ca8d6 !important; }
+
+.panel-buttons {
+  margin-left: 10px; }

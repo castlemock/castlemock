@@ -31,7 +31,7 @@
             </div>
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/update"/>"><i class="fas fa-file"></i> <span><spring:message code="soap.soapport.button.updateport"/></span></a>
+                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPortId}/update"/>"><i class="fas fa-edit"></i> <span><spring:message code="soap.soapport.button.updateport"/></span></a>
                     <a class="btn btn-danger demo-button-disabled" href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/delete"/>"><i class="fas fa-trash"></i> <span><spring:message code="soap.soapport.button.deleteport"/></span></a>
                 </sec:authorize>
             </div>
@@ -57,51 +57,57 @@
             </table>
         </div>
 
-        <h2 class="decorated"><span><spring:message code="soap.soapport.header.operations"/></span></h2>
-        <c:choose>
-            <c:when test="${soapPort.operations.size() > 0}">
-                <form:form action="${operation_update_url}" method="POST"  modelAttribute="soapOperationModifierCommand">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover sortable">
-                            <col width="10%">
-                            <col width="40%">
-                            <col width="15%">
-                            <col width="20%">
-                            <col width="15%">
-                            <tr>
-                                <th><spring:message code="soap.soapport.column.selected"/></th>
-                                <th><spring:message code="soap.soapport.column.name"/></th>
-                                <th><spring:message code="soap.soapport.column.method"/></th>
-                                <th><spring:message code="soap.soapport.column.responsestrategy"/></th>
-                                <th><spring:message code="soap.soapport.column.soapMockResponseStatus"/></th>
-                            </tr>
-                            <c:forEach items="${soapPort.operations}" var="soapOperation" varStatus="loopStatus">
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
+                <h3 class="panel-title"><spring:message code="soap.soapport.header.operations"/></h3>
+            </div>
+            <c:choose>
+                <c:when test="${soapPort.operations.size() > 0}">
+                    <form:form action="${operation_update_url}" method="POST"  modelAttribute="soapOperationModifierCommand">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover sortable">
+                                <col width="0%">
+                                <col width="40%">
+                                <col width="15%">
+                                <col width="20%">
+                                <col width="15%">
                                 <tr>
-                                    <td><form:checkbox path="soapOperationIds" name="${soapOperation.id}" value="${soapOperation.id}"/></td>
-                                    <td><a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/operation/${soapOperation.id}"/>">${soapOperation.name}</a></td>
-                                    <td>${soapOperation.httpMethod}</td>
-                                    <td><spring:message code="soap.type.responsestrategy.${soapOperation.responseStrategy}"/></td>
-                                    <td><spring:message code="soap.type.soapoperationstatus.${soapOperation.status}"/></td>
+                                    <th></th>
+                                    <th><spring:message code="soap.soapport.column.name"/></th>
+                                    <th><spring:message code="soap.soapport.column.method"/></th>
+                                    <th><spring:message code="soap.soapport.column.responsestrategy"/></th>
+                                    <th><spring:message code="soap.soapport.column.soapMockResponseStatus"/></th>
                                 </tr>
-                            </c:forEach>
-                        </table>
-                    </div>
-                    <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                        <form:select path="soapOperationStatus">
-                            <c:forEach items="${soapOperationStatuses}" var="operationStatus">
-                                <form:option value="${operationStatus}"><spring:message code="soap.type.soapoperationstatus.${operationStatus}"/></form:option>
-                            </c:forEach>
-                        </form:select>
-                        <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="soap.soapport.button.updatestatus"/></span></button>
-                        <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fas fa-code-branch"></i> <span><spring:message code="soap.soapport.button.updateendpoint"/></span></button>
-                    </sec:authorize>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <c:forEach items="${soapPort.operations}" var="soapOperation" varStatus="loopStatus">
+                                    <tr>
+                                        <td><form:checkbox path="soapOperationIds" name="${soapOperation.id}" value="${soapOperation.id}"/></td>
+                                        <td><a href="<c:url value="/web/soap/project/${soapProjectId}/port/${soapPort.id}/operation/${soapOperation.id}"/>">${soapOperation.name}</a></td>
+                                        <td>${soapOperation.httpMethod}</td>
+                                        <td><spring:message code="soap.type.responsestrategy.${soapOperation.responseStrategy}"/></td>
+                                        <td><spring:message code="soap.type.soapoperationstatus.${soapOperation.status}"/></td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                        <div class="panel-buttons">
+                            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                                <form:select path="soapOperationStatus">
+                                    <c:forEach items="${soapOperationStatuses}" var="operationStatus">
+                                        <form:option value="${operationStatus}"><spring:message code="soap.type.soapoperationstatus.${operationStatus}"/></form:option>
+                                    </c:forEach>
+                                </form:select>
+                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="soap.soapport.button.updatestatus"/></span></button>
+                                <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fas fa-project-diagram"></i> <span><spring:message code="soap.soapport.button.updateendpoint"/></span></button>
+                            </sec:authorize>
+                        </div>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
-                </form:form>
-            </c:when>
-            <c:otherwise>
-                <spring:message code="soap.soapport.label.nooperation"/>
-            </c:otherwise>
-        </c:choose>
+                    </form:form>
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="soap.soapport.label.nooperation"/>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </section>
 </div>

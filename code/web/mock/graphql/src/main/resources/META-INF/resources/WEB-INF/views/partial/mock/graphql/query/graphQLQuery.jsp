@@ -56,61 +56,67 @@
             </table>
         </div>
 
-        <h2 class="decorated"><span><spring:message code="graphql.graphqlquery.header.arguments"/></span></h2>
-        <c:choose>
-            <c:when test="${graphQLQuery.arguments.size() > 0}">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover sortable">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="30%">
-                        <col width="40%">
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
+                <h3 class="panel-title"><spring:message code="graphql.graphqlquery.header.arguments"/></h3>
+            </div>
+            <c:choose>
+                <c:when test="${graphQLQuery.arguments.size() > 0}">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover sortable">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="30%">
+                            <col width="40%">
 
-                        <tr>
-                            <th><spring:message code="graphql.graphqlquery.column.name"/></th>
-                            <th><spring:message code="graphql.graphqlquery.column.type"/></th>
-                            <th><spring:message code="graphql.graphqlquery.column.nullable"/></th>
-                            <th><spring:message code="graphql.graphqlquery.column.defaultvalue"/></th>
-                            <th><spring:message code="graphql.graphqlquery.column.description"/></th>
-                        </tr>
-
-                        <c:forEach items="${graphQLQuery.arguments}" var="graphQLArgument" varStatus="loopStatus">
                             <tr>
-                                <c:choose>
-                                    <c:when test="${graphQLArgument.attributeType == 'OBJECT_TYPE'}">
-                                        <td><a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLArgument.typeId}"/>">${graphQLArgument.name}</a></td>
-                                    </c:when>
-                                    <c:when test="${graphQLArgument.attributeType == 'ENUM'}">
-                                        <td><a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/enum/${graphQLArgument.typeId}"/>">${graphQLArgument.name}</a></td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td>${graphQLArgument.name}</td>
-                                    </c:otherwise>
-                                </c:choose>
-                                <td>
-                                    <spring:message code="graphql.type.attributetype.${graphQLArgument.attributeType}"/>
-                                    <c:choose>
-                                        <c:when test="${graphQLArgument.listable == true}">
-                                            []
-                                        </c:when>
-                                    </c:choose>
-                                </td>
-                                <td>${graphQLArgument.nullable}</td>
-                                <td>${graphQLArgument.defaultValue}</td>
-                                <td>${graphQLArgument.description}</td>
+                                <th><spring:message code="graphql.graphqlquery.column.name"/></th>
+                                <th><spring:message code="graphql.graphqlquery.column.type"/></th>
+                                <th><spring:message code="graphql.graphqlquery.column.nullable"/></th>
+                                <th><spring:message code="graphql.graphqlquery.column.defaultvalue"/></th>
+                                <th><spring:message code="graphql.graphqlquery.column.description"/></th>
                             </tr>
-                        </c:forEach>
-                    </table>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <spring:message code="graphql.graphqlquery.label.noarguments"/>
-            </c:otherwise>
-        </c:choose>
 
+                            <c:forEach items="${graphQLQuery.arguments}" var="graphQLArgument" varStatus="loopStatus">
+                                <tr>
+                                    <c:choose>
+                                        <c:when test="${graphQLArgument.attributeType == 'OBJECT_TYPE'}">
+                                            <td><a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLArgument.typeId}"/>">${graphQLArgument.name}</a></td>
+                                        </c:when>
+                                        <c:when test="${graphQLArgument.attributeType == 'ENUM'}">
+                                            <td><a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/enum/${graphQLArgument.typeId}"/>">${graphQLArgument.name}</a></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td>${graphQLArgument.name}</td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <td>
+                                        <spring:message code="graphql.type.attributetype.${graphQLArgument.attributeType}"/>
+                                        <c:choose>
+                                            <c:when test="${graphQLArgument.listable == true}">
+                                                []
+                                            </c:when>
+                                        </c:choose>
+                                    </td>
+                                    <td>${graphQLArgument.nullable}</td>
+                                    <td>${graphQLArgument.defaultValue}</td>
+                                    <td>${graphQLArgument.description}</td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="graphql.graphqlquery.label.noarguments"/>
+                </c:otherwise>
+            </c:choose>
+        </div>
 
-        <h2 class="decorated"><span><spring:message code="graphql.graphqlquery.header.result"/></span></h2>
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
+                <h3 class="panel-title"><spring:message code="graphql.graphqlquery.header.result"/></h3>
+            </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover sortable">
                     <col width="90%">
@@ -138,5 +144,6 @@
                     </tr>
                 </table>
             </div>
+        </div>
     </section>
 </div>

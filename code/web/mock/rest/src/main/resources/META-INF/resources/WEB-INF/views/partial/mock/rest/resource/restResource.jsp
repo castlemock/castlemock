@@ -33,8 +33,8 @@
             </div>
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/update"/>"><i class="fas fa-file"></i> <span><spring:message code="rest.restresource.button.updateresource"/></span></a>
-                    <a class="btn btn-primary demo-button-disabled" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/create/method"/>"><i class="fas fa-plus"></i> <span><spring:message code="rest.restresource.button.createmethod"/></span></a>
+                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/update"/>"><i class="fas fa-edit"></i> <span><spring:message code="rest.restresource.button.updateresource"/></span></a>
+                    <a class="btn btn-primary demo-button-disabled" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/create/method"/>"><i class="fas fa-plus-circle"></i> <span><spring:message code="rest.restresource.button.createmethod"/></span></a>
                     <a class="btn btn-danger demo-button-disabled" href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/delete"/>"><i class="fas fa-trash"></i> <span><spring:message code="rest.restresource.button.delete"/></span></a>
                 </sec:authorize>
             </div>
@@ -56,51 +56,55 @@
             </table>
         </div>
 
-        <h2 class="decorated"><span><spring:message code="rest.restresource.header.methods"/></span></h2>
-        <c:choose>
-            <c:when test="${restResource.methods.size() > 0}">
-                <form:form action="${rest_method_update_url}/" method="POST"  modelAttribute="restMethodModifierCommand">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover sortable">
-                            <col width="10%">
-                            <col width="30%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="40%">
-                            <tr>
-                                <th><spring:message code="rest.restresource.column.selected"/></th>
-                                <th><spring:message code="rest.restresource.column.methodname"/></th>
-                                <th><spring:message code="rest.restresource.column.methodmethodtype"/></th>
-                                <th><spring:message code="rest.restresource.column.methodmethodstatus"/></th>
-                                <th><spring:message code="rest.restresource.column.methodforwardedendpoint"/></th>
-                            </tr>
-                            <c:forEach items="${restResource.methods}" var="restMethod" varStatus="loopStatus">
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
+                <h3 class="panel-title"><spring:message code="rest.restresource.header.methods"/></h3>
+            </div>
+            <c:choose>
+                <c:when test="${restResource.methods.size() > 0}">
+                    <form:form action="${rest_method_update_url}/" method="POST"  modelAttribute="restMethodModifierCommand">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover sortable">
+                                <col width="10%">
+                                <col width="30%">
+                                <col width="10%">
+                                <col width="10%">
+                                <col width="40%">
                                 <tr>
-                                    <td><form:checkbox path="restMethodIds" name="${restMethod.id}" value="${restMethod.id}"/></td>
-                                    <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.name}</a></td>
-                                    <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.httpMethod}</a></td>
-                                    <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>"><spring:message code="rest.type.restmethodstatus.${restMethod.status}"/></a></td>
-                                    <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.forwardedEndpoint}</a></td>
+                                    <th><spring:message code="rest.restresource.column.selected"/></th>
+                                    <th><spring:message code="rest.restresource.column.methodname"/></th>
+                                    <th><spring:message code="rest.restresource.column.methodmethodtype"/></th>
+                                    <th><spring:message code="rest.restresource.column.methodmethodstatus"/></th>
+                                    <th><spring:message code="rest.restresource.column.methodforwardedendpoint"/></th>
                                 </tr>
-                            </c:forEach>
-                        </table>
-                    </div>
-                    <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                        <form:select path="restMethodStatus">
-                            <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
-                                <form:option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></form:option>
-                            </c:forEach>
-                        </form:select>
-                        <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.restresource.button.update"/></span></button>
-                        <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fas fa-code-branch"></i> <span><spring:message code="rest.restresource.button.updateendpoint"/></span></button>
-                    </sec:authorize>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form:form>
+                                <c:forEach items="${restResource.methods}" var="restMethod" varStatus="loopStatus">
+                                    <tr>
+                                        <td><form:checkbox path="restMethodIds" name="${restMethod.id}" value="${restMethod.id}"/></td>
+                                        <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.name}</a></td>
+                                        <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.httpMethod}</a></td>
+                                        <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>"><spring:message code="rest.type.restmethodstatus.${restMethod.status}"/></a></td>
+                                        <td><a href="<c:url value="/web/rest/project/${restProjectId}/application/${restApplicationId}/resource/${restResource.id}/method/${restMethod.id}"/>">${restMethod.forwardedEndpoint}</a></td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                            <form:select path="restMethodStatus">
+                                <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
+                                    <form:option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></form:option>
+                                </c:forEach>
+                            </form:select>
+                            <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.restresource.button.update"/></span></button>
+                            <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fas fa-project-diagram"></i> <span><spring:message code="rest.restresource.button.updateendpoint"/></span></button>
+                        </sec:authorize>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form:form>
 
-            </c:when>
-            <c:otherwise>
-                <spring:message code="rest.restresource.label.nomethods"/>
-            </c:otherwise>
-        </c:choose>
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="rest.restresource.label.nomethods"/>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </section>
 </div>

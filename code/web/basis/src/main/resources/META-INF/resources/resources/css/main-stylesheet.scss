@@ -72,6 +72,10 @@ body {
     margin: 0 auto;
     left: 80px;
     position: relative;
+
+    @media screen and (max-width: 850px) {
+        left: 0;
+    }
 }
 
 .navigation {
@@ -85,6 +89,11 @@ body {
 
     a {
         color: #666666;
+    }
+
+    @media screen and (max-width: 850px) {
+        left: 0;
+        z-index: 0;
     }
 }
 
@@ -281,7 +290,7 @@ section{
         text-align: left;
         padding-top: 5px;
         padding-bottom: 4px;
-        background-color: #f0f0f0;
+        background-color: #f5f5f5;
         border-collapse: collapse;
         color: #666666;
         cursor: pointer;
@@ -419,6 +428,7 @@ select {
         .sideMenuItemSelected {
             background-color: #ffffff;
             border-left: 4px solid #b81d22;
+            color: #3ca8d6;
         }
 
 
@@ -430,4 +440,17 @@ select {
             }
         }
     }
+}
+
+.table-panel {
+    border-color: #3ca8d6 !important;
+}
+
+.table-panel-heading {
+    border-color: #3ca8d6 !important;
+    background-color: #3ca8d6 !important;
+}
+
+.panel-buttons {
+    margin-left: 10px;
 }

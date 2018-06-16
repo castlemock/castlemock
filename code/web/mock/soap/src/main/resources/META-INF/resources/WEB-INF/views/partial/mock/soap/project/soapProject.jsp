@@ -47,7 +47,7 @@
             </div>
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/soap/project/${soapProject.id}/update"/>"><i class="fas fa-file"></i> <span><spring:message code="soap.soapproject.button.updateproject"/></span></a>
+                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/soap/project/${soapProject.id}/update"/>"><i class="fas fa-edit"></i> <span><spring:message code="soap.soapproject.button.updateproject"/></span></a>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle demo-button-disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-upload"></i> <span><spring:message code="soap.soapproject.button.upload"/> <span class="caret"></span>
@@ -78,23 +78,19 @@
             </table>
         </div>
 
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#ports"><span><spring:message code="soap.soapproject.header.ports"/></a></li>
-            <li><a data-toggle="tab" href="#resources"><span><spring:message code="soap.soapproject.header.resources"/></a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="ports" class="tab-pane fade in active">
-                <h2 class="decorated"><span><spring:message code="soap.soapproject.header.ports"/></span></h2>
+            <div class="panel panel-primary table-panel">
+                <div class="panel-heading table-panel-heading">
+                    <h3 class="panel-title"><spring:message code="soap.soapproject.header.ports"/></h3>
+                </div>
                 <c:choose>
                     <c:when test="${soapProject.ports.size() > 0}">
                         <form:form action="${soap_port_update_url}/" method="POST"  modelAttribute="soapPortModifierCommand">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover sortable">
-                                    <col width="10%">
+                                    <col width="5%">
                                     <col width="40%">
                                     <tr>
-                                        <th><spring:message code="soap.soapproject.column.selected"/></th>
+                                        <th></th>
                                         <th><spring:message code="soap.soapproject.column.port"/></th>
                                         <c:forEach items="${soapOperationStatuses}" var="soapOperationStatus">
                                             <th><spring:message code="soap.type.soapoperationstatus.${soapOperationStatus}"/></th>
@@ -111,16 +107,18 @@
                                     </c:forEach>
                                 </table>
                             </div>
-                            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                                <form:select path="soapPortStatus">
-                                    <c:forEach items="${soapOperationStatuses}" var="soapOperationStatus">
-                                        <form:option value="${soapOperationStatus}"><spring:message code="soap.type.soapoperationstatus.${soapOperationStatus}"/></form:option>
-                                    </c:forEach>
-                                </form:select>
-                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="soap.soapproject.button.update"/></span></button>
-                                <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fas fa-code-branch"></i> <span><spring:message code="soap.soapproject.button.updateendpoint"/></span></button>
-                                <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="soap.soapproject.button.deleteport"/></span></button>
-                            </sec:authorize>
+                            <div class="panel-buttons">
+                                <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                                    <form:select path="soapPortStatus">
+                                        <c:forEach items="${soapOperationStatuses}" var="soapOperationStatus">
+                                            <form:option value="${soapOperationStatus}"><spring:message code="soap.type.soapoperationstatus.${soapOperationStatus}"/></form:option>
+                                        </c:forEach>
+                                    </form:select>
+                                    <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="soap.soapproject.button.update"/></span></button>
+                                    <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fas fa-project-diagram"></i> <span><spring:message code="soap.soapproject.button.updateendpoint"/></span></button>
+                                    <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="soap.soapproject.button.deleteport"/></span></button>
+                                </sec:authorize>
+                            </div>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form:form>
 
@@ -131,13 +129,15 @@
                 </c:choose>
             </div>
 
-            <div id="resources" class="tab-pane fade">
-                <h2 class="decorated"><span><spring:message code="soap.soapproject.header.resources"/></span></h2>
+            <div class="panel panel-primary table-panel">
+                <div class="panel-heading table-panel-heading">
+                    <h3 class="panel-title"><spring:message code="soap.soapproject.header.resources"/></h3>
+                </div>
                 <c:choose>
                     <c:when test="${soapProject.resources.size() > 0}">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover sortable">
-                                <col width="10%">
+                                <col width="0%">
                                 <col width="90%">
                                 <tr>
                                     <th><spring:message code="soap.soapproject.column.type"/></th>

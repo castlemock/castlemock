@@ -33,7 +33,7 @@
             </div>
             <div class="menu" align="right">
                 <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLObjectType.id}/update"/>"><i class="fas fa-file"></i> <span><spring:message code="graphql.graphqlobject.button.updateobject"/></span></a>
+                    <a class="btn btn-success demo-button-disabled" href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLObjectType.id}/update"/>"><i class="fas fa-edit"></i> <span><spring:message code="graphql.graphqlobject.button.updateobject"/></span></a>
                 </sec:authorize>
             </div>
         </div>
@@ -50,65 +50,69 @@
             </table>
         </div>
 
-        <h2 class="decorated"><span><spring:message code="graphql.graphqlobject.header.attributes"/></span></h2>
-        <c:choose>
-            <c:when test="${graphQLObjectType.attributes.size() > 0}">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover sortable">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="30%">
-                        <col width="40%">
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
+                <h3 class="panel-title"><spring:message code="graphql.graphqlobject.header.attributes"/></h3>
+            </div>
+            <c:choose>
+                <c:when test="${graphQLObjectType.attributes.size() > 0}">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover sortable">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="30%">
+                            <col width="40%">
 
-                        <tr>
-                            <th><spring:message code="graphql.graphqlobject.column.name"/></th>
-                            <th><spring:message code="graphql.graphqlobject.column.type"/></th>
-                            <th><spring:message code="graphql.graphqlobject.column.nullable"/></th>
-                            <th><spring:message code="graphql.graphqlobject.column.description"/></th>
-                            <th><spring:message code="graphql.graphqlobject.column.value"/></th>
-                        </tr>
-
-                        <c:forEach items="${graphQLObjectType.attributes}" var="graphQLAttribute" varStatus="loopStatus">
                             <tr>
-                                <td>${graphQLAttribute.name}</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${graphQLAttribute.attributeType == 'OBJECT_TYPE'}">
-                                            <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLAttribute.typeId}"/>">${graphQLAttribute.typeName}</a>
-                                        </c:when>
-                                        <c:when test="${graphQLAttribute.attributeType == 'ENUM'}">
-                                            <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/enum/${graphQLAttribute.typeId}"/>">${graphQLAttribute.typeName}</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <spring:message code="graphql.type.attributetype.${graphQLAttribute.attributeType}"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <c:choose>
-                                        <c:when test="${graphQLAttribute.listable == true}">[ ]</c:when>
-                                    </c:choose>
-                                </td>
-                                <td>${graphQLAttribute.nullable}</td>
-                                <td>${graphQLAttribute.description}</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${graphQLAttribute.attributeType == 'OBJECT_TYPE'}">
-                                        </c:when>
-                                        <c:when test="${graphQLAttribute.attributeType == 'ENUM'}">
-                                        </c:when>
-                                        <c:otherwise>
-                                            ${graphQLAttribute.value}
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
+                                <th><spring:message code="graphql.graphqlobject.column.name"/></th>
+                                <th><spring:message code="graphql.graphqlobject.column.type"/></th>
+                                <th><spring:message code="graphql.graphqlobject.column.nullable"/></th>
+                                <th><spring:message code="graphql.graphqlobject.column.description"/></th>
+                                <th><spring:message code="graphql.graphqlobject.column.value"/></th>
                             </tr>
-                        </c:forEach>
-                    </table>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <spring:message code="graphql.graphqlobject.label.noattributes"/>
-            </c:otherwise>
-        </c:choose>
+
+                            <c:forEach items="${graphQLObjectType.attributes}" var="graphQLAttribute" varStatus="loopStatus">
+                                <tr>
+                                    <td>${graphQLAttribute.name}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${graphQLAttribute.attributeType == 'OBJECT_TYPE'}">
+                                                <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/object/${graphQLAttribute.typeId}"/>">${graphQLAttribute.typeName}</a>
+                                            </c:when>
+                                            <c:when test="${graphQLAttribute.attributeType == 'ENUM'}">
+                                                <a href="<c:url value="/web/graphql/project/${graphQLProjectId}/application/${graphQLApplicationId}/enum/${graphQLAttribute.typeId}"/>">${graphQLAttribute.typeName}</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <spring:message code="graphql.type.attributetype.${graphQLAttribute.attributeType}"/>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <c:choose>
+                                            <c:when test="${graphQLAttribute.listable == true}">[ ]</c:when>
+                                        </c:choose>
+                                    </td>
+                                    <td>${graphQLAttribute.nullable}</td>
+                                    <td>${graphQLAttribute.description}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${graphQLAttribute.attributeType == 'OBJECT_TYPE'}">
+                                            </c:when>
+                                            <c:when test="${graphQLAttribute.attributeType == 'ENUM'}">
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${graphQLAttribute.value}
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="graphql.graphqlobject.label.noattributes"/>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </section>
 </div>

@@ -149,23 +149,34 @@
   .avatar-circle {
     width: 40px;
     height: 40px;
-    background-color: #1b76b9;
-    text-align: center;
+    background-color: #FFFFFF;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     margin-top: 9px;
     margin-right: 10px;
+    padding-top: 3px;
+    padding-left: 3px;
 
-    .fa-2x {
-      font-size: 24px;
-      position: relative;
-      top: 10px;
-      line-height: 20px;
-      color: #fff;
+    .avatar-inner-circle{
+      text-align: center;
+      width: 34px;
+      height: 34px;
+      background-color: #1b76b9;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
 
-      &:hover {
-        cursor: pointer;
+      .fa-2x {
+        font-size: 27px;
+        position: relative;
+        top: 11px;
+        line-height: 20px;
+        color: #fff;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }
@@ -229,5 +240,21 @@
   .stylish-input-group button{
     border:0;
     background:transparent;
+    margin-top: 3px;
   }
+
+  .headerMenu {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    display: none;
+
+    @media screen and (max-width: 850px) {
+      visibility: visible;
+      clear: none;
+      float: left;
+      display: inline;
+    }
+  }
+
 }
