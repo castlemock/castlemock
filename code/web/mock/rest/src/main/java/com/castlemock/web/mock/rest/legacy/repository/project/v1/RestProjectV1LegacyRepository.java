@@ -23,7 +23,7 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.web.basis.model.AbstractLegacyRepositoryImpl;
-import com.castlemock.web.mock.rest.model.project.repository.*;
+import com.castlemock.web.mock.rest.repository.project.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
