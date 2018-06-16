@@ -93,7 +93,7 @@
                                 <col width="20%">
                                 <col width="20%">
                                 <tr>
-                                    <th><spring:message code="rest.restmethod.column.selected"/></th>
+                                    <th></th>
                                     <th><spring:message code="rest.restmethod.column.responsename"/></th>
                                     <th><spring:message code="rest.restmethod.column.status"/></th>
                                     <th><spring:message code="rest.restmethod.column.httpstatuscode"/></th>

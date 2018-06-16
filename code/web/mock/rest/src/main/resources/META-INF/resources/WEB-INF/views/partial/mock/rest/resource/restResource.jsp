@@ -71,7 +71,7 @@
                                 <col width="10%">
                                 <col width="40%">
                                 <tr>
-                                    <th><spring:message code="rest.restresource.column.selected"/></th>
+                                    <th></th>
                                     <th><spring:message code="rest.restresource.column.methodname"/></th>
                                     <th><spring:message code="rest.restresource.column.methodmethodtype"/></th>
                                     <th><spring:message code="rest.restresource.column.methodmethodstatus"/></th>

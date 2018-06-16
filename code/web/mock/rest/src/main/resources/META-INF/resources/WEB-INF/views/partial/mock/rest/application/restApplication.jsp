@@ -61,7 +61,7 @@
                                 <col width="20%">
                                 <col width="30%">
                                 <tr>
-                                    <th><spring:message code="rest.restapplication.column.selected"/></th>
+                                    <th></th>
                                     <th><spring:message code="rest.restapplication.column.resource"/></th>
                                     <th><spring:message code="rest.restapplication.column.uri"/></th>
                                     <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
