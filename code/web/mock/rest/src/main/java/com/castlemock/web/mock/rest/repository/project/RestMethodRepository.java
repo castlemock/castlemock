@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.repository.project;
 
-import com.castlemock.core.basis.model.Repository;
+import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 
 import java.util.List;

@@ -18,8 +18,8 @@ package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.basis.model.*;
 import com.castlemock.core.mock.rest.model.project.domain.*;
-import com.castlemock.core.mock.rest.model.project.service.message.input.SearchRestProjectInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.SearchRestProjectOutput;
+import com.castlemock.core.mock.rest.service.project.input.SearchRestProjectInput;
+import com.castlemock.core.mock.rest.service.project.output.SearchRestProjectOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

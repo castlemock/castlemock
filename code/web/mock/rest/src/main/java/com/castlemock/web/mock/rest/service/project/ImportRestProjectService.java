@@ -22,8 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.utility.serializer.ExportContainerSerializer;
 import com.castlemock.core.mock.rest.model.RestExportContainer;
 import com.castlemock.core.mock.rest.model.project.domain.*;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestProjectInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ImportRestProjectOutput;
+import com.castlemock.core.mock.rest.service.project.input.ImportRestProjectInput;
+import com.castlemock.core.mock.rest.service.project.output.ImportRestProjectOutput;
 import com.castlemock.web.mock.rest.legacy.repository.project.v1.RestProjectV1LegacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

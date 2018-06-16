@@ -23,8 +23,8 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperation;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.IdentifyGraphQLOperationInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.IdentifyGraphQLOperationOutput;
+import com.castlemock.core.mock.graphql.service.project.input.IdentifyGraphQLOperationInput;
+import com.castlemock.core.mock.graphql.service.project.output.IdentifyGraphQLOperationOutput;
 
 import java.util.List;
 import java.util.Map;

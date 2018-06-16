@@ -16,10 +16,10 @@
 
 package com.castlemock.web.mock.soap.web.view.controller.mockresponse;
 
-import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapMockResponseInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapMockResponsesInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
+import com.castlemock.core.mock.soap.service.project.input.DeleteSoapMockResponseInput;
+import com.castlemock.core.mock.soap.service.project.input.DeleteSoapMockResponsesInput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapMockResponseInput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
 import com.castlemock.web.mock.soap.web.view.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

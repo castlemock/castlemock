@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumType;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLEnumTypeInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLEnumTypeOutput;
+import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLEnumTypeInput;
+import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLEnumTypeOutput;
 
 
 /**

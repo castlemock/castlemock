@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
 import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;

@@ -18,8 +18,8 @@ package com.castlemock.web.mock.soap.web.view.controller.event;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
-import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventInput;
-import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventOutput;
+import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
+import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
 import com.castlemock.web.mock.soap.model.event.SoapEventGenerator;

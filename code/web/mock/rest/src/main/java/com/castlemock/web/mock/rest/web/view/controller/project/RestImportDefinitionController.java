@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.web.view.controller.project;
 
 import com.castlemock.core.mock.rest.model.RestDefinitionType;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestDefinitionInput;
+import com.castlemock.core.mock.rest.service.project.input.ImportRestDefinitionInput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.rest.web.view.command.project.RestDefinitionFileUploadForm;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;

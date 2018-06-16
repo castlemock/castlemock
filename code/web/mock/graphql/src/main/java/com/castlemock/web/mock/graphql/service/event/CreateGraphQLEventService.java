@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
-import com.castlemock.core.mock.graphql.model.event.service.message.input.CreateGraphQLEventInput;
-import com.castlemock.core.mock.graphql.model.event.service.message.output.CreateGraphQLEventOutput;
+import com.castlemock.core.mock.graphql.service.event.input.CreateGraphQLEventInput;
+import com.castlemock.core.mock.graphql.service.event.output.CreateGraphQLEventOutput;
 import org.springframework.beans.factory.annotation.Value;
 
 public class CreateGraphQLEventService extends AbstractGraphQLEventService implements Service<CreateGraphQLEventInput, CreateGraphQLEventOutput> {

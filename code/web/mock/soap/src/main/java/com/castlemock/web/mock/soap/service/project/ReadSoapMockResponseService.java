@@ -4,8 +4,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapMockResponseInput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
 
 /**
  * @author Karl Dahlgren

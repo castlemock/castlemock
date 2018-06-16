@@ -22,8 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.utility.serializer.ExportContainerSerializer;
 import com.castlemock.core.mock.graphql.model.GraphQLExportContainer;
 import com.castlemock.core.mock.graphql.model.project.domain.*;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ExportGraphQLProjectInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.ExportGraphQLProjectOutput;
+import com.castlemock.core.mock.graphql.service.project.input.ExportGraphQLProjectInput;
+import com.castlemock.core.mock.graphql.service.project.output.ExportGraphQLProjectOutput;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -16,8 +16,8 @@
 
 package com.castlemock.web.mock.graphql.web.view.controller.enumtype;
 
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLEnumTypeInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLEnumTypeOutput;
+import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLEnumTypeInput;
+import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLEnumTypeOutput;
 import com.castlemock.web.mock.graphql.web.view.controller.AbstractGraphQLViewController;
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;

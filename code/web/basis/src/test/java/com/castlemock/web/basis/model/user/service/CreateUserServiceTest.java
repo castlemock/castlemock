@@ -16,14 +16,15 @@
 
 package com.castlemock.web.basis.model.user.service;
 
-import com.castlemock.core.basis.model.Repository;
+import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.service.message.input.CreateUserInput;
-import com.castlemock.core.basis.model.user.service.message.output.CreateUserOutput;
+import com.castlemock.core.basis.service.user.input.CreateUserInput;
+import com.castlemock.core.basis.service.user.output.CreateUserOutput;
+import com.castlemock.web.basis.service.user.CreateUserService;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;

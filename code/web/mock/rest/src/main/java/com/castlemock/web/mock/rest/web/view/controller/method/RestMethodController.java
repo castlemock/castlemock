@@ -16,16 +16,16 @@
 
 package com.castlemock.web.mock.rest.web.view.controller.method;
 
-import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
-import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
+import com.castlemock.core.mock.rest.service.event.input.ReadRestEventWithMethodIdInput;
+import com.castlemock.core.mock.rest.service.event.output.ReadRestEventWithMethodIdOutput;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
-import com.castlemock.core.mock.rest.model.project.service.message.input.*;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
+import com.castlemock.core.mock.rest.service.project.input.*;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestMockResponseOutput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestResourceOutput;
 import com.castlemock.web.mock.rest.web.view.command.mockresponse.DeleteRestMockResponsesCommand;
 import com.castlemock.web.mock.rest.web.view.command.mockresponse.RestMockResponseModifierCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;

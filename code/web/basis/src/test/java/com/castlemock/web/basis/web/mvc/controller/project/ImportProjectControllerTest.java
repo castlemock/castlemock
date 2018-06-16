@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.mvc.controller.project;
 
-import com.castlemock.core.basis.model.project.service.ProjectServiceFacade;
+import com.castlemock.core.basis.service.project.ProjectServiceFacade;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.mvc.controller.AbstractControllerTest;

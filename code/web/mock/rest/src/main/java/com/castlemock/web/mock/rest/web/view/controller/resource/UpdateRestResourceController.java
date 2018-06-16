@@ -17,10 +17,10 @@
 package com.castlemock.web.mock.rest.web.view.controller.resource;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourceInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesForwardedEndpointInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestResourceInput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestResourceInput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestResourcesForwardedEndpointInput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestResourceOutput;
 import com.castlemock.web.mock.rest.web.view.command.resource.UpdateRestResourcesEndpointCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
 import com.google.common.base.Preconditions;

@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
-import com.castlemock.core.mock.rest.model.event.service.message.input.ReadAllRestEventInput;
-import com.castlemock.core.mock.rest.model.event.service.message.output.ReadAllRestEventOutput;
+import com.castlemock.core.mock.rest.service.event.input.ReadAllRestEventInput;
+import com.castlemock.core.mock.rest.service.event.output.ReadAllRestEventOutput;
 
 import java.util.List;
 

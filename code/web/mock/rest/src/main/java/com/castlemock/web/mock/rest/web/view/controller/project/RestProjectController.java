@@ -18,11 +18,11 @@ package com.castlemock.web.mock.rest.web.view.controller.project;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsStatusInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestApplicationInput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestProjectInput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationsStatusInput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestApplicationOutput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestProjectOutput;
 import com.castlemock.web.mock.rest.web.view.command.application.DeleteRestApplicationsCommand;
 import com.castlemock.web.mock.rest.web.view.command.application.RestApplicationModifierCommand;
 import com.castlemock.web.mock.rest.web.view.command.application.UpdateRestApplicationsEndpointCommand;

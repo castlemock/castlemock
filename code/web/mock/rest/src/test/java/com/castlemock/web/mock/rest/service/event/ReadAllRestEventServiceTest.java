@@ -16,14 +16,13 @@
 
 package com.castlemock.web.mock.rest.service.event;
 
-import com.castlemock.core.basis.model.Repository;
+import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
-import com.castlemock.core.mock.rest.model.event.service.message.input.ReadAllRestEventInput;
-import com.castlemock.core.mock.rest.model.event.service.message.output.ReadAllRestEventOutput;
+import com.castlemock.core.mock.rest.service.event.input.ReadAllRestEventInput;
+import com.castlemock.core.mock.rest.service.event.output.ReadAllRestEventOutput;
 import com.castlemock.web.mock.rest.model.project.RestEventGenerator;
-import com.castlemock.web.mock.rest.service.event.ReadAllRestEventService;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;

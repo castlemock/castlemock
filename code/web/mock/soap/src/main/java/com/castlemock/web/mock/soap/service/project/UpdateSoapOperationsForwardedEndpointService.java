@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsForwardedEndpointInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapOperationsForwardedEndpointOutput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsForwardedEndpointInput;
+import com.castlemock.core.mock.soap.service.project.output.UpdateSoapOperationsForwardedEndpointOutput;
 
 /**
  * @author Karl Dahlgren

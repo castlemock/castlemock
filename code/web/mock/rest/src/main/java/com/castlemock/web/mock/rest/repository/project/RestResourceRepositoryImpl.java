@@ -23,7 +23,7 @@ import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
-import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.repository.RepositoryImpl;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

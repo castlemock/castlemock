@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.soap.web.view.controller.mockresponse;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapMockResponseInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapMockResponseInput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;

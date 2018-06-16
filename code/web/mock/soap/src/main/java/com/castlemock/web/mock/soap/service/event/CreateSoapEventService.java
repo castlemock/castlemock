@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
-import com.castlemock.core.mock.soap.model.event.service.message.input.CreateSoapEventInput;
-import com.castlemock.core.mock.soap.model.event.service.message.output.CreateSoapEventOutput;
+import com.castlemock.core.mock.soap.service.event.input.CreateSoapEventInput;
+import com.castlemock.core.mock.soap.service.event.output.CreateSoapEventOutput;
 import org.springframework.beans.factory.annotation.Value;
 
 /**

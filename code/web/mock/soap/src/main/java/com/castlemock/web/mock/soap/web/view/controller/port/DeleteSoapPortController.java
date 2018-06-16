@@ -16,10 +16,10 @@
 
 package com.castlemock.web.mock.soap.web.view.controller.port;
 
-import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapPortInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapPortsInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
+import com.castlemock.core.mock.soap.service.project.input.DeleteSoapPortInput;
+import com.castlemock.core.mock.soap.service.project.input.DeleteSoapPortsInput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapPortInput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.web.mock.soap.web.view.command.port.DeleteSoapPortsCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

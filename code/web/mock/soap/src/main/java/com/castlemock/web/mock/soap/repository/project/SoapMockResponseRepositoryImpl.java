@@ -26,7 +26,7 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.repository.RepositoryImpl;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

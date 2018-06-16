@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapMockResponseOutput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapMockResponseInput;
+import com.castlemock.core.mock.soap.service.project.output.UpdateSoapMockResponseOutput;
 
 /**
  * The service provides functionality to update a specific SOAP mock response.

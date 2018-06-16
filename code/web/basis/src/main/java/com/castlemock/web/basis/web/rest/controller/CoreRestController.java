@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.rest.controller;
 
 import com.castlemock.core.basis.model.project.domain.Project;
-import com.castlemock.core.basis.model.project.service.ProjectServiceFacade;
+import com.castlemock.core.basis.service.project.ProjectServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
 import io.swagger.annotations.*;
 import org.apache.log4j.Logger;

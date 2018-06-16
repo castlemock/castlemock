@@ -18,9 +18,9 @@ package com.castlemock.web.mock.rest.web.view.controller.mockresponse;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
-import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestMockResponseInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
+import com.castlemock.core.mock.rest.service.project.input.CreateRestMockResponseInput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;

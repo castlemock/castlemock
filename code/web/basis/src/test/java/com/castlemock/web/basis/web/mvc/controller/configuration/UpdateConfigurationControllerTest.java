@@ -18,8 +18,8 @@ package com.castlemock.web.basis.web.mvc.controller.configuration;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.core.basis.model.configuration.service.message.input.UpdateAllConfigurationGroupsInput;
-import com.castlemock.core.basis.model.configuration.service.message.output.ReadAllConfigurationGroupsOutput;
+import com.castlemock.core.basis.service.configuration.input.UpdateAllConfigurationGroupsInput;
+import com.castlemock.core.basis.service.configuration.output.ReadAllConfigurationGroupsOutput;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.web.mvc.command.configuration.ConfigurationUpdateCommand;
 import com.castlemock.web.basis.web.AbstractController;

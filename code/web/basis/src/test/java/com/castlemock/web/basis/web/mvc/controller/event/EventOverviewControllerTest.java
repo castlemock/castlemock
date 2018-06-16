@@ -19,7 +19,7 @@ package com.castlemock.web.basis.web.mvc.controller.event;
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.model.event.dto.EventDtoGenerator;
-import com.castlemock.web.basis.model.event.service.EventServiceFacadeImpl;
+import com.castlemock.web.basis.service.event.EventServiceFacadeImpl;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.mvc.controller.AbstractControllerTest;
 import org.junit.Test;

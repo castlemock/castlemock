@@ -22,8 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.utility.serializer.ExportContainerSerializer;
 import com.castlemock.core.mock.rest.model.RestExportContainer;
 import com.castlemock.core.mock.rest.model.project.domain.*;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ExportRestProjectInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ExportRestProjectOutput;
+import com.castlemock.core.mock.rest.service.project.input.ExportRestProjectInput;
+import com.castlemock.core.mock.rest.service.project.output.ExportRestProjectOutput;
 import java.util.ArrayList;
 import java.util.List;
 

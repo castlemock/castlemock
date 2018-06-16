@@ -16,16 +16,16 @@
 
 package com.castlemock.web.mock.soap.web.view.controller.operation;
 
-import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
-import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
+import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventsByOperationIdInput;
+import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventsByOperationIdOutput;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.service.message.input.*;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapMockResponseOutput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
+import com.castlemock.core.mock.soap.service.project.input.*;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.web.mock.soap.web.view.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.castlemock.web.mock.soap.web.view.command.mockresponse.SoapMockResponseModifierCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;

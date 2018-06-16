@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.service.message.input.CreateSoapProjectInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.CreateSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.input.CreateSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.output.CreateSoapProjectOutput;
 
 /**
  * @author Karl Dahlgren

@@ -2,6 +2,7 @@ package com.castlemock.web.basis.model.configuration.repository;
 
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.web.basis.model.configuration.dto.ConfigurationGroupDtoGenerator;
+import com.castlemock.web.basis.repository.configuration.ConfigurationRepositoryImpl;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;

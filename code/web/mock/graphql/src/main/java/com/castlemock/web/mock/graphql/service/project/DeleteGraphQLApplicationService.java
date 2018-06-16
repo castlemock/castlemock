@@ -19,8 +19,8 @@ package com.castlemock.web.mock.graphql.service.project;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.DeleteGraphQLApplicationInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.DeleteGraphQLApplicationOutput;
+import com.castlemock.core.mock.graphql.service.project.input.DeleteGraphQLApplicationInput;
+import com.castlemock.core.mock.graphql.service.project.output.DeleteGraphQLApplicationOutput;
 
 /**
  * @author Karl Dahlgren

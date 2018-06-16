@@ -18,8 +18,8 @@ package com.castlemock.web.mock.soap.web.rest.controller;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ImportSoapResourceInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ImportSoapResourceOutput;
+import com.castlemock.core.mock.soap.service.project.input.ImportSoapResourceInput;
+import com.castlemock.core.mock.soap.service.project.output.ImportSoapResourceOutput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import io.swagger.annotations.*;

@@ -17,7 +17,7 @@
 package com.castlemock.war.config;
 
 import com.castlemock.core.basis.model.LegacyRepository;
-import com.castlemock.core.basis.model.Repository;
+import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.model.session.token.repository.SessionTokenRepository;

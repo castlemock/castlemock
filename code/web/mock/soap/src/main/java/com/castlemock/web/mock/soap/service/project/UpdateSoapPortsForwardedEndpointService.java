@@ -21,8 +21,8 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsForwardedEndpointInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapPortsForwardedEndpointOutput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsForwardedEndpointInput;
+import com.castlemock.core.mock.soap.service.project.output.UpdateSoapPortsForwardedEndpointOutput;
 
 import java.util.List;
 

@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.rest.web.view.controller.application;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
-import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestApplicationInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestApplicationOutput;
+import com.castlemock.core.mock.rest.service.project.input.CreateRestApplicationInput;
+import com.castlemock.core.mock.rest.service.project.output.CreateRestApplicationOutput;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;

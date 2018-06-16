@@ -18,8 +18,8 @@ package com.castlemock.web.basis.web.mvc.controller.user;
 
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.service.message.input.ReadAllUsersInput;
-import com.castlemock.core.basis.model.user.service.message.output.ReadAllUsersOutput;
+import com.castlemock.core.basis.service.user.input.ReadAllUsersInput;
+import com.castlemock.core.basis.service.user.output.ReadAllUsersOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import org.springframework.context.annotation.Scope;

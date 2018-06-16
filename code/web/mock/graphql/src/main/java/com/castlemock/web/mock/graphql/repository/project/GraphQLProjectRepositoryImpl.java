@@ -24,7 +24,7 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeTyp
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestArgument;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestField;
-import com.castlemock.web.basis.model.project.repository.AbstractProjectFileRepository;
+import com.castlemock.web.basis.repository.project.AbstractProjectFileRepository;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.dozer.Mapping;

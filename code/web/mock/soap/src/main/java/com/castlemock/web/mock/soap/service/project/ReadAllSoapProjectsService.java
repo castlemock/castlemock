@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadAllSoapProjectsInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadAllSoapProjectsOutput;
+import com.castlemock.core.mock.soap.service.project.input.ReadAllSoapProjectsInput;
+import com.castlemock.core.mock.soap.service.project.output.ReadAllSoapProjectsOutput;
 
 import java.util.List;
 

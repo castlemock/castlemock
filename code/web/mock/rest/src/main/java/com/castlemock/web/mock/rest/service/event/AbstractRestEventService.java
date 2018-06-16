@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.service.event;
 
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
-import com.castlemock.web.basis.model.event.service.AbstractEventService;
+import com.castlemock.web.basis.service.event.AbstractEventService;
 import com.castlemock.web.mock.rest.repository.event.RestEventRepository;
 import org.springframework.stereotype.Service;
 

@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.mvc.controller.project;
 
 import com.castlemock.core.basis.model.project.domain.Project;
-import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
+import com.castlemock.web.basis.service.project.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.command.project.CreateProjectCommand;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import org.dozer.DozerBeanMapper;

@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.graphql.repository.project;
 
-import com.castlemock.core.basis.model.Repository;
+import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttribute;
 
 import java.util.List;

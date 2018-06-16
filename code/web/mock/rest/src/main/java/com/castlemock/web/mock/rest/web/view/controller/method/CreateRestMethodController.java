@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.rest.web.view.controller.method;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestMethodInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestMethodOutput;
+import com.castlemock.core.mock.rest.service.project.input.CreateRestMethodInput;
+import com.castlemock.core.mock.rest.service.project.output.CreateRestMethodOutput;
 import com.castlemock.web.mock.rest.web.view.command.method.CreateRestMethodCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

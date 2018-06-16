@@ -18,11 +18,11 @@ package com.castlemock.web.mock.rest.web.view.controller.mockresponse;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.rest.model.project.domain.*;
-import com.castlemock.core.mock.rest.model.project.service.message.input.DeleteRestMockResponseInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.DeleteRestMockResponsesInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMockResponseInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.DeleteRestMockResponsesOutput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMockResponseOutput;
+import com.castlemock.core.mock.rest.service.project.input.DeleteRestMockResponseInput;
+import com.castlemock.core.mock.rest.service.project.input.DeleteRestMockResponsesInput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestMockResponseInput;
+import com.castlemock.core.mock.rest.service.project.output.DeleteRestMockResponsesOutput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestMockResponseOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.model.project.*;

@@ -18,7 +18,7 @@ package com.castlemock.web.basis.web.mvc.controller.project;
 
 import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.model.project.service.ProjectServiceFacadeImpl;
+import com.castlemock.web.basis.service.project.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.command.project.DeleteProjectsCommand;
 import com.castlemock.web.basis.web.mvc.command.project.ProjectModifierCommand;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;

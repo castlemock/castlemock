@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestMockResponseOutput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestMockResponseInput;
+import com.castlemock.core.mock.rest.service.project.output.UpdateRestMockResponseOutput;
 
 /**
  * The service provides the functionality to update an already existing REST mock response.

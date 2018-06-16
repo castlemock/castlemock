@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.graphql.web.view.controller.project;
 
 import com.castlemock.core.mock.graphql.model.GraphQLDefinitionType;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ImportGraphQLDefinitionInput;
+import com.castlemock.core.mock.graphql.service.project.input.ImportGraphQLDefinitionInput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.graphql.web.view.command.project.GraphQLDefinitionFileUploadForm;
 import com.castlemock.web.mock.graphql.web.view.controller.AbstractGraphQLViewController;

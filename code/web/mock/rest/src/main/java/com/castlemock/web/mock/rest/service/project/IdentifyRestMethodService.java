@@ -23,8 +23,8 @@ import com.castlemock.core.basis.utility.compare.UrlUtility;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
-import com.castlemock.core.mock.rest.model.project.service.message.input.IdentifyRestMethodInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
+import com.castlemock.core.mock.rest.service.project.input.IdentifyRestMethodInput;
+import com.castlemock.core.mock.rest.service.project.output.IdentifyRestMethodOutput;
 
 import java.util.List;
 import java.util.Map;

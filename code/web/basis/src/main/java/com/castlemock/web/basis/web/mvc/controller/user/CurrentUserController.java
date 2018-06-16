@@ -17,8 +17,8 @@
 package com.castlemock.web.basis.web.mvc.controller.user;
 
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
-import com.castlemock.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
+import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
+import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import org.springframework.context.annotation.Scope;

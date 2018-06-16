@@ -21,8 +21,8 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ImportSoapResourceInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ImportSoapResourceOutput;
+import com.castlemock.core.mock.soap.service.project.input.ImportSoapResourceInput;
+import com.castlemock.core.mock.soap.service.project.output.ImportSoapResourceOutput;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;

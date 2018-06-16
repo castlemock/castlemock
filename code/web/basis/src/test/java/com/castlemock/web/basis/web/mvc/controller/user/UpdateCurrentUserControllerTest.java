@@ -18,13 +18,13 @@ package com.castlemock.web.basis.web.mvc.controller.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.service.message.input.ReadUserByUsernameInput;
-import com.castlemock.core.basis.model.user.service.message.input.UpdateCurrentUserInput;
-import com.castlemock.core.basis.model.user.service.message.output.ReadUserByUsernameOutput;
-import com.castlemock.core.basis.model.user.service.message.output.UpdateCurrentUserOutput;
+import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
+import com.castlemock.core.basis.service.user.input.UpdateCurrentUserInput;
+import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
+import com.castlemock.core.basis.service.user.output.UpdateCurrentUserOutput;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.model.user.dto.UserDtoGenerator;
-import com.castlemock.web.basis.model.user.service.UserDetailSecurityService;
+import com.castlemock.web.basis.service.user.UserDetailSecurityService;
 import com.castlemock.web.basis.web.mvc.command.user.UpdateCurrentUserCommand;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.mvc.controller.AbstractControllerTest;

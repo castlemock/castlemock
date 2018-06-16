@@ -16,8 +16,8 @@
 
 package com.castlemock.web.mock.rest.web.view.controller.event;
 
-import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventInput;
-import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventOutput;
+import com.castlemock.core.mock.rest.service.event.input.ReadRestEventInput;
+import com.castlemock.core.mock.rest.service.event.output.ReadRestEventOutput;
 import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
 import org.springframework.context.annotation.Scope;

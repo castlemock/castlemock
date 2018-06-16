@@ -22,8 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestApplicationInput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestApplicationOutput;
 
 import java.util.List;
 import java.util.Map;

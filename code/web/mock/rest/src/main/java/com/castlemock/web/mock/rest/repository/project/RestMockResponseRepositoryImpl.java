@@ -25,7 +25,7 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
-import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.repository.RepositoryImpl;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

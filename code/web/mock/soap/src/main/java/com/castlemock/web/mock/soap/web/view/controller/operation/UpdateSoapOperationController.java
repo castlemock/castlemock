@@ -18,10 +18,10 @@ package com.castlemock.web.mock.soap.web.view.controller.operation;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsForwardedEndpointInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapOperationInput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationInput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsForwardedEndpointInput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
 import com.castlemock.web.mock.soap.web.view.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
 import com.google.common.base.Preconditions;

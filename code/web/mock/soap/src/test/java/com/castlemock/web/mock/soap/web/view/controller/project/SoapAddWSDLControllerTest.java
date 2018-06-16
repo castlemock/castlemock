@@ -18,8 +18,8 @@ package com.castlemock.web.mock.soap.web.view.controller.project;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;

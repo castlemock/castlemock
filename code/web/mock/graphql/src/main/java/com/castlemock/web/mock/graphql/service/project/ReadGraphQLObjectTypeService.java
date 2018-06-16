@@ -21,8 +21,8 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttribute;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLObjectTypeInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLObjectTypeOutput;
+import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLObjectTypeInput;
+import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLObjectTypeOutput;
 
 import java.util.List;
 

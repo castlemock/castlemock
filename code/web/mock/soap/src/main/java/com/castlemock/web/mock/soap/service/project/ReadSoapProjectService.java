@@ -24,8 +24,8 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapProjectInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
 import com.google.common.base.Preconditions;
 
 import java.util.HashMap;

@@ -19,8 +19,8 @@ package com.castlemock.web.mock.rest.service.project;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.service.message.input.DeleteRestApplicationInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.DeleteRestApplicationOutput;
+import com.castlemock.core.mock.rest.service.project.input.DeleteRestApplicationInput;
+import com.castlemock.core.mock.rest.service.project.output.DeleteRestApplicationOutput;
 
 /**
  * @author Karl Dahlgren

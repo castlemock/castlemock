@@ -18,8 +18,8 @@ package com.castlemock.web.mock.rest.web.view.controller.project;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestProjectInput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestProjectOutput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;

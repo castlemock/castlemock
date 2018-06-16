@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.web.view.controller.mockresponse;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapMockResponseInput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapMockResponseInput;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;

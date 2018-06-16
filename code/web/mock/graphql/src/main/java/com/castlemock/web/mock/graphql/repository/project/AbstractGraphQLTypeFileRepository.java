@@ -1,7 +1,7 @@
 package com.castlemock.web.mock.graphql.repository.project;
 
 import com.castlemock.core.basis.model.Saveable;
-import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.repository.RepositoryImpl;
 import org.dozer.Mapping;
 
 import javax.xml.bind.annotation.XmlElement;

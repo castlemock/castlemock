@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.view.controller.project;
 
-import com.castlemock.core.mock.soap.model.project.service.message.input.CreateSoapPortsInput;
+import com.castlemock.core.mock.soap.service.project.input.CreateSoapPortsInput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.soap.web.view.command.project.WSDLFileUploadForm;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;

@@ -17,10 +17,10 @@
 package com.castlemock.web.mock.soap.web.view.controller.resource;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
-import com.castlemock.core.mock.soap.model.project.service.message.input.LoadSoapResourceInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapResourceInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSoapResourceOutput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapResourceOutput;
+import com.castlemock.core.mock.soap.service.project.input.LoadSoapResourceInput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapResourceInput;
+import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapResourceOutput;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;

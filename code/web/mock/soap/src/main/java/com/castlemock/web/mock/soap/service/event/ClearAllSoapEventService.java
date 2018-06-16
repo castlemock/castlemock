@@ -19,8 +19,8 @@ package com.castlemock.web.mock.soap.service.event;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.event.service.message.input.ClearAllSoapEventInput;
-import com.castlemock.core.mock.soap.model.event.service.message.output.ClearAllSoapEventOutput;
+import com.castlemock.core.mock.soap.service.event.input.ClearAllSoapEventInput;
+import com.castlemock.core.mock.soap.service.event.output.ClearAllSoapEventOutput;
 
 /**
  * The service provides the functionality to retrieve all stored SOAP events in the SOAP event repository.

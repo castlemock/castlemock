@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestApplicationInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestApplicationOutput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationInput;
+import com.castlemock.core.mock.rest.service.project.output.UpdateRestApplicationOutput;
 
 /**
  * @author Karl Dahlgren

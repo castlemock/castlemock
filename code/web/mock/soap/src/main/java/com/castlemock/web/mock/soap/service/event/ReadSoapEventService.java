@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
-import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventInput;
-import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventOutput;
+import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
+import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventOutput;
 
 /**
  * The service provides the functionality to retrieve a specific SOAP event from the repository.

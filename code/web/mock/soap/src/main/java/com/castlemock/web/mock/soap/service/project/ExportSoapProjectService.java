@@ -22,8 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.utility.serializer.ExportContainerSerializer;
 import com.castlemock.core.mock.soap.model.SoapExportContainer;
 import com.castlemock.core.mock.soap.model.project.domain.*;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ExportSoapProjectInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ExportSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.input.ExportSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.output.ExportSoapProjectOutput;
 
 import java.util.ArrayList;
 import java.util.List;

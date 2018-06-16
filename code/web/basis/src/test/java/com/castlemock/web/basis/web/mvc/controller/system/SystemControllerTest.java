@@ -18,8 +18,8 @@ package com.castlemock.web.basis.web.mvc.controller.system;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.system.service.dto.SystemInformationDto;
-import com.castlemock.core.basis.model.system.service.message.input.GetSystemInformationInput;
-import com.castlemock.core.basis.model.system.service.message.output.GetSystemInformationOutput;
+import com.castlemock.core.basis.service.system.input.GetSystemInformationInput;
+import com.castlemock.core.basis.service.system.output.GetSystemInformationOutput;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.mvc.controller.AbstractControllerTest;

@@ -16,14 +16,13 @@
 
 package com.castlemock.web.mock.soap.service.project;
 
-import com.castlemock.core.basis.model.Repository;
+import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.service.message.input.DeleteSoapProjectInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.DeleteSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.input.DeleteSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.output.DeleteSoapProjectOutput;
 import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
-import com.castlemock.web.mock.soap.service.project.DeleteSoapProjectService;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Ignore;

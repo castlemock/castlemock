@@ -22,8 +22,8 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
-import com.castlemock.core.mock.rest.model.project.service.message.input.CreateRestMethodInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.CreateRestMethodOutput;
+import com.castlemock.core.mock.rest.service.project.input.CreateRestMethodInput;
+import com.castlemock.core.mock.rest.service.project.output.CreateRestMethodOutput;
 
 /**
  * @author Karl Dahlgren

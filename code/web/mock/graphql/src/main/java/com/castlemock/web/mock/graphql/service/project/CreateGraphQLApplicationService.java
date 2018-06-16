@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.CreateGraphQLApplicationInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.CreateGraphQLApplicationOutput;
+import com.castlemock.core.mock.graphql.service.project.input.CreateGraphQLApplicationInput;
+import com.castlemock.core.mock.graphql.service.project.output.CreateGraphQLApplicationOutput;
 
 /**
  * @author Karl Dahlgren

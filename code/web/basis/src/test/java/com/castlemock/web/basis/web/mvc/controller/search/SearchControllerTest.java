@@ -18,7 +18,7 @@ package com.castlemock.web.basis.web.mvc.controller.search;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.basis.model.project.service.ProjectServiceFacade;
+import com.castlemock.core.basis.service.project.ProjectServiceFacade;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.web.mvc.command.search.SearchCommand;
 import com.castlemock.web.basis.web.AbstractController;

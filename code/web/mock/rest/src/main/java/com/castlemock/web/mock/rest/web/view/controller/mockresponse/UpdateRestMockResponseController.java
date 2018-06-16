@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.web.view.controller.mockresponse;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMockResponseInput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestMockResponseInput;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;

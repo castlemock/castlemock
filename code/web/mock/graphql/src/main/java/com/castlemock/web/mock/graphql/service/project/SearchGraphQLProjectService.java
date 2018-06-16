@@ -18,8 +18,8 @@ package com.castlemock.web.mock.graphql.service.project;
 
 import com.castlemock.core.basis.model.*;
 import com.castlemock.core.mock.graphql.model.project.domain.*;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.SearchGraphQLProjectInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.SearchGraphQLProjectOutput;
+import com.castlemock.core.mock.graphql.service.project.input.SearchGraphQLProjectInput;
+import com.castlemock.core.mock.graphql.service.project.output.SearchGraphQLProjectOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

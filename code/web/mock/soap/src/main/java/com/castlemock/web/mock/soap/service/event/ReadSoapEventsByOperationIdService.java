@@ -21,8 +21,8 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.event.domain.EventStartDateComparator;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
-import com.castlemock.core.mock.soap.model.event.service.message.input.ReadSoapEventsByOperationIdInput;
-import com.castlemock.core.mock.soap.model.event.service.message.output.ReadSoapEventsByOperationIdOutput;
+import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventsByOperationIdInput;
+import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventsByOperationIdOutput;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 
 import java.util.Collections;

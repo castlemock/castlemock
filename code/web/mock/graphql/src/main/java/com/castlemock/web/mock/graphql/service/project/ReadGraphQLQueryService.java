@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLQuery;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLQueryInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLQueryOutput;
+import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLQueryInput;
+import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLQueryOutput;
 
 
 /**

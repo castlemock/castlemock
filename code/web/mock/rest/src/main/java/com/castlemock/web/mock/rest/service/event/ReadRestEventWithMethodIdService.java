@@ -21,8 +21,8 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.event.domain.EventStartDateComparator;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
-import com.castlemock.core.mock.rest.model.event.service.message.input.ReadRestEventWithMethodIdInput;
-import com.castlemock.core.mock.rest.model.event.service.message.output.ReadRestEventWithMethodIdOutput;
+import com.castlemock.core.mock.rest.service.event.input.ReadRestEventWithMethodIdInput;
+import com.castlemock.core.mock.rest.service.event.output.ReadRestEventWithMethodIdOutput;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 
 import java.util.Collections;

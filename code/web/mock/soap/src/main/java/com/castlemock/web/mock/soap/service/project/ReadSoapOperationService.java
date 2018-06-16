@@ -21,8 +21,8 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapOperationInput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
 import org.apache.log4j.Logger;
 
 import java.util.List;

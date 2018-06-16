@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.mvc.controller.event;
 
 import com.castlemock.core.basis.model.event.domain.Event;
-import com.castlemock.web.basis.model.event.service.EventServiceFacadeImpl;
+import com.castlemock.web.basis.service.event.EventServiceFacadeImpl;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import com.castlemock.web.basis.web.mvc.controller.MenuItem;
 import org.springframework.beans.factory.annotation.Autowired;

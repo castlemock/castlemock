@@ -18,9 +18,9 @@ package com.castlemock.web.mock.graphql.web.view.controller.application;
 
 
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLApplicationInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.UpdateGraphQLApplicationInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLApplicationOutput;
+import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLApplicationInput;
+import com.castlemock.core.mock.graphql.service.project.input.UpdateGraphQLApplicationInput;
+import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLApplicationOutput;
 import com.castlemock.web.mock.graphql.web.view.controller.AbstractGraphQLViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -3,6 +3,7 @@ package com.castlemock.web.basis.model.user.repository;
 
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.web.basis.model.user.dto.UserDtoGenerator;
+import com.castlemock.web.basis.repository.user.UserRepositoryImpl;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;

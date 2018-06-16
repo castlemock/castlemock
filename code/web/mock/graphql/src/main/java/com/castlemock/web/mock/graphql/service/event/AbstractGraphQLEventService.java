@@ -18,7 +18,7 @@ package com.castlemock.web.mock.graphql.service.event;
 
 
 import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
-import com.castlemock.web.basis.model.event.service.AbstractEventService;
+import com.castlemock.web.basis.service.event.AbstractEventService;
 import com.castlemock.web.mock.graphql.repository.event.GraphQLEventRepository;
 
 /**

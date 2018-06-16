@@ -19,8 +19,8 @@ package com.castlemock.web.mock.rest.service.event;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.event.service.message.input.ClearAllRestEventInput;
-import com.castlemock.core.mock.rest.model.event.service.message.output.ClearAllRestEventOutput;
+import com.castlemock.core.mock.rest.service.event.input.ClearAllRestEventInput;
+import com.castlemock.core.mock.rest.service.event.output.ClearAllRestEventOutput;
 
 /**
  * @author Karl Dahlgren

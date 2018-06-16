@@ -23,7 +23,7 @@ import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLArgument;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttribute;
-import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.repository.RepositoryImpl;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

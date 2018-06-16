@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.graphql.web.view.controller.application;
 
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLApplicationInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLApplicationOutput;
+import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLApplicationInput;
+import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLApplicationOutput;
 import com.castlemock.web.mock.graphql.web.view.command.project.GraphQLMutationModifierCommand;
 import com.castlemock.web.mock.graphql.web.view.command.project.GraphQLQueryModifierCommand;
 import com.castlemock.web.mock.graphql.web.view.command.project.GraphQLSubscriptionModifierCommand;

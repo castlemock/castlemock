@@ -23,8 +23,8 @@ import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ImportRestDefinitionInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ImportRestDefinitionOutput;
+import com.castlemock.core.mock.rest.service.project.input.ImportRestDefinitionInput;
+import com.castlemock.core.mock.rest.service.project.output.ImportRestDefinitionOutput;
 import com.castlemock.web.mock.rest.converter.RestDefinitionConverter;
 import com.castlemock.web.mock.rest.converter.RestDefinitionConverterFactory;
 

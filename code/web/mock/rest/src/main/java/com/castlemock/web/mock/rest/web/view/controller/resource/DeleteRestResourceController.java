@@ -16,10 +16,10 @@
 
 package com.castlemock.web.mock.rest.web.view.controller.resource;
 
-import com.castlemock.core.mock.rest.model.project.service.message.input.DeleteRestResourceInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.DeleteRestResourcesInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
+import com.castlemock.core.mock.rest.service.project.input.DeleteRestResourceInput;
+import com.castlemock.core.mock.rest.service.project.input.DeleteRestResourcesInput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestResourceInput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestResourceOutput;
 import com.castlemock.web.mock.rest.web.view.command.resource.DeleteRestResourcesCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

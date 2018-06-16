@@ -24,8 +24,8 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
-import com.castlemock.core.mock.rest.model.project.service.message.input.IdentifyRestMethodInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.IdentifyRestMethodOutput;
+import com.castlemock.core.mock.rest.service.project.input.IdentifyRestMethodInput;
+import com.castlemock.core.mock.rest.service.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.web.AbstractControllerTest;
 import com.castlemock.web.mock.rest.web.mock.controller.RestServiceController;

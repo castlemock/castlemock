@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.mvc.controller.user;
 
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.service.message.input.CreateUserInput;
+import com.castlemock.core.basis.service.user.input.CreateUserInput;
 import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;

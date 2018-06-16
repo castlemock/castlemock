@@ -24,7 +24,7 @@ import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
-import com.castlemock.web.basis.model.RepositoryImpl;
+import com.castlemock.web.basis.repository.RepositoryImpl;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;

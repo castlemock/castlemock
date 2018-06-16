@@ -16,8 +16,8 @@
 
 package com.castlemock.web.mock.graphql.web.view.controller.objecttype;
 
-import com.castlemock.core.mock.graphql.model.project.service.message.input.ReadGraphQLObjectTypeInput;
-import com.castlemock.core.mock.graphql.model.project.service.message.output.ReadGraphQLObjectTypeOutput;
+import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLObjectTypeInput;
+import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLObjectTypeOutput;
 import com.castlemock.web.mock.graphql.web.view.controller.AbstractGraphQLViewController;
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;

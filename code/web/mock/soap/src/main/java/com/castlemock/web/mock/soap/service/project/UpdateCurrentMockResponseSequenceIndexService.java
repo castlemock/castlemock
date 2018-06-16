@@ -19,8 +19,8 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateCurrentMockResponseSequenceIndexInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateCurrentMockResponseSequenceIndexOutput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateCurrentMockResponseSequenceIndexInput;
+import com.castlemock.core.mock.soap.service.project.output.UpdateCurrentMockResponseSequenceIndexOutput;
 
 /**
  * @author Karl Dahlgren

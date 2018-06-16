@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.graphql.repository.event;
 
-import com.castlemock.core.basis.model.Repository;
+import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
 
 public interface GraphQLEventRepository extends Repository<GraphQLEvent, String> {

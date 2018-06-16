@@ -20,8 +20,8 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
-import com.castlemock.core.mock.rest.model.event.service.message.input.CreateRestEventInput;
-import com.castlemock.core.mock.rest.model.event.service.message.output.CreateRestEventOutput;
+import com.castlemock.core.mock.rest.service.event.input.CreateRestEventInput;
+import com.castlemock.core.mock.rest.service.event.output.CreateRestEventOutput;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
