@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.service.project.test;
+package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
@@ -25,7 +25,6 @@ import com.castlemock.core.mock.rest.service.project.input.SearchRestProjectInpu
 import com.castlemock.core.mock.rest.service.project.output.SearchRestProjectOutput;
 import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.web.mock.rest.repository.project.*;
-import com.castlemock.web.mock.rest.service.project.SearchRestProjectService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;

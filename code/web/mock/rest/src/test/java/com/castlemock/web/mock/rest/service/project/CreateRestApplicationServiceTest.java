@@ -14,25 +14,22 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.service.project.test;
+package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.output.CreateRestApplicationOutput;
 import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.web.mock.rest.repository.project.RestProjectRepository;
-import com.castlemock.web.mock.rest.service.project.CreateRestApplicationService;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.web.mock.rest.repository.project.RestApplicationRepository;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.*;
-
-import java.util.ArrayList;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 /**
  * @author Karl Dahlgren
@@ -40,11 +37,8 @@ import java.util.ArrayList;
  */
 public class CreateRestApplicationServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
-
     @Mock
-    private RestProjectRepository repository;
+    private RestApplicationRepository applicationRepository;
 
     @InjectMocks
     private CreateRestApplicationService service;
@@ -55,24 +49,18 @@ public class CreateRestApplicationServiceTest {
     }
 
     @Test
-    @Ignore
     public void testProcess(){
-        final RestProject restProject = new RestProject();
-        restProject.setApplications(new ArrayList<RestApplication>());
-        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(restProject);
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        restApplication.setId(null);
-        //Mockito.when(repository.saveRestApplication(Mockito.anyString(), Mockito.any(RestApplication.class))).thenReturn(restApplication);
+        final String projectId = "ProjectId";
+        final RestApplication application = RestApplicationGenerator.generateRestApplication();
+        Mockito.when(applicationRepository.save(Mockito.any(RestApplication.class))).thenReturn(application);
 
-        final CreateRestApplicationInput input = new CreateRestApplicationInput("ProjectId", restApplication);
-
+        final CreateRestApplicationInput input = new CreateRestApplicationInput(projectId, application);
         final ServiceTask<CreateRestApplicationInput> serviceTask = new ServiceTask<CreateRestApplicationInput>(input);
         final ServiceResult<CreateRestApplicationOutput> serviceResult = service.process(serviceTask);
-        final CreateRestApplicationOutput createRestApplicationOutput = serviceResult.getOutput();
-        final RestApplication returnedRestApplication = createRestApplicationOutput.getSavedRestApplication();
 
-        Assert.assertEquals(restApplication.getName(), returnedRestApplication.getName());
-        Assert.assertEquals(restApplication.getResources(), returnedRestApplication.getResources());
+        Assert.assertNotNull(serviceResult.getOutput());
+        Assert.assertEquals(application, serviceResult.getOutput().getSavedRestApplication());
+        Mockito.verify(applicationRepository, Mockito.times(1)).save(application);
     }
 
 }

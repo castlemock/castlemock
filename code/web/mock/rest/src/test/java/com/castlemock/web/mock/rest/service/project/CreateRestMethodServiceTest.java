@@ -14,30 +14,25 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.service.project.test;
+package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
-import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
-import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.output.CreateRestMethodOutput;
 import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
 import com.castlemock.web.mock.rest.model.project.RestMethodGenerator;
 import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.web.mock.rest.model.project.RestResourceGenerator;
-import com.castlemock.web.mock.rest.repository.project.RestProjectRepository;
-import com.castlemock.web.mock.rest.service.project.CreateRestMethodService;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.web.mock.rest.repository.project.RestMethodRepository;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 /**
  * @author Karl Dahlgren
@@ -45,11 +40,8 @@ import org.mockito.*;
  */
 public class CreateRestMethodServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
-
     @Mock
-    private RestProjectRepository repository;
+    private RestMethodRepository methodRepository;
 
     @InjectMocks
     private CreateRestMethodService service;
@@ -64,10 +56,9 @@ public class CreateRestMethodServiceTest {
     }
 
     @Test
-    @Ignore
     public void testProcess(){
         final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
-        //Mockito.when(repository.saveRestMethod(Mockito.anyString(),Mockito.anyString(),Mockito.anyString(),Mockito.any(RestMethod.class))).thenReturn(restMethod);
+        Mockito.when(methodRepository.save(Mockito.any(RestMethod.class))).thenReturn(restMethod);
 
         final CreateRestMethodInput input = new CreateRestMethodInput(restProject.getId(), restApplication.getId(), restResource.getId(), restMethod);
         final ServiceTask<CreateRestMethodInput> serviceTask = new ServiceTask<CreateRestMethodInput>(input);
@@ -85,12 +76,10 @@ public class CreateRestMethodServiceTest {
     }
 
     @Test
-    @Ignore
     public void testProcessWithoutStatus(){
         final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
         restMethod.setStatus(null);
-        //Mockito.when(repository.saveRestMethod(Mockito.anyString(),Mockito.anyString(),Mockito.anyString(),Mockito.any(RestMethod.class))).thenReturn(restMethod);
-
+        Mockito.when(methodRepository.save(Mockito.any(RestMethod.class))).thenReturn(restMethod);
 
         final CreateRestMethodInput input = new CreateRestMethodInput(restProject.getId(), restApplication.getId(), restResource.getId(), restMethod);
         final ServiceTask<CreateRestMethodInput> serviceTask = new ServiceTask<CreateRestMethodInput>(input);
@@ -108,11 +97,10 @@ public class CreateRestMethodServiceTest {
     }
 
     @Test
-    @Ignore
     public void testProcessWithoutResponseStrategy(){
         final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
         restMethod.setResponseStrategy(null);
-        //Mockito.when(repository.saveRestMethod(Mockito.anyString(),Mockito.anyString(),Mockito.anyString(),Mockito.any(RestMethod.class))).thenReturn(restMethod);
+        Mockito.when(methodRepository.save(Mockito.any(RestMethod.class))).thenReturn(restMethod);
 
         final CreateRestMethodInput input = new CreateRestMethodInput(restProject.getId(), restApplication.getId(), restResource.getId(), restMethod);
         final ServiceTask<CreateRestMethodInput> serviceTask = new ServiceTask<CreateRestMethodInput>(input);

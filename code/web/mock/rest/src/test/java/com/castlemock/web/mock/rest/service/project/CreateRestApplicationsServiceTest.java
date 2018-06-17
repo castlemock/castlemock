@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.service.project.test;
+package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
 import com.castlemock.web.mock.rest.repository.project.RestProjectRepository;
-import com.castlemock.web.mock.rest.service.project.ImportRestDefinitionService;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Ignore;

@@ -143,7 +143,7 @@ public class SoapProjectServiceAdapterTest {
     }
 
     @Test
-    public void testImportroject(){
+    public void testImportProject(){
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
         final String importedProject = "Imported project";
         final ImportSoapProjectOutput output = new ImportSoapProjectOutput(project);
