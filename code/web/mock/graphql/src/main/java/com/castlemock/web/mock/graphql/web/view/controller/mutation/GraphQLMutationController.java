@@ -55,6 +55,7 @@ public class GraphQLMutationController extends AbstractGraphQLViewController {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(GRAPHQL_MUTATION, output.getGraphQLMutation());
         model.addObject(GRAPHQL_PROJECT_ID, projectId);
+        model.addObject(GRAPHQL_APPLICATION_ID, applicationId);
         model.addObject(GRAPHQL_OPERATION_STATUSES, getGraphQLOperationStatuses());
 
         return model;

@@ -200,6 +200,7 @@ project(':code:web:mock:graphql') {
         compile(project(":code:web:basis"))
         compile(project(":code:core:mock:graphql"))
         compile(group: 'com.graphql-java', name: 'graphql-java', version: graphqlVersion)
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
     }
 }
 
