@@ -24,10 +24,10 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadRestMockResponseOutput implements Output{
+public final class ReadRestMockResponseOutput implements Output{
 
     @NotNull
-    private RestMockResponse restMockResponse;
+    private final RestMockResponse restMockResponse;
 
     public ReadRestMockResponseOutput(RestMockResponse restMockResponse) {
         this.restMockResponse = restMockResponse;
@@ -37,7 +37,4 @@ public class ReadRestMockResponseOutput implements Output{
         return restMockResponse;
     }
 
-    public void setRestMockResponse(RestMockResponse restMockResponse) {
-        this.restMockResponse = restMockResponse;
-    }
 }

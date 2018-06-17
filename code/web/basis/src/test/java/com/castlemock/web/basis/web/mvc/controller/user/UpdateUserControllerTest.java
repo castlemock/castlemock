@@ -78,9 +78,9 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateUserWithValidId() throws Exception {
-        final ReadUserOutput readUserOutput = new ReadUserOutput();
         final User userDto = UserDtoGenerator.generateUserDto();
-        readUserOutput.setUser(userDto);
+        final ReadUserOutput readUserOutput = new ReadUserOutput(userDto);
+
         when(serviceProcessor.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + userDto.getId() + UPDATE);
         mockMvc.perform(message)
@@ -98,8 +98,6 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
         final User userDto = UserDtoGenerator.generateUserDto();
         final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput(userDto);
         final UpdateUserOutput updateUserOutput = new UpdateUserOutput(userDto);
-        updateUserOutput.setUpdatedUser(userDto);
-
         when(serviceProcessor.process(isA(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);
         when(serviceProcessor.process(isA(UpdateUserInput.class))).thenReturn(updateUserOutput);
 

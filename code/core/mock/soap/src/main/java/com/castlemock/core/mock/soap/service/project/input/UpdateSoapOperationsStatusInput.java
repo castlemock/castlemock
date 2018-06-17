@@ -24,18 +24,21 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapOperationsStatusInput implements Input {
+public final class UpdateSoapOperationsStatusInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
     @NotNull
-    private String soapOperationId;
+    private final String soapOperationId;
     @NotNull
-    private SoapOperationStatus soapOperationStatus;
+    private final SoapOperationStatus soapOperationStatus;
 
-    public UpdateSoapOperationsStatusInput(String soapProjectId, String soapPortId, String soapOperationId, SoapOperationStatus soapOperationStatus) {
+    public UpdateSoapOperationsStatusInput(String soapProjectId,
+                                           String soapPortId,
+                                           String soapOperationId,
+                                           SoapOperationStatus soapOperationStatus) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
         this.soapOperationId = soapOperationId;
@@ -46,31 +49,16 @@ public class UpdateSoapOperationsStatusInput implements Input {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapPortId() {
         return soapPortId;
-    }
-
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
     }
 
     public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(String soapOperationId) {
-        this.soapOperationId = soapOperationId;
-    }
-
     public SoapOperationStatus getSoapOperationStatus() {
         return soapOperationStatus;
     }
 
-    public void setSoapOperationStatus(SoapOperationStatus soapOperationStatus) {
-        this.soapOperationStatus = soapOperationStatus;
-    }
 }

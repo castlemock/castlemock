@@ -24,10 +24,10 @@ import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateRestApplicationOutput implements Output {
+public final class CreateRestApplicationOutput implements Output {
 
     @NotNull
-    private RestApplication savedRestApplication;
+    private final RestApplication savedRestApplication;
 
     public CreateRestApplicationOutput(RestApplication savedRestApplication) {
         this.savedRestApplication = savedRestApplication;
@@ -37,7 +37,4 @@ public class CreateRestApplicationOutput implements Output {
         return savedRestApplication;
     }
 
-    public void setSavedRestApplication(RestApplication savedRestApplication) {
-        this.savedRestApplication = savedRestApplication;
-    }
 }

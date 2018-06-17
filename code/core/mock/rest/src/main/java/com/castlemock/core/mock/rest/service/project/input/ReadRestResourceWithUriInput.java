@@ -23,36 +23,31 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadRestResourceWithUriInput implements Input {
+public final class ReadRestResourceWithUriInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private String restResourceUri;
+    private final String restResourceUri;
+
+    public ReadRestResourceWithUriInput(String restProjectId, String restApplicationId, String restResourceUri) {
+        this.restProjectId = restProjectId;
+        this.restApplicationId = restApplicationId;
+        this.restResourceUri = restResourceUri;
+    }
 
     public String getRestProjectId() {
         return restProjectId;
-    }
-
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
     }
 
     public String getRestApplicationId() {
         return restApplicationId;
     }
 
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
-    }
-
     public String getRestResourceUri() {
         return restResourceUri;
     }
 
-    public void setRestResourceUri(String restResourceUri) {
-        this.restResourceUri = restResourceUri;
-    }
 }

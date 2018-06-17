@@ -6,14 +6,14 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery
 
 import java.util.List;
 
-public class IdentifyGraphQLOperationInput implements Input {
+public final class IdentifyGraphQLOperationInput implements Input {
 
     @NotNull
-    private String graphQLProjectId;
+    private final String graphQLProjectId;
     @NotNull
-    private String graphQLApplicationId;
+    private final String graphQLApplicationId;
     @NotNull
-    private List<GraphQLRequestQuery> queries;
+    private final List<GraphQLRequestQuery> queries;
 
     public IdentifyGraphQLOperationInput(String graphQLProjectId,
                                          String graphQLApplicationId,
@@ -27,23 +27,12 @@ public class IdentifyGraphQLOperationInput implements Input {
         return graphQLProjectId;
     }
 
-    public void setGraphQLProjectId(String graphQLProjectId) {
-        this.graphQLProjectId = graphQLProjectId;
-    }
-
     public String getGraphQLApplicationId() {
         return graphQLApplicationId;
-    }
-
-    public void setGraphQLApplicationId(String graphQLApplicationId) {
-        this.graphQLApplicationId = graphQLApplicationId;
     }
 
     public List<GraphQLRequestQuery> getQueries() {
         return queries;
     }
 
-    public void setQueries(List<GraphQLRequestQuery> queries) {
-        this.queries = queries;
-    }
 }

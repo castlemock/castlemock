@@ -17,7 +17,6 @@
 package com.castlemock.core.basis.utility.parser.expression.argument;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**

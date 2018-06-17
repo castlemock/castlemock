@@ -23,7 +23,7 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class DeleteGraphQLProjectOutput implements Output {
+public final class DeleteGraphQLProjectOutput implements Output {
 
     private final GraphQLProject project;
 

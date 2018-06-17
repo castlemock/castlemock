@@ -43,8 +43,7 @@ public class ReadAllGraphQLProjectsService extends AbstractGraphQLProjectService
     @Override
     public ServiceResult<ReadAllGraphQLProjectsOutput> process(final ServiceTask<ReadAllGraphQLProjectsInput> serviceTask) {
         final List<GraphQLProject> restProjects = findAll();
-        final ReadAllGraphQLProjectsOutput output = new ReadAllGraphQLProjectsOutput();
-        output.setGraphQLProjects(restProjects);
+        final ReadAllGraphQLProjectsOutput output = new ReadAllGraphQLProjectsOutput(restProjects);
         return createServiceResult(output);
     }
 }

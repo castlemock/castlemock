@@ -17,21 +17,11 @@
 package com.castlemock.core.mock.soap.service.project.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapPortsForwardedEndpointOutput implements Output {
+public final class UpdateSoapPortsForwardedEndpointOutput implements Output {
 
-    private SoapProject updatedSoapProject;
-
-    public SoapProject getUpdatedSoapProject() {
-        return updatedSoapProject;
-    }
-
-    public void setUpdatedSoapProject(SoapProject updatedSoapProject) {
-        this.updatedSoapProject = updatedSoapProject;
-    }
 }

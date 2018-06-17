@@ -17,8 +17,8 @@
 package com.castlemock.core.basis.service.user.input;
 
 import com.castlemock.core.basis.model.Input;
-import com.castlemock.core.basis.service.user.output.DeleteUserOutput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.user.output.DeleteUserOutput;
 
 /**
  * Deletes a user
@@ -26,10 +26,10 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @since 1.0
  * @see DeleteUserOutput
  */
-public class DeleteUserInput implements Input {
+public final class DeleteUserInput implements Input {
 
     @NotNull
-    private String userId;
+    private final String userId;
 
     public DeleteUserInput(String userId) {
         this.userId = userId;
@@ -39,7 +39,4 @@ public class DeleteUserInput implements Input {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 }

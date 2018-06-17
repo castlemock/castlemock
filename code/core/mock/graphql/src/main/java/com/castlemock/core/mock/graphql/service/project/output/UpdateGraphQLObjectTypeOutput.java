@@ -22,5 +22,5 @@ import com.castlemock.core.basis.model.Output;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class UpdateGraphQLObjectTypeOutput implements Output {
+public final class UpdateGraphQLObjectTypeOutput implements Output {
 }

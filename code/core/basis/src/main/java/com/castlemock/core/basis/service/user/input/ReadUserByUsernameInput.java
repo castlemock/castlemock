@@ -17,8 +17,8 @@
 package com.castlemock.core.basis.service.user.input;
 
 import com.castlemock.core.basis.model.Input;
-import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 
 /**
  * Read a user with a specific username
@@ -26,22 +26,17 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @since 1.0
  * @see ReadUserByUsernameOutput
  */
-public class ReadUserByUsernameInput implements Input {
+public final class ReadUserByUsernameInput implements Input {
 
     @NotNull
-    private String username;
+    private final String username;
 
-    public ReadUserByUsernameInput(String username) {
+    public ReadUserByUsernameInput(final String username) {
         this.username = username;
     }
 
     public String getUsername() {
         return username;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
 
 }

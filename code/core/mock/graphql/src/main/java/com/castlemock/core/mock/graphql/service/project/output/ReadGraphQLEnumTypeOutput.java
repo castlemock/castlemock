@@ -24,10 +24,10 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumType;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ReadGraphQLEnumTypeOutput implements Output{
+public final class ReadGraphQLEnumTypeOutput implements Output{
 
     @NotNull
-    private GraphQLEnumType graphQLEnumType;
+    private final GraphQLEnumType graphQLEnumType;
 
     public ReadGraphQLEnumTypeOutput(GraphQLEnumType graphQLEnumType) {
         this.graphQLEnumType = graphQLEnumType;
@@ -37,7 +37,4 @@ public class ReadGraphQLEnumTypeOutput implements Output{
         return graphQLEnumType;
     }
 
-    public void setGraphQLEnumType(GraphQLEnumType graphQLEnumType) {
-        this.graphQLEnumType = graphQLEnumType;
-    }
 }

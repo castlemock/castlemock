@@ -26,12 +26,12 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class DeleteGraphQLApplicationsInput implements Input{
+public final class DeleteGraphQLApplicationsInput implements Input{
 
     @NotNull
-    private String graphQLProjectId;
+    private final String graphQLProjectId;
     @NotNull
-    private List<GraphQLApplication> graphQLApplications;
+    private final List<GraphQLApplication> graphQLApplications;
 
     public DeleteGraphQLApplicationsInput(String graphQLProjectId, List<GraphQLApplication> graphQLApplications) {
         this.graphQLProjectId = graphQLProjectId;
@@ -42,15 +42,8 @@ public class DeleteGraphQLApplicationsInput implements Input{
         return graphQLProjectId;
     }
 
-    public void setGraphQLProjectId(String graphQLProjectId) {
-        this.graphQLProjectId = graphQLProjectId;
-    }
-
     public List<GraphQLApplication> getGraphQLApplications() {
         return graphQLApplications;
     }
 
-    public void setGraphQLApplications(List<GraphQLApplication> graphQLApplications) {
-        this.graphQLApplications = graphQLApplications;
-    }
 }

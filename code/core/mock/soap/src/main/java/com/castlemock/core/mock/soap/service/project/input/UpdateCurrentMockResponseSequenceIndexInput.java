@@ -23,18 +23,21 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateCurrentMockResponseSequenceIndexInput implements Input {
+public final class UpdateCurrentMockResponseSequenceIndexInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
     @NotNull
-    private String soapOperationId;
+    private final String soapOperationId;
     @NotNull
-    private Integer currentResponseSequenceIndex;
+    private final Integer currentResponseSequenceIndex;
 
-    public UpdateCurrentMockResponseSequenceIndexInput(String soapProjectId, String soapPortId, String soapOperationId, Integer currentResponseSequenceIndex) {
+    public UpdateCurrentMockResponseSequenceIndexInput(String soapProjectId,
+                                                       String soapPortId,
+                                                       String soapOperationId,
+                                                       Integer currentResponseSequenceIndex) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
         this.soapOperationId = soapOperationId;
@@ -45,31 +48,15 @@ public class UpdateCurrentMockResponseSequenceIndexInput implements Input {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(String soapOperationId) {
-        this.soapOperationId = soapOperationId;
-    }
-
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
-    }
-
-    public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
-        this.currentResponseSequenceIndex = currentResponseSequenceIndex;
     }
 
     public String getSoapProjectId() {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapPortId() {
         return soapPortId;
-    }
-
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
     }
 }

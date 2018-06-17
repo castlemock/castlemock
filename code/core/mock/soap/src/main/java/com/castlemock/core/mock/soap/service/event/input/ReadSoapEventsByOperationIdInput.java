@@ -22,9 +22,9 @@ import com.castlemock.core.basis.model.Input;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadSoapEventsByOperationIdInput implements Input {
+public final class ReadSoapEventsByOperationIdInput implements Input {
 
-    private String operationId;
+    private final String operationId;
 
     public ReadSoapEventsByOperationIdInput(String operationId) {
         this.operationId = operationId;
@@ -34,7 +34,4 @@ public class ReadSoapEventsByOperationIdInput implements Input {
         return operationId;
     }
 
-    public void setOperationId(String operationId) {
-        this.operationId = operationId;
-    }
 }

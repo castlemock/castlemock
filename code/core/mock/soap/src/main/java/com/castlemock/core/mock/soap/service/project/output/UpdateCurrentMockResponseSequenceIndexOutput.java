@@ -22,6 +22,6 @@ import com.castlemock.core.basis.model.Output;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateCurrentMockResponseSequenceIndexOutput implements Output {
+public final class UpdateCurrentMockResponseSequenceIndexOutput implements Output {
 
 }

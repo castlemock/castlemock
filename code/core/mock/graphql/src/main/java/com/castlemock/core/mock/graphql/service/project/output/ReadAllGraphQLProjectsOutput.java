@@ -26,16 +26,17 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ReadAllGraphQLProjectsOutput implements Output {
+public final class ReadAllGraphQLProjectsOutput implements Output {
 
     @NotNull
-    private List<GraphQLProject> graphQLProjects;
+    private final List<GraphQLProject> graphQLProjects;
+
+    public ReadAllGraphQLProjectsOutput(List<GraphQLProject> graphQLProjects) {
+        this.graphQLProjects = graphQLProjects;
+    }
 
     public List<GraphQLProject> getGraphQLProjects() {
         return graphQLProjects;
     }
 
-    public void setGraphQLProjects(List<GraphQLProject> graphQLProjects) {
-        this.graphQLProjects = graphQLProjects;
-    }
 }

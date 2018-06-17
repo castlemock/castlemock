@@ -23,15 +23,16 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateSoapProjectOutput implements Output {
+public final class CreateSoapProjectOutput implements Output {
 
-    private SoapProject savedSoapProject;
+    private final SoapProject savedSoapProject;
+
+    public CreateSoapProjectOutput(SoapProject savedSoapProject) {
+        this.savedSoapProject = savedSoapProject;
+    }
 
     public SoapProject getSavedSoapProject() {
         return savedSoapProject;
     }
 
-    public void setSavedSoapProject(SoapProject savedSoapProject) {
-        this.savedSoapProject = savedSoapProject;
-    }
 }

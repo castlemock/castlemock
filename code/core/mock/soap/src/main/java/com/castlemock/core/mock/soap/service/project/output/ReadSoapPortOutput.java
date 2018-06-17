@@ -23,9 +23,9 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadSoapPortOutput implements Output{
+public final class ReadSoapPortOutput implements Output{
 
-    private SoapPort soapPort;
+    private final SoapPort soapPort;
 
     public ReadSoapPortOutput(SoapPort soapPort) {
         this.soapPort = soapPort;
@@ -35,7 +35,4 @@ public class ReadSoapPortOutput implements Output{
         return soapPort;
     }
 
-    public void setSoapPort(SoapPort soapPort) {
-        this.soapPort = soapPort;
-    }
 }

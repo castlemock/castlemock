@@ -26,16 +26,17 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadAllRestProjectsOutput implements Output {
+public final class ReadAllRestProjectsOutput implements Output {
 
     @NotNull
-    private List<RestProject> restProjects;
+    private final List<RestProject> restProjects;
+
+    public ReadAllRestProjectsOutput(List<RestProject> restProjects) {
+        this.restProjects = restProjects;
+    }
 
     public List<RestProject> getRestProjects() {
         return restProjects;
     }
 
-    public void setRestProjects(List<RestProject> restProjects) {
-        this.restProjects = restProjects;
-    }
 }

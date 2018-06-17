@@ -24,7 +24,7 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class UpdateGraphQLObjectTypeInput implements Input {
+public final class UpdateGraphQLObjectTypeInput implements Input {
 
     @NotNull
     private final String projectId;

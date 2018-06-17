@@ -18,8 +18,8 @@ package com.castlemock.core.basis.service.configuration.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.core.basis.service.configuration.input.UpdateAllConfigurationGroupsInput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.configuration.input.UpdateAllConfigurationGroupsInput;
 
 import java.util.List;
 
@@ -28,16 +28,18 @@ import java.util.List;
  * @since 1.0
  * @see UpdateAllConfigurationGroupsInput
  */
-public class UpdateAllConfigurationGroupsOutput implements Output {
+public final class UpdateAllConfigurationGroupsOutput implements Output {
 
     @NotNull
     private List<ConfigurationGroup> updatedConfigurationGroups;
+
+    public UpdateAllConfigurationGroupsOutput(final List<ConfigurationGroup> updatedConfigurationGroups) {
+        this.updatedConfigurationGroups = updatedConfigurationGroups;
+    }
 
     public List<ConfigurationGroup> getUpdatedConfigurationGroups() {
         return updatedConfigurationGroups;
     }
 
-    public void setUpdatedConfigurationGroups(List<ConfigurationGroup> updatedConfigurationGroups) {
-        this.updatedConfigurationGroups = updatedConfigurationGroups;
-    }
+
 }

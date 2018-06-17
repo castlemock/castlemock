@@ -23,10 +23,10 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ReadGraphQLProjectInput implements Input {
+public final class ReadGraphQLProjectInput implements Input {
 
     @NotNull
-    private String graphQLProjectId;
+    private final String graphQLProjectId;
 
     public ReadGraphQLProjectInput(String graphQLProjectId) {
         this.graphQLProjectId = graphQLProjectId;
@@ -36,7 +36,4 @@ public class ReadGraphQLProjectInput implements Input {
         return graphQLProjectId;
     }
 
-    public void setGraphQLProjectId(String graphQLProjectId) {
-        this.graphQLProjectId = graphQLProjectId;
-    }
 }

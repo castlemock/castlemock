@@ -22,5 +22,5 @@ import com.castlemock.core.basis.model.Input;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ReadAllGraphQLProjectsInput implements Input {
+public final class ReadAllGraphQLProjectsInput implements Input {
 }

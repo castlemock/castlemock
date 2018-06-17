@@ -44,8 +44,7 @@ public class UpdateGraphQLProjectService extends AbstractGraphQLProjectService i
         final String restProjectId = input.getGraphQLProjectId();
         final GraphQLProject restProject = input.getGraphQLProject();
         final GraphQLProject updatedGraphQLProject = update(restProjectId, restProject);
-        final UpdateGraphQLProjectOutput output = new UpdateGraphQLProjectOutput();
-        output.setUpdatedGraphQLProject(updatedGraphQLProject);
+        final UpdateGraphQLProjectOutput output = new UpdateGraphQLProjectOutput(updatedGraphQLProject);
         return createServiceResult(output);
     }
 }

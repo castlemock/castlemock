@@ -18,24 +18,24 @@ package com.castlemock.core.basis.service.user.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.input.ReadUserInput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.user.input.ReadUserInput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  * @see ReadUserInput
  */
-public class ReadUserOutput implements Output {
+public final class ReadUserOutput implements Output {
 
     @NotNull
-    private User user;
+    private final User user;
+
+    public ReadUserOutput(User user) {
+        this.user = user;
+    }
 
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

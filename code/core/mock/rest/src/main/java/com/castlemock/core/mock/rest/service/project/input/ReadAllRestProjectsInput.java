@@ -22,5 +22,5 @@ import com.castlemock.core.basis.model.Input;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadAllRestProjectsInput implements Input {
+public final class ReadAllRestProjectsInput implements Input {
 }

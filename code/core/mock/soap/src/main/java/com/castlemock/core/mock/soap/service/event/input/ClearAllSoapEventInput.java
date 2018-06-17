@@ -22,6 +22,6 @@ import com.castlemock.core.basis.model.Input;
  * @author Karl Dahlgren
  * @since 1.7
  */
-public class ClearAllSoapEventInput implements Input {
+public final class ClearAllSoapEventInput implements Input {
 
 }

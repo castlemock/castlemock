@@ -23,18 +23,21 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteRestMethodInput implements Input{
+public final class DeleteRestMethodInput implements Input{
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private String restResourceId;
+    private final String restResourceId;
     @NotNull
-    private String restMethodId;
+    private final String restMethodId;
 
-    public DeleteRestMethodInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId) {
+    public DeleteRestMethodInput(String restProjectId,
+                                 String restApplicationId,
+                                 String restResourceId,
+                                 String restMethodId) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -45,31 +48,16 @@ public class DeleteRestMethodInput implements Input{
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
-    }
-
     public String getRestMethodId() {
         return restMethodId;
     }
 
-    public void setRestMethodId(String restMethodId) {
-        this.restMethodId = restMethodId;
-    }
 }

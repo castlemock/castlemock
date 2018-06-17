@@ -18,18 +18,18 @@ package com.castlemock.core.basis.service.user.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.input.UpdateUserInput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.user.input.UpdateUserInput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  * @see UpdateUserInput
  */
-public class UpdateUserOutput implements Output {
+public final class UpdateUserOutput implements Output {
 
     @NotNull
-    private User updatedUser;
+    private final User updatedUser;
 
     public UpdateUserOutput(User updatedUser) {
         this.updatedUser = updatedUser;
@@ -39,7 +39,4 @@ public class UpdateUserOutput implements Output {
         return updatedUser;
     }
 
-    public void setUpdatedUser(User updatedUser) {
-        this.updatedUser = updatedUser;
-    }
 }

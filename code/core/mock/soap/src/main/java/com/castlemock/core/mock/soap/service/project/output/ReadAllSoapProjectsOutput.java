@@ -25,7 +25,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadAllSoapProjectsOutput implements Output {
+public final class ReadAllSoapProjectsOutput implements Output {
 
     private final List<SoapProject> soapProjects;
 

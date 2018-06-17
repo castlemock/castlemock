@@ -67,7 +67,7 @@ public class UpdateConfigurationControllerTest extends AbstractControllerTest {
         final ConfigurationUpdateCommand configurationUpdateCommand = new ConfigurationUpdateCommand();
         configurationUpdateCommand.setConfigurationGroups(new ArrayList<ConfigurationGroup>());
 
-        Mockito.when(serviceProcessor.process(any(UpdateAllConfigurationGroupsInput.class))).thenReturn(new ReadAllConfigurationGroupsOutput());
+        Mockito.when(serviceProcessor.process(any(UpdateAllConfigurationGroupsInput.class))).thenReturn(new ReadAllConfigurationGroupsOutput(new ArrayList<ConfigurationGroup>()));
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL, configurationUpdateCommand);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())

@@ -77,8 +77,7 @@ public class UserOverviewControllerTest extends AbstractControllerTest {
         for(int index = 0; index < USER_COUNT; index++){
             userDtos.add(UserDtoGenerator.generateUserDto());
         }
-        final ReadAllUsersOutput readAllUsersOutput = new ReadAllUsersOutput();
-        readAllUsersOutput.setUsers(userDtos);
+        final ReadAllUsersOutput readAllUsersOutput = new ReadAllUsersOutput(userDtos);
         when(serviceProcessor.process(any(ReadAllUsersInput.class))).thenReturn(readAllUsersOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
         mockMvc.perform(message)

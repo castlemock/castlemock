@@ -43,8 +43,7 @@ public class ReadAllUsersService extends AbstractUserService implements Service<
     @Override
     public ServiceResult<ReadAllUsersOutput> process(final ServiceTask<ReadAllUsersInput> serviceTask) {
         final List<User> users = findAll();
-        final ReadAllUsersOutput output = new ReadAllUsersOutput();
-        output.setUsers(users);
+        final ReadAllUsersOutput output = new ReadAllUsersOutput(users);
         return createServiceResult(output);
     }
 }

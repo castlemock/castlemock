@@ -24,10 +24,10 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class SearchGraphQLProjectInput implements Input {
+public final class SearchGraphQLProjectInput implements Input {
 
     @NotNull
-    private SearchQuery searchQuery;
+    private final SearchQuery searchQuery;
 
     public SearchGraphQLProjectInput(SearchQuery searchQuery) {
         this.searchQuery = searchQuery;
@@ -37,7 +37,4 @@ public class SearchGraphQLProjectInput implements Input {
         return searchQuery;
     }
 
-    public void setSearchQuery(SearchQuery searchQuery) {
-        this.searchQuery = searchQuery;
-    }
 }

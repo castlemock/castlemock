@@ -17,8 +17,6 @@
 package com.castlemock.core.basis.utility.parser;
 
 import com.castlemock.core.basis.utility.parser.expression.*;
-import com.castlemock.core.basis.utility.parser.expression.ExpressionInput;
-import com.castlemock.core.basis.utility.parser.expression.ExpressionInputParser;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;

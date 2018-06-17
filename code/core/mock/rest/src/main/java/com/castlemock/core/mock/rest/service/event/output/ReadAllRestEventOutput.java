@@ -26,10 +26,10 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadAllRestEventOutput implements Output {
+public final class ReadAllRestEventOutput implements Output {
 
     @NotNull
-    private List<RestEvent> restEvents;
+    private final List<RestEvent> restEvents;
 
     public ReadAllRestEventOutput(List<RestEvent> restEvents) {
         this.restEvents = restEvents;
@@ -39,7 +39,4 @@ public class ReadAllRestEventOutput implements Output {
         return restEvents;
     }
 
-    public void setRestEvents(List<RestEvent> restEvents) {
-        this.restEvents = restEvents;
-    }
 }

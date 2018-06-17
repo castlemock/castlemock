@@ -26,12 +26,12 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteRestApplicationsInput implements Input{
+public final class DeleteRestApplicationsInput implements Input{
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private List<RestApplication> restApplications;
+    private final List<RestApplication> restApplications;
 
     public DeleteRestApplicationsInput(String restProjectId, List<RestApplication> restApplications) {
         this.restProjectId = restProjectId;
@@ -42,15 +42,8 @@ public class DeleteRestApplicationsInput implements Input{
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public List<RestApplication> getRestApplications() {
         return restApplications;
     }
 
-    public void setRestApplications(List<RestApplication> restApplications) {
-        this.restApplications = restApplications;
-    }
 }

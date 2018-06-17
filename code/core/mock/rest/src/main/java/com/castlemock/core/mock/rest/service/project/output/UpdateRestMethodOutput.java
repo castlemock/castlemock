@@ -24,10 +24,10 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestMethodOutput implements Output {
+public final class UpdateRestMethodOutput implements Output {
 
     @NotNull
-    private RestMethod restMethod;
+    private final RestMethod restMethod;
 
     public UpdateRestMethodOutput(RestMethod restMethod) {
         this.restMethod = restMethod;
@@ -37,7 +37,4 @@ public class UpdateRestMethodOutput implements Output {
         return restMethod;
     }
 
-    public void setRestMethod(RestMethod restMethod) {
-        this.restMethod = restMethod;
-    }
 }

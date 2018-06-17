@@ -16,8 +16,8 @@
 
 package com.castlemock.core.mock.soap.model.event.domain;
 
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 
 import javax.xml.bind.annotation.XmlElement;

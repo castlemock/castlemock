@@ -27,17 +27,17 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ImportGraphQLDefinitionInput implements Input {
+public final class ImportGraphQLDefinitionInput implements Input {
 
     @NotNull
-    private String graphQLProjectId;
+    private final String graphQLProjectId;
     @NotNull
-    private String graphQLApplicationId;
+    private final String graphQLApplicationId;
     @NotNull
-    private GraphQLDefinitionType definitionType;
+    private final GraphQLDefinitionType definitionType;
 
-    private List<File> files;
-    private String location;
+    private final List<File> files;
+    private final String location;
 
     public ImportGraphQLDefinitionInput(final String graphQLProjectId,
                                         final String graphQLApplicationId,
@@ -54,39 +54,20 @@ public class ImportGraphQLDefinitionInput implements Input {
         return graphQLProjectId;
     }
 
-    public void setGraphQLProjectId(String graphQLProjectId) {
-        this.graphQLProjectId = graphQLProjectId;
-    }
-
     public String getGraphQLApplicationId() {
         return graphQLApplicationId;
-    }
-
-    public void setGraphQLApplicationId(String graphQLApplicationId) {
-        this.graphQLApplicationId = graphQLApplicationId;
     }
 
     public List<File> getFiles() {
         return files;
     }
 
-    public void setFiles(List<File> files) {
-        this.files = files;
-    }
-
     public String getLocation() {
         return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public GraphQLDefinitionType getDefinitionType() {
         return definitionType;
     }
 
-    public void setDefinitionType(GraphQLDefinitionType definitionType) {
-        this.definitionType = definitionType;
-    }
 }

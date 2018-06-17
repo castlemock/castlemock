@@ -23,10 +23,10 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class LoadSoapResourceOutput implements Output{
+public final class LoadSoapResourceOutput implements Output{
 
     @NotNull
-    private String resource;
+    private final String resource;
 
     public LoadSoapResourceOutput(String resource){
         this.resource = resource;
@@ -36,7 +36,4 @@ public class LoadSoapResourceOutput implements Output{
         return resource;
     }
 
-    public void setResource(String resource) {
-        this.resource = resource;
-    }
 }

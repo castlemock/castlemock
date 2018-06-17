@@ -25,9 +25,9 @@ import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
  * @since 1.0
  * @see ReadUserByUsernameInput
  */
-public class ReadUserByUsernameOutput implements Output {
+public final class ReadUserByUsernameOutput implements Output {
 
-    private User user;
+    private final User user;
 
     public ReadUserByUsernameOutput(User user) {
         this.user = user;
@@ -37,7 +37,4 @@ public class ReadUserByUsernameOutput implements Output {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

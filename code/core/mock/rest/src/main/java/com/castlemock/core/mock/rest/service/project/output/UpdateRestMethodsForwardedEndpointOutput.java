@@ -17,21 +17,11 @@
 package com.castlemock.core.mock.rest.service.project.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestMethodsForwardedEndpointOutput implements Output {
+public final class UpdateRestMethodsForwardedEndpointOutput implements Output {
 
-    private RestProject updatedRestProject;
-
-    public RestProject getUpdatedRestProject() {
-        return updatedRestProject;
-    }
-
-    public void setUpdatedRestProject(RestProject updatedRestProject) {
-        this.updatedRestProject = updatedRestProject;
-    }
 }

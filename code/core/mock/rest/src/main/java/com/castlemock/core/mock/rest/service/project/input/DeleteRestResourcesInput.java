@@ -26,16 +26,18 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteRestResourcesInput implements Input{
+public final class DeleteRestResourcesInput implements Input{
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private List<RestResource> restResources;
+    private final List<RestResource> restResources;
 
-    public DeleteRestResourcesInput(String restProjectId, String restApplicationId, List<RestResource> restResources) {
+    public DeleteRestResourcesInput(String restProjectId,
+                                    String restApplicationId,
+                                    List<RestResource> restResources) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResources = restResources;
@@ -45,23 +47,12 @@ public class DeleteRestResourcesInput implements Input{
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public List<RestResource> getRestResources() {
         return restResources;
     }
 
-    public void setRestResources(List<RestResource> restResources) {
-        this.restResources = restResources;
-    }
 }

@@ -22,5 +22,5 @@ import com.castlemock.core.basis.model.Output;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteSoapMockResponseOutput implements Output {
+public final class DeleteSoapMockResponseOutput implements Output {
 }

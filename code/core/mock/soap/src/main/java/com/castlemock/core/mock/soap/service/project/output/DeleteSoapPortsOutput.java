@@ -22,5 +22,5 @@ import com.castlemock.core.basis.model.Output;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteSoapPortsOutput implements Output {
+public final class DeleteSoapPortsOutput implements Output {
 }

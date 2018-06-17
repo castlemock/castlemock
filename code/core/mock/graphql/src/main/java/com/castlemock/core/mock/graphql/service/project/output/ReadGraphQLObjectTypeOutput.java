@@ -24,10 +24,10 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ReadGraphQLObjectTypeOutput implements Output{
+public final class ReadGraphQLObjectTypeOutput implements Output{
 
     @NotNull
-    private GraphQLObjectType graphQLObjectType;
+    private final GraphQLObjectType graphQLObjectType;
 
     public ReadGraphQLObjectTypeOutput(GraphQLObjectType graphQLObjectType) {
         this.graphQLObjectType = graphQLObjectType;
@@ -37,7 +37,4 @@ public class ReadGraphQLObjectTypeOutput implements Output{
         return graphQLObjectType;
     }
 
-    public void setGraphQLObjectType(GraphQLObjectType graphQLObjectType) {
-        this.graphQLObjectType = graphQLObjectType;
-    }
 }

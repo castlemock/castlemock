@@ -23,15 +23,16 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadSoapPortWithNameOutput implements Output{
+public final class ReadSoapPortWithNameOutput implements Output{
 
-    private SoapProject soapProject;
+    private final SoapProject soapProject;
+
+    public ReadSoapPortWithNameOutput(SoapProject soapProject) {
+        this.soapProject = soapProject;
+    }
 
     public SoapProject getSoapProject() {
         return soapProject;
     }
 
-    public void setSoapProject(SoapProject soapProject) {
-        this.soapProject = soapProject;
-    }
 }

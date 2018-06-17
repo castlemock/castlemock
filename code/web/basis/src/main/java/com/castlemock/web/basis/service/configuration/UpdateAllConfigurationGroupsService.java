@@ -63,8 +63,7 @@ public class UpdateAllConfigurationGroupsService extends AbstractConfigurationGr
             }
         }
 
-        final UpdateAllConfigurationGroupsOutput output = new UpdateAllConfigurationGroupsOutput();
-        output.setUpdatedConfigurationGroups(updateConfigurations);
+        final UpdateAllConfigurationGroupsOutput output = new UpdateAllConfigurationGroupsOutput(updateConfigurations);
 
         return createServiceResult(output);
     }

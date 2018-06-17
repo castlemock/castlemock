@@ -24,12 +24,12 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class UpdateGraphQLProjectInput implements Input {
+public final class UpdateGraphQLProjectInput implements Input {
 
     @NotNull
-    private String graphQLProjectId;
+    private final String graphQLProjectId;
     @NotNull
-    private GraphQLProject graphQLProject;
+    private final GraphQLProject graphQLProject;
 
     public UpdateGraphQLProjectInput(final String graphQLProjectId, final GraphQLProject graphQLProject) {
         this.graphQLProjectId = graphQLProjectId;
@@ -40,15 +40,8 @@ public class UpdateGraphQLProjectInput implements Input {
         return graphQLProjectId;
     }
 
-    public void setGraphQLProjectId(String graphQLProjectId) {
-        this.graphQLProjectId = graphQLProjectId;
-    }
-
     public GraphQLProject getGraphQLProject() {
         return graphQLProject;
     }
 
-    public void setGraphQLProject(GraphQLProject graphQLProject) {
-        this.graphQLProject = graphQLProject;
-    }
 }

@@ -26,10 +26,10 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class SearchGraphQLProjectOutput implements Output {
+public final class SearchGraphQLProjectOutput implements Output {
 
     @NotNull
-    private List<SearchResult> searchResults;
+    private final List<SearchResult> searchResults;
 
     public SearchGraphQLProjectOutput(List<SearchResult> searchResults) {
         this.searchResults = searchResults;
@@ -39,7 +39,4 @@ public class SearchGraphQLProjectOutput implements Output {
         return searchResults;
     }
 
-    public void setSearchResults(List<SearchResult> searchResults) {
-        this.searchResults = searchResults;
-    }
 }

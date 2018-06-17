@@ -23,9 +23,9 @@ import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateSoapEventInput implements Input {
+public final class CreateSoapEventInput implements Input {
 
-    private SoapEvent soapEvent;
+    private final SoapEvent soapEvent;
 
     public CreateSoapEventInput(SoapEvent soapEvent) {
         this.soapEvent = soapEvent;
@@ -35,7 +35,4 @@ public class CreateSoapEventInput implements Input {
         return soapEvent;
     }
 
-    public void setSoapEvent(SoapEvent soapEvent) {
-        this.soapEvent = soapEvent;
-    }
 }

@@ -24,14 +24,14 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapPortsStatusInput implements Input {
+public final class UpdateSoapPortsStatusInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
     @NotNull
-    private SoapOperationStatus soapOperationStatus;
+    private final SoapOperationStatus soapOperationStatus;
 
     public UpdateSoapPortsStatusInput(String soapProjectId, String soapPortId, SoapOperationStatus soapOperationStatus) {
         this.soapProjectId = soapProjectId;
@@ -43,23 +43,12 @@ public class UpdateSoapPortsStatusInput implements Input {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapPortId() {
         return soapPortId;
-    }
-
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
     }
 
     public SoapOperationStatus getSoapOperationStatus() {
         return soapOperationStatus;
     }
 
-    public void setSoapOperationStatus(SoapOperationStatus soapOperationStatus) {
-        this.soapOperationStatus = soapOperationStatus;
-    }
 }

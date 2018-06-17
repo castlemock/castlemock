@@ -23,9 +23,9 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadSoapMockResponseOutput implements Output{
+public final class ReadSoapMockResponseOutput implements Output{
 
-    private SoapMockResponse soapMockResponse;
+    private final SoapMockResponse soapMockResponse;
 
     public ReadSoapMockResponseOutput(SoapMockResponse soapMockResponse) {
         this.soapMockResponse = soapMockResponse;
@@ -35,7 +35,4 @@ public class ReadSoapMockResponseOutput implements Output{
         return soapMockResponse;
     }
 
-    public void setSoapMockResponse(SoapMockResponse soapMockResponse) {
-        this.soapMockResponse = soapMockResponse;
-    }
 }

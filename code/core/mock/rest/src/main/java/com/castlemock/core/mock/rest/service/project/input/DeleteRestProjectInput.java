@@ -23,10 +23,10 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteRestProjectInput implements Input{
+public final class DeleteRestProjectInput implements Input{
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
 
     public DeleteRestProjectInput(String restProjectId) {
         this.restProjectId = restProjectId;
@@ -36,7 +36,4 @@ public class DeleteRestProjectInput implements Input{
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
 }

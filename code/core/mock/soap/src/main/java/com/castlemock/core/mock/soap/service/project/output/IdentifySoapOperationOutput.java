@@ -24,19 +24,19 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class IdentifySoapOperationOutput implements Output{
+public final class IdentifySoapOperationOutput implements Output{
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
 
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
 
     @NotNull
-    private String soapOperationId;
+    private final String soapOperationId;
 
     @NotNull
-    private SoapOperation soapOperation;
+    private final SoapOperation soapOperation;
 
     public IdentifySoapOperationOutput(String soapProjectId, String soapPortId, String soapOperationId, SoapOperation soapOperation) {
         this.soapProjectId = soapProjectId;
@@ -49,31 +49,16 @@ public class IdentifySoapOperationOutput implements Output{
         return soapOperation;
     }
 
-    public void setSoapOperation(SoapOperation soapOperation) {
-        this.soapOperation = soapOperation;
-    }
-
     public String getSoapProjectId() {
         return soapProjectId;
-    }
-
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
     }
 
     public String getSoapPortId() {
         return soapPortId;
     }
 
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
-    }
-
     public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(String soapOperationId) {
-        this.soapOperationId = soapOperationId;
-    }
 }

@@ -26,18 +26,21 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteRestMethodsInput implements Input{
+public final class DeleteRestMethodsInput implements Input{
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private String restResourceId;
+    private final String restResourceId;
     @NotNull
-    private List<RestMethod> restMethods;
+    private final List<RestMethod> restMethods;
 
-    public DeleteRestMethodsInput(String restProjectId, String restApplicationId, String restResourceId, List<RestMethod> restMethods) {
+    public DeleteRestMethodsInput(String restProjectId,
+                                  String restApplicationId,
+                                  String restResourceId,
+                                  List<RestMethod> restMethods) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -48,31 +51,16 @@ public class DeleteRestMethodsInput implements Input{
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
-    }
-
     public List<RestMethod> getRestMethods() {
         return restMethods;
     }
 
-    public void setRestMethods(List<RestMethod> restMethods) {
-        this.restMethods = restMethods;
-    }
 }

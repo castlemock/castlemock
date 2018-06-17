@@ -18,8 +18,8 @@ package com.castlemock.core.basis.service.user.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.output.UpdateUserOutput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.user.output.UpdateUserOutput;
 
 /**
  * Update a user with a specific user id
@@ -27,12 +27,12 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @since 1.0
  * @see UpdateUserOutput
  */
-public class UpdateUserInput implements Input {
+public final class UpdateUserInput implements Input {
 
     @NotNull
-    private String userId;
+    private final String userId;
     @NotNull
-    private User user;
+    private final User user;
 
     public UpdateUserInput(String userId, User user) {
         this.userId = userId;
@@ -43,15 +43,8 @@ public class UpdateUserInput implements Input {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

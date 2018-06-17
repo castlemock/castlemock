@@ -65,9 +65,9 @@ public class DeleteUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteUserWithValidId() throws Exception {
-        final ReadUserOutput readUserOutput = new ReadUserOutput();
         final User userDto = UserDtoGenerator.generateUserDto();
-        readUserOutput.setUser(userDto);
+        final ReadUserOutput readUserOutput = new ReadUserOutput(userDto);
+
         when(serviceProcessor.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + userDto.getId() + DELETE);
         mockMvc.perform(message)

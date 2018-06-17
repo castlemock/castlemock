@@ -26,14 +26,14 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapPortsForwardedEndpointInput implements Input {
+public final class UpdateSoapPortsForwardedEndpointInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private List<SoapPort> soapPorts;
+    private final List<SoapPort> soapPorts;
     @NotNull
-    private String forwardedEndpoint;
+    private final String forwardedEndpoint;
 
     public UpdateSoapPortsForwardedEndpointInput(String soapProjectId, List<SoapPort> soapPorts, String forwardedEndpoint) {
         this.soapProjectId = soapProjectId;
@@ -45,23 +45,12 @@ public class UpdateSoapPortsForwardedEndpointInput implements Input {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public List<SoapPort> getSoapPorts() {
         return soapPorts;
-    }
-
-    public void setSoapPorts(List<SoapPort> soapPorts) {
-        this.soapPorts = soapPorts;
     }
 
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
 }

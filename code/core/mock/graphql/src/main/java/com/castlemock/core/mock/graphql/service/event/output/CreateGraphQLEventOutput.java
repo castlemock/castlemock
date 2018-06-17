@@ -23,9 +23,9 @@ import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class CreateGraphQLEventOutput implements Output {
+public final class CreateGraphQLEventOutput implements Output {
 
-    private GraphQLEvent createdGraphQLEvent;
+    private final GraphQLEvent createdGraphQLEvent;
 
     public CreateGraphQLEventOutput(GraphQLEvent createdGraphQLEvent) {
         this.createdGraphQLEvent = createdGraphQLEvent;
@@ -35,7 +35,4 @@ public class CreateGraphQLEventOutput implements Output {
         return createdGraphQLEvent;
     }
 
-    public void setCreatedGraphQLEvent(GraphQLEvent createdGraphQLEvent) {
-        this.createdGraphQLEvent = createdGraphQLEvent;
-    }
 }

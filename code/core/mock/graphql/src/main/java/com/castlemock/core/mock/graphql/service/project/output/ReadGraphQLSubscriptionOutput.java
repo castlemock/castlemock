@@ -24,10 +24,10 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLSubscription
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ReadGraphQLSubscriptionOutput implements Output{
+public final class ReadGraphQLSubscriptionOutput implements Output{
 
     @NotNull
-    private GraphQLSubscription graphQLSubscription;
+    private final GraphQLSubscription graphQLSubscription;
 
     public ReadGraphQLSubscriptionOutput(GraphQLSubscription graphQLSubscription) {
         this.graphQLSubscription = graphQLSubscription;
@@ -37,7 +37,4 @@ public class ReadGraphQLSubscriptionOutput implements Output{
         return graphQLSubscription;
     }
 
-    public void setGraphQLSubscription(GraphQLSubscription graphQLSubscription) {
-        this.graphQLSubscription = graphQLSubscription;
-    }
 }

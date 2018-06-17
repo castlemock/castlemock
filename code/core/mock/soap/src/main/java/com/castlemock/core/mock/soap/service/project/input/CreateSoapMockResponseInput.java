@@ -24,16 +24,16 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateSoapMockResponseInput implements Input {
+public final class CreateSoapMockResponseInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
     @NotNull
-    private String soapOperationId;
+    private final String soapOperationId;
     @NotNull
-    private SoapMockResponse soapMockResponse;
+    private final SoapMockResponse soapMockResponse;
 
     public CreateSoapMockResponseInput(String soapProjectId, String soapPortId, String soapOperationId, SoapMockResponse soapMockResponse) {
         this.soapProjectId = soapProjectId;
@@ -46,31 +46,16 @@ public class CreateSoapMockResponseInput implements Input {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapPortId() {
         return soapPortId;
-    }
-
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
     }
 
     public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(String soapOperationId) {
-        this.soapOperationId = soapOperationId;
-    }
-
     public SoapMockResponse getSoapMockResponse() {
         return soapMockResponse;
     }
 
-    public void setSoapMockResponse(SoapMockResponse soapMockResponse) {
-        this.soapMockResponse = soapMockResponse;
-    }
 }

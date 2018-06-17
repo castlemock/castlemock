@@ -24,10 +24,10 @@ import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadRestEventOutput implements Output {
+public final class ReadRestEventOutput implements Output {
 
     @NotNull
-    private RestEvent restEvent;
+    private final RestEvent restEvent;
 
     public ReadRestEventOutput(RestEvent restEvent) {
         this.restEvent = restEvent;
@@ -37,7 +37,4 @@ public class ReadRestEventOutput implements Output {
         return restEvent;
     }
 
-    public void setRestEvent(RestEvent restEvent) {
-        this.restEvent = restEvent;
-    }
 }

@@ -22,9 +22,9 @@ import com.castlemock.core.basis.model.Output;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ExportSoapProjectOutput implements Output{
+public final class ExportSoapProjectOutput implements Output{
 
-    private String exportedProject;
+    private final String exportedProject;
 
     public ExportSoapProjectOutput(String exportedProject) {
         this.exportedProject = exportedProject;
@@ -34,7 +34,4 @@ public class ExportSoapProjectOutput implements Output{
         return exportedProject;
     }
 
-    public void setExportedProject(String exportedProject) {
-        this.exportedProject = exportedProject;
-    }
 }

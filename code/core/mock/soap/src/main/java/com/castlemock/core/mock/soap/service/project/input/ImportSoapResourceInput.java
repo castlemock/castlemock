@@ -24,20 +24,13 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ImportSoapResourceInput implements Input {
+public final class ImportSoapResourceInput implements Input {
 
-    private String projectId;
+    private final String projectId;
     @NotNull
-    private SoapResource resource;
+    private final SoapResource resource;
     @NotNull
-    private String raw;
-
-    public ImportSoapResourceInput(final SoapResource resource,
-                                   final String raw) {
-        this.projectId = projectId;
-        this.resource = resource;
-        this.raw = raw;
-    }
+    private final String raw;
 
     public ImportSoapResourceInput(final String projectId,
                                    final SoapResource resource,
@@ -51,23 +44,12 @@ public class ImportSoapResourceInput implements Input {
         return projectId;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
     public SoapResource getResource() {
         return resource;
-    }
-
-    public void setResource(SoapResource resource) {
-        this.resource = resource;
     }
 
     public String getRaw() {
         return raw;
     }
 
-    public void setRaw(String raw) {
-        this.raw = raw;
-    }
 }

@@ -65,9 +65,8 @@ public class CreateUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        final CreateUserOutput createUserOutput = new CreateUserOutput();
         final User userDto = UserDtoGenerator.generateUserDto();
-        createUserOutput.setSavedUser(userDto);
+        final CreateUserOutput createUserOutput = new CreateUserOutput(userDto);
         when(serviceProcessor.process(any(CreateUserInput.class))).thenReturn(createUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL);
         mockMvc.perform(message)

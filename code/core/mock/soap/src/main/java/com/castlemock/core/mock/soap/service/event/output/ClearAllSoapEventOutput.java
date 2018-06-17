@@ -22,6 +22,6 @@ import com.castlemock.core.basis.model.Output;
  * @author Karl Dahlgren
  * @since 1.7
  */
-public class ClearAllSoapEventOutput implements Output {
+public final class ClearAllSoapEventOutput implements Output {
 
 }

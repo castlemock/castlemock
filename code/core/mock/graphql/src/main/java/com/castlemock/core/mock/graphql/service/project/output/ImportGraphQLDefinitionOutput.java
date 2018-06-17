@@ -22,6 +22,6 @@ import com.castlemock.core.basis.model.Output;
  * @author Karl Dahlgren
  * @since 1.9
  */
-public class ImportGraphQLDefinitionOutput implements Output {
+public final class ImportGraphQLDefinitionOutput implements Output {
 
 }

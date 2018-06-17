@@ -44,8 +44,7 @@ public class UpdateRestProjectService extends AbstractRestProjectService impleme
         final String restProjectId = input.getRestProjectId();
         final RestProject restProject = input.getRestProject();
         final RestProject updatedRestProject = update(restProjectId, restProject);
-        final UpdateRestProjectOutput output = new UpdateRestProjectOutput();
-        output.setUpdatedRestProject(updatedRestProject);
+        final UpdateRestProjectOutput output = new UpdateRestProjectOutput(updatedRestProject);
         return createServiceResult(output);
     }
 }

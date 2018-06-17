@@ -23,10 +23,10 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadRestEventInput implements Input {
+public final class ReadRestEventInput implements Input {
 
     @NotNull
-    private String restEventId;
+    private final String restEventId;
 
     public ReadRestEventInput(String restEventId) {
         this.restEventId = restEventId;
@@ -36,7 +36,4 @@ public class ReadRestEventInput implements Input {
         return restEventId;
     }
 
-    public void setRestEventId(String restEventId) {
-        this.restEventId = restEventId;
-    }
 }

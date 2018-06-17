@@ -24,16 +24,17 @@ import com.castlemock.core.mock.rest.model.project.domain.RestProject;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestProjectOutput implements Output {
+public final class UpdateRestProjectOutput implements Output {
 
     @NotNull
-    private RestProject updatedRestProject;
+    private final RestProject updatedRestProject;
+
+    public UpdateRestProjectOutput(RestProject updatedRestProject) {
+        this.updatedRestProject = updatedRestProject;
+    }
 
     public RestProject getUpdatedRestProject() {
         return updatedRestProject;
     }
 
-    public void setUpdatedRestProject(RestProject updatedRestProject) {
-        this.updatedRestProject = updatedRestProject;
-    }
 }

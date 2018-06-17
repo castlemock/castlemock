@@ -16,8 +16,8 @@
 
 package com.castlemock.core.mock.graphql.model.event.domain;
 
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
 
 import javax.xml.bind.annotation.XmlElement;

@@ -69,7 +69,7 @@ public class ReadAllConfigurationGroupsServiceTest {
         configurationGroups.add(configurationGroup);
 
         Mockito.when(repository.findAll()).thenReturn(configurationGroups);
-        final ReadAllConfigurationGroupsInput input = Mockito.mock(ReadAllConfigurationGroupsInput.class);
+        final ReadAllConfigurationGroupsInput input = new ReadAllConfigurationGroupsInput();
         final ServiceTask<ReadAllConfigurationGroupsInput> serviceTask = new ServiceTask<ReadAllConfigurationGroupsInput>();
         serviceTask.setInput(input);
         final ServiceResult<ReadAllConfigurationGroupsOutput> serviceResult = service.process(serviceTask);

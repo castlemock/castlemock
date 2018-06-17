@@ -23,16 +23,16 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteSoapMockResponseInput implements Input{
+public final class DeleteSoapMockResponseInput implements Input{
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
     @NotNull
-    private String soapOperationId;
+    private final String soapOperationId;
     @NotNull
-    private String soapMockResponseId;
+    private final String soapMockResponseId;
 
     public DeleteSoapMockResponseInput(String soapProjectId, String soapPortId, String soapOperationId, String soapMockResponseId) {
         this.soapProjectId = soapProjectId;
@@ -45,31 +45,16 @@ public class DeleteSoapMockResponseInput implements Input{
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapPortId() {
         return soapPortId;
-    }
-
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
     }
 
     public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(String soapOperationId) {
-        this.soapOperationId = soapOperationId;
-    }
-
     public String getSoapMockResponseId() {
         return soapMockResponseId;
     }
 
-    public void setSoapMockResponseId(String soapMockResponseId) {
-        this.soapMockResponseId = soapMockResponseId;
-    }
 }

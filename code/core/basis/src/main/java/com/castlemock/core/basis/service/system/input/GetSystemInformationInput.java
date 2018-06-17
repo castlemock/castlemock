@@ -24,7 +24,7 @@ import com.castlemock.core.basis.model.Input;
  * @since 1.7
  * @see com.castlemock.core.basis.service.system.output.GetSystemInformationOutput
  */
-public class GetSystemInformationInput implements Input {
+public final class GetSystemInformationInput implements Input {
 
 
 }

@@ -26,14 +26,14 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateSoapPortsInput implements Input {
+public final class CreateSoapPortsInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private boolean generateResponse;
+    private final boolean generateResponse;
     @NotNull
-    private List<File> files;
+    private final List<File> files;
 
     public CreateSoapPortsInput(String soapProjectId, boolean generateResponse, List<File> files) {
         this.soapProjectId = soapProjectId;
@@ -45,24 +45,12 @@ public class CreateSoapPortsInput implements Input {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public boolean isGenerateResponse() {
         return generateResponse;
     }
 
-    public void setGenerateResponse(boolean generateResponse) {
-        this.generateResponse = generateResponse;
-    }
-
     public List<File> getFiles() {
         return files;
-    }
-
-    public void setFiles(List<File> files) {
-        this.files = files;
     }
 
 }

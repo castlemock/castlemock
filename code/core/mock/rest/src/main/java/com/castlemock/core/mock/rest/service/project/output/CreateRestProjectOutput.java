@@ -24,16 +24,17 @@ import com.castlemock.core.mock.rest.model.project.domain.RestProject;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateRestProjectOutput implements Output {
+public final class CreateRestProjectOutput implements Output {
 
     @NotNull
-    private RestProject savedRestProject;
+    private final RestProject savedRestProject;
+
+    public CreateRestProjectOutput(RestProject savedRestProject) {
+        this.savedRestProject = savedRestProject;
+    }
 
     public RestProject getSavedRestProject() {
         return savedRestProject;
     }
 
-    public void setSavedRestProject(RestProject savedRestProject) {
-        this.savedRestProject = savedRestProject;
-    }
 }

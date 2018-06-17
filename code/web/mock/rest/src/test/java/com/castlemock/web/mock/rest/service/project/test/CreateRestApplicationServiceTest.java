@@ -65,8 +65,6 @@ public class CreateRestApplicationServiceTest {
         //Mockito.when(repository.saveRestApplication(Mockito.anyString(), Mockito.any(RestApplication.class))).thenReturn(restApplication);
 
         final CreateRestApplicationInput input = new CreateRestApplicationInput("ProjectId", restApplication);
-        input.setRestApplication(restApplication);
-        input.setRestProjectId("ProjectId");
 
         final ServiceTask<CreateRestApplicationInput> serviceTask = new ServiceTask<CreateRestApplicationInput>(input);
         final ServiceResult<CreateRestApplicationOutput> serviceResult = service.process(serviceTask);

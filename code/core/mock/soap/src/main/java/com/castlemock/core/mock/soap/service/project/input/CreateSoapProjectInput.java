@@ -24,10 +24,10 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateSoapProjectInput implements Input {
+public final class CreateSoapProjectInput implements Input {
 
     @NotNull
-    private SoapProject soapProject;
+    private final SoapProject soapProject;
 
     public CreateSoapProjectInput(SoapProject soapProject) {
         this.soapProject = soapProject;
@@ -37,7 +37,4 @@ public class CreateSoapProjectInput implements Input {
         return soapProject;
     }
 
-    public void setSoapProject(SoapProject soapProject) {
-        this.soapProject = soapProject;
-    }
 }

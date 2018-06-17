@@ -43,8 +43,7 @@ public class CreateRestProjectService extends AbstractRestProjectService impleme
         final CreateRestProjectInput input = serviceTask.getInput();
         final RestProject restProject = input.getRestProject();
         final RestProject savedRestProject = save(restProject);
-        final CreateRestProjectOutput output = new CreateRestProjectOutput();
-        output.setSavedRestProject(savedRestProject);
+        final CreateRestProjectOutput output = new CreateRestProjectOutput(savedRestProject);
         return createServiceResult(output);
     }
 }

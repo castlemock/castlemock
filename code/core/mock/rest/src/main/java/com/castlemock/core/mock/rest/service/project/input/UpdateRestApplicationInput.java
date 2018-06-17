@@ -24,14 +24,14 @@ import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestApplicationInput implements Input {
+public final class UpdateRestApplicationInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private RestApplication restApplication;
+    private final RestApplication restApplication;
 
     public UpdateRestApplicationInput(String restProjectId, String restApplicationId, RestApplication restApplication) {
         this.restProjectId = restProjectId;
@@ -43,23 +43,12 @@ public class UpdateRestApplicationInput implements Input {
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public RestApplication getRestApplication() {
         return restApplication;
     }
 
-    public void setRestApplication(RestApplication restApplication) {
-        this.restApplication = restApplication;
-    }
 }

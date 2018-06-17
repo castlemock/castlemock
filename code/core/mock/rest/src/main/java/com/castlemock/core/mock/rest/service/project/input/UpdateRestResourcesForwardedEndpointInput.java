@@ -26,18 +26,21 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestResourcesForwardedEndpointInput implements Input {
+public final class UpdateRestResourcesForwardedEndpointInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private List<RestResource> restResources;
+    private final List<RestResource> restResources;
     @NotNull
-    private String forwardedEndpoint;
+    private final String forwardedEndpoint;
 
-    public UpdateRestResourcesForwardedEndpointInput(String restProjectId, String restApplicationId, List<RestResource> restResources, String forwardedEndpoint) {
+    public UpdateRestResourcesForwardedEndpointInput(String restProjectId,
+                                                     String restApplicationId,
+                                                     List<RestResource> restResources,
+                                                     String forwardedEndpoint) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResources = restResources;
@@ -48,31 +51,16 @@ public class UpdateRestResourcesForwardedEndpointInput implements Input {
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public List<RestResource> getRestResources() {
         return restResources;
     }
 
-    public void setRestResources(List<RestResource> restResources) {
-        this.restResources = restResources;
-    }
-
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
 }

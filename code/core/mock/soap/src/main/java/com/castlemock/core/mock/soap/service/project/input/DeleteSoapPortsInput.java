@@ -26,12 +26,12 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteSoapPortsInput implements Input{
+public final class DeleteSoapPortsInput implements Input{
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private List<SoapPort> soapPorts;
+    private final List<SoapPort> soapPorts;
 
     public DeleteSoapPortsInput(String soapProjectId, List<SoapPort> soapPorts) {
         this.soapProjectId = soapProjectId;
@@ -42,15 +42,8 @@ public class DeleteSoapPortsInput implements Input{
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public List<SoapPort> getSoapPorts() {
         return soapPorts;
     }
 
-    public void setSoapPorts(List<SoapPort> soapPorts) {
-        this.soapPorts = soapPorts;
-    }
 }

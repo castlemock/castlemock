@@ -22,9 +22,9 @@ import com.castlemock.core.basis.model.Output;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ExportGraphQLProjectOutput implements Output{
+public final class ExportGraphQLProjectOutput implements Output{
 
-    private String exportedProject;
+    private final String exportedProject;
 
     public ExportGraphQLProjectOutput(String exportedProject) {
         this.exportedProject = exportedProject;
@@ -34,7 +34,4 @@ public class ExportGraphQLProjectOutput implements Output{
         return exportedProject;
     }
 
-    public void setExportedProject(String exportedProject) {
-        this.exportedProject = exportedProject;
-    }
 }

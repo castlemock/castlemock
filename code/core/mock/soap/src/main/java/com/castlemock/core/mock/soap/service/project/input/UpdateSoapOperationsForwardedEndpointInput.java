@@ -26,16 +26,16 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapOperationsForwardedEndpointInput implements Input {
+public final class UpdateSoapOperationsForwardedEndpointInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
     @NotNull
-    private List<SoapOperation> soapOperations;
+    private final List<SoapOperation> soapOperations;
     @NotNull
-    private String forwardedEndpoint;
+    private final String forwardedEndpoint;
 
     public UpdateSoapOperationsForwardedEndpointInput(String soapProjectId, String soapPortId, List<SoapOperation> soapOperations, String forwardedEndpoint) {
         this.soapProjectId = soapProjectId;
@@ -48,31 +48,16 @@ public class UpdateSoapOperationsForwardedEndpointInput implements Input {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapPortId() {
         return soapPortId;
-    }
-
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
     }
 
     public List<SoapOperation> getSoapOperations() {
         return soapOperations;
     }
 
-    public void setSoapOperations(List<SoapOperation> soapOperations) {
-        this.soapOperations = soapOperations;
-    }
-
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
 }

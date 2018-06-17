@@ -26,25 +26,25 @@ import java.util.Map;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class IdentifyRestMethodOutput implements Output{
+public final class IdentifyRestMethodOutput implements Output{
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
 
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
 
     @NotNull
-    private String restResourceId;
+    private final String restResourceId;
 
     @NotNull
-    private String restMethodId;
+    private final String restMethodId;
 
     @NotNull
-    private RestMethod restMethod;
+    private final RestMethod restMethod;
 
     @NotNull
-    private Map<String, String> pathParameters;
+    private final Map<String, String> pathParameters;
 
     public IdentifyRestMethodOutput(String restProjectId, String restApplicationId,
                                     String restResourceId, String restMethodId,
@@ -61,47 +61,24 @@ public class IdentifyRestMethodOutput implements Output{
         return restMethod;
     }
 
-    public void setRestMethod(RestMethod restMethod) {
-        this.restMethod = restMethod;
-    }
-
     public String getRestProjectId() {
         return restProjectId;
-    }
-
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
     }
 
     public String getRestApplicationId() {
         return restApplicationId;
     }
 
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
-    }
-
     public String getRestResourceId() {
         return restResourceId;
-    }
-
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
     }
 
     public String getRestMethodId() {
         return restMethodId;
     }
 
-    public void setRestMethodId(String restMethodId) {
-        this.restMethodId = restMethodId;
-    }
-
     public Map<String, String> getPathParameters() {
         return pathParameters;
     }
 
-    public void setPathParameters(Map<String, String> pathParameters) {
-        this.pathParameters = pathParameters;
-    }
 }

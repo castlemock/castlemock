@@ -25,9 +25,9 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadSoapEventsByOperationIdOutput implements Output {
+public final class ReadSoapEventsByOperationIdOutput implements Output {
 
-    private List<SoapEvent> soapEvents;
+    private final List<SoapEvent> soapEvents;
 
     public ReadSoapEventsByOperationIdOutput(List<SoapEvent> soapEvents) {
         this.soapEvents = soapEvents;
@@ -36,8 +36,5 @@ public class ReadSoapEventsByOperationIdOutput implements Output {
     public List<SoapEvent> getSoapEvents() {
         return soapEvents;
     }
-
-    public void setSoapEvents(List<SoapEvent> soapEvents) {
-        this.soapEvents = soapEvents;
-    }
+    
 }

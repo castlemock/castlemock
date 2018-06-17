@@ -24,16 +24,16 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateRestMethodInput implements Input {
+public final class CreateRestMethodInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private String restResourceId;
+    private final String restResourceId;
     @NotNull
-    private RestMethod restMethod;
+    private final RestMethod restMethod;
 
     public CreateRestMethodInput(String restProjectId, String restApplicationId, String restResourceId, RestMethod restMethod) {
         this.restProjectId = restProjectId;
@@ -46,31 +46,16 @@ public class CreateRestMethodInput implements Input {
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
-    }
-
     public RestMethod getRestMethod() {
         return restMethod;
     }
 
-    public void setRestMethod(RestMethod restMethod) {
-        this.restMethod = restMethod;
-    }
 }

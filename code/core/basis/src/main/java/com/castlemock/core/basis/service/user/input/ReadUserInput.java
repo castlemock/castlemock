@@ -17,8 +17,8 @@
 package com.castlemock.core.basis.service.user.input;
 
 import com.castlemock.core.basis.model.Input;
-import com.castlemock.core.basis.service.user.output.ReadUserOutput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.user.output.ReadUserOutput;
 
 /**
  * Read a user with a specific user id
@@ -26,10 +26,10 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @since 1.0
  * @see ReadUserOutput
  */
-public class ReadUserInput implements Input {
+public final class ReadUserInput implements Input {
 
     @NotNull
-    private String userId;
+    private final String userId;
 
     public ReadUserInput(String userId) {
         this.userId = userId;
@@ -39,7 +39,4 @@ public class ReadUserInput implements Input {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 }

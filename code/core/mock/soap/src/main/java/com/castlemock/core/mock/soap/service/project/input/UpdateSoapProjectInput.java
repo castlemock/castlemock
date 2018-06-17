@@ -24,12 +24,12 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapProjectInput implements Input {
+public final class UpdateSoapProjectInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private SoapProject soapProject;
+    private final SoapProject soapProject;
 
     public UpdateSoapProjectInput(String soapProjectId, SoapProject soapProject) {
         this.soapProjectId = soapProjectId;
@@ -40,15 +40,8 @@ public class UpdateSoapProjectInput implements Input {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public SoapProject getSoapProject() {
         return soapProject;
     }
 
-    public void setSoapProject(SoapProject soapProject) {
-        this.soapProject = soapProject;
-    }
 }

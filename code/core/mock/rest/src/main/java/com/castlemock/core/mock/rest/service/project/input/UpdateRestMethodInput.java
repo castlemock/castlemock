@@ -24,20 +24,24 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestMethodInput implements Input {
+public final class UpdateRestMethodInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private String restResourceId;
+    private final String restResourceId;
     @NotNull
-    private String restMethodId;
+    private final String restMethodId;
     @NotNull
-    private RestMethod restMethod;
+    private final RestMethod restMethod;
 
-    public UpdateRestMethodInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, RestMethod restMethod) {
+    public UpdateRestMethodInput(String restProjectId,
+                                 String restApplicationId,
+                                 String restResourceId,
+                                 String restMethodId,
+                                 RestMethod restMethod) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -49,39 +53,20 @@ public class UpdateRestMethodInput implements Input {
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
-    }
-
     public String getRestMethodId() {
         return restMethodId;
-    }
-
-    public void setRestMethodId(String restMethodId) {
-        this.restMethodId = restMethodId;
     }
 
     public RestMethod getRestMethod() {
         return restMethod;
     }
 
-    public void setRestMethod(RestMethod restMethod) {
-        this.restMethod = restMethod;
-    }
 }

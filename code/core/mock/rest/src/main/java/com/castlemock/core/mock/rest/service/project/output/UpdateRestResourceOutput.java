@@ -24,10 +24,10 @@ import com.castlemock.core.mock.rest.model.project.domain.RestResource;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestResourceOutput implements Output {
+public final class UpdateRestResourceOutput implements Output {
 
     @NotNull
-    private RestResource updatedRestResource;
+    private final RestResource updatedRestResource;
 
     public UpdateRestResourceOutput(RestResource updatedRestResource) {
         this.updatedRestResource = updatedRestResource;
@@ -37,7 +37,4 @@ public class UpdateRestResourceOutput implements Output {
         return updatedRestResource;
     }
 
-    public void setUpdatedRestResource(RestResource updatedRestResource) {
-        this.updatedRestResource = updatedRestResource;
-    }
 }

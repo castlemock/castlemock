@@ -24,18 +24,21 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class IdentifyRestMethodInput implements Input {
+public final class IdentifyRestMethodInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private String restResourceUri;
+    private final String restResourceUri;
     @NotNull
-    private HttpMethod httpMethod;
+    private final HttpMethod httpMethod;
 
-    public IdentifyRestMethodInput(String restProjectId, String restApplicationId, String restResourceUri, HttpMethod httpMethod) {
+    public IdentifyRestMethodInput(String restProjectId,
+                                   String restApplicationId,
+                                   String restResourceUri,
+                                   HttpMethod httpMethod) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceUri = restResourceUri;
@@ -46,31 +49,15 @@ public class IdentifyRestMethodInput implements Input {
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public String getRestResourceUri() {
         return restResourceUri;
     }
 
-    public void setRestResourceUri(String restResourceUri) {
-        this.restResourceUri = restResourceUri;
-    }
-
     public HttpMethod getHttpMethod() {
         return httpMethod;
-    }
-
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
     }
 }

@@ -26,16 +26,18 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestApplicationsForwardedEndpointInput implements Input {
+public final class UpdateRestApplicationsForwardedEndpointInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private List<RestApplication> restApplications;
+    private final List<RestApplication> restApplications;
     @NotNull
-    private String forwardedEndpoint;
+    private final String forwardedEndpoint;
 
-    public UpdateRestApplicationsForwardedEndpointInput(String restProjectId, List<RestApplication> restApplications, String forwardedEndpoint) {
+    public UpdateRestApplicationsForwardedEndpointInput(String restProjectId,
+                                                        List<RestApplication> restApplications,
+                                                        String forwardedEndpoint) {
         this.restProjectId = restProjectId;
         this.restApplications = restApplications;
         this.forwardedEndpoint = forwardedEndpoint;
@@ -45,23 +47,12 @@ public class UpdateRestApplicationsForwardedEndpointInput implements Input {
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public List<RestApplication> getRestApplications() {
         return restApplications;
-    }
-
-    public void setRestApplications(List<RestApplication> restApplications) {
-        this.restApplications = restApplications;
     }
 
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
 }

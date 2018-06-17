@@ -23,10 +23,10 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ImportRestProjectInput implements Input {
+public final class ImportRestProjectInput implements Input {
 
     @NotNull
-    private String projectRaw;
+    private final String projectRaw;
 
     public ImportRestProjectInput(String projectRaw) {
         this.projectRaw = projectRaw;
@@ -36,7 +36,4 @@ public class ImportRestProjectInput implements Input {
         return projectRaw;
     }
 
-    public void setProjectRaw(String projectRaw) {
-        this.projectRaw = projectRaw;
-    }
 }

@@ -26,20 +26,24 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestMethodsForwardedEndpointInput implements Input {
+public final class UpdateRestMethodsForwardedEndpointInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private String restResourceId;
+    private final String restResourceId;
     @NotNull
-    private List<RestMethod> restMethods;
+    private final List<RestMethod> restMethods;
     @NotNull
-    private String forwardedEndpoint;
+    private final String forwardedEndpoint;
 
-    public UpdateRestMethodsForwardedEndpointInput(String restProjectId, String restApplicationId, String restResourceId, List<RestMethod> restMethods, String forwardedEndpoint) {
+    public UpdateRestMethodsForwardedEndpointInput(String restProjectId,
+                                                   String restApplicationId,
+                                                   String restResourceId,
+                                                   List<RestMethod> restMethods,
+                                                   String forwardedEndpoint) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -51,39 +55,20 @@ public class UpdateRestMethodsForwardedEndpointInput implements Input {
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
-    }
-
     public List<RestMethod> getRestMethods() {
         return restMethods;
-    }
-
-    public void setRestMethods(List<RestMethod> restMethods) {
-        this.restMethods = restMethods;
     }
 
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
 }

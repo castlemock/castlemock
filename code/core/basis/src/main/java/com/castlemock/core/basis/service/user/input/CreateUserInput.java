@@ -18,8 +18,8 @@ package com.castlemock.core.basis.service.user.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.output.CreateUserOutput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.user.output.CreateUserOutput;
 
 /**
  * Creates a new user
@@ -27,12 +27,12 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @since 1.0
  * @see CreateUserOutput
  */
-public class CreateUserInput implements Input {
+public final class CreateUserInput implements Input {
 
     @NotNull
-    private User user;
+    private final User user;
 
-    public CreateUserInput(User user) {
+    public CreateUserInput(final User user) {
         this.user = user;
     }
 
@@ -40,7 +40,4 @@ public class CreateUserInput implements Input {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

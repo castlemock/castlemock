@@ -26,16 +26,16 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteSoapMockResponsesInput implements Input{
+public final class DeleteSoapMockResponsesInput implements Input{
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
     @NotNull
-    private String soapOperationId;
+    private final String soapOperationId;
     @NotNull
-    private List<SoapMockResponse> mockResponses;
+    private final List<SoapMockResponse> mockResponses;
 
     public DeleteSoapMockResponsesInput(String soapProjectId, String soapPortId, String soapOperationId, List<SoapMockResponse> mockResponses) {
         this.soapProjectId = soapProjectId;
@@ -48,31 +48,16 @@ public class DeleteSoapMockResponsesInput implements Input{
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapPortId() {
         return soapPortId;
-    }
-
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
     }
 
     public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(String soapOperationId) {
-        this.soapOperationId = soapOperationId;
-    }
-
     public List<SoapMockResponse> getMockResponses() {
         return mockResponses;
     }
 
-    public void setMockResponses(List<SoapMockResponse> mockResponses) {
-        this.mockResponses = mockResponses;
-    }
 }

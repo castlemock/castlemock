@@ -59,8 +59,7 @@ public class CreateUserService extends AbstractUserService implements Service<Cr
         user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
 
         final User savedUser = save(user);
-        final CreateUserOutput output = new CreateUserOutput();
-        output.setSavedUser(savedUser);
+        final CreateUserOutput output = new CreateUserOutput(savedUser);
         return createServiceResult(output);
     }
 }

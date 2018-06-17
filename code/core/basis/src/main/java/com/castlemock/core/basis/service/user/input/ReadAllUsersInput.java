@@ -25,5 +25,5 @@ import com.castlemock.core.basis.service.user.output.ReadAllUsersOutput;
  * @since 1.0
  * @see ReadAllUsersOutput
  */
-public class ReadAllUsersInput implements Input {
+public final class ReadAllUsersInput implements Input {
 }

@@ -25,18 +25,18 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class IdentifySoapOperationInput implements Input {
+public final class IdentifySoapOperationInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapOperationIdentifier;
+    private final String soapOperationIdentifier;
     @NotNull
-    private String uri;
+    private final String uri;
     @NotNull
-    private HttpMethod httpMethod;
+    private final HttpMethod httpMethod;
     @NotNull
-    private SoapVersion type;
+    private final SoapVersion type;
 
     public IdentifySoapOperationInput(String soapProjectId, String soapOperationIdentifier, String uri, HttpMethod httpMethod, SoapVersion type) {
         this.soapProjectId = soapProjectId;
@@ -50,39 +50,20 @@ public class IdentifySoapOperationInput implements Input {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapOperationIdentifier() {
         return soapOperationIdentifier;
-    }
-
-    public void setSoapOperationIdentifier(String soapOperationIdentifier) {
-        this.soapOperationIdentifier = soapOperationIdentifier;
     }
 
     public String getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
     public HttpMethod getHttpMethod() {
         return httpMethod;
-    }
-
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
     }
 
     public SoapVersion getType() {
         return type;
     }
 
-    public void setType(SoapVersion type) {
-        this.type = type;
-    }
 }

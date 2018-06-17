@@ -23,12 +23,12 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteSoapPortInput implements Input{
+public final class DeleteSoapPortInput implements Input{
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
 
     public DeleteSoapPortInput(String soapProjectId, String soapPortId) {
         this.soapProjectId = soapProjectId;
@@ -39,15 +39,8 @@ public class DeleteSoapPortInput implements Input{
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapPortId() {
         return soapPortId;
     }
 
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
-    }
 }

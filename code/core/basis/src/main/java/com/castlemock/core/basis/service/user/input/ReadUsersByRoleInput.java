@@ -18,8 +18,8 @@ package com.castlemock.core.basis.service.user.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.user.domain.Role;
-import com.castlemock.core.basis.service.user.output.ReadUsersByRoleOutput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.user.output.ReadUsersByRoleOutput;
 
 /**
  * Read users with a specific role
@@ -27,10 +27,10 @@ import com.castlemock.core.basis.model.validation.NotNull;
  * @since 1.0
  * @see ReadUsersByRoleOutput
  */
-public class ReadUsersByRoleInput implements Input {
+public final class ReadUsersByRoleInput implements Input {
 
     @NotNull
-    private Role role;
+    private final Role role;
 
     public ReadUsersByRoleInput(Role role) {
         this.role = role;
@@ -40,7 +40,4 @@ public class ReadUsersByRoleInput implements Input {
         return role;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
 }

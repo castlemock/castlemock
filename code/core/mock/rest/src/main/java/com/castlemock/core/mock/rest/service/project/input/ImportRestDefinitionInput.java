@@ -27,17 +27,17 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ImportRestDefinitionInput implements Input {
+public final class ImportRestDefinitionInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private boolean generateResponse;
+    private final boolean generateResponse;
     @NotNull
-    private RestDefinitionType definitionType;
+    private final RestDefinitionType definitionType;
 
-    private List<File> files;
-    private String location;
+    private final List<File> files;
+    private final String location;
 
     public ImportRestDefinitionInput(final String restProjectId, final List<File> files, String location,
                                      final boolean generateResponse, final RestDefinitionType definitionType) {
@@ -52,39 +52,19 @@ public class ImportRestDefinitionInput implements Input {
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public List<File> getFiles() {
         return files;
-    }
-
-    public void setFiles(List<File> files) {
-        this.files = files;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public boolean isGenerateResponse() {
         return generateResponse;
     }
 
-    public void setGenerateResponse(boolean generateResponse) {
-        this.generateResponse = generateResponse;
-    }
-
     public RestDefinitionType getDefinitionType() {
         return definitionType;
-    }
-
-    public void setDefinitionType(RestDefinitionType definitionType) {
-        this.definitionType = definitionType;
     }
 }

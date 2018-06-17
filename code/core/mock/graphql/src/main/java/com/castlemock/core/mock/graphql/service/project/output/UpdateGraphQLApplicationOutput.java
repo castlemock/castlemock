@@ -24,10 +24,10 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class UpdateGraphQLApplicationOutput implements Output {
+public final class UpdateGraphQLApplicationOutput implements Output {
 
     @NotNull
-    private GraphQLApplication updatedGraphQLApplication;
+    private final GraphQLApplication updatedGraphQLApplication;
 
     public UpdateGraphQLApplicationOutput(GraphQLApplication updatedGraphQLApplication) {
         this.updatedGraphQLApplication = updatedGraphQLApplication;
@@ -37,7 +37,4 @@ public class UpdateGraphQLApplicationOutput implements Output {
         return updatedGraphQLApplication;
     }
 
-    public void setUpdatedGraphQLApplication(GraphQLApplication updatedGraphQLApplication) {
-        this.updatedGraphQLApplication = updatedGraphQLApplication;
-    }
 }

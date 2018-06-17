@@ -24,16 +24,18 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class CreateGraphQLProjectOutput implements Output {
+public final class CreateGraphQLProjectOutput implements Output {
 
     @NotNull
-    private GraphQLProject savedGraphQLProject;
+    private final GraphQLProject savedGraphQLProject;
+
+    public CreateGraphQLProjectOutput(GraphQLProject savedGraphQLProject) {
+        this.savedGraphQLProject = savedGraphQLProject;
+    }
 
     public GraphQLProject getSavedGraphQLProject() {
         return savedGraphQLProject;
     }
 
-    public void setSavedGraphQLProject(GraphQLProject savedGraphQLProject) {
-        this.savedGraphQLProject = savedGraphQLProject;
-    }
+
 }

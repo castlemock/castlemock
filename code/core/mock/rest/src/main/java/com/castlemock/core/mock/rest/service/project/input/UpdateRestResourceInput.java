@@ -24,18 +24,21 @@ import com.castlemock.core.mock.rest.model.project.domain.RestResource;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestResourceInput implements Input {
+public final class UpdateRestResourceInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private String restResourceId;
+    private final String restResourceId;
     @NotNull
-    private RestResource restResource;
+    private final RestResource restResource;
 
-    public UpdateRestResourceInput(String restProjectId, String restApplicationId, String restResourceId, RestResource restResource) {
+    public UpdateRestResourceInput(String restProjectId,
+                                   String restApplicationId,
+                                   String restResourceId,
+                                   RestResource restResource) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -46,31 +49,16 @@ public class UpdateRestResourceInput implements Input {
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
-    }
-
     public RestResource getRestResource() {
         return restResource;
     }
 
-    public void setRestResource(RestResource restResource) {
-        this.restResource = restResource;
-    }
 }

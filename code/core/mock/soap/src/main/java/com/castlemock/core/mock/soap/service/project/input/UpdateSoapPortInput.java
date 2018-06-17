@@ -24,14 +24,14 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapPortInput implements Input {
+public final class UpdateSoapPortInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
     @NotNull
-    private SoapPort updatedSoapPort;
+    private final SoapPort updatedSoapPort;
 
     public UpdateSoapPortInput(String soapProjectId, String soapPortId, SoapPort updatedSoapPort) {
         this.soapProjectId = soapProjectId;

@@ -58,8 +58,7 @@ public class SoapProjectServiceAdapterTest {
     @Test
     public void testCreate(){
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
-        final CreateSoapProjectOutput output = new CreateSoapProjectOutput();
-        output.setSavedSoapProject(project);
+        final CreateSoapProjectOutput output = new CreateSoapProjectOutput(project);
 
         Mockito.when(serviceProcessor.process(Mockito.any(CreateSoapProjectInput.class))).thenReturn(output);
 

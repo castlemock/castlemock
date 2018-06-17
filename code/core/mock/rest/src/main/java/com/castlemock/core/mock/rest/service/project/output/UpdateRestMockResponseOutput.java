@@ -24,10 +24,10 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestMockResponseOutput implements Output {
+public final class UpdateRestMockResponseOutput implements Output {
 
     @NotNull
-    private RestMockResponse updatedRestMockResponse;
+    private final RestMockResponse updatedRestMockResponse;
 
     public UpdateRestMockResponseOutput(RestMockResponse updatedRestMockResponse) {
         this.updatedRestMockResponse = updatedRestMockResponse;
@@ -37,7 +37,4 @@ public class UpdateRestMockResponseOutput implements Output {
         return updatedRestMockResponse;
     }
 
-    public void setUpdatedRestMockResponse(RestMockResponse updatedRestMockResponse) {
-        this.updatedRestMockResponse = updatedRestMockResponse;
-    }
 }

@@ -16,8 +16,8 @@
 
 package com.castlemock.core.mock.rest.model.event.domain;
 
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpParameter;
 
 import javax.xml.bind.annotation.XmlElement;

@@ -23,9 +23,9 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadSoapOperationOutput implements Output{
+public final class ReadSoapOperationOutput implements Output{
 
-    private SoapOperation soapOperation;
+    private final SoapOperation soapOperation;
 
     public ReadSoapOperationOutput(SoapOperation soapOperation) {
         this.soapOperation = soapOperation;
@@ -35,7 +35,4 @@ public class ReadSoapOperationOutput implements Output{
         return soapOperation;
     }
 
-    public void setSoapOperation(SoapOperation soapOperation) {
-        this.soapOperation = soapOperation;
-    }
 }

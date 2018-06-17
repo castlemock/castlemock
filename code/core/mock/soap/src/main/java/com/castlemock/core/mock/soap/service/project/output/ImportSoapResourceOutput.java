@@ -24,7 +24,7 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ImportSoapResourceOutput implements Output{
+public final class ImportSoapResourceOutput implements Output{
 
     @NotNull
     private final SoapResource resource;

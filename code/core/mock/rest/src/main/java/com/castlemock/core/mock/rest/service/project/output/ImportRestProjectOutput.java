@@ -23,7 +23,7 @@ import com.castlemock.core.mock.rest.model.project.domain.RestProject;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ImportRestProjectOutput implements Output{
+public final class ImportRestProjectOutput implements Output{
 
     private final RestProject project;
 

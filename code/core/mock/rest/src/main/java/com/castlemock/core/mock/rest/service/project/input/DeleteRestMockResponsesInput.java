@@ -26,20 +26,24 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class DeleteRestMockResponsesInput implements Input{
+public final class DeleteRestMockResponsesInput implements Input{
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private String restResourceId;
+    private final String restResourceId;
     @NotNull
-    private String restMethodId;
+    private final String restMethodId;
     @NotNull
-    private List<RestMockResponse> restMockResponses;
+    private final List<RestMockResponse> restMockResponses;
 
-    public DeleteRestMockResponsesInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, List<RestMockResponse> restMockResponses) {
+    public DeleteRestMockResponsesInput(String restProjectId,
+                                        String restApplicationId,
+                                        String restResourceId,
+                                        String restMethodId,
+                                        List<RestMockResponse> restMockResponses) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -51,39 +55,20 @@ public class DeleteRestMockResponsesInput implements Input{
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
-    }
-
     public String getRestMethodId() {
         return restMethodId;
-    }
-
-    public void setRestMethodId(String restMethodId) {
-        this.restMethodId = restMethodId;
     }
 
     public List<RestMockResponse> getRestMockResponses() {
         return restMockResponses;
     }
 
-    public void setRestMockResponses(List<RestMockResponse> restMockResponses) {
-        this.restMockResponses = restMockResponses;
-    }
 }

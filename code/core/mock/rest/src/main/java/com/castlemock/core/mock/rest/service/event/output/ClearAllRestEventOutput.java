@@ -22,6 +22,6 @@ import com.castlemock.core.basis.model.Output;
  * @author Karl Dahlgren
  * @since 1.7
  */
-public class ClearAllRestEventOutput implements Output {
+public final class ClearAllRestEventOutput implements Output {
 
 }

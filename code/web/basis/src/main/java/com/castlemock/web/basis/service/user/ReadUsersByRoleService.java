@@ -46,8 +46,7 @@ public class ReadUsersByRoleService extends AbstractUserService implements Servi
         final ReadUsersByRoleInput input = serviceTask.getInput();
         final Role role = input.getRole();
         final List<User> users = findByRole(role);
-        final ReadUsersByRoleOutput output = new ReadUsersByRoleOutput();
-        output.setUsers(users);
+        final ReadUsersByRoleOutput output = new ReadUsersByRoleOutput(users);
         return createServiceResult(output);
     }
 }

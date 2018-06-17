@@ -23,9 +23,9 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
  * @author Karl Dahlgren
  * @since 1.16
  */
-public class ReadSoapResourceOutput implements Output{
+public final class ReadSoapResourceOutput implements Output{
 
-    private SoapResource soapResource;
+    private final SoapResource soapResource;
 
     public ReadSoapResourceOutput(SoapResource soapResource) {
         this.soapResource = soapResource;
@@ -35,7 +35,4 @@ public class ReadSoapResourceOutput implements Output{
         return soapResource;
     }
 
-    public void setSoapResource(SoapResource soapResource) {
-        this.soapResource = soapResource;
-    }
 }

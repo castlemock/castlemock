@@ -24,10 +24,10 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLMutation;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ReadGraphQLMutationOutput implements Output{
+public final class ReadGraphQLMutationOutput implements Output{
 
     @NotNull
-    private GraphQLMutation graphQLMutation;
+    private final GraphQLMutation graphQLMutation;
 
     public ReadGraphQLMutationOutput(GraphQLMutation graphQLMutation) {
         this.graphQLMutation = graphQLMutation;
@@ -37,7 +37,4 @@ public class ReadGraphQLMutationOutput implements Output{
         return graphQLMutation;
     }
 
-    public void setGraphQLMutation(GraphQLMutation graphQLMutation) {
-        this.graphQLMutation = graphQLMutation;
-    }
 }

@@ -43,8 +43,7 @@ public class ReadAllConfigurationGroupsService extends AbstractConfigurationGrou
     @Override
     public ServiceResult<ReadAllConfigurationGroupsOutput> process(final ServiceTask<ReadAllConfigurationGroupsInput> serviceTask) {
         final List<ConfigurationGroup> configurationGroups = findAll();
-        final ReadAllConfigurationGroupsOutput output = new ReadAllConfigurationGroupsOutput();
-        output.setConfigurationGroups(configurationGroups);
+        final ReadAllConfigurationGroupsOutput output = new ReadAllConfigurationGroupsOutput(configurationGroups);
         return createServiceResult(output);
     }
 }

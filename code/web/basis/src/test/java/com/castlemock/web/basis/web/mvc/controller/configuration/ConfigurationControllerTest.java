@@ -70,8 +70,7 @@ public class ConfigurationControllerTest extends AbstractControllerTest {
         final ConfigurationGroup configurationGroupDto = ConfigurationGroupDtoGenerator.generateConfigurationGroupDto();
         configurationGroups.add(configurationGroupDto);
 
-        final ReadAllConfigurationGroupsOutput readAllConfigurationGroupsOutput = new ReadAllConfigurationGroupsOutput();
-        readAllConfigurationGroupsOutput.setConfigurationGroups(configurationGroups);
+        final ReadAllConfigurationGroupsOutput readAllConfigurationGroupsOutput = new ReadAllConfigurationGroupsOutput(configurationGroups);
 
         Mockito.when(serviceProcessor.process(any(ReadAllConfigurationGroupsInput.class))).thenReturn(readAllConfigurationGroupsOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);

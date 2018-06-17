@@ -24,10 +24,10 @@ import com.castlemock.core.mock.rest.model.project.domain.RestResource;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateRestResourceOutput implements Output {
+public final class CreateRestResourceOutput implements Output {
 
     @NotNull
-    private RestResource createdRestResource;
+    private final RestResource createdRestResource;
 
     public CreateRestResourceOutput(RestResource createdRestResource) {
         this.createdRestResource = createdRestResource;
@@ -37,7 +37,4 @@ public class CreateRestResourceOutput implements Output {
         return createdRestResource;
     }
 
-    public void setCreatedRestResource(RestResource createdRestResource) {
-        this.createdRestResource = createdRestResource;
-    }
 }

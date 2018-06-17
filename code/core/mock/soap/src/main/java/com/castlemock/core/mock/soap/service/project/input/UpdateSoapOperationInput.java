@@ -24,18 +24,21 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapOperationInput implements Input {
+public final class UpdateSoapOperationInput implements Input {
 
     @NotNull
-    private String soapProjectId;
+    private final String soapProjectId;
     @NotNull
-    private String soapPortId;
+    private final String soapPortId;
     @NotNull
-    private String soapOperationId;
+    private final String soapOperationId;
     @NotNull
-    private SoapOperation updatedSoapOperation;
+    private final SoapOperation updatedSoapOperation;
 
-    public UpdateSoapOperationInput(String soapProjectId, String soapPortId, String soapOperationId, SoapOperation updatedSoapOperation) {
+    public UpdateSoapOperationInput(String soapProjectId,
+                                    String soapPortId,
+                                    String soapOperationId,
+                                    SoapOperation updatedSoapOperation) {
         this.soapProjectId = soapProjectId;
         this.soapPortId = soapPortId;
         this.soapOperationId = soapOperationId;
@@ -46,31 +49,16 @@ public class UpdateSoapOperationInput implements Input {
         return soapProjectId;
     }
 
-    public void setSoapProjectId(String soapProjectId) {
-        this.soapProjectId = soapProjectId;
-    }
-
     public String getSoapPortId() {
         return soapPortId;
-    }
-
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
     }
 
     public String getSoapOperationId() {
         return soapOperationId;
     }
 
-    public void setSoapOperationId(String soapOperationId) {
-        this.soapOperationId = soapOperationId;
-    }
-
     public SoapOperation getUpdatedSoapOperation() {
         return updatedSoapOperation;
     }
 
-    public void setUpdatedSoapOperation(SoapOperation updatedSoapOperation) {
-        this.updatedSoapOperation = updatedSoapOperation;
-    }
 }

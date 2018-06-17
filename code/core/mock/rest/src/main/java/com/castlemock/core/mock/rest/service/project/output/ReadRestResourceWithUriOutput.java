@@ -24,10 +24,10 @@ import com.castlemock.core.mock.rest.model.project.domain.RestResource;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ReadRestResourceWithUriOutput implements Output{
+public final class ReadRestResourceWithUriOutput implements Output{
 
     @NotNull
-    private RestResource restResource;
+    private final RestResource restResource;
 
     public ReadRestResourceWithUriOutput(RestResource restResource) {
         this.restResource = restResource;
@@ -37,7 +37,4 @@ public class ReadRestResourceWithUriOutput implements Output{
         return restResource;
     }
 
-    public void setRestResource(RestResource restResource) {
-        this.restResource = restResource;
-    }
 }

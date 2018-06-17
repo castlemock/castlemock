@@ -23,7 +23,7 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class ImportGraphQLProjectOutput implements Output{
+public final class ImportGraphQLProjectOutput implements Output{
 
     private final GraphQLProject project;
 

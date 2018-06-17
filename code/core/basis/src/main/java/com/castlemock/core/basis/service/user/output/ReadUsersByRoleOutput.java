@@ -18,8 +18,8 @@ package com.castlemock.core.basis.service.user.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.input.ReadUsersByRoleInput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.user.input.ReadUsersByRoleInput;
 
 import java.util.List;
 
@@ -28,16 +28,17 @@ import java.util.List;
  * @since 1.0
  * @see ReadUsersByRoleInput
  */
-public class ReadUsersByRoleOutput implements Output {
+public final class ReadUsersByRoleOutput implements Output {
 
     @NotNull
-    private List<User> users;
+    private final List<User> users;
+
+    public ReadUsersByRoleOutput(List<User> users) {
+        this.users = users;
+    }
 
     public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
 }

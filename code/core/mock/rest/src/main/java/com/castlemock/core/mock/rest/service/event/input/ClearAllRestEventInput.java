@@ -22,5 +22,5 @@ import com.castlemock.core.basis.model.Input;
  * @author Karl Dahlgren
  * @since 1.7
  */
-public class ClearAllRestEventInput implements Input {
+public final class ClearAllRestEventInput implements Input {
 }

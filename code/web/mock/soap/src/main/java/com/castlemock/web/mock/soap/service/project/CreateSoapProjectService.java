@@ -43,8 +43,7 @@ public class CreateSoapProjectService extends AbstractSoapProjectService impleme
         final CreateSoapProjectInput input = serviceTask.getInput();
         final SoapProject soapProject = input.getSoapProject();
         final SoapProject savedSoapProject = save(soapProject);
-        final CreateSoapProjectOutput output = new CreateSoapProjectOutput();
-        output.setSavedSoapProject(savedSoapProject);
+        final CreateSoapProjectOutput output = new CreateSoapProjectOutput(savedSoapProject);
         return createServiceResult(output);
     }
 }

@@ -43,8 +43,7 @@ public class CreateGraphQLProjectService extends AbstractGraphQLProjectService i
         final CreateGraphQLProjectInput input = serviceTask.getInput();
         final GraphQLProject restProject = input.getGraphQLProject();
         final GraphQLProject savedGraphQLProject = save(restProject);
-        final CreateGraphQLProjectOutput output = new CreateGraphQLProjectOutput();
-        output.setSavedGraphQLProject(savedGraphQLProject);
+        final CreateGraphQLProjectOutput output = new CreateGraphQLProjectOutput(savedGraphQLProject);
         return createServiceResult(output);
     }
 }

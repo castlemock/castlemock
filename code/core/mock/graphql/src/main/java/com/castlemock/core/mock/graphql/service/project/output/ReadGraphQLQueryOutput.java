@@ -24,10 +24,10 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLQuery;
  * @author Karl Dahlgren
  * @since 1.19
  */
-public class ReadGraphQLQueryOutput implements Output{
+public final class ReadGraphQLQueryOutput implements Output{
 
     @NotNull
-    private GraphQLQuery graphQLQuery;
+    private final GraphQLQuery graphQLQuery;
 
     public ReadGraphQLQueryOutput(GraphQLQuery graphQLQuery) {
         this.graphQLQuery = graphQLQuery;
@@ -37,7 +37,4 @@ public class ReadGraphQLQueryOutput implements Output{
         return graphQLQuery;
     }
 
-    public void setGraphQLQuery(GraphQLQuery graphQLQuery) {
-        this.graphQLQuery = graphQLQuery;
-    }
 }

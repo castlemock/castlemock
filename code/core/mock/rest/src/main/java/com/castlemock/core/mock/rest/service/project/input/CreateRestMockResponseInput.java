@@ -24,20 +24,24 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateRestMockResponseInput implements Input {
+public final class CreateRestMockResponseInput implements Input {
 
     @NotNull
-    private String restProjectId;
+    private final String restProjectId;
     @NotNull
-    private String restApplicationId;
+    private final String restApplicationId;
     @NotNull
-    private String restResourceId;
+    private final String restResourceId;
     @NotNull
-    private String restMethodId;
+    private final String restMethodId;
     @NotNull
-    private RestMockResponse restMockResponse;
+    private final RestMockResponse restMockResponse;
 
-    public CreateRestMockResponseInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, RestMockResponse restMockResponse) {
+    public CreateRestMockResponseInput(String restProjectId,
+                                       String restApplicationId,
+                                       String restResourceId,
+                                       String restMethodId,
+                                       RestMockResponse restMockResponse) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -49,39 +53,20 @@ public class CreateRestMockResponseInput implements Input {
         return restProjectId;
     }
 
-    public void setRestProjectId(String restProjectId) {
-        this.restProjectId = restProjectId;
-    }
-
     public String getRestApplicationId() {
         return restApplicationId;
-    }
-
-    public void setRestApplicationId(String restApplicationId) {
-        this.restApplicationId = restApplicationId;
     }
 
     public String getRestResourceId() {
         return restResourceId;
     }
 
-    public void setRestResourceId(String restResourceId) {
-        this.restResourceId = restResourceId;
-    }
-
     public String getRestMethodId() {
         return restMethodId;
-    }
-
-    public void setRestMethodId(String restMethodId) {
-        this.restMethodId = restMethodId;
     }
 
     public RestMockResponse getRestMockResponse() {
         return restMockResponse;
     }
 
-    public void setRestMockResponse(RestMockResponse restMockResponse) {
-        this.restMockResponse = restMockResponse;
-    }
 }

@@ -24,10 +24,10 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class CreateRestMethodOutput implements Output {
+public final class CreateRestMethodOutput implements Output {
 
     @NotNull
-    private RestMethod createdRestMethod;
+    private final RestMethod createdRestMethod;
 
     public CreateRestMethodOutput(RestMethod createdRestMethod) {
         this.createdRestMethod = createdRestMethod;
@@ -37,7 +37,4 @@ public class CreateRestMethodOutput implements Output {
         return createdRestMethod;
     }
 
-    public void setCreatedRestMethod(RestMethod createdRestMethod) {
-        this.createdRestMethod = createdRestMethod;
-    }
 }

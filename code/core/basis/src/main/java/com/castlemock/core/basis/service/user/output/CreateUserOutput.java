@@ -18,24 +18,25 @@ package com.castlemock.core.basis.service.user.output;
 
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.input.CreateUserInput;
 import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.basis.service.user.input.CreateUserInput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  * @see CreateUserInput
  */
-public class CreateUserOutput implements Output {
+public final class CreateUserOutput implements Output {
 
     @NotNull
-    private User savedUser;
+    private final User savedUser;
+
+    public CreateUserOutput(User savedUser) {
+        this.savedUser = savedUser;
+    }
 
     public User getSavedUser() {
         return savedUser;
     }
 
-    public void setSavedUser(User savedUser) {
-        this.savedUser = savedUser;
-    }
 }
