@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.web.mock.controller;
 
-import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import com.castlemock.web.basis.web.view.controller.AbstractViewController;
 import com.castlemock.web.mock.rest.model.RestErrorMessage;
 import com.castlemock.web.mock.rest.model.RestException;
 import org.springframework.core.Ordered;

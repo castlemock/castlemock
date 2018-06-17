@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.model;
 
 
-import com.castlemock.web.basis.web.mvc.controller.ViewControllerAdvice;
+import com.castlemock.web.basis.web.view.controller.ViewControllerAdvice;
 import com.castlemock.web.mock.rest.web.mock.controller.RestControllerAdvice;
 import com.castlemock.web.mock.rest.web.mock.controller.RestServiceController;
 

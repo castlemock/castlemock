@@ -14,44 +14,48 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.web.view.controller.event;
+package com.castlemock.web.basis.web.view.controller.event;
 
-import com.castlemock.core.mock.rest.service.event.input.ReadRestEventInput;
-import com.castlemock.core.mock.rest.service.event.output.ReadRestEventOutput;
+import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.web.basis.service.event.EventServiceFacadeImpl;
+import com.castlemock.web.basis.web.view.controller.AbstractViewController;
 import com.castlemock.web.basis.web.view.controller.MenuItem;
-import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /**
- * The controller RestEventController provides functionality to retrieve REST event
+ * The controller LogController provides functionality to retrieve logged information
  * and display it to the user
  * @author Karl Dahlgren
  * @since 1.0
  */
 @Controller
 @Scope("request")
-@RequestMapping("/web")
-public class RestEventController extends AbstractRestViewController {
+@RequestMapping("/web/event")
+public class EventOverviewController extends AbstractViewController {
 
-    private static final String PAGE = "mock/rest/event/restEvent";
+    private static final String PAGE = "basis/event/eventOverview";
+
+    @Autowired
+    private EventServiceFacadeImpl eventServiceFacade;
 
     /**
-     * The method provides the functionality to retrieve a REST event.
-     * @param eventId The id of the event that should be retrieved
-     * @return View with the specific REST event
+     * The method creates a view that displays all the logged information to the user
+     * @return View with all the logged information
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "rest/event/{eventId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String eventId) {
-        final ReadRestEventOutput output = serviceProcessor.process(new ReadRestEventInput(eventId));
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView defaultPage() {
+        final List<Event> events = eventServiceFacade.findAll();
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(EVENT, output.getRestEvent());
+        model.addObject(EVENTS, events);
         model.addObject(SELECTED_MENU, MenuItem.EVENT);
         return model;
     }

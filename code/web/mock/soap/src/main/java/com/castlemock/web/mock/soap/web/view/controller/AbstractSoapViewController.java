@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.web.view.controller;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import com.castlemock.web.basis.web.view.controller.AbstractViewController;
 import org.apache.log4j.Logger;
 
 import java.util.LinkedList;

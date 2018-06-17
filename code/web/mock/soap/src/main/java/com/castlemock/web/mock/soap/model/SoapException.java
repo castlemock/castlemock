@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.model;
 
 
-import com.castlemock.web.basis.web.mvc.controller.ViewControllerAdvice;
+import com.castlemock.web.basis.web.view.controller.ViewControllerAdvice;
 import com.castlemock.web.mock.soap.web.soap.controller.SoapControllerAdvice;
 import com.castlemock.web.mock.soap.web.soap.controller.SoapServiceController;
 

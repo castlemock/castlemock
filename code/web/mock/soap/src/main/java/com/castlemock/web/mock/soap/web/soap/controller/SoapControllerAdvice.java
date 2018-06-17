@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.soap.controller;
 
-import com.castlemock.web.basis.web.mvc.controller.AbstractViewController;
+import com.castlemock.web.basis.web.view.controller.AbstractViewController;
 import com.castlemock.web.mock.soap.model.SoapErrorMessage;
 import com.castlemock.web.mock.soap.model.SoapException;
 import org.springframework.core.Ordered;

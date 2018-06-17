@@ -22,7 +22,7 @@ import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
-import com.castlemock.web.basis.web.mvc.controller.user.UpdateCurrentUserController;
+import com.castlemock.web.basis.web.view.controller.user.UpdateCurrentUserController;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
