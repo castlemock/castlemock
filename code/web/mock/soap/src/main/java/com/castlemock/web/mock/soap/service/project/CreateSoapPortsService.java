@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Karl Dahlgren
@@ -249,6 +251,10 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         }
 
         final NodeList operationNodeList = portTypeElement.getElementsByTagNameNS(WSDL_NAMESPACE, "operation");
+
+        // harpipl
+        final Map<String, Element> messages = findMessages(document);
+
         for (int operationIndex = 0; operationIndex < operationNodeList.getLength(); operationIndex++) {
             final Node operationNode = operationNodeList.item(operationIndex);
             if (operationNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -256,7 +262,7 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                 final String operationName = getAttribute(operationElement, "name");
                 final SoapOperation soapOperation = new SoapOperation();
                 final String defaultBody = generateDefaultBody(operationName, operationElement.getNamespaceURI());
-                final String inputMessageName = getInputMessageName(operationElement);
+                final String inputMessageName = getInputMessageName(messages, operationElement);
                 final String identifier = inputMessageName != null && !inputMessageName.isEmpty() ? inputMessageName : operationName;
 
                 soapOperation.setName(operationName);
@@ -308,6 +314,23 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         return null;
     }
 
+    // harpipl
+    private Map<String, Element> findMessages(final Document document){
+        Map<String, Element> messages = new HashMap<String, Element>();
+
+        final NodeList nodeList = document.getDocumentElement().getElementsByTagNameNS(WSDL_NAMESPACE, "message");
+        for (int index = 0; index < nodeList.getLength(); index++) {
+            Node node = nodeList.item(index);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
+
+                String name = element.getAttribute("name");
+                messages.put(name, element);
+            }
+        }
+        return messages;
+    }
+
     /**
      * Extracts an attribute from an element. The method will also remove namespace prefix
      * if it is present.
@@ -350,7 +373,7 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         return null;
     }
 
-    private String getInputMessageName(Element operationElement){
+    private String getInputMessageName(Map<String, Element> messages, Element operationElement){
         String inputMessageName = null;
         final NodeList inputNodeList = operationElement.getElementsByTagNameNS(WSDL_NAMESPACE, "input");
         for (int inputIndex = 0; inputIndex < inputNodeList.getLength(); inputIndex++) {
@@ -358,6 +381,21 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
             if (inputNode.getNodeType() == Node.ELEMENT_NODE) {
                 final Element inputElement = (Element) inputNode;
                 inputMessageName = getAttribute(inputElement, "name");
+
+                final Element messageElement = messages.get(inputMessageName);
+                if (messageElement != null) {
+
+                    final NodeList portNodeList = messageElement.getElementsByTagNameNS(WSDL_NAMESPACE, "part");
+                    for (int partIndex = 0; partIndex < portNodeList.getLength(); partIndex++) {
+                        Node partNode = portNodeList.item(partIndex);
+                        if (partNode.getNodeType() == Node.ELEMENT_NODE) {
+                            final Element partElement = (Element) partNode;
+
+                            inputMessageName = partElement.getAttribute("name");
+                            break;
+                        }
+                    }
+                }
             }
         }
         return inputMessageName;
