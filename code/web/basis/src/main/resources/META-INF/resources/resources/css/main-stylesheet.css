@@ -671,11 +671,11 @@ section {
 .delete {
   cursor: pointer; }
   .delete:before {
-    font-family: FontAwesome;
-    content: "\f014"; }
+    font-family: 'Font Awesome 5 Free';
+    content: "\f2ed"; }
   .delete:hover:before {
-    font-family: FontAwesome;
-    content: "\f1f8"; }
+    font-family: 'Font Awesome 5 Free';
+    content: "\f2ed"; }
 
 .question {
   cursor: pointer;

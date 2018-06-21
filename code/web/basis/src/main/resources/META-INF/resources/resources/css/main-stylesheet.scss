@@ -313,15 +313,15 @@ section{
     cursor: pointer;
 
   &:before {
-    font-family: FontAwesome;
-    content: "\f014";
+    font-family: 'Font Awesome 5 Free';
+    content: "\f2ed";
   }
 
   &:hover {
 
     &:before {
-      font-family: FontAwesome;
-      content: "\f1f8";
+      font-family: 'Font Awesome 5 Free';
+      content: "\f2ed";
     }
   }
 }
