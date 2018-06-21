@@ -72,61 +72,63 @@
                 </table>
             </div>
 
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#tab-body"><spring:message code="soap.soapmockresponse.header.body"/></a></li>
-            <li><a data-toggle="tab" href="#tab-headers"><spring:message code="soap.soapmockresponse.header.headers"/></a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="tab-body" class="tab-pane fade in active">
-                <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.header.body"/></span></h2>
-                <div class="editor">
-                    <form:textarea class="form-control" id="body" path="body"/>
-                    <div class="editorButtons">
-                        <button id="formatXmlButton" type="button"><spring:message code="soap.soapmockresponse.button.formatxml"/></button>
-                        <button id="formatJsonButton" type="button"><spring:message code="soap.soapmockresponse.button.formatjson"/></button>
-                    </div>
-                </div>
+        <div class="panel with-nav-tabs panel-primary">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-body"><spring:message code="soap.soapmockresponse.header.body"/></a></li>
+                    <li><a data-toggle="tab" href="#tab-headers"><spring:message code="soap.soapmockresponse.header.headers"/></a></li>
+                </ul>
             </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div id="tab-body" class="tab-pane fade in active">
+                        <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.header.body"/></span></h2>
+                        <div class="editor">
+                            <form:textarea class="form-control" id="body" path="body"/>
+                            <div class="editorButtons">
+                                <button id="formatXmlButton" type="button"><spring:message code="soap.soapmockresponse.button.formatxml"/></button>
+                            </div>
+                        </div>
+                    </div>
 
-            <div id="tab-headers" class="tab-pane fade">
-                <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.header.headers"/></span></h2>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><spring:message code="soap.soapmockresponse.field.addheader"/></h3>
+                    <div id="tab-headers" class="tab-pane fade">
+                        <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.field.addheader"/></span></h2>
+                        <div>
+                            <table class="formTable">
+                                <tr>
+                                    <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headername"/></form:label></td>
+                                    <td class="column2"><input type="text" class="form-control" name="headerName" id="headerNameInput"></td>
+                                </tr>
+                                <tr>
+                                    <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headervalue"/></form:label></td>
+                                    <td class="column2"><input type="text" class="form-control" name="headerValue" id="headerValueInput"></td>
+                                </tr>
+                            </table>
+                            <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="soap.soapmockresponse.button.addheader"/></span></button>
+                        </div>
+
+                        <div class="invisible-divider"></div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover sortable" id="headerTable">
+                                <col width="4%">
+                                <col width="48%">
+                                <col width="48%">
+                                <tr>
+                                    <th></th>
+                                    <th><spring:message code="soap.soapmockresponse.column.headername"/></th>
+                                    <th><spring:message code="soap.soapmockresponse.column.headervalue"/></th>
+                                </tr>
+                                <c:forEach items="${soapMockResponse.httpHeaders}" var="httpHeader" varStatus="loopStatus">
+                                    <tr class="even">
+                                        <td><div class="delete" onclick="removeHeader('${httpHeader.name}')"></div></td>
+                                        <td><input name="httpHeaders[${loopStatus.index}].name" id="httpHeaders[${loopStatus.index}].name" value="${httpHeader.name}" type="hidden" />${httpHeader.name}</td>
+                                        <td><input name="httpHeaders[${loopStatus.index}].value" id="httpHeaders[${loopStatus.index}].value" value="${httpHeader.value}" type="hidden"/>${httpHeader.value}</td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <table class="formTable">
-                            <tr>
-                                <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headername"/></form:label></td>
-                                <td class="column2"><input type="text" class="form-control" name="headerName" id="headerNameInput"></td>
-                            </tr>
-                            <tr>
-                                <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.headervalue"/></form:label></td>
-                                <td class="column2"><input type="text" class="form-control" name="headerValue" id="headerValueInput"></td>
-                            </tr>
-                        </table>
-                        <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="soap.soapmockresponse.button.addheader"/></span></button>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover sortable" id="headerTable">
-                        <col width="4%">
-                        <col width="48%">
-                        <col width="48%">
-                        <tr>
-                            <th></th>
-                            <th><spring:message code="soap.soapmockresponse.column.headername"/></th>
-                            <th><spring:message code="soap.soapmockresponse.column.headervalue"/></th>
-                        </tr>
-                        <c:forEach items="${soapMockResponse.httpHeaders}" var="httpHeader" varStatus="loopStatus">
-                            <tr class="even">
-                                <td><div class="delete" onclick="removeHeader('${httpHeader.name}')"></div></td>
-                                <td><input name="httpHeaders[${loopStatus.index}].name" id="httpHeaders[${loopStatus.index}].name" value="${httpHeader.name}" type="hidden" />${httpHeader.name}</td>
-                                <td><input name="httpHeaders[${loopStatus.index}].value" id="httpHeaders[${loopStatus.index}].value" value="${httpHeader.value}" type="hidden"/>${httpHeader.value}</td>
-                            </tr>
-                        </c:forEach>
-                    </table>
                 </div>
             </div>
         </div>
@@ -146,5 +148,4 @@
     enableTab('body');
     initiateHttpResponseCode('soapMockResponseHttpStatusCodeInput','httpCodeLabel', 'httpCodeDefinitionLabel');
     registerXmlFormat('formatXmlButton','body');
-    registerJsonFormat('formatJsonButton','body');
 </script>

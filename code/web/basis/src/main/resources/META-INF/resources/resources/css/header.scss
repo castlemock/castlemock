@@ -157,6 +157,13 @@
     margin-right: 10px;
     padding-top: 3px;
     padding-left: 3px;
+    color: #fff;
+
+    &:hover {
+      background-color: #ddd;
+      color: #ddd;
+      cursor: pointer;
+    }
 
     .avatar-inner-circle{
       text-align: center;
@@ -168,13 +175,13 @@
       -moz-border-radius: 50%;
 
       .fa-2x {
-        font-size: 27px;
+        font-size: 26px;
         position: relative;
         top: 11px;
         line-height: 20px;
-        color: #fff;
 
         &:hover {
+          color: #ddd;
           cursor: pointer;
         }
       }
@@ -243,17 +250,50 @@
     margin-top: 3px;
   }
 
-  .headerMenu {
+  .header-menu-collapse {
     visibility: hidden;
     clear: both;
     float: left;
     display: none;
+
+    .header-menu-collapse-row {
+      margin-top: 10px;
+    }
+
+    &:hover {
+      color: #ddd;
+    }
+
+    .header-menu-icon {
+      float: left;
+      width: 50px;
+      display: inline-block;
+      overflow: hidden;
+
+      .fa-2x {
+        font-size: 24px;
+      }
+    }
+
+    .header-menu-title {
+      display: inline-block;
+      font-size: 18px;
+    }
 
     @media screen and (max-width: 850px) {
       visibility: visible;
       clear: none;
       float: left;
       display: inline;
+    }
+  }
+
+  .header-menu-full-row {
+    @media screen and (max-width: 850px) {
+      visibility: hidden;
+      clear: both;
+      float: left;
+      display: none;
     }
   }
 

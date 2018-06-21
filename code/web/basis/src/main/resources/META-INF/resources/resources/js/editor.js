@@ -100,38 +100,42 @@ function enableTab(id) {
     };
 }
 
+function formatXml(xml) {
+    var formatted = '';
+    var reg = /(>)\s*(<)(\/*)/g;;
+    xml = xml.replace(reg, '$1\r\n$2$3');
+    var pad = 0;
+    jQuery.each(xml.split('\r\n'), function(index, node) {
+        var indent = 0;
+        if (node.match( /.+<\/\w[^>]*>$/ )) {
+            indent = 0;
+        } else if (node.match( /^<\/\w/ )) {
+            if (pad != 0) {
+                pad -= 1;
+            }
+        } else if (node.match( /^<\w[^>]*[^\/]>.*$/ )) {
+            indent = 1;
+        } else {
+            indent = 0;
+        }
+
+        var padding = '';
+        for (var i = 0; i < pad; i++) {
+            padding += '\t';
+        }
+
+        formatted += padding + node + '\r\n';
+        pad += indent;
+    });
+    return formatted;
+}
+
 function registerXmlFormat(buttonId, textAreaId){
     var buttonElement = document.getElementById(buttonId);
     buttonElement.onclick = function(e) {
         var textAreaElement = document.getElementById(textAreaId);
         var xml = textAreaElement.value;
-        var formatted = '';
-        var reg = /(>)\s*(<)(\/*)/g;;
-        xml = xml.replace(reg, '$1\r\n$2$3');
-        var pad = 0;
-        jQuery.each(xml.split('\r\n'), function(index, node) {
-            var indent = 0;
-            if (node.match( /.+<\/\w[^>]*>$/ )) {
-                indent = 0;
-            } else if (node.match( /^<\/\w/ )) {
-                if (pad != 0) {
-                    pad -= 1;
-                }
-            } else if (node.match( /^<\w[^>]*[^\/]>.*$/ )) {
-                indent = 1;
-            } else {
-                indent = 0;
-            }
-
-            var padding = '';
-            for (var i = 0; i < pad; i++) {
-                padding += '\t';
-            }
-
-            formatted += padding + node + '\r\n';
-            pad += indent;
-        });
-
+        var formatted = formatXml(xml);
         textAreaElement.value = formatted.trim();
     };
 }
@@ -144,6 +148,22 @@ function registerJsonFormat(buttonId, textAreaId){
         var formatted = JSON.stringify(JSON.parse(json), null, "\t");
         textAreaElement.value = formatted;
     };
+}
+
+function formatXmlCodeTag(codeId){
+    try {
+        var code = document.getElementById(codeId);
+        var xml = code.innerHTML;
+        code.innerHTML = formatXml(xml);
+    }catch (ex){}
+}
+
+function formatJsonCodeTag(codeId){
+    try {
+        var code = document.getElementById(codeId);
+        var json = code.innerHTML;
+        code.innerHTML = JSON.stringify(JSON.parse(json), null, "\t");
+    }catch (ex){}
 }
 
 function initiateHttpResponseCode(textField, label, labelDefinition){

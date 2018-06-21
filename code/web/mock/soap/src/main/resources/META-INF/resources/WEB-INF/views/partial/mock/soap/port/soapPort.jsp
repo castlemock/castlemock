@@ -39,10 +39,6 @@
         <div class="content-summary">
             <table class="formTable">
                 <tr>
-                    <td class="column1"><label path="name"><spring:message code="soap.soapport.label.name"/></label></td>
-                    <td class="column2"><label path="name">${soapPort.name}</label></td>
-                </tr>
-                <tr>
                     <td class="column1"><label path="name"><spring:message code="soap.soapport.label.uri"/></label></td>
                     <td class="column2"><label path="name">${soapPort.uri}</label></td>
                 </tr>

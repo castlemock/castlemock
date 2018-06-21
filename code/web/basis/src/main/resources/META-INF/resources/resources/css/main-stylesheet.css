@@ -255,7 +255,12 @@ a {
     margin-top: 9px;
     margin-right: 10px;
     padding-top: 3px;
-    padding-left: 3px; }
+    padding-left: 3px;
+    color: #fff; }
+    .main-header .avatar-circle:hover {
+      background-color: #ddd;
+      color: #ddd;
+      cursor: pointer; }
     .main-header .avatar-circle .avatar-inner-circle {
       text-align: center;
       width: 34px;
@@ -265,12 +270,12 @@ a {
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%; }
       .main-header .avatar-circle .avatar-inner-circle .fa-2x {
-        font-size: 27px;
+        font-size: 26px;
         position: relative;
         top: 11px;
-        line-height: 20px;
-        color: #fff; }
+        line-height: 20px; }
         .main-header .avatar-circle .avatar-inner-circle .fa-2x:hover {
+          color: #ddd;
           cursor: pointer; }
   .main-header .search {
     border-radius: 55px 50px;
@@ -319,17 +324,37 @@ a {
     border: 0;
     background: transparent;
     margin-top: 3px; }
-  .main-header .headerMenu {
+  .main-header .header-menu-collapse {
     visibility: hidden;
     clear: both;
     float: left;
     display: none; }
+    .main-header .header-menu-collapse .header-menu-collapse-row {
+      margin-top: 10px; }
+    .main-header .header-menu-collapse:hover {
+      color: #ddd; }
+    .main-header .header-menu-collapse .header-menu-icon {
+      float: left;
+      width: 50px;
+      display: inline-block;
+      overflow: hidden; }
+      .main-header .header-menu-collapse .header-menu-icon .fa-2x {
+        font-size: 24px; }
+    .main-header .header-menu-collapse .header-menu-title {
+      display: inline-block;
+      font-size: 18px; }
     @media screen and (max-width: 850px) {
-      .main-header .headerMenu {
+      .main-header .header-menu-collapse {
         visibility: visible;
         clear: none;
         float: left;
         display: inline; } }
+  @media screen and (max-width: 850px) {
+    .main-header .header-menu-full-row {
+      visibility: hidden;
+      clear: both;
+      float: left;
+      display: none; } }
 
 a {
   text-decoration: none; }
@@ -625,7 +650,8 @@ section {
     font-size: 12px;
     padding: 3px 7px 2px 7px;
     font-weight: normal;
-    border-top: none; }
+    border-top: none;
+    min-width: 200px; }
   section th {
     font-weight: bold;
     font-size: 12px;
@@ -657,6 +683,10 @@ section {
   padding-top: 10px; }
   .question:first-child {
     border-top: none; }
+
+.invisible-divider {
+  margin-top: 20px;
+  margin-bottom: 10px; }
 
 textarea {
   border: 1px solid #ddd; }
@@ -732,3 +762,58 @@ select {
 
 .panel-buttons {
   margin-left: 10px; }
+
+/*** PANEL PRIMARY ***/
+.with-nav-tabs.panel-primary .nav-tabs > li > a,
+.with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+.with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+  color: #fff; }
+
+.panel-primary {
+  border-color: #3ca8d6; }
+
+.with-nav-tabs.panel-primary > .panel-heading {
+  background-color: #3ca8d6;
+  border-color: #3ca8d6; }
+
+.with-nav-tabs.panel-primary .nav-tabs > .open > a,
+.with-nav-tabs.panel-primary .nav-tabs > .open > a:hover,
+.with-nav-tabs.panel-primary .nav-tabs > .open > a:focus,
+.with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+.with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+  color: #fff;
+  background-color: #1b76b9;
+  border-color: transparent; }
+
+.with-nav-tabs.panel-primary .nav-tabs > li.active > a,
+.with-nav-tabs.panel-primary .nav-tabs > li.active > a:hover,
+.with-nav-tabs.panel-primary .nav-tabs > li.active > a:focus {
+  color: #428bca;
+  background-color: #fff;
+  border-color: #428bca;
+  border-bottom-color: transparent; }
+
+.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu {
+  background-color: #428bca;
+  border-color: #3071a9; }
+
+.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a {
+  color: #fff; }
+
+.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
+.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
+  background-color: #3071a9; }
+
+.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a,
+.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
+.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
+  background-color: #4a9fe9; }
+
+.panel.with-nav-tabs .panel-heading {
+  padding: 5px 5px 0 5px; }
+
+.panel.with-nav-tabs .nav-tabs {
+  border-bottom: none; }
+
+.panel.with-nav-tabs .nav-justified {
+  margin-bottom: -1px; }

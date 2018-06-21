@@ -17,7 +17,6 @@
 package com.castlemock.web.basis.web.view.controller;
 
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.web.basis.model.ContentItem;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.view.command.search.SearchCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * The AbstractViewController provides functionality that are shared amongst
@@ -80,18 +78,6 @@ public abstract class AbstractViewController extends AbstractController {
      * @see #INDEX
      */
     public ModelAndView createPartialModelAndView(final String page){
-        return createPartialModelAndView(page, null);
-    }
-
-    /**
-     * The method create a ModelAndView instance with the index page set as the view name
-     * @param page The partial page that will be displayed in the index page
-     * @param pageContentItems The content items specific for the page that will be displayed
-     * @return A new ModelAndView instance with index as view name
-     * @see org.springframework.web.servlet.ModelAndView
-     * @see #INDEX
-     */
-    public ModelAndView createPartialModelAndView(final String page, final List<ContentItem> pageContentItems){
         final ModelAndView modelAndView = createModelAndView();
         modelAndView.setViewName(INDEX);
         modelAndView.addObject(PARTIAL, createPartial(page));

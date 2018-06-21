@@ -61,56 +61,59 @@
                 </table>
             </div>
 
-            <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#tab-body"><spring:message code="rest.createrestmockresponse.header.body"/></a></li>
-                <li><a data-toggle="tab" href="#tab-headers"><spring:message code="rest.createrestmockresponse.header.headers"/></a></li>
-            </ul>
-
-            <div class="tab-content">
-                <div id="tab-body" class="tab-pane fade in active">
-                    <div>
-                        <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.header.body"/></span></h2>
-                        <div class="editor">
-                            <form:textarea id="body" path="body"/>
-                            <div class="editorButtons">
-                                <button id="formatXmlButton" type="button"><spring:message code="rest.createrestmockresponse.button.formatxml"/></button>
-                                <button id="formatJsonButton" type="button"><spring:message code="rest.createrestmockresponse.button.formatjson"/></button>
+            <div class="panel with-nav-tabs panel-primary">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-body"><spring:message code="rest.createrestmockresponse.header.body"/></a></li>
+                        <li><a data-toggle="tab" href="#tab-headers"><spring:message code="rest.createrestmockresponse.header.headers"/></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div id="tab-body" class="tab-pane fade in active">
+                            <div>
+                                <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.header.body"/></span></h2>
+                                <div class="editor">
+                                    <form:textarea id="body" path="body"/>
+                                    <div class="editorButtons">
+                                        <button id="formatXmlButton" type="button"><spring:message code="rest.createrestmockresponse.button.formatxml"/></button>
+                                        <button id="formatJsonButton" type="button"><spring:message code="rest.createrestmockresponse.button.formatjson"/></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div id="tab-headers" class="tab-pane fade">
-                    <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.header.headers"/></span></h2>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><spring:message code="rest.createrestmockresponse.field.addheader"/></h3>
-                        </div>
-                        <div class="panel-body">
-                            <table class="formTable">
-                                <tr>
-                                    <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.headername"/></form:label></td>
-                                    <td class="column2"><input type="text" class="form-control" name="headerName" id="headerNameInput"></td>
-                                </tr>
-                                <tr>
-                                    <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.headervalue"/></form:label></td>
-                                    <td class="column2"><input type="text" class="form-control" name="headerValue" id="headerValueInput"></td>
-                                </tr>
-                            </table>
-                            <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.createrestmockresponse.button.addheader"/></span></button>
-                        </div>
-                    </div>
+                        <div id="tab-headers" class="tab-pane fade">
+                            <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.field.addheader"/></span></h2>
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover sortable" id="headerTable">
-                            <col width="4%">
-                            <col width="48%">
-                            <col width="48%">
-                            <tr>
-                                <th></th>
-                                <th><spring:message code="rest.createrestmockresponse.column.headername"/></th>
-                                <th><spring:message code="rest.createrestmockresponse.column.headervalue"/></th>
-                            </tr>
-                        </table>
+                            <div>
+                                <table class="formTable">
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.headername"/></form:label></td>
+                                        <td class="column2"><input type="text" class="form-control" name="headerName" id="headerNameInput"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.headervalue"/></form:label></td>
+                                        <td class="column2"><input type="text" class="form-control" name="headerValue" id="headerValueInput"></td>
+                                    </tr>
+                                </table>
+                                <button class="btn btn-success" onclick="addHeader()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.createrestmockresponse.button.addheader"/></span></button>
+                            </div>
+
+                            <div class="invisible-divider"></div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover sortable" id="headerTable">
+                                    <col width="4%">
+                                    <col width="48%">
+                                    <col width="48%">
+                                    <tr>
+                                        <th></th>
+                                        <th><spring:message code="rest.createrestmockresponse.column.headername"/></th>
+                                        <th><spring:message code="rest.createrestmockresponse.column.headervalue"/></th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

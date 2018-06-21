@@ -16,7 +16,7 @@
 
 package com.castlemock.war.config;
 
-import com.castlemock.web.basis.model.session.token.repository.SessionTokenRepository;
+import com.castlemock.web.basis.repository.token.SessionTokenRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

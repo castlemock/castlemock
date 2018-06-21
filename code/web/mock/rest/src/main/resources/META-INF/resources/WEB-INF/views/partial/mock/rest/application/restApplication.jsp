@@ -40,12 +40,6 @@
             </div>
         </div>
         <div class="content-summary">
-            <table class="formTable">
-                <tr>
-                    <td class="column1"><label path="name"><spring:message code="rest.restapplication.label.name"/></label></td>
-                    <td class="column2"><label path="name">${restApplication.name}</label></td>
-                </tr>
-            </table>
         </div>
 
         <div class="panel panel-primary table-panel">
@@ -80,16 +74,18 @@
                                 </c:forEach>
                             </table>
                         </div>
-                        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                            <form:select path="restMethodStatus">
-                                <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
-                                    <form:option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></form:option>
-                                </c:forEach>
-                            </form:select>
-                            <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.restapplication.button.update"/></span></button>
-                            <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fas fa-project-diagram"></i> <span><spring:message code="rest.restapplication.button.updateendpoint"/></span></button>
-                            <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="rest.restapplication.button.deleteresources"/></span></button>
-                        </sec:authorize>
+                        <div class="panel-buttons">
+                            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                                <form:select path="restMethodStatus">
+                                    <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
+                                        <form:option value="${restMethodStatus}"><spring:message code="rest.type.restmethodstatus.${restMethodStatus}"/></form:option>
+                                    </c:forEach>
+                                </form:select>
+                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.restapplication.button.update"/></span></button>
+                                <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fas fa-project-diagram"></i> <span><spring:message code="rest.restapplication.button.updateendpoint"/></span></button>
+                                <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="rest.restapplication.button.deleteresources"/></span></button>
+                            </sec:authorize>
+                        </div>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form:form>
 

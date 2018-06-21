@@ -1,4 +1,4 @@
-package com.castlemock.web.basis.model.session.token.repository;
+package com.castlemock.web.basis.repository.token;
 
 import com.castlemock.web.basis.model.session.token.SessionToken;
 import com.castlemock.web.basis.model.session.token.SessionTokenList;

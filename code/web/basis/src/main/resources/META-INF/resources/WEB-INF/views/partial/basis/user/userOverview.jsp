@@ -27,8 +27,8 @@
         <div class="content-top">
         <h1><spring:message code="general.useroverview.header.users"/></h1>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="panel panel-primary table-panel">
+            <div class="panel-heading table-panel-heading">
                 <h3 class="panel-title"><spring:message code="general.useroverview.field.createuser"/></h3>
             </div>
             <div class="panel-body">

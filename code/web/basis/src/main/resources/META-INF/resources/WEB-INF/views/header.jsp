@@ -47,7 +47,8 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="links nav navbar-nav navbar-right">
-                    <li>
+
+                    <li class="header-menu-full-row">
                         <div>
                             <a href="${context}/web/me">
                                 <div class="avatar-username">
@@ -61,17 +62,67 @@
                         </div>
                     </li>
 
-                    <div class="headerMenu">
-                        <li><a href="${context}/web/web"><i class="fas fa-tachometer-alt fa-2x"></i> <spring:message code="general.menu.projects"/></a></li>
-                        <li><a href="${context}/web/event"><i class="fas fa-chart-bar fa-2x"></i><spring:message code="general.menu.logs"/></a></li>
+
+                    <div class="header-menu-collapse">
+                        <li class="header-menu-collapse-row">
+                            <a href="${context}/web">
+                                <div class="header-menu-icon">
+                                    <i class="fas fa-tachometer-alt fa-2x"></i>
+                                </div>
+                                <div class="header-menu-title">
+                                    <spring:message code="general.menu.projects"/>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="header-menu-collapse-row">
+                            <a href="${context}/web/event">
+                                <div class="header-menu-icon">
+                                    <i class="fas fa-chart-bar fa-2x"></i>
+                                </div>
+                                <div class="header-menu-title">
+                                    <spring:message code="general.menu.logs"/>
+                                </div>
+                            </a>
+                        </li>
 
                         <sec:authorize access="hasAuthority('ADMIN')">
-                            <li><a href="${context}/web/user"><i class="fas fa-users-cog fa-2x"></i><spring:message code="general.menu.users"/></a></li>
-                            <li><a href="${context}/web/system"><i class="fas fas fa-cogs fa-2x"></i><spring:message code="general.menu.system"/></a></li>
+                            <li class="header-menu-collapse-row">
+                                <a href="${context}/web/user">
+                                    <div class="header-menu-icon">
+                                        <i class="fas fa-users-cog fa-2x"></i>
+                                    </div>
+                                    <div class="header-menu-title">
+                                        <spring:message code="general.menu.users"/>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="header-menu-collapse-row">
+                                <a href="${context}/web/system">
+                                    <div class="header-menu-icon">
+                                        <i class="fas fas fa-cogs fa-2x"></i>
+                                    </div>
+                                    <div class="header-menu-title">
+                                        <spring:message code="general.menu.system"/>
+                                    </div>
+                                </a>
+                            </li>
+
                         </sec:authorize>
+
+                        <li class="header-menu-collapse-row">
+                            <a href="${context}/web/logout">
+                                <div class="header-menu-icon">
+                                    <i class="fas fas fa-sign-out-alt fa-2x"></i>
+                                </div>
+                                <div class="header-menu-title">
+                                    <spring:message code="general.menu.logout"/>
+                                </div>
+                            </a>
+                        </li>
                     </div>
 
-                    <li><a href="${context}/web/logout"><i class="fas fa-sign-out-alt fa-2x"></i></a></li>
+                    <li class="header-menu-full-row"><a href="${context}/web/logout"><i class="fas fa-sign-out-alt fa-2x"></i></a></li>
                 </ul>
             </div>
         </div>

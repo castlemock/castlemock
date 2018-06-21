@@ -21,7 +21,7 @@ import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.web.basis.repository.user.UserRepository;
 import com.castlemock.web.basis.service.AbstractService;
-import com.castlemock.web.basis.model.session.token.repository.SessionTokenRepository;
+import com.castlemock.web.basis.repository.token.SessionTokenRepository;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

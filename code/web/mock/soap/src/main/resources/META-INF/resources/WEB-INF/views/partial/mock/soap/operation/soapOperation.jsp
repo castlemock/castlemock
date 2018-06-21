@@ -41,10 +41,6 @@
         <div class="content-summary">
             <table class="formTable">
                 <tr>
-                    <td class="column1"><label path="name"><spring:message code="soap.soapoperation.label.name"/></label></td>
-                    <td class="column2"><label path="name">${soapOperation.name}</label></td>
-                </tr>
-                <tr>
                     <td class="column1"><label path="name"><spring:message code="soap.soapoperation.label.identifier"/></label></td>
                     <td class="column2"><label path="name">${soapOperation.identifier}</label></td>
                 </tr>
@@ -124,16 +120,18 @@
                                 </c:forEach>
                             </table>
                         </div>
-                        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                            <form:select path="soapMockResponseStatus">
-                                <c:forEach items="${soapMockResponseStatuses}" var="soapMockResponseStatus">
-                                    <form:option value="${soapMockResponseStatus}"><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponseStatus}"/></form:option>
-                                </c:forEach>
-                            </form:select>
-                            <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="soap.soapoperation.button.update"/></span></button>
-                            <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="duplicate"><i class="fas fa-copy"></i> <span><spring:message code="soap.soapoperation.button.duplicate"/></span></button>
-                            <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="soap.soapoperation.button.deletemockresponse"/></span></button>
-                        </sec:authorize>
+                        <div class="panel-buttons">
+                            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                                <form:select path="soapMockResponseStatus">
+                                    <c:forEach items="${soapMockResponseStatuses}" var="soapMockResponseStatus">
+                                        <form:option value="${soapMockResponseStatus}"><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponseStatus}"/></form:option>
+                                    </c:forEach>
+                                </form:select>
+                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="soap.soapoperation.button.update"/></span></button>
+                                <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="duplicate"><i class="fas fa-copy"></i> <span><spring:message code="soap.soapoperation.button.duplicate"/></span></button>
+                                <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="soap.soapoperation.button.deletemockresponse"/></span></button>
+                            </sec:authorize>
+                        </div>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form:form>
                 </c:when>

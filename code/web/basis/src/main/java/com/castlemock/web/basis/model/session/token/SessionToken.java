@@ -1,6 +1,6 @@
 package com.castlemock.web.basis.model.session.token;
 
-import com.castlemock.web.basis.model.session.token.repository.SessionTokenRepository;
+import com.castlemock.web.basis.repository.token.SessionTokenRepository;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 
 import javax.xml.bind.annotation.XmlElement;

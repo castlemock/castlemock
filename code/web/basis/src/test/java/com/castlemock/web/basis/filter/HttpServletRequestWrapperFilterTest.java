@@ -32,6 +32,8 @@ public class HttpServletRequestWrapperFilterTest {
     @Test
     public void testDoFilterHttpRequest() throws IOException, ServletException {
         final HttpServletRequestWrapperFilter filter = new HttpServletRequestWrapperFilter();
+        final FilterConfig filterConfig = Mockito.mock(FilterConfig.class);
+        filter.init(filterConfig);
         final ServletInputStream inputStream = Mockito.mock(ServletInputStream.class);
         final ServletRequest request = Mockito.mock(HttpServletRequest.class);
         final ServletResponse response = Mockito.mock(ServletResponse.class);
@@ -45,11 +47,14 @@ public class HttpServletRequestWrapperFilterTest {
 
         Mockito.verify(chain, Mockito.times(1)).doFilter(Mockito.any(HttpServletRequestWrapper.class),
                 Mockito.eq(response));
+        filter.destroy();
     }
 
     @Test
     public void testDoFilterRequest() throws IOException, ServletException {
         final HttpServletRequestWrapperFilter filter = new HttpServletRequestWrapperFilter();
+        final FilterConfig filterConfig = Mockito.mock(FilterConfig.class);
+        filter.init(filterConfig);
         final ServletRequest request = Mockito.mock(ServletRequest.class);
         final ServletResponse response = Mockito.mock(ServletResponse.class);
         final FilterChain chain = Mockito.mock(FilterChain.class);
@@ -58,6 +63,7 @@ public class HttpServletRequestWrapperFilterTest {
 
         Mockito.verify(chain, Mockito.times(1))
                 .doFilter(Mockito.eq(request), Mockito.eq(response));
+        filter.destroy();
     }
 
 }

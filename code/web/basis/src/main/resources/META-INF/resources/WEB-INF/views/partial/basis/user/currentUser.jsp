@@ -18,7 +18,6 @@
 <div class="navigation">
     <ol class="breadcrumb">
         <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
-        <li><a href="${context}/web/user"><spring:message code="general.breadcrumb.users"/></a></li>
         <li class="active"><spring:message code="general.currentuser.header.user" arguments="${user.username}"/></li>
     </ol>
 </div>

@@ -43,10 +43,6 @@
         <div class="content-summary">
             <table class="formTable">
                 <tr>
-                    <td class="column1"><label path="name"><spring:message code="rest.restmethod.label.name"/></label></td>
-                    <td class="column2"><label path="name">${restMethod.name}</label></td>
-                </tr>
-                <tr>
                     <td class="column1"><label path="methodtype"><spring:message code="rest.restmethod.label.methodtype"/></label></td>
                     <td class="column2"><label path="methodtype">${restMethod.httpMethod}</label></td>
                 </tr>
@@ -108,16 +104,18 @@
                                 </c:forEach>
                             </table>
                         </div>
-                        <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                            <form:select path="restMockResponseStatus">
-                                <c:forEach items="${restMockResponseStatuses}" var="restMockResponseStatus">
-                                    <form:option value="${restMockResponseStatus}"><spring:message code="rest.type.restmockresponsestatus.${restMockResponseStatus}"/></form:option>
-                                </c:forEach>
-                            </form:select>
-                            <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.restmethod.button.update"/></span></button>
-                            <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="duplicate"><i class="fas fa-copy"></i> <span><spring:message code="rest.restmethod.button.duplicate"/></span></button>
-                            <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="rest.restmethod.button.deletemockresponses"/></span></button>
-                        </sec:authorize>
+                        <div class="panel-buttons">
+                            <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
+                                <form:select path="restMockResponseStatus">
+                                    <c:forEach items="${restMockResponseStatuses}" var="restMockResponseStatus">
+                                        <form:option value="${restMockResponseStatus}"><spring:message code="rest.type.restmockresponsestatus.${restMockResponseStatus}"/></form:option>
+                                    </c:forEach>
+                                </form:select>
+                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.restmethod.button.update"/></span></button>
+                                <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="duplicate"><i class="fas fa-copy"></i> <span><spring:message code="rest.restmethod.button.duplicate"/></span></button>
+                                <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"></i> <span><spring:message code="rest.restmethod.button.deletemockresponses"/></span></button>
+                            </sec:authorize>
+                        </div>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form:form>
                 </c:when>

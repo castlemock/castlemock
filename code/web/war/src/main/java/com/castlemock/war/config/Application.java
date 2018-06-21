@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.LegacyRepository;
 import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.model.session.token.repository.SessionTokenRepository;
+import com.castlemock.web.basis.repository.token.SessionTokenRepository;
 import com.castlemock.web.basis.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
