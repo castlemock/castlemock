@@ -52,6 +52,8 @@ subprojects {
     ext.springfoxVersion = "2.8.0"
     ext.graphqlVersion = "8.0"
     ext.commonsLangVersion = "3.7"
+    ext.jaxbVersion = "2.3.0"
+    ext.activationVersion = "1.1.1"
 
     compileJava {
         sourceCompatibility = 1.8
@@ -175,6 +177,11 @@ project(':code:web:basis') {
         compile(group: 'org.springframework.security', name: 'spring-security-taglibs', version: springSecurityVersion)
         compile(group: 'io.springfox', name: 'springfox-swagger2', version: springfoxVersion)
         compile(group: 'io.springfox', name: 'springfox-swagger-ui', version: springfoxVersion)
+        compile(group: 'javax.xml.bind', name: 'jaxb-api', version: jaxbVersion)
+        compile(group: 'com.sun.xml.bind', name: 'jaxb-core', version: jaxbVersion)
+        compile(group: 'com.sun.xml.bind', name: 'jaxb-impl', version: jaxbVersion)
+        compile(group: 'javax.activation', name: 'activation', version: activationVersion)
+
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
 
         compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
