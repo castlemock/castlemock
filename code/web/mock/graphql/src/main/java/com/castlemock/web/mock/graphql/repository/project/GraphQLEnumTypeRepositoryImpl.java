@@ -67,7 +67,7 @@ public class GraphQLEnumTypeRepositoryImpl extends AbstractGraphQLTypeFileReposi
      */
     @Override
     protected String getFileExtension() {
-        return fileDirectory;
+        return fileExtension;
     }
 
     /**
