@@ -277,13 +277,6 @@ a {
         .main-header .avatar-circle .avatar-inner-circle .fa-2x:hover {
           color: #ddd;
           cursor: pointer; }
-  .main-header .search {
-    border-radius: 55px 50px;
-    color: #FFFFFF;
-    background: #3ca8d6 !important;
-    border-color: #3ca8d6 !important;
-    width: 80%;
-    height: 35px; }
   .main-header .stylish-input-group {
     width: 30%;
     top: 10px;
@@ -291,39 +284,48 @@ a {
     position: absolute;
     left: 0;
     right: 0; }
-    .main-header .stylish-input-group ::placeholder {
-      /* Chrome, Firefox, Opera, Safari 10.1+ */
-      color: white;
-      opacity: 1;
-      /* Firefox */ }
-    .main-header .stylish-input-group ::-webkit-input-placeholder {
-      text-align: center; }
-    .main-header .stylish-input-group :-moz-placeholder {
-      /* Firefox 18- */
-      text-align: center; }
-    .main-header .stylish-input-group ::-moz-placeholder {
-      /* Firefox 19+ */
-      text-align: center; }
-    .main-header .stylish-input-group :-ms-input-placeholder {
-      text-align: center;
-      color: white; }
-  .main-header .input-group-addon {
-    background: #3ca8d6 !important;
-    border-color: #3ca8d6 !important;
-    color: #FFFFFF;
-    border-bottom-right-radius: 50px;
-    border-top-right-radius: 50px;
-    width: 20%;
-    height: 35px;
-    float: right; }
-  .main-header .stylish-input-group .form-control {
-    border-right: 0;
-    box-shadow: 0 0 0;
-    border-color: #ccc; }
-  .main-header .stylish-input-group button {
-    border: 0;
-    background: transparent;
-    margin-top: 3px; }
+    .main-header .stylish-input-group .input-group-addon {
+      background: #3ca8d6 !important;
+      border-color: #3ca8d6 !important;
+      color: #FFFFFF;
+      border-bottom-right-radius: 50px;
+      border-top-right-radius: 50px;
+      width: 50px;
+      height: 35px;
+      float: right; }
+      .main-header .stylish-input-group .input-group-addon button {
+        border: 0;
+        background: transparent;
+        margin-top: 3px; }
+    .main-header .stylish-input-group .input-group-field {
+      padding-right: 50px; }
+      .main-header .stylish-input-group .input-group-field .form-control {
+        border-right: 0;
+        box-shadow: 0 0 0;
+        border-color: #ccc; }
+      .main-header .stylish-input-group .input-group-field .search {
+        border-bottom-left-radius: 50px;
+        border-top-left-radius: 50px;
+        color: #FFFFFF;
+        background: #3ca8d6 !important;
+        border-color: #3ca8d6 !important;
+        height: 35px; }
+      .main-header .stylish-input-group .input-group-field ::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: white;
+        opacity: 1;
+        /* Firefox */ }
+      .main-header .stylish-input-group .input-group-field ::-webkit-input-placeholder {
+        text-align: center; }
+      .main-header .stylish-input-group .input-group-field :-moz-placeholder {
+        /* Firefox 18- */
+        text-align: center; }
+      .main-header .stylish-input-group .input-group-field ::-moz-placeholder {
+        /* Firefox 19+ */
+        text-align: center; }
+      .main-header .stylish-input-group .input-group-field :-ms-input-placeholder {
+        text-align: center;
+        color: white; }
   .main-header .header-menu-collapse {
     visibility: hidden;
     clear: both;

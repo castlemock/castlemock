@@ -189,14 +189,6 @@
   }
 
 
-  .search {
-    border-radius: 55px 50px;
-    color: #FFFFFF;
-    background: #3ca8d6 !important;
-    border-color: #3ca8d6 !important;
-    width: 80%;
-    height: 35px;
-  }
 
   .stylish-input-group {
     width: 30%;
@@ -206,49 +198,68 @@
     left: 0;
     right: 0;
 
-    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-      color: white;
-      opacity: 1; /* Firefox */
+    .input-group-addon{
+      background: #3ca8d6 !important;
+      border-color: #3ca8d6 !important;
+      color: #FFFFFF;
+      border-bottom-right-radius: 50px;
+      border-top-right-radius: 50px;
+      width: 50px;
+      height: 35px;
+      float: right;
+
+      button{
+        border:0;
+        background:transparent;
+        margin-top: 3px;
+      }
     }
 
-    ::-webkit-input-placeholder {
-      text-align: center;
+    .input-group-field {
+      padding-right: 50px;
+
+      .form-control{
+        border-right:0;
+        box-shadow:0 0 0;
+        border-color:#ccc;
+      }
+
+      .search {
+        border-bottom-left-radius: 50px;
+        border-top-left-radius: 50px;
+        color: #FFFFFF;
+        background: #3ca8d6 !important;
+        border-color: #3ca8d6 !important;
+        height: 35px;
+      }
+
+      ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: white;
+        opacity: 1; /* Firefox */
+      }
+
+      ::-webkit-input-placeholder {
+        text-align: center;
+      }
+
+      :-moz-placeholder { /* Firefox 18- */
+        text-align: center;
+      }
+
+      ::-moz-placeholder {  /* Firefox 19+ */
+        text-align: center;
+      }
+
+      :-ms-input-placeholder {
+        text-align: center;
+        color: white;
+      }
     }
 
-    :-moz-placeholder { /* Firefox 18- */
-      text-align: center;
-    }
 
-    ::-moz-placeholder {  /* Firefox 19+ */
-      text-align: center;
-    }
-
-    :-ms-input-placeholder {
-      text-align: center;
-      color: white;
-    }
   }
 
-  .input-group-addon{
-    background: #3ca8d6 !important;
-    border-color: #3ca8d6 !important;
-    color: #FFFFFF;
-    border-bottom-right-radius: 50px;
-    border-top-right-radius: 50px;
-    width: 20%;
-    height: 35px;
-    float: right;
-  }
-  .stylish-input-group .form-control{
-    border-right:0;
-    box-shadow:0 0 0;
-    border-color:#ccc;
-  }
-  .stylish-input-group button{
-    border:0;
-    background:transparent;
-    margin-top: 3px;
-  }
+
 
   .header-menu-collapse {
     visibility: hidden;

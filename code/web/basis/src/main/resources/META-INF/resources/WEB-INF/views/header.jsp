@@ -33,16 +33,18 @@
             </div>
 
 
-            <div class="input-group stylish-input-group">
-                <form:form action="${searchUrl}" method="POST" modelAttribute="searchCommand">
-                    <form:input onfocus="this.placeholder = ''" type="text" path="query" class="form-control search"  placeholder="Search" ></form:input>
-                    <span class="input-group-addon">
-                        <button type="submit">
-                            <span class="fas fa-search"></span>
-                        </button>
-                    </span>
-                </form:form>
-            </div>
+                <div class="input-group stylish-input-group">
+                    <form:form action="${searchUrl}" method="POST" modelAttribute="searchCommand">
+                        <div class="input-group-field">
+                            <form:input onfocus="this.placeholder = ''" type="text" path="query" class="form-control search"  placeholder="Search" ></form:input>
+                        </div>
+                        <span class="input-group-addon">
+                            <button type="submit">
+                                <span class="fas fa-search"></span>
+                            </button>
+                        </span>
+                    </form:form>
+                </div>
 
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
