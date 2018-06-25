@@ -2,7 +2,7 @@ package com.castlemock.web.basis.repository.configuration;
 
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.web.basis.model.configuration.dto.ConfigurationGroupDtoGenerator;
-import com.castlemock.web.basis.repository.configuration.ConfigurationRepositoryImpl;
+import com.castlemock.web.basis.repository.configuration.file.ConfigurationFileRepository;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -26,7 +26,7 @@ public class ConfigurationRepositoryTest {
     @Spy
     private DozerBeanMapper mapper;
     @InjectMocks
-    private ConfigurationRepositoryImpl repository;
+    private ConfigurationFileRepository repository;
 
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
@@ -45,7 +45,7 @@ public class ConfigurationRepositoryTest {
         configurationGroups.add(configurationGroup);
         Mockito.when(fileRepositorySupport.load(ConfigurationGroup.class, DIRECTORY, EXTENSION)).thenReturn(configurationGroups);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(ConfigurationRepositoryImpl.ConfigurationGroupFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(ConfigurationFileRepository.ConfigurationGroupFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test

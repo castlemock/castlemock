@@ -4,7 +4,7 @@ package com.castlemock.web.mock.rest.repository.event;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.castlemock.web.mock.rest.model.project.RestEventGenerator;
-import com.castlemock.web.mock.rest.repository.event.RestEventRepositoryImpl;
+import com.castlemock.web.mock.rest.repository.event.file.RestEventFileRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,7 +27,7 @@ public class RestEventRepositoryTest {
     @Spy
     private DozerBeanMapper mapper;
     @InjectMocks
-    private RestEventRepositoryImpl repository;
+    private RestEventFileRepository repository;
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
 
@@ -45,7 +45,7 @@ public class RestEventRepositoryTest {
         restEvents.add(restEvent);
         Mockito.when(fileRepositorySupport.load(RestEvent.class, DIRECTORY, EXTENSION)).thenReturn(restEvents);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(RestEventRepositoryImpl.RestEventFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(RestEventFileRepository.RestEventFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test

@@ -4,7 +4,7 @@ package com.castlemock.web.mock.rest.repository.project;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
-import com.castlemock.web.mock.rest.repository.project.RestProjectRepositoryImpl;
+import com.castlemock.web.mock.rest.repository.project.file.RestProjectFileRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,7 +27,7 @@ public class RestProjectRepositoryTest {
     @Spy
     private DozerBeanMapper mapper;
     @InjectMocks
-    private RestProjectRepositoryImpl repository;
+    private RestProjectFileRepository repository;
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
 
@@ -45,7 +45,7 @@ public class RestProjectRepositoryTest {
         restProjects.add(restProject);
         Mockito.when(fileRepositorySupport.load(RestProject.class, DIRECTORY, EXTENSION)).thenReturn(restProjects);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(RestProjectRepositoryImpl.RestProjectFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(RestProjectFileRepository.RestProjectFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test

@@ -4,7 +4,7 @@ package com.castlemock.web.mock.soap.repository.project;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
-import com.castlemock.web.mock.soap.repository.project.SoapProjectRepositoryImpl;
+import com.castlemock.web.mock.soap.repository.project.file.SoapProjectFileRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,7 +27,7 @@ public class SoapProjectRepositoryTest {
     @Spy
     private DozerBeanMapper mapper;
     @InjectMocks
-    private SoapProjectRepositoryImpl repository;
+    private SoapProjectFileRepository repository;
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
 
@@ -45,7 +45,7 @@ public class SoapProjectRepositoryTest {
         soapProjects.add(soapProject);
         Mockito.when(fileRepositorySupport.load(SoapProject.class, DIRECTORY, EXTENSION)).thenReturn(soapProjects);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(SoapProjectRepositoryImpl.SoapProjectFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(SoapProjectFileRepository.SoapProjectFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test

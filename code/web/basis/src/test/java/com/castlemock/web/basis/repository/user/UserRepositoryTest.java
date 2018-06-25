@@ -3,7 +3,7 @@ package com.castlemock.web.basis.repository.user;
 
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.web.basis.model.user.dto.UserDtoGenerator;
-import com.castlemock.web.basis.repository.user.UserRepositoryImpl;
+import com.castlemock.web.basis.repository.user.file.UserFileRepository;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -27,7 +27,7 @@ public class UserRepositoryTest {
     @Spy
     private DozerBeanMapper mapper;
     @InjectMocks
-    private UserRepositoryImpl repository;
+    private UserFileRepository repository;
 
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
@@ -46,7 +46,7 @@ public class UserRepositoryTest {
         users.add(user);
         Mockito.when(fileRepositorySupport.load(User.class, DIRECTORY, EXTENSION)).thenReturn(users);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(UserRepositoryImpl.UserFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(UserFileRepository.UserFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test

@@ -3,7 +3,7 @@ package com.castlemock.web.mock.soap.repository.event;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.web.basis.support.FileRepositorySupport;
 import com.castlemock.web.mock.soap.model.event.SoapEventGenerator;
-import com.castlemock.web.mock.soap.repository.event.SoapEventRepositoryImpl;
+import com.castlemock.web.mock.soap.repository.event.file.SoapEventFileRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,7 +26,7 @@ public class SoapEventRepositoryTest {
     @Spy
     private DozerBeanMapper mapper;
     @InjectMocks
-    private SoapEventRepositoryImpl repository;
+    private SoapEventFileRepository repository;
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
 
@@ -44,7 +44,7 @@ public class SoapEventRepositoryTest {
         soapEvents.add(soapEvent);
         Mockito.when(fileRepositorySupport.load(SoapEvent.class, DIRECTORY, EXTENSION)).thenReturn(soapEvents);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(SoapEventRepositoryImpl.SoapEventFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(SoapEventFileRepository.SoapEventFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test
