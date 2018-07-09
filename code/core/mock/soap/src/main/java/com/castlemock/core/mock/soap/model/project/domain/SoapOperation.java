@@ -155,7 +155,7 @@ public class SoapOperation {
         this.soapVersion = soapVersion;
     }
 
-    @XmlTransient
+    @XmlElement
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
     }

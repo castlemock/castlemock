@@ -88,7 +88,8 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
                 if(this.operationRepository.exists(operation.getId())){
                     throw new IllegalArgumentException("An operation with the following key already exists: " + operation.getId());
                 }
-
+                
+                operation.setCurrentResponseSequenceIndex(0);
                 this.operationRepository.save(operation);
             }
 
