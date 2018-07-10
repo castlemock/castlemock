@@ -84,6 +84,7 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
                     throw new IllegalArgumentException("A method with the following key already exists: " + method.getId());
                 }
 
+                method.setCurrentResponseSequenceIndex(0);
                 this.methodRepository.save(method);
             }
 
