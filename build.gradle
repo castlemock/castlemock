@@ -17,7 +17,7 @@ subprojects {
     apply plugin: 'eclipse'
     apply plugin: "jacoco"
     group = "com.castlemock"
-    version = '1.23'
+    version = '1.24-SNAPSHOT'
 
     archivesBaseName = "${it.group}-${it.name}"
 
