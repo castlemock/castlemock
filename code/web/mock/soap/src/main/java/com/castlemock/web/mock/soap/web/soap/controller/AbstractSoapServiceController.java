@@ -37,6 +37,7 @@ import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
+import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparator;
 import com.castlemock.web.mock.soap.support.MtomUtility;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
@@ -69,6 +70,9 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     private static final String SOAP = "soap";
     private static final int ERROR_CODE = 500;
     private static final Logger LOGGER = Logger.getLogger(AbstractSoapServiceController.class);
+
+    private static final SoapMockResponseNameComparator MOCK_RESPONSE_NAME_COMPARATOR =
+            new SoapMockResponseNameComparator();
 
     /**
      * Process the incoming message by forwarding it to the main process method in
@@ -263,6 +267,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 mockResponses.add(mockResponse);
             }
         }
+
+        mockResponses.sort(MOCK_RESPONSE_NAME_COMPARATOR);
 
         SoapMockResponse mockResponse = null;
         if(mockResponses.isEmpty()){

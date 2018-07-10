@@ -43,6 +43,7 @@ import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.model.RestException;
+import com.castlemock.web.mock.rest.utility.compare.RestMockResponseNameComparator;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpHeaders;
@@ -71,6 +72,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static final Random RANDOM = new Random();
     private static final Logger LOGGER = Logger.getLogger(AbstractRestServiceController.class);
+
+    private static final RestMockResponseNameComparator MOCK_RESPONSE_NAME_COMPARATOR =
+            new RestMockResponseNameComparator();
 
     /**
      *
@@ -333,6 +337,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 enabledMockResponses.add(mockResponse);
             }
         }
+
+        enabledMockResponses.sort(MOCK_RESPONSE_NAME_COMPARATOR);
 
         List<RestMockResponse> mockResponses = new ArrayList<>();
 
