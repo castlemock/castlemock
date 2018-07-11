@@ -78,6 +78,7 @@ public class HttpMessageSupport {
      */
     public static String extractSoapRequestName(final String body){
         try {
+            LOGGER.trace("Extracting the SOAP request name from the following body: " + body);
             final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             final InputSource inputSource = new InputSource(new StringReader(body));
@@ -85,9 +86,23 @@ public class HttpMessageSupport {
             final String rootName = document.getDocumentElement().getNodeName();
             final String prefix = getElement(rootName, 0);
 
-            final NodeList nodeList = document.getElementsByTagName(prefix + DIVIDER + BODY);
+            NodeList nodeList = document.getElementsByTagName(prefix + DIVIDER + BODY);
+            Node bodyNode = nodeList.item(0);
 
-            final Node bodyNode = nodeList.item(0);
+            if(bodyNode == null){
+                // Unable to extract the body. Try to extract the
+                // body without the namespace
+                LOGGER.trace("Unable to extract the SOAP request body. " +
+                        "Trying to extract the body without the namespace");
+                nodeList = document.getElementsByTagName(BODY);
+                bodyNode = nodeList.item(0);
+            }
+
+            if(bodyNode == null){
+                LOGGER.warn("Unable to extract the body from the following SOAP request: " + body);
+                throw new IllegalArgumentException("Unable to extract the body element");
+            }
+
             final NodeList bodyChildren = bodyNode.getChildNodes();
 
             if (bodyChildren.getLength() == 0) {

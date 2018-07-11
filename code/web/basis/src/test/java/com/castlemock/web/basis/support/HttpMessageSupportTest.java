@@ -278,6 +278,56 @@ public class HttpMessageSupportTest {
         Assert.assertEquals("GetPrice", requestName);
     }
 
+    @Test
+    public void testExtractSoapRequestNameWithoutNamespaces(){
+        final String requestBody =
+                "<?xml version=\"1.0\"?>\n" +
+                        "<soap:Envelope\n" +
+                        "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\">\n" +
+                        "<soap:Body>\n" +
+                        "  <GetPrice>\n" +
+                        "    <Item>Apples</Item>\n" +
+                        "  </GetPrice>\n" +
+                        "</soap:Body>\n" +
+                        "</soap:Envelope> ";
+
+        final String requestName = HttpMessageSupport.extractSoapRequestName(requestBody);
+        Assert.assertEquals("GetPrice", requestName);
+    }
+
+    @Test
+    public void testExtractSoapRequestNameWithoutBodyNamespace(){
+        final String requestBody =
+                "<?xml version=\"1.0\"?>\n" +
+                        "<soap:Envelope\n" +
+                        "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\">\n" +
+                        "<Body>\n" +
+                        "  <GetPrice>\n" +
+                        "    <Item>Apples</Item>\n" +
+                        "  </GetPrice>\n" +
+                        "</Body>\n" +
+                        "</soap:Envelope> ";
+
+        final String requestName = HttpMessageSupport.extractSoapRequestName(requestBody);
+        Assert.assertEquals("GetPrice", requestName);
+    }
+
+    @Test
+    public void testExtractSoapRequestNameWithoutSoapNamespaces(){
+        final String requestBody =
+                "<?xml version=\"1.0\"?>\n" +
+                        "<Envelope>\n" +
+                        "<Body>\n" +
+                        "  <GetPrice>\n" +
+                        "    <Item>Apples</Item>\n" +
+                        "  </GetPrice>\n" +
+                        "</Body>\n" +
+                        "</Envelope> ";
+
+        final String requestName = HttpMessageSupport.extractSoapRequestName(requestBody);
+        Assert.assertEquals("GetPrice", requestName);
+    }
+
     @Test(expected = IllegalStateException.class)
     public void testExtractSoapRequestNameInvalidRequestBody(){
         HttpMessageSupport.extractSoapRequestName(new String());
