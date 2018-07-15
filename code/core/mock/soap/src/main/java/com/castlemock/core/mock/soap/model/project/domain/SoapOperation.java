@@ -21,7 +21,6 @@ import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -35,6 +34,7 @@ public class SoapOperation {
     private String id;
     private String name;
     private String identifier;
+    private SoapOperationIdentifier operationIdentifier;
     private SoapResponseStrategy responseStrategy;
     private SoapOperationStatus status;
     private HttpMethod httpMethod;
@@ -80,6 +80,15 @@ public class SoapOperation {
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    @XmlElement
+    public SoapOperationIdentifier getOperationIdentifier() {
+        return operationIdentifier;
+    }
+
+    public void setOperationIdentifier(SoapOperationIdentifier operationIdentifier) {
+        this.operationIdentifier = operationIdentifier;
     }
 
     @XmlElement

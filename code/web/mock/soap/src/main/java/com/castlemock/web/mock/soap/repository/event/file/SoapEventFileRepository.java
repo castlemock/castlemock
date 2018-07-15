@@ -255,7 +255,7 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
         @Mapping("operationName")
         private String operationName;
         @Mapping("operationIdentifier")
-        private String operationIdentifier;
+        private SoapOperationIdentifierFile operationIdentifier;
         @Mapping("soapVersion")
         private SoapVersion soapVersion;
         @Mapping("httpHeaders")
@@ -307,11 +307,11 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
         }
 
         @XmlElement
-        public String getOperationIdentifier() {
+        public SoapOperationIdentifierFile getOperationIdentifier() {
             return operationIdentifier;
         }
 
-        public void setOperationIdentifier(String operationIdentifier) {
+        public void setOperationIdentifier(SoapOperationIdentifierFile operationIdentifier) {
             this.operationIdentifier = operationIdentifier;
         }
 
@@ -407,6 +407,34 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
         public void setContentEncodings(List<ContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
         }
+    }
+
+    @XmlRootElement(name = "soapOperationIdentifier")
+    protected static class SoapOperationIdentifierFile {
+
+        @Mapping("name")
+        private String name;
+        @Mapping("namespace")
+        private String namespace;
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getNamespace() {
+            return namespace;
+        }
+
+        public void setNamespace(String namespace) {
+            this.namespace = namespace;
+        }
+
     }
 
 }

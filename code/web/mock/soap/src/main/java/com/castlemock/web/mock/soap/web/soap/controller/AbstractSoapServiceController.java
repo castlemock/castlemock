@@ -39,6 +39,7 @@ import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparator;
 import com.castlemock.web.mock.soap.support.MtomUtility;
+import com.castlemock.web.mock.soap.support.SoapUtility;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpHeaders;
@@ -46,10 +47,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -143,7 +152,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         final SoapRequest request = new SoapRequest();
         final String body = HttpMessageSupport.getBody(httpServletRequest);
 
-        final String identifier;
+        final SoapOperationIdentifier identifier;
         if(httpServletRequest instanceof MultipartHttpServletRequest){
             // Check if the request is a Multipart request. If so, interpret  the incoming request
             // as a MTOM request and extract the main body (Exclude the attachment).
@@ -151,10 +160,10 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             String mainBody = MtomUtility.extractMtomBody(body, httpServletRequest.getContentType());
 
             // Use the main body to identify
-            identifier = HttpMessageSupport.extractSoapRequestName(mainBody);
+            identifier = SoapUtility.extractSoapRequestName(mainBody);
         } else {
             // The incoming request is a regular SOAP request. Parse the body as it is.
-            identifier = HttpMessageSupport.extractSoapRequestName(body);
+            identifier = SoapUtility.extractSoapRequestName(body);
         }
 
         final String serviceUri = httpServletRequest.getRequestURI().replace(getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
@@ -285,7 +294,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             serviceProcessor.process(new UpdateCurrentMockResponseSequenceIndexInput(soapProjectId, soapPortId, soapOperation.getId(), currentSequenceNumber + 1));
         } else if (soapOperation.getResponseStrategy().equals(SoapResponseStrategy.XPATH_INPUT)) {
             for (SoapMockResponse testedMockResponse : mockResponses) {
-                if (HttpMessageSupport.isValidXPathExpr(request.getBody(), testedMockResponse.getXpathExpression())) {
+                if (SoapUtility.isValidXPathExpr(request.getBody(), testedMockResponse.getXpathExpression())) {
                     mockResponse = testedMockResponse;
                     break;
                 }
