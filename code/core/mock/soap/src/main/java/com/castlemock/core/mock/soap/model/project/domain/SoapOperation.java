@@ -48,6 +48,7 @@ public class SoapOperation {
     private String defaultXPathMockResponseId;
     private String portId;
     private Boolean mockOnFailure;
+    private SoapOperationIdentifyStrategy identifyStrategy;
 
     private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<SoapMockResponse>();
 
@@ -234,5 +235,14 @@ public class SoapOperation {
 
     public void setMockOnFailure(Boolean mockOnFailure) {
         this.mockOnFailure = mockOnFailure;
+    }
+
+    @XmlElement
+    public SoapOperationIdentifyStrategy getIdentifyStrategy() {
+        return identifyStrategy;
+    }
+
+    public void setIdentifyStrategy(SoapOperationIdentifyStrategy identifyStrategy) {
+        this.identifyStrategy = identifyStrategy;
     }
 }

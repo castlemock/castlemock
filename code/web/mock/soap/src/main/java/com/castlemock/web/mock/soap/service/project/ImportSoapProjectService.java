@@ -93,7 +93,11 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
                     SoapOperationIdentifier operationIdentifier =
                             new SoapOperationIdentifier();
                     operationIdentifier.setName(operation.getIdentifier());
+                    operation.setOperationIdentifier(operationIdentifier);
                     operation.setIdentifier(null);
+                }
+                if(operation.getIdentifyStrategy() == null){
+                    operation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
                 }
                 
                 operation.setCurrentResponseSequenceIndex(0);

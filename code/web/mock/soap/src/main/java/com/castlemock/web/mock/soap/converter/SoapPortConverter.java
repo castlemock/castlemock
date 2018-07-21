@@ -157,6 +157,7 @@ public class SoapPortConverter {
             soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
             soapOperation.setDefaultBody(defaultBody);
             soapOperation.setCurrentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX);
+            soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
             if(generateResponse){
                 final SoapMockResponse mockResponse = new SoapMockResponse();
                 mockResponse.setBody(soapOperation.getDefaultBody());

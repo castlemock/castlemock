@@ -55,6 +55,17 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="column1"><spring:message code="soap.updatesoapoperation.label.identifystrategy"/></td>
+                    <td>
+                        <form:select class="form-control" path="identifyStrategy">
+                            <c:forEach items="${soapOperationIdentifyStrategies}" var="soapOperationIdentifyStrategy">
+                                <spring:message var="label" code="soap.type.soapoperationidentifystrategy.${soapOperationIdentifyStrategy}"/>
+                                <form:option value="${soapOperationIdentifyStrategy}" label="${label}"/>
+                            </c:forEach>
+                        </form:select>
+                    </td>
+                </tr>
+                <tr>
                     <td class="column1"><label path="originalEndpoint"><spring:message code="soap.updatesoapoperation.label.originalforwardedenpoint"/></label></td>
                     <td class="column2"><label path="originalEndpoint">${command.originalEndpoint}</label></td>
                 </tr>

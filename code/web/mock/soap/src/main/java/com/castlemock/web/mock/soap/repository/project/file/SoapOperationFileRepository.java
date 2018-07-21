@@ -103,6 +103,11 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
                 soapOperation.setIdentifier(null);
                 save(soapOperation);
             }
+
+            if(soapOperation.getIdentifyStrategy() == null){
+                soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
+                save(soapOperation);
+            }
         }
     }
 
@@ -189,7 +194,12 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
 
                 if(operationIdentifier.getName().equalsIgnoreCase(operationIdentifierFile.getName())){
 
+                    // Three ways to identify SOAP operation:
+                    // 1. Namespace is missing from the stored files (Legacy)
+                    // 2. The identify strategy is ELEMENT (Ignore namespace)
+                    // 3. Both the name and namespace is matching
                     if(operationIdentifierFile.getNamespace() == null ||
+                            soapOperation.getIdentifyStrategy() == SoapOperationIdentifyStrategy.ELEMENT ||
                             operationIdentifierFile.getNamespace().equalsIgnoreCase(operationIdentifier.getNamespace())) {
                         return this.mapper.map(soapOperation, SoapOperation.class);
                     }
@@ -267,6 +277,8 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         private long networkDelay;
         @Mapping("mockOnFailure")
         private boolean mockOnFailure;
+        @Mapping("identifyStrategy")
+        private SoapOperationIdentifyStrategy identifyStrategy;
 
         @XmlElement
         @Override
@@ -422,6 +434,15 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         public void setMockOnFailure(boolean mockOnFailure) {
             this.mockOnFailure = mockOnFailure;
         }
+
+        @XmlElement
+        public SoapOperationIdentifyStrategy getIdentifyStrategy() {
+            return identifyStrategy;
+        }
+
+        public void setIdentifyStrategy(SoapOperationIdentifyStrategy identifyStrategy) {
+            this.identifyStrategy = identifyStrategy;
+        }
     }
 
 
@@ -452,7 +473,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         }
 
     }
-
 
 }
 
