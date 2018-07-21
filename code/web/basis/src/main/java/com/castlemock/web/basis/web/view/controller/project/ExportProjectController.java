@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -45,6 +44,8 @@ public class ExportProjectController extends AbstractViewController {
     @Autowired
     private ProjectServiceFacade projectServiceFacade;
 
+    private static final String TEXT_XML_UTF_8 = "text/xml;charset=utf-8";
+
     /**
      * Creates and return a view that provides the required functionality
      * to export a project.
@@ -58,7 +59,7 @@ public class ExportProjectController extends AbstractViewController {
         final String exportedProject = projectServiceFacade.exportProject(projectType, projectId);
 
         HttpHeaders respHeaders = new HttpHeaders();
-        respHeaders.setContentType(MediaType.TEXT_XML);
+        respHeaders.set(HttpHeaders.CONTENT_TYPE, TEXT_XML_UTF_8);
         respHeaders.setContentDispositionFormData("attachment", "project-" + projectType + "-" + projectId + ".xml");
 
         return new ResponseEntity<String>(exportedProject, respHeaders, HttpStatus.OK);

@@ -15,6 +15,7 @@
 --%>
 
 <%@ include file="includes.jspf"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1" %>
 <html>
 <body>
 	<h1><spring:message code="general.error.forbidden.title"/></h1>

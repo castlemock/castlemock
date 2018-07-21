@@ -26,6 +26,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -53,13 +54,16 @@ public class ExportProjectControllerTest extends AbstractControllerTest {
         return exportProjectController;
     }
 
+    private static final String TEXT_XML_UTF_8 = "text/xml;charset=utf-8";
+
     @Test
     public void testProjectExport() throws Exception {
         Mockito.when(projectServiceFacade.exportProject(Mockito.anyString(), Mockito.anyString())).thenReturn("Project information");
         final String url = "/web/soap/project/0/export";
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(url);
         mockMvc.perform(message)
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.CONTENT_TYPE, TEXT_XML_UTF_8));
     }
 
 }

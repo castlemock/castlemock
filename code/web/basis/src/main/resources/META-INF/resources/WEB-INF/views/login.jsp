@@ -16,6 +16,7 @@
 
 <%@ include file="includes.jspf"%>
 <%@page session="true"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1" %>
 <html>
     <head>
         <title><spring:message code="general.login.title.title"/></title>
