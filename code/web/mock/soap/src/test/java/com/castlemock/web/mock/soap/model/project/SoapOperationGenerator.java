@@ -17,10 +17,7 @@
 package com.castlemock.web.mock.soap.model.project;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
+import com.castlemock.core.mock.soap.model.project.domain.*;
 
 import java.util.ArrayList;
 
@@ -42,6 +39,7 @@ public class SoapOperationGenerator {
         soapOperation.setHttpMethod(HttpMethod.POST);
         soapOperation.setStatus(SoapOperationStatus.MOCKED);
         soapOperation.setSoapVersion(SoapVersion.SOAP11);
+        soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
         soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
         return soapOperation;
     }

@@ -42,7 +42,7 @@
             <table class="formTable">
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="soap.soapoperation.label.identifier"/></label></td>
-                    <td class="column2"><label path="name">${soapOperation.identifier}</label></td>
+                    <td class="column2"><label path="name">${soapOperation.operationIdentifier.name}</label></td>
                 </tr>
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="soap.soapoperation.label.soapversion"/></label></td>
@@ -51,6 +51,10 @@
                 <tr>
                     <td class="column1"><label path="status"><spring:message code="soap.soapoperation.label.status"/></label></td>
                     <td class="column2"><label path="status"><spring:message code="soap.type.soapoperationstatus.${soapOperation.status}"/></label></td>
+                </tr>
+                <tr>
+                    <td class="column1"><label path="identifyStrategy"><spring:message code="soap.soapoperation.label.identifystrategy"/></label></td>
+                    <td class="column2"><label path="identifyStrategy"><spring:message code="soap.type.soapoperationidentifystrategy.${soapOperation.identifyStrategy}"/></label></td>
                 </tr>
                 <tr>
                     <td class="column1"><label path="soapResponseStrategy"><spring:message code="soap.soapoperation.label.responsestrategy"/></label></td>

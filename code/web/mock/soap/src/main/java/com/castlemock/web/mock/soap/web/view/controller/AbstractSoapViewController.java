@@ -40,6 +40,7 @@ public class AbstractSoapViewController extends AbstractViewController {
     protected static final String SOAP_PROJECT = "soapProject";
     protected static final String SOAP_PROJECT_ID = "soapProjectId";
     protected static final String SOAP_OPERATION_STATUSES = "soapOperationStatuses";
+    protected static final String SOAP_OPERATION_IDENTIFY_STRATEGIES = "soapOperationIdentifyStrategies";
     protected static final String SOAP_OPERATION = "soapOperation";
     protected static final String SOAP_OPERATION_ID = "soapOperationId";
     protected static final String SOAP_OPERATIONS = "soapOperations";

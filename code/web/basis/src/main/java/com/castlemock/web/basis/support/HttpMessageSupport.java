@@ -17,26 +17,12 @@
 package com.castlemock.web.basis.support;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpParameter;
-import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathFactory;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -53,9 +39,6 @@ import java.util.zip.InflaterInputStream;
  */
 public class HttpMessageSupport {
 
-    private static final String DIVIDER = ":";
-    private static final String VARIABLE = "#";
-    private static final String BODY = "Body";
     private static final String TRANSFER_ENCODING = "Transfer-Encoding";
     private static final String CONTENT_LENGTH = "Content-Length";
     private static final Logger LOGGER = Logger.getLogger(HttpMessageSupport.class);
@@ -69,83 +52,6 @@ public class HttpMessageSupport {
      */
     private HttpMessageSupport(){
         // The constructor should be empty
-    }
-
-    /**
-     * The method extract the operation name from the SOAP body
-     * @param body The body that contains the operation name
-     * @return The extracted operation name
-     */
-    public static String extractSoapRequestName(final String body){
-        try {
-            LOGGER.trace("Extracting the SOAP request name from the following body: " + body);
-            final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            final InputSource inputSource = new InputSource(new StringReader(body));
-            final Document document = documentBuilder.parse(inputSource);
-            final String rootName = document.getDocumentElement().getNodeName();
-            final String prefix = getElement(rootName, 0);
-
-            NodeList nodeList = document.getElementsByTagName(prefix + DIVIDER + BODY);
-            Node bodyNode = nodeList.item(0);
-
-            if(bodyNode == null){
-                // Unable to extract the body. Try to extract the
-                // body without the namespace
-                LOGGER.trace("Unable to extract the SOAP request body. " +
-                        "Trying to extract the body without the namespace");
-                nodeList = document.getElementsByTagName(BODY);
-                bodyNode = nodeList.item(0);
-            }
-
-            if(bodyNode == null){
-                LOGGER.warn("Unable to extract the body from the following SOAP request: " + body);
-                throw new IllegalArgumentException("Unable to extract the body element");
-            }
-
-            final NodeList bodyChildren = bodyNode.getChildNodes();
-
-            if (bodyChildren.getLength() == 0) {
-                throw new IllegalStateException("Invalid count of body children");
-            }
-
-            String serviceNameWithPrefix = null;
-            for (int index = 0; index < bodyChildren.getLength(); index++) {
-                if (!bodyChildren.item(index).getNodeName().contains(VARIABLE)) {
-                    serviceNameWithPrefix = bodyChildren.item(index).getNodeName();
-                }
-            }
-            if (serviceNameWithPrefix == null) {
-                throw new IllegalStateException("Unable to extract the service name");
-            }
-
-            return getElement(serviceNameWithPrefix, 1);
-        }catch(Exception exception){
-            LOGGER.error("Unable to extract SOAP request name", exception);
-            throw new IllegalStateException(exception.getMessage());
-        }
-    }
-
-    /**
-     * Returns the element name or prefix
-     * @param element The element with both the name and namespace
-     * @param index Index is used to indicate what should be retrieved. Index 0 = namespace, Index 1 = element name
-     * @return Either the element name or namespace
-     */
-    public static String getElement(String element, int index){
-        Preconditions.checkArgument(index >= 0, "The index can't be less than zero");
-        Preconditions.checkArgument(index <= 1, "The index can't be more than one");
-
-        final String[] elementDivided = element.split(DIVIDER);
-
-        if (elementDivided.length == 1) {
-            return elementDivided[0];
-        }
-        if (elementDivided.length == 2) {
-            return elementDivided[index];
-        }
-
-        throw new IllegalArgumentException("Unable to find the name or prefix in the XML element");
     }
 
     /**
@@ -290,23 +196,6 @@ public class HttpMessageSupport {
             }
         }
         return stringBuilder.toString();
-    }
-
-    public static boolean isValidXPathExpr(String body, String xpathExpr) {
-        try {
-            final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            final InputSource inputSource = new InputSource(new StringReader(body));
-            final Document document = documentBuilder.parse(inputSource);
-
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            NodeList evaluate = (NodeList) xPath.compile(xpathExpr).evaluate(document, XPathConstants.NODESET);
-            return evaluate.getLength() > 0;
-
-        } catch (Exception exception) {
-            LOGGER.error("Unable to evaluate xpath expression", exception);
-            return false;
-        }
     }
 
     /**

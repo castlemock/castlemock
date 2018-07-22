@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.repository.project;
 
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
 import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
@@ -45,10 +46,12 @@ public interface SoapOperationRepository extends Repository<SoapOperation, Strin
      * @param portId The id of the port
      * @param method The HTTP method
      * @param version The SOAP version
-     * @param identifier The identifier
+     * @param operationIdentifier The identifier
      * @return A {@link SoapOperation} that matches the provided search criteria.
      */
-    SoapOperation findWithMethodAndVersionAndIdentifier(String portId, HttpMethod method, SoapVersion version, String identifier);
+    SoapOperation findWithMethodAndVersionAndIdentifier(String portId, HttpMethod method,
+                                                        SoapVersion version,
+                                                        SoapOperationIdentifier operationIdentifier);
 
     /**
      * Updates the current response sequence index.

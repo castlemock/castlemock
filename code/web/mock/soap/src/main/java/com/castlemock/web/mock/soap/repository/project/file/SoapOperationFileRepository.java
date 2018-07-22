@@ -85,6 +85,33 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
     }
 
     /**
+     * The post initialize method can be used to run functionality for a specific service. The method is called when
+     * the method {@link #initialize} has finished successful. The method does not contain any functionality and the
+     * whole idea is the it should be overridden by subclasses, but only if certain functionality is required to
+     * run after the {@link #initialize} method has completed.
+     * @see #initialize
+     */
+    @Override
+    public void postInitiate(){
+        for(SoapOperationFile soapOperation : this.collection.values()){
+            if(soapOperation.getOperationIdentifier() == null){
+                SoapOperationIdentifierFile operationIdentifier =
+                        new SoapOperationIdentifierFile();
+                operationIdentifier.setName(soapOperation.getIdentifier());
+
+                soapOperation.setOperationIdentifier(operationIdentifier);
+                soapOperation.setIdentifier(null);
+                save(soapOperation);
+            }
+
+            if(soapOperation.getIdentifyStrategy() == null){
+                soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
+                save(soapOperation);
+            }
+        }
+    }
+
+    /**
      * The method provides the functionality to search in the repository with a {@link SearchQuery}
      *
      * @param query The search query
@@ -112,6 +139,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             }
         }
     }
+
 
     @Override
     public List<SoapOperation> findWithPortId(String portId) {
@@ -149,18 +177,33 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
      *
      * @param method     The HTTP method
      * @param version    The SOAP version
-     * @param identifier The identifier
+     * @param operationIdentifier The identifier
      * @return A {@link SoapOperation} that matches the provided search criteria.
      */
     @Override
     public SoapOperation findWithMethodAndVersionAndIdentifier(final String portId, final HttpMethod method,
-                                                               final SoapVersion version, final String identifier) {
+                                                               final SoapVersion version,
+                                                               final SoapOperationIdentifier operationIdentifier) {
         for(SoapOperationFile soapOperation : this.collection.values()){
             if(soapOperation.getPortId().equals(portId) &&
                     soapOperation.getHttpMethod().equals(method) &&
-                    soapOperation.getSoapVersion().equals(version) &&
-                    soapOperation.getIdentifier().equalsIgnoreCase(identifier)){
-                return this.mapper.map(soapOperation, SoapOperation.class);
+                    soapOperation.getSoapVersion().equals(version)){
+
+                final SoapOperationIdentifierFile operationIdentifierFile =
+                        soapOperation.getOperationIdentifier();
+
+                if(operationIdentifier.getName().equalsIgnoreCase(operationIdentifierFile.getName())){
+
+                    // Three ways to identify SOAP operation:
+                    // 1. Namespace is missing from the stored files (Legacy)
+                    // 2. The identify strategy is ELEMENT (Ignore namespace)
+                    // 3. Both the name and namespace is matching
+                    if(operationIdentifierFile.getNamespace() == null ||
+                            soapOperation.getIdentifyStrategy() == SoapOperationIdentifyStrategy.ELEMENT ||
+                            operationIdentifierFile.getNamespace().equalsIgnoreCase(operationIdentifier.getNamespace())) {
+                        return this.mapper.map(soapOperation, SoapOperation.class);
+                    }
+                }
             }
         }
         return null;
@@ -204,12 +247,14 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         private String id;
         @Mapping("name")
         private String name;
-        @Mapping("identifier")
-        private String identifier;
         @Mapping("portId")
         private String portId;
         @Mapping("responseStrategy")
         private SoapResponseStrategy responseStrategy;
+        @Mapping("identifier")
+        private String identifier;
+        @Mapping("operationIdentifier")
+        private SoapOperationIdentifierFile operationIdentifier;
         @Mapping("status")
         private SoapOperationStatus status;
         @Mapping("httpMethod")
@@ -232,6 +277,8 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         private long networkDelay;
         @Mapping("mockOnFailure")
         private boolean mockOnFailure;
+        @Mapping("identifyStrategy")
+        private SoapOperationIdentifyStrategy identifyStrategy;
 
         @XmlElement
         @Override
@@ -260,6 +307,15 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
 
         public void setIdentifier(String identifier) {
             this.identifier = identifier;
+        }
+
+        @XmlElement
+        public SoapOperationIdentifierFile getOperationIdentifier() {
+            return operationIdentifier;
+        }
+
+        public void setOperationIdentifier(SoapOperationIdentifierFile operationIdentifier) {
+            this.operationIdentifier = operationIdentifier;
         }
 
         @XmlElement
@@ -378,9 +434,45 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         public void setMockOnFailure(boolean mockOnFailure) {
             this.mockOnFailure = mockOnFailure;
         }
+
+        @XmlElement
+        public SoapOperationIdentifyStrategy getIdentifyStrategy() {
+            return identifyStrategy;
+        }
+
+        public void setIdentifyStrategy(SoapOperationIdentifyStrategy identifyStrategy) {
+            this.identifyStrategy = identifyStrategy;
+        }
     }
 
 
+    @XmlRootElement(name = "soapOperationIdentifier")
+    protected static class SoapOperationIdentifierFile {
+
+        @Mapping("name")
+        private String name;
+        @Mapping("namespace")
+        private String namespace;
+
+        @XmlElement
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlElement
+        public String getNamespace() {
+            return namespace;
+        }
+
+        public void setNamespace(String namespace) {
+            this.namespace = namespace;
+        }
+
+    }
 
 }
 

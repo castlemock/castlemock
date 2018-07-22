@@ -17,11 +17,7 @@ package com.castlemock.web.mock.soap.web.view.controller.operation;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsForwardedEndpointInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
 import com.castlemock.web.basis.web.AbstractController;
@@ -62,6 +58,7 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
     private static final String SLASH = "/";
     private static final String UPDATE = "update";
     private static final String SOAP_OPERATION_STATUSES = "soapOperationStatuses";
+    private static final String SOAP_OPERATION_IDENTIFY_STRATEGIES = "soapOperationIdentifyStrategies";
     private static final String COMMAND = "command";
 
     @InjectMocks
@@ -85,7 +82,7 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + UPDATE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(6 + GLOBAL_VIEW_MODEL_COUNT))
+                .andExpect(MockMvcResultMatchers.model().size(7 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, soapProject.getId()))
@@ -93,6 +90,7 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_ID, soapOperation.getId()))
                 .andExpect(MockMvcResultMatchers.model().attribute(COMMAND, soapOperation))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_STATUSES, soapOperationStatuses))
+                .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION_IDENTIFY_STRATEGIES, SoapOperationIdentifyStrategy.values()))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_MOCK_RESPONSE_STRATEGIES, SoapResponseStrategy.values()));
     }
 

@@ -163,7 +163,6 @@ public class SoapProjectV1LegacyRepository extends AbstractLegacyRepositoryImpl<
                 SoapOperation operation = new SoapOperation();
                 operation.setId(operationV1.getId());
                 operation.setName(operationV1.getName());
-                operation.setIdentifier(operationV1.getIdentifier());
                 operation.setResponseStrategy(operationV1.getResponseStrategy());
                 operation.setStatus(operationV1.getStatus());
                 operation.setHttpMethod(operationV1.getHttpMethod());

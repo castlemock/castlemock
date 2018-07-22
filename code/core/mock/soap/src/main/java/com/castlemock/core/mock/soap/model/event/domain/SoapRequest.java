@@ -18,6 +18,7 @@ package com.castlemock.core.mock.soap.model.event.domain;
 
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -36,9 +37,9 @@ public class SoapRequest {
     private String uri;
     private HttpMethod httpMethod;
     private String operationName;
-    private String operationIdentifier;
     private SoapVersion soapVersion;
     private List<HttpHeader> httpHeaders;
+    private SoapOperationIdentifier operationIdentifier;
 
     @XmlElement
     public String getBody() {
@@ -86,11 +87,11 @@ public class SoapRequest {
     }
 
     @XmlElement
-    public String getOperationIdentifier() {
+    public SoapOperationIdentifier getOperationIdentifier() {
         return operationIdentifier;
     }
 
-    public void setOperationIdentifier(String operationIdentifier) {
+    public void setOperationIdentifier(SoapOperationIdentifier operationIdentifier) {
         this.operationIdentifier = operationIdentifier;
     }
 

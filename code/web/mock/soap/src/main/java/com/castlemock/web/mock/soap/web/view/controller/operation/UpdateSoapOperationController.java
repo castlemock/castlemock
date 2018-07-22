@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.web.view.controller.operation;
 
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifyStrategy;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapOperationInput;
@@ -66,6 +67,7 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
         model.addObject(SOAP_OPERATION_ID, soapOperationId);
         model.addObject(SOAP_MOCK_RESPONSE_STRATEGIES, SoapResponseStrategy.values());
         model.addObject(SOAP_OPERATION_STATUSES, getSoapOperationStatuses());
+        model.addObject(SOAP_OPERATION_IDENTIFY_STRATEGIES, SoapOperationIdentifyStrategy.values());
         return model;
     }
 
