@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Karl Dahlgren
+ * Copyright 2018 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,41 +16,34 @@
 
 package com.castlemock.war.config;
 
-import com.castlemock.web.basis.repository.token.SessionTokenRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * The class SecurityConfig provides the configuration for the entire Castle Mock security
+ * The class {@link SecurityConfig} provides the configuration for the entire Castle Mock security
  *
  * @author Karl Dahlgren
  * @since 1.0
  */
 @Configuration
+@Order(1)
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     @Autowired
     @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
-    @Autowired
-    @Qualifier("tokenRepository")
-    private SessionTokenRepository tokenRepository;
-    @Value(value = "${token.validity.seconds}")
-    private Integer tokenValiditySeconds;
     private static final Logger LOGGER = Logger.getLogger(SecurityConfig.class);
 
     /**
@@ -62,54 +55,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(final AuthenticationManagerBuilder authenticationManagerBuilder) throws IllegalStateException {
         try {
-            //authenticationManagerBuilder.inMemoryAuthentication().withUser("user").password("password").authorities("ROLE_USER");
             authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
         } catch (Exception exception) {
             LOGGER.error("Unable to configure the authentication manager builder", exception);
             throw new IllegalStateException("Unable to configure the authentication manager builder");
         }
-    }
-
-    /**
-     * The method configure is responsible for the security configuration.
-     *
-     * @param httpSecurity httpSecurity will be used to configure the authentication process.
-     * @throws Exception Throws an exception if the configuration fails
-     */
-    @Override
-    protected void configure(final HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .authorizeRequests()
-                    .antMatchers("/web/**")
-                    .authenticated()
-                    .and()
-                .formLogin()
-                    .loginPage("/login").failureUrl("/login?error")
-                    .usernameParameter("username")
-                    .passwordParameter("password")
-                    .and()
-                .logout()
-                    .logoutSuccessUrl("/login?logout")
-                    .and()
-                .csrf().and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(tokenValiditySeconds)
-                .and().exceptionHandling().accessDeniedPage("/forbidden");
-
-        httpSecurity
-                .authorizeRequests()
-                    .antMatchers("/mock/**")
-                    .permitAll()
-                    .and()
-                .csrf()
-                    .disable();
-
-        httpSecurity
-                .authorizeRequests()
-                    .antMatchers("/api/rest/**")
-                    .authenticated()
-                    .and()
-                .httpBasic();
-
-        httpSecurity.headers().cacheControl().disable();
     }
 
     /**
