@@ -54,7 +54,9 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest()
                     .authenticated()
                 .and()
-                    .httpBasic();
+                    .httpBasic()
+                .and()
+                    .csrf().disable();
 
         httpSecurity.headers().cacheControl().disable();
     }

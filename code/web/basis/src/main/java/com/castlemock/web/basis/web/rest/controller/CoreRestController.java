@@ -92,7 +92,7 @@ public class CoreRestController extends AbstractRestController {
             @ApiResponse(code = 200, message = "Successfully deleted project")
     })
     @RequestMapping(method = RequestMethod.DELETE, value = "/project/{type}/{projectId}")
-    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     Project deleteProject(
             @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
