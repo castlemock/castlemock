@@ -39,6 +39,7 @@ public abstract class AbstractRestDefinitionConverter implements RestDefinitionC
         restMockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
         restMockResponse.setHttpStatusCode(DEFAULT_RESPONSE_CODE);
         restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
+        restMockResponse.setUsingExpressions(true);
         return restMockResponse;
     }
 

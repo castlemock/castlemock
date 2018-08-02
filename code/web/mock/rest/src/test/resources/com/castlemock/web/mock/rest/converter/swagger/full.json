@@ -1,0 +1,256 @@
+{
+  "basePath": "/v1",
+  "definitions": {
+    "Mock": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "mockStatus": {
+          "description": "Mock Status",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "xml": {
+        "name": "Mock"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Castle Mock",
+    "url": "https://castlemock.com"
+  },
+  "host": "castlemock.com",
+  "info": {
+    "contact": {
+      "email": "contact@castlemock.com"
+    },
+    "description": "Test example for Castle Mock",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "https://castlemock.com",
+    "title": "Castle Mock Swagger",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/mock": {
+      "get": {
+        "description": "Get all mock services",
+        "operationId": "getAllMockServices",
+        "parameters": [],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Mock"
+            }
+          },
+          "400": {
+            "description": "Invalid mock id supplied"
+          },
+          "404": {
+            "description": "Mock not found"
+          }
+        },
+        "summary": "Get all mock services",
+        "tags": [
+          "mock"
+        ]
+      },
+      "head": {
+        "description": "Head service.",
+        "operationId": "headMock",
+        "parameters": [],
+        "produces": [],
+        "responses": {
+        },
+        "summary": "Head mock",
+        "tags": [
+          "mock"
+        ]
+      },
+      "options": {
+        "description": "Options service.",
+        "operationId": "optionsMock",
+        "parameters": [],
+        "produces": [],
+        "responses": {
+        },
+        "summary": "Options mock",
+        "tags": [
+          "mock"
+        ]
+      },
+      "post": {
+        "description": "Creates a new mocked service",
+        "operationId": "createMock",
+        "parameters": [
+          {
+            "description": "new mock object",
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Mock"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid mock supplied"
+          }
+        },
+        "summary": "Create mock",
+        "tags": [
+          "mock"
+        ]
+      }
+    },
+    "/mock/{mockId}": {
+      "delete": {
+        "description": "The service deletes a mocked service.",
+        "operationId": "deleteMock",
+        "parameters": [
+          {
+            "description": "The id that needs to be deleted",
+            "in": "path",
+            "name": "mockId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [],
+        "responses": {
+          "404": {
+            "description": "Mock not found"
+          }
+        },
+        "summary": "Delete mock",
+        "tags": [
+          "mock"
+        ]
+      },
+      "get": {
+        "description": "Get mock service by id",
+        "parameters": [
+          {
+            "description": "The id of the mock that will be retrieved",
+            "in": "path",
+            "name": "mockId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Mock"
+            }
+          },
+          "400": {
+            "description": "Invalid mock id supplied"
+          },
+          "404": {
+            "description": "Mock not found"
+          }
+        },
+        "summary": "Get mock by mock id",
+        "tags": [
+          "mock"
+        ]
+      },
+      "put": {
+        "description": "Updates a mocked service",
+        "operationId": "updateMock",
+        "parameters": [
+          {
+            "description": "The id of the mock that will be updated.",
+            "in": "path",
+            "name": "mockId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Updated mock object",
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Mock"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid mock supplied"
+          },
+          "404": {
+            "description": "Mock not found"
+          }
+        },
+        "summary": "Update mock",
+        "tags": [
+          "mock"
+        ]
+      }
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "api_key": {
+      "in": "header",
+      "name": "api_key",
+      "type": "apiKey"
+    },
+    "petstore_auth": {
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "read:pets": "read your pets",
+        "write:pets": "modify pets in your account"
+      },
+      "type": "oauth2"
+    }
+  },
+  "swagger": "2.0",
+  "tags": [
+    {
+      "description": "Castle Mock Swagger example",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://castlemock.com"
+      },
+      "name": "Castle Mock"
+    }
+  ]
+}

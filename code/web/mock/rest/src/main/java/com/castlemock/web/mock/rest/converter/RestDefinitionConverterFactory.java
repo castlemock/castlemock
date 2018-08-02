@@ -18,6 +18,7 @@
 package com.castlemock.web.mock.rest.converter;
 
 import com.castlemock.core.mock.rest.model.RestDefinitionType;
+import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.rest.converter.raml.RAMLRestDefinitionConverter;
 import com.castlemock.web.mock.rest.converter.swagger.SwaggerRestDefinitionConverter;
 import com.castlemock.web.mock.rest.converter.wadl.WADLRestDefinitionConverter;
@@ -29,7 +30,14 @@ import com.castlemock.web.mock.rest.converter.wadl.WADLRestDefinitionConverter;
  * @see SwaggerRestDefinitionConverter
  * @see WADLRestDefinitionConverter
  */
-public class RestDefinitionConverterFactory {
+public final class RestDefinitionConverterFactory {
+
+    /**
+     * Private constructor
+     */
+    private RestDefinitionConverterFactory(){
+
+    }
 
 
     /**
@@ -38,10 +46,11 @@ public class RestDefinitionConverterFactory {
      * @return A {@link RestDefinitionConverter} which matches the provided <code>converterType</code>
      * @throws IllegalArgumentException If not converter is matching the provided {@link RestDefinitionType}
      */
-    public static RestDefinitionConverter getConverter(final RestDefinitionType converterType){
+    public static RestDefinitionConverter getConverter(final RestDefinitionType converterType,
+                                                       final FileManager fileManager){
         switch (converterType){
             case WADL:
-                return new WADLRestDefinitionConverter();
+                return new WADLRestDefinitionConverter(fileManager);
             case SWAGGER:
                 return new SwaggerRestDefinitionConverter();
             case RAML:

@@ -27,7 +27,6 @@ import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.web.mock.rest.repository.project.*;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -69,7 +68,6 @@ public class SearchRestProjectServiceTest {
 
 
     @Test
-    @Ignore
     public void testProcess(){
         RestProject restProject = RestProjectGenerator.generateRestProject();
 

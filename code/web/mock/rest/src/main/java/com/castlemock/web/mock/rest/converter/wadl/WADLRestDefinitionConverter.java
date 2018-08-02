@@ -18,16 +18,10 @@
 package com.castlemock.web.mock.rest.converter.wadl;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
-import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
-import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -50,9 +44,13 @@ import java.util.List;
  */
 public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
-    @Autowired
-    private FileManager fileManager;
+    private final FileManager fileManager;
     private static final Logger LOGGER = Logger.getLogger(WADLRestDefinitionConverter.class);
+
+
+    public WADLRestDefinitionConverter(final FileManager fileManager){
+        this.fileManager = fileManager;
+    }
 
     /**
      * The method is responsible for parsing a {@link File} and converting into a list of {@link RestApplication}.
@@ -124,7 +122,8 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
      * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplication> convert(final String location, boolean generateResponse) {
+    public List<RestApplication> convert(final String location,
+                                         boolean generateResponse) {
 
         final List<RestApplication> restApplications = new ArrayList<>();
         List<File> files = null;

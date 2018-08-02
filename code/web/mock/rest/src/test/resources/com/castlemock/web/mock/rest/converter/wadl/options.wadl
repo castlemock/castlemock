@@ -1,0 +1,29 @@
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd"
+             xmlns:tns="urn:castlemock:com"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:yn="urn:castlemock:com"
+             xmlns:ya="urn:castlemock:api"
+             xmlns="http://wadl.dev.java.net/2009/02">
+    <grammars>
+        <include
+                href="UserResponse.xsd"/>
+        <include
+                href="Error.xsd"/>
+    </grammars>
+
+    <resources base="http://api.search.castlemock.com/UserService/V1/">
+        <resource path="optionsUser">
+            <method name="OPTIONS" id="optionsUser">
+                <response status="200">
+                    <representation mediaType="application/xml"
+                                    element="yn:ResultSet"/>
+                </response>
+                <response status="400">
+                    <representation mediaType="application/xml"
+                                    element="ya:Error"/>
+                </response>
+            </method>
+        </resource>
+    </resources>
+</application>

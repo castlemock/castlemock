@@ -200,8 +200,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         String methodName;
         if(operation.getOperationId() != null){
             methodName = operation.getOperationId();
-        }
-        else if(operation.getSummary() != null){
+        } else if(operation.getSummary() != null){
             methodName = operation.getSummary();
         } else {
             methodName = httpMethod.name();

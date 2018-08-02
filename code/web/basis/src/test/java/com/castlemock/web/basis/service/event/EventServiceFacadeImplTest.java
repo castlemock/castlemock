@@ -20,7 +20,6 @@ import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.basis.service.event.EventServiceAdapter;
 import com.castlemock.web.basis.model.event.dto.EventDtoGenerator;
-import com.castlemock.web.basis.service.event.EventServiceFacadeImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -131,6 +130,13 @@ public class EventServiceFacadeImplTest {
     public void testGetTypeUrl(){
         final String typeUrl = serviceFacade.getTypeUrl(TYPE);
         Assert.assertEquals(TYPE_URL, typeUrl);
+    }
+
+    @Test
+    public void testClearAll(){
+        serviceFacade.clearAll();
+        Mockito.verify(eventServiceAdapter, Mockito.times(1)).clearAll();
+
     }
 
 }

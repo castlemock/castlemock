@@ -1,7 +1,5 @@
 package com.castlemock.web.basis.repository.token;
 
-import com.castlemock.web.basis.model.session.token.SessionToken;
-import com.castlemock.web.basis.model.session.token.SessionTokenList;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,6 +11,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -204,6 +205,84 @@ public class SessionTokenRepository implements PersistentTokenRepository {
             tokens.add(token);
         }
         return tokens;
+    }
+
+    /**
+     * The session token represent the token which will be used to identify the user
+     * if the user has chosen the "Remember me" option when logging in
+     */
+    @XmlRootElement(name = "token")
+    private static class SessionToken {
+
+        private String username;
+        private String series;
+        private String tokenValue;
+        private Date date;
+
+        /**
+         * Default constructor for the Token.
+         * It is required in order to marshal and unmarshal the token
+         */
+        public SessionToken(){
+
+        }
+
+        public SessionToken(PersistentRememberMeToken persistentRememberMeToken){
+            this.username = persistentRememberMeToken.getUsername();
+            this.series = persistentRememberMeToken.getSeries();
+            this.tokenValue = persistentRememberMeToken.getTokenValue();
+            this.date = persistentRememberMeToken.getDate();
+        }
+
+        @XmlElement
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        @XmlElement
+        public String getSeries() {
+            return series;
+        }
+
+        public void setSeries(String series) {
+            this.series = series;
+        }
+
+        @XmlElement
+        public String getTokenValue() {
+            return tokenValue;
+        }
+
+        public void setTokenValue(String tokenValue) {
+            this.tokenValue = tokenValue;
+        }
+
+        @XmlElement
+        public Date getDate() {
+            return date;
+        }
+
+        public void setDate(Date date) {
+            this.date = date;
+        }
+    }
+
+    /**
+     * The SessionTokenList is a container class for all the tokens which will be stored on
+     * the local file system.
+     */
+    @XmlRootElement(name = "tokens")
+    @XmlSeeAlso({SessionToken.class})
+    public static class SessionTokenList extends LinkedList<SessionToken> {
+
+        @XmlElement(name = "token")
+        public List<SessionToken> getSessionTokens() {
+            return this;
+        }
     }
 
 
