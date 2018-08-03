@@ -11,7 +11,7 @@ task wrapper(type: Wrapper) {
     gradleVersion = '4.7'
 }
 
-subprojects {
+allprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
     apply plugin: 'eclipse'
@@ -23,13 +23,10 @@ subprojects {
 
     repositories {
         mavenCentral()
-    }
+        mavenLocal()
+        jcenter()
 
-    jacocoTestReport {
-        reports {
-            xml.enabled true
-            html.enabled false
-        }
+        maven { url "http://repo1.maven.org/maven2/" }
     }
 
     ext.junitVersion = "4.12"
@@ -65,15 +62,6 @@ subprojects {
         targetCompatibility = 1.8
     }
 
-    dependencies {
-        compile(group: 'com.google.guava', name: 'guava', version: guavaVersion)
-        compile(group: 'log4j', name: 'log4j', version: log4jVersion)
-        testCompile(group: 'org.mockito', name: 'mockito-all', version: mockitoVersion)
-        testCompile(group: 'junit', name: 'junit', version: junitVersion) {
-            exclude(group:'org.hamcrest', module:'hamcrest-core')
-        }
-    }
-
     sourceSets {
         main {
             java {
@@ -84,6 +72,36 @@ subprojects {
             }
         }
     }
+}
+
+subprojects {
+    dependencies {
+        compile(group: 'com.google.guava', name: 'guava', version: guavaVersion)
+        compile(group: 'log4j', name: 'log4j', version: log4jVersion)
+        testCompile(group: 'org.mockito', name: 'mockito-all', version: mockitoVersion)
+        testCompile(group: 'junit', name: 'junit', version: junitVersion) {
+            exclude(group:'org.hamcrest', module:'hamcrest-core')
+        }
+    }
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
+        csv.enabled false
+    }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
 }
 
 project(':code:core:expression') {
