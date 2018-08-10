@@ -39,7 +39,7 @@ public final class DeleteRestMockResponsesInput implements Input{
     @NotNull
     private final List<RestMockResponse> restMockResponses;
 
-    public DeleteRestMockResponsesInput(String restProjectId,
+    private DeleteRestMockResponsesInput(String restProjectId,
                                         String restApplicationId,
                                         String restResourceId,
                                         String restMethodId,
@@ -69,6 +69,52 @@ public final class DeleteRestMockResponsesInput implements Input{
 
     public List<RestMockResponse> getRestMockResponses() {
         return restMockResponses;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceId;
+        private String restMethodId;
+        private List<RestMockResponse> restMockResponses;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceId(final String restResourceId){
+            this.restResourceId = restResourceId;
+            return this;
+        }
+
+        public Builder restMethodId(final String restMethodId){
+            this.restMethodId = restMethodId;
+            return this;
+        }
+
+        public Builder restMockResponses(final List<RestMockResponse> restMockResponses){
+            this.restMockResponses = restMockResponses;
+            return this;
+        }
+
+        public DeleteRestMockResponsesInput build(){
+            return new DeleteRestMockResponsesInput(this.restProjectId,
+                    this.restApplicationId, this.restResourceId,
+                    this.restMethodId, this.restMockResponses);
+        }
+
     }
 
 }

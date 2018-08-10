@@ -48,7 +48,9 @@ public class SoapEventController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "soap/event/{eventId}", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String eventId) {
-        final ReadSoapEventOutput output = serviceProcessor.process(new ReadSoapEventInput(eventId));
+        final ReadSoapEventOutput output = serviceProcessor.process(ReadSoapEventInput.builder()
+                .soapEventId(eventId)
+                .build());
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(EVENT, output.getSoapEvent());
         model.addObject(SELECTED_MENU, MenuItem.EVENT);

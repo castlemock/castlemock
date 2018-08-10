@@ -66,7 +66,9 @@ public class ReadSoapEventsByOperationIdServiceTest {
 
         Mockito.when(repository.findEventsByOperationId(Mockito.anyString())).thenReturn(soapEvents);
 
-        final ReadSoapEventsByOperationIdInput input = new ReadSoapEventsByOperationIdInput("OperationId");
+        final ReadSoapEventsByOperationIdInput input = ReadSoapEventsByOperationIdInput.builder()
+                .operationId("OperationId")
+                .build();
         final ServiceTask<ReadSoapEventsByOperationIdInput> serviceTask = new ServiceTask<ReadSoapEventsByOperationIdInput>(input);
         final ServiceResult<ReadSoapEventsByOperationIdOutput> serviceResult = service.process(serviceTask);
         final ReadSoapEventsByOperationIdOutput output = serviceResult.getOutput();

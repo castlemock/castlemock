@@ -52,6 +52,6 @@ public class UpdateRestResourcesForwardedEndpointService extends AbstractRestPro
                 this.methodRepository.update(restMethod.getId(), restMethod);
             }
         }
-        return createServiceResult(new UpdateRestResourcesForwardedEndpointOutput());
+        return createServiceResult(UpdateRestResourcesForwardedEndpointOutput.builder().build());
     }
 }

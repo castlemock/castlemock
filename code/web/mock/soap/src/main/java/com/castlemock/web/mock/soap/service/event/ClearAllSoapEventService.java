@@ -42,6 +42,6 @@ public class ClearAllSoapEventService extends AbstractSoapEventService implement
     @Override
     public ServiceResult<ClearAllSoapEventOutput> process(ServiceTask<ClearAllSoapEventInput> serviceTask) {
         repository.clearAll();
-        return createServiceResult(new ClearAllSoapEventOutput());
+        return createServiceResult(ClearAllSoapEventOutput.builder().build());
     }
 }

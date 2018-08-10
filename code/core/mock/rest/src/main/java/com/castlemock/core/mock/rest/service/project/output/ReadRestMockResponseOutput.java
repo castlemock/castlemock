@@ -29,7 +29,7 @@ public final class ReadRestMockResponseOutput implements Output{
     @NotNull
     private final RestMockResponse restMockResponse;
 
-    public ReadRestMockResponseOutput(RestMockResponse restMockResponse) {
+    private ReadRestMockResponseOutput(RestMockResponse restMockResponse) {
         this.restMockResponse = restMockResponse;
     }
 
@@ -37,4 +37,23 @@ public final class ReadRestMockResponseOutput implements Output{
         return restMockResponse;
     }
 
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestMockResponse restMockResponse;
+
+        public Builder restMockResponse(final RestMockResponse restMockResponse){
+            this.restMockResponse = restMockResponse;
+            return this;
+        }
+
+        public ReadRestMockResponseOutput build(){
+            return new ReadRestMockResponseOutput(this.restMockResponse);
+        }
+
+    }
 }

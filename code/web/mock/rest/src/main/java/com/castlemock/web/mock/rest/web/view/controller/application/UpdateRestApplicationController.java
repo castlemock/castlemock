@@ -48,8 +48,12 @@ public class UpdateRestApplicationController extends AbstractRestViewController 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/update", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String projectId, @PathVariable final String applicationId) {
-        final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(projectId, applicationId));
+    public ModelAndView defaultPage(@PathVariable final String projectId,
+                                    @PathVariable final String applicationId) {
+        final ReadRestApplicationOutput output = serviceProcessor.process(ReadRestApplicationInput.builder()
+                .restProjectId(projectId)
+                .restApplicationId(applicationId)
+                .build());
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_APPLICATION, output.getRestApplication());
         model.addObject(REST_PROJECT_ID, projectId);
@@ -58,8 +62,14 @@ public class UpdateRestApplicationController extends AbstractRestViewController 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String projectId, @PathVariable final String applicationId,  @ModelAttribute final RestApplication restApplication) {
-        serviceProcessor.process(new UpdateRestApplicationInput(projectId, applicationId, restApplication));
+    public ModelAndView update(@PathVariable final String projectId,
+                               @PathVariable final String applicationId,
+                               @ModelAttribute final RestApplication restApplication) {
+        serviceProcessor.process(UpdateRestApplicationInput.builder()
+                .restProjectId(projectId)
+                .restApplicationId(applicationId)
+                .restApplication(restApplication)
+                .build());
         return redirect("/rest/project/" + projectId + "/application/" + applicationId);
     }
 
@@ -73,9 +83,14 @@ public class UpdateRestApplicationController extends AbstractRestViewController 
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/update/confirm", method = RequestMethod.POST)
-    public ModelAndView updateEndpoint(@PathVariable final String projectId, @ModelAttribute final UpdateRestApplicationsEndpointCommand updateRestApplicationsEndpointCommand) {
+    public ModelAndView updateEndpoint(@PathVariable final String projectId,
+                                       @ModelAttribute final UpdateRestApplicationsEndpointCommand updateRestApplicationsEndpointCommand) {
         Preconditions.checkNotNull(updateRestApplicationsEndpointCommand, "The update application endpoint command cannot be null");
-        serviceProcessor.process(new UpdateRestApplicationsForwardedEndpointInput(projectId, updateRestApplicationsEndpointCommand.getRestApplications(), updateRestApplicationsEndpointCommand.getForwardedEndpoint()));
+        serviceProcessor.process(UpdateRestApplicationsForwardedEndpointInput.builder()
+                .restProjectId(projectId)
+                .restApplications(updateRestApplicationsEndpointCommand.getRestApplications())
+                .forwardedEndpoint(updateRestApplicationsEndpointCommand.getForwardedEndpoint())
+                .build());
         return redirect("/rest/project/" + projectId);
     }
 }

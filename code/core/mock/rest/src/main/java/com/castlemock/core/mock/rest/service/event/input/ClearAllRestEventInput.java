@@ -23,4 +23,21 @@ import com.castlemock.core.basis.model.Input;
  * @since 1.7
  */
 public final class ClearAllRestEventInput implements Input {
+
+    private ClearAllRestEventInput(){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        public ClearAllRestEventInput build(){
+            return new ClearAllRestEventInput();
+        }
+
+    }
+
 }

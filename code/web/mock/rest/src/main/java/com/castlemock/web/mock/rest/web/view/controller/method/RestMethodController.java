@@ -74,12 +74,27 @@ public class RestMethodController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, final ServletRequest request) {
-        final ReadRestResourceOutput readRestResourceOutput = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
-        final ReadRestMethodOutput restMethodOutput = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
+    public ModelAndView defaultPage(@PathVariable final String restProjectId,
+                                    @PathVariable final String restApplicationId,
+                                    @PathVariable final String restResourceId,
+                                    @PathVariable final String restMethodId,
+                                    final ServletRequest request) {
+        final ReadRestResourceOutput readRestResourceOutput = serviceProcessor.process(ReadRestResourceInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .build());
+        final ReadRestMethodOutput restMethodOutput = serviceProcessor.process(ReadRestMethodInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .restMethodId(restMethodId)
+                .build());
         final RestResource restResource = readRestResourceOutput.getRestResource();
         final RestMethod restMethod = restMethodOutput.getRestMethod();
-        final ReadRestEventWithMethodIdOutput readRestEventWithMethodIdOutput = serviceProcessor.process(new ReadRestEventWithMethodIdInput(restMethodId));
+        final ReadRestEventWithMethodIdOutput readRestEventWithMethodIdOutput = serviceProcessor.process(ReadRestEventWithMethodIdInput.builder()
+                .restMethodId(restMethodId)
+                .build());
 
         final String protocol = getProtocol(request);
         final String invokeAddress = getRestInvokeAddress(protocol, request.getServerPort(), restProjectId, restApplicationId, restResource.getUri());
@@ -113,20 +128,46 @@ public class RestMethodController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}", method = RequestMethod.POST)
-    public ModelAndView methodFunctionality(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @RequestParam final String action, @ModelAttribute final RestMockResponseModifierCommand restMockResponseModifierCommand) {
+    public ModelAndView methodFunctionality(@PathVariable final String restProjectId,
+                                            @PathVariable final String restApplicationId,
+                                            @PathVariable final String restResourceId,
+                                            @PathVariable final String restMethodId,
+                                            @RequestParam final String action,
+                                            @ModelAttribute final RestMockResponseModifierCommand restMockResponseModifierCommand) {
         LOGGER.debug("REST operation action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final RestMockResponseStatus status = RestMockResponseStatus.valueOf(restMockResponseModifierCommand.getRestMockResponseStatus());
             for(String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
-                ReadRestMockResponseOutput readRestMockResponseOutput = serviceProcessor.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId));
+                ReadRestMockResponseOutput readRestMockResponseOutput = serviceProcessor.process(ReadRestMockResponseInput.builder()
+                        .restProjectId(restProjectId)
+                        .restApplicationId(restApplicationId)
+                        .restResourceId(restResourceId)
+                        .restMethodId(restMethodId)
+                        .restMockResponse(mockResponseId)
+                        .build());
+
                 RestMockResponse restMockResponse = readRestMockResponseOutput.getRestMockResponse();
                 restMockResponse.setStatus(status);
-                serviceProcessor.process(new UpdateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId, restMockResponse));
+                serviceProcessor.process(UpdateRestMockResponseInput.builder()
+                        .restProjectId(restProjectId)
+                        .restApplicationId(restApplicationId)
+                        .restResourceId(restResourceId)
+                        .restMethodId(restMethodId)
+                        .restMockResponseId(mockResponseId)
+                        .restMockResponse(restMockResponse)
+                        .build());
             }
         } else if(DELETE_MOCK_RESPONSES.equalsIgnoreCase(action)) {
             final List<RestMockResponse> mockResponses = new ArrayList<RestMockResponse>();
             for(String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
-                final ReadRestMockResponseOutput output = serviceProcessor.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, mockResponseId));
+                final ReadRestMockResponseOutput output = serviceProcessor.process(ReadRestMockResponseInput.builder()
+                        .restProjectId(restProjectId)
+                        .restApplicationId(restApplicationId)
+                        .restResourceId(restResourceId)
+                        .restMethodId(restMethodId)
+                        .restMockResponse(mockResponseId)
+                        .build());
+
                 mockResponses.add(output.getRestMockResponse());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_MOCK_RESPONSES_PAGE);
@@ -140,18 +181,30 @@ public class RestMethodController extends AbstractRestViewController {
         } else if (DUPLICATE_MOCK_RESPONSE.equalsIgnoreCase(action)) {
             String copyOfLabel = messageSource.getMessage("rest.restmethod.label.copyOf", null, LocaleContextHolder.getLocale());
             for (String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()) {
-                ReadRestMockResponseOutput readRestMockResponseOutput =
-                        serviceProcessor.process(new ReadRestMockResponseInput(restProjectId,
-                                restApplicationId, restResourceId, restMethodId, mockResponseId));
+                ReadRestMockResponseOutput readRestMockResponseOutput = serviceProcessor.process(ReadRestMockResponseInput.builder()
+                        .restProjectId(restProjectId)
+                        .restApplicationId(restApplicationId)
+                        .restResourceId(restResourceId)
+                        .restMethodId(restMethodId)
+                        .restMockResponse(mockResponseId)
+                        .build());
+
                 RestMockResponse restMockResponse = readRestMockResponseOutput.getRestMockResponse();
                 restMockResponse.setId(null);
                 restMockResponse.setName(String.format("%s %s", copyOfLabel, restMockResponse.getName()));
-                serviceProcessor.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponse));
+                serviceProcessor.process(CreateRestMockResponseInput.builder()
+                        .projectId(restProjectId)
+                        .applicationId(restApplicationId)
+                        .resourceId(restResourceId)
+                        .methodId(restMethodId)
+                        .mockResponse(restMockResponse)
+                        .build());
             }
         }
 
 
-        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
+        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" +
+                restResourceId + "/method/" + restMethodId);
     }
 }
 

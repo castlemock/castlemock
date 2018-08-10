@@ -31,12 +31,32 @@ public final class ReadAllRestProjectsOutput implements Output {
     @NotNull
     private final List<RestProject> restProjects;
 
-    public ReadAllRestProjectsOutput(List<RestProject> restProjects) {
+    private ReadAllRestProjectsOutput(List<RestProject> restProjects) {
         this.restProjects = restProjects;
     }
 
     public List<RestProject> getRestProjects() {
         return restProjects;
+    }
+
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private List<RestProject> restProjects;
+
+        public Builder restProjects(final List<RestProject> restProjects){
+            this.restProjects = restProjects;
+            return this;
+        }
+
+        public ReadAllRestProjectsOutput build(){
+            return new ReadAllRestProjectsOutput(this.restProjects);
+        }
+
     }
 
 }

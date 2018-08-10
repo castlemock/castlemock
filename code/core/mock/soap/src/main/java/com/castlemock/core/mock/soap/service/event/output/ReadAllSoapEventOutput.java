@@ -30,12 +30,31 @@ public final class ReadAllSoapEventOutput implements Output {
 
     private final List<SoapEvent> soapEvents;
 
-    public ReadAllSoapEventOutput(List<SoapEvent> soapEvents) {
+    private ReadAllSoapEventOutput(List<SoapEvent> soapEvents) {
         this.soapEvents = soapEvents;
     }
 
     public List<SoapEvent> getSoapEvents() {
         return soapEvents;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private List<SoapEvent> soapEvents;
+
+        public Builder soapEvents(final List<SoapEvent> soapEvents){
+            this.soapEvents = soapEvents;
+            return this;
+        }
+
+        public ReadAllSoapEventOutput build(){
+            return new ReadAllSoapEventOutput(this.soapEvents);
+        }
+
     }
 
 }

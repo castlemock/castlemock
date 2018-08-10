@@ -66,7 +66,9 @@ public class ReadRestEventsByMethodIdServiceTest {
 
         Mockito.when(repository.findEventsByMethodId(Mockito.anyString())).thenReturn(restEvents);
 
-        final ReadRestEventWithMethodIdInput input = new ReadRestEventWithMethodIdInput("OperationId");
+        final ReadRestEventWithMethodIdInput input = ReadRestEventWithMethodIdInput.builder()
+                .restMethodId("OperationId")
+                .build();
         final ServiceTask<ReadRestEventWithMethodIdInput> serviceTask = new ServiceTask<ReadRestEventWithMethodIdInput>(input);
         final ServiceResult<ReadRestEventWithMethodIdOutput> serviceResult = service.process(serviceTask);
         final ReadRestEventWithMethodIdOutput output = serviceResult.getOutput();

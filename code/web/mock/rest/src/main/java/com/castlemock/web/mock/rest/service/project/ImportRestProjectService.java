@@ -96,6 +96,8 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
                 this.mockResponseRepository.save(mockResponse);
             }
         }
-        return createServiceResult(new ImportRestProjectOutput(project));
+        return createServiceResult(ImportRestProjectOutput.builder()
+                .project(project)
+                .build());
     }
 }

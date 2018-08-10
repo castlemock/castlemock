@@ -55,7 +55,9 @@ public class ReadSoapEventServiceTest {
         final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
         Mockito.when(repository.findOne(soapEvent.getId())).thenReturn(soapEvent);
 
-        final ReadSoapEventInput input = new ReadSoapEventInput(soapEvent.getId());
+        final ReadSoapEventInput input = ReadSoapEventInput.builder()
+                .soapEventId(soapEvent.getId())
+                .build();
         final ServiceTask<ReadSoapEventInput> serviceTask = new ServiceTask<ReadSoapEventInput>(input);
         final ServiceResult<ReadSoapEventOutput> serviceResult = service.process(serviceTask);
         final ReadSoapEventOutput output = serviceResult.getOutput();

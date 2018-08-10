@@ -27,12 +27,31 @@ public final class ReadSoapEventOutput implements Output {
 
     private final SoapEvent soapEvent;
 
-    public ReadSoapEventOutput(SoapEvent soapEvent) {
+    private ReadSoapEventOutput(SoapEvent soapEvent) {
         this.soapEvent = soapEvent;
     }
 
     public SoapEvent getSoapEvent() {
         return soapEvent;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private SoapEvent soapEvent;
+
+        public Builder soapEvent(final SoapEvent soapEvent){
+            this.soapEvent = soapEvent;
+            return this;
+        }
+
+        public ReadSoapEventOutput build(){
+            return new ReadSoapEventOutput(this.soapEvent);
+        }
+
     }
 
 }

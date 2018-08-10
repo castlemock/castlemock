@@ -53,7 +53,9 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      */
     @Override
     public RestProject create(RestProject project) {
-        final CreateRestProjectOutput output = serviceProcessor.process(new CreateRestProjectInput(project));
+        final CreateRestProjectOutput output = serviceProcessor.process(CreateRestProjectInput.builder()
+                .restProject(project)
+                .build());
         return output.getSavedRestProject();
     }
 
@@ -66,7 +68,9 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      */
     @Override
     public RestProject delete(String id) {
-        final DeleteRestProjectOutput output = serviceProcessor.process(new DeleteRestProjectInput(id));
+        final DeleteRestProjectOutput output = serviceProcessor.process(DeleteRestProjectInput.builder()
+                .restProjectId(id)
+                .build());
         return output.getProject();
     }
 
@@ -82,7 +86,10 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      */
     @Override
     public RestProject update(String id, RestProject project) {
-        final UpdateRestProjectOutput output = serviceProcessor.process(new UpdateRestProjectInput(id, project));
+        final UpdateRestProjectOutput output = serviceProcessor.process(UpdateRestProjectInput.builder()
+                .restProjectId(id)
+                .restProject(project)
+                .build());
         return output.getUpdatedRestProject();
     }
 
@@ -92,7 +99,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      */
     @Override
     public List<RestProject> readAll() {
-        final ReadAllRestProjectsOutput output = serviceProcessor.process(new ReadAllRestProjectsInput());
+        final ReadAllRestProjectsOutput output = serviceProcessor.process(ReadAllRestProjectsInput.builder().build());
         return output.getRestProjects();
     }
 
@@ -106,7 +113,9 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      */
     @Override
     public RestProject read(String id) {
-        final ReadRestProjectOutput output = serviceProcessor.process(new ReadRestProjectInput(id));
+        final ReadRestProjectOutput output = serviceProcessor.process(ReadRestProjectInput.builder()
+                .restProjectId(id)
+                .build());
         return output.getRestProject();
     }
 
@@ -137,7 +146,9 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      */
     @Override
     public String exportProject(String id) {
-        final ExportRestProjectOutput output = serviceProcessor.process(new ExportRestProjectInput(id));
+        final ExportRestProjectOutput output = serviceProcessor.process(ExportRestProjectInput.builder()
+                .restProjectId(id)
+                .build());
         return output.getExportedProject();
     }
 
@@ -148,7 +159,9 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      */
     @Override
     public RestProject importProject(String projectRaw) {
-        final ImportRestProjectOutput output =serviceProcessor.process(new ImportRestProjectInput(projectRaw));
+        final ImportRestProjectOutput output =serviceProcessor.process(ImportRestProjectInput.builder()
+                .projectRaw(projectRaw)
+                .build());
         return output.getProject();
     }
 
@@ -160,7 +173,9 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
      */
     @Override
     public List<SearchResult> search(SearchQuery searchQuery) {
-        final SearchRestProjectOutput output = serviceProcessor.process(new SearchRestProjectInput(searchQuery));
+        final SearchRestProjectOutput output = serviceProcessor.process(SearchRestProjectInput.builder()
+                .searchQuery(searchQuery)
+                .build());
         return output.getSearchResults();
     }
 }

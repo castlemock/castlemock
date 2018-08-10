@@ -29,7 +29,7 @@ public final class CreateRestResourceOutput implements Output {
     @NotNull
     private final RestResource createdRestResource;
 
-    public CreateRestResourceOutput(RestResource createdRestResource) {
+    private CreateRestResourceOutput(RestResource createdRestResource) {
         this.createdRestResource = createdRestResource;
     }
 
@@ -37,4 +37,22 @@ public final class CreateRestResourceOutput implements Output {
         return createdRestResource;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestResource createdRestResource;
+
+        public Builder savedRestApplication(final RestResource createdRestResource){
+            this.createdRestResource = createdRestResource;
+            return this;
+        }
+
+        public CreateRestResourceOutput build(){
+            return new CreateRestResourceOutput(this.createdRestResource);
+        }
+
+    }
 }

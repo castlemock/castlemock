@@ -41,7 +41,7 @@ public class ClearAllRestEventService extends AbstractRestEventService implement
     @Override
     public ServiceResult<ClearAllRestEventOutput> process(ServiceTask<ClearAllRestEventInput> serviceTask) {
         repository.clearAll();
-        return createServiceResult(new ClearAllRestEventOutput());
+        return createServiceResult(ClearAllRestEventOutput.builder().build());
     }
 
 

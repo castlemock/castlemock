@@ -41,9 +41,11 @@ public class CreateRestMockResponseService extends AbstractRestProjectService im
     @Override
     public ServiceResult<CreateRestMockResponseOutput> process(final ServiceTask<CreateRestMockResponseInput> serviceTask) {
         final CreateRestMockResponseInput input = serviceTask.getInput();
-        final RestMockResponse mockResponse = input.getRestMockResponse();
-        mockResponse.setMethodId(input.getRestMethodId());
+        final RestMockResponse mockResponse = input.getMockResponse();
+        mockResponse.setMethodId(input.getMethodId());
         final RestMockResponse createdMockResponse = mockResponseRepository.save(mockResponse);
-        return createServiceResult(new CreateRestMockResponseOutput(createdMockResponse));
+        return createServiceResult(CreateRestMockResponseOutput.builder()
+                .restMockResponse(createdMockResponse)
+                .build());
     }
 }

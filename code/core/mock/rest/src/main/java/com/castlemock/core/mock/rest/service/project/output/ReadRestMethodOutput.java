@@ -30,7 +30,7 @@ public final class ReadRestMethodOutput implements Output{
     @NotNull
     private final RestMethod restMethod;
 
-    public ReadRestMethodOutput(RestMethod restMethod) {
+    private ReadRestMethodOutput(final RestMethod restMethod) {
         this.restMethod = restMethod;
     }
 
@@ -38,4 +38,23 @@ public final class ReadRestMethodOutput implements Output{
         return restMethod;
     }
 
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestMethod restMethod;
+
+        public Builder restMethod(final RestMethod restMethod){
+            this.restMethod = restMethod;
+            return this;
+        }
+
+        public ReadRestMethodOutput build(){
+            return new ReadRestMethodOutput(this.restMethod);
+        }
+
+    }
 }

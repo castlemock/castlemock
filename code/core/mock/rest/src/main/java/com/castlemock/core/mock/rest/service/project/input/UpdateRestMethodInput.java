@@ -37,11 +37,11 @@ public final class UpdateRestMethodInput implements Input {
     @NotNull
     private final RestMethod restMethod;
 
-    public UpdateRestMethodInput(String restProjectId,
-                                 String restApplicationId,
-                                 String restResourceId,
-                                 String restMethodId,
-                                 RestMethod restMethod) {
+    private UpdateRestMethodInput(final String restProjectId,
+                                  final String restApplicationId,
+                                  final String restResourceId,
+                                  final String restMethodId,
+                                  final RestMethod restMethod) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -68,5 +68,51 @@ public final class UpdateRestMethodInput implements Input {
     public RestMethod getRestMethod() {
         return restMethod;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceId;
+        private String restMethodId;
+        private RestMethod restMethod;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceId(final String restResourceId){
+            this.restResourceId = restResourceId;
+            return this;
+        }
+
+        public Builder restMethodId(final String restMethodId){
+            this.restMethodId = restMethodId;
+            return this;
+        }
+
+        public Builder restMethod(final RestMethod restMethod){
+            this.restMethod = restMethod;
+            return this;
+        }
+
+        public UpdateRestMethodInput build(){
+            return new UpdateRestMethodInput(this.restProjectId,
+                    this.restApplicationId, this.restResourceId,
+                    this.restMethodId, this.restMethod);
+        }
+
+    }
+
 
 }

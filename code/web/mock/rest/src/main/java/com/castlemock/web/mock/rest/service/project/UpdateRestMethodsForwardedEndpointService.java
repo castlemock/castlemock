@@ -46,6 +46,6 @@ public class UpdateRestMethodsForwardedEndpointService extends AbstractRestProje
             restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
             this.methodRepository.update(restMethod.getId(), restMethod);
         }
-        return createServiceResult(new UpdateRestMethodsForwardedEndpointOutput());
+        return createServiceResult(UpdateRestMethodsForwardedEndpointOutput.builder().build());
     }
 }

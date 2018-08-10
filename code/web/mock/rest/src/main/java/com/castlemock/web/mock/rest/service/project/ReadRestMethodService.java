@@ -47,6 +47,8 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
         final RestMethod restMethod = this.methodRepository.findOne(input.getRestMethodId());
         final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(input.getRestMethodId());
         restMethod.setMockResponses(mockResponses);
-        return createServiceResult(new ReadRestMethodOutput(restMethod));
+        return createServiceResult(ReadRestMethodOutput.builder()
+                .restMethod(restMethod)
+                .build());
     }
 }

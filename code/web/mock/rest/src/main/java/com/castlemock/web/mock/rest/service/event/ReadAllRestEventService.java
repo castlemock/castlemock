@@ -43,6 +43,8 @@ public class ReadAllRestEventService extends AbstractRestEventService implements
     @Override
     public ServiceResult<ReadAllRestEventOutput> process(ServiceTask<ReadAllRestEventInput> serviceTask) {
         final List<RestEvent> restEvents = findAll();
-        return createServiceResult(new ReadAllRestEventOutput(restEvents));
+        return createServiceResult(ReadAllRestEventOutput.builder()
+                .restEvents(restEvents)
+                .build());
     }
 }

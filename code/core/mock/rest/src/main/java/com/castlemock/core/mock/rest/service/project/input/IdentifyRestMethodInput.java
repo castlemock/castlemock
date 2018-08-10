@@ -35,10 +35,10 @@ public final class IdentifyRestMethodInput implements Input {
     @NotNull
     private final HttpMethod httpMethod;
 
-    public IdentifyRestMethodInput(String restProjectId,
-                                   String restApplicationId,
-                                   String restResourceUri,
-                                   HttpMethod httpMethod) {
+    private IdentifyRestMethodInput(final String restProjectId,
+                                   final String restApplicationId,
+                                   final String restResourceUri,
+                                   final HttpMethod httpMethod) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceUri = restResourceUri;
@@ -59,5 +59,43 @@ public final class IdentifyRestMethodInput implements Input {
 
     public HttpMethod getHttpMethod() {
         return httpMethod;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceUri;
+        private HttpMethod httpMethod;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceUri(final String restResourceUri){
+            this.restResourceUri = restResourceUri;
+            return this;
+        }
+
+        public Builder httpMethod(final HttpMethod httpMethod){
+            this.httpMethod = httpMethod;
+            return this;
+        }
+
+        public IdentifyRestMethodInput build(){
+            return new IdentifyRestMethodInput(this.restProjectId, this.restApplicationId,
+                    this.restResourceUri, this.httpMethod);
+        }
+
     }
 }

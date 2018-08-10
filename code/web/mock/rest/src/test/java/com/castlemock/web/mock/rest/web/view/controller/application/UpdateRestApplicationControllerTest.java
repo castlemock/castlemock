@@ -73,8 +73,11 @@ public class UpdateRestApplicationControllerTest extends AbstractRestControllerT
     public void testUpdatePortWithValidId() throws Exception {
         final RestProject restProject = RestProjectGenerator.generateRestProject();
         final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        when(serviceProcessor.process(any(ReadRestApplicationInput.class))).thenReturn(new ReadRestApplicationOutput(restApplication));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + UPDATE);
+        when(serviceProcessor.process(any(ReadRestApplicationInput.class))).thenReturn(ReadRestApplicationOutput.builder()
+                .restApplication(restApplication
+                ).build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT +
+                SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + UPDATE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(2 + GLOBAL_VIEW_MODEL_COUNT))
@@ -89,8 +92,12 @@ public class UpdateRestApplicationControllerTest extends AbstractRestControllerT
     public void testUpdateConfirmPortWithValidId() throws Exception {
         final RestProject restProject = RestProjectGenerator.generateRestProject();
         final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        when(serviceProcessor.process(any(UpdateRestApplicationInput.class))).thenReturn(new UpdateRestApplicationOutput(restApplication));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + UPDATE, restApplication);
+        when(serviceProcessor.process(any(UpdateRestApplicationInput.class))).thenReturn(UpdateRestApplicationOutput.builder()
+                .updatedRestApplication(restApplication)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH +
+                UPDATE, restApplication);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
@@ -103,7 +110,8 @@ public class UpdateRestApplicationControllerTest extends AbstractRestControllerT
         final UpdateRestResourcesEndpointCommand updateRestResourcesEndpointCommand = new UpdateRestResourcesEndpointCommand();
         updateRestResourcesEndpointCommand.setForwardedEndpoint("http://localhost:8080/web");
 
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + "update/confirm")
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + projectId + SLASH + APPLICATION + SLASH + "update/confirm")
                 .flashAttr("updateRestResourcesEndpointCommand", updateRestResourcesEndpointCommand);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())

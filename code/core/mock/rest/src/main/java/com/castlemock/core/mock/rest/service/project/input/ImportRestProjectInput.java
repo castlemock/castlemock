@@ -28,12 +28,31 @@ public final class ImportRestProjectInput implements Input {
     @NotNull
     private final String projectRaw;
 
-    public ImportRestProjectInput(String projectRaw) {
+    private ImportRestProjectInput(String projectRaw) {
         this.projectRaw = projectRaw;
     }
 
     public String getProjectRaw() {
         return projectRaw;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String projectRaw;
+
+        public Builder projectRaw(final String projectRaw){
+            this.projectRaw = projectRaw;
+            return this;
+        }
+
+        public ImportRestProjectInput build(){
+            return new ImportRestProjectInput(this.projectRaw);
+        }
+
     }
 
 }

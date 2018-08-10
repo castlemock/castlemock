@@ -29,7 +29,7 @@ public final class ReadRestResourceOutput implements Output{
     @NotNull
     private final RestResource restResource;
 
-    public ReadRestResourceOutput(RestResource restResource) {
+    private ReadRestResourceOutput(RestResource restResource) {
         this.restResource = restResource;
     }
 
@@ -37,4 +37,23 @@ public final class ReadRestResourceOutput implements Output{
         return restResource;
     }
 
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestResource restResource;
+
+        public Builder restResource(final RestResource restResource){
+            this.restResource = restResource;
+            return this;
+        }
+
+        public ReadRestResourceOutput build(){
+            return new ReadRestResourceOutput(this.restResource);
+        }
+
+    }
 }

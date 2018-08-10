@@ -29,12 +29,32 @@ public final class SearchRestProjectInput implements Input {
     @NotNull
     private final SearchQuery searchQuery;
 
-    public SearchRestProjectInput(SearchQuery searchQuery) {
+    private SearchRestProjectInput(SearchQuery searchQuery) {
         this.searchQuery = searchQuery;
     }
 
     public SearchQuery getSearchQuery() {
         return searchQuery;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private SearchQuery searchQuery;
+
+        public Builder searchQuery(final SearchQuery searchQuery){
+            this.searchQuery = searchQuery;
+            return this;
+        }
+
+        public SearchRestProjectInput build(){
+            return new SearchRestProjectInput(this.searchQuery);
+        }
+
+    }
+
 
 }

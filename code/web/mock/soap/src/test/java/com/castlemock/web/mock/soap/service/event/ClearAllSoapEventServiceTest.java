@@ -18,19 +18,13 @@ package com.castlemock.web.mock.soap.service.event;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.service.event.input.ClearAllSoapEventInput;
-import com.castlemock.core.mock.soap.service.event.input.CreateSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ClearAllSoapEventOutput;
-import com.castlemock.core.mock.soap.service.event.output.CreateSoapEventOutput;
-import com.castlemock.web.mock.soap.model.event.SoapEventGenerator;
 import com.castlemock.web.mock.soap.repository.event.SoapEventRepository;
 import org.dozer.DozerBeanMapper;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
-import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * @author Karl Dahlgren
@@ -54,7 +48,7 @@ public class ClearAllSoapEventServiceTest {
 
     @Test
     public void testProcess(){
-        final ClearAllSoapEventInput input = new ClearAllSoapEventInput();
+        final ClearAllSoapEventInput input = ClearAllSoapEventInput.builder().build();
         final ServiceTask<ClearAllSoapEventInput> serviceTask = new ServiceTask<ClearAllSoapEventInput>(input);
         final ServiceResult<ClearAllSoapEventOutput> serviceResult = service.process(serviceTask);
         final ClearAllSoapEventOutput output = serviceResult.getOutput();

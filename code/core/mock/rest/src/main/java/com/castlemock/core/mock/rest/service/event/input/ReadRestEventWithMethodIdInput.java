@@ -28,12 +28,31 @@ public final class ReadRestEventWithMethodIdInput implements Input {
     @NotNull
     private final String restMethodId;
 
-    public ReadRestEventWithMethodIdInput(String restMethodId) {
+    private ReadRestEventWithMethodIdInput(String restMethodId) {
         this.restMethodId = restMethodId;
     }
 
     public String getRestMethodId() {
         return restMethodId;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restMethodId;
+
+        public Builder restMethodId(final String restMethodId){
+            this.restMethodId = restMethodId;
+            return this;
+        }
+
+        public ReadRestEventWithMethodIdInput build(){
+            return new ReadRestEventWithMethodIdInput(restMethodId);
+        }
+
     }
 
 }

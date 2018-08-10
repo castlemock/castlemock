@@ -77,7 +77,9 @@ public class RestProjectControllerTest extends AbstractRestControllerTest {
     @Test
     public void testGetServiceValid() throws Exception {
         final RestProject restProject = RestProjectGenerator.generateRestProject();
-        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProject));
+        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
+                .restProject(restProject)
+                .build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -91,7 +93,9 @@ public class RestProjectControllerTest extends AbstractRestControllerTest {
     @Test
     public void testGetServiceValidUploadSuccess() throws Exception {
         final RestProject restProject = RestProjectGenerator.generateRestProject();
-        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProject));
+        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
+                .restProject(restProject)
+                .build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH)
                 .param("upload", "success");
         mockMvc.perform(message)
@@ -107,7 +111,9 @@ public class RestProjectControllerTest extends AbstractRestControllerTest {
     @Test
     public void testGetServiceValidUploadError() throws Exception {
         final RestProject restProject = RestProjectGenerator.generateRestProject();
-        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProject));
+        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
+                .restProject(restProject)
+                .build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH)
                 .param("upload", "error");
         mockMvc.perform(message)
@@ -158,8 +164,8 @@ public class RestProjectControllerTest extends AbstractRestControllerTest {
         final List<RestApplication> restApplications = Arrays.asList(restApplication1, restApplication2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestApplicationInput.class)))
-                .thenReturn(new ReadRestApplicationOutput(restApplication1))
-                .thenReturn(new ReadRestApplicationOutput(restApplication2));
+                .thenReturn(ReadRestApplicationOutput.builder().restApplication(restApplication1).build())
+                .thenReturn(ReadRestApplicationOutput.builder().restApplication(restApplication2).build());
 
 
         final RestApplicationModifierCommand restApplicationModifierCommand = new RestApplicationModifierCommand();
@@ -199,8 +205,12 @@ public class RestProjectControllerTest extends AbstractRestControllerTest {
         final List<RestApplication> restApplications = Arrays.asList(restApplication1, restApplication2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestApplicationInput.class)))
-                .thenReturn(new ReadRestApplicationOutput(restApplication1))
-                .thenReturn(new ReadRestApplicationOutput(restApplication2));
+                .thenReturn(ReadRestApplicationOutput.builder()
+                        .restApplication(restApplication1)
+                        .build())
+                .thenReturn(ReadRestApplicationOutput.builder()
+                        .restApplication(restApplication2)
+                        .build());
 
 
         final RestApplicationModifierCommand restApplicationModifierCommand = new RestApplicationModifierCommand();

@@ -53,6 +53,8 @@ public class ReadRestProjectService extends AbstractRestProjectService implement
             final Map<RestMethodStatus, Integer> soapOperationStatusCount = getRestMethodStatusCount(restApplication);
             restApplication.setStatusCount(soapOperationStatusCount);
         }
-        return createServiceResult(new ReadRestProjectOutput(restProject));
+        return createServiceResult(ReadRestProjectOutput.builder()
+                .restProject(restProject)
+                .build());
     }
 }

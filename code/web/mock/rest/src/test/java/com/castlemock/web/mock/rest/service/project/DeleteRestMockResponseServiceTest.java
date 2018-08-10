@@ -55,7 +55,13 @@ public class DeleteRestMockResponseServiceTest {
 
 
         final DeleteRestMockResponseInput input =
-                new DeleteRestMockResponseInput(projectId, applicationId, resourceId, methodId, mockResponseId);
+                DeleteRestMockResponseInput.builder()
+                        .restProjectId(projectId)
+                        .restApplicationId(applicationId)
+                        .restResourceId(resourceId)
+                        .restMethodId(methodId)
+                        .restMockResponseId(mockResponseId)
+                        .build();
         final ServiceTask<DeleteRestMockResponseInput> serviceTask = new ServiceTask<DeleteRestMockResponseInput>(input);
         final ServiceResult<DeleteRestMockResponseOutput> serviceResult = service.process(serviceTask);
 

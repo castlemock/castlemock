@@ -33,7 +33,8 @@ public final class UpdateRestApplicationsStatusInput implements Input {
     @NotNull
     private final RestMethodStatus restMethodStatus;
 
-    public UpdateRestApplicationsStatusInput(String restProjectId, String restApplicationId, RestMethodStatus restMethodStatus) {
+    private UpdateRestApplicationsStatusInput(final String restProjectId, final String restApplicationId,
+                                              final RestMethodStatus restMethodStatus) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restMethodStatus = restMethodStatus;
@@ -50,5 +51,38 @@ public final class UpdateRestApplicationsStatusInput implements Input {
     public RestMethodStatus getRestMethodStatus() {
         return restMethodStatus;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private RestMethodStatus restMethodStatus;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restMethodStatus(final RestMethodStatus restMethodStatus){
+            this.restMethodStatus = restMethodStatus;
+            return this;
+        }
+
+        public UpdateRestApplicationsStatusInput build(){
+            return new UpdateRestApplicationsStatusInput(this.restProjectId,
+                    this.restApplicationId, this.restMethodStatus);
+        }
+
+    }
+
 
 }

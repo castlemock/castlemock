@@ -29,7 +29,7 @@ public final class UpdateRestMethodOutput implements Output {
     @NotNull
     private final RestMethod restMethod;
 
-    public UpdateRestMethodOutput(RestMethod restMethod) {
+    private UpdateRestMethodOutput(RestMethod restMethod) {
         this.restMethod = restMethod;
     }
 
@@ -37,4 +37,23 @@ public final class UpdateRestMethodOutput implements Output {
         return restMethod;
     }
 
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestMethod restMethod;
+
+        public Builder restMethod(final RestMethod restMethod){
+            this.restMethod = restMethod;
+            return this;
+        }
+
+        public UpdateRestMethodOutput build(){
+            return new UpdateRestMethodOutput(this.restMethod);
+        }
+
+    }
 }

@@ -47,8 +47,14 @@ public class UpdateRestResourceController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/update", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId) {
-        final ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
+    public ModelAndView defaultPage(@PathVariable final String restProjectId,
+                                    @PathVariable final String restApplicationId,
+                                    @PathVariable final String restResourceId) {
+        final ReadRestResourceOutput output = serviceProcessor.process(ReadRestResourceInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .build());
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_RESOURCE, output.getRestResource());
         model.addObject(REST_PROJECT_ID, restProjectId);
@@ -59,8 +65,16 @@ public class UpdateRestResourceController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId,  @ModelAttribute final RestResource restResource) {
-        serviceProcessor.process(new UpdateRestResourceInput(restProjectId, restApplicationId, restResourceId, restResource));
+    public ModelAndView update(@PathVariable final String restProjectId,
+                               @PathVariable final String restApplicationId,
+                               @PathVariable final String restResourceId,
+                               @ModelAttribute final RestResource restResource) {
+        serviceProcessor.process(UpdateRestResourceInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .restResource(restResource)
+                .build());
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId);
     }
 
@@ -75,9 +89,16 @@ public class UpdateRestResourceController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/update/confirm", method = RequestMethod.POST)
-    public ModelAndView updateEndpoint(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @ModelAttribute final UpdateRestResourcesEndpointCommand updateRestResourcesEndpointCommand) {
+    public ModelAndView updateEndpoint(@PathVariable final String restProjectId,
+                                       @PathVariable final String restApplicationId,
+                                       @ModelAttribute final UpdateRestResourcesEndpointCommand updateRestResourcesEndpointCommand) {
         Preconditions.checkNotNull(updateRestResourcesEndpointCommand, "The update application endpoint command cannot be null");
-        serviceProcessor.process(new UpdateRestResourcesForwardedEndpointInput(restProjectId, restApplicationId, updateRestResourcesEndpointCommand.getRestResources(), updateRestResourcesEndpointCommand.getForwardedEndpoint()));
+        serviceProcessor.process(UpdateRestResourcesForwardedEndpointInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResources(updateRestResourcesEndpointCommand.getRestResources())
+                .forwardedEndpoint(updateRestResourcesEndpointCommand.getForwardedEndpoint())
+                .build());
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);
     }
 

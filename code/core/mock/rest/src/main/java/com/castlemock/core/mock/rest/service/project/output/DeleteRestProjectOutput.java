@@ -27,11 +27,31 @@ public final class DeleteRestProjectOutput implements Output {
 
     private final RestProject project;
 
-    public DeleteRestProjectOutput(RestProject project) {
+    private DeleteRestProjectOutput(RestProject project) {
         this.project = project;
     }
 
     public RestProject getProject() {
         return project;
+    }
+
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestProject project;
+
+        public Builder project(final RestProject project){
+            this.project = project;
+            return this;
+        }
+
+        public DeleteRestProjectOutput build(){
+            return new DeleteRestProjectOutput(this.project);
+        }
+
     }
 }

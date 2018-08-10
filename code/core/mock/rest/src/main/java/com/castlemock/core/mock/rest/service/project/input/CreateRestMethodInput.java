@@ -27,35 +27,71 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 public final class CreateRestMethodInput implements Input {
 
     @NotNull
-    private final String restProjectId;
+    private final String projectId;
     @NotNull
-    private final String restApplicationId;
+    private final String applicationId;
     @NotNull
-    private final String restResourceId;
+    private final String resourceId;
     @NotNull
-    private final RestMethod restMethod;
+    private final RestMethod method;
 
-    public CreateRestMethodInput(String restProjectId, String restApplicationId, String restResourceId, RestMethod restMethod) {
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
-        this.restResourceId = restResourceId;
-        this.restMethod = restMethod;
+    private CreateRestMethodInput(final String projectId, final String applicationId,
+                                  final String resourceId, final RestMethod method) {
+        this.projectId = projectId;
+        this.applicationId = applicationId;
+        this.resourceId = resourceId;
+        this.method = method;
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public String getRestResourceId() {
-        return restResourceId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public RestMethod getRestMethod() {
-        return restMethod;
+    public RestMethod getMethod() {
+        return method;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String projectId;
+        private String applicationId;
+        private String resourceId;
+        private RestMethod method;
+
+
+        public Builder projectId(final String restProjectId){
+            this.projectId = restProjectId;
+            return this;
+        }
+
+        public Builder applicationId(final String applicationId){
+            this.applicationId = applicationId;
+            return this;
+        }
+
+        public Builder resourceId(final String resourceId){
+            this.resourceId = resourceId;
+            return this;
+        }
+        public Builder method(final RestMethod method){
+            this.method = method;
+            return this;
+        }
+
+        public CreateRestMethodInput build(){
+            return new CreateRestMethodInput(this.projectId, this.applicationId, this.resourceId, this.method);
+        }
     }
 
 }

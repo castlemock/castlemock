@@ -33,7 +33,7 @@ public final class DeleteRestApplicationsInput implements Input{
     @NotNull
     private final List<RestApplication> restApplications;
 
-    public DeleteRestApplicationsInput(String restProjectId, List<RestApplication> restApplications) {
+    private DeleteRestApplicationsInput(String restProjectId, List<RestApplication> restApplications) {
         this.restProjectId = restProjectId;
         this.restApplications = restApplications;
     }
@@ -44,6 +44,33 @@ public final class DeleteRestApplicationsInput implements Input{
 
     public List<RestApplication> getRestApplications() {
         return restApplications;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+
+        private List<RestApplication> restApplications;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplications(final List<RestApplication> restApplications){
+            this.restApplications = restApplications;
+            return this;
+        }
+
+        public DeleteRestApplicationsInput build(){
+            return new DeleteRestApplicationsInput(this.restProjectId,
+                    this.restApplications);
+        }
+
     }
 
 }

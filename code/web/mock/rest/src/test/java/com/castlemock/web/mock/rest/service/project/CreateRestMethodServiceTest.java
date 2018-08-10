@@ -60,7 +60,12 @@ public class CreateRestMethodServiceTest {
         final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
         Mockito.when(methodRepository.save(Mockito.any(RestMethod.class))).thenReturn(restMethod);
 
-        final CreateRestMethodInput input = new CreateRestMethodInput(restProject.getId(), restApplication.getId(), restResource.getId(), restMethod);
+        final CreateRestMethodInput input = CreateRestMethodInput.builder()
+                .projectId(restProject.getId())
+                .applicationId(restApplication.getId())
+                .resourceId(restResource.getId())
+                .method(restMethod)
+                .build();
         final ServiceTask<CreateRestMethodInput> serviceTask = new ServiceTask<CreateRestMethodInput>(input);
         final ServiceResult<CreateRestMethodOutput> serviceResult = service.process(serviceTask);
         final CreateRestMethodOutput createRestApplicationOutput = serviceResult.getOutput();
@@ -81,7 +86,12 @@ public class CreateRestMethodServiceTest {
         restMethod.setStatus(null);
         Mockito.when(methodRepository.save(Mockito.any(RestMethod.class))).thenReturn(restMethod);
 
-        final CreateRestMethodInput input = new CreateRestMethodInput(restProject.getId(), restApplication.getId(), restResource.getId(), restMethod);
+        final CreateRestMethodInput input = CreateRestMethodInput.builder()
+                .projectId(restProject.getId())
+                .applicationId(restApplication.getId())
+                .resourceId(restResource.getId())
+                .method(restMethod)
+                .build();
         final ServiceTask<CreateRestMethodInput> serviceTask = new ServiceTask<CreateRestMethodInput>(input);
         final ServiceResult<CreateRestMethodOutput> serviceResult = service.process(serviceTask);
         final CreateRestMethodOutput createRestApplicationOutput = serviceResult.getOutput();
@@ -102,7 +112,12 @@ public class CreateRestMethodServiceTest {
         restMethod.setResponseStrategy(null);
         Mockito.when(methodRepository.save(Mockito.any(RestMethod.class))).thenReturn(restMethod);
 
-        final CreateRestMethodInput input = new CreateRestMethodInput(restProject.getId(), restApplication.getId(), restResource.getId(), restMethod);
+        final CreateRestMethodInput input = CreateRestMethodInput.builder()
+                .projectId(restProject.getId())
+                .applicationId(restApplication.getId())
+                .resourceId(restResource.getId())
+                .method(restMethod)
+                .build();
         final ServiceTask<CreateRestMethodInput> serviceTask = new ServiceTask<CreateRestMethodInput>(input);
         final ServiceResult<CreateRestMethodOutput> serviceResult = service.process(serviceTask);
         final CreateRestMethodOutput createRestApplicationOutput = serviceResult.getOutput();

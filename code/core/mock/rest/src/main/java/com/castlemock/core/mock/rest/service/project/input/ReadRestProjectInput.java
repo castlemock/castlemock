@@ -28,12 +28,33 @@ public final class ReadRestProjectInput implements Input {
     @NotNull
     private final String restProjectId;
 
-    public ReadRestProjectInput(String restProjectId) {
+    private ReadRestProjectInput(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 
     public String getRestProjectId() {
         return restProjectId;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public ReadRestProjectInput build(){
+            return new ReadRestProjectInput(this.restProjectId);
+        }
+
+    }
+
 
 }

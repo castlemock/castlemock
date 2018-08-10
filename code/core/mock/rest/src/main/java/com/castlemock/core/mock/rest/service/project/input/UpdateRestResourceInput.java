@@ -35,10 +35,10 @@ public final class UpdateRestResourceInput implements Input {
     @NotNull
     private final RestResource restResource;
 
-    public UpdateRestResourceInput(String restProjectId,
-                                   String restApplicationId,
-                                   String restResourceId,
-                                   RestResource restResource) {
+    private UpdateRestResourceInput(final String restProjectId,
+                                    final String restApplicationId,
+                                    final String restResourceId,
+                                    final RestResource restResource) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -60,5 +60,44 @@ public final class UpdateRestResourceInput implements Input {
     public RestResource getRestResource() {
         return restResource;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceId;
+        private RestResource restResource;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceId(final String restResourceId){
+            this.restResourceId = restResourceId;
+            return this;
+        }
+
+        public Builder restResource(final RestResource restResource){
+            this.restResource = restResource;
+            return this;
+        }
+
+        public UpdateRestResourceInput build(){
+            return new UpdateRestResourceInput(this.restProjectId,
+                    this.restApplicationId, this.restResourceId, this.restResource);
+        }
+
+    }
+
 
 }

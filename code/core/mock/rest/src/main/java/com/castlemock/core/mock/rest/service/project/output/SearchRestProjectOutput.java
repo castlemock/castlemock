@@ -31,7 +31,7 @@ public final class SearchRestProjectOutput implements Output {
     @NotNull
     private final List<SearchResult> searchResults;
 
-    public SearchRestProjectOutput(List<SearchResult> searchResults) {
+    private SearchRestProjectOutput(List<SearchResult> searchResults) {
         this.searchResults = searchResults;
     }
 
@@ -39,4 +39,23 @@ public final class SearchRestProjectOutput implements Output {
         return searchResults;
     }
 
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private List<SearchResult> searchResults;
+
+        public Builder searchResults(final List<SearchResult> searchResults){
+            this.searchResults = searchResults;
+            return this;
+        }
+
+        public SearchRestProjectOutput build(){
+            return new SearchRestProjectOutput(this.searchResults);
+        }
+
+    }
 }

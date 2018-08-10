@@ -52,6 +52,6 @@ public class UpdateRestApplicationsStatusService extends AbstractRestProjectServ
                 this.methodRepository.update(restMethod.getId(), restMethod);
             }
         }
-        return createServiceResult(new UpdateRestApplicationsStatusOutput());
+        return createServiceResult(UpdateRestApplicationsStatusOutput.builder().build());
     }
 }

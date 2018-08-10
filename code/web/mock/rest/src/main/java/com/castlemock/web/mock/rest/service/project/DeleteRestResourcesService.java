@@ -44,6 +44,6 @@ public class DeleteRestResourcesService extends AbstractRestProjectService imple
         for(RestResource restResource : input.getRestResources()){
             this.deleteResource(restResource.getId());
         }
-        return createServiceResult(new DeleteRestResourcesOutput());
+        return createServiceResult(DeleteRestResourcesOutput.builder().build());
     }
 }

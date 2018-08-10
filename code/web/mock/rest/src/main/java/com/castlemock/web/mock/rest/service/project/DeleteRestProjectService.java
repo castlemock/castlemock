@@ -43,6 +43,8 @@ public class DeleteRestProjectService extends AbstractRestProjectService impleme
         final DeleteRestProjectInput input = serviceTask.getInput();
         final String restProjectId = input.getRestProjectId();
         final RestProject restProject = deleteProject(restProjectId);
-        return createServiceResult(new DeleteRestProjectOutput(restProject));
+        return createServiceResult(DeleteRestProjectOutput.builder()
+                .project(restProject)
+                .build());
     }
 }

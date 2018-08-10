@@ -94,7 +94,9 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
         final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
         when(serviceProcessor.process(isA(ReadSoapPortInput.class))).thenReturn(new ReadSoapPortOutput(soapPort));
         when(serviceProcessor.process(isA(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
-        when(serviceProcessor.process(isA(ReadSoapEventsByOperationIdInput.class))).thenReturn(new ReadSoapEventsByOperationIdOutput(new ArrayList<SoapEvent>()));
+        when(serviceProcessor.process(isA(ReadSoapEventsByOperationIdInput.class))).thenReturn(ReadSoapEventsByOperationIdOutput.builder()
+                .soapEvents(new ArrayList<SoapEvent>())
+                .build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH);
         ResultActions result = mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())

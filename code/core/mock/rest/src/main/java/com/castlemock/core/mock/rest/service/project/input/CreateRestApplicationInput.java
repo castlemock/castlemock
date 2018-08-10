@@ -27,21 +27,47 @@ import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 public final class CreateRestApplicationInput implements Input {
 
     @NotNull
-    private final String restProjectId;
+    private final String projectId;
     @NotNull
-    private final RestApplication restApplication;
+    private final RestApplication application;
 
-    public CreateRestApplicationInput(String restProjectId, RestApplication restApplication) {
-        this.restProjectId = restProjectId;
-        this.restApplication = restApplication;
+    private CreateRestApplicationInput(final String projectId,
+                                       final RestApplication application) {
+        this.projectId = projectId;
+        this.application = application;
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public RestApplication getRestApplication() {
-        return restApplication;
+    public RestApplication getApplication() {
+        return application;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String projectId;
+        private RestApplication application;
+
+
+        public Builder projectId(final String restProjectId){
+            this.projectId = restProjectId;
+            return this;
+        }
+
+        public Builder application(final RestApplication restApplication){
+            this.application = restApplication;
+            return this;
+        }
+
+        public CreateRestApplicationInput build(){
+            return new CreateRestApplicationInput(this.projectId, this.application);
+        }
+
     }
 
 }

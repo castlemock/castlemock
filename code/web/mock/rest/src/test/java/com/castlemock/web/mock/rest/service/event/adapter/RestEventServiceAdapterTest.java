@@ -82,7 +82,7 @@ public class RestEventServiceAdapterTest {
 
         }
 
-        final ReadAllRestEventOutput output = new ReadAllRestEventOutput(restEvents);
+        final ReadAllRestEventOutput output = ReadAllRestEventOutput.builder().restEvents(restEvents).build();
         Mockito.when(serviceProcessor.process(Mockito.any(ReadAllRestEventInput.class))).thenReturn(output);
 
         final List<RestEvent> returnedRestEvents = serviceAdapter.readAll();
@@ -102,7 +102,7 @@ public class RestEventServiceAdapterTest {
     @Test
     public void testRead(){
         final RestEvent restEvent = RestEventGenerator.generateRestEvent();
-        final ReadRestEventOutput output = new ReadRestEventOutput(restEvent);
+        final ReadRestEventOutput output = ReadRestEventOutput.builder().restEvent(restEvent).build();
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestEventInput.class))).thenReturn(output);
 
         final RestEvent returnedRestEvent = serviceAdapter.read(restEvent.getId());

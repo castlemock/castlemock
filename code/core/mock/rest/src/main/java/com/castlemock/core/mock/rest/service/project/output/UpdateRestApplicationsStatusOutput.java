@@ -23,4 +23,21 @@ import com.castlemock.core.basis.model.Output;
  * @since 1.0
  */
 public final class UpdateRestApplicationsStatusOutput implements Output {
+
+
+    private UpdateRestApplicationsStatusOutput(){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        public UpdateRestApplicationsStatusOutput build(){
+            return new UpdateRestApplicationsStatusOutput();
+        }
+
+    }
 }

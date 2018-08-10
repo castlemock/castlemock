@@ -55,6 +55,8 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
 
 
         this.methodRepository.update(input.getRestMethodId(), existing);
-        return createServiceResult(new UpdateRestMethodOutput(updatedRestMethod));
+        return createServiceResult(UpdateRestMethodOutput.builder()
+                .restMethod(updatedRestMethod)
+                .build());
     }
 }

@@ -83,7 +83,7 @@ public class SearchRestProjectServiceTest {
         final SearchQuery searchQuery = new SearchQuery();
         searchQuery.setQuery(query);
 
-        final SearchRestProjectInput input = new SearchRestProjectInput(searchQuery);
+        final SearchRestProjectInput input = SearchRestProjectInput.builder().searchQuery(searchQuery).build();
         final ServiceTask<SearchRestProjectInput> serviceTask = new ServiceTask<SearchRestProjectInput>();
         serviceTask.setInput(input);
 

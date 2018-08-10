@@ -85,8 +85,10 @@ public class RestResourceControllerTest extends AbstractRestControllerTest {
         final RestProject restProject = RestProjectGenerator.generateRestProject();
         final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
         final RestResource restResource = RestResourceGenerator.generateRestResource();
-        when(serviceProcessor.process(isA(ReadRestResourceInput.class))).thenReturn(new ReadRestResourceOutput(restResource));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId());
+        when(serviceProcessor.process(isA(ReadRestResourceInput.class))).thenReturn(ReadRestResourceOutput.builder().restResource(restResource).build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT +
+                SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() +
+                SLASH + RESOURCE + SLASH + restResource.getId());
         ResultActions result = mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(5 + GLOBAL_VIEW_MODEL_COUNT))
@@ -117,11 +119,12 @@ public class RestResourceControllerTest extends AbstractRestControllerTest {
         restMethod2.setName("restMethod2");
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestMethodInput.class)))
-                .thenReturn(new ReadRestMethodOutput(restMethod1))
-                .thenReturn(new ReadRestMethodOutput(restMethod2));
+                .thenReturn(ReadRestMethodOutput.builder().restMethod(restMethod1).build())
+                .thenReturn(ReadRestMethodOutput.builder().restMethod(restMethod2).build());
 
         final MockHttpServletRequestBuilder message =
-                MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId)
+                MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION +
+                        SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId)
                         .param("action", "update").flashAttr("restMethodModifierCommand", restMethodModifierCommand);
 
         mockMvc.perform(message)
@@ -149,14 +152,15 @@ public class RestResourceControllerTest extends AbstractRestControllerTest {
         final List<RestMethod> restMethods = Arrays.asList(restMethod1, restMethod2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestMethodInput.class)))
-                .thenReturn(new ReadRestMethodOutput(restMethod1))
-                .thenReturn(new ReadRestMethodOutput(restMethod2));
+                .thenReturn(ReadRestMethodOutput.builder().restMethod(restMethod1).build())
+                .thenReturn(ReadRestMethodOutput.builder().restMethod(restMethod2).build());
 
         final RestMethodModifierCommand restMethodModifierCommand = new RestMethodModifierCommand();
         restMethodModifierCommand.setRestMethodIds(restMethodIds);
 
         final MockHttpServletRequestBuilder message =
-                MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId)
+                MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH +
+                        APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId)
                         .param("action", "delete").flashAttr("restMethodModifierCommand", restMethodModifierCommand);
 
         mockMvc.perform(message)
@@ -191,14 +195,15 @@ public class RestResourceControllerTest extends AbstractRestControllerTest {
         final List<RestMethod> restMethods = Arrays.asList(restMethod1, restMethod2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestMethodInput.class)))
-                .thenReturn(new ReadRestMethodOutput(restMethod1))
-                .thenReturn(new ReadRestMethodOutput(restMethod2));
+                .thenReturn(ReadRestMethodOutput.builder().restMethod(restMethod1).build())
+                .thenReturn(ReadRestMethodOutput.builder().restMethod(restMethod2).build());
 
         final RestMethodModifierCommand restMethodModifierCommand = new RestMethodModifierCommand();
         restMethodModifierCommand.setRestMethodIds(restMethodIds);
 
         final MockHttpServletRequestBuilder message =
-                MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId)
+                MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId +
+                        SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId)
                         .param("action", "update-endpoint").flashAttr("restMethodModifierCommand", restMethodModifierCommand);
 
         mockMvc.perform(message)

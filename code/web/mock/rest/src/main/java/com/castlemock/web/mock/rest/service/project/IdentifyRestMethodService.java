@@ -72,9 +72,14 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
         final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(foundRestMethod.getId());
         foundRestMethod.setMockResponses(mockResponses);
 
-        return createServiceResult(new IdentifyRestMethodOutput(input.getRestProjectId(),
-                input.getRestApplicationId(), restResource.getId(),
-                foundRestMethod.getId(),  foundRestMethod, pathParameters));
+        return createServiceResult(IdentifyRestMethodOutput.builder()
+                        .restProjectId(input.getRestProjectId())
+                        .restApplicationId(input.getRestApplicationId())
+                        .restResourceId(restResource.getId())
+                        .restMethodId(foundRestMethod.getId())
+                        .restMethod(foundRestMethod)
+                        .pathParameters(pathParameters)
+                        .build());
     }
 
     /**

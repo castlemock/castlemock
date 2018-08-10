@@ -31,7 +31,7 @@ public final class UpdateRestProjectInput implements Input {
     @NotNull
     private final RestProject restProject;
 
-    public UpdateRestProjectInput(String restProjectId, RestProject restProject) {
+    private UpdateRestProjectInput(String restProjectId, RestProject restProject) {
         this.restProjectId = restProjectId;
         this.restProject = restProject;
     }
@@ -43,5 +43,31 @@ public final class UpdateRestProjectInput implements Input {
     public RestProject getRestProject() {
         return restProject;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private RestProject restProject;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restProject(final RestProject restProject){
+            this.restProject = restProject;
+            return this;
+        }
+
+        public UpdateRestProjectInput build(){
+            return new UpdateRestProjectInput(this.restProjectId, this.restProject);
+        }
+
+    }
+
 
 }

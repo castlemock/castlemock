@@ -24,4 +24,19 @@ import com.castlemock.core.basis.model.Output;
  */
 public final class UpdateRestApplicationsForwardedEndpointOutput implements Output {
 
+    private UpdateRestApplicationsForwardedEndpointOutput(){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        public UpdateRestApplicationsForwardedEndpointOutput build(){
+            return new UpdateRestApplicationsForwardedEndpointOutput();
+        }
+
+    }
 }

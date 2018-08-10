@@ -47,6 +47,8 @@ public class ReadRestResourceService extends AbstractRestProjectService implemen
         final RestResource restResource = this.resourceRepository.findOne(input.getRestResourceId());
         final List<RestMethod> methods = this.methodRepository.findWithResourceId(input.getRestResourceId());
         restResource.setMethods(methods);
-        return createServiceResult(new ReadRestResourceOutput(restResource));
+        return createServiceResult(ReadRestResourceOutput.builder()
+                .restResource(restResource)
+                .build());
     }
 }

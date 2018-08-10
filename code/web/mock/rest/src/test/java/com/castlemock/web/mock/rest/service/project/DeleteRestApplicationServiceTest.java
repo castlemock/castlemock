@@ -77,7 +77,10 @@ public class DeleteRestApplicationServiceTest {
         Mockito.when(methodRepository.findWithResourceId(resource.getId())).thenReturn(Arrays.asList(method));
         Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(Arrays.asList(mockResponse));
 
-        final DeleteRestApplicationInput input = new DeleteRestApplicationInput(projectId, applicationId);
+        final DeleteRestApplicationInput input = DeleteRestApplicationInput.builder()
+                .restProjectId(projectId)
+                .restApplicationId(applicationId)
+                .build();
         final ServiceTask<DeleteRestApplicationInput> serviceTask = new ServiceTask<DeleteRestApplicationInput>(input);
         final ServiceResult<DeleteRestApplicationOutput> serviceResult = service.process(serviceTask);
 

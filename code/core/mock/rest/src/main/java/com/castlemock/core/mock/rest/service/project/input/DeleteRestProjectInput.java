@@ -28,12 +28,31 @@ public final class DeleteRestProjectInput implements Input{
     @NotNull
     private final String restProjectId;
 
-    public DeleteRestProjectInput(String restProjectId) {
+    private DeleteRestProjectInput(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 
     public String getRestProjectId() {
         return restProjectId;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public DeleteRestProjectInput build(){
+            return new DeleteRestProjectInput(this.restProjectId);
+        }
+
     }
 
 }

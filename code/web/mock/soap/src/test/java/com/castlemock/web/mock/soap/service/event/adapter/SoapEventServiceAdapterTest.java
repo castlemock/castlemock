@@ -82,7 +82,7 @@ public class SoapEventServiceAdapterTest {
 
         }
 
-        final ReadAllSoapEventOutput output = new ReadAllSoapEventOutput(soapEvents);
+        final ReadAllSoapEventOutput output = ReadAllSoapEventOutput.builder().soapEvents(soapEvents).build();
         Mockito.when(serviceProcessor.process(Mockito.any(ReadAllSoapEventInput.class))).thenReturn(output);
 
         final List<SoapEvent> returnedSoapEvents = serviceAdapter.readAll();
@@ -101,7 +101,9 @@ public class SoapEventServiceAdapterTest {
     @Test
     public void testRead(){
         final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
-        final ReadSoapEventOutput output = new ReadSoapEventOutput(soapEvent);
+        final ReadSoapEventOutput output = ReadSoapEventOutput.builder()
+                .soapEvent(soapEvent)
+                .build();
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapEventInput.class))).thenReturn(output);
 
         final SoapEvent returnedSoapEvent = serviceAdapter.read(soapEvent.getId());

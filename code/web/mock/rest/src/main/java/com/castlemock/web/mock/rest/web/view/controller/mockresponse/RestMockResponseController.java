@@ -41,8 +41,18 @@ public class RestMockResponseController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/{restMockResponseId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @PathVariable final String restMockResponseId) {
-        final ReadRestMockResponseOutput output = serviceProcessor.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId));
+    public ModelAndView defaultPage(@PathVariable final String restProjectId,
+                                    @PathVariable final String restApplicationId,
+                                    @PathVariable final String restResourceId,
+                                    @PathVariable final String restMethodId,
+                                    @PathVariable final String restMockResponseId) {
+        final ReadRestMockResponseOutput output = serviceProcessor.process(ReadRestMockResponseInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .restMethodId(restMethodId)
+                .restMockResponse(restMockResponseId)
+                .build());
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);

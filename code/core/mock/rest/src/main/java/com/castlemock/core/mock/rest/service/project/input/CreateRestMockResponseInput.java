@@ -27,46 +27,91 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 public final class CreateRestMockResponseInput implements Input {
 
     @NotNull
-    private final String restProjectId;
+    private final String projectId;
     @NotNull
-    private final String restApplicationId;
+    private final String applicationId;
     @NotNull
-    private final String restResourceId;
+    private final String resourceId;
     @NotNull
-    private final String restMethodId;
+    private final String methodId;
     @NotNull
-    private final RestMockResponse restMockResponse;
+    private final RestMockResponse mockResponse;
 
-    public CreateRestMockResponseInput(String restProjectId,
-                                       String restApplicationId,
-                                       String restResourceId,
-                                       String restMethodId,
-                                       RestMockResponse restMockResponse) {
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
-        this.restResourceId = restResourceId;
-        this.restMethodId = restMethodId;
-        this.restMockResponse = restMockResponse;
+    private CreateRestMockResponseInput(String projectId,
+                                       String applicationId,
+                                       String resourceId,
+                                       String methodId,
+                                       RestMockResponse mockResponse) {
+        this.projectId = projectId;
+        this.applicationId = applicationId;
+        this.resourceId = resourceId;
+        this.methodId = methodId;
+        this.mockResponse = mockResponse;
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public String getRestResourceId() {
-        return restResourceId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public String getRestMethodId() {
-        return restMethodId;
+    public String getMethodId() {
+        return methodId;
     }
 
-    public RestMockResponse getRestMockResponse() {
-        return restMockResponse;
+    public RestMockResponse getMockResponse() {
+        return mockResponse;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String projectId;
+        private String applicationId;
+        private String resourceId;
+        private String methodId;
+        private RestMockResponse mockResponse;
+
+
+        public Builder projectId(final String restProjectId){
+            this.projectId = restProjectId;
+            return this;
+        }
+
+        public Builder applicationId(final String applicationId){
+            this.applicationId = applicationId;
+            return this;
+        }
+
+        public Builder resourceId(final String resourceId){
+            this.resourceId = resourceId;
+            return this;
+        }
+
+        public Builder methodId(final String methodId){
+            this.methodId = methodId;
+            return this;
+        }
+
+        public Builder mockResponse(final RestMockResponse mockResponse){
+            this.mockResponse = mockResponse;
+            return this;
+        }
+
+        public CreateRestMockResponseInput build(){
+            return new CreateRestMockResponseInput(this.projectId, this.applicationId,
+                    this.resourceId, this.methodId, this.mockResponse);
+        }
+    }
+
+
 
 }

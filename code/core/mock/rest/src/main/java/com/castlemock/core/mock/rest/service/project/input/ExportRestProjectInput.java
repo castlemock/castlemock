@@ -28,12 +28,31 @@ public final class ExportRestProjectInput implements Input {
     @NotNull
     private final String restProjectId;
 
-    public ExportRestProjectInput(String restProjectId) {
+    private ExportRestProjectInput(String restProjectId) {
         this.restProjectId = restProjectId;
     }
 
     public String getRestProjectId() {
         return restProjectId;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public ExportRestProjectInput build(){
+            return new ExportRestProjectInput(this.restProjectId);
+        }
+
     }
 
 }

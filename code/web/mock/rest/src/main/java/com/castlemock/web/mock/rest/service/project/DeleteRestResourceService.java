@@ -41,6 +41,6 @@ public class DeleteRestResourceService extends AbstractRestProjectService implem
     public ServiceResult<DeleteRestResourceOutput> process(final ServiceTask<DeleteRestResourceInput> serviceTask) {
         final DeleteRestResourceInput input = serviceTask.getInput();
         this.deleteResource(input.getRestResourceId());
-        return createServiceResult(new DeleteRestResourceOutput());
+        return createServiceResult(DeleteRestResourceOutput.builder().build());
     }
 }

@@ -46,6 +46,8 @@ public class UpdateRestApplicationService extends AbstractRestProjectService imp
         existing.setName(updated.getName());
 
         final RestApplication updatedRestApplication = this.applicationRepository.update(input.getRestApplicationId(), existing);
-        return createServiceResult(new UpdateRestApplicationOutput(updatedRestApplication));
+        return createServiceResult(UpdateRestApplicationOutput.builder()
+                .updatedRestApplication(updatedRestApplication)
+                .build());
     }
 }

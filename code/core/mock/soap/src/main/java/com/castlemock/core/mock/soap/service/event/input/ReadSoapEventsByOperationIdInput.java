@@ -26,12 +26,31 @@ public final class ReadSoapEventsByOperationIdInput implements Input {
 
     private final String operationId;
 
-    public ReadSoapEventsByOperationIdInput(String operationId) {
+    private ReadSoapEventsByOperationIdInput(final String operationId) {
         this.operationId = operationId;
     }
 
     public String getOperationId() {
         return operationId;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String operationId;
+
+        public Builder operationId(final String operationId){
+            this.operationId = operationId;
+            return this;
+        }
+
+        public ReadSoapEventsByOperationIdInput build(){
+            return new ReadSoapEventsByOperationIdInput(this.operationId);
+        }
+
     }
 
 }

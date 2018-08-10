@@ -27,11 +27,30 @@ public final class CreateSoapEventOutput implements Output {
 
     private final SoapEvent createdSoapEvent;
 
-    public CreateSoapEventOutput(SoapEvent createdSoapEvent) {
+    private CreateSoapEventOutput(final SoapEvent createdSoapEvent) {
         this.createdSoapEvent = createdSoapEvent;
     }
 
     public SoapEvent getCreatedSoapEvent() {
         return createdSoapEvent;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private SoapEvent createdSoapEvent;
+
+        public Builder createdSoapEvent(final SoapEvent createdSoapEvent){
+            this.createdSoapEvent = createdSoapEvent;
+            return this;
+        }
+
+        public CreateSoapEventOutput build(){
+            return new CreateSoapEventOutput(this.createdSoapEvent);
+        }
+
     }
 }

@@ -29,12 +29,31 @@ public final class ReadRestApplicationOutput implements Output{
     @NotNull
     private final RestApplication restApplication;
 
-    public ReadRestApplicationOutput(RestApplication restApplication) {
+    private ReadRestApplicationOutput(RestApplication restApplication) {
         this.restApplication = restApplication;
     }
 
     public RestApplication getRestApplication() {
         return restApplication;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestApplication restApplication;
+
+        public Builder restApplication(final RestApplication restApplication){
+            this.restApplication = restApplication;
+            return this;
+        }
+
+        public ReadRestApplicationOutput build(){
+            return new ReadRestApplicationOutput(this.restApplication);
+        }
+
     }
 
 }

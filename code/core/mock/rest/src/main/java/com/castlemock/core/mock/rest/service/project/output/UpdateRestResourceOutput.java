@@ -29,7 +29,7 @@ public final class UpdateRestResourceOutput implements Output {
     @NotNull
     private final RestResource updatedRestResource;
 
-    public UpdateRestResourceOutput(RestResource updatedRestResource) {
+    private UpdateRestResourceOutput(RestResource updatedRestResource) {
         this.updatedRestResource = updatedRestResource;
     }
 
@@ -37,4 +37,23 @@ public final class UpdateRestResourceOutput implements Output {
         return updatedRestResource;
     }
 
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestResource updatedRestResource;
+
+        public Builder updatedRestResource(final RestResource updatedRestResource){
+            this.updatedRestResource = updatedRestResource;
+            return this;
+        }
+
+        public UpdateRestResourceOutput build(){
+            return new UpdateRestResourceOutput(this.updatedRestResource);
+        }
+
+    }
 }

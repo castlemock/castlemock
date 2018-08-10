@@ -35,10 +35,10 @@ public final class UpdateRestResourcesStatusInput implements Input {
     @NotNull
     private final RestMethodStatus restMethodStatus;
 
-    public UpdateRestResourcesStatusInput(String restProjectId,
-                                          String restApplicationId,
-                                          String restResourceId,
-                                          RestMethodStatus restMethodStatus) {
+    private UpdateRestResourcesStatusInput(final String restProjectId,
+                                           final String restApplicationId,
+                                           final String restResourceId,
+                                           final RestMethodStatus restMethodStatus) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -60,5 +60,44 @@ public final class UpdateRestResourcesStatusInput implements Input {
     public RestMethodStatus getRestMethodStatus() {
         return restMethodStatus;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceId;
+        private RestMethodStatus restMethodStatus;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceId(final String restResourceId){
+            this.restResourceId = restResourceId;
+            return this;
+        }
+
+        public Builder restMethodStatus(final RestMethodStatus restMethodStatus){
+            this.restMethodStatus = restMethodStatus;
+            return this;
+        }
+
+        public UpdateRestResourcesStatusInput build(){
+            return new UpdateRestResourcesStatusInput(this.restProjectId,
+                    this.restApplicationId, this.restResourceId, this.restMethodStatus);
+        }
+
+    }
+
 
 }

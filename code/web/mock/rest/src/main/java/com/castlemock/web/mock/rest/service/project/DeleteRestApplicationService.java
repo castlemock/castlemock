@@ -41,6 +41,6 @@ public class DeleteRestApplicationService extends AbstractRestProjectService imp
     public ServiceResult<DeleteRestApplicationOutput> process(final ServiceTask<DeleteRestApplicationInput> serviceTask) {
         final DeleteRestApplicationInput input = serviceTask.getInput();
         this.deleteApplication(input.getRestApplicationId());
-        return createServiceResult(new DeleteRestApplicationOutput());
+        return createServiceResult(DeleteRestApplicationOutput.builder().build());
     }
 }

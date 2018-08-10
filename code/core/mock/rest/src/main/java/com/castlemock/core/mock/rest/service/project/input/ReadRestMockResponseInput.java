@@ -36,7 +36,9 @@ public final class ReadRestMockResponseInput implements Input {
     @NotNull
     private final String restMockResponse;
 
-    public ReadRestMockResponseInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, String restMockResponse) {
+    private ReadRestMockResponseInput(final String restProjectId, final String restApplicationId,
+                                      final String restResourceId, final String restMethodId,
+                                      final String restMockResponse) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -62,6 +64,52 @@ public final class ReadRestMockResponseInput implements Input {
 
     public String getRestMockResponse() {
         return restMockResponse;
+    }
+
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceId;
+        private String restMethodId;
+        private String restMockResponse;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceId(final String restResourceId){
+            this.restResourceId = restResourceId;
+            return this;
+        }
+
+        public Builder restMethodId(final String restMethodId){
+            this.restMethodId = restMethodId;
+            return this;
+        }
+
+        public Builder restMockResponse(final String restMockResponse){
+            this.restMockResponse = restMockResponse;
+            return this;
+        }
+
+        public ReadRestMockResponseInput build(){
+            return new ReadRestMockResponseInput(this.restProjectId,
+                    this.restApplicationId, this.restResourceId,
+                    this.restMethodId, this.restMockResponse);
+        }
+
     }
 
 }

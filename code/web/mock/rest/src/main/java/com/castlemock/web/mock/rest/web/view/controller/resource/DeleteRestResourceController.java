@@ -51,8 +51,13 @@ public class DeleteRestResourceController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/delete", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId) {
-        final ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
+    public ModelAndView defaultPage(@PathVariable final String restProjectId,
+                                    @PathVariable final String restApplicationId,
+                                    @PathVariable final String restResourceId) {
+        final ReadRestResourceOutput output = serviceProcessor.process(ReadRestResourceInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId).build());
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
@@ -70,8 +75,13 @@ public class DeleteRestResourceController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/delete/confirm", method = RequestMethod.GET)
-    public ModelAndView confirm(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId) {
-        serviceProcessor.process(new DeleteRestResourceInput(restProjectId, restApplicationId, restResourceId));
+    public ModelAndView confirm(@PathVariable final String restProjectId,
+                                @PathVariable final String restApplicationId,
+                                @PathVariable final String restResourceId) {
+        serviceProcessor.process(DeleteRestResourceInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId).build());
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);
     }
 
@@ -84,7 +94,9 @@ public class DeleteRestResourceController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/delete/confirm", method = RequestMethod.POST)
-    public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @ModelAttribute final DeleteRestResourcesCommand deleteRestResourcesCommand) {
+    public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final String restProjectId,
+                                                           @PathVariable final String restApplicationId,
+                                                           @ModelAttribute final DeleteRestResourcesCommand deleteRestResourcesCommand) {
         serviceProcessor.process(new DeleteRestResourcesInput(restProjectId, restApplicationId, deleteRestResourcesCommand.getRestResources()));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);
     }

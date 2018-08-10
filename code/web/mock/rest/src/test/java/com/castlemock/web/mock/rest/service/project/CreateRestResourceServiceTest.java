@@ -55,7 +55,11 @@ public class CreateRestResourceServiceTest {
         final RestResource resource = RestResourceGenerator.generateRestResource();
         Mockito.when(resourceRepository.save(Mockito.any(RestResource.class))).thenReturn(resource);
 
-        final CreateRestResourceInput input = new CreateRestResourceInput(projectId, applicationId, resource);
+        final CreateRestResourceInput input = CreateRestResourceInput.builder()
+                .restProjectId(projectId)
+                .restApplicationId(applicationId)
+                .restResource(resource)
+                .build();
         final ServiceTask<CreateRestResourceInput> serviceTask = new ServiceTask<CreateRestResourceInput>(input);
         final ServiceResult<CreateRestResourceOutput> serviceResult = service.process(serviceTask);
 

@@ -29,7 +29,7 @@ public final class UpdateRestApplicationOutput implements Output {
     @NotNull
     private final RestApplication updatedRestApplication;
 
-    public UpdateRestApplicationOutput(RestApplication updatedRestApplication) {
+    private UpdateRestApplicationOutput(RestApplication updatedRestApplication) {
         this.updatedRestApplication = updatedRestApplication;
     }
 
@@ -37,4 +37,23 @@ public final class UpdateRestApplicationOutput implements Output {
         return updatedRestApplication;
     }
 
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestApplication updatedRestApplication;
+
+        public Builder updatedRestApplication(final RestApplication updatedRestApplication){
+            this.updatedRestApplication = updatedRestApplication;
+            return this;
+        }
+
+        public UpdateRestApplicationOutput build(){
+            return new UpdateRestApplicationOutput(this.updatedRestApplication);
+        }
+
+    }
 }

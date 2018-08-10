@@ -29,11 +29,30 @@ public final class CreateRestEventInput implements Input {
     @NotNull
     private final RestEvent restEvent;
 
-    public CreateRestEventInput(RestEvent restEvent) {
+    private CreateRestEventInput(RestEvent restEvent) {
         this.restEvent = restEvent;
     }
 
     public RestEvent getRestEvent() {
         return restEvent;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestEvent restEvent;
+
+        public Builder restEvent(final RestEvent restEvent){
+            this.restEvent = restEvent;
+            return this;
+        }
+
+        public CreateRestEventInput build(){
+            return new CreateRestEventInput(this.restEvent);
+        }
+
     }
 }

@@ -29,12 +29,31 @@ public final class CreateRestProjectInput implements Input {
     @NotNull
     private final RestProject restProject;
 
-    public CreateRestProjectInput(RestProject restProject) {
+    private CreateRestProjectInput(RestProject restProject) {
         this.restProject = restProject;
     }
 
     public RestProject getRestProject() {
         return restProject;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestProject restProject;
+
+        public Builder restProject(final RestProject restProject){
+            this.restProject = restProject;
+            return this;
+        }
+
+        public CreateRestProjectInput build(){
+            return new CreateRestProjectInput(this.restProject);
+        }
+
     }
 
 }

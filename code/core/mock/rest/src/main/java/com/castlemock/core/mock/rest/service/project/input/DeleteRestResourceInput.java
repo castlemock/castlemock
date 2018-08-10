@@ -32,7 +32,7 @@ public final class DeleteRestResourceInput implements Input{
     @NotNull
     private final String restResourceId;
 
-    public DeleteRestResourceInput(String restProjectId, String restApplicationId, String restResourceId) {
+    private DeleteRestResourceInput(String restProjectId, String restApplicationId, String restResourceId) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -48,5 +48,37 @@ public final class DeleteRestResourceInput implements Input{
 
     public String getRestResourceId() {
         return restResourceId;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceId;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceId(final String restResourceId){
+            this.restResourceId = restResourceId;
+            return this;
+        }
+        public DeleteRestResourceInput build(){
+            return new DeleteRestResourceInput(this.restProjectId,
+                    this.restApplicationId, this.restResourceId);
+        }
+
     }
 }

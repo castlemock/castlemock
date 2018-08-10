@@ -47,8 +47,15 @@ public class CreateRestMockResponseController extends AbstractRestViewController
 
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/create/response", method = RequestMethod.GET)
-    public ModelAndView displayCreatePage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId) {
-        final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
+    public ModelAndView displayCreatePage(@PathVariable final String restProjectId,
+                                          @PathVariable final String restApplicationId,
+                                          @PathVariable final String restResourceId,
+                                          @PathVariable final String restMethodId) {
+        final ReadRestMethodOutput output = serviceProcessor.process(ReadRestMethodInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .restMethodId(restMethodId).build());
 
         final RestMockResponse mockResponse = new RestMockResponse();
         mockResponse.setBody(output.getRestMethod().getDefaultBody());
@@ -66,9 +73,20 @@ public class CreateRestMockResponseController extends AbstractRestViewController
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/create/response", method = RequestMethod.POST)
-    public ModelAndView createResponse(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @ModelAttribute final RestMockResponse restMockResponse) {
-        serviceProcessor.process(new CreateRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponse));
-        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
+    public ModelAndView createResponse(@PathVariable final String restProjectId,
+                                       @PathVariable final String restApplicationId,
+                                       @PathVariable final String restResourceId,
+                                       @PathVariable final String restMethodId,
+                                       @ModelAttribute final RestMockResponse restMockResponse) {
+        serviceProcessor.process(CreateRestMockResponseInput.builder()
+                .projectId(restProjectId)
+                .applicationId(restApplicationId)
+                .resourceId(restResourceId)
+                .methodId(restMethodId)
+                .mockResponse(restMockResponse)
+                .build());
+        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" +
+                restResourceId + "/method/" + restMethodId);
     }
 
 

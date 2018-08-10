@@ -42,6 +42,8 @@ public class ReadRestResourceWithUriService extends AbstractRestProjectService i
     public ServiceResult<ReadRestResourceWithUriOutput> process(final ServiceTask<ReadRestResourceWithUriInput> serviceTask) {
         final ReadRestResourceWithUriInput input = serviceTask.getInput();
         final RestResource restResource = this.resourceRepository.findRestResourceByUri(input.getRestApplicationId(), input.getRestResourceUri());
-        return createServiceResult(new ReadRestResourceWithUriOutput(restResource));
+        return createServiceResult(ReadRestResourceWithUriOutput.builder()
+                .restResource(restResource)
+                .build());
     }
 }

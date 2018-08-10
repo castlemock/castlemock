@@ -23,4 +23,20 @@ import com.castlemock.core.basis.model.Output;
  * @since 1.0
  */
 public final class DeleteRestApplicationsOutput implements Output {
+
+    private DeleteRestApplicationsOutput(){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        public DeleteRestApplicationsOutput build(){
+            return new DeleteRestApplicationsOutput();
+        }
+
+    }
 }

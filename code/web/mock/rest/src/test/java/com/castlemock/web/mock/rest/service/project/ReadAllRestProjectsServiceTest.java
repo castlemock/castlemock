@@ -36,7 +36,7 @@ public class ReadAllRestProjectsServiceTest {
         final RestProject project = RestProjectGenerator.generateRestProject();
         final List<RestProject> projects = Arrays.asList(project);
 
-        final ReadAllRestProjectsInput input = new ReadAllRestProjectsInput();
+        final ReadAllRestProjectsInput input = ReadAllRestProjectsInput.builder().build();
         final ServiceTask<ReadAllRestProjectsInput> serviceTask = new ServiceTask<ReadAllRestProjectsInput>(input);
 
         Mockito.when(repository.findAll()).thenReturn(projects);

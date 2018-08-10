@@ -89,7 +89,13 @@ public class RestImportDefinitionController extends AbstractRestViewController {
         }
 
         try {
-            serviceProcessor.process(new ImportRestDefinitionInput(projectId, files, uploadForm.getLink(), uploadForm.isGenerateResponse(), uploadForm.getDefinitionType()));
+            serviceProcessor.process(ImportRestDefinitionInput.builder()
+                    .restProjectId(projectId)
+                    .files(files)
+                    .location(uploadForm.getLink())
+                    .generateResponse(uploadForm.isGenerateResponse())
+                    .definitionType(uploadForm.getDefinitionType())
+                    .build());
             return redirect("/rest/project/" + projectId + "?upload=success");
         } catch (Exception e){
             return redirect("/rest/project/" + projectId + "?upload=error");

@@ -53,6 +53,8 @@ public class ReadRestApplicationService extends AbstractRestProjectService imple
             restResource.setStatusCount(restMethodStatusCount);
         }
         application.setResources(resources);
-        return createServiceResult(new ReadRestApplicationOutput(application));
+        return createServiceResult(ReadRestApplicationOutput.builder()
+                .restApplication(application)
+                .build());
     }
 }

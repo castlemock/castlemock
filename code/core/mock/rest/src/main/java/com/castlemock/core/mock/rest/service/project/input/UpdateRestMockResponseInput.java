@@ -39,12 +39,12 @@ public final class UpdateRestMockResponseInput implements Input {
     @NotNull
     private final RestMockResponse restMockResponse;
 
-    public UpdateRestMockResponseInput(String restProjectId,
-                                       String restApplicationId,
-                                       String restResourceId,
-                                       String restMethodId,
-                                       String restMockResponseId,
-                                       RestMockResponse restMockResponse) {
+    private UpdateRestMockResponseInput(final String restProjectId,
+                                        final String restApplicationId,
+                                        final String restResourceId,
+                                        final String restMethodId,
+                                        final String restMockResponseId,
+                                        final RestMockResponse restMockResponse) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -76,4 +76,57 @@ public final class UpdateRestMockResponseInput implements Input {
     public RestMockResponse getRestMockResponse() {
         return restMockResponse;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceId;
+        private String restMethodId;
+        private String restMockResponseId;
+        private RestMockResponse restMockResponse;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceId(final String restResourceId){
+            this.restResourceId = restResourceId;
+            return this;
+        }
+
+        public Builder restMethodId(final String restMethodId){
+            this.restMethodId = restMethodId;
+            return this;
+        }
+
+        public Builder restMockResponseId(final String restMockResponseId){
+            this.restMockResponseId = restMockResponseId;
+            return this;
+        }
+
+        public Builder restMockResponse(final RestMockResponse restMockResponse){
+            this.restMockResponse = restMockResponse;
+            return this;
+        }
+
+        public UpdateRestMockResponseInput build(){
+            return new UpdateRestMockResponseInput(this.restProjectId,
+                    this.restApplicationId, this.restResourceId,
+                    this.restMethodId, this.restMockResponseId,
+                    this.restMockResponse);
+        }
+
+    }
+
 }

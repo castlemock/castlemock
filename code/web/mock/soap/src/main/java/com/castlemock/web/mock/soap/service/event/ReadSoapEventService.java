@@ -35,6 +35,8 @@ public class ReadSoapEventService  extends AbstractSoapEventService implements S
     public ServiceResult<ReadSoapEventOutput> process(ServiceTask<ReadSoapEventInput> serviceTask) {
         final ReadSoapEventInput input = serviceTask.getInput();
         final SoapEvent soapEvent = find(input.getSoapEventId());
-        return createServiceResult(new ReadSoapEventOutput(soapEvent));
+        return createServiceResult(ReadSoapEventOutput.builder()
+                .soapEvent(soapEvent)
+                .build());
     }
 }

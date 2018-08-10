@@ -96,7 +96,14 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
         restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
 
-        final IdentifyRestMethodOutput identifyRestMethodOutput = new IdentifyRestMethodOutput(PROJECT_ID, APPLICATION_ID, RESOURCE_ID, METHOD_ID, restMethod, PATH_PARAMETERS);
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
 
 
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
@@ -123,7 +130,14 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
         restMethod.setResponseStrategy(RestResponseStrategy.SEQUENCE);
 
-        final IdentifyRestMethodOutput identifyRestMethodOutput = new IdentifyRestMethodOutput(PROJECT_ID, APPLICATION_ID, RESOURCE_ID, METHOD_ID, restMethod, PATH_PARAMETERS);
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
 
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
 
@@ -146,7 +160,14 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
         restMethod.setStatus(RestMethodStatus.ECHO);
 
-        final IdentifyRestMethodOutput identifyRestMethodOutput = new IdentifyRestMethodOutput(PROJECT_ID, APPLICATION_ID, RESOURCE_ID, METHOD_ID, restMethod, PATH_PARAMETERS);
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
 
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + REST + SLASH + PROJECT +

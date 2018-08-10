@@ -113,7 +113,7 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
         }
 
         // Set the last version of the REST application
-        return createServiceResult(new ImportRestDefinitionOutput());
+        return createServiceResult(ImportRestDefinitionOutput.builder().build());
     }
 
 

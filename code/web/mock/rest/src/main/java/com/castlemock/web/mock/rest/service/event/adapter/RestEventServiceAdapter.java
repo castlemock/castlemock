@@ -96,7 +96,7 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEvent> {
      */
     @Override
     public List<RestEvent> readAll() {
-        final ReadAllRestEventOutput output = serviceProcessor.process(new ReadAllRestEventInput());
+        final ReadAllRestEventOutput output = serviceProcessor.process(ReadAllRestEventInput.builder().build());
 
         for(RestEvent restEvent : output.getRestEvents()){
             final String resourceLink = generateResourceLink(restEvent);
@@ -116,7 +116,9 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEvent> {
      */
     @Override
     public RestEvent read(String id) {
-        final ReadRestEventOutput output = serviceProcessor.process(new ReadRestEventInput(id));
+        final ReadRestEventOutput output = serviceProcessor.process(ReadRestEventInput.builder()
+                .restEventId(id)
+                .build());
         return output.getRestEvent();
     }
 
@@ -163,7 +165,7 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEvent> {
      */
     @Override
     public void clearAll() {
-        serviceProcessor.process(new ClearAllRestEventInput());
+        serviceProcessor.process(ClearAllRestEventInput.builder().build());
     }
 
 }

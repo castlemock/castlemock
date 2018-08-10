@@ -55,7 +55,9 @@ public class ReadRestEventServiceTest {
         final RestEvent restEvent = RestEventGenerator.generateRestEvent();
         Mockito.when(repository.findOne(restEvent.getId())).thenReturn(restEvent);
 
-        final ReadRestEventInput input = new ReadRestEventInput(restEvent.getId());
+        final ReadRestEventInput input = ReadRestEventInput.builder()
+                .restEventId(restEvent.getId())
+                .build();
         final ServiceTask<ReadRestEventInput> serviceTask = new ServiceTask<ReadRestEventInput>(input);
         final ServiceResult<ReadRestEventOutput> serviceResult = service.process(serviceTask);
         final ReadRestEventOutput output = serviceResult.getOutput();

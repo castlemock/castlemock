@@ -39,7 +39,7 @@ public final class UpdateRestMethodsForwardedEndpointInput implements Input {
     @NotNull
     private final String forwardedEndpoint;
 
-    public UpdateRestMethodsForwardedEndpointInput(String restProjectId,
+    private UpdateRestMethodsForwardedEndpointInput(String restProjectId,
                                                    String restApplicationId,
                                                    String restResourceId,
                                                    List<RestMethod> restMethods,
@@ -70,5 +70,52 @@ public final class UpdateRestMethodsForwardedEndpointInput implements Input {
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceId;
+        private List<RestMethod> restMethods;
+        private String forwardedEndpoint;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceId(final String restResourceId){
+            this.restResourceId = restResourceId;
+            return this;
+        }
+
+        public Builder restMethods(final List<RestMethod> restMethods){
+            this.restMethods = restMethods;
+            return this;
+        }
+
+        public Builder forwardedEndpoint(final String forwardedEndpoint){
+            this.forwardedEndpoint = forwardedEndpoint;
+            return this;
+        }
+
+
+        public UpdateRestMethodsForwardedEndpointInput build(){
+            return new UpdateRestMethodsForwardedEndpointInput(this.restProjectId,
+                    this.restApplicationId, this.restResourceId,
+                    this.restMethods, this.forwardedEndpoint);
+        }
+
+    }
+
 
 }

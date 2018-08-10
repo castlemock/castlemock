@@ -67,7 +67,9 @@ public class RestProjectController extends AbstractRestViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
     public ModelAndView getProject(@PathVariable final String projectId, @RequestParam(value = UPLOAD, required = false) final String upload) {
-        final ReadRestProjectOutput output =  serviceProcessor.process(new ReadRestProjectInput(projectId));
+        final ReadRestProjectOutput output =  serviceProcessor.process(ReadRestProjectInput.builder()
+                .restProjectId(projectId)
+                .build());
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT, output.getRestProject());
@@ -99,12 +101,19 @@ public class RestProjectController extends AbstractRestViewController {
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final RestMethodStatus restMethodStatus = RestMethodStatus.valueOf(restApplicationModifierCommand.getRestMethodStatus());
             for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
-                serviceProcessor.process(new UpdateRestApplicationsStatusInput(projectId, restApplicationId, restMethodStatus));
+                serviceProcessor.process(UpdateRestApplicationsStatusInput.builder()
+                        .restProjectId(projectId)
+                        .restApplicationId(restApplicationId)
+                        .restMethodStatus(restMethodStatus)
+                        .build());
             }
         } else if(DELETE_REST_APPLICATIONS.equalsIgnoreCase(action)) {
             final List<RestApplication> restApplications = new ArrayList<RestApplication>();
             for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
-                final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(projectId, restApplicationId));
+                final ReadRestApplicationOutput output = serviceProcessor.process(ReadRestApplicationInput.builder()
+                        .restProjectId(projectId)
+                        .restApplicationId(restApplicationId)
+                        .build());
                 restApplications.add(output.getRestApplication());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_REST_APPLICATIONS_PAGE);
@@ -115,7 +124,10 @@ public class RestProjectController extends AbstractRestViewController {
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<RestApplication> restApplications = new ArrayList<RestApplication>();
             for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
-                final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(projectId, restApplicationId));
+                final ReadRestApplicationOutput output = serviceProcessor.process(ReadRestApplicationInput.builder()
+                        .restProjectId(projectId)
+                        .restApplicationId(restApplicationId)
+                        .build());
                 restApplications.add(output.getRestApplication());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_REST_APPLICATIONS_ENDPOINT_PAGE);

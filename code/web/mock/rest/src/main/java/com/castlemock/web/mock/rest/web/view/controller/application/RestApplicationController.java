@@ -67,8 +67,12 @@ public class RestApplicationController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId) {
-        final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(restProjectId, restApplicationId));
+    public ModelAndView defaultPage(@PathVariable final String restProjectId,
+                                    @PathVariable final String restApplicationId) {
+        final ReadRestApplicationOutput output = serviceProcessor.process(ReadRestApplicationInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .build());
 
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
@@ -94,17 +98,29 @@ public class RestApplicationController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}", method = RequestMethod.POST)
-    public ModelAndView applicationFunctionality(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @RequestParam final String action, @ModelAttribute final RestResourceModifierCommand restResourceModifierCommand) {
+    public ModelAndView applicationFunctionality(@PathVariable final String restProjectId,
+                                                 @PathVariable final String restApplicationId,
+                                                 @RequestParam final String action,
+                                                 @ModelAttribute final RestResourceModifierCommand restResourceModifierCommand) {
         LOGGER.debug("Requested REST project action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
             final RestMethodStatus restMethodStatus = RestMethodStatus.valueOf(restResourceModifierCommand.getRestMethodStatus());
             for(String restResourceId : restResourceModifierCommand.getRestResourceIds()){
-                serviceProcessor.process(new UpdateRestResourcesStatusInput(restProjectId, restApplicationId, restResourceId, restMethodStatus));
+                serviceProcessor.process(UpdateRestResourcesStatusInput.builder()
+                        .restProjectId(restProjectId)
+                        .restApplicationId(restApplicationId)
+                        .restResourceId(restResourceId)
+                        .restMethodStatus(restMethodStatus)
+                        .build());
             }
         } else if(DELETE_REST_RESOURCES.equalsIgnoreCase(action)) {
             final List<RestResource> restResources = new ArrayList<RestResource>();
             for(String restResourceId : restResourceModifierCommand.getRestResourceIds()){
-                ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
+                ReadRestResourceOutput output = serviceProcessor.process(ReadRestResourceInput.builder()
+                        .restProjectId(restProjectId)
+                        .restApplicationId(restApplicationId)
+                        .restResourceId(restResourceId)
+                        .build());
                 restResources.add(output.getRestResource());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_REST_RESOURCES_PAGE);
@@ -116,7 +132,11 @@ public class RestApplicationController extends AbstractRestViewController {
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<RestResource> restResources = new ArrayList<RestResource>();
             for(String restResourceId : restResourceModifierCommand.getRestResourceIds()){
-                final ReadRestResourceOutput output = serviceProcessor.process(new ReadRestResourceInput(restProjectId, restApplicationId, restResourceId));
+                final ReadRestResourceOutput output = serviceProcessor.process(ReadRestResourceInput.builder()
+                        .restProjectId(restProjectId)
+                        .restApplicationId(restApplicationId)
+                        .restResourceId(restResourceId)
+                        .build());
                 restResources.add(output.getRestResource());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_REST_RESOURCES_ENDPOINT_PAGE);

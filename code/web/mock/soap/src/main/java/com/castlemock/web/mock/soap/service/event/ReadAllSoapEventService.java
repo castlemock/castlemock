@@ -36,6 +36,8 @@ public class ReadAllSoapEventService extends AbstractSoapEventService implements
     @Override
     public ServiceResult<ReadAllSoapEventOutput> process(final ServiceTask<ReadAllSoapEventInput> serviceTask) {
         final List<SoapEvent> soapEvents = findAll();
-        return createServiceResult(new ReadAllSoapEventOutput(soapEvents));
+        return createServiceResult(ReadAllSoapEventOutput.builder()
+                .soapEvents(soapEvents)
+                .build());
     }
 }

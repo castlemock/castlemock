@@ -26,12 +26,32 @@ public final class ExportRestProjectOutput implements Output{
 
     private final String exportedProject;
 
-    public ExportRestProjectOutput(String exportedProject) {
+    private ExportRestProjectOutput(String exportedProject) {
         this.exportedProject = exportedProject;
     }
 
     public String getExportedProject() {
         return exportedProject;
+    }
+
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String exportedProject;
+
+        public Builder exportedProject(final String exportedProject){
+            this.exportedProject = exportedProject;
+            return this;
+        }
+
+        public ExportRestProjectOutput build(){
+            return new ExportRestProjectOutput(this.exportedProject);
+        }
+
     }
 
 }

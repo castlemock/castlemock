@@ -50,6 +50,8 @@ public class ReadSoapEventsByOperationIdService extends AbstractSoapEventService
         final ReadSoapEventsByOperationIdInput input = serviceTask.getInput();
         final List<SoapEvent> events = repository.findEventsByOperationId(input.getOperationId());
         Collections.sort(events, new EventStartDateComparator());
-        return createServiceResult(new ReadSoapEventsByOperationIdOutput(events));
+        return createServiceResult(ReadSoapEventsByOperationIdOutput.builder()
+                .soapEvents(events)
+                .build());
     }
 }

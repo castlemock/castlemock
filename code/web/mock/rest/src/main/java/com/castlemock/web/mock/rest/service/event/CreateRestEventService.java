@@ -49,6 +49,8 @@ public class CreateRestEventService extends AbstractRestEventService implements 
             repository.deleteOldestEvent();
         }
         final RestEvent createdRestEvent = save(input.getRestEvent());
-        return createServiceResult(new CreateRestEventOutput(createdRestEvent));
+        return createServiceResult(CreateRestEventOutput.builder()
+                .createdRestEvent(createdRestEvent)
+                .build());
     }
 }

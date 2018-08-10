@@ -44,6 +44,6 @@ public class DeleteRestMethodsService extends AbstractRestProjectService impleme
         for(RestMethod restMethod : input.getRestMethods()){
             this.deleteMethod(restMethod.getId());
         }
-        return createServiceResult(new DeleteRestMethodsOutput());
+        return createServiceResult(DeleteRestMethodsOutput.builder().build());
     }
 }

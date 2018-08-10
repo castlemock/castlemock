@@ -75,6 +75,8 @@ public class ExportRestProjectService extends AbstractRestProjectService impleme
         exportContainer.setMockResponses(mockResponses);
 
         final String serialized = ExportContainerSerializer.serialize(exportContainer);
-        return createServiceResult(new ExportRestProjectOutput(serialized));
+        return createServiceResult(ExportRestProjectOutput.builder()
+                .exportedProject(serialized)
+                .build());
     }
 }

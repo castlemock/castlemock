@@ -17,18 +17,14 @@
 package com.castlemock.web.mock.soap.web.soap.controller;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.utility.parser.TextParser;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.domain.SoapRequest;
 import com.castlemock.core.mock.soap.model.event.domain.SoapResponse;
-import com.castlemock.core.mock.soap.service.event.input.CreateSoapEventInput;
 import com.castlemock.core.mock.soap.model.project.domain.*;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
+import com.castlemock.core.mock.soap.service.event.input.CreateSoapEventInput;
 import com.castlemock.core.mock.soap.service.project.input.*;
 import com.castlemock.core.mock.soap.service.project.output.IdentifySoapOperationOutput;
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
@@ -37,9 +33,9 @@ import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
-import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparator;
 import com.castlemock.web.mock.soap.support.MtomUtility;
 import com.castlemock.web.mock.soap.support.SoapUtility;
+import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparator;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpHeaders;
@@ -47,18 +43,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -232,7 +220,9 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         } finally{
             if(event != null){
                 event.finish(response);
-                serviceProcessor.processAsync(new CreateSoapEventInput(event));
+                serviceProcessor.processAsync(CreateSoapEventInput.builder()
+                        .soapEvent(event)
+                        .build());
             }
         }
     }

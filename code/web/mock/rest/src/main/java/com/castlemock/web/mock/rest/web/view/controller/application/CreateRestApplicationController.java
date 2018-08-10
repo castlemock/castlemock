@@ -55,7 +55,10 @@ public class CreateRestApplicationController extends AbstractRestViewController 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/create/application", method = RequestMethod.POST)
     public ModelAndView createProject(@PathVariable final String projectId, @ModelAttribute final RestApplication restApplication) {
-        final CreateRestApplicationOutput output = serviceProcessor.process(new CreateRestApplicationInput(projectId, restApplication));
+        final CreateRestApplicationOutput output = serviceProcessor.process(CreateRestApplicationInput.builder()
+                .projectId(projectId)
+                .application(restApplication)
+                .build());
         return redirect("/rest/project/" + projectId + "/application/" + output.getSavedRestApplication().getId());
     }
 

@@ -29,7 +29,7 @@ public final class CreateRestMethodOutput implements Output {
     @NotNull
     private final RestMethod createdRestMethod;
 
-    public CreateRestMethodOutput(RestMethod createdRestMethod) {
+    private CreateRestMethodOutput(RestMethod createdRestMethod) {
         this.createdRestMethod = createdRestMethod;
     }
 
@@ -37,4 +37,22 @@ public final class CreateRestMethodOutput implements Output {
         return createdRestMethod;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestMethod createdRestMethod;
+
+        public Builder createdRestMethod(final RestMethod createdRestMethod){
+            this.createdRestMethod = createdRestMethod;
+            return this;
+        }
+
+        public CreateRestMethodOutput build(){
+            return new CreateRestMethodOutput(this.createdRestMethod);
+        }
+
+    }
 }

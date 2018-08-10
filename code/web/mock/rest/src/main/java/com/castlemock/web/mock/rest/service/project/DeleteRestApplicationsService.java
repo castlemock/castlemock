@@ -44,6 +44,6 @@ public class DeleteRestApplicationsService extends AbstractRestProjectService im
         for(RestApplication restApplication : input.getRestApplications()){
             this.deleteApplication(restApplication.getId());
         }
-        return createServiceResult(new DeleteRestApplicationsOutput());
+        return createServiceResult(DeleteRestApplicationsOutput.builder().build());
     }
 }

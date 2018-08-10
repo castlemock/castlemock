@@ -93,7 +93,12 @@ public abstract class AbstractRestServiceController extends AbstractController {
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
             Preconditions.checkNotNull(httpServletResponse, "The HTTP Servlet Response cannot be null");
             final RestRequest restRequest = prepareRequest(projectId, applicationId, httpMethod, httpServletRequest);
-            final IdentifyRestMethodOutput output = serviceProcessor.process(new IdentifyRestMethodInput(projectId, applicationId, restRequest.getUri(), httpMethod));
+            final IdentifyRestMethodOutput output = serviceProcessor.process(IdentifyRestMethodInput.builder()
+                    .restProjectId(projectId)
+                    .restApplicationId(applicationId)
+                    .restResourceUri(restRequest.getUri())
+                    .httpMethod(httpMethod)
+                    .build());
             final String resourceId = output.getRestResourceId();
 
             return process(restRequest, projectId, applicationId, resourceId,
@@ -187,7 +192,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
         } finally{
             if(event != null){
                 event.finish(response);
-                serviceProcessor.processAsync(new CreateRestEventInput(event));
+                serviceProcessor.processAsync(CreateRestEventInput.builder()
+                        .restEvent(event)
+                        .build());
             }
         }
     }
@@ -266,7 +273,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
         mockResponse.setHttpHeaders(response.getHttpHeaders());
         mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
         mockResponse.setHttpStatusCode(response.getHttpStatusCode());
-        serviceProcessor.processAsync(new CreateRestMockResponseInput(projectId, applicationId, resourceId, restMethod.getId(), mockResponse));
+        serviceProcessor.processAsync(CreateRestMockResponseInput.builder()
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
+                .methodId(restMethod.getId())
+                .mockResponse(mockResponse)
+                .build());
         return response;
     }
 
@@ -288,7 +301,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 forwardRequestAndRecordResponse(restRequest, projectId,
                         applicationId, resourceId, restMethod, pathParameters);
         restMethod.setStatus(RestMethodStatus.MOCKED);
-        serviceProcessor.process(new UpdateRestMethodInput(projectId, applicationId, resourceId, restMethod.getId(), restMethod));
+        serviceProcessor.process(UpdateRestMethodInput.builder()
+                .restProjectId(projectId)
+                .restApplicationId(applicationId)
+                .restResourceId(resourceId)
+                .restMethodId(restMethod.getId())
+                .restMethod(restMethod)
+                .build());
         return response;
     }
 
@@ -372,8 +391,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 currentSequenceNumber = 0;
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
-            serviceProcessor.process(new UpdateCurrentRestMockResponseSequenceIndexInput(projectId,
-                    applicationId, resourceId, restMethod.getId(), currentSequenceNumber + 1));
+            serviceProcessor.process(UpdateCurrentRestMockResponseSequenceIndexInput.builder()
+                    .restProjectId(projectId)
+                    .restApplicationId(applicationId)
+                    .restResourceId(resourceId)
+                    .restMethodId(restMethod.getId())
+                    .currentRestMockResponseSequenceIndex(currentSequenceNumber + 1)
+                    .build());
         }
 
         if(mockResponse == null){

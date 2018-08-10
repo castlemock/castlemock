@@ -23,4 +23,21 @@ import com.castlemock.core.basis.model.Input;
  * @since 1.0
  */
 public final class ReadAllRestEventInput implements Input {
+
+    private ReadAllRestEventInput(){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        public ReadAllRestEventInput build(){
+            return new ReadAllRestEventInput();
+        }
+
+    }
+
 }

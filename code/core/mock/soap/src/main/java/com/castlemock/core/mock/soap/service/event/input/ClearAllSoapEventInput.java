@@ -24,4 +24,21 @@ import com.castlemock.core.basis.model.Input;
  */
 public final class ClearAllSoapEventInput implements Input {
 
+    private ClearAllSoapEventInput(){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        public ClearAllSoapEventInput build(){
+            return new ClearAllSoapEventInput();
+        }
+
+    }
+
+
 }

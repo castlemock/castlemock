@@ -55,7 +55,9 @@ public class ReadRestProjectServiceTest {
         final RestResource resource = RestResourceGenerator.generateRestResource();
         final RestMethod method = RestMethodGenerator.generateRestMethod();
 
-        final ReadRestProjectInput input = new ReadRestProjectInput(project.getId());
+        final ReadRestProjectInput input = ReadRestProjectInput.builder()
+                .restProjectId(project.getId())
+                .build();
         final ServiceTask<ReadRestProjectInput> serviceTask = new ServiceTask<ReadRestProjectInput>(input);
 
         Mockito.when(repository.findOne(project.getId())).thenReturn(project);

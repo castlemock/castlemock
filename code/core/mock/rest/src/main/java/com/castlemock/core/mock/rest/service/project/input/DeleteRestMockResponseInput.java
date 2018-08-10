@@ -36,7 +36,7 @@ public final class DeleteRestMockResponseInput implements Input{
     @NotNull
     private final String restMockResponseId;
 
-    public DeleteRestMockResponseInput(String restProjectId,
+    private DeleteRestMockResponseInput(String restProjectId,
                                        String restApplicationId,
                                        String restResourceId,
                                        String restMethodId,
@@ -66,6 +66,52 @@ public final class DeleteRestMockResponseInput implements Input{
 
     public String getRestMockResponseId() {
         return restMockResponseId;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceId;
+        private String restMethodId;
+        private String restMockResponseId;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceId(final String restResourceId){
+            this.restResourceId = restResourceId;
+            return this;
+        }
+
+        public Builder restMethodId(final String restMethodId){
+            this.restMethodId = restMethodId;
+            return this;
+        }
+
+        public Builder restMockResponseId(final String restMockResponseId){
+            this.restMockResponseId = restMockResponseId;
+            return this;
+        }
+
+        public DeleteRestMockResponseInput build(){
+            return new DeleteRestMockResponseInput(this.restProjectId,
+                    this.restApplicationId, this.restResourceId,
+                    this.restMethodId, this.restMockResponseId);
+        }
+
     }
 
 }

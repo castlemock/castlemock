@@ -26,12 +26,31 @@ public final class ReadSoapEventInput implements Input {
 
     private final String soapEventId;
 
-    public ReadSoapEventInput(String soapEventId) {
+    private ReadSoapEventInput(String soapEventId) {
         this.soapEventId = soapEventId;
     }
 
     public String getSoapEventId() {
         return soapEventId;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String soapEventId;
+
+        public Builder soapEventId(final String soapEventId){
+            this.soapEventId = soapEventId;
+            return this;
+        }
+
+        public ReadSoapEventInput build(){
+            return new ReadSoapEventInput(soapEventId);
+        }
+
     }
 
 }

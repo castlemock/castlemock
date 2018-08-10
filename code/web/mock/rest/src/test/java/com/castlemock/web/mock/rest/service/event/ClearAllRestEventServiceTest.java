@@ -48,7 +48,7 @@ public class ClearAllRestEventServiceTest {
 
     @Test
     public void testProcess(){
-        final ClearAllRestEventInput input = new ClearAllRestEventInput();
+        final ClearAllRestEventInput input = ClearAllRestEventInput.builder().build();
         final ServiceTask<ClearAllRestEventInput> serviceTask = new ServiceTask<ClearAllRestEventInput>(input);
         final ServiceResult<ClearAllRestEventOutput> serviceResult = service.process(serviceTask);
         final ClearAllRestEventOutput output = serviceResult.getOutput();

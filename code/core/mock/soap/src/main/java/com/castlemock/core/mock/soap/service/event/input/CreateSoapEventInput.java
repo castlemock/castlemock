@@ -27,12 +27,31 @@ public final class CreateSoapEventInput implements Input {
 
     private final SoapEvent soapEvent;
 
-    public CreateSoapEventInput(SoapEvent soapEvent) {
+    private CreateSoapEventInput(SoapEvent soapEvent) {
         this.soapEvent = soapEvent;
     }
 
     public SoapEvent getSoapEvent() {
         return soapEvent;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private SoapEvent soapEvent;
+
+        public Builder soapEvent(final SoapEvent soapEvent){
+            this.soapEvent = soapEvent;
+            return this;
+        }
+
+        public CreateSoapEventInput build(){
+            return new CreateSoapEventInput(this.soapEvent);
+        }
+
     }
 
 }

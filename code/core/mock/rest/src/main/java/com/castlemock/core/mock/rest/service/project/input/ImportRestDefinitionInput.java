@@ -39,7 +39,7 @@ public final class ImportRestDefinitionInput implements Input {
     private final List<File> files;
     private final String location;
 
-    public ImportRestDefinitionInput(final String restProjectId, final List<File> files, String location,
+    private ImportRestDefinitionInput(final String restProjectId, final List<File> files, String location,
                                      final boolean generateResponse, final RestDefinitionType definitionType) {
         this.restProjectId = restProjectId;
         this.files = files;
@@ -66,5 +66,49 @@ public final class ImportRestDefinitionInput implements Input {
 
     public RestDefinitionType getDefinitionType() {
         return definitionType;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private boolean generateResponse;
+        private RestDefinitionType definitionType;
+        private List<File> files;
+        private String location;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder generateResponse(final boolean generateResponse){
+            this.generateResponse = generateResponse;
+            return this;
+        }
+
+        public Builder definitionType(final RestDefinitionType definitionType){
+            this.definitionType = definitionType;
+            return this;
+        }
+
+        public Builder files(final List<File> files){
+            this.files = files;
+            return this;
+        }
+
+        public Builder location(final String location){
+            this.location = location;
+            return this;
+        }
+
+        public ImportRestDefinitionInput build(){
+            return new ImportRestDefinitionInput(this.restProjectId, this.files, this.location,
+                    this.generateResponse, this.definitionType);
+        }
+
     }
 }

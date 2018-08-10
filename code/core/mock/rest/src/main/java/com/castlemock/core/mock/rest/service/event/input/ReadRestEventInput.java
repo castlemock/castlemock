@@ -28,12 +28,31 @@ public final class ReadRestEventInput implements Input {
     @NotNull
     private final String restEventId;
 
-    public ReadRestEventInput(String restEventId) {
+    private ReadRestEventInput(String restEventId) {
         this.restEventId = restEventId;
     }
 
     public String getRestEventId() {
         return restEventId;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restEventId;
+
+        public Builder restEventId(final String restEventId){
+            this.restEventId = restEventId;
+            return this;
+        }
+
+        public ReadRestEventInput build(){
+            return new ReadRestEventInput(restEventId);
+        }
+
     }
 
 }

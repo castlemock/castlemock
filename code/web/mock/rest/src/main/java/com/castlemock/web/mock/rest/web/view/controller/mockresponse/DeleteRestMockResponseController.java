@@ -48,8 +48,18 @@ public class DeleteRestMockResponseController extends AbstractRestViewController
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/{restMockResponseId}/delete", method = RequestMethod.GET)
-    public ModelAndView showConfirmationPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @PathVariable final String restMockResponseId) {
-        final ReadRestMockResponseOutput output = serviceProcessor.process(new ReadRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId));
+    public ModelAndView showConfirmationPage(@PathVariable final String restProjectId,
+                                             @PathVariable final String restApplicationId,
+                                             @PathVariable final String restResourceId,
+                                             @PathVariable final String restMethodId,
+                                             @PathVariable final String restMockResponseId) {
+        final ReadRestMockResponseOutput output = serviceProcessor.process(ReadRestMockResponseInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .restMethodId(restMethodId)
+                .restMockResponse(restMockResponseId)
+                .build());
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
@@ -62,17 +72,38 @@ public class DeleteRestMockResponseController extends AbstractRestViewController
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/{restMockResponseId}/delete/confirm", method = RequestMethod.GET)
-    public ModelAndView confirm(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @PathVariable final String restMockResponseId) {
-        serviceProcessor.process(new DeleteRestMockResponseInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMockResponseId));
+    public ModelAndView confirm(@PathVariable final String restProjectId,
+                                @PathVariable final String restApplicationId,
+                                @PathVariable final String restResourceId,
+                                @PathVariable final String restMethodId,
+                                @PathVariable final String restMockResponseId) {
+        serviceProcessor.process(DeleteRestMockResponseInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .restMethodId(restMethodId)
+                .restMockResponseId(restMockResponseId)
+                .build());
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/response/delete/confirm", method = RequestMethod.POST)
-    public ModelAndView confirmDeletationOfMultpleMockResponses(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @ModelAttribute final DeleteRestMockResponsesCommand deleteRestMockResponsesCommand) {
-        serviceProcessor.process(new DeleteRestMockResponsesInput(restProjectId, restApplicationId, restResourceId, restMethodId, deleteRestMockResponsesCommand.getRestMockResponses()));
-        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
+    public ModelAndView confirmDeletationOfMultpleMockResponses(@PathVariable final String restProjectId,
+                                                                @PathVariable final String restApplicationId,
+                                                                @PathVariable final String restResourceId,
+                                                                @PathVariable final String restMethodId,
+                                                                @ModelAttribute final DeleteRestMockResponsesCommand deleteRestMockResponsesCommand) {
+        serviceProcessor.process(DeleteRestMockResponsesInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .restMethodId(restMethodId)
+                .restMockResponses(deleteRestMockResponsesCommand.getRestMockResponses())
+                .build());
+        return redirect("/rest/project/" + restProjectId + "/application/" +
+                restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 
 }

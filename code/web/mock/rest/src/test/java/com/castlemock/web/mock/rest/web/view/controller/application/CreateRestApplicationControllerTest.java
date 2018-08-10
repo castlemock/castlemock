@@ -69,8 +69,11 @@ public class CreateRestApplicationControllerTest extends AbstractRestControllerT
     @Test
     public void testCreateMethod() throws Exception {
         final RestProject restProject = RestProjectGenerator.generateRestProject();
-        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(new ReadRestProjectOutput(restProject));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + CREATE_APPLICATION);
+        when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
+                .restProject(restProject)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT +
+                SLASH + restProject.getId() + SLASH + CREATE_APPLICATION);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(2 + GLOBAL_VIEW_MODEL_COUNT))
@@ -84,8 +87,11 @@ public class CreateRestApplicationControllerTest extends AbstractRestControllerT
     public void testPostCreateMethod() throws Exception {
         final RestProject restProject = RestProjectGenerator.generateRestProject();
         final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        when(serviceProcessor.process(any(CreateRestApplicationInput.class))).thenReturn(new CreateRestApplicationOutput(restApplication));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + CREATE_APPLICATION);
+        when(serviceProcessor.process(any(CreateRestApplicationInput.class))).thenReturn(CreateRestApplicationOutput.builder()
+                .savedRestApplication(restApplication)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + restProject.getId() + SLASH + CREATE_APPLICATION);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

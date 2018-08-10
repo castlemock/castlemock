@@ -57,8 +57,13 @@ public class CreateRestMockResponseServiceTest {
         final RestMockResponse mockResponse = RestMockResponseGenerator.generateRestMockResponse();
         Mockito.when(mockResponseRepository.save(Mockito.any(RestMockResponse.class))).thenReturn(mockResponse);
 
-        final CreateRestMockResponseInput input =
-                new CreateRestMockResponseInput(projectId, applicationId, resourceId, methodId, mockResponse);
+        final CreateRestMockResponseInput input = CreateRestMockResponseInput.builder()
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
+                .methodId(methodId)
+                .mockResponse(mockResponse)
+                .build();
         final ServiceTask<CreateRestMockResponseInput> serviceTask = new ServiceTask<CreateRestMockResponseInput>(input);
         final ServiceResult<CreateRestMockResponseOutput> serviceResult = service.process(serviceTask);
 

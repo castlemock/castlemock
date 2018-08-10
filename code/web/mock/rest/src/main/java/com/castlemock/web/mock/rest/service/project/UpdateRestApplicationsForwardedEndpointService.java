@@ -55,6 +55,6 @@ public class UpdateRestApplicationsForwardedEndpointService extends AbstractRest
                 }
             }
         }
-        return createServiceResult(new UpdateRestApplicationsForwardedEndpointOutput());
+        return createServiceResult(UpdateRestApplicationsForwardedEndpointOutput.builder().build());
     }
 }

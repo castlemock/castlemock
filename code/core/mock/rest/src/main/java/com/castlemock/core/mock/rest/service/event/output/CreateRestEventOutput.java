@@ -29,12 +29,31 @@ public final class CreateRestEventOutput implements Output {
     @NotNull
     private final RestEvent createdRestEvent;
 
-    public CreateRestEventOutput(RestEvent createdRestEvent) {
+    private CreateRestEventOutput(RestEvent createdRestEvent) {
         this.createdRestEvent = createdRestEvent;
     }
 
     public RestEvent getCreatedRestEvent() {
         return createdRestEvent;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestEvent createdRestEvent;
+
+        public Builder createdRestEvent(final RestEvent createdRestEvent){
+            this.createdRestEvent = createdRestEvent;
+            return this;
+        }
+
+        public CreateRestEventOutput build(){
+            return new CreateRestEventOutput(this.createdRestEvent);
+        }
+
     }
 
 }

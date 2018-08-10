@@ -27,11 +27,32 @@ public final class ImportRestProjectOutput implements Output{
 
     private final RestProject project;
 
-    public ImportRestProjectOutput(RestProject project) {
+    private ImportRestProjectOutput(RestProject project) {
         this.project = project;
     }
 
     public RestProject getProject() {
         return project;
     }
+
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestProject project;
+
+        public Builder project(final RestProject project){
+            this.project = project;
+            return this;
+        }
+
+        public ImportRestProjectOutput build(){
+            return new ImportRestProjectOutput(this.project);
+        }
+
+    }
+
 }

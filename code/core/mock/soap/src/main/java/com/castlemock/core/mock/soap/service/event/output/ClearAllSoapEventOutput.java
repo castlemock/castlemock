@@ -24,4 +24,21 @@ import com.castlemock.core.basis.model.Output;
  */
 public final class ClearAllSoapEventOutput implements Output {
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    private ClearAllSoapEventOutput(){
+
+    }
+
+    public static class Builder {
+
+        public ClearAllSoapEventOutput build(){
+            return new ClearAllSoapEventOutput();
+        }
+
+    }
+
+
 }

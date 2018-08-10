@@ -29,7 +29,7 @@ public final class CreateRestProjectOutput implements Output {
     @NotNull
     private final RestProject savedRestProject;
 
-    public CreateRestProjectOutput(RestProject savedRestProject) {
+    private CreateRestProjectOutput(RestProject savedRestProject) {
         this.savedRestProject = savedRestProject;
     }
 
@@ -37,4 +37,22 @@ public final class CreateRestProjectOutput implements Output {
         return savedRestProject;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestProject savedRestProject;
+
+        public Builder savedRestApplication(final RestProject savedRestProject){
+            this.savedRestProject = savedRestProject;
+            return this;
+        }
+
+        public CreateRestProjectOutput build(){
+            return new CreateRestProjectOutput(this.savedRestProject);
+        }
+
+    }
 }

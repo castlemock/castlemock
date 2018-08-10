@@ -44,6 +44,6 @@ public class DeleteRestMockResponsesService extends AbstractRestProjectService i
         for(RestMockResponse restMockResponse : input.getRestMockResponses()){
             this.deleteMockResponse(restMockResponse.getId());
         }
-        return createServiceResult(new DeleteRestMockResponsesOutput());
+        return createServiceResult(DeleteRestMockResponsesOutput.builder().build());
     }
 }

@@ -29,12 +29,32 @@ public final class CreateRestApplicationOutput implements Output {
     @NotNull
     private final RestApplication savedRestApplication;
 
-    public CreateRestApplicationOutput(RestApplication savedRestApplication) {
+    private CreateRestApplicationOutput(final RestApplication savedRestApplication) {
         this.savedRestApplication = savedRestApplication;
     }
 
     public RestApplication getSavedRestApplication() {
         return savedRestApplication;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestApplication savedRestApplication;
+
+        public Builder savedRestApplication(final RestApplication savedRestApplication){
+            this.savedRestApplication = savedRestApplication;
+            return this;
+        }
+
+        public CreateRestApplicationOutput build(){
+            return new CreateRestApplicationOutput(this.savedRestApplication);
+        }
+
+    }
+
 
 }

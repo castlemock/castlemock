@@ -53,7 +53,10 @@ public class ReadRestApplicationServiceTest {
         final RestResource resource = RestResourceGenerator.generateRestResource();
         final RestMethod method = RestMethodGenerator.generateRestMethod();
 
-        final ReadRestApplicationInput input = new ReadRestApplicationInput(projectId, application.getId());
+        final ReadRestApplicationInput input = ReadRestApplicationInput.builder()
+                .restProjectId(projectId)
+                .restApplicationId(application.getId())
+                .build();
         final ServiceTask<ReadRestApplicationInput> serviceTask = new ServiceTask<ReadRestApplicationInput>(input);
 
         Mockito.when(applicationRepository.findOne(application.getId())).thenReturn(application);

@@ -23,4 +23,20 @@ import com.castlemock.core.basis.model.Output;
  * @since 1.0
  */
 public final class DeleteRestMockResponsesOutput implements Output {
+
+    private DeleteRestMockResponsesOutput(){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        public DeleteRestMockResponsesOutput build(){
+            return new DeleteRestMockResponsesOutput();
+        }
+
+    }
 }

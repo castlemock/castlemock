@@ -55,4 +55,36 @@ public final class DeleteRestResourcesInput implements Input{
         return restResources;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private List<RestResource> restResources;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResources(final List<RestResource> restResources){
+            this.restResources = restResources;
+            return this;
+        }
+        public DeleteRestResourcesInput build(){
+            return new DeleteRestResourcesInput(this.restProjectId,
+                    this.restApplicationId, this.restResources);
+        }
+
+    }
+
 }

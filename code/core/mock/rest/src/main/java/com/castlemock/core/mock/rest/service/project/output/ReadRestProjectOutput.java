@@ -29,7 +29,7 @@ public final class ReadRestProjectOutput implements Output{
     @NotNull
     private final RestProject restProject;
 
-    public ReadRestProjectOutput(RestProject restProject) {
+    private ReadRestProjectOutput(RestProject restProject) {
         this.restProject = restProject;
     }
 
@@ -37,4 +37,23 @@ public final class ReadRestProjectOutput implements Output{
         return restProject;
     }
 
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestProject restProject;
+
+        public Builder restProject(final RestProject restProject){
+            this.restProject = restProject;
+            return this;
+        }
+
+        public ReadRestProjectOutput build(){
+            return new ReadRestProjectOutput(this.restProject);
+        }
+
+    }
 }

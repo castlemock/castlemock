@@ -33,7 +33,7 @@ public final class CreateRestResourceInput implements Input {
     @NotNull
     private final RestResource restResource;
 
-    public CreateRestResourceInput(String restProjectId,
+    private CreateRestResourceInput(String restProjectId,
                                    String restApplicationId,
                                    RestResource restResource) {
         this.restProjectId = restProjectId;
@@ -52,5 +52,40 @@ public final class CreateRestResourceInput implements Input {
     public RestResource getRestResource() {
         return restResource;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+
+        private String restApplicationId;
+
+        private RestResource restResource;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResource(final RestResource restResource){
+            this.restResource = restResource;
+            return this;
+        }
+
+        public CreateRestResourceInput build(){
+            return new CreateRestResourceInput(this.restProjectId,
+                    this.restApplicationId, this.restResource);
+        }
+
+    }
+
 
 }

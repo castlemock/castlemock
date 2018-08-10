@@ -56,9 +56,16 @@ public class CreateRestResourceController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/create/resource", method = RequestMethod.POST)
-    public ModelAndView createResource(@PathVariable final String projectId, @PathVariable final String applicationId, @ModelAttribute final RestResource restResource) {
-        final CreateRestResourceOutput output = serviceProcessor.process(new CreateRestResourceInput(projectId, applicationId, restResource));
-        return redirect("/rest/project/" + projectId + "/application/" + applicationId + "/resource/" +  output.getCreatedRestResource().getId());
+    public ModelAndView createResource(@PathVariable final String projectId,
+                                       @PathVariable final String applicationId,
+                                       @ModelAttribute final RestResource restResource) {
+        final CreateRestResourceOutput output = serviceProcessor.process(CreateRestResourceInput.builder()
+                .restProjectId(projectId)
+                .restApplicationId(applicationId)
+                .restResource(restResource)
+                .build());
+        return redirect("/rest/project/" + projectId + "/application/" +
+                applicationId + "/resource/" +  output.getCreatedRestResource().getId());
     }
 
 

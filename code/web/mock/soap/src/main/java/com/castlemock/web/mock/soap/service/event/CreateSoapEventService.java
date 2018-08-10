@@ -51,6 +51,8 @@ public class CreateSoapEventService extends AbstractSoapEventService implements 
             repository.deleteOldestEvent();
         }
         final SoapEvent createdSoapEvent = save(soapEvent);
-        return createServiceResult(new CreateSoapEventOutput(createdSoapEvent));
+        return createServiceResult(CreateSoapEventOutput.builder()
+                .createdSoapEvent(createdSoapEvent)
+                .build());
     }
 }

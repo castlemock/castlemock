@@ -49,6 +49,8 @@ public class UpdateRestResourceService extends AbstractRestProjectService implem
 
         this.resourceRepository.update(input.getRestResourceId(), existing);
 
-        return createServiceResult(new UpdateRestResourceOutput(updatedRestResource));
+        return createServiceResult(UpdateRestResourceOutput.builder()
+                .updatedRestResource(updatedRestResource)
+                .build());
     }
 }

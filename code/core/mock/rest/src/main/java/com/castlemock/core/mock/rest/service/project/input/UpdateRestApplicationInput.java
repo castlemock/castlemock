@@ -33,7 +33,8 @@ public final class UpdateRestApplicationInput implements Input {
     @NotNull
     private final RestApplication restApplication;
 
-    public UpdateRestApplicationInput(String restProjectId, String restApplicationId, RestApplication restApplication) {
+    private UpdateRestApplicationInput(final String restProjectId, final String restApplicationId,
+                                       final RestApplication restApplication) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restApplication = restApplication;
@@ -50,5 +51,38 @@ public final class UpdateRestApplicationInput implements Input {
     public RestApplication getRestApplication() {
         return restApplication;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private RestApplication restApplication;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restApplication(final RestApplication restApplication){
+            this.restApplication = restApplication;
+            return this;
+        }
+
+        public UpdateRestApplicationInput build(){
+            return new UpdateRestApplicationInput(this.restProjectId,
+                    this.restApplicationId, this.restApplication);
+        }
+
+    }
+
 
 }

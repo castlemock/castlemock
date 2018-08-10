@@ -29,12 +29,31 @@ public final class ReadRestEventOutput implements Output {
     @NotNull
     private final RestEvent restEvent;
 
-    public ReadRestEventOutput(RestEvent restEvent) {
+    private ReadRestEventOutput(RestEvent restEvent) {
         this.restEvent = restEvent;
     }
 
     public RestEvent getRestEvent() {
         return restEvent;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestEvent restEvent;
+
+        public Builder restEvent(final RestEvent restEvent){
+            this.restEvent = restEvent;
+            return this;
+        }
+
+        public ReadRestEventOutput build(){
+            return new ReadRestEventOutput(this.restEvent);
+        }
+
     }
 
 }

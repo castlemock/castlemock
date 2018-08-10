@@ -63,8 +63,11 @@ public class RestEventControllerTest extends AbstractRestControllerTest {
     @Test
     public void testGetServiceValid() throws Exception {
         final RestEvent restEvent = RestEventGenerator.generateRestEvent();
-        when(serviceProcessor.process(any(ReadRestEventInput.class))).thenReturn(new ReadRestEventOutput(restEvent));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + EVENT + SLASH + restEvent.getId());
+        when(serviceProcessor.process(any(ReadRestEventInput.class))).thenReturn(ReadRestEventOutput.builder()
+                .restEvent(restEvent)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL +
+                EVENT + SLASH + restEvent.getId());
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(1 + GLOBAL_VIEW_MODEL_COUNT))

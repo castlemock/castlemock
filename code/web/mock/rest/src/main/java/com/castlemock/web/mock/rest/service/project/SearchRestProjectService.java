@@ -132,7 +132,9 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
             searchResults.add(searchResult);
         }
 
-        return createServiceResult(new SearchRestProjectOutput(searchResults));
+        return createServiceResult(SearchRestProjectOutput.builder()
+                .searchResults(searchResults)
+                .build());
     }
 
 }

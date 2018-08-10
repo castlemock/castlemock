@@ -69,8 +69,13 @@ public class UpdateRestMockResponseControllerTest extends AbstractRestController
         final RestResource restResource = RestResourceGenerator.generateRestResource();
         final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
         final RestMockResponse restMockResponse = RestMockResponseGenerator.generateRestMockResponse();
-        when(serviceProcessor.process(any(UpdateRestMockResponseInput.class))).thenReturn(new UpdateRestMockResponseOutput(restMockResponse));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId() + SLASH + RESPONSE + SLASH + restMockResponse.getId() + SLASH + UPDATE);
+        when(serviceProcessor.process(any(UpdateRestMockResponseInput.class))).thenReturn(UpdateRestMockResponseOutput.builder()
+                .updatedRestMockResponse(restMockResponse)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() +
+                SLASH + RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId() +
+                SLASH + RESPONSE + SLASH + restMockResponse.getId() + SLASH + UPDATE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

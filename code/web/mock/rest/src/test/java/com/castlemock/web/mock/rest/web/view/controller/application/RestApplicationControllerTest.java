@@ -81,8 +81,11 @@ public class RestApplicationControllerTest extends AbstractRestControllerTest {
     public void getRestApplication() throws Exception {
         final RestProject restProject = RestProjectGenerator.generateRestProject();
         final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        when(serviceProcessor.process(any(ReadRestApplicationInput.class))).thenReturn(new ReadRestApplicationOutput(restApplication));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId());
+        when(serviceProcessor.process(any(ReadRestApplicationInput.class))).thenReturn(ReadRestApplicationOutput.builder()
+                .restApplication(restApplication)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT +
+                SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId());
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(4 + GLOBAL_VIEW_MODEL_COUNT))
@@ -130,8 +133,8 @@ public class RestApplicationControllerTest extends AbstractRestControllerTest {
         final List<RestResource> restResources = Arrays.asList(restResource1, restResource2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestResourceInput.class)))
-                .thenReturn(new ReadRestResourceOutput(restResource1))
-                .thenReturn(new ReadRestResourceOutput(restResource2));
+                .thenReturn(ReadRestResourceOutput.builder().restResource(restResource1).build())
+                .thenReturn(ReadRestResourceOutput.builder().restResource(restResource2).build());
 
 
         final RestResourceModifierCommand restResourceModifierCommand = new RestResourceModifierCommand();
@@ -171,8 +174,8 @@ public class RestApplicationControllerTest extends AbstractRestControllerTest {
         final List<RestResource> restResources = Arrays.asList(restResource1, restResource2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestResourceInput.class)))
-                .thenReturn(new ReadRestResourceOutput(restResource1))
-                .thenReturn(new ReadRestResourceOutput(restResource2));
+                .thenReturn(ReadRestResourceOutput.builder().restResource(restResource1).build())
+                .thenReturn(ReadRestResourceOutput.builder().restResource(restResource2).build());
 
 
         final RestResourceModifierCommand restResourceModifierCommand = new RestResourceModifierCommand();

@@ -50,8 +50,16 @@ public class UpdateRestMethodController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/update", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId) {
-        final ReadRestMethodOutput output = serviceProcessor.process(new ReadRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId));
+    public ModelAndView defaultPage(@PathVariable final String restProjectId,
+                                    @PathVariable final String restApplicationId,
+                                    @PathVariable final String restResourceId,
+                                    @PathVariable final String restMethodId) {
+        final ReadRestMethodOutput output = serviceProcessor.process(ReadRestMethodInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .restMethodId(restMethodId)
+                .build());
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_METHOD, output.getRestMethod());
         model.addObject(REST_PROJECT_ID, restProjectId);
@@ -66,9 +74,20 @@ public class UpdateRestMethodController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/{restMethodId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @PathVariable final String restMethodId, @ModelAttribute final RestMethod restMethod) {
-        serviceProcessor.process(new UpdateRestMethodInput(restProjectId, restApplicationId, restResourceId, restMethodId, restMethod));
-        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
+    public ModelAndView update(@PathVariable final String restProjectId,
+                               @PathVariable final String restApplicationId,
+                               @PathVariable final String restResourceId,
+                               @PathVariable final String restMethodId,
+                               @ModelAttribute final RestMethod restMethod) {
+        serviceProcessor.process(UpdateRestMethodInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .restMethodId(restMethodId)
+                .restMethod(restMethod)
+                .build());
+        return redirect("/rest/project/" + restProjectId + "/application/" +
+                restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);
     }
 
     /**
@@ -83,10 +102,20 @@ public class UpdateRestMethodController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/update/confirm", method = RequestMethod.POST)
-    public ModelAndView updateEndpoint(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @ModelAttribute final UpdateRestMethodsEndpointCommand updateRestMethodsEndpointCommand) {
+    public ModelAndView updateEndpoint(@PathVariable final String restProjectId,
+                                       @PathVariable final String restApplicationId,
+                                       @PathVariable final String restResourceId,
+                                       @ModelAttribute final UpdateRestMethodsEndpointCommand updateRestMethodsEndpointCommand) {
         Preconditions.checkNotNull(updateRestMethodsEndpointCommand, "The update application endpoint command cannot be null");
-        serviceProcessor.process(new UpdateRestMethodsForwardedEndpointInput(restProjectId, restApplicationId, restResourceId, updateRestMethodsEndpointCommand.getRestMethods(), updateRestMethodsEndpointCommand.getForwardedEndpoint()));
-        return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId);
+        serviceProcessor.process(UpdateRestMethodsForwardedEndpointInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResourceId(restResourceId)
+                .restMethods(updateRestMethodsEndpointCommand.getRestMethods())
+                .forwardedEndpoint(updateRestMethodsEndpointCommand.getForwardedEndpoint())
+                .build());
+        return redirect("/rest/project/" + restProjectId + "/application/" +
+                restApplicationId + "/resource/" + restResourceId);
     }
 
 }

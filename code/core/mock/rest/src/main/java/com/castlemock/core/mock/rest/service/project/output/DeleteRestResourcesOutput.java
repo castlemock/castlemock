@@ -23,4 +23,20 @@ import com.castlemock.core.basis.model.Output;
  * @since 1.0
  */
 public final class DeleteRestResourcesOutput implements Output {
+
+    private DeleteRestResourcesOutput(){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        public DeleteRestResourcesOutput build(){
+            return new DeleteRestResourcesOutput();
+        }
+
+    }
 }

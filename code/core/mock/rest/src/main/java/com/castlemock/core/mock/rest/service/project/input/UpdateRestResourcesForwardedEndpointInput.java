@@ -37,10 +37,10 @@ public final class UpdateRestResourcesForwardedEndpointInput implements Input {
     @NotNull
     private final String forwardedEndpoint;
 
-    public UpdateRestResourcesForwardedEndpointInput(String restProjectId,
-                                                     String restApplicationId,
-                                                     List<RestResource> restResources,
-                                                     String forwardedEndpoint) {
+    private UpdateRestResourcesForwardedEndpointInput(final String restProjectId,
+                                                      final String restApplicationId,
+                                                      final List<RestResource> restResources,
+                                                      final String forwardedEndpoint) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResources = restResources;
@@ -62,5 +62,44 @@ public final class UpdateRestResourcesForwardedEndpointInput implements Input {
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private List<RestResource> restResources;
+        private String forwardedEndpoint;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResources(final List<RestResource> restResources){
+            this.restResources = restResources;
+            return this;
+        }
+
+        public Builder forwardedEndpoint(final String forwardedEndpoint){
+            this.forwardedEndpoint = forwardedEndpoint;
+            return this;
+        }
+
+        public UpdateRestResourcesForwardedEndpointInput build(){
+            return new UpdateRestResourcesForwardedEndpointInput(this.restProjectId,
+                    this.restApplicationId, this.restResources, this.forwardedEndpoint);
+        }
+
+    }
+
 
 }

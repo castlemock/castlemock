@@ -59,7 +59,7 @@ public class RestProjectServiceAdapterTest {
     @Test
     public void testCreate(){
         final RestProject project = RestProjectGenerator.generateRestProject();
-        final CreateRestProjectOutput output = new CreateRestProjectOutput(project);
+        final CreateRestProjectOutput output = CreateRestProjectOutput.builder().savedRestApplication(project).build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(CreateRestProjectInput.class))).thenReturn(output);
 
@@ -72,7 +72,7 @@ public class RestProjectServiceAdapterTest {
     @Test
     public void testDelete(){
         final RestProject project = RestProjectGenerator.generateRestProject();
-        final DeleteRestProjectOutput output = new DeleteRestProjectOutput(project);
+        final DeleteRestProjectOutput output = DeleteRestProjectOutput.builder().project(project).build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(DeleteRestProjectInput.class))).thenReturn(output);
 
@@ -85,7 +85,7 @@ public class RestProjectServiceAdapterTest {
     @Test
     public void testUpdate(){
         final RestProject project = RestProjectGenerator.generateRestProject();
-        final UpdateRestProjectOutput output = new UpdateRestProjectOutput(project);
+        final UpdateRestProjectOutput output = UpdateRestProjectOutput.builder().updatedRestProject(project).build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(UpdateRestProjectInput.class))).thenReturn(output);
 
@@ -99,7 +99,7 @@ public class RestProjectServiceAdapterTest {
     public void testReadAll(){
         final RestProject project = RestProjectGenerator.generateRestProject();
         final List<RestProject> projects = Arrays.asList(project);
-        final ReadAllRestProjectsOutput output = new ReadAllRestProjectsOutput(projects);
+        final ReadAllRestProjectsOutput output = ReadAllRestProjectsOutput.builder().restProjects(projects).build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadAllRestProjectsInput.class))).thenReturn(output);
 
@@ -112,7 +112,7 @@ public class RestProjectServiceAdapterTest {
     @Test
     public void testRead(){
         final RestProject project = RestProjectGenerator.generateRestProject();
-        final ReadRestProjectOutput output = new ReadRestProjectOutput(project);
+        final ReadRestProjectOutput output = ReadRestProjectOutput.builder().restProject(project).build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadRestProjectInput.class))).thenReturn(output);
 
@@ -133,7 +133,7 @@ public class RestProjectServiceAdapterTest {
     public void testExportProject(){
         final RestProject project = RestProjectGenerator.generateRestProject();
         final String exportedProject = "Exported project";
-        final ExportRestProjectOutput output = new ExportRestProjectOutput(exportedProject);
+        final ExportRestProjectOutput output = ExportRestProjectOutput.builder().exportedProject(exportedProject).build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(ExportRestProjectInput.class))).thenReturn(output);
 
@@ -147,7 +147,7 @@ public class RestProjectServiceAdapterTest {
     public void testImportProject(){
         final RestProject project = RestProjectGenerator.generateRestProject();
         final String importedProject = "Imported project";
-        final ImportRestProjectOutput output = new ImportRestProjectOutput(project);
+        final ImportRestProjectOutput output = ImportRestProjectOutput.builder().project(project).build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(ImportRestProjectInput.class))).thenReturn(output);
 
@@ -165,7 +165,7 @@ public class RestProjectServiceAdapterTest {
         searchResult.setTitle("Title");
         searchResult.setDescription("Description");
         searchResults.add(searchResult);
-        final SearchRestProjectOutput output = new SearchRestProjectOutput(searchResults);
+        final SearchRestProjectOutput output = SearchRestProjectOutput.builder().searchResults(searchResults).build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(SearchRestProjectInput.class))).thenReturn(output);
 

@@ -20,24 +20,22 @@ package com.castlemock.web.mock.rest.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.service.project.input.IdentifyRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.output.IdentifyRestMethodOutput;
-import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
 import com.castlemock.web.mock.rest.model.project.RestMethodGenerator;
 import com.castlemock.web.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.web.mock.rest.repository.project.RestMethodRepository;
 import com.castlemock.web.mock.rest.repository.project.RestMockResponseRepository;
-import com.castlemock.web.mock.rest.repository.project.RestProjectRepository;
 import com.castlemock.web.mock.rest.repository.project.RestResourceRepository;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,21 +95,36 @@ public class IdentifyRestMethodServiceTest {
 
         Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
 
-        IdentifyRestMethodInput input1 = new IdentifyRestMethodInput("RestProjectId", "RestApplicationId", "/user", HttpMethod.GET);
+        IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/user")
+                .httpMethod(HttpMethod.GET)
+                .build();
         ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
         ServiceResult<IdentifyRestMethodOutput> serviceResult1 = service.process(serviceTask1);
         IdentifyRestMethodOutput output1 = serviceResult1.getOutput();
         Assert.assertEquals(restMethod2, output1.getRestMethod());
 
 
-        IdentifyRestMethodInput input2 = new IdentifyRestMethodInput("RestProjectId", "RestApplicationId", "/user", HttpMethod.PUT);
+        IdentifyRestMethodInput input2 =  IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/user")
+                .httpMethod(HttpMethod.PUT)
+                .build();
         ServiceTask<IdentifyRestMethodInput> serviceTask2 = new ServiceTask<IdentifyRestMethodInput>(input2);
         ServiceResult<IdentifyRestMethodOutput> serviceResult2 = service.process(serviceTask2);
         IdentifyRestMethodOutput output2 = serviceResult2.getOutput();
         Assert.assertEquals(restMethod3, output2.getRestMethod());
 
 
-        IdentifyRestMethodInput input3 = new IdentifyRestMethodInput("RestProjectId", "RestApplicationId", "/user/resource", HttpMethod.POST);
+        IdentifyRestMethodInput input3 = IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/user/resource")
+                .httpMethod(HttpMethod.POST)
+                .build();
         ServiceTask<IdentifyRestMethodInput> serviceTask3 = new ServiceTask<IdentifyRestMethodInput>(input3);
         ServiceResult<IdentifyRestMethodOutput> serviceResult3 = service.process(serviceTask3);
         IdentifyRestMethodOutput output3 = serviceResult3.getOutput();
@@ -150,7 +163,12 @@ public class IdentifyRestMethodServiceTest {
 
         Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
 
-        IdentifyRestMethodInput input1 = new IdentifyRestMethodInput("RestProjectId", "RestApplicationId", "/user/random", HttpMethod.GET);
+        IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/user/random")
+                .httpMethod(HttpMethod.GET)
+                .build();
         ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
         service.process(serviceTask1);
     }
@@ -176,7 +194,12 @@ public class IdentifyRestMethodServiceTest {
 
         Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
 
-        IdentifyRestMethodInput input1 = new IdentifyRestMethodInput("RestProjectId", "RestApplicationId", "/random", HttpMethod.GET);
+        IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/random")
+                .httpMethod(HttpMethod.GET)
+                .build();
         ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
         service.process(serviceTask1);
     }
@@ -202,13 +225,23 @@ public class IdentifyRestMethodServiceTest {
 
         Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
 
-        IdentifyRestMethodInput input1 = new IdentifyRestMethodInput("RestProjectId", "RestApplicationId", "/user/random", HttpMethod.GET);
+        IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/user/random")
+                .httpMethod(HttpMethod.GET)
+                .build();
         ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
         ServiceResult<IdentifyRestMethodOutput> serviceResult1 = service.process(serviceTask1);
         IdentifyRestMethodOutput output1 = serviceResult1.getOutput();
         Assert.assertEquals(restMethod1, output1.getRestMethod());
 
-        IdentifyRestMethodInput input2 = new IdentifyRestMethodInput("RestProjectId", "RestApplicationId", "/user/random/resource", HttpMethod.POST);
+        IdentifyRestMethodInput input2 = IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/user/random/resource")
+                .httpMethod(HttpMethod.POST)
+                .build();
         ServiceTask<IdentifyRestMethodInput> serviceTask2 = new ServiceTask<IdentifyRestMethodInput>(input2);
         ServiceResult<IdentifyRestMethodOutput> serviceResult2 = service.process(serviceTask2);
         IdentifyRestMethodOutput output2 = serviceResult2.getOutput();
@@ -245,19 +278,34 @@ public class IdentifyRestMethodServiceTest {
 
         Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
 
-        IdentifyRestMethodInput input1 = new IdentifyRestMethodInput("RestProjectId", "RestApplicationId", "/user/random.json", HttpMethod.GET);
+        IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/user/random.json")
+                .httpMethod(HttpMethod.GET)
+                .build();
         ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
         ServiceResult<IdentifyRestMethodOutput> serviceResult1 = service.process(serviceTask1);
         IdentifyRestMethodOutput output1 = serviceResult1.getOutput();
         Assert.assertEquals(restMethod1, output1.getRestMethod());
 
-        IdentifyRestMethodInput input2 = new IdentifyRestMethodInput("RestProjectId", "RestApplicationId", "/user/id.xml", HttpMethod.GET);
+        IdentifyRestMethodInput input2 = IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/user/id.xml")
+                .httpMethod(HttpMethod.GET)
+                .build();
         ServiceTask<IdentifyRestMethodInput> serviceTask2 = new ServiceTask<IdentifyRestMethodInput>(input2);
         ServiceResult<IdentifyRestMethodOutput> serviceResult2 = service.process(serviceTask2);
         IdentifyRestMethodOutput output2 = serviceResult2.getOutput();
         Assert.assertEquals(restMethod2, output2.getRestMethod());
 
-        IdentifyRestMethodInput input3 = new IdentifyRestMethodInput("RestProjectId", "RestApplicationId", "/resource/test...xml", HttpMethod.GET);
+        IdentifyRestMethodInput input3 = IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/resource/test...xml")
+                .httpMethod(HttpMethod.GET)
+                .build();
         ServiceTask<IdentifyRestMethodInput> serviceTask3 = new ServiceTask<IdentifyRestMethodInput>(input3);
         ServiceResult<IdentifyRestMethodOutput> serviceResult3 = service.process(serviceTask3);
         IdentifyRestMethodOutput output3 = serviceResult3.getOutput();

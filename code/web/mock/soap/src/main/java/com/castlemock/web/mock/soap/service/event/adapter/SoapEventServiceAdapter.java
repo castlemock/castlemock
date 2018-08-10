@@ -99,7 +99,7 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEvent> {
      */
     @Override
     public List<SoapEvent> readAll() {
-        final ReadAllSoapEventOutput output = serviceProcessor.process(new ReadAllSoapEventInput());
+        final ReadAllSoapEventOutput output = serviceProcessor.process(ReadAllSoapEventInput.builder().build());
 
         for(SoapEvent soapEvent : output.getSoapEvents()){
             final String resourceLink = generateResourceLink(soapEvent);
@@ -119,7 +119,9 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEvent> {
      */
     @Override
     public SoapEvent read(String id) {
-        final ReadSoapEventOutput output = serviceProcessor.process(new ReadSoapEventInput(id));
+        final ReadSoapEventOutput output = serviceProcessor.process(ReadSoapEventInput.builder()
+                .soapEventId(id)
+                .build());
         return output.getSoapEvent();
     }
 
@@ -156,7 +158,8 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEvent> {
      */
     @Override
     public String generateResourceLink(SoapEvent soapEvent) {
-        return SLASH + WEB + SLASH + SOAP + SLASH + PROJECT + SLASH + soapEvent.getProjectId() + SLASH + PORT + SLASH + soapEvent.getPortId() + SLASH + OPERATION + SLASH + soapEvent.getOperationId();
+        return SLASH + WEB + SLASH + SOAP + SLASH + PROJECT + SLASH + soapEvent.getProjectId() + SLASH + PORT + SLASH +
+                soapEvent.getPortId() + SLASH + OPERATION + SLASH + soapEvent.getOperationId();
     }
 
     /**
@@ -165,6 +168,6 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEvent> {
      */
     @Override
     public void clearAll() {
-        serviceProcessor.process(new ClearAllSoapEventInput());
+        serviceProcessor.process(ClearAllSoapEventInput.builder().build());
     }
 }

@@ -44,6 +44,8 @@ public class CreateRestResourceService extends AbstractRestProjectService implem
         final RestResource resource = input.getRestResource();
         resource.setApplicationId(input.getRestApplicationId());
         final RestResource createdRestResource = this.resourceRepository.save(resource);
-        return createServiceResult(new CreateRestResourceOutput(createdRestResource));
+        return createServiceResult(CreateRestResourceOutput.builder()
+                .savedRestApplication(createdRestResource)
+                .build());
     }
 }

@@ -35,7 +35,7 @@ public final class UpdateRestApplicationsForwardedEndpointInput implements Input
     @NotNull
     private final String forwardedEndpoint;
 
-    public UpdateRestApplicationsForwardedEndpointInput(String restProjectId,
+    private UpdateRestApplicationsForwardedEndpointInput(String restProjectId,
                                                         List<RestApplication> restApplications,
                                                         String forwardedEndpoint) {
         this.restProjectId = restProjectId;
@@ -54,5 +54,38 @@ public final class UpdateRestApplicationsForwardedEndpointInput implements Input
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String forwardedEndpoint;
+        private List<RestApplication> restApplications;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder forwardedEndpoint(final String forwardedEndpoint){
+            this.forwardedEndpoint = forwardedEndpoint;
+            return this;
+        }
+
+        public Builder restApplications(final List<RestApplication> restApplications){
+            this.restApplications = restApplications;
+            return this;
+        }
+
+        public UpdateRestApplicationsForwardedEndpointInput build(){
+            return new UpdateRestApplicationsForwardedEndpointInput(this.restProjectId,
+                    this.restApplications, this.forwardedEndpoint);
+        }
+
+    }
+
 
 }

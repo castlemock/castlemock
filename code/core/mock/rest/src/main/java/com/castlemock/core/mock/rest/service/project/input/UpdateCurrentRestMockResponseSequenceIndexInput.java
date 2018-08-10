@@ -36,7 +36,9 @@ public final class UpdateCurrentRestMockResponseSequenceIndexInput implements In
     @NotNull
     private final Integer currentRestMockResponseSequenceIndex;
 
-    public UpdateCurrentRestMockResponseSequenceIndexInput(String restProjectId, String restApplicationId, String restResourceId, String restMethodId, Integer currentRestMockResponseSequenceIndex) {
+    private UpdateCurrentRestMockResponseSequenceIndexInput(final String restProjectId, final String restApplicationId,
+                                                            final String restResourceId, final String restMethodId,
+                                                            final Integer currentRestMockResponseSequenceIndex) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -63,5 +65,51 @@ public final class UpdateCurrentRestMockResponseSequenceIndexInput implements In
     public Integer getCurrentRestMockResponseSequenceIndex() {
         return currentRestMockResponseSequenceIndex;
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String restProjectId;
+        private String restApplicationId;
+        private String restResourceId;
+        private String restMethodId;
+        private Integer currentRestMockResponseSequenceIndex;
+
+        public Builder restProjectId(final String restProjectId){
+            this.restProjectId = restProjectId;
+            return this;
+        }
+
+        public Builder restApplicationId(final String restApplicationId){
+            this.restApplicationId = restApplicationId;
+            return this;
+        }
+
+        public Builder restResourceId(final String restResourceId){
+            this.restResourceId = restResourceId;
+            return this;
+        }
+
+        public Builder restMethodId(final String restMethodId){
+            this.restMethodId = restMethodId;
+            return this;
+        }
+
+        public Builder currentRestMockResponseSequenceIndex(final Integer currentRestMockResponseSequenceIndex){
+            this.currentRestMockResponseSequenceIndex = currentRestMockResponseSequenceIndex;
+            return this;
+        }
+
+        public UpdateCurrentRestMockResponseSequenceIndexInput build(){
+            return new UpdateCurrentRestMockResponseSequenceIndexInput(this.restProjectId,
+                    this.restApplicationId, this.restResourceId,
+                    this.restMethodId, this.currentRestMockResponseSequenceIndex);
+        }
+
+    }
+
 
 }

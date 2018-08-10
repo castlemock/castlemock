@@ -29,7 +29,7 @@ public final class UpdateRestProjectOutput implements Output {
     @NotNull
     private final RestProject updatedRestProject;
 
-    public UpdateRestProjectOutput(RestProject updatedRestProject) {
+    private UpdateRestProjectOutput(RestProject updatedRestProject) {
         this.updatedRestProject = updatedRestProject;
     }
 
@@ -37,4 +37,23 @@ public final class UpdateRestProjectOutput implements Output {
         return updatedRestProject;
     }
 
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private RestProject updatedRestProject;
+
+        public Builder updatedRestProject(final RestProject updatedRestProject){
+            this.updatedRestProject = updatedRestProject;
+            return this;
+        }
+
+        public UpdateRestProjectOutput build(){
+            return new UpdateRestProjectOutput(this.updatedRestProject);
+        }
+
+    }
 }

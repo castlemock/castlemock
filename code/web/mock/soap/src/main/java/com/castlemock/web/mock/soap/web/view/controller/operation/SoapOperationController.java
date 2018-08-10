@@ -76,7 +76,9 @@ public class SoapOperationController extends AbstractSoapViewController {
 
         final ReadSoapOperationOutput readSoapOperationOutput = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
         final SoapOperation soapOperation = readSoapOperationOutput.getSoapOperation();
-        final ReadSoapEventsByOperationIdOutput readSoapEventsByOperationIdOutput = serviceProcessor.process(new ReadSoapEventsByOperationIdInput(soapOperationId));
+        final ReadSoapEventsByOperationIdOutput readSoapEventsByOperationIdOutput = serviceProcessor.process(ReadSoapEventsByOperationIdInput.builder()
+                .operationId(soapOperationId)
+                .build());
 
         final String protocol = getProtocol(request);
         final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUri());

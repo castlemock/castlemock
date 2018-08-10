@@ -53,6 +53,8 @@ public class UpdateRestMockResponseService extends AbstractRestProjectService im
         existing.setUsingExpressions(updatedRestMockResponse.isUsingExpressions());
 
         this.mockResponseRepository.update(input.getRestMockResponseId(), existing);
-        return createServiceResult(new UpdateRestMockResponseOutput(updatedRestMockResponse));
+        return createServiceResult(UpdateRestMockResponseOutput.builder()
+                .updatedRestMockResponse(updatedRestMockResponse)
+                .build());
     }
 }

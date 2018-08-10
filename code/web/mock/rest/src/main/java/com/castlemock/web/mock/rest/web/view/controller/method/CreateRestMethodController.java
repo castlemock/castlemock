@@ -44,7 +44,9 @@ public class CreateRestMethodController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}/create/method", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String projectId, @PathVariable final String applicationId, @PathVariable final String resourceId) {
+    public ModelAndView defaultPage(@PathVariable final String projectId,
+                                    @PathVariable final String applicationId,
+                                    @PathVariable final String resourceId) {
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, projectId);
         model.addObject(REST_APPLICATION_ID, applicationId);
@@ -57,9 +59,18 @@ public class CreateRestMethodController extends AbstractRestViewController {
 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/{applicationId}/resource/{resourceId}/create/method", method = RequestMethod.POST)
-    public ModelAndView createMethod(@PathVariable final String projectId, @PathVariable final String applicationId, @PathVariable final String resourceId, @ModelAttribute final CreateRestMethodCommand createRestMethodCommand) {
-        final CreateRestMethodOutput output = serviceProcessor.process(new CreateRestMethodInput(projectId, applicationId, resourceId, createRestMethodCommand.getRestMethod()));
-        return redirect("/rest/project/" + projectId + "/application/" + applicationId + "/resource/" + resourceId + "/method/" + output.getCreatedRestMethod().getId());
+    public ModelAndView createMethod(@PathVariable final String projectId,
+                                     @PathVariable final String applicationId,
+                                     @PathVariable final String resourceId,
+                                     @ModelAttribute final CreateRestMethodCommand createRestMethodCommand) {
+        final CreateRestMethodOutput output = serviceProcessor.process(CreateRestMethodInput.builder()
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
+                .method(createRestMethodCommand.getRestMethod())
+                .build());
+        return redirect("/rest/project/" + projectId + "/application/" +
+                applicationId + "/resource/" + resourceId + "/method/" + output.getCreatedRestMethod().getId());
     }
 
 
