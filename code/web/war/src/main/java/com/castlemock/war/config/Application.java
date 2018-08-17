@@ -17,9 +17,9 @@
 package com.castlemock.war.config;
 
 import com.castlemock.core.basis.model.LegacyRepository;
-import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
+import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.web.basis.repository.token.SessionTokenRepository;
 import com.castlemock.web.basis.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
+import org.springframework.web.WebApplicationInitializer;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
@@ -48,7 +49,7 @@ import java.util.Map;
 @SpringBootApplication
 @EnableAsync
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-public class Application extends SpringBootServletInitializer {
+public class Application extends SpringBootServletInitializer implements WebApplicationInitializer {
 
     @Value("${app.version}")
     private String version;
