@@ -16,6 +16,8 @@
 
 package com.castlemock.core.basis.utility.compare;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -140,5 +142,15 @@ public class UrlUtility {
     }
 
 
+    public static String getPath(final String originalPath,
+                                 final String newPath){
+
+        try {
+            final URL url = new URL(originalPath);
+            return new URL(url, newPath).toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
 
 }

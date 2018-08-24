@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="Untitled" targetNamespace="http://Services/ServiceExample" xmlns:ns="http://Services/ServiceExample" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ServiceExample1="http://Services/ServiceExample/ServiceExample/1/Schema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-    <wsdl:import namespace="http://Services/ServiceExample/ServiceExample/1/wsdl/0" location="./ServiceExample2.wsdl"/>
+<wsdl:definitions name="Untitled" targetNamespace="http://Services/ServiceExample" xmlns:ns="http://Services/ServiceExample" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ServiceExample2="http://Services/ServiceExample/ServiceExample/1/Schema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:import namespace="http://Services/ServiceExample/ServiceExample/1/wsdl/0" location="./ServiceExample3.wsdl"/>
     <wsdl:types>
         <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://Services/ServiceExample/ServiceExample/1/Schema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
             <xs:include schemaLocation="http://schema/ServiceExample.xsd"/>
         </xs:schema>
     </wsdl:types>
-    <wsdl:service name="ServiceExample1">
-        <wsdl:port binding="ns:ServiceExample1.EndpointBinding" name="ServiceExample1.Endpoint">
+    <wsdl:service name="ServiceExample">
+        <wsdl:port binding="ns:ServiceExample2.EndpointBinding" name="ServiceExample2.Endpoint">
             <soap:address location="https://localhost:8443/ESB/Services/ServiceExample"/>
         </wsdl:port>
     </wsdl:service>
     <wsdl:portType name="ServiceExamplePortType">
-        <wsdl:operation name="ServiceExample1">
-            <wsdl:input message="ns:ServiceExampleRequest1"/>
-            <wsdl:output message="ns:ServiceExampleResponse1"/>
+        <wsdl:operation name="ServiceExample2">
+            <wsdl:input message="ns:ServiceExampleRequest2"/>
+            <wsdl:output message="ns:ServiceExampleResponse2"/>
             <wsdl:fault message="ns:ServiceExampleFault" name="fault1"/>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name="ServiceExample1.EndpointBinding" type="ns:ServiceExamplePortType">
+    <wsdl:binding name="ServiceExample2.EndpointBinding" type="ns:ServiceExamplePortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="ServiceExample1">
-            <soap:operation soapAction="ServiceExample1" style="document"/>
+        <wsdl:operation name="ServiceExample2">
+            <soap:operation soapAction="ServiceExample" style="document"/>
             <wsdl:input>
                 <soap:body parts="Request" use="literal"/>
             </wsdl:input>
@@ -33,13 +33,13 @@
             </wsdl:fault>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:message name="ServiceExampleRequest1">
-        <wsdl:part element="ServiceExample1:Request" name="Request"/>
+    <wsdl:message name="ServiceExampleRequest2">
+        <wsdl:part element="ServiceExample2:Request" name="Request"/>
     </wsdl:message>
-    <wsdl:message name="ServiceExampleResponse1">
-        <wsdl:part element="ServiceExample1:Response" name="Response"/>
+    <wsdl:message name="ServiceExampleResponse2">
+        <wsdl:part element="ServiceExample2:Response" name="Response"/>
     </wsdl:message>
     <wsdl:message name="ServiceExampleFault">
-        <wsdl:part element="ServiceExample1:Fault" name="Fault"/>
+        <wsdl:part element="ServiceExample2:Fault" name="Fault"/>
     </wsdl:message>
 </wsdl:definitions>

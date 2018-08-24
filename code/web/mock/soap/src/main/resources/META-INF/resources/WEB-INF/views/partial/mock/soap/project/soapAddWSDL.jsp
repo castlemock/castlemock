@@ -45,6 +45,10 @@
                         <td class="column2"><form:input class="form-control" path="link" type="text" name="wsdlLinkInput" id="wsdlLinkInput" size="100"/>
                     </tr>
                     <tr>
+                        <td class="column1"><form:label path="includeImports"><spring:message code="soap.soapaddwsdl.label.includeimports"/></form:label></td>
+                        <td class="column2"><form:checkbox class="form-control" path="includeImports" title="Include import"></form:checkbox></td>
+                    </tr>
+                    <tr>
                         <td class="column1"><form:label path="generateResponse"><spring:message code="soap.soapaddwsdl.label.generateresponse"/></form:label></td>
                         <td class="column2"><form:checkbox class="form-control" path="generateResponse" title="Generate response"></form:checkbox></td>
                     </tr>
@@ -59,7 +63,7 @@
         <div class="upload-file">
             <form:form method="POST" enctype="multipart/form-data" action="${add_wsdl_url}" modelAttribute="uploadForm">
 
-                <input type="file" id="files" name="files"/>
+                <input type="file" id="files" name="files" multiple="multiple"/>
 
                 <div id="messages">
                 </div>

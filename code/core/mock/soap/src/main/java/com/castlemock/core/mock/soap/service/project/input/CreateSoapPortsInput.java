@@ -32,13 +32,19 @@ public final class CreateSoapPortsInput implements Input {
     private final String soapProjectId;
     @NotNull
     private final boolean generateResponse;
-    @NotNull
-    private final List<File> files;
 
-    public CreateSoapPortsInput(String soapProjectId, boolean generateResponse, List<File> files) {
-        this.soapProjectId = soapProjectId;
-        this.generateResponse = generateResponse;
-        this.files = files;
+    private final boolean includeImports;
+
+    private final List<File> files;
+    private final String location;
+
+
+    private CreateSoapPortsInput(final Builder builder) {
+        this.soapProjectId = builder.soapProjectId;
+        this.includeImports = builder.includeImports;
+        this.generateResponse = builder.generateResponse;
+        this.files = builder.files;
+        this.location = builder.location;
     }
 
     public String getSoapProjectId() {
@@ -53,4 +59,54 @@ public final class CreateSoapPortsInput implements Input {
         return files;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public boolean isIncludeImports() {
+        return includeImports;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String soapProjectId;
+        private boolean includeImports;
+        private boolean generateResponse;
+        private List<File> files;
+        private String location;
+
+        public Builder soapProjectId(final String soapProjectId){
+            this.soapProjectId = soapProjectId;
+            return this;
+        }
+
+        public Builder includeImports(final boolean includeImports){
+            this.includeImports = includeImports;
+            return this;
+        }
+
+        public Builder generateResponse(final boolean generateResponse){
+            this.generateResponse = generateResponse;
+            return this;
+        }
+
+        public Builder files(final List<File> files){
+            this.files = files;
+            return this;
+        }
+
+        public Builder location(final String location){
+            this.location = location;
+            return this;
+        }
+
+        public CreateSoapPortsInput build(){
+            return new CreateSoapPortsInput(this);
+        }
+
+    }
 }

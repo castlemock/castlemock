@@ -76,31 +76,37 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value="/{projectId}/add/wsdl", method=RequestMethod.POST)
-    public ModelAndView uploadWSDL(@PathVariable final String projectId, @RequestParam final String type, @ModelAttribute("uploadForm") final WSDLFileUploadForm uploadForm) throws IOException {
-        List<File> uploadedFiles;
+    public ModelAndView uploadWSDL(@PathVariable final String projectId,
+                                   @RequestParam final String type,
+                                   @ModelAttribute("uploadForm") final WSDLFileUploadForm uploadForm) throws IOException {
 
+        List<File> uploadedFiles = null;
         if(TYPE_FILE.equals(type)){
             uploadedFiles = fileManager.uploadFiles(uploadForm.getFiles());
-        } else if(TYPE_LINK.equals(type)){
-            uploadedFiles = fileManager.uploadFiles(uploadForm.getLink());
-        } else {
-            throw new IllegalArgumentException("Invalid type: " + type);
         }
 
         try {
-            serviceProcessor.process(new CreateSoapPortsInput(projectId, uploadForm.isGenerateResponse(), uploadedFiles));
+            serviceProcessor.process(CreateSoapPortsInput.builder()
+                    .soapProjectId(projectId)
+                    .files(uploadedFiles)
+                    .includeImports(uploadForm.isIncludeImports())
+                    .generateResponse(uploadForm.isGenerateResponse())
+                    .location(uploadForm.getLink())
+                    .build());
             return redirect("/soap/project/" + projectId + "?upload=success");
         }catch (Exception e){
             return redirect("/soap/project/" + projectId + "?upload=error");
         } finally {
-            for(File uploadedFile : uploadedFiles){
-                boolean deletionResult = fileManager.deleteFile(uploadedFile);
-                if(deletionResult){
-                    LOGGER.debug("Deleted the following WSDL file: " + uploadedFile.getName());
-                } else {
-                    LOGGER.warn("Unable to delete the following WSDL file: " + uploadedFile.getName());
-                }
+            if(uploadedFiles != null){
+                for(File uploadedFile : uploadedFiles){
+                    boolean deletionResult = fileManager.deleteFile(uploadedFile);
+                    if(deletionResult){
+                        LOGGER.debug("Deleted the following WSDL file: " + uploadedFile.getName());
+                    } else {
+                        LOGGER.warn("Unable to delete the following WSDL file: " + uploadedFile.getName());
+                    }
 
+                }
             }
         }
     }

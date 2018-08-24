@@ -18,63 +18,189 @@ package com.castlemock.web.mock.soap.converter;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.soap.model.project.domain.*;
+import com.castlemock.web.basis.manager.FileManager;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class SoapPortConverterTest {
 
+    @InjectMocks
+    private SoapPortConverter soapPortConverter;
+
+    @Mock
+    private FileManager fileManager;
+
+    @Before
+    public void initiateTest() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
-    public void testGetSoapPorts() throws IOException, SAXException, ParserConfigurationException {
+    public void testGetSoapPortsFiles() {
         try {
-            final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            documentBuilderFactory.setValidating(false);
-            documentBuilderFactory.setNamespaceAware(true);
+            final List<File> files = this.loadFile("ServiceExample1.wsdl");
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
 
-            final InputStream inputStream =
-                    SoapPortConverterTest.class.getResourceAsStream("ServiceExample1.wsdl");
+            Assert.assertEquals(1, results.size());
 
-            final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            final Document document = documentBuilder.parse(inputStream);
-            document.getDocumentElement().normalize();
+            SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
+                    .getName().equals("ServiceExample1.wsdl"))
+                    .findFirst()
+                    .get();
 
-            final List<SoapPort> fileSoapPorts = SoapPortConverter.getSoapPorts(document, true);
+            Assert.assertEquals(SoapResourceType.WSDL, result.getResourceType());
+            final Set<SoapPort> soapPorts = result.getPorts();
 
-            Assert.assertEquals(1, fileSoapPorts.size());
+            final SoapPort soapPort = soapPorts.stream().findFirst().get();
+            this.verify(soapPort, "ServiceExample1");
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
 
-            final SoapPort soapPort = fileSoapPorts.get(0);
+    @Test
+    public void testGetSoapPortsLink() {
+        try {
+            final String wsdlLocation = "http://castlemock.com/ServiceExample1.wsdl";
+            final List<File> files = this.loadFile("ServiceExample1.wsdl");
 
-            Assert.assertEquals("ServiceExample.Endpoint", soapPort.getName());
-            Assert.assertEquals("ServiceExample.Endpoint", soapPort.getUri());
-            Assert.assertEquals(1, soapPort.getOperations().size());
+            Mockito.when(fileManager.uploadFiles(wsdlLocation)).thenReturn(files);
 
-            SoapOperation soapOperation = soapPort.getOperations().get(0);
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(wsdlLocation, true, false);
 
-            Assert.assertEquals("ServiceExample", soapOperation.getName());
-            Assert.assertEquals(SoapResponseStrategy.RANDOM, soapOperation.getResponseStrategy());
-            Assert.assertEquals(SoapOperationStatus.MOCKED, soapOperation.getStatus());
-            Assert.assertEquals(SoapVersion.SOAP11, soapOperation.getSoapVersion());
-            Assert.assertEquals(HttpMethod.POST, soapOperation.getHttpMethod());
+            Assert.assertEquals(1, results.size());
 
-            SoapOperationIdentifier operationIdentifier = soapOperation.getOperationIdentifier();
+            SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
+                    .getName().equals("ServiceExample1.wsdl"))
+                    .findFirst()
+                    .get();
 
-            Assert.assertNotNull(operationIdentifier);
-            Assert.assertEquals("Request", operationIdentifier.getName());
-            Assert.assertEquals("http://Services/ServiceExample/ServiceExample/1/Schema",
-                    operationIdentifier.getNamespace());
+            Assert.assertEquals(SoapResourceType.WSDL, result.getResourceType());
+            final Set<SoapPort> soapPorts = result.getPorts();
+
+            final SoapPort soapPort = soapPorts.stream().findFirst().get();
+            this.verify(soapPort, "ServiceExample1");
+
+            Mockito.verify(this.fileManager, Mockito.times(1)).uploadFiles(wsdlLocation);
 
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
+    }
+
+    @Test
+    public void testGetSoapPortsLinkImportExternal() {
+        try {
+            final String wsdlLocation = "http://castlemock.com/ServiceExample1.wsdl";
+            final String externalWsdlLocation2 = "http://castlemock.com/ServiceExample2.wsdl";
+            final String externalWsdlLocation3 = "http://castlemock.com/ServiceExample3.wsdl";
+
+            final List<File> files = this.loadFile("ServiceExample1.wsdl");
+            final List<File> externalFiles2 = this.loadFile("ServiceExample2.wsdl");
+            final List<File> externalFiles3 = this.loadFile("ServiceExample3.wsdl");
+
+            Mockito.when(fileManager.uploadFiles(Mockito.eq(wsdlLocation))).thenReturn(files);
+            Mockito.when(fileManager.uploadFiles(Mockito.eq(externalWsdlLocation2))).thenReturn(externalFiles2);
+            Mockito.when(fileManager.uploadFiles(Mockito.eq(externalWsdlLocation3))).thenReturn(externalFiles3);
+
+            // External files
+
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(wsdlLocation, true, true);
+
+            Assert.assertEquals(3, results.size());
+
+            SoapPortConverterResult result1 = results.stream()
+                    .filter(result -> result.getName().equals("ServiceExample1.wsdl"))
+                    .findFirst()
+                    .get();
+
+            SoapPortConverterResult result2 = results.stream()
+                    .filter(result -> result.getName().equals("ServiceExample2.wsdl"))
+                    .findFirst()
+                    .get();
+
+            SoapPortConverterResult result3 = results.stream()
+                    .filter(result -> result.getName().equals("ServiceExample3.wsdl"))
+                    .findFirst()
+                    .get();
+
+            Assert.assertEquals(SoapResourceType.WSDL, result1.getResourceType());
+            Assert.assertEquals(SoapResourceType.WSDL_IMPORT, result2.getResourceType());
+            Assert.assertEquals(SoapResourceType.WSDL_IMPORT, result3.getResourceType());
+
+            final SoapPort serviceExample1 = result1
+                    .getPorts()
+                    .stream()
+                    .findFirst()
+                    .get();
+
+            final SoapPort serviceExample2 = result2
+                    .getPorts()
+                    .stream()
+                    .findFirst()
+                    .get();
+
+            final SoapPort serviceExample3 = result3
+                    .getPorts()
+                    .stream()
+                    .findFirst()
+                    .get();
+
+            this.verify(serviceExample1, "ServiceExample1");
+            this.verify(serviceExample2, "ServiceExample2");
+            this.verify(serviceExample3, "ServiceExample3");
+
+            Mockito.verify(this.fileManager, Mockito.times(1)).uploadFiles(wsdlLocation);
+            Mockito.verify(this.fileManager, Mockito.times(1)).uploadFiles(externalWsdlLocation2);
+            Mockito.verify(this.fileManager, Mockito.times(1)).uploadFiles(externalWsdlLocation3);
+
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
+
+    private void verify(final SoapPort soapPort,
+                        final String name){
+        Assert.assertEquals(name + ".Endpoint", soapPort.getName());
+        Assert.assertEquals(name + ".Endpoint", soapPort.getUri());
+        Assert.assertEquals(1, soapPort.getOperations().size());
+
+        SoapOperation soapOperation = soapPort.getOperations().get(0);
+
+        Assert.assertEquals(name, soapOperation.getName());
+        Assert.assertEquals(SoapResponseStrategy.RANDOM, soapOperation.getResponseStrategy());
+        Assert.assertEquals(SoapOperationStatus.MOCKED, soapOperation.getStatus());
+        Assert.assertEquals(SoapVersion.SOAP11, soapOperation.getSoapVersion());
+        Assert.assertEquals(HttpMethod.POST, soapOperation.getHttpMethod());
+
+        SoapOperationIdentifier operationIdentifier = soapOperation.getOperationIdentifier();
+
+        Assert.assertNotNull(operationIdentifier);
+        Assert.assertEquals("Request", operationIdentifier.getName());
+        Assert.assertEquals("http://Services/ServiceExample/ServiceExample/1/Schema",
+                operationIdentifier.getNamespace());
+    }
+
+    private List<File> loadFile(final String location) throws URISyntaxException {
+        final URL resourceUrl = SoapPortConverterTest.class.getResource(location);
+        final File file = new File(resourceUrl.toURI());
+        return Collections.singletonList(file);
     }
 
 

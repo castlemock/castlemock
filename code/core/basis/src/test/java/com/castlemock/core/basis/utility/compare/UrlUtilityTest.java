@@ -25,7 +25,7 @@ import org.junit.Test;
  * @since 1.8
  * @author Karl Dahlgren
  */
-public class UrlComparerTest {
+public class UrlUtilityTest {
 
     @Test
     public void compareTest1(){
@@ -76,4 +76,15 @@ public class UrlComparerTest {
         Assert.assertFalse(UrlUtility.compareUri("/user/{id", "/user/1"));
     }
 
+    @Test
+    public void testGetPath(){
+        Assert.assertEquals("http://castlemock.com/wsdl2.wsdl",
+                UrlUtility.getPath("http://castlemock.com/wsdl1.wsdl", "./wsdl2.wsdl"));
+    }
+
+    @Test
+    public void testGetPathFull(){
+        Assert.assertEquals("http://castlemock.com/wsdl2.wsdl",
+                UrlUtility.getPath("http://castlemock.com/wsdl1.wsdl", "http://castlemock.com/wsdl2.wsdl"));
+    }
 }

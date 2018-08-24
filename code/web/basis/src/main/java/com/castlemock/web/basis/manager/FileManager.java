@@ -68,7 +68,7 @@ public class FileManager {
             if(file.getOriginalFilename().isEmpty()){
                 continue;
             }
-            final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+            final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss.SSS");
             final String fileName = "Upload-" + formatter.format(new Date());
 
             LOGGER.debug("Uploading file: " + fileName);

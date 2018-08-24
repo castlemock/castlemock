@@ -34,6 +34,7 @@ import java.util.List;
 public class WSDLFileUploadForm {
 
     private boolean generateResponse;
+    private boolean includeImports;
     private List<MultipartFile> files;
     private String link;
 
@@ -87,5 +88,13 @@ public class WSDLFileUploadForm {
      */
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public boolean isIncludeImports() {
+        return includeImports;
+    }
+
+    public void setIncludeImports(boolean includeImports) {
+        this.includeImports = includeImports;
     }
 }

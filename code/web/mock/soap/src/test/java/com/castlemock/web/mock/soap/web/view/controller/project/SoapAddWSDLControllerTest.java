@@ -120,7 +120,7 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
-        Mockito.verify(fileManager, times(1)).uploadFiles(anyString());
+        Mockito.verify(fileManager, times(0)).uploadFiles(anyString());
     }
 
 
