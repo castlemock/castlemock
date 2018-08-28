@@ -39,9 +39,11 @@ public class SoapMockResponse {
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
     private boolean usingExpressions;
+    @Deprecated
     private String xpathExpression;
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+    private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpression>();
 
     @XmlElement
     public String getId() {
@@ -133,5 +135,15 @@ public class SoapMockResponse {
 
     public void setContentEncodings(List<ContentEncoding> contentEncodings) {
         this.contentEncodings = contentEncodings;
+    }
+
+    @XmlElementWrapper(name = "xpathExpressions")
+    @XmlElement(name = "xpathExpression")
+    public List<SoapXPathExpression> getXpathExpressions() {
+        return xpathExpressions;
+    }
+
+    public void setXpathExpressions(List<SoapXPathExpression> xpathExpressions) {
+        this.xpathExpressions = xpathExpressions;
     }
 }

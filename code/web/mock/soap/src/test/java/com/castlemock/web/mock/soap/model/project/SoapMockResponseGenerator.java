@@ -18,6 +18,9 @@ package com.castlemock.web.mock.soap.model.project;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapXPathExpression;
+
+import java.util.Arrays;
 
 /**
  * @author Karl Dahlgren
@@ -26,10 +29,17 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus
 public class SoapMockResponseGenerator {
 
     public static SoapMockResponse generateSoapMockResponse(){
+        final SoapXPathExpression soapXPathExpression1 = new SoapXPathExpression();
+        final SoapXPathExpression soapXPathExpression2 = new SoapXPathExpression();
+        soapXPathExpression1.setExpression("//Request/Name[text()='Input1']");
+        soapXPathExpression2.setExpression("//Request/Name[text()='Input2']");
+
         final SoapMockResponse soapMockResponse = new SoapMockResponse();
         soapMockResponse.setName("Soap mock response name");
         soapMockResponse.setBody("Soap mock response body");
         soapMockResponse.setId("SOAP MOCK RESPONSE");
+        soapMockResponse.setXpathExpression("//Request/Name[text()='Input1']");
+        soapMockResponse.setXpathExpressions(Arrays.asList(soapXPathExpression1, soapXPathExpression2));
         soapMockResponse.setStatus(SoapMockResponseStatus.ENABLED);
         return soapMockResponse;
     }

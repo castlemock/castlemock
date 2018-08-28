@@ -23,11 +23,12 @@ import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.web.basis.repository.FileRepository;
 import com.castlemock.web.mock.soap.repository.project.SoapMockResponseRepository;
+import com.google.common.base.Strings;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -114,6 +115,15 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             }
 
             soapMockResponse.setContentEncodings(contentEncodings);
+
+            if(!Strings.isNullOrEmpty(soapMockResponse.getXpathExpression())){
+                final SoapXPathExpressionFile xPathExpression = new SoapXPathExpressionFile();
+                xPathExpression.setExpression(soapMockResponse.getXpathExpression());
+                soapMockResponse.getXpathExpressions().add(xPathExpression);
+                soapMockResponse.setXpathExpression(null);
+            }
+
+            save(soapMockResponse);
         }
     }
 
@@ -195,11 +205,14 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         @Mapping("usingExpressions")
         private boolean usingExpressions;
         @Mapping("xpathExpression")
+        @Deprecated
         private String xpathExpression;
         @Mapping("httpHeaders")
         private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+        @Mapping("xpathExpressions")
+        private List<SoapXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpressionFile>();
 
         @XmlElement
         @Override
@@ -296,6 +309,16 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.contentEncodings = contentEncodings;
         }
 
+        @XmlElementWrapper(name = "xpathExpressions")
+        @XmlElement(name = "xpathExpression")
+        public List<SoapXPathExpressionFile> getXpathExpressions() {
+            return xpathExpressions;
+        }
+
+        public void setXpathExpressions(List<SoapXPathExpressionFile> xpathExpressions) {
+            this.xpathExpressions = xpathExpressions;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o)
@@ -315,5 +338,21 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         public int hashCode() {
             return id != null ? id.hashCode() : 0;
         }
+    }
+
+    @XmlRootElement(name = "soapXPathExpression")
+    protected static class SoapXPathExpressionFile {
+
+        private String expression;
+
+        @XmlElement
+        public String getExpression() {
+            return expression;
+        }
+
+        public void setExpression(String expression) {
+            this.expression = expression;
+        }
+
     }
 }

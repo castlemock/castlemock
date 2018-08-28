@@ -75,6 +75,6 @@ public class UpdateSoapMockResponseServiceTest {
         Assert.assertEquals(mockResponse.getHttpStatusCode(), returnedSoapMockResponse.getHttpStatusCode());
         Assert.assertEquals(mockResponse.getStatus(), returnedSoapMockResponse.getStatus());
         Assert.assertEquals(mockResponse.isUsingExpressions(), returnedSoapMockResponse.isUsingExpressions());
-        Assert.assertEquals(mockResponse.getXpathExpression(), returnedSoapMockResponse.getXpathExpression());
+        Assert.assertEquals(mockResponse.getXpathExpressions(), returnedSoapMockResponse.getXpathExpressions());
     }
 }

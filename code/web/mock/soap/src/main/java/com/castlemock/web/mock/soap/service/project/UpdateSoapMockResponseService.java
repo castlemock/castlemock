@@ -53,7 +53,7 @@ public class UpdateSoapMockResponseService extends AbstractSoapProjectService im
         mockResponse.setStatus(updated.getStatus());
         mockResponse.setHttpHeaders(updated.getHttpHeaders());
         mockResponse.setUsingExpressions(updated.isUsingExpressions());
-        mockResponse.setXpathExpression(updated.getXpathExpression());
+        mockResponse.setXpathExpressions(updated.getXpathExpressions());
 
         final SoapMockResponse updatedSoapMockResponse = mockResponseRepository.update(input.getSoapMockResponseId(), mockResponse);
         return createServiceResult(new UpdateSoapMockResponseOutput(updatedSoapMockResponse));

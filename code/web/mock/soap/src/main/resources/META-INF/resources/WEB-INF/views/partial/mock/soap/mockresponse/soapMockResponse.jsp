@@ -65,10 +65,6 @@
                         <td class="column1"><form:label path="usingExpressions"><spring:message code="soap.soapmockresponse.label.useexpressions"/></form:label></td>
                         <td class="column2"><span class="checkbox"><form:checkbox class="form-control" path="usingExpressions"/></span></td>
                     </tr>
-                    <tr>
-                        <td class="column1"><label><spring:message code="soap.soapmockresponse.label.xpathExpression"/></label></td>
-                        <td class="column2"><form:input class="form-control" path="xpathExpression" id="xpathExpression" /></td>
-                    </tr>
                 </table>
             </div>
 
@@ -77,6 +73,7 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#tab-body"><spring:message code="soap.soapmockresponse.header.body"/></a></li>
                     <li><a data-toggle="tab" href="#tab-headers"><spring:message code="soap.soapmockresponse.header.headers"/></a></li>
+                    <li><a data-toggle="tab" href="#tab-xpaths"><spring:message code="soap.soapmockresponse.header.xpaths"/></a></li>
                 </ul>
             </div>
             <div class="panel-body">
@@ -129,6 +126,41 @@
                             </table>
                         </div>
                     </div>
+
+
+
+                    <div id="tab-xpaths" class="tab-pane fade">
+                        <h2 class="decorated"><span><spring:message code="soap.soapmockresponse.field.addxpath"/></span></h2>
+                        <div>
+                            <table class="formTable">
+                                <tr>
+                                    <td class="column1"><form:label path="name"><spring:message code="soap.soapmockresponse.label.xpath"/></form:label></td>
+                                    <td class="column2"><input type="text" class="form-control" name="xpathInput" id="xpathInput"></td>
+                                </tr>
+                            </table>
+                            <button class="btn btn-success" onclick="addXpath()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="soap.soapmockresponse.button.xpath"/></span></button>
+                        </div>
+
+                        <div class="invisible-divider"></div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover sortable" id="xpathTable">
+                                <col width="4%">
+                                <col width="96%">
+                                <tr>
+                                    <th></th>
+                                    <th><spring:message code="soap.soapmockresponse.column.xpath"/></th>
+                                </tr>
+                                <c:forEach items="${soapMockResponse.xpathExpressions}" var="xpathExpression" varStatus="loopStatus">
+                                    <tr class="even">
+                                        <td><div class="delete" onclick="removeXpath('${xpathExpression}')"></div></td>
+                                        <td><input name="xpathExpressions[${loopStatus.index}].expression" id="xpathExpressions[${loopStatus.index}].expression" value="${xpathExpression.expression}" type="hidden" />${xpathExpression.expression}</td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -141,6 +173,7 @@
     </section>
 </div>
 <script src=<c:url value="/resources/js/headerTable.js"/>></script>
+<script src=<c:url value="/resources/js/xpathTable.js"/>></script>
 <script src=<c:url value="/resources/js/editor.js"/>></script>
 <script>
     $("#soapMockResponseNameInput").attr('required', '');
