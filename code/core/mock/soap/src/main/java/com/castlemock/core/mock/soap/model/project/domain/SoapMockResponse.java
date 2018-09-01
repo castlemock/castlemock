@@ -119,10 +119,12 @@ public class SoapMockResponse {
     }
 
     @XmlElement
+    @Deprecated
     public String getXpathExpression() {
         return xpathExpression;
     }
 
+    @Deprecated
     public void setXpathExpression(String xpathExpression) {
         this.xpathExpression = xpathExpression;
     }

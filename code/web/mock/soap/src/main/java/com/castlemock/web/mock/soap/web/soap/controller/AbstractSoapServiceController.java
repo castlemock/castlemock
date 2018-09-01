@@ -299,7 +299,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 if(defaultXPathResponseId != null && !defaultXPathResponseId.isEmpty()){
                     LOGGER.info("Use the default XPath response");
                     for (SoapMockResponse tmpMockResponse : mockResponses) {
-                        if(defaultXPathResponseId.equals(mockResponse.getId())){
+                        if(defaultXPathResponseId.equals(tmpMockResponse.getId())){
                             mockResponse = tmpMockResponse;
                             break;
                         }

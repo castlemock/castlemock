@@ -19,14 +19,7 @@ package com.castlemock.web.mock.soap.web.soap.controller;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
+import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.core.mock.soap.service.project.input.IdentifySoapOperationInput;
 import com.castlemock.core.mock.soap.service.project.input.LoadSoapResourceInput;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
@@ -34,6 +27,7 @@ import com.castlemock.core.mock.soap.service.project.output.IdentifySoapOperatio
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.web.AbstractController;
+import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.web.AbstractControllerTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -184,6 +178,86 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
         Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
         Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+    }
+
+    @Test
+    public void testMockedXpathDefaultResponse(){
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final SoapOperation soapOperation = getSoapOperation();
+
+        soapOperation.setDefaultXPathResponseName("Mocked response");
+        soapOperation.setDefaultXPathMockResponseId("MockResponseId");
+        soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
+
+        final IdentifySoapOperationOutput identifySoapOperationOutput =
+                new IdentifySoapOperationOutput(PROJECT_ID, SOAP_PORT_ID, SOAP_OPERATION_ID, soapOperation);
+
+
+        when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
+        when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
+                SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
+
+        final ResponseEntity responseEntity = soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
+        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+    }
+
+    @Test
+    public void testMockedXpathMatch(){
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final SoapXPathExpression xPathExpression = new SoapXPathExpression();
+        xPathExpression.setExpression("//ServiceName/value[text()='Input']");
+
+        final SoapOperation soapOperation = getSoapOperation();
+        soapOperation.getMockResponses().get(0).getXpathExpressions().add(xPathExpression);
+
+        soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
+
+        final IdentifySoapOperationOutput identifySoapOperationOutput =
+                new IdentifySoapOperationOutput(PROJECT_ID, SOAP_PORT_ID, SOAP_OPERATION_ID, soapOperation);
+
+
+        when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
+        when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
+                SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
+
+        final ResponseEntity responseEntity = soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
+        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+    }
+
+    @Test(expected = SoapException.class)
+    public void testMockedXpathNoMatchAndNoDefaultResponse(){
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final SoapOperation soapOperation = getSoapOperation();
+
+        soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
+
+        final IdentifySoapOperationOutput identifySoapOperationOutput =
+                new IdentifySoapOperationOutput(PROJECT_ID, SOAP_PORT_ID, SOAP_OPERATION_ID, soapOperation);
+
+        when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
+        when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
+                SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
+
+        soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
     }
 
 
