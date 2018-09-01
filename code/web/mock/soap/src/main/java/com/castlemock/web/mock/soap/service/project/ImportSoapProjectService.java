@@ -25,6 +25,7 @@ import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.core.mock.soap.service.project.input.ImportSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.output.ImportSoapProjectOutput;
 import com.castlemock.web.mock.soap.legacy.repository.project.v1.SoapProjectV1LegacyRepository;
+import com.google.common.base.Strings;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -107,6 +108,13 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
             for(SoapMockResponse mockResponse : exportContainer.getMockResponses()){
                 if(this.mockResponseRepository.exists(mockResponse.getId())){
                     throw new IllegalArgumentException("A mocked response with the following key already exists: " + mockResponse.getId());
+                }
+
+                if(!Strings.isNullOrEmpty(mockResponse.getXpathExpression())){
+                    final SoapXPathExpression xPathExpression = new SoapXPathExpression();
+                    xPathExpression.setExpression(mockResponse.getXpathExpression());
+                    mockResponse.getXpathExpressions().add(xPathExpression);
+                    mockResponse.setXpathExpression(null);
                 }
 
                 this.mockResponseRepository.save(mockResponse);
