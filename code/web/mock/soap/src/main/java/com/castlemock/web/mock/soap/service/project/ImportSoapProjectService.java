@@ -100,6 +100,9 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
                 if(operation.getIdentifyStrategy() == null){
                     operation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
                 }
+                if(operation.getCurrentResponseSequenceIndex() == null){
+                    operation.setCurrentResponseSequenceIndex(0);
+                }
                 
                 operation.setCurrentResponseSequenceIndex(0);
                 this.operationRepository.save(operation);

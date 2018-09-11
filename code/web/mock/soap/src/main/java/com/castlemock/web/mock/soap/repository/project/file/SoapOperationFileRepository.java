@@ -108,6 +108,10 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
                 soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
                 save(soapOperation);
             }
+
+            if(soapOperation.getCurrentResponseSequenceIndex() == null){
+                soapOperation.setCurrentResponseSequenceIndex(0);
+            }
         }
     }
 
