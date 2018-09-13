@@ -50,7 +50,8 @@
                 <tr>
                     <td class="column1"><spring:message code="rest.updatemethod.label.methodstatus"/></td>
                     <td>
-                        <form:select class="form-control" path="status">
+                        <form:select id="status" class="form-control" path="status"
+                            onchange="toggleEnabled('status', 'MOCKED', ['responseStrategy'])">
                             <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
                                 <spring:message var="label" code="rest.type.restmethodstatus.${restMethodStatus}"/>
                                 <form:option value="${restMethodStatus}" label="${label}"/>
@@ -61,7 +62,7 @@
                 <tr>
                     <td class="column1"><spring:message code="rest.updatemethod.label.responsestrategy"/></td>
                     <td>
-                        <form:select class="form-control" path="responseStrategy">
+                        <form:select id="responseStrategy" class="form-control" path="responseStrategy">
                             <c:forEach items="${restResponsestrategies}" var="restResponseStrategy">
                                 <spring:message var="label" code="rest.type.responsestrategy.${restResponseStrategy}"/>
                                 <form:option value="${restResponseStrategy}" label="${label}"/>
@@ -89,6 +90,8 @@
         </form:form>
     </section>
 </div>
+<script src=<c:url value="/resources/js/UIHelper.js"/>></script>
 <script>
     $("#restMethodNameInput").attr('required', '');
+    toggleEnabled('status', 'MOCKED', ['responseStrategy']);
 </script>

@@ -819,3 +819,8 @@ select {
 
 .panel.with-nav-tabs .nav-justified {
   margin-bottom: -1px; }
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
