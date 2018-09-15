@@ -153,7 +153,7 @@
                                 </tr>
                                 <c:forEach items="${soapMockResponse.xpathExpressions}" var="xpathExpression" varStatus="loopStatus">
                                     <tr class="even">
-                                        <td><div class="delete" onclick="removeXpath('${xpathExpression}')"></div></td>
+                                        <td><div class="delete" onclick="removeXpath('${xpathExpression.expression}')"></div></td>
                                         <td><input name="xpathExpressions[${loopStatus.index}].expression" id="xpathExpressions[${loopStatus.index}].expression" value="${xpathExpression.expression}" type="hidden" />${xpathExpression.expression}</td>
                                     </tr>
                                 </c:forEach>

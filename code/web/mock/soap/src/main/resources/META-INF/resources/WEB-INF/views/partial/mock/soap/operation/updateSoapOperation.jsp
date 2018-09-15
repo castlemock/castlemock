@@ -35,7 +35,9 @@
                 <tr>
                     <td class="column1"><spring:message code="soap.updatesoapoperation.label.status"/></td>
                     <td>
-                        <form:select class="form-control" path="status">
+                        <form:select id="status" class="form-control" path="status"
+                                     onchange="toggleEnabled('status', 'MOCKED', ['responseStrategy', 'defaultXPathMockResponseId']) ||
+                                                toggleEnabled('status', ['FORWARDED', 'RECORDING', 'RECORD_ONCE'], ['mockOnFailure'])" >
                             <c:forEach items="${soapOperationStatuses}" var="soapOperationStatus">
                                 <spring:message var="label" code="soap.type.soapoperationstatus.${soapOperationStatus}"/>
                                 <form:option value="${soapOperationStatus}" label="${label}"/>
@@ -46,7 +48,8 @@
                 <tr>
                     <td class="column1"><spring:message code="soap.updatesoapoperation.label.responsestrategy"/></td>
                     <td>
-                        <form:select class="form-control" path="responseStrategy">
+                        <form:select id="responseStrategy" class="form-control" path="responseStrategy"
+                                     onchange="toggleEnabled('responseStrategy', 'XPATH_INPUT', ['defaultXPathMockResponseId'])" >
                             <c:forEach items="${soapMockResponseStrategies}" var="soapMockResponseStrategy">
                                 <spring:message var="label" code="soap.type.responsestrategy.${soapMockResponseStrategy}"/>
                                 <form:option value="${soapMockResponseStrategy}" label="${label}"/>
@@ -84,7 +87,7 @@
                 <tr>
                     <td class="column1"><spring:message code="soap.updatesoapoperation.label.defaultxpathresponse"/></td>
                     <td>
-                        <form:select class="form-control" path="defaultXPathMockResponseId">
+                        <form:select id="defaultXPathMockResponseId" class="form-control" path="defaultXPathMockResponseId">
                             <spring:message var="label" code="soap.updatesoapoperation.dropdown.option.selectresponse"/>
                             <form:option value="" label="${label}"/>
                             <c:forEach items="${command.mockResponses}" var="mockResponse">
@@ -95,7 +98,7 @@
                 </tr>
                 <tr>
                     <td class="column1"><form:label path="mockOnFailure"><spring:message code="soap.updatesoapoperation.label.mockonfailure"/></form:label></td>
-                    <td class="column2"><span class="checkbox"><form:checkbox class="form-control" path="mockOnFailure"/></span></td>
+                    <td class="column2"><span class="checkbox"><form:checkbox id="mockOnFailure" class="form-control" path="mockOnFailure"/></span></td>
                 </tr>
             </table>
 
@@ -105,3 +108,9 @@
         </form:form>
     </section>
 </div>
+<script src=<c:url value="/resources/js/UIHelper.js"/>></script>
+<script>
+    toggleEnabled('status', 'MOCKED', ['responseStrategy', 'defaultXPathMockResponseId']);
+    toggleEnabled('status', ['FORWARDED', 'RECORDING', 'RECORD_ONCE'], ['mockOnFailure']);
+    toggleEnabled('responseStrategy', 'XPATH_INPUT', ['defaultXPathMockResponseId']);
+</script>
