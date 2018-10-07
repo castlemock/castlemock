@@ -27,6 +27,9 @@ import com.castlemock.core.mock.rest.service.project.output.ImportRestProjectOut
 import com.castlemock.web.mock.rest.legacy.repository.project.v1.RestProjectV1LegacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -91,6 +94,11 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
             for(RestMockResponse mockResponse : exportContainer.getMockResponses()){
                 if(this.mockResponseRepository.exists(mockResponse.getId())){
                     throw new IllegalArgumentException("A mocked response with the following key already exists: " + mockResponse.getId());
+                }
+
+                if(mockResponse.getParameterQueries() == null){
+                    List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<RestParameterQuery>();
+                    mockResponse.setParameterQueries(parameterQueries);
                 }
 
                 this.mockResponseRepository.save(mockResponse);

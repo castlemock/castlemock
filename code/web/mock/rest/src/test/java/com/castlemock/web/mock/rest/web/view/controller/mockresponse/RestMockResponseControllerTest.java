@@ -19,11 +19,14 @@ package com.castlemock.web.mock.rest.web.view.controller.mockresponse;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMockResponseInput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestResourceQueryParametersInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMockResponseOutput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestResourceQueryParametersOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.model.project.*;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestControllerTest;
+import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -35,7 +38,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 
 
@@ -69,16 +72,21 @@ public class RestMockResponseControllerTest extends AbstractRestControllerTest {
         final RestResource restResource = RestResourceGenerator.generateRestResource();
         final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
         final RestMockResponse restMockResponse = RestMockResponseGenerator.generateRestMockResponse();
-        when(serviceProcessor.process(any(ReadRestMockResponseInput.class))).thenReturn(ReadRestMockResponseOutput.builder()
+        final RestParameterQuery restParameterQuery = RestParameterQueryGenerator.generateRestParameterQuery();
+        when(serviceProcessor.process(isA(ReadRestMockResponseInput.class))).thenReturn(ReadRestMockResponseOutput.builder()
                 .restMockResponse(restMockResponse)
                 .build());
+        when(serviceProcessor.process(isA(ReadRestResourceQueryParametersInput.class)))
+                .thenReturn(ReadRestResourceQueryParametersOutput.builder()
+                        .queries(ImmutableSet.of(restParameterQuery))
+                        .build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT +
                 SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH +
                 RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId() + SLASH +
                 RESPONSE + SLASH + restMockResponse.getId());
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(6 + GLOBAL_VIEW_MODEL_COUNT))
+                .andExpect(MockMvcResultMatchers.model().size(7 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, restProject.getId()))

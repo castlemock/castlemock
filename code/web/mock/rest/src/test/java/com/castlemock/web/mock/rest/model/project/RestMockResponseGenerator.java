@@ -19,6 +19,8 @@ package com.castlemock.web.mock.rest.model.project;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestParameterQuery;
+import com.google.common.collect.ImmutableList;
 
 /**
  * @author Karl Dahlgren
@@ -27,12 +29,20 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus
 public class RestMockResponseGenerator {
     
     public static RestMockResponse generateRestMockResponse(){
+        final RestParameterQuery parameterQuery = new RestParameterQuery();
+        parameterQuery.setParameter("Parameter");
+        parameterQuery.setQuery("Query");
+        parameterQuery.setMatchAny(false);
+        parameterQuery.setMatchCase(false);
+        parameterQuery.setMatchRegex(false);
+
         final RestMockResponse restMockResponse = new RestMockResponse();
         restMockResponse.setName("Rest mock response name");
         restMockResponse.setBody("Rest mock response body");
         restMockResponse.setId("REST MOCK RESPONSE");
         restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
         restMockResponse.setHttpStatusCode(200);
+        restMockResponse.setParameterQueries(ImmutableList.of(parameterQuery));
         return restMockResponse;
     }
 }

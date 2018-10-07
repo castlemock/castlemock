@@ -43,6 +43,7 @@ import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.model.RestException;
+import com.castlemock.web.mock.rest.utility.RestParameterQueryValidator;
 import com.castlemock.web.mock.rest.utility.compare.RestMockResponseNameComparator;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
@@ -398,6 +399,30 @@ public abstract class AbstractRestServiceController extends AbstractController {
                     .restMethodId(restMethod.getId())
                     .currentRestMockResponseSequenceIndex(currentSequenceNumber + 1)
                     .build());
+        } else if(restMethod.getResponseStrategy().equals(RestResponseStrategy.QUERY_MATCH)){
+            mockResponse = mockResponses.stream()
+                    .filter(tmp -> RestParameterQueryValidator.validate(tmp.getParameterQueries(), pathParameters))
+                    .findFirst()
+                    .orElse(null);
+
+            if(mockResponse == null){
+                LOGGER.info("Unable to match the input Query to a response");
+                final String defaultQueryMockResponseId = restMethod.getDefaultQueryMockResponseId();
+
+                if(defaultQueryMockResponseId != null && !defaultQueryMockResponseId.isEmpty()){
+                    LOGGER.info("Use the default Query response");
+                    for (RestMockResponse tmpMockResponse : mockResponses) {
+                        if(defaultQueryMockResponseId.equals(tmpMockResponse.getId())){
+                            mockResponse = tmpMockResponse;
+                            break;
+                        }
+                    }
+
+                    if(mockResponse == null){
+                        LOGGER.error("Unable to find the default XPath response");
+                    }
+                }
+            }
         }
 
         if(mockResponse == null){

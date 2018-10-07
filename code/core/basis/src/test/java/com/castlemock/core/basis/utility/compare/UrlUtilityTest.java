@@ -20,6 +20,8 @@ package com.castlemock.core.basis.utility.compare;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Set;
+
 
 /**
  * @since 1.8
@@ -86,5 +88,21 @@ public class UrlUtilityTest {
     public void testGetPathFull(){
         Assert.assertEquals("http://castlemock.com/wsdl2.wsdl",
                 UrlUtility.getPath("http://castlemock.com/wsdl1.wsdl", "http://castlemock.com/wsdl2.wsdl"));
+    }
+
+    @Test
+    public void canGetPathParameters(){
+        final Set<String> parts = UrlUtility.getPathParameters("/rest/api/user/{userId}/");
+        Assert.assertEquals(1, parts.size());
+        Assert.assertTrue(parts.contains("userId"));
+    }
+
+    @Test
+    public void canGetPathParametersMultiple(){
+        final Set<String> parts = UrlUtility.getPathParameters("/rest/api/user/{userId}/{format}/{parameter}");
+        Assert.assertEquals(3, parts.size());
+        Assert.assertTrue(parts.contains("userId"));
+        Assert.assertTrue(parts.contains("format"));
+        Assert.assertTrue(parts.contains("parameter"));
     }
 }

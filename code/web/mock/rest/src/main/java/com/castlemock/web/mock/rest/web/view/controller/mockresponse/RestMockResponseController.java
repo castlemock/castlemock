@@ -18,7 +18,9 @@ package com.castlemock.web.mock.rest.web.view.controller.mockresponse;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMockResponseInput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestResourceQueryParametersInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMockResponseOutput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestResourceQueryParametersOutput;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -54,6 +56,14 @@ public class RestMockResponseController extends AbstractRestViewController {
                 .restMockResponse(restMockResponseId)
                 .build());
 
+
+        final ReadRestResourceQueryParametersOutput resourceQueryParameters =
+                serviceProcessor.process(ReadRestResourceQueryParametersInput.builder()
+                        .projectId(restProjectId)
+                        .applicationId(restApplicationId)
+                        .resourceId(restResourceId)
+                        .build());
+
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(REST_PROJECT_ID, restProjectId);
         model.addObject(REST_APPLICATION_ID, restApplicationId);
@@ -61,6 +71,7 @@ public class RestMockResponseController extends AbstractRestViewController {
         model.addObject(REST_METHOD_ID, restMethodId);
         model.addObject(REST_MOCK_RESPONSE, output.getRestMockResponse());
         model.addObject(REST_MOCK_RESPONSE_STATUSES, RestMockResponseStatus.values());
+        model.addObject(REST_QUERY_PARAMETERS, resourceQueryParameters.getQueries());
         return model;
     }
 

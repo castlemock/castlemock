@@ -23,6 +23,7 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -32,6 +33,8 @@ import java.util.List;
  */
 @org.springframework.stereotype.Service
 public class ReadRestMethodService extends AbstractRestProjectService implements Service<ReadRestMethodInput, ReadRestMethodOutput> {
+
+    private static final Logger LOGGER = Logger.getLogger(ReadRestMethodService.class);
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -47,6 +50,27 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
         final RestMethod restMethod = this.methodRepository.findOne(input.getRestMethodId());
         final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(input.getRestMethodId());
         restMethod.setMockResponses(mockResponses);
+
+        if(restMethod.getDefaultQueryMockResponseId() != null){
+            // Iterate through all the mocked responses to identify
+            // which has been set to be the default XPath mock response.
+            boolean defaultQueryMockResponseId = false;
+            for(RestMockResponse mockResponse : mockResponses){
+                if(mockResponse.getId().equals(restMethod.getDefaultQueryMockResponseId())){
+                    restMethod.setDefaultQueryResponseName(mockResponse.getName());
+                    defaultQueryMockResponseId = true;
+                    break;
+                }
+            }
+
+            if(!defaultQueryMockResponseId){
+                // Unable to find the default XPath mock response.
+                // Log only an error message for now.
+                LOGGER.error("Unable to find the default Query mock response with the following id: " +
+                        restMethod.getDefaultQueryMockResponseId());
+            }
+        }
+
         return createServiceResult(ReadRestMethodOutput.builder()
                 .restMethod(restMethod)
                 .build());

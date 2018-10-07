@@ -18,8 +18,8 @@ package com.castlemock.core.basis.utility.compare;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -141,6 +141,25 @@ public class UrlUtility {
         return pathParameters;
     }
 
+
+    public static Set<String> getPathParameters(final String uri){
+        return Arrays.stream(uri.split(SLASH))
+                .map(part -> {
+                    int startBracketIndex = part.indexOf(START_BRACKET);
+                    int endBracketIndex = part.indexOf(END_BRACKET);
+
+                    if(startBracketIndex != -1 && endBracketIndex != -1
+                            && startBracketIndex < endBracketIndex){
+                        part = part.replaceAll("\\{", EMPTY_STRING);
+                        part = part.replaceAll("\\}", EMPTY_STRING);
+                        return part;
+                    } else {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+    }
 
     public static String getPath(final String originalPath,
                                  final String newPath){

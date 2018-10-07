@@ -82,6 +82,18 @@
                     <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.networkdelay"/> (ms)</label></td>
                     <td class="column2"><form:input class="form-control" path="networkDelay" value="${restMethod.networkDelay}"/></td>
                 </tr>
+                <tr>
+                    <td class="column1"><spring:message code="rest.updatemethod.label.defaultqueryresponse"/></td>
+                    <td>
+                        <form:select id="defaultQueryMockResponseId" class="form-control" path="defaultQueryMockResponseId">
+                            <spring:message var="label" code="rest.updatemethod.dropdown.option.selectresponse"/>
+                            <form:option value="" label="${label}"/>
+                            <c:forEach items="${restMethod.mockResponses}" var="mockResponse">
+                                <form:option value="${mockResponse.id}" label="${mockResponse.name}"/>
+                            </c:forEach>
+                        </form:select>
+                    </td>
+                </tr>
             </table>
 
             <button class="btn btn-success" type="submit" name="submit"><i class="fas fa-check-circle"></i><spring:message code="rest.updatemethod.button.updatemethod"/></button>

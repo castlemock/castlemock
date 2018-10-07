@@ -23,8 +23,8 @@ import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.web.basis.repository.FileRepository;
 import com.castlemock.web.mock.rest.repository.project.RestMockResponseRepository;
 import org.dozer.Mapping;
@@ -86,6 +86,26 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
     @Override
     protected void checkType(RestMockResponseFile type) {
 
+    }
+
+    /**
+     * The post initialize method can be used to run functionality for a specific service. The method is called when
+     * the method {@link #initialize} has finished successful.
+     *
+     * The method is responsible to validate the imported types and make certain that all the collections are
+     * initialized.
+     * @see #initialize
+     * @since 1.4
+     */
+    @Override
+    protected void postInitiate() {
+        for(RestMockResponseFile restMockResponse : collection.values()) {
+            if(restMockResponse.getParameterQueries() == null){
+                List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryFile>();
+                restMockResponse.setParameterQueries(parameterQueries);
+                save(restMockResponse);
+            }
+        }
     }
 
     /**
@@ -182,6 +202,8 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+        @Mapping("parameterQueries")
+        private List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryFile>();
 
         @Override
         @XmlElement
@@ -268,6 +290,16 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.contentEncodings = contentEncodings;
         }
 
+        @XmlElementWrapper(name = "parameterQueries")
+        @XmlElement(name = "parameterQuery")
+        public List<RestParameterQueryFile> getParameterQueries() {
+            return parameterQueries;
+        }
+
+        public void setParameterQueries(List<RestParameterQueryFile> parameterQueries) {
+            this.parameterQueries = parameterQueries;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o)
@@ -286,6 +318,61 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         @Override
         public int hashCode() {
             return id != null ? id.hashCode() : 0;
+        }
+    }
+
+    @XmlRootElement(name = "restParameterQuery")
+    protected static class RestParameterQueryFile {
+
+        private String parameter;
+        private String query;
+        private boolean matchCase;
+        private boolean matchAny;
+        private boolean matchRegex;
+
+        @XmlElement
+        public String getParameter() {
+            return parameter;
+        }
+
+        public void setParameter(String parameter) {
+            this.parameter = parameter;
+        }
+
+        @XmlElement
+        public String getQuery() {
+            return query;
+        }
+
+        public void setQuery(String query) {
+            this.query = query;
+        }
+
+        @XmlElement
+        public boolean getMatchCase() {
+            return matchCase;
+        }
+
+        public void setMatchCase(boolean matchCase) {
+            this.matchCase = matchCase;
+        }
+
+        @XmlElement
+        public boolean getMatchAny() {
+            return matchAny;
+        }
+
+        public void setMatchAny(boolean matchAny) {
+            this.matchAny = matchAny;
+        }
+
+        @XmlElement
+        public boolean getMatchRegex() {
+            return matchRegex;
+        }
+
+        public void setMatchRegex(boolean matchRegex) {
+            this.matchRegex = matchRegex;
         }
     }
 }

@@ -41,6 +41,7 @@ public class RestMockResponse {
     private boolean usingExpressions;
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+    private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<RestParameterQuery>();
 
     @XmlElement
     public String getId() {
@@ -123,5 +124,15 @@ public class RestMockResponse {
 
     public void setContentEncodings(List<ContentEncoding> contentEncodings) {
         this.contentEncodings = contentEncodings;
+    }
+
+    @XmlElementWrapper(name = "parameterQueries")
+    @XmlElement(name = "parameterQuery")
+    public List<RestParameterQuery> getParameterQueries() {
+        return parameterQueries;
+    }
+
+    public void setParameterQueries(List<RestParameterQuery> parameterQueries) {
+        this.parameterQueries = parameterQueries;
     }
 }

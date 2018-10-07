@@ -66,6 +66,11 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#tab-body"><spring:message code="rest.createrestmockresponse.header.body"/></a></li>
                         <li><a data-toggle="tab" href="#tab-headers"><spring:message code="rest.createrestmockresponse.header.headers"/></a></li>
+                        <c:choose>
+                            <c:when test="${restQueryParameters.size() > 0}">
+                                <li><a data-toggle="tab" href="#tab-queries"><spring:message code="rest.createrestmockresponse.header.queries"/></a></li>
+                            </c:when>
+                        </c:choose>
                     </ul>
                 </div>
                 <div class="panel-body">
@@ -114,6 +119,67 @@
                                 </table>
                             </div>
                         </div>
+
+                        <c:choose>
+                            <c:when test="${restQueryParameters.size() > 0}">
+                                <div id="tab-queries" class="tab-pane fade">
+                                    <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.field.addquery"/></span></h2>
+                                    <div>
+                                        <table class="formTable">
+                                            <tr>
+                                                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.parameter"/></form:label></td>
+                                                <td>
+                                                    <select name="parameterSelect" id="parameterSelect" class="form-control">
+                                                        <c:forEach items="${restQueryParameters}" var="restQueryParameter">
+                                                            <option value="${restQueryParameter.query}" >${restQueryParameter.query}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.query"/></form:label></td>
+                                                <td class="column2"><input type="text" class="form-control" name="queryInput" id="queryInput"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.matchany"/></form:label></td>
+                                                <td class="column2"><span class="checkbox"><input type="checkbox" name="queryInput" id="matchAnyInput" class="form-control"/></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.matchcase"/></form:label></td>
+                                                <td class="column2"><span class="checkbox"><input type="checkbox" name="queryInput" id="matchCaseInput" class="form-control"/></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.matchregex"/></form:label></td>
+                                                <td class="column2"><span class="checkbox"><input type="checkbox" name="regexInput" id="regexInput" class="form-control"/></span></td>
+                                            </tr>
+
+                                        </table>
+                                        <button class="btn btn-success" onclick="addParameterQuery()" type="button"><i class="fas fa-plus-circle"></i><span><spring:message code="rest.createrestmockresponse.button.addquery"/></span></button>
+                                    </div>
+
+                                    <div class="invisible-divider"></div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover sortable" id="queryTable">
+                                            <col width="5%">
+                                            <col width="32.5%">
+                                            <col width="32.5%">
+                                            <col width="10%">
+                                            <col width="10%">
+                                            <col width="10%">
+                                            <tr>
+                                                <th></th>
+                                                <th><spring:message code="rest.createrestmockresponse.column.parameter"/></th>
+                                                <th><spring:message code="rest.createrestmockresponse.column.query"/></th>
+                                                <th><spring:message code="rest.createrestmockresponse.column.matchany"/></th>
+                                                <th><spring:message code="rest.createrestmockresponse.column.matchcase"/></th>
+                                                <th><spring:message code="rest.createrestmockresponse.column.matchregex"/></th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </c:when>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -126,6 +192,7 @@
     </section>
 </div>
 <script src=<c:url value="/resources/js/headerTable.js"/>></script>
+<script src=<c:url value="/resources/js/queryTable.js"/>></script>
 <script src=<c:url value="/resources/js/editor.js"/>></script>
 <script>
     $("#restMockResponseNameInput").attr('required', '');

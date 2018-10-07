@@ -218,6 +218,8 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         private boolean simulateNetworkDelay;
         @Mapping("networkDelay")
         private long networkDelay;
+        @Mapping("defaultQueryMockResponseId")
+        private String defaultQueryMockResponseId;
 
         @Override
         @XmlElement
@@ -318,6 +320,15 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
 
         public void setNetworkDelay(long networkDelay) {
             this.networkDelay = networkDelay;
+        }
+
+        @XmlElement
+        public String getDefaultQueryMockResponseId() {
+            return defaultQueryMockResponseId;
+        }
+
+        public void setDefaultQueryMockResponseId(String defaultQueryMockResponseId) {
+            this.defaultQueryMockResponseId = defaultQueryMockResponseId;
         }
     }
 }

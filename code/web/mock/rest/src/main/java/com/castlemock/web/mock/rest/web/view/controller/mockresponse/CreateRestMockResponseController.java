@@ -20,7 +20,9 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestMockResponseInput;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestResourceQueryParametersInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
+import com.castlemock.core.mock.rest.service.project.output.ReadRestResourceQueryParametersOutput;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,6 +59,13 @@ public class CreateRestMockResponseController extends AbstractRestViewController
                 .restResourceId(restResourceId)
                 .restMethodId(restMethodId).build());
 
+        final ReadRestResourceQueryParametersOutput resourceQueryParameters =
+                serviceProcessor.process(ReadRestResourceQueryParametersInput.builder()
+                        .projectId(restProjectId)
+                        .applicationId(restApplicationId)
+                        .resourceId(restResourceId)
+                        .build());
+
         final RestMockResponse mockResponse = new RestMockResponse();
         mockResponse.setBody(output.getRestMethod().getDefaultBody());
         mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
@@ -67,6 +76,7 @@ public class CreateRestMockResponseController extends AbstractRestViewController
         model.addObject(REST_METHOD_ID, restMethodId);
         model.addObject(REST_MOCK_RESPONSE, mockResponse);
         model.addObject(REST_MOCK_RESPONSE_STATUSES, RestMockResponseStatus.values());
+        model.addObject(REST_QUERY_PARAMETERS, resourceQueryParameters.getQueries());
         return model;
     }
 

@@ -42,10 +42,14 @@ public class RestMethod {
     private Integer currentResponseSequenceIndex = 0;
     private boolean simulateNetworkDelay;
     private long networkDelay;
+    private String defaultQueryMockResponseId;
 
     private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
     
     private String invokeAddress;
+
+    private String defaultQueryResponseName;
+
 
     @XmlElement
     public String getId() {
@@ -163,5 +167,23 @@ public class RestMethod {
 
     public void setNetworkDelay(long networkDelay) {
         this.networkDelay = networkDelay;
+    }
+
+    @XmlElement
+    public String getDefaultQueryMockResponseId() {
+        return defaultQueryMockResponseId;
+    }
+
+    public void setDefaultQueryMockResponseId(String defaultQueryMockResponseId) {
+        this.defaultQueryMockResponseId = defaultQueryMockResponseId;
+    }
+
+    @XmlElement
+    public String getDefaultQueryResponseName() {
+        return defaultQueryResponseName;
+    }
+
+    public void setDefaultQueryResponseName(String defaultQueryResponseName) {
+        this.defaultQueryResponseName = defaultQueryResponseName;
     }
 }

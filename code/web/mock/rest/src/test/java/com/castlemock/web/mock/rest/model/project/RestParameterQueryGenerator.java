@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.rest.model.project.domain;
+package com.castlemock.web.mock.rest.model.project;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+
+import com.castlemock.core.mock.rest.model.project.domain.RestParameterQuery;
 
 /**
- * The response strategy defines how mocked instances should decide which response
- * should be returned to the consumer.
  * @author Karl Dahlgren
  * @since 1.0
  */
-@XmlType
-@XmlEnum(String.class)
-public enum RestResponseStrategy {
+public class RestParameterQueryGenerator {
+    
+    public static RestParameterQuery generateRestParameterQuery(){
+        final RestParameterQuery parameterQuery = new RestParameterQuery();
+        parameterQuery.setParameter("Parameter");
+        parameterQuery.setQuery("Query");
+        parameterQuery.setMatchAny(false);
+        parameterQuery.setMatchCase(false);
+        parameterQuery.setMatchRegex(false);
 
-    RANDOM, SEQUENCE, QUERY_MATCH
-
+        return parameterQuery;
+    }
 }

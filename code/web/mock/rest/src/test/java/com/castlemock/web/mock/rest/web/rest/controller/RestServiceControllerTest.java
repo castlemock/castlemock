@@ -17,18 +17,16 @@
 package com.castlemock.web.mock.rest.web.rest.controller;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
-import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.service.project.input.IdentifyRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.web.AbstractControllerTest;
 import com.castlemock.web.mock.rest.web.mock.controller.RestServiceController;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -71,11 +69,10 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private static final String APPLICATION_JSON = "application/json";
     private static final String CONTENT_TYPE_HEADER = "Content-type";
     private static final String ACCEPT_HEADER = "Accept";
-    private static final Map<String, String> PATH_PARAMETERS = new HashMap<>();
+    private static final Map<String, String> PATH_PARAMETERS = ImmutableMap.of("Path", "Value");
+    private static final Map<String, String> NO_MATCHING_PATH_PARAMETERS = ImmutableMap.of("Path", "OtherValue");
 
-    static {
-        PATH_PARAMETERS.put("Path", "Valud");
-    }
+
 
     private static final String REQUEST_BODY = "<request>\n" +
             "\t<variable>Value 1</variable>\n" +
@@ -84,6 +81,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private static final String RESPONSE_BODY = "<response>\n" +
             "\t<variable>Value 1</variable>\n" +
             "</response>";
+
+    private static final String QUERY_DEFAULT_RESPONSE_BODY = "<response>\n" +
+            "\t<variable>Default value 1</variable>\n" +
+            "</response>";
+
 
 
     @Test
@@ -149,6 +151,67 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
         Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
     }
+
+    @Test
+    public void testMockedQuery(){
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestMethod restMethod = getQueryRestMethod();
+
+        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
+
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+
+        final ResponseEntity responseEntity = restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
+        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+    }
+
+    @Test
+    public void testMockedQueryDefaultMockResponse(){
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestMethod restMethod = getQueryRestMethod();
+
+        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(NO_MATCHING_PATH_PARAMETERS)
+                .build();
+
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+
+        final ResponseEntity responseEntity = restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
+        Assert.assertEquals(QUERY_DEFAULT_RESPONSE_BODY, responseEntity.getBody());
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+    }
+
 
     @Test
     public void testEcho(){
@@ -295,6 +358,66 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         restMethod.setSimulateNetworkDelay(false);
         restMethod.setStatus(RestMethodStatus.MOCKED);
         restMethod.setMockResponses(Arrays.asList(restMockResponse));
+
+        return restMethod;
+    }
+
+    private RestMethod getQueryRestMethod(){
+
+        final HttpHeader contentTypeHeader = new HttpHeader();
+        contentTypeHeader.setName(CONTENT_TYPE_HEADER);
+        contentTypeHeader.setValue(APPLICATION_XML);
+
+        final HttpHeader acceptHeader = new HttpHeader();
+        acceptHeader.setName(ACCEPT_HEADER);
+        acceptHeader.setValue(APPLICATION_XML);
+
+        final RestParameterQuery parameterQuery = new RestParameterQuery();
+        parameterQuery.setParameter("Path");
+        parameterQuery.setQuery("Value");
+        parameterQuery.setMatchAny(false);
+        parameterQuery.setMatchCase(false);
+        parameterQuery.setMatchRegex(false);
+
+        // Mock
+        final RestMockResponse restMockResponse1 = new RestMockResponse();
+        restMockResponse1.setBody(RESPONSE_BODY);
+        restMockResponse1.setContentEncodings(new ArrayList<>());
+        restMockResponse1.setHttpHeaders(Arrays.asList(contentTypeHeader, acceptHeader));
+        restMockResponse1.setHttpStatusCode(200);
+        restMockResponse1.setId("MockResponseId1");
+        restMockResponse1.setName("Mocked response 1");
+        restMockResponse1.setStatus(RestMockResponseStatus.ENABLED);
+        restMockResponse1.setUsingExpressions(false);
+        restMockResponse1.setParameterQueries(ImmutableList.of(parameterQuery));
+
+        final RestMockResponse restMockResponse2 = new RestMockResponse();
+        restMockResponse2.setBody(QUERY_DEFAULT_RESPONSE_BODY);
+        restMockResponse2.setContentEncodings(new ArrayList<>());
+        restMockResponse2.setHttpHeaders(Arrays.asList(contentTypeHeader, acceptHeader));
+        restMockResponse2.setHttpStatusCode(200);
+        restMockResponse2.setId("MockResponseId2");
+        restMockResponse2.setName("Mocked response 2");
+        restMockResponse2.setStatus(RestMockResponseStatus.ENABLED);
+        restMockResponse2.setUsingExpressions(false);
+        restMockResponse2.setParameterQueries(ImmutableList.of());
+
+
+        final RestMethod restMethod = new RestMethod();
+        restMethod.setCurrentResponseSequenceIndex(0);
+        restMethod.setForwardedEndpoint(FORWARD_ENDPOINT);
+        restMethod.setHttpMethod(HttpMethod.GET);
+        restMethod.setId(METHOD_ID);
+        restMethod.setInvokeAddress("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + REST + SLASH +
+                PROJECT + SLASH + PROJECT_ID + SLASH + APPLICATION + SLASH + APPLICATION_ID + "/method/{variable}");
+        restMethod.setName("Method name");
+        restMethod.setNetworkDelay(0);
+        restMethod.setResponseStrategy(RestResponseStrategy.SEQUENCE);
+        restMethod.setSimulateNetworkDelay(false);
+        restMethod.setStatus(RestMethodStatus.MOCKED);
+        restMethod.setMockResponses(Arrays.asList(restMockResponse1, restMockResponse2));
+        restMethod.setDefaultQueryResponseName("Mocked response 2");
+        restMethod.setDefaultQueryMockResponseId("MockResponseId2");
 
         return restMethod;
     }
