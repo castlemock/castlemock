@@ -149,4 +149,29 @@ public class CoreRestController extends AbstractRestController {
         }
     }
 
+    /**
+     * The REST operations exports a project.
+     * @param type The type of the project.
+     * @param projectId The id of the project that will be exported.
+     * @param httpServletRequest The incoming HTTP servlet request.
+     * @param httpServletResponse The outgoing HTTP servlet response.
+     * @return A HTTP response.
+     */
+    @ApiOperation(value = "Export project",response = Project.class,
+            notes = "Export project. Required authorization: Reader, Modifier or Admin.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully exported project")
+    })
+    @RequestMapping(method = RequestMethod.GET, value = "/project/{type}/{projectId}/export")
+    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    String exportProject(
+            @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
+            @PathVariable("type") final String type,
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable("projectId") final String projectId,
+            final HttpServletRequest httpServletRequest,
+            final HttpServletResponse httpServletResponse) {
+        return projectServiceFacade.exportProject(type, projectId);
+    }
 }

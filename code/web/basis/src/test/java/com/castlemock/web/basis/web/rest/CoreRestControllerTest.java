@@ -30,10 +30,12 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -99,6 +101,23 @@ public class CoreRestControllerTest extends AbstractControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         Mockito.verify(projectServiceComponent, Mockito.times(1)).delete("rest", "2");
+    }
+
+    @Test
+    public void exportRestProjectTest() throws Exception {
+        final String exported = "This is an exported project";
+        final String serviceUrl = BASE_SERVICE_URL + "/project/rest/2/export";
+
+        when(projectServiceComponent.exportProject(Mockito.anyString(), Mockito.anyString())).thenReturn(exported);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(serviceUrl);
+        final MvcResult result = mockMvc.perform(message)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        final String content = result.getResponse().getContentAsString();
+
+        assertEquals(exported, content);
+        Mockito.verify(projectServiceComponent, Mockito.times(1)).exportProject("rest", "2");
     }
 
 
