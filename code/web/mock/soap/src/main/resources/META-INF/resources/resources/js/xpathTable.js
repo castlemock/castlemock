@@ -28,7 +28,7 @@ function findXpath(xpathName){
     return -1;
 }
 
-function alignTableRowValues(){
+function alignXpathTableRowValues(){
     var xpathTable = document.getElementById("xpathTable");
     for (var index = 1, row; row = xpathTable.rows[index]; index++) {
         var nameCell = row.cells[1];
@@ -45,7 +45,7 @@ function addXpath() {
     var xpath = document.getElementById("xpathInput").value;
 
     var index = findXpath(xpath);
-    if(index != -1){
+    if(index !== -1){
         return;
     }
 
@@ -56,12 +56,12 @@ function addXpath() {
 
     xpathSelected.innerHTML = "<div class=\"delete\" onclick=\"removeXpath(\'" + xpath + "')\" \>";
     xpathColumn.innerHTML = "<input name=\"xpathExpressions[" + insertIndex + "].expression\" value=\"" + xpath + "\" type=\"hidden\" \> " + xpath;
-    alignTableRowValues();
+    alignXpathTableRowValues();
 }
 
 function removeXpath(deleteXPath) {
     var xpathTable = document.getElementById("xpathTable");
     var index = findXpath(deleteXPath);
     xpathTable.deleteRow(index);
-    alignTableRowValues();
+    alignXpathTableRowValues();
 }
