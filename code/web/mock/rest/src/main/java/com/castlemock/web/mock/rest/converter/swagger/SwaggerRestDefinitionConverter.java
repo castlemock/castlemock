@@ -116,7 +116,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         }
 
         final RestApplication restApplication = new RestApplication();
-        restApplication.setName(swagger.getHost());
+        restApplication.setName(this.getApplicationName(swagger));
 
         final String forwardAddress = getForwardAddress(swagger);
         final Map<String, Model> definitions = swagger.getDefinitions();
@@ -658,5 +658,18 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         return Math.min(MAX_RESPONSE_ITEMS, maxItemCount);
     }
 
+    private String getApplicationName(final Swagger swagger){
+        if(swagger.getInfo() != null &&
+                swagger.getInfo().getTitle() != null){
+            return swagger.getInfo().getTitle();
+        } else if(swagger.getHost() != null){
+            return swagger.getHost();
+        } else if(swagger.getBasePath() != null){
+            return swagger.getBasePath();
+        }
+
+        throw new IllegalArgumentException("Unable to extract application name " +
+                "from the following swagger config: " + swagger);
+    }
 
 }
