@@ -41,7 +41,7 @@ public class SwaggerRestDefinitionConverterTest {
 
         final RestApplication restApplication = restApplications.get(0);
 
-        Assert.assertEquals("castlemock.com", restApplication.getName());
+        Assert.assertEquals("Castle Mock Swagger", restApplication.getName());
         Assert.assertNull(restApplication.getId());
         Assert.assertNull(restApplication.getProjectId());
         Assert.assertEquals(2, restApplication.getResources().size());
