@@ -274,12 +274,15 @@ public class SoapPortConverter {
                         .findFirst()
                         .orElseThrow(() -> new IllegalArgumentException("Unable to find any output message part")));
 
-        final SoapOperationIdentifier operationIdentifier =
+        final SoapOperationIdentifier operationRequestIdentifier =
                 createSoapOperationIdentifier(inputMessagePart, namespaces);
+
+        final SoapOperationIdentifier operationResponseIdentifier =
+                createSoapOperationIdentifier(outputMessagePart, namespaces);
 
         final SoapOperation soapOperation = new SoapOperation();
 
-        soapOperation.setOperationIdentifier(operationIdentifier);
+        soapOperation.setOperationIdentifier(operationRequestIdentifier);
         soapOperation.setName(bindingOperation.getName());
         soapOperation.setHttpMethod(HttpMethod.POST);
         soapOperation.setStatus(SoapOperationStatus.MOCKED);
@@ -288,8 +291,7 @@ public class SoapPortConverter {
         soapOperation.setOriginalEndpoint(address.getLocation());
         soapOperation.setSoapVersion(address.getVersion());
         soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
-        soapOperation.setDefaultBody(generateDefaultBody(outputMessagePart.getElement().getLocalName(),
-                outputMessagePart.getElement().getNamespace().get()));
+        soapOperation.setDefaultBody(generateDefaultBody(operationResponseIdentifier));
         soapOperation.setCurrentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX);
         soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
 
@@ -328,17 +330,16 @@ public class SoapPortConverter {
 
     /**
      * The method provides the functionality to generate a new mocked response
-     * @param name The operation contains all the information that is needed to compose a operation default body
-     * @param targetNamespace The target namespace that the response will use
      * @return A string value of the response
      */
-    private static String generateDefaultBody(final String name, final String targetNamespace){
+    private static String generateDefaultBody(final SoapOperationIdentifier operationResponseIdentifier){
         final String prefix = "web";
         return "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:" +
-                prefix + "=\"" + targetNamespace + "\">\n" +
+                prefix + "=\"" + operationResponseIdentifier.getNamespace() + "\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
-                "      <" + prefix + ":" + name + ">?</" + prefix + ":" + name + ">\n" +
+                "      <" + prefix + ":" + operationResponseIdentifier.getName() + ">?</" + prefix + ":" +
+                operationResponseIdentifier.getName() + ">\n" +
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
     }
