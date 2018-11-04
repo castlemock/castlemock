@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum(String.class)
 public enum SoapVersion {
 
-    SOAP11("SOAP 1.1", "application/xml"), SOAP12("SOAP 1.2", "application/soap+xml");
+    SOAP11("SOAP 1.1", "text/xml"), SOAP12("SOAP 1.2", "application/soap+xml");
 
     private String name;
     private String contextType;

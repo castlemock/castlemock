@@ -37,6 +37,7 @@ import com.castlemock.web.mock.soap.support.MtomUtility;
 import com.castlemock.web.mock.soap.support.SoapUtility;
 import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparator;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     private static final Random RANDOM = new Random();
     private static final String SOAP = "soap";
     private static final int ERROR_CODE = 500;
+    private static final String DEFAULT_CHAR_SET = "charset=\"utf-8\"";
     private static final Logger LOGGER = Logger.getLogger(AbstractSoapServiceController.class);
 
     private static final SoapMockResponseNameComparator MOCK_RESPONSE_NAME_COMPARATOR =
@@ -179,7 +181,11 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletResponse The outgoing HTTP servlet response
      * @return Returns the response as an String
      */
-    protected ResponseEntity process(final String soapProjectId, final String soapPortId, final SoapOperation soapOperation, final SoapRequest request, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity process(final String soapProjectId,
+                                     final String soapPortId,
+                                     final SoapOperation soapOperation,
+                                     final SoapRequest request,
+                                     final HttpServletResponse httpServletResponse){
         Preconditions.checkNotNull(request, "Request cannot be null");
         if(soapOperation == null){
             throw new SoapException("Soap operation could not be found");
@@ -200,11 +206,11 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 response = mockResponse(request, soapProjectId, soapPortId, soapOperation);
             }
 
-            HttpHeaders responseHeaders = new HttpHeaders();
+            final HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.put(CONTENT_TYPE,
+                    ImmutableList.of(request.getSoapVersion().getContextType() + "; " + DEFAULT_CHAR_SET));
             for(HttpHeader httpHeader : response.getHttpHeaders()){
-                List<String> headerValues = new LinkedList<String>();
-                headerValues.add(httpHeader.getValue());
-                responseHeaders.put(httpHeader.getName(), headerValues);
+                responseHeaders.put(httpHeader.getName(), ImmutableList.of(httpHeader.getValue()));
             }
 
             if(soapOperation.getSimulateNetworkDelay() &&
@@ -216,7 +222,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 }
             }
 
-            return new ResponseEntity<String>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
+            return new ResponseEntity<String>(response.getBody(), responseHeaders,
+                    HttpStatus.valueOf(response.getHttpStatusCode()));
         } finally{
             if(event != null){
                 event.finish(response);
