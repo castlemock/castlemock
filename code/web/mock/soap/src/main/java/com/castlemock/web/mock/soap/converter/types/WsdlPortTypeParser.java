@@ -1,0 +1,92 @@
+/*
+ * Copyright 2018 Karl Dahlgren
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.castlemock.web.mock.soap.converter.types;
+
+import com.castlemock.web.mock.soap.support.DocumentUtility;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public final class WsdlPortTypeParser extends WsdlParser {
+
+    private static final String WSDL_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/";
+    private static final String PORT_TYPE_NAMESPACE = "portType";
+    private static final String NAME_NAMESPACE = "name";
+    private static final String INPUT_NAMESPACE = "input";
+    private static final String OUTPUT_NAMESPACE = "output";
+    private static final String MESSAGE_NAMESPACE = "message";
+    private static final String OPERATION_NAMESPACE = "operation";
+
+    public Set<PortType> parsePortTypes(final Document document){
+        final NodeList portTypesNodeList = document.getElementsByTagNameNS(WSDL_NAMESPACE, PORT_TYPE_NAMESPACE);
+        final List<Element> portTypesElement = DocumentUtility.getElements(portTypesNodeList);
+        return portTypesElement.stream()
+                .map(this::parsePortType)
+                .collect(Collectors.toSet());
+    }
+
+    private PortType parsePortType(final Element portTypeElement){
+        final NodeList operationNodeList = portTypeElement.getElementsByTagNameNS(WSDL_NAMESPACE, OPERATION_NAMESPACE);
+        final List<Element> operationElements = DocumentUtility.getElements(operationNodeList);
+        final String name = DocumentUtility.getAttribute(portTypeElement, NAME_NAMESPACE);
+        final Set<PortTypeOperation> operations = operationElements.stream()
+                .map(this::parseOperation)
+                .collect(Collectors.toSet());
+        return PortType.builder()
+                .name(name)
+                .operations(operations)
+                .build();
+    }
+
+    private PortTypeOperation parseOperation(final Element operationElement){
+        final String name = DocumentUtility.getAttribute(operationElement, NAME_NAMESPACE);
+        return PortTypeOperation.builder()
+                .name(name)
+                .input(parseInput(operationElement))
+                .output(parseOutput(operationElement))
+                .build();
+    }
+
+    private PortTypeOperationInput parseInput(final Element operationElement){
+        final Attribute message = DocumentUtility.getElement(operationElement, WSDL_NAMESPACE, INPUT_NAMESPACE)
+                .map(element -> this.getAttribute(element, MESSAGE_NAMESPACE))
+                .map(optional -> optional.orElse(null))
+                .orElse(null);
+
+        return PortTypeOperationInput.builder()
+                .message(message)
+                .build();
+    }
+
+    private PortTypeOperationOutput parseOutput(final Element operationElement){
+        final Optional<Element> outputElement =
+                DocumentUtility.getElement(operationElement, WSDL_NAMESPACE, OUTPUT_NAMESPACE);
+
+        final String message = outputElement
+                .map(element -> DocumentUtility.getAttribute(element, MESSAGE_NAMESPACE))
+                .orElse(null);
+
+        return PortTypeOperationOutput.builder()
+                .message(message)
+                .build();
+    }
+}

@@ -67,7 +67,7 @@ public class SoapPortConverterTest {
             final Set<SoapPort> soapPorts = result.getPorts();
 
             final SoapPort soapPort = soapPorts.stream().findFirst().get();
-            this.verify(soapPort, "ServiceExample1");
+            this.verify(soapPort, "ServiceExample1", SoapVersion.SOAP11);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -94,7 +94,7 @@ public class SoapPortConverterTest {
             final Set<SoapPort> soapPorts = result.getPorts();
 
             final SoapPort soapPort = soapPorts.stream().findFirst().get();
-            this.verify(soapPort, "ServiceExample1");
+            this.verify(soapPort, "ServiceExample1", SoapVersion.SOAP11);
 
             Mockito.verify(this.fileManager, Mockito.times(1)).uploadFiles(wsdlLocation);
 
@@ -161,9 +161,9 @@ public class SoapPortConverterTest {
                     .findFirst()
                     .get();
 
-            this.verify(serviceExample1, "ServiceExample1");
-            this.verify(serviceExample2, "ServiceExample2");
-            this.verify(serviceExample3, "ServiceExample3");
+            this.verify(serviceExample1, "ServiceExample1" ,SoapVersion.SOAP11);
+            this.verify(serviceExample2, "ServiceExample2", SoapVersion.SOAP11);
+            this.verify(serviceExample3, "ServiceExample3", SoapVersion.SOAP11);
 
             Mockito.verify(this.fileManager, Mockito.times(1)).uploadFiles(wsdlLocation);
             Mockito.verify(this.fileManager, Mockito.times(1)).uploadFiles(externalWsdlLocation2);
@@ -174,9 +174,78 @@ public class SoapPortConverterTest {
         }
     }
 
+    @Test
+    public void testGetSoapPortsMultipleInputParts() {
+        try {
+            final List<File> files = this.loadFile("ServiceExample4.wsdl");
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
 
+            Assert.assertEquals(1, results.size());
+
+            SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
+                    .getName().equals("ServiceExample4.wsdl"))
+                    .findFirst()
+                    .get();
+
+            Assert.assertEquals(SoapResourceType.WSDL, result.getResourceType());
+            final Set<SoapPort> soapPorts = result.getPorts();
+
+            final SoapPort soapPort = soapPorts.stream().findFirst().get();
+            this.verify(soapPort, "ServiceExample4", SoapVersion.SOAP11);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetSoapPortsWithoutBodyParts() {
+        try {
+            final List<File> files = this.loadFile("ServiceExample5.wsdl");
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
+
+            Assert.assertEquals(1, results.size());
+
+            SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
+                    .getName().equals("ServiceExample5.wsdl"))
+                    .findFirst()
+                    .get();
+
+            Assert.assertEquals(SoapResourceType.WSDL, result.getResourceType());
+            final Set<SoapPort> soapPorts = result.getPorts();
+
+            final SoapPort soapPort = soapPorts.stream().findFirst().get();
+            this.verify(soapPort, "ServiceExample5", SoapVersion.SOAP11);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetSoapPortsSoap12() {
+        try {
+            final List<File> files = this.loadFile("ServiceExampleSoap12.wsdl");
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
+
+            Assert.assertEquals(1, results.size());
+
+            SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
+                    .getName().equals("ServiceExampleSoap12.wsdl"))
+                    .findFirst()
+                    .get();
+
+            Assert.assertEquals(SoapResourceType.WSDL, result.getResourceType());
+            final Set<SoapPort> soapPorts = result.getPorts();
+
+            final SoapPort soapPort = soapPorts.stream().findFirst().get();
+            this.verify(soapPort, "ServiceExampleSoap12", SoapVersion.SOAP12);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+    
     private void verify(final SoapPort soapPort,
-                        final String name){
+                        final String name,
+                        final SoapVersion soapVersion){
         Assert.assertEquals(name + ".Endpoint", soapPort.getName());
         Assert.assertEquals(name + ".Endpoint", soapPort.getUri());
         Assert.assertEquals(1, soapPort.getOperations().size());
@@ -186,7 +255,7 @@ public class SoapPortConverterTest {
         Assert.assertEquals(name, soapOperation.getName());
         Assert.assertEquals(SoapResponseStrategy.RANDOM, soapOperation.getResponseStrategy());
         Assert.assertEquals(SoapOperationStatus.MOCKED, soapOperation.getStatus());
-        Assert.assertEquals(SoapVersion.SOAP11, soapOperation.getSoapVersion());
+        Assert.assertEquals(soapVersion, soapOperation.getSoapVersion());
         Assert.assertEquals(HttpMethod.POST, soapOperation.getHttpMethod());
 
         SoapOperationIdentifier operationIdentifier = soapOperation.getOperationIdentifier();

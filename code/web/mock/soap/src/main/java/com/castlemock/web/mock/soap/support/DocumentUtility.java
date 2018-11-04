@@ -24,10 +24,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DocumentUtility {
 
@@ -57,6 +54,23 @@ public class DocumentUtility {
                 String name = element.getAttribute(NAME_NAMESPACE);
                 if(name.equals(identifier)){
                     return element;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public static Element findElement(final Element element, final String namespace,
+                                      final String type, final String identifier){
+        final NodeList nodeList = element.getElementsByTagNameNS(namespace, type);
+        for (int index = 0; index < nodeList.getLength(); index++) {
+            Node node = nodeList.item(index);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element subElement = (Element) node;
+                String name = subElement.getAttribute(NAME_NAMESPACE);
+                if(name.equals(identifier)){
+                    return subElement;
                 }
             }
         }
@@ -125,6 +139,24 @@ public class DocumentUtility {
     }
 
 
+    public static List<Element> getElements(final Element element,
+                                            final String namespace,
+                                            final String type){
+        final NodeList nodeList = element.getElementsByTagNameNS(namespace, type);
+        return getElements(nodeList);
+    }
+
+    public static Optional<Element> getElement(final Element element,
+                                               final String namespace,
+                                               final String type){
+        final NodeList nodeList = element.getElementsByTagNameNS(namespace, type);
+
+        if(nodeList.getLength() == 0){
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(getElements(nodeList).get(0));
+    }
 
     public static List<Element> getElements(final NodeList nodeList){
         final List<Element> elements = new ArrayList<>();

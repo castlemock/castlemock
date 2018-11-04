@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Untitled" targetNamespace="http://Services/ServiceExample" xmlns:ns="http://Services/ServiceExample" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ServiceExample4="http://Services/ServiceExample/ServiceExample/1/Schema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://Services/ServiceExample/ServiceExample/1/Schema" xmlns:xs="http://www.w4.org/2001/XMLSchema">
+            <xs:include schemaLocation="http://schema/ServiceExample.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="ServiceExample">
+        <wsdl:port binding="ns:ServiceExample4.EndpointBinding" name="ServiceExample4.Endpoint">
+            <soap:address location="https://localhost:8444/ESB/Services/ServiceExample"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="ServiceExamplePortType">
+        <wsdl:operation name="ServiceExample4">
+            <wsdl:input message="ns:ServiceExampleRequest4"/>
+            <wsdl:output message="ns:ServiceExampleResponse4"/>
+            <wsdl:fault message="ns:ServiceExampleFault" name="fault1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ServiceExample4.EndpointBinding" type="ns:ServiceExamplePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ServiceExample4">
+            <soap:operation soapAction="ServiceExample" style="document"/>
+            <wsdl:input>
+                <soap:header message="" part="header" use="literal"/>
+                <soap:body parts="body" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="Response" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="ServiceExampleRequest4">
+        <wsdl:part element="ServiceExample4:Header" name="header"/>
+        <wsdl:part element="ServiceExample4:Request" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="ServiceExampleResponse4">
+        <wsdl:part element="ServiceExample4:Response" name="Response"/>
+    </wsdl:message>
+    <wsdl:message name="ServiceExampleFault">
+        <wsdl:part element="ServiceExample4:Fault" name="Fault"/>
+    </wsdl:message>
+</wsdl:definitions>

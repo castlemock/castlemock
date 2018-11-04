@@ -20,12 +20,13 @@ import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.utility.compare.UrlUtility;
 import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.web.basis.manager.FileManager;
+import com.castlemock.web.mock.soap.converter.types.*;
 import com.castlemock.web.mock.soap.support.DocumentUtility;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -42,22 +43,14 @@ public class SoapPortConverter {
     private static final Integer DEFAULT_HTTP_STATUS_CODE = 200;
 
     private static final String WSDL_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/";
-    private static final String SOAP_11_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/soap/";
-    private static final String SOAP_12_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/soap12/";
-
-    private static final String PORT_NAMESPACE = "port";
-    private static final String NAME_NAMESPACE = "name";
-    private static final String ELEMENT_NAMESPACE = "element";
-    private static final String BINDING_NAMESPACE = "binding";
-    private static final String SERVICE_NAMESPACE = "service";
     private static final String IMPORT_NAMESPACE = "import";
-    private static final String TYPE_NAMESPACE = "type";
     private static final String LOCATION_NAMESPACE = "location";
-    private static final String PORT_TYPE_NAMESPACE = "portType";
-    private static final String OPERATION_NAMESPACE = "operation";
-    private static final String PART_NAMESPACE = "part";
-    private static final String INPUT_NAMESPACE = "input";
-    private static final String MESSAGE_NAMESPACE = "message";
+
+    private static final WsdlBindingParser BINDING_PARSER = new WsdlBindingParser();
+    private static final WsdlMessageParser MESSAGE_PARSER = new WsdlMessageParser();
+    private static final WsdlServiceParser SERVICE_PARSER = new WsdlServiceParser();
+    private static final WsdlPortTypeParser PORT_TYPE_PARSER = new WsdlPortTypeParser();
+    private static final WsdlNamespaceParser NAMESPACE_PARSER = new WsdlNamespaceParser();
 
     @Autowired
     private FileManager fileManager;
@@ -180,165 +173,140 @@ public class SoapPortConverter {
      * @return A list of SOAP ports
      */
     private Set<SoapPort> parseDocument(final Document document,
-                               final boolean generateResponse){
-        final Set<SoapPort> soapPorts = new HashSet<>();
-        final NodeList serviceNodeList =
-                document.getDocumentElement().getElementsByTagNameNS(WSDL_NAMESPACE, SERVICE_NAMESPACE);
-        final List<Element> serviceElements = DocumentUtility.getElements(serviceNodeList);
-        for (Element serviceElement : serviceElements) {
-            final NodeList portNodeList = serviceElement.getElementsByTagNameNS(WSDL_NAMESPACE, PORT_NAMESPACE);
-            final List<Element> portElements = DocumentUtility.getElements(portNodeList);
-            for (Element portElement : portElements) {
-                String soapOperationAddress = DocumentUtility.extractSoapAddress(portElement, SOAP_11_NAMESPACE);
-                SoapVersion soapOperationVersion = SoapVersion.SOAP11;
+                                        final boolean generateResponse){
 
-                if(soapOperationAddress == null){
-                    soapOperationAddress = DocumentUtility.extractSoapAddress(portElement, SOAP_12_NAMESPACE);
-                    soapOperationVersion = SoapVersion.SOAP12;
-                }
-                if(soapOperationAddress == null){
-                    // The port element is not a SOAP port
-                    continue;
-                }
 
-                final String portName = DocumentUtility.getAttribute(portElement, NAME_NAMESPACE);
-                final String portBinding = DocumentUtility.getAttribute(portElement, BINDING_NAMESPACE);
-                final List<SoapOperation> soapOperations =
-                        getSoapOperations(document, portBinding,
-                                soapOperationAddress, soapOperationVersion,
-                                generateResponse);
-                final SoapPort soapPort = new SoapPort();
-                soapPort.setName(portName);
-                soapPort.setOperations(soapOperations);
-                soapPort.setUri(portName);
-                soapPorts.add(soapPort);
+        final Set<Binding> bindings = BINDING_PARSER.parseBindings(document);
+        final Set<Message> messages = MESSAGE_PARSER.parseMessages(document);
+        final Set<Service> services = SERVICE_PARSER.parseServices(document);
+        final Set<PortType> portTypes = PORT_TYPE_PARSER.parsePortTypes(document);
+        final Set<Namespace> namespaces = NAMESPACE_PARSER.parseNamespaces(document);
 
-            }
+        final Set<SoapPort> ports = services.stream()
+                .map(Service::getPorts)
+                .flatMap(Collection::stream)
+                .map(servicePort -> createSoapPort(servicePort, bindings, portTypes, messages, namespaces))
+                .collect(Collectors.toSet());
+
+        if(generateResponse){
+            ports.stream()
+                    .map(SoapPort::getOperations)
+                    .flatMap(List::stream)
+                    .forEach(operation -> operation.getMockResponses()
+                            .add(createSoapMockResponse(operation.getDefaultBody())));
         }
 
-        return soapPorts;
+        return ports;
+    }
+
+    private SoapPort createSoapPort(final ServicePort servicePort,
+                                    final Set<Binding> bindings,
+                                    final Set<PortType> portTypes,
+                                    final Set<Message> messages,
+                                    final Set<Namespace> namespaces){
+
+        final Binding binding = bindings.stream()
+                .filter(tmp -> servicePort.getBinding().getLocalName().equals(tmp.getName()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find the binding"));
+
+        final PortType portType = portTypes.stream()
+                .filter(tmp -> binding.getType().getLocalName().equals(tmp.getName()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find the port type"));
+
+        final List<SoapOperation> operations = binding.getOperations().stream()
+                .map(b -> Maps.immutableEntry(
+                        b,
+                        portType.getOperations().stream()
+                                .filter(p -> b.getName().equals(p.getName()))
+                                .findFirst()
+                                .orElseThrow(() -> new IllegalArgumentException("Unable to map"))))
+                .map(entry -> createSoapOperation(
+                        entry.getKey(),
+                        entry.getValue(),
+                        messages,
+                        namespaces,
+                        servicePort.getAddress()))
+                .collect(Collectors.toList());
+
+        final SoapPort soapPort = new SoapPort();
+        soapPort.setName(servicePort.getName());
+        soapPort.setOperations(operations);
+        soapPort.setUri(servicePort.getName());
+        return soapPort;
+    }
+
+    private SoapOperation createSoapOperation(final BindingOperation bindingOperation,
+                                              final PortTypeOperation portTypeOperation,
+                                              final Set<Message> messages,
+                                              final Set<Namespace> namespaces,
+                                              final ServicePortAddress address){
+        final Message inputMessage = messages.stream()
+                .filter(message -> portTypeOperation.getInput().getMessage().getLocalName().equals(message.getName()))
+                .findFirst()
+                .orElseThrow((() -> new IllegalArgumentException("Unable to find the input message")));
+
+        final MessagePart inputMessagePart = bindingOperation.getInput().getBody()
+                .map(BindingOperationInputBody::getParts)
+                .map(Optional::get)
+                .map(parts -> inputMessage.getParts().stream()
+                        .filter(messagePart -> parts.equals(messagePart.getName()))
+                        .findFirst()
+                        .orElse(null))
+                .orElse(inputMessage.getParts().stream()
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("Unable to find any message part")));
+
+        final SoapOperationIdentifier operationIdentifier =
+                createSoapOperationIdentifier(inputMessagePart, namespaces);
+
+        final SoapOperation soapOperation = new SoapOperation();
+
+        soapOperation.setOperationIdentifier(operationIdentifier);
+        soapOperation.setName(bindingOperation.getName());
+        soapOperation.setHttpMethod(HttpMethod.POST);
+        soapOperation.setOperationIdentifier(operationIdentifier);
+        soapOperation.setStatus(SoapOperationStatus.MOCKED);
+        soapOperation.setResponseStrategy(SoapResponseStrategy.RANDOM);
+        soapOperation.setForwardedEndpoint(address.getLocation());
+        soapOperation.setOriginalEndpoint(address.getLocation());
+        soapOperation.setSoapVersion(address.getVersion());
+        soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
+        soapOperation.setDefaultBody(generateDefaultBody(operationIdentifier.getName(), operationIdentifier.getNamespace()));
+        soapOperation.setCurrentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX);
+        soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
+
+        return soapOperation;
     }
 
 
 
+    private static SoapOperationIdentifier createSoapOperationIdentifier(final MessagePart messagePart,
+                                                                         final Set<Namespace> namespaces){
+        final Attribute elementAttribute = messagePart.getElement();
 
-    /**
-     * The method provides the functionality to extract SOAP operation from a document
-     * @param document The document which will be parsed
-     * @param soapPortBinding The SOAP port binding which the operations belongs to
-     * @param soapOperationAddress The address that will be assigned as the default address to the operations
-     * @param soapVersion The SOAP operation version (SOAP 11 or SOAP 12)
-     * @param generateResponse Boolean value determining if a response should be generated for each extracted
-     *                         operation.
-     * @return A list of extracted SOAP operations
-     */
-    private List<SoapOperation> getSoapOperations(final Document document,
-                                                         final String soapPortBinding,
-                                                         final String soapOperationAddress,
-                                                         final SoapVersion soapVersion,
-                                                         final boolean generateResponse){
-        final List<SoapOperation> soapOperations = new LinkedList<SoapOperation>();
-        final Element bindingElement = DocumentUtility.findElement(document, WSDL_NAMESPACE, BINDING_NAMESPACE, soapPortBinding);
-        if(bindingElement == null){
-            return soapOperations;
-        }
-        final String bindingType = DocumentUtility.getAttribute(bindingElement, TYPE_NAMESPACE);
+        final String name = elementAttribute.getLocalName();
+        final String namespace = elementAttribute.getNamespace()
+                .map(namespaceName -> namespaces.stream()
+                        .filter(namespace1 -> namespace1.getLocalName().equals(namespaceName))
+                        .findFirst()
+                        .map(Namespace::getValue).orElse(null))
+                .orElse(null);
 
-        if(bindingType == null){
-            return soapOperations;
-        }
-
-        final Element portTypeElement = DocumentUtility.findElement(document, WSDL_NAMESPACE, PORT_TYPE_NAMESPACE, bindingType);
-
-        if(portTypeElement == null){
-            return soapOperations;
-        }
-
-        final NodeList operationNodeList = portTypeElement.getElementsByTagNameNS(WSDL_NAMESPACE, OPERATION_NAMESPACE);
-        final List<Element> operationElements = DocumentUtility.getElements(operationNodeList);
-
-        // harpipl
-        final Map<String, Element> messages = DocumentUtility.findMessages(document);
-        // Attributes
-        final Map<String, Node> namespaces = DocumentUtility.getAttributes(document);
-
-        for (Element operationElement : operationElements) {
-            final String operationName = DocumentUtility.getAttribute(operationElement, NAME_NAMESPACE);
-            final SoapOperation soapOperation = new SoapOperation();
-            final String defaultBody = generateDefaultBody(operationName, operationElement.getNamespaceURI());
-            final SoapOperationIdentifier operationIdentifier =
-                    getSoapOperationIdentifier(messages, namespaces, operationElement);
-
-
-            soapOperation.setName(operationName);
-            soapOperation.setHttpMethod(HttpMethod.POST);
-            soapOperation.setOperationIdentifier(operationIdentifier);
-            soapOperation.setStatus(SoapOperationStatus.MOCKED);
-            soapOperation.setResponseStrategy(SoapResponseStrategy.RANDOM);
-            soapOperation.setForwardedEndpoint(soapOperationAddress);
-            soapOperation.setOriginalEndpoint(soapOperationAddress);
-            soapOperation.setSoapVersion(soapVersion);
-            soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
-            soapOperation.setDefaultBody(defaultBody);
-            soapOperation.setCurrentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX);
-            soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
-            if(generateResponse){
-                final SoapMockResponse mockResponse = new SoapMockResponse();
-                mockResponse.setBody(soapOperation.getDefaultBody());
-                mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
-                mockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
-                mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
-                soapOperation.getMockResponses().add(mockResponse);
-            }
-
-            soapOperations.add(soapOperation);
-
-        }
-        return soapOperations;
+        final SoapOperationIdentifier operationIdentifier = new SoapOperationIdentifier();
+        operationIdentifier.setName(name);
+        operationIdentifier.setNamespace(namespace);
+        return operationIdentifier;
     }
 
-    private SoapOperationIdentifier getSoapOperationIdentifier(final Map<String, Element> messages,
-                                             final Map<String, Node> attributes,
-                                             final Element operationElement){
-        final NodeList inputNodeList = operationElement.getElementsByTagNameNS(WSDL_NAMESPACE, INPUT_NAMESPACE);
-        final List<Element> inputsNodes = DocumentUtility.getElements(inputNodeList);
-        for (final Element inputElement : inputsNodes) {
-
-            String inputMessageName = DocumentUtility.getAttribute(inputElement, MESSAGE_NAMESPACE);
-            final Element messageElement = messages.get(inputMessageName);
-            if (messageElement != null) {
-
-                final NodeList partNodeList = messageElement.getElementsByTagNameNS(WSDL_NAMESPACE, PART_NAMESPACE);
-                final List<Element> partElements = DocumentUtility.getElements(partNodeList);
-
-                for(Element partElement : partElements){
-                    String inputMessageElement = partElement.getAttribute(ELEMENT_NAMESPACE);
-                    String[] messageElementParts = inputMessageElement.split(":");
-
-                    String name = null;
-                    String namespace = null;
-                    if(messageElementParts.length == 1) {
-                        name = messageElementParts[0];
-                    } else if(messageElementParts.length == 2) {
-                        name = messageElementParts[1];
-                        String namespaceName = messageElementParts[0];
-                        Node namespaceNode = attributes.get(namespaceName);
-
-                        if(namespaceNode != null){
-                            namespace = namespaceNode.getNodeValue();
-                        }
-                    } else {
-                        name = inputMessageName;
-                    }
-
-                    final SoapOperationIdentifier operationIdentifier = new SoapOperationIdentifier();
-                    operationIdentifier.setName(name);
-                    operationIdentifier.setNamespace(namespace);
-                    return operationIdentifier;
-                }
-            }
-        }
-        return new SoapOperationIdentifier();
+    private static SoapMockResponse createSoapMockResponse(final String defaultBody){
+        final SoapMockResponse mockResponse = new SoapMockResponse();
+        mockResponse.setBody(defaultBody);
+        mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
+        mockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
+        mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
+        return mockResponse;
     }
 
 

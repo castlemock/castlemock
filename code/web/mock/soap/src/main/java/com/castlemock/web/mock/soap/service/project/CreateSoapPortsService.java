@@ -63,7 +63,7 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                 throw new IllegalArgumentException("Neither files or links were provided when importing SOAP ports");
             }
         } catch (Exception e) {
-            throw new IllegalStateException("Unable to parse the WSDL file");
+            throw new IllegalStateException("Unable to parse the WSDL file", e);
         }
 
         for(SoapPortConverterResult result : results){
