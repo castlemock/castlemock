@@ -247,16 +247,32 @@ public class SoapPortConverter {
                 .findFirst()
                 .orElseThrow((() -> new IllegalArgumentException("Unable to find the input message")));
 
+        final Message outputMessage = messages.stream()
+                .filter(message -> portTypeOperation.getOutput().getMessage().getLocalName().equals(message.getName()))
+                .findFirst()
+                .orElseThrow((() -> new IllegalArgumentException("Unable to find the input message")));
+
         final MessagePart inputMessagePart = bindingOperation.getInput().getBody()
                 .map(BindingOperationInputBody::getParts)
-                .map(Optional::get)
+                .map(optional -> optional.orElse(null))
                 .map(parts -> inputMessage.getParts().stream()
                         .filter(messagePart -> parts.equals(messagePart.getName()))
                         .findFirst()
                         .orElse(null))
                 .orElse(inputMessage.getParts().stream()
                         .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("Unable to find any message part")));
+                        .orElseThrow(() -> new IllegalArgumentException("Unable to find any input message part")));
+
+        final MessagePart outputMessagePart = bindingOperation.getOutput().getBody()
+                .map(BindingOperationOutputBody::getParts)
+                .map(optional -> optional.orElse(null))
+                .map(parts -> outputMessage.getParts().stream()
+                        .filter(messagePart -> parts.equals(messagePart.getName()))
+                        .findFirst()
+                        .orElse(null))
+                .orElse(outputMessage.getParts().stream()
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("Unable to find any output message part")));
 
         final SoapOperationIdentifier operationIdentifier =
                 createSoapOperationIdentifier(inputMessagePart, namespaces);
@@ -266,14 +282,14 @@ public class SoapPortConverter {
         soapOperation.setOperationIdentifier(operationIdentifier);
         soapOperation.setName(bindingOperation.getName());
         soapOperation.setHttpMethod(HttpMethod.POST);
-        soapOperation.setOperationIdentifier(operationIdentifier);
         soapOperation.setStatus(SoapOperationStatus.MOCKED);
         soapOperation.setResponseStrategy(SoapResponseStrategy.RANDOM);
         soapOperation.setForwardedEndpoint(address.getLocation());
         soapOperation.setOriginalEndpoint(address.getLocation());
         soapOperation.setSoapVersion(address.getVersion());
         soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
-        soapOperation.setDefaultBody(generateDefaultBody(operationIdentifier.getName(), operationIdentifier.getNamespace()));
+        soapOperation.setDefaultBody(generateDefaultBody(outputMessagePart.getElement().getLocalName(),
+                outputMessagePart.getElement().getNamespace().get()));
         soapOperation.setCurrentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX);
         soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
 
@@ -318,12 +334,11 @@ public class SoapPortConverter {
      */
     private static String generateDefaultBody(final String name, final String targetNamespace){
         final String prefix = "web";
-        final String resultElement = name + "Result";
         return "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:" +
                 prefix + "=\"" + targetNamespace + "\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
-                "      <" + prefix + ":" + resultElement + ">?</" + prefix + ":" + resultElement + ">\n" +
+                "      <" + prefix + ":" + name + ">?</" + prefix + ":" + name + ">\n" +
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
     }

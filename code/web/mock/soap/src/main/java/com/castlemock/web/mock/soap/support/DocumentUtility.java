@@ -103,7 +103,7 @@ public class DocumentUtility {
      */
     public static String getAttribute(Element element, String name){
         final String value = element.getAttribute(name);
-        if(value == null){
+        if(value == null || value.isEmpty()){
             return null;
         }
         String[] splitValues = value.split(":");

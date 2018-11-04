@@ -242,6 +242,29 @@ public class SoapPortConverterTest {
             Assert.fail(e.getMessage());
         }
     }
+
+    @Test
+    public void testGetSoapPorts() {
+        try {
+            final List<File> files = this.loadFile("wsdl.wsdl");
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
+
+            Assert.assertEquals(1, results.size());
+
+            SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
+                    .getName().equals("wsdl.wsdl"))
+                    .findFirst()
+                    .get();
+
+            Assert.assertEquals(SoapResourceType.WSDL, result.getResourceType());
+            final Set<SoapPort> soapPorts = result.getPorts();
+
+            final SoapPort soapPort = soapPorts.stream().findFirst().get();
+            //this.verify(soapPort, "ServiceExampleSoap12", SoapVersion.SOAP12);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
     
     private void verify(final SoapPort soapPort,
                         final String name,

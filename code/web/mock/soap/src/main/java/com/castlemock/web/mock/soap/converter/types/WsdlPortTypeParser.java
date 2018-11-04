@@ -22,7 +22,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -78,11 +77,9 @@ public final class WsdlPortTypeParser extends WsdlParser {
     }
 
     private PortTypeOperationOutput parseOutput(final Element operationElement){
-        final Optional<Element> outputElement =
-                DocumentUtility.getElement(operationElement, WSDL_NAMESPACE, OUTPUT_NAMESPACE);
-
-        final String message = outputElement
-                .map(element -> DocumentUtility.getAttribute(element, MESSAGE_NAMESPACE))
+        final Attribute message = DocumentUtility.getElement(operationElement, WSDL_NAMESPACE, OUTPUT_NAMESPACE)
+                .map(element -> this.getAttribute(element, MESSAGE_NAMESPACE))
+                .map(optional -> optional.orElse(null))
                 .orElse(null);
 
         return PortTypeOperationOutput.builder()

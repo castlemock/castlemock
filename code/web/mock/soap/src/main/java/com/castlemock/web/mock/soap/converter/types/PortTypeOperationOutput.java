@@ -19,13 +19,13 @@ import java.util.Objects;
 
 public final class PortTypeOperationOutput {
 
-    private final String message;
+    private final Attribute message;
 
     private PortTypeOperationOutput(final Builder builder){
         this.message = Objects.requireNonNull(builder.message);
     }
 
-    public String getMessage() {
+    public Attribute getMessage() {
         return message;
     }
 
@@ -35,13 +35,13 @@ public final class PortTypeOperationOutput {
 
     public static class Builder{
 
-        private String message;
+        private Attribute message;
 
         private Builder(){
 
         }
 
-        public Builder message(final String message){
+        public Builder message(final Attribute message){
             this.message = message;
             return this;
         }
