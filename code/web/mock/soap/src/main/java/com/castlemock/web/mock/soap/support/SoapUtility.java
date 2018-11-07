@@ -36,6 +36,7 @@ public class SoapUtility {
     private static final String DIVIDER = ":";
     private static final String VARIABLE = "#";
     private static final String BODY = "Body";
+    private static final String XMLNS = "xmlns";
     private static final Logger LOGGER = Logger.getLogger(SoapUtility.class);
 
     /**
@@ -94,6 +95,9 @@ public class SoapUtility {
             String namespace = null;
             if(attributes.containsKey(namespacePrefix)){
                 Node namespaceNode = attributes.get(namespacePrefix);
+                namespace = namespaceNode.getNodeValue();
+            } else if(attributes.containsKey(XMLNS)){
+                Node namespaceNode = attributes.get(XMLNS);
                 namespace = namespaceNode.getNodeValue();
             }
 

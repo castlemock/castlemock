@@ -18,6 +18,7 @@ package com.castlemock.web.mock.soap.support;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SoapUtilityTest {
@@ -76,8 +77,46 @@ public class SoapUtilityTest {
                         "<soap:Envelope\n" +
                         "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\">\n" +
                         "<soap:Body>\n" +
+                        "  <GetPrice xmlns=\"http://www.w3schools.com/prices\">\n" +
+                        "    <Item>Apples</Item>\n" +
+                        "  </GetPrice>\n" +
+                        "</soap:Body>\n" +
+                        "</soap:Envelope> ";
+
+        final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
+        Assert.assertEquals("GetPrice", operationIdentifier.getName());
+        Assert.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace());
+    }
+
+    @Test
+    public void testExtractSoapRequestNameNamespacesInElement(){
+        final String requestBody =
+                "<?xml version=\"1.0\"?>\n" +
+                        "<soap:Envelope\n" +
+                        "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\">\n" +
+                        "<soap:Body>\n" +
                         "  <GetPrice>\n" +
                         "    <Item>Apples</Item>\n" +
+                        "  </GetPrice>\n" +
+                        "</soap:Body>\n" +
+                        "</soap:Envelope> ";
+
+        final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
+        Assert.assertEquals("GetPrice", operationIdentifier.getName());
+        Assert.assertNull(operationIdentifier.getNamespace());
+    }
+
+    @Test
+    @Ignore
+    public void testExtractSoapSameNamespaceAndName(){
+        final String requestBody =
+                "<?xml version=\"1.0\"?>\n" +
+                        "<soap:Envelope\n" +
+                        "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\"\n" +
+                        "soap:encodingStyle=\"http://www.w3.org/2003/05/soap-encoding\">\n" +
+                        "<soap:Body>\n" +
+                        "  <GetPrice xmlns:GetPrice=\"http://www.w3schools.com/prices\">\n" +
+                        "    <m:Item>Apples</m:Item>\n" +
                         "  </GetPrice>\n" +
                         "</soap:Body>\n" +
                         "</soap:Envelope> ";
