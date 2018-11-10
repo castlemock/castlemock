@@ -76,24 +76,24 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
         final String methodType = messageSource.getMessage("rest.type.method", null , LocaleContextHolder.getLocale());
         final String responseType = messageSource.getMessage("rest.type.mockresponse", null , LocaleContextHolder.getLocale());
 
-        for(RestProject project : projects){
+        projects.forEach(project -> {
             final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(project.getName());
             searchResult.setLink(REST + SLASH + PROJECT + SLASH + project.getId());
             searchResult.setDescription(REST_TYPE + COMMA + projectType);
             searchResults.add(searchResult);
-        }
+        });
 
-        for(RestApplication application : applications){
+        applications.forEach(application -> {
             final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(application.getName());
             searchResult.setLink(REST + SLASH + PROJECT + SLASH + application.getProjectId()
                     + SLASH + APPLICATION + SLASH + application.getId());
             searchResult.setDescription(REST_TYPE + COMMA + applicationType);
             searchResults.add(searchResult);
-        }
+        });
 
-        for(RestResource resource : resources){
+        resources.forEach(resource -> {
             final String projectId = this.applicationRepository.getProjectId(resource.getApplicationId());
             final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(resource.getName());
@@ -102,9 +102,9 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
                     + SLASH + RESOURCE + SLASH + resource.getId());
             searchResult.setDescription(REST_TYPE + COMMA + resourceType);
             searchResults.add(searchResult);
-        }
+        });
 
-        for(RestMethod method : methods){
+        methods.forEach(method -> {
             final String applicationId = this.resourceRepository.getApplicationId(method.getResourceId());
             final String projectId = this.applicationRepository.getProjectId(applicationId);
             final SearchResult searchResult = new SearchResult();
@@ -115,9 +115,9 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
                     + SLASH + METHOD + SLASH + method.getId());
             searchResult.setDescription(REST_TYPE + COMMA + methodType);
             searchResults.add(searchResult);
-        }
+        });
 
-        for(RestMockResponse mockResponse : mockResponses){
+        mockResponses.forEach(mockResponse -> {
             final String resourceId = this.methodRepository.getResourceId(mockResponse.getMethodId());
             final String applicationId = this.resourceRepository.getApplicationId(resourceId);
             final String projectId = this.applicationRepository.getProjectId(applicationId);
@@ -130,7 +130,7 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
                     + SLASH + RESPONSE + SLASH + mockResponse.getId());
             searchResult.setDescription(REST_TYPE + COMMA + responseType);
             searchResults.add(searchResult);
-        }
+        });
 
         return createServiceResult(SearchRestProjectOutput.builder()
                 .searchResults(searchResults)

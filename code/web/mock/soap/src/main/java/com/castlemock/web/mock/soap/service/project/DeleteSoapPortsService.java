@@ -41,9 +41,9 @@ public class DeleteSoapPortsService extends AbstractSoapProjectService implement
     @Override
     public ServiceResult<DeleteSoapPortsOutput> process(final ServiceTask<DeleteSoapPortsInput> serviceTask) {
         final DeleteSoapPortsInput input = serviceTask.getInput();
-        for(final SoapPort soapPort : input.getSoapPorts()){
-            this.deletePort(soapPort.getId());
-        }
+        input.getSoapPorts().stream()
+                .map(SoapPort::getId)
+                .forEach(this::deletePort);
         return createServiceResult(new DeleteSoapPortsOutput());
     }
 }

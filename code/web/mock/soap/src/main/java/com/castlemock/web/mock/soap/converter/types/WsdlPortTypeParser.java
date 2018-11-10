@@ -16,10 +16,9 @@
 
 package com.castlemock.web.mock.soap.converter.types;
 
-import com.castlemock.web.mock.soap.support.DocumentUtility;
+import com.castlemock.web.basis.support.DocumentUtility;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.util.List;
 import java.util.Set;
@@ -36,17 +35,18 @@ public final class WsdlPortTypeParser extends WsdlParser {
     private static final String OPERATION_NAMESPACE = "operation";
 
     public Set<PortType> parsePortTypes(final Document document){
-        final NodeList portTypesNodeList = document.getElementsByTagNameNS(WSDL_NAMESPACE, PORT_TYPE_NAMESPACE);
-        final List<Element> portTypesElement = DocumentUtility.getElements(portTypesNodeList);
+        final List<Element> portTypesElement =
+                DocumentUtility.getElements(document, WSDL_NAMESPACE, PORT_TYPE_NAMESPACE);
         return portTypesElement.stream()
                 .map(this::parsePortType)
                 .collect(Collectors.toSet());
     }
 
     private PortType parsePortType(final Element portTypeElement){
-        final NodeList operationNodeList = portTypeElement.getElementsByTagNameNS(WSDL_NAMESPACE, OPERATION_NAMESPACE);
-        final List<Element> operationElements = DocumentUtility.getElements(operationNodeList);
-        final String name = DocumentUtility.getAttribute(portTypeElement, NAME_NAMESPACE);
+        final List<Element> operationElements =
+                DocumentUtility.getElements(portTypeElement, WSDL_NAMESPACE, OPERATION_NAMESPACE);
+        final String name = DocumentUtility.getAttribute(portTypeElement, NAME_NAMESPACE)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find port type name"));
         final Set<PortTypeOperation> operations = operationElements.stream()
                 .map(this::parseOperation)
                 .collect(Collectors.toSet());
@@ -57,7 +57,8 @@ public final class WsdlPortTypeParser extends WsdlParser {
     }
 
     private PortTypeOperation parseOperation(final Element operationElement){
-        final String name = DocumentUtility.getAttribute(operationElement, NAME_NAMESPACE);
+        final String name = DocumentUtility.getAttribute(operationElement, NAME_NAMESPACE)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find operation name"));
         return PortTypeOperation.builder()
                 .name(name)
                 .input(parseInput(operationElement))

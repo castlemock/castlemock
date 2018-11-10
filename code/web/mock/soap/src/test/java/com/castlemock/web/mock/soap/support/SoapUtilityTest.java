@@ -18,38 +18,9 @@ package com.castlemock.web.mock.soap.support;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class SoapUtilityTest {
-
-
-    @Test
-    public void testGetElement(){
-        final String oneInput = "First";
-        final String twoInput = "First:Second";
-
-        Assert.assertEquals("First", SoapUtility.getElement(oneInput, 0));
-        Assert.assertEquals("First", SoapUtility.getElement(oneInput, 1));
-        Assert.assertEquals("First", SoapUtility.getElement(twoInput, 0));
-        Assert.assertEquals("Second", SoapUtility.getElement(twoInput, 1));
-    }
-
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetElementInvalidIndexLessThanZero(){
-        Assert.assertEquals("First", SoapUtility.getElement("First", -1));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetElementInvalidIndexMoreThanOne(){
-        Assert.assertEquals("First", SoapUtility.getElement("First", 2));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetElementInvalidElement(){
-        Assert.assertEquals("First", SoapUtility.getElement("First:Second:Third", 1));
-    }
 
     @Test
     public void testExtractSoapRequestName(){
@@ -107,7 +78,6 @@ public class SoapUtilityTest {
     }
 
     @Test
-    @Ignore
     public void testExtractSoapSameNamespaceAndName(){
         final String requestBody =
                 "<?xml version=\"1.0\"?>\n" +

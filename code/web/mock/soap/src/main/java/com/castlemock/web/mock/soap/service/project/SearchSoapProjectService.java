@@ -77,31 +77,31 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
         final String resourceType = messageSource.getMessage("soap.type.resource", null , LocaleContextHolder.getLocale());
         final String responseType = messageSource.getMessage("soap.type.mockresponse", null , LocaleContextHolder.getLocale());
 
-        for(SoapProject project : projects){
+        projects.forEach(project -> {
             final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(project.getName());
             searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + project.getId());
             searchResult.setDescription(SOAP_TYPE + COMMA + projectType);
             searchResults.add(searchResult);
-        }
+        });
 
-        for(SoapPort port : ports){
+        ports.forEach(port -> {
             final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(port.getName());
             searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + port.getProjectId() + SLASH + PORT + SLASH + port.getId());
             searchResult.setDescription(SOAP_TYPE + COMMA + portType);
             searchResults.add(searchResult);
-        }
+        });
 
-        for(SoapResource resource : resources){
+        resources.forEach(resource -> {
             final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(resource.getName());
             searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + resource.getProjectId() + SLASH + RESOURCE + SLASH + resource.getId());
             searchResult.setDescription(SOAP_TYPE + COMMA + resourceType);
             searchResults.add(searchResult);
-        }
+        });
 
-        for(SoapOperation operation : operations){
+        operations.forEach(operation -> {
             final String projectId = this.portRepository.getProjectId(operation.getPortId());
             final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(operation.getName());
@@ -109,10 +109,9 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
                     SLASH + operation.getPortId() + SLASH + OPERATION + SLASH + operation.getId());
             searchResult.setDescription(SOAP_TYPE + COMMA + operationType);
             searchResults.add(searchResult);
+        });
 
-        }
-
-        for(SoapMockResponse mockResponse : mockResponses){
+        mockResponses.forEach(mockResponse -> {
             final String portId = this.operationRepository.getPortId(mockResponse.getOperationId());
             final String projectId = this.portRepository.getProjectId(portId);
             final SearchResult searchResult = new SearchResult();
@@ -122,8 +121,7 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
                     SLASH + RESPONSE + SLASH + mockResponse.getId());
             searchResult.setDescription(SOAP_TYPE + COMMA + responseType);
             searchResults.add(searchResult);
-        }
-
+        });
 
         return createServiceResult(new SearchSoapProjectOutput(searchResults));
     }

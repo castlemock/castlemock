@@ -44,33 +44,22 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
     protected SoapProject deleteProject(final String projectId){
         final List<SoapPort> ports = this.portRepository.findWithProjectId(projectId);
         final List<SoapResource> resources = this.resourceRepository.findWithProjectId(projectId);
-
-        for(SoapPort port : ports){
-            this.deletePort(port.getId());
-        }
-        for(SoapResource resource : resources){
-            this.deleteResource(resource.getId());
-        }
+        ports.forEach(port -> this.deletePort(port.getId()));
+        resources.forEach(resource -> this.deleteResource(resource.getId()));
 
         return this.repository.delete(projectId);
     }
 
     protected SoapPort deletePort(final String portId){
         final List<SoapOperation> operations = this.operationRepository.findWithPortId(portId);
-
-        for(SoapOperation operation : operations){
-            this.deleteOperation(operation.getId());
-        }
+        operations.forEach(operation -> this.deleteOperation(operation.getId()));
 
         return this.portRepository.delete(portId);
     }
 
     protected SoapOperation deleteOperation(final String operationId){
         final List<SoapMockResponse> responses = this.mockResponseRepository.findWithOperationId(operationId);
-
-        for(SoapMockResponse response : responses){
-            this.deleteMockResponse(response.getId());
-        }
+        responses.forEach(response -> this.deleteMockResponse(response.getId()));
 
         return this.operationRepository.delete(operationId);
     }

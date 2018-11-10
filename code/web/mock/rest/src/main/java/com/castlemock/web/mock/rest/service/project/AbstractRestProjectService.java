@@ -17,15 +17,17 @@
 package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.mock.rest.model.project.domain.*;
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.web.basis.service.AbstractService;
 import com.castlemock.web.mock.rest.repository.project.*;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
 
 /**
  * @author Karl Dahlgren
@@ -46,9 +48,9 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected RestProject deleteProject(final String projectId){
         final List<RestApplication> applications = this.applicationRepository.findWithProjectId(projectId);
 
-        for(RestApplication application : applications){
-            this.deleteApplication(application.getId());
-        }
+        applications.stream()
+                .map(RestApplication::getId)
+                .forEach(this::deleteApplication);
 
         return this.repository.delete(projectId);
     }
@@ -56,9 +58,9 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected RestApplication deleteApplication(final String applicationId){
         final List<RestResource> resources = this.resourceRepository.findWithApplicationId(applicationId);
 
-        for(RestResource resource : resources){
-            this.deleteResource(resource.getId());
-        }
+        resources.stream()
+                .map(RestResource::getId)
+                .forEach(this::deleteResource);
 
         return this.applicationRepository.delete(applicationId);
     }
@@ -66,19 +68,18 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected RestResource deleteResource(final String resourceId){
         final List<RestMethod> methods = this.methodRepository.findWithResourceId(resourceId);
 
-        for(RestMethod method : methods){
-            this.deleteMethod(method.getId());
-        }
-
+        methods.stream()
+                .map(RestMethod::getId)
+                .forEach(this::deleteMethod);
         return this.resourceRepository.delete(resourceId);
     }
 
     protected RestMethod deleteMethod(final String methodId){
         final List<RestMockResponse> responses = this.mockResponseRepository.findWithMethodId(methodId);
 
-        for(RestMockResponse response : responses){
-            this.deleteMockResponse(response.getId());
-        }
+        responses.stream()
+                .map(RestMockResponse::getId)
+                .forEach(this::deleteMockResponse);
 
         return this.methodRepository.delete(methodId);
     }
@@ -141,16 +142,15 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
      */
     protected Map<RestMethodStatus, Integer> getRestMethodStatusCount(final RestResource restResource){
         Preconditions.checkNotNull(restResource, "The REST resource cannot be null");
-        final Map<RestMethodStatus, Integer> statuses = new HashMap<RestMethodStatus, Integer>();
+        final Map<RestMethodStatus, Integer> statuses =
+                ImmutableSet.copyOf(RestMethodStatus.values()).stream()
+                .collect(toMap(status -> status, status -> 0));
 
-        for(RestMethodStatus restMethodStatus : RestMethodStatus.values()){
-            statuses.put(restMethodStatus, 0);
-        }
         final List<RestMethod> methods = this.methodRepository.findWithResourceId(restResource.getId());
-        for(RestMethod restMethod : methods){
-            RestMethodStatus restMethodStatus = restMethod.getStatus();
-            statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
-        }
+        methods.stream()
+                .map(RestMethod::getStatus)
+                .forEach(status -> statuses.put(status, statuses.get(status)+1));
+
         return statuses;
     }
 

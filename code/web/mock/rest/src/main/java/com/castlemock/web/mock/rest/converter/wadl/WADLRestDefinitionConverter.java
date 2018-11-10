@@ -20,12 +20,11 @@ package com.castlemock.web.mock.rest.converter.wadl;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.web.basis.manager.FileManager;
+import com.castlemock.web.basis.support.DocumentUtility;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,9 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * The {@link WADLRestDefinitionConverter} class provides functionality related to WADL.
@@ -71,7 +68,7 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
 
             for(Element applicationElement : applicationElements){
                 final String applicationName = file.getName().replace(".wadl", "");
-                final String baseUri = resourceBase(applicationElement);
+                final Optional<String> baseUri = getResourceBase(applicationElement);
                 final RestApplication restApplication = new RestApplication();
                 restApplication.setName(applicationName);
                 applications.add(restApplication);
@@ -81,7 +78,7 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
                     final String resourceName = resourceElement.getAttribute("path");
                     final RestResource restResource = new RestResource();
                     restResource.setName(resourceName);
-                    restResource.setUri(baseUri + resourceName);
+                    restResource.setUri(baseUri.orElse("") + resourceName);
                     restApplication.getResources().add(restResource);
 
                     final List<Element> methodElements = getMethods(resourceElement);
@@ -158,17 +155,7 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
      * @return A list of application elements
      */
     private List<Element> getApplications(Document document){
-        List<Element> applicationElements = new LinkedList<Element>();
-        final NodeList applicationNodeList = document.getElementsByTagName("application");
-
-        for (int applicationIndex = 0; applicationIndex < applicationNodeList.getLength(); applicationIndex++) {
-            Node applicationNode = applicationNodeList.item(applicationIndex);
-            if (applicationNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element applicationElement = (Element) applicationNode;
-                applicationElements.add(applicationElement);
-            }
-        }
-        return applicationElements;
+        return DocumentUtility.getElements(document, "application");
     }
 
     /**
@@ -176,18 +163,8 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
      * @param applicationElement The application element which contains all the resources that will be extracted
      * @return A list of resource elements
      */
-    private List<Element> getResources(Element applicationElement){
-        List<Element> resourceElements = new LinkedList<Element>();
-        NodeList resourceNodeList = applicationElement.getElementsByTagName("resource");
-
-        for (int resourceIndex = 0; resourceIndex < resourceNodeList.getLength(); resourceIndex++) {
-            Node resourceNode = resourceNodeList.item(resourceIndex);
-            if (resourceNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element resourceElement = (Element) resourceNode;
-                resourceElements.add(resourceElement);
-            }
-        }
-        return resourceElements;
+    private List<Element> getResources(final Element applicationElement){
+        return DocumentUtility.getElements(applicationElement, "resource");
     }
 
     /**
@@ -195,38 +172,30 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
      * @param resourceElement The resource element which contains all the methods that will be extracted
      * @return A list of method elements
      */
-    private List<Element> getMethods(Element resourceElement){
-        List<Element> methodElements = new LinkedList<Element>();
-        NodeList methodNodeList = resourceElement.getElementsByTagName("method");
-
-        for (int methodIndex = 0; methodIndex < methodNodeList.getLength(); methodIndex++) {
-            Node methodNode = methodNodeList.item(methodIndex);
-            if (methodNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element methodElement = (Element) methodNode;
-                methodElements.add(methodElement);
-            }
-        }
-        return methodElements;
+    private List<Element> getMethods(final Element resourceElement){
+        return DocumentUtility.getElements(resourceElement, "method");
     }
 
     /**
      * The method provides the functionality to extract the resource base from a provided application element
      * @param applicationElement The application element that contains the resource base
      * @return The resource base from the application element
-     * @throws MalformedURLException
      */
-    private String resourceBase(Element applicationElement) throws MalformedURLException {
-        final NodeList resourcesNodeList = applicationElement.getElementsByTagName("resources");
-        for (int resourcesIndex = 0; resourcesIndex < resourcesNodeList.getLength(); resourcesIndex++) {
-            Node resourcesNode = resourcesNodeList.item(resourcesIndex);
-            if (resourcesNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element resourcesElement = (Element) resourcesNode;
-                String resourceBase = resourcesElement.getAttribute("base");
-                URL url = new URL(resourceBase);
-                return url.getPath();
-            }
-        }
-        return null;
+    private Optional<String> getResourceBase(final Element applicationElement) {
+        return DocumentUtility.getElement(applicationElement, "resources")
+                .map(resourcesElement -> resourcesElement.getAttribute("base"))
+                .filter(resourceBase -> !resourceBase.isEmpty())
+                .map(resourceBase -> {
+                    try {
+                        final URL url = new URL(resourceBase);
+                        return url.getPath();
+                    } catch (MalformedURLException e) {
+                        LOGGER.error("Unable to create an URL for the following URL " + resourceBase);
+                        return null;
+                    }
+                });
     }
+
+
 
 }

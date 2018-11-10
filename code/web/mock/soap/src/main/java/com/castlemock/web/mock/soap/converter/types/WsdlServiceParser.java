@@ -17,10 +17,10 @@
 package com.castlemock.web.mock.soap.converter.types;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
-import com.castlemock.web.mock.soap.support.DocumentUtility;
+import com.castlemock.web.basis.support.DocumentUtility;
+import com.castlemock.web.mock.soap.support.SoapUtility;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,17 +33,13 @@ public final class WsdlServiceParser extends WsdlParser {
     private static final String WSDL_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/";
     private static final String SOAP_11_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/soap/";
     private static final String SOAP_12_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/soap12/";
-    private static final String HTTP_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/http/";
-
     private static final String PORT_NAMESPACE = "port";
     private static final String NAME_NAMESPACE = "name";
     private static final String BINDING_NAMESPACE = "binding";
     private static final String SERVICE_NAMESPACE = "service";
 
     public Set<Service> parseServices(final Document document){
-        final NodeList serviceNodeList =
-                document.getDocumentElement().getElementsByTagNameNS(WSDL_NAMESPACE, SERVICE_NAMESPACE);
-        final List<Element> serviceElements = DocumentUtility.getElements(serviceNodeList);
+        final List<Element> serviceElements = DocumentUtility.getElements(document, WSDL_NAMESPACE, SERVICE_NAMESPACE);
         return serviceElements.stream()
                 .map(this::parseService)
                 .collect(Collectors.toSet());
@@ -51,9 +47,9 @@ public final class WsdlServiceParser extends WsdlParser {
 
 
     private Service parseService(final Element serviceElement){
-        final NodeList portNodeList = serviceElement.getElementsByTagNameNS(WSDL_NAMESPACE, PORT_NAMESPACE);
-        final List<Element> portElements = DocumentUtility.getElements(portNodeList);
-        final String name = DocumentUtility.getAttribute(serviceElement, NAME_NAMESPACE);
+        final List<Element> portElements = DocumentUtility.getElements(serviceElement, WSDL_NAMESPACE, PORT_NAMESPACE);
+        final String name = DocumentUtility.getAttribute(serviceElement, NAME_NAMESPACE)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find service name"));
         final Set<ServicePort> ports = portElements.stream()
                 .map(this::parseServicePort)
                 .filter(Objects::nonNull)
@@ -71,7 +67,8 @@ public final class WsdlServiceParser extends WsdlParser {
             return null;
         }
 
-        final String name = DocumentUtility.getAttribute(servicePortElement, NAME_NAMESPACE);
+        final String name = DocumentUtility.getAttribute(servicePortElement, NAME_NAMESPACE)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find service port name"));
         final Attribute binding = this.getAttribute(servicePortElement, BINDING_NAMESPACE)
                 .orElseThrow(() -> new IllegalArgumentException("Unable to find binding attribute"));
 
@@ -84,19 +81,19 @@ public final class WsdlServiceParser extends WsdlParser {
     }
 
     private Optional<ServicePortAddress> parseServicePortAddress(final Element servicePortElement){
-        String location = DocumentUtility.extractSoapAddress(servicePortElement, SOAP_11_NAMESPACE);
+        Optional<String> location = SoapUtility.extractSoapAddress(servicePortElement, SOAP_11_NAMESPACE);
         SoapVersion version = SoapVersion.SOAP11;
 
-        if(location == null){
-            location = DocumentUtility.extractSoapAddress(servicePortElement, SOAP_12_NAMESPACE);
+        if(!location.isPresent()){
+            location = SoapUtility.extractSoapAddress(servicePortElement, SOAP_12_NAMESPACE);
             version = SoapVersion.SOAP12;
         }
-        if(location == null){
+        if(!location.isPresent()){
             return Optional.empty();
         }
 
         return Optional.of(ServicePortAddress.builder()
-                .location(location)
+                .location(location.get())
                 .version(version)
                 .build());
     }

@@ -32,7 +32,7 @@ public final class Attribute {
     }
 
     public Optional<String> getNamespace() {
-        return Optional.of(namespace);
+        return Optional.ofNullable(namespace);
     }
 
     public String getValue() {

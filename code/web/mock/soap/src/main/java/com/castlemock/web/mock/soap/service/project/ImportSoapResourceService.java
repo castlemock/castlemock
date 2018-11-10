@@ -19,13 +19,12 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
 import com.castlemock.core.mock.soap.service.project.input.ImportSoapResourceInput;
 import com.castlemock.core.mock.soap.service.project.output.ImportSoapResourceOutput;
 
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -62,12 +61,10 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
 
             if(SoapResourceType.WSDL.equals(soapResource.getType())){
                 // Remove the already existing WSDL file if a new one is being uploaded.
-                final Collection<SoapResource> wsdlSoapResources =
-                        this.resourceRepository.findSoapResources(projectId, SoapResourceType.WSDL);
-
-                for(SoapResource wsdlSoapResource : wsdlSoapResources){
-                    this.resourceRepository.deleteWithProjectId(wsdlSoapResource.getId());
-                }
+                this.resourceRepository.findSoapResources(projectId, SoapResourceType.WSDL)
+                        .stream()
+                        .map(SoapResource::getId)
+                        .forEach(this.resourceRepository::deleteWithProjectId);
             }
             soapResource.setProjectId(projectId);
             result = this.resourceRepository.saveSoapResource(soapResource, raw);

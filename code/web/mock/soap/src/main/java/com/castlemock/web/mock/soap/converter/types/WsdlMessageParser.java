@@ -15,10 +15,9 @@
  */
 package com.castlemock.web.mock.soap.converter.types;
 
-import com.castlemock.web.mock.soap.support.DocumentUtility;
+import com.castlemock.web.basis.support.DocumentUtility;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.util.List;
 import java.util.Set;
@@ -33,17 +32,16 @@ public final class WsdlMessageParser extends WsdlParser {
     private static final String MESSAGE_NAMESPACE = "message";
 
     public Set<Message> parseMessages(final Document document){
-        final NodeList portTypesNodeList = document.getElementsByTagNameNS(WSDL_NAMESPACE, MESSAGE_NAMESPACE);
-        final List<Element> portTypesElement = DocumentUtility.getElements(portTypesNodeList);
+        final List<Element> portTypesElement = DocumentUtility.getElements(document, WSDL_NAMESPACE, MESSAGE_NAMESPACE);
         return portTypesElement.stream()
                 .map(this::parseMessage)
                 .collect(Collectors.toSet());
     }
 
     private Message parseMessage(final Element messageElement){
-        final String name = DocumentUtility.getAttribute(messageElement, NAME_NAMESPACE);
-        final NodeList partNodeList = messageElement.getElementsByTagNameNS(WSDL_NAMESPACE, PART_NAMESPACE);
-        final List<Element> partElements = DocumentUtility.getElements(partNodeList);
+        final String name = DocumentUtility.getAttribute(messageElement, NAME_NAMESPACE)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find message name"));
+        final List<Element> partElements = DocumentUtility.getElements(messageElement, WSDL_NAMESPACE, PART_NAMESPACE);
         final Set<MessagePart> parts = partElements.stream()
                 .map(this::parseMessagePart)
                 .collect(Collectors.toSet());
@@ -55,7 +53,8 @@ public final class WsdlMessageParser extends WsdlParser {
     }
 
     private MessagePart parseMessagePart(final Element messageElement){
-        final String name = DocumentUtility.getAttribute(messageElement, NAME_NAMESPACE);
+        final String name = DocumentUtility.getAttribute(messageElement, NAME_NAMESPACE)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find message part name"));
         final Attribute element = this.getAttribute(messageElement, ELEMENT_NAMESPACE)
                 .orElseThrow(() -> new IllegalArgumentException("Unable to find element attribute"));
 

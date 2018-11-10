@@ -27,7 +27,7 @@ public final class BindingOperationOutput {
     }
 
     public Optional<BindingOperationOutputBody> getBody() {
-        return Optional.of(body);
+        return Optional.ofNullable(body);
     }
 
     public static Builder builder(){

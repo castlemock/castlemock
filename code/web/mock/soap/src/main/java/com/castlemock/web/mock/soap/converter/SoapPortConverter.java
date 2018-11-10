@@ -20,14 +20,13 @@ import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.utility.compare.UrlUtility;
 import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.web.basis.manager.FileManager;
+import com.castlemock.web.basis.support.DocumentUtility;
 import com.castlemock.web.mock.soap.converter.types.*;
-import com.castlemock.web.mock.soap.support.DocumentUtility;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -67,14 +66,14 @@ public class SoapPortConverter {
         try {
             final List<File> files = this.fileManager.uploadFiles(location);
             final Map<String, WSDLDocument> documents = this.getDocuments(files, SoapResourceType.WSDL);
+            final Map<String, WSDLDocument> allDocuments = new HashMap<>(documents);
 
             if(loadExternal){
-                for(WSDLDocument document : documents.values()){
-                    loadExternal(location, document, documents);
-                }
+                documents.values()
+                        .forEach(document -> loadExternal(location, document, allDocuments));
             }
 
-            return getResults(documents, generateResponse);
+            return getResults(allDocuments, generateResponse);
         } catch (Exception e){
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -82,24 +81,22 @@ public class SoapPortConverter {
 
     private Set<SoapPortConverterResult> getResults(final Map<String, WSDLDocument> documents,
                                                     final boolean generateResponse){
-        final Set<SoapPortConverterResult> results = new HashSet<>();
-        for(Map.Entry<String, WSDLDocument> documentEntry : documents.entrySet()){
-            final String name = documentEntry.getKey();
-            final WSDLDocument wsdlDocument = documentEntry.getValue();
-            final Document document = wsdlDocument.getDocument();
-            final Set<SoapPort> ports = parseDocument(document, generateResponse);
+        return documents.entrySet().stream()
+                .map(documentEntry -> {
+                    final String name = documentEntry.getKey();
+                    final WSDLDocument wsdlDocument = documentEntry.getValue();
+                    final Document document = wsdlDocument.getDocument();
+                    final Set<SoapPort> ports = parseDocument(document, generateResponse);
 
-            final String content = DocumentUtility.toString(document);
-            final SoapPortConverterResult result = SoapPortConverterResult.builder()
-                    .name(name)
-                    .ports(ports)
-                    .definition(content)
-                    .resourceType(wsdlDocument.getResourceType())
-                    .build();
-
-            results.add(result);
-        }
-        return results;
+                    final String content = DocumentUtility.toString(document);
+                    return SoapPortConverterResult.builder()
+                            .name(name)
+                            .ports(ports)
+                            .definition(content)
+                            .resourceType(wsdlDocument.getResourceType())
+                            .build();
+                })
+                .collect(Collectors.toSet());
     }
 
     private Map<String, WSDLDocument> getDocuments(final List<File> files,
@@ -150,16 +147,12 @@ public class SoapPortConverter {
     private Set<String> getImports(final String url,
                                      final WSDLDocument wsdlDocument){
         final Document document = wsdlDocument.getDocument();
-        final NodeList importNodeList = document.getElementsByTagNameNS(WSDL_NAMESPACE, IMPORT_NAMESPACE);
-
-        if(importNodeList == null){
-            return Collections.emptySet();
-        }
-
-        final List<Element> importElements = DocumentUtility.getElements(importNodeList);
+        final List<Element> importElements = DocumentUtility.getElements(document, WSDL_NAMESPACE, IMPORT_NAMESPACE);
 
         return importElements.stream()
                 .map(importElement -> DocumentUtility.getAttribute(importElement, LOCATION_NAMESPACE))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .map(location -> UrlUtility.getPath(url, location))
                 .collect(Collectors.toSet());
     }

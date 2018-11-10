@@ -122,14 +122,15 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         final ReadSoapProjectOutput projectOutput = this.serviceProcessor.process(new ReadSoapProjectInput(projectId));
         final SoapProject soapProject = projectOutput.getSoapProject();
 
-        for(SoapResource soapResource : soapProject.getResources()){
-            if(SoapResourceType.WSDL.equals(soapResource.getType())){
-                final LoadSoapResourceOutput loadOutput =
-                        this.serviceProcessor.process(new LoadSoapResourceInput(projectId, soapResource.getId()));
-                return loadOutput.getResource();
-            }
-        }
-        throw new IllegalArgumentException("Unable to find a WSDL file for the following project: " + projectId);
+        return soapProject.getResources().stream()
+                .filter(soapResource -> SoapResourceType.WSDL.equals(soapResource.getType()))
+                .findFirst()
+                .map(soapResource -> {
+                    final LoadSoapResourceOutput loadOutput =
+                            this.serviceProcessor.process(new LoadSoapResourceInput(projectId, soapResource.getId()));
+                    return loadOutput.getResource();
+                })
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find a WSDL file for the following project: " + projectId));
     }
 
     /**
@@ -138,7 +139,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletRequest The incoming request
      * @return A new created project
      */
-    protected SoapRequest prepareRequest(final String projectId, final HttpServletRequest httpServletRequest) {
+    private SoapRequest prepareRequest(final String projectId, final HttpServletRequest httpServletRequest) {
         final SoapRequest request = new SoapRequest();
         final String body = HttpMessageSupport.getBody(httpServletRequest);
 

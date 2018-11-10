@@ -16,10 +16,9 @@
 
 package com.castlemock.web.mock.soap.converter.types;
 
-import com.castlemock.web.mock.soap.support.DocumentUtility;
+import com.castlemock.web.basis.support.DocumentUtility;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,20 +41,21 @@ public final class WsdlBindingParser extends WsdlParser {
     private static final String TYPE_NAMESPACE = "type";
 
     public Set<Binding> parseBindings(final Document document){
-        final NodeList bindingNodeList = document.getElementsByTagNameNS(WSDL_NAMESPACE, BINDING_NAMESPACE);
-        final List<Element> bindingElements = DocumentUtility.getElements(bindingNodeList);
+        final List<Element> bindingElements =
+                DocumentUtility.getElements(document, WSDL_NAMESPACE, BINDING_NAMESPACE);
         return bindingElements.stream()
                 .map(this::parseBinding)
                 .collect(Collectors.toSet());
     }
 
     private Binding parseBinding(final Element bindingElement){
-        final String name = DocumentUtility.getAttribute(bindingElement, NAME_NAMESPACE);
+        final String name = DocumentUtility.getAttribute(bindingElement, NAME_NAMESPACE)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find binding name"));
         final Attribute type = this.getAttribute(bindingElement, TYPE_NAMESPACE)
                 .orElseThrow(() -> new IllegalArgumentException("Unable to find type attribute"));
 
-        final NodeList operationNodeList = bindingElement.getElementsByTagNameNS(WSDL_NAMESPACE, OPERATION_NAMESPACE);
-        final List<Element> operationElements = DocumentUtility.getElements(operationNodeList);
+        final List<Element> operationElements =
+                DocumentUtility.getElements(bindingElement, WSDL_NAMESPACE, OPERATION_NAMESPACE);
         final Set<BindingOperation> operations = operationElements.stream()
                 .map(this::parseOperation)
                 .collect(Collectors.toSet());
@@ -67,7 +67,8 @@ public final class WsdlBindingParser extends WsdlParser {
     }
 
     private BindingOperation parseOperation(final Element operationElement){
-        final String name = DocumentUtility.getAttribute(operationElement, NAME_NAMESPACE);
+        final String name = DocumentUtility.getAttribute(operationElement, NAME_NAMESPACE)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find operation name"));
         return BindingOperation.builder()
                 .name(name)
                 .input(parseInput(operationElement))
@@ -100,7 +101,8 @@ public final class WsdlBindingParser extends WsdlParser {
     private Optional<BindingOperationInputBody> parseInputBody(final Element inputElement){
         return DocumentUtility.getElement(inputElement, SOAP_11_NAMESPACE, BODY_NAMESPACE)
                         .map(element -> {
-                            final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE);
+                            final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
+                                    .orElse(null);
                             return Optional.of(BindingOperationInputBody.builder()
                                     .parts(parts)
                                     .build());
@@ -108,7 +110,8 @@ public final class WsdlBindingParser extends WsdlParser {
                         .orElseGet(() -> {
                             return DocumentUtility.getElement(inputElement, SOAP_12_NAMESPACE, BODY_NAMESPACE)
                                     .map(element -> {
-                                        final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE);
+                                        final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
+                                                .orElse(null);
                                         return Optional.of(BindingOperationInputBody.builder()
                                                 .parts(parts)
                                                 .build());
@@ -119,14 +122,16 @@ public final class WsdlBindingParser extends WsdlParser {
     private Optional<BindingOperationOutputBody> parseOutputBody(final Element outputElement){
         return DocumentUtility.getElement(outputElement, SOAP_11_NAMESPACE, BODY_NAMESPACE)
                         .map(element -> {
-                            final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE);
+                            final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
+                                    .orElse(null);
                             return Optional.of(BindingOperationOutputBody.builder()
                                     .parts(parts)
                                     .build());
                 }).orElseGet(() -> {
                     return DocumentUtility.getElement(outputElement, SOAP_12_NAMESPACE, BODY_NAMESPACE)
                             .map(element -> {
-                                final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE);
+                                final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
+                                        .orElse(null);
                                 return Optional.of(BindingOperationOutputBody.builder()
                                         .parts(parts)
                                         .build());
