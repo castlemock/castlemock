@@ -19,6 +19,8 @@ package com.castlemock.core.mock.rest.service.project.input;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -36,16 +38,12 @@ public final class DeleteRestMockResponseInput implements Input{
     @NotNull
     private final String restMockResponseId;
 
-    private DeleteRestMockResponseInput(String restProjectId,
-                                       String restApplicationId,
-                                       String restResourceId,
-                                       String restMethodId,
-                                       String restMockResponseId) {
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
-        this.restResourceId = restResourceId;
-        this.restMethodId = restMethodId;
-        this.restMockResponseId = restMockResponseId;
+    private DeleteRestMockResponseInput(final Builder builder) {
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
+        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
+        this.restMethodId = Objects.requireNonNull(builder.restMethodId);
+        this.restMockResponseId = Objects.requireNonNull(builder.restMockResponseId);
     }
 
     public String getRestProjectId() {
@@ -107,9 +105,7 @@ public final class DeleteRestMockResponseInput implements Input{
         }
 
         public DeleteRestMockResponseInput build(){
-            return new DeleteRestMockResponseInput(this.restProjectId,
-                    this.restApplicationId, this.restResourceId,
-                    this.restMethodId, this.restMockResponseId);
+            return new DeleteRestMockResponseInput(this);
         }
 
     }

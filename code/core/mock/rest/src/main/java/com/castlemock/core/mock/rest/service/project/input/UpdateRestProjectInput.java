@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -31,9 +33,9 @@ public final class UpdateRestProjectInput implements Input {
     @NotNull
     private final RestProject restProject;
 
-    private UpdateRestProjectInput(String restProjectId, RestProject restProject) {
-        this.restProjectId = restProjectId;
-        this.restProject = restProject;
+    private UpdateRestProjectInput(final Builder builder) {
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.restProject = Objects.requireNonNull(builder.restProject);
     }
 
     public String getRestProjectId() {
@@ -64,7 +66,7 @@ public final class UpdateRestProjectInput implements Input {
         }
 
         public UpdateRestProjectInput build(){
-            return new UpdateRestProjectInput(this.restProjectId, this.restProject);
+            return new UpdateRestProjectInput(this);
         }
 
     }

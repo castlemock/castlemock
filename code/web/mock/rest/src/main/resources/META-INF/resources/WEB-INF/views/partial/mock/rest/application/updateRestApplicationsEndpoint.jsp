@@ -32,7 +32,7 @@
         <c:choose>
             <c:when test="${restApplications.size() > 0}">
                 <p><spring:message code="rest.updaterestapplicationsendpoint.label.confirmation"/></p>
-                <form:form action="${update_applications_endpoint_url}" method="POST" modelAttribute="updateRestApplicationsEndpointCommand">
+                <form:form action="${update_applications_endpoint_url}" method="POST" modelAttribute="command">
                     <ul>
                         <c:forEach items="${restApplications}" var="restApplication" varStatus="loopStatus">
                             <li>${restApplication.name}</li>
@@ -42,7 +42,7 @@
                     <table class="formTable">
                         <tr>
                             <td class="column1"><label path="forwardedEndpoint"><spring:message code="rest.updaterestapplicationsendpoint.label.forwardedendpoint"/></label></td>
-                            <td class="column2"><form:input class="form-control" path="forwardedEndpoint" value="${updateRestApplicationsEndpointCommand.forwardedEndpoint}"/></td>
+                            <td class="column2"><form:input class="form-control" path="forwardedEndpoint" value="${command.forwardedEndpoint}"/></td>
                         </tr>
                     </table>
                     <button class="btn btn-success"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.updaterestapplicationsendpoint.button.updateapplications"/></span></button>

@@ -19,6 +19,8 @@ package com.castlemock.core.mock.rest.service.project.input;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -36,14 +38,12 @@ public final class UpdateCurrentRestMockResponseSequenceIndexInput implements In
     @NotNull
     private final Integer currentRestMockResponseSequenceIndex;
 
-    private UpdateCurrentRestMockResponseSequenceIndexInput(final String restProjectId, final String restApplicationId,
-                                                            final String restResourceId, final String restMethodId,
-                                                            final Integer currentRestMockResponseSequenceIndex) {
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
-        this.restResourceId = restResourceId;
-        this.restMethodId = restMethodId;
-        this.currentRestMockResponseSequenceIndex = currentRestMockResponseSequenceIndex;
+    private UpdateCurrentRestMockResponseSequenceIndexInput(final Builder builder) {
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
+        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
+        this.restMethodId = Objects.requireNonNull(builder.restMethodId);
+        this.currentRestMockResponseSequenceIndex = Objects.requireNonNull(builder.currentRestMockResponseSequenceIndex);
     }
 
     public String getRestProjectId() {
@@ -104,9 +104,7 @@ public final class UpdateCurrentRestMockResponseSequenceIndexInput implements In
         }
 
         public UpdateCurrentRestMockResponseSequenceIndexInput build(){
-            return new UpdateCurrentRestMockResponseSequenceIndexInput(this.restProjectId,
-                    this.restApplicationId, this.restResourceId,
-                    this.restMethodId, this.currentRestMockResponseSequenceIndex);
+            return new UpdateCurrentRestMockResponseSequenceIndexInput(this);
         }
 
     }

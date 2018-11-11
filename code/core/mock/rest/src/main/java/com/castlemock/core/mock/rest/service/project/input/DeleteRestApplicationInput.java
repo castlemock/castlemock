@@ -19,6 +19,8 @@ package com.castlemock.core.mock.rest.service.project.input;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -30,9 +32,9 @@ public final class DeleteRestApplicationInput implements Input{
     @NotNull
     private final String restApplicationId;
 
-    private DeleteRestApplicationInput(String restProjectId, String restApplicationId) {
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
+    private DeleteRestApplicationInput(final Builder builder) {
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
     }
 
     public String getRestProjectId() {
@@ -64,8 +66,7 @@ public final class DeleteRestApplicationInput implements Input{
         }
 
         public DeleteRestApplicationInput build(){
-            return new DeleteRestApplicationInput(this.restProjectId,
-                    this.restApplicationId);
+            return new DeleteRestApplicationInput(this);
         }
 
     }

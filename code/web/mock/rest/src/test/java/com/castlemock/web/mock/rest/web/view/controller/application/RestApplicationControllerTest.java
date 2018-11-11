@@ -60,8 +60,8 @@ public class RestApplicationControllerTest extends AbstractRestControllerTest {
 
     private static final String PAGE = "partial/mock/rest/application/restApplication.jsp";
     private static final String UPDATE_REST_RESOURCES_ENDPOINT_PAGE = "partial/mock/rest/resource/updateRestResourcesEndpoint.jsp";
-    private static final String UPDATE_REST_RESOURCES_ENDPOINT_COMMAND = "updateRestResourcesEndpointCommand";
-    private static final String DELETE_REST_RESOURCES_COMMAND = "deleteRestResourcesCommand";
+    private static final String UPDATE_REST_RESOURCES_ENDPOINT_COMMAND = "command";
+    private static final String DELETE_REST_RESOURCES_COMMAND = "command";
     private static final String DELETE_REST_RESOURCES_PAGE = "partial/mock/rest/resource/deleteRestResources.jsp";
     private static final String REST_RESOURCES = "restResources";
 
@@ -101,13 +101,13 @@ public class RestApplicationControllerTest extends AbstractRestControllerTest {
         final String applicationId = "applicationId";
         final String[] restResources = {"restApplication1", "restApplication2"};
 
-        final RestResourceModifierCommand restResourceModifierCommand = new RestResourceModifierCommand();
-        restResourceModifierCommand.setRestResourceIds(restResources);
-        restResourceModifierCommand.setRestMethodStatus("MOCKED");
+        final RestResourceModifierCommand command = new RestResourceModifierCommand();
+        command.setRestResourceIds(restResources);
+        command.setRestMethodStatus("MOCKED");
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId)
-                        .param("action", "update").flashAttr("restResourceModifierCommand", restResourceModifierCommand);
+                        .param("action", "update").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
@@ -137,16 +137,16 @@ public class RestApplicationControllerTest extends AbstractRestControllerTest {
                 .thenReturn(ReadRestResourceOutput.builder().restResource(restResource2).build());
 
 
-        final RestResourceModifierCommand restResourceModifierCommand = new RestResourceModifierCommand();
-        restResourceModifierCommand.setRestResourceIds(restResourceIds);
+        final RestResourceModifierCommand command = new RestResourceModifierCommand();
+        command.setRestResourceIds(restResourceIds);
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId)
-                        .param("action", "delete").flashAttr("restResourceModifierCommand", restResourceModifierCommand);
+                        .param("action", "delete").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(5 + GLOBAL_VIEW_MODEL_COUNT))
+                .andExpect(MockMvcResultMatchers.model().size(4 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, DELETE_REST_RESOURCES_PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, projectId))
@@ -178,16 +178,16 @@ public class RestApplicationControllerTest extends AbstractRestControllerTest {
                 .thenReturn(ReadRestResourceOutput.builder().restResource(restResource2).build());
 
 
-        final RestResourceModifierCommand restResourceModifierCommand = new RestResourceModifierCommand();
-        restResourceModifierCommand.setRestResourceIds(restResourceIds);
+        final RestResourceModifierCommand command = new RestResourceModifierCommand();
+        command.setRestResourceIds(restResourceIds);
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId)
-                        .param("action", "update-endpoint").flashAttr("restResourceModifierCommand", restResourceModifierCommand);
+                        .param("action", "update-endpoint").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(5 + GLOBAL_VIEW_MODEL_COUNT))
+                .andExpect(MockMvcResultMatchers.model().size(4 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, UPDATE_REST_RESOURCES_ENDPOINT_PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, projectId))

@@ -77,19 +77,19 @@ public class UpdateRestApplicationController extends AbstractRestViewController 
      * The method provides the functionality to update the endpoint address for multiple
      * applications at once
      * @param projectId The id of the project that the ports belongs to
-     * @param updateRestApplicationsEndpointCommand The command object contains both the application that
+     * @param command The command object contains both the application that
      *                                          will be updated and the new forwarded address
      * @return Redirects the user to the project page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/application/update/confirm", method = RequestMethod.POST)
     public ModelAndView updateEndpoint(@PathVariable final String projectId,
-                                       @ModelAttribute final UpdateRestApplicationsEndpointCommand updateRestApplicationsEndpointCommand) {
-        Preconditions.checkNotNull(updateRestApplicationsEndpointCommand, "The update application endpoint command cannot be null");
+                                       @ModelAttribute(name="command") final UpdateRestApplicationsEndpointCommand command) {
+        Preconditions.checkNotNull(command, "The update application endpoint command cannot be null");
         serviceProcessor.process(UpdateRestApplicationsForwardedEndpointInput.builder()
                 .restProjectId(projectId)
-                .restApplications(updateRestApplicationsEndpointCommand.getRestApplications())
-                .forwardedEndpoint(updateRestApplicationsEndpointCommand.getForwardedEndpoint())
+                .restApplications(command.getRestApplications())
+                .forwardedEndpoint(command.getForwardedEndpoint())
                 .build());
         return redirect("/rest/project/" + projectId);
     }

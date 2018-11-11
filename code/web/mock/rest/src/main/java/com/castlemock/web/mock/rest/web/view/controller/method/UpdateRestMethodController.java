@@ -96,7 +96,7 @@ public class UpdateRestMethodController extends AbstractRestViewController {
      * @param restProjectId The id of the project that the method belongs to
      * @param restApplicationId The id of the application that the method belongs to
      * @param restResourceId The id of the resource that the method belongs to
-     * @param updateRestMethodsEndpointCommand The command object contains both the methods that
+     * @param command The command object contains both the methods that
      *                                          will be updated and the new forwarded address
      * @return Redirects the user to the resource page
      */
@@ -105,14 +105,14 @@ public class UpdateRestMethodController extends AbstractRestViewController {
     public ModelAndView updateEndpoint(@PathVariable final String restProjectId,
                                        @PathVariable final String restApplicationId,
                                        @PathVariable final String restResourceId,
-                                       @ModelAttribute final UpdateRestMethodsEndpointCommand updateRestMethodsEndpointCommand) {
-        Preconditions.checkNotNull(updateRestMethodsEndpointCommand, "The update application endpoint command cannot be null");
+                                       @ModelAttribute(name="command") final UpdateRestMethodsEndpointCommand command) {
+        Preconditions.checkNotNull(command, "The update application endpoint command cannot be null");
         serviceProcessor.process(UpdateRestMethodsForwardedEndpointInput.builder()
                 .restProjectId(restProjectId)
                 .restApplicationId(restApplicationId)
                 .restResourceId(restResourceId)
-                .restMethods(updateRestMethodsEndpointCommand.getRestMethods())
-                .forwardedEndpoint(updateRestMethodsEndpointCommand.getForwardedEndpoint())
+                .restMethods(command.getRestMethods())
+                .forwardedEndpoint(command.getForwardedEndpoint())
                 .build());
         return redirect("/rest/project/" + restProjectId + "/application/" +
                 restApplicationId + "/resource/" + restResourceId);

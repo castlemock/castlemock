@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -35,12 +36,10 @@ public final class UpdateRestApplicationsForwardedEndpointInput implements Input
     @NotNull
     private final String forwardedEndpoint;
 
-    private UpdateRestApplicationsForwardedEndpointInput(String restProjectId,
-                                                        List<RestApplication> restApplications,
-                                                        String forwardedEndpoint) {
-        this.restProjectId = restProjectId;
-        this.restApplications = restApplications;
-        this.forwardedEndpoint = forwardedEndpoint;
+    private UpdateRestApplicationsForwardedEndpointInput(final Builder builder) {
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.restApplications = Objects.requireNonNull(builder.restApplications);
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
     }
 
     public String getRestProjectId() {
@@ -81,8 +80,7 @@ public final class UpdateRestApplicationsForwardedEndpointInput implements Input
         }
 
         public UpdateRestApplicationsForwardedEndpointInput build(){
-            return new UpdateRestApplicationsForwardedEndpointInput(this.restProjectId,
-                    this.restApplications, this.forwardedEndpoint);
+            return new UpdateRestApplicationsForwardedEndpointInput(this);
         }
 
     }

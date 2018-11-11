@@ -49,15 +49,15 @@ import java.util.List;
 public class RestApplicationController extends AbstractRestViewController {
 
     private static final String PAGE = "mock/rest/application/restApplication";
-    private static final String REST_RESOURCE_MODIFIER_COMMAND = "restResourceModifierCommand";
+    private static final String REST_RESOURCE_MODIFIER_COMMAND = "command";
     private static final Logger LOGGER = Logger.getLogger(RestApplicationController.class);
     private static final String DELETE_REST_RESOURCES = "delete";
-    private static final String DELETE_REST_RESOURCES_COMMAND = "deleteRestResourcesCommand";
+    private static final String DELETE_REST_RESOURCES_COMMAND = "command";
     private static final String DELETE_REST_RESOURCES_PAGE = "mock/rest/resource/deleteRestResources";
     private static final String UPDATE_STATUS = "update";
     private static final String UPDATE_ENDPOINTS = "update-endpoint";
     private static final String UPDATE_REST_RESOURCES_ENDPOINT_PAGE = "mock/rest/resource/updateRestResourcesEndpoint";
-    private static final String UPDATE_REST_RESOURCES_ENDPOINT_COMMAND = "updateRestResourcesEndpointCommand";
+    private static final String UPDATE_REST_RESOURCES_ENDPOINT_COMMAND = "command";
 
     /**
      * Retrieves a specific project with a project id
@@ -93,7 +93,7 @@ public class RestApplicationController extends AbstractRestViewController {
      * @param restProjectId The id of the project responsible for the REST application
      * @param restApplicationId The id of the application that the action should be invoked upon
      * @param action The requested action
-     * @param restResourceModifierCommand The command object contains meta data required for certain actions
+     * @param command The command object contains meta data required for certain actions
      * @return Either a model related to the action or redirects the user to the REST application page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
@@ -101,11 +101,11 @@ public class RestApplicationController extends AbstractRestViewController {
     public ModelAndView applicationFunctionality(@PathVariable final String restProjectId,
                                                  @PathVariable final String restApplicationId,
                                                  @RequestParam final String action,
-                                                 @ModelAttribute final RestResourceModifierCommand restResourceModifierCommand) {
+                                                 @ModelAttribute(name="command") final RestResourceModifierCommand command) {
         LOGGER.debug("Requested REST project action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
-            final RestMethodStatus restMethodStatus = RestMethodStatus.valueOf(restResourceModifierCommand.getRestMethodStatus());
-            for(String restResourceId : restResourceModifierCommand.getRestResourceIds()){
+            final RestMethodStatus restMethodStatus = RestMethodStatus.valueOf(command.getRestMethodStatus());
+            for(String restResourceId : command.getRestResourceIds()){
                 serviceProcessor.process(UpdateRestResourcesStatusInput.builder()
                         .restProjectId(restProjectId)
                         .restApplicationId(restApplicationId)
@@ -115,7 +115,7 @@ public class RestApplicationController extends AbstractRestViewController {
             }
         } else if(DELETE_REST_RESOURCES.equalsIgnoreCase(action)) {
             final List<RestResource> restResources = new ArrayList<RestResource>();
-            for(String restResourceId : restResourceModifierCommand.getRestResourceIds()){
+            for(String restResourceId : command.getRestResourceIds()){
                 ReadRestResourceOutput output = serviceProcessor.process(ReadRestResourceInput.builder()
                         .restProjectId(restProjectId)
                         .restApplicationId(restApplicationId)
@@ -131,7 +131,7 @@ public class RestApplicationController extends AbstractRestViewController {
             return model;
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<RestResource> restResources = new ArrayList<RestResource>();
-            for(String restResourceId : restResourceModifierCommand.getRestResourceIds()){
+            for(String restResourceId : command.getRestResourceIds()){
                 final ReadRestResourceOutput output = serviceProcessor.process(ReadRestResourceInput.builder()
                         .restProjectId(restProjectId)
                         .restApplicationId(restApplicationId)

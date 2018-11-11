@@ -124,14 +124,15 @@ public class DeleteRestMethodControllerTest extends AbstractRestControllerTest {
         final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
         final RestResource restResource = RestResourceGenerator.generateRestResource();
         final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
-        final DeleteRestMethodsCommand deleteRestMethodsCommand = new DeleteRestMethodsCommand();
-        deleteRestMethodsCommand.setRestMethods(new ArrayList<RestMethod>());
-        deleteRestMethodsCommand.getRestMethods().add(restMethod);
+        final DeleteRestMethodsCommand command = new DeleteRestMethodsCommand();
+        command.setRestMethods(new ArrayList<RestMethod>());
+        command.getRestMethods().add(restMethod);
 
         when(serviceProcessor.process(any(DeleteRestMethodInput.class))).thenReturn(DeleteRestMethodOutput.builder().build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
                 SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH +
-                RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + DELETE + SLASH + CONFIRM);
+                RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + DELETE + SLASH + CONFIRM)
+                .flashAttr("command", command);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

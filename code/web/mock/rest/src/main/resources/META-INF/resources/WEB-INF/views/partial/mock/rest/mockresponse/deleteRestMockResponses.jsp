@@ -34,7 +34,7 @@
         <c:choose>
             <c:when test="${restMockResponses.size() > 0}">
                 <p><spring:message code="rest.deleterestmockresponses.label.confirmation"/></p>
-                <form:form action="${delete_rest_mock_responses_url}" method="POST" modelAttribute="deleteRestMockResponsesCommand">
+                <form:form action="${delete_rest_mock_responses_url}" method="POST" modelAttribute="command">
                     <ul>
                         <c:forEach items="${restMockResponses}" var="restMockResponse" varStatus="loopStatus">
                             <li>${restMockResponse.name}</li>

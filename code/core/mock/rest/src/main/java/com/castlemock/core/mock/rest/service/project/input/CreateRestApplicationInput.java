@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -31,10 +33,9 @@ public final class CreateRestApplicationInput implements Input {
     @NotNull
     private final RestApplication application;
 
-    private CreateRestApplicationInput(final String projectId,
-                                       final RestApplication application) {
-        this.projectId = projectId;
-        this.application = application;
+    private CreateRestApplicationInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.application = Objects.requireNonNull(builder.application);
     }
 
     public String getProjectId() {
@@ -65,7 +66,7 @@ public final class CreateRestApplicationInput implements Input {
         }
 
         public CreateRestApplicationInput build(){
-            return new CreateRestApplicationInput(this.projectId, this.application);
+            return new CreateRestApplicationInput(this);
         }
 
     }

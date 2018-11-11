@@ -33,7 +33,7 @@
         <c:choose>
             <c:when test="${restMethods.size() > 0}">
                 <p><spring:message code="rest.deletemethods.label.confirmation"/></p>
-                <form:form action="${delete_methods_url}" method="POST" modelAttribute="deleteRestMethodsCommand">
+                <form:form action="${delete_methods_url}" method="POST" modelAttribute="command">
                     <ul>
                         <c:forEach items="${restMethods}" var="restMethod" varStatus="loopStatus">
                             <li>${restMethod.name}</li>

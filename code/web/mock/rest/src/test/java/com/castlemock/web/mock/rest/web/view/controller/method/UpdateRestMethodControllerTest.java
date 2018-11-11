@@ -34,6 +34,7 @@ import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.web.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.web.mock.rest.web.view.command.method.UpdateRestMethodsEndpointCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestControllerTest;
+import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -120,11 +121,14 @@ public class UpdateRestMethodControllerTest extends AbstractRestControllerTest {
         final String applicationId = "applicationId";
         final String resourceId = "resourceId";
 
-        final UpdateRestMethodsEndpointCommand updateRestMethodsEndpointCommand = new UpdateRestMethodsEndpointCommand();
-        updateRestMethodsEndpointCommand.setForwardedEndpoint("http://localhost:8080/web");
+        final UpdateRestMethodsEndpointCommand command = new UpdateRestMethodsEndpointCommand();
+        command.setForwardedEndpoint("http://localhost:8080/web");
+        command.setRestMethods(ImmutableList.of());
 
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId + SLASH + METHOD + SLASH + "update/confirm")
-                .flashAttr("updateRestResourcesEndpointCommand", updateRestMethodsEndpointCommand);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH +
+                resourceId + SLASH + METHOD + SLASH + "update/confirm")
+                .flashAttr("command", command);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/web/rest/project/" + projectId + "/application/" + applicationId + "/resource/" + resourceId));

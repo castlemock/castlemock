@@ -58,7 +58,7 @@
             </div>
             <c:choose>
                 <c:when test="${restResource.methods.size() > 0}">
-                    <form:form action="${rest_method_update_url}/" method="POST"  modelAttribute="restMethodModifierCommand">
+                    <form:form action="${rest_method_update_url}/" method="POST"  modelAttribute="command">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover sortable">
                                 <col width="10%">

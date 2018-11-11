@@ -63,7 +63,7 @@ import static org.mockito.Mockito.when;
 public class RestMethodControllerTest extends AbstractRestControllerTest {
 
     private static final String PAGE = "partial/mock/rest/method/restMethod.jsp";
-    private static final String DELETE_REST_MOCK_RESPONSES_COMMAND = "deleteRestMockResponsesCommand";
+    private static final String DELETE_REST_MOCK_RESPONSES_COMMAND = "command";
     private static final String DELETE_MOCK_RESPONSES_PAGE = "partial/mock/rest/mockresponse/deleteRestMockResponses.jsp";
     protected static final String REST_MOCK_RESPONSES = "restMockResponses";
 
@@ -123,13 +123,13 @@ public class RestMethodControllerTest extends AbstractRestControllerTest {
                 .thenReturn(ReadRestMockResponseOutput.builder().restMockResponse(restMockResponse1).build())
                 .thenReturn(ReadRestMockResponseOutput.builder().restMockResponse(restMockResponse2).build());
 
-        final RestMockResponseModifierCommand restMockResponseModifierCommand = new RestMockResponseModifierCommand();
-        restMockResponseModifierCommand.setRestMockResponseIds(mockResponses);
-        restMockResponseModifierCommand.setRestMockResponseStatus("ENABLED");
+        final RestMockResponseModifierCommand command = new RestMockResponseModifierCommand();
+        command.setRestMockResponseIds(mockResponses);
+        command.setRestMockResponseStatus("ENABLED");
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId + SLASH + METHOD + SLASH + methodId)
-                        .param("action", "update").flashAttr("restMockResponseModifierCommand", restMockResponseModifierCommand);
+                        .param("action", "update").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
@@ -148,8 +148,8 @@ public class RestMethodControllerTest extends AbstractRestControllerTest {
         final String methodId = "methjodId";
         final String[] mockResponseIds = {"restMethod1", "restMethod2"};
 
-        final RestMockResponseModifierCommand restMockResponseModifierCommand = new RestMockResponseModifierCommand();
-        restMockResponseModifierCommand.setRestMockResponseIds(mockResponseIds);
+        final RestMockResponseModifierCommand command = new RestMockResponseModifierCommand();
+        command.setRestMockResponseIds(mockResponseIds);
 
 
         final RestMockResponse restMockResponse1 = new RestMockResponse();
@@ -167,12 +167,12 @@ public class RestMethodControllerTest extends AbstractRestControllerTest {
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId +
                         SLASH + APPLICATION + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId + SLASH + METHOD + SLASH + methodId)
-                        .param("action", "delete").flashAttr("restMockResponseModifierCommand", restMockResponseModifierCommand);
+                        .param("action", "delete").flashAttr("command", command);
 
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(7 + GLOBAL_VIEW_MODEL_COUNT))
+                .andExpect(MockMvcResultMatchers.model().size(6 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, DELETE_MOCK_RESPONSES_PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(REST_PROJECT_ID, projectId))
@@ -207,13 +207,13 @@ public class RestMethodControllerTest extends AbstractRestControllerTest {
                 .thenReturn(ReadRestMockResponseOutput.builder().restMockResponse(restMockResponse2).build());
 
 
-        final RestMockResponseModifierCommand restMockResponseModifierCommand = new RestMockResponseModifierCommand();
-        restMockResponseModifierCommand.setRestMockResponseIds(restMockResponseIds);
+        final RestMockResponseModifierCommand command = new RestMockResponseModifierCommand();
+        command.setRestMockResponseIds(restMockResponseIds);
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + APPLICATION
                         + SLASH + applicationId + SLASH + RESOURCE + SLASH + resourceId + SLASH + METHOD + SLASH + methodId)
-                        .param("action", "duplicate").flashAttr("restMockResponseModifierCommand", restMockResponseModifierCommand);
+                        .param("action", "duplicate").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())

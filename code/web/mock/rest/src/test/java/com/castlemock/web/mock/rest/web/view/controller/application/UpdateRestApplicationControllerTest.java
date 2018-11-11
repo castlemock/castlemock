@@ -28,8 +28,9 @@ import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
 import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
-import com.castlemock.web.mock.rest.web.view.command.resource.UpdateRestResourcesEndpointCommand;
+import com.castlemock.web.mock.rest.web.view.command.application.UpdateRestApplicationsEndpointCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestControllerTest;
+import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -107,16 +108,18 @@ public class UpdateRestApplicationControllerTest extends AbstractRestControllerT
     public void testUpdateEndpoint() throws Exception {
         final String projectId = "projectId";
 
-        final UpdateRestResourcesEndpointCommand updateRestResourcesEndpointCommand = new UpdateRestResourcesEndpointCommand();
-        updateRestResourcesEndpointCommand.setForwardedEndpoint("http://localhost:8080/web");
+        final UpdateRestApplicationsEndpointCommand command = new UpdateRestApplicationsEndpointCommand();
+        command.setForwardedEndpoint("http://localhost:8080/web");
+        command.setRestApplications(ImmutableList.of());
 
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
                 SLASH + projectId + SLASH + APPLICATION + SLASH + "update/confirm")
-                .flashAttr("updateRestResourcesEndpointCommand", updateRestResourcesEndpointCommand);
+                .flashAttr("command", command);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/web/rest/project/" + projectId));
 
-        Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(UpdateRestApplicationsForwardedEndpointInput.class));
+        Mockito.verify(serviceProcessor, Mockito.times(1))
+                .process(Mockito.any(UpdateRestApplicationsForwardedEndpointInput.class));
     }
 }

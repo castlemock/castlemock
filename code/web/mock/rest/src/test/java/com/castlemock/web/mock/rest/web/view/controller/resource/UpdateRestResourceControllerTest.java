@@ -31,6 +31,7 @@ import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.web.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.web.mock.rest.web.view.command.resource.UpdateRestResourcesEndpointCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestControllerTest;
+import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -108,13 +109,14 @@ public class UpdateRestResourceControllerTest extends AbstractRestControllerTest
         final String projectId = "projectId";
         final String applicationId = "applicationId";
 
-        final UpdateRestResourcesEndpointCommand updateRestResourcesEndpointCommand = new UpdateRestResourcesEndpointCommand();
-        updateRestResourcesEndpointCommand.setForwardedEndpoint("http://localhost:8080/web");
+        final UpdateRestResourcesEndpointCommand command = new UpdateRestResourcesEndpointCommand();
+        command.setForwardedEndpoint("http://localhost:8080/web");
+        command.setRestResources(ImmutableList.of());
 
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL +
                 PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + SLASH +
                 RESOURCE + SLASH + "update/confirm")
-                .flashAttr("updateRestResourcesEndpointCommand", updateRestResourcesEndpointCommand);
+                .flashAttr("command", command);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/web/rest/project/" + projectId + "/application/" + applicationId));

@@ -62,12 +62,12 @@ public class CreateRestMethodController extends AbstractRestViewController {
     public ModelAndView createMethod(@PathVariable final String projectId,
                                      @PathVariable final String applicationId,
                                      @PathVariable final String resourceId,
-                                     @ModelAttribute final CreateRestMethodCommand createRestMethodCommand) {
+                                     @ModelAttribute(name="command") final CreateRestMethodCommand command) {
         final CreateRestMethodOutput output = serviceProcessor.process(CreateRestMethodInput.builder()
                 .projectId(projectId)
                 .applicationId(applicationId)
                 .resourceId(resourceId)
-                .method(createRestMethodCommand.getRestMethod())
+                .method(command.getRestMethod())
                 .build());
         return redirect("/rest/project/" + projectId + "/application/" +
                 applicationId + "/resource/" + resourceId + "/method/" + output.getCreatedRestMethod().getId());

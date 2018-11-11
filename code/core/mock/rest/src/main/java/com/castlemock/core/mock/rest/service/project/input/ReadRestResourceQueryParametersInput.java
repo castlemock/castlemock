@@ -19,6 +19,8 @@ package com.castlemock.core.mock.rest.service.project.input;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 public class ReadRestResourceQueryParametersInput implements Input {
 
     @NotNull
@@ -29,9 +31,9 @@ public class ReadRestResourceQueryParametersInput implements Input {
     private final String resourceId;
 
     private ReadRestResourceQueryParametersInput(final Builder builder) {
-        this.projectId = builder.projectId;
-        this.applicationId = builder.applicationId;
-        this.resourceId = builder.resourceId;
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.applicationId = Objects.requireNonNull(builder.applicationId);
+        this.resourceId = Objects.requireNonNull(builder.resourceId);
     }
 
     public String getProjectId() {

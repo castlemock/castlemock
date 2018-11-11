@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -35,12 +36,10 @@ public final class DeleteRestResourcesInput implements Input{
     @NotNull
     private final List<RestResource> restResources;
 
-    public DeleteRestResourcesInput(String restProjectId,
-                                    String restApplicationId,
-                                    List<RestResource> restResources) {
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
-        this.restResources = restResources;
+    public DeleteRestResourcesInput(final Builder builder) {
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
+        this.restResources = Objects.requireNonNull(builder.restResources);
     }
 
     public String getRestProjectId() {
@@ -81,8 +80,7 @@ public final class DeleteRestResourcesInput implements Input{
             return this;
         }
         public DeleteRestResourcesInput build(){
-            return new DeleteRestResourcesInput(this.restProjectId,
-                    this.restApplicationId, this.restResources);
+            return new DeleteRestResourcesInput(this);
         }
 
     }

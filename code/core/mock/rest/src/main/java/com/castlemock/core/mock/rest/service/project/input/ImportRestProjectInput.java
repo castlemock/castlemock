@@ -19,6 +19,8 @@ package com.castlemock.core.mock.rest.service.project.input;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -28,8 +30,8 @@ public final class ImportRestProjectInput implements Input {
     @NotNull
     private final String projectRaw;
 
-    private ImportRestProjectInput(String projectRaw) {
-        this.projectRaw = projectRaw;
+    private ImportRestProjectInput(final Builder builder) {
+        this.projectRaw = Objects.requireNonNull(builder.projectRaw);
     }
 
     public String getProjectRaw() {
@@ -50,7 +52,7 @@ public final class ImportRestProjectInput implements Input {
         }
 
         public ImportRestProjectInput build(){
-            return new ImportRestProjectInput(this.projectRaw);
+            return new ImportRestProjectInput(this);
         }
 
     }

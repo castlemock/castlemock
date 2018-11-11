@@ -46,14 +46,14 @@ import java.util.List;
 public class RestProjectController extends AbstractRestViewController {
 
     private static final String PAGE = "mock/rest/project/restProject";
-    private static final String REST_APPLICATION_MODIFIER_COMMAND = "restApplicationModifierCommand";
+    private static final String REST_APPLICATION_MODIFIER_COMMAND = "command";
     private static final String DELETE_REST_APPLICATIONS = "delete";
-    private static final String DELETE_REST_APPLICATIONS_COMMAND = "deleteRestApplicationsCommand";
+    private static final String DELETE_REST_APPLICATIONS_COMMAND = "command";
     private static final String DELETE_REST_APPLICATIONS_PAGE = "mock/rest/application/deleteRestApplications";
     private static final String UPDATE_STATUS = "update";
     private static final String UPDATE_ENDPOINTS = "update-endpoint";
     private static final String UPDATE_REST_APPLICATIONS_ENDPOINT_PAGE = "mock/rest/application/updateRestApplicationsEndpoint";
-    private static final String UPDATE_REST_APPLICATIONS_ENDPOINT_COMMAND = "updateRestApplicationsEndpointCommand";
+    private static final String UPDATE_REST_APPLICATIONS_ENDPOINT_COMMAND = "command";
     private static final String UPLOAD = "upload";
     private static final String UPLOAD_OUTCOME_SUCCESS = "success";
     private static final String UPLOAD_OUTCOME_ERROR = "error";
@@ -91,16 +91,18 @@ public class RestProjectController extends AbstractRestViewController {
      * The method projectFunctionality provides multiple functionalities:
      * @param projectId The id of the project that the resources belong to
      * @param action The name of the action that should be executed (delete or update).
-     * @param restApplicationModifierCommand The command object that contains the list of resources that get affected by the executed action.
+     * @param command The command object that contains the list of resources that get affected by the executed action.
      * @return Redirects the user back to the main page for the project with the provided id.
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.POST)
-    public ModelAndView projectFunctionality(@PathVariable final String projectId, @RequestParam final String action, @ModelAttribute final RestApplicationModifierCommand restApplicationModifierCommand) {
+    public ModelAndView projectFunctionality(@PathVariable final String projectId,
+                                             @RequestParam final String action,
+                                             @ModelAttribute(name="command") final RestApplicationModifierCommand command) {
         LOGGER.debug("Requested REST project action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
-            final RestMethodStatus restMethodStatus = RestMethodStatus.valueOf(restApplicationModifierCommand.getRestMethodStatus());
-            for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
+            final RestMethodStatus restMethodStatus = RestMethodStatus.valueOf(command.getRestMethodStatus());
+            for(String restApplicationId : command.getRestApplicationIds()){
                 serviceProcessor.process(UpdateRestApplicationsStatusInput.builder()
                         .restProjectId(projectId)
                         .restApplicationId(restApplicationId)
@@ -109,7 +111,7 @@ public class RestProjectController extends AbstractRestViewController {
             }
         } else if(DELETE_REST_APPLICATIONS.equalsIgnoreCase(action)) {
             final List<RestApplication> restApplications = new ArrayList<RestApplication>();
-            for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
+            for(String restApplicationId : command.getRestApplicationIds()){
                 final ReadRestApplicationOutput output = serviceProcessor.process(ReadRestApplicationInput.builder()
                         .restProjectId(projectId)
                         .restApplicationId(restApplicationId)
@@ -123,7 +125,7 @@ public class RestProjectController extends AbstractRestViewController {
             return model;
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<RestApplication> restApplications = new ArrayList<RestApplication>();
-            for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
+            for(String restApplicationId : command.getRestApplicationIds()){
                 final ReadRestApplicationOutput output = serviceProcessor.process(ReadRestApplicationInput.builder()
                         .restProjectId(projectId)
                         .restApplicationId(restApplicationId)

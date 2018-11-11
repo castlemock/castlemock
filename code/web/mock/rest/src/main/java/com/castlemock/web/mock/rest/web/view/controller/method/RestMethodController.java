@@ -58,8 +58,8 @@ public class RestMethodController extends AbstractRestViewController {
     private static final String DUPLICATE_MOCK_RESPONSE = "duplicate";
 
 
-    private static final String DELETE_REST_MOCK_RESPONSES_COMMAND = "deleteRestMockResponsesCommand";
-    private static final String REST_MOCK_RESPONSE_MODIFIER_COMMAND = "restMockResponseModifierCommand";
+    private static final String DELETE_REST_MOCK_RESPONSES_COMMAND = "command";
+    private static final String REST_MOCK_RESPONSE_MODIFIER_COMMAND = "command";
     private static final String DELETE_MOCK_RESPONSES_PAGE = "mock/rest/mockresponse/deleteRestMockResponses";
 
 
@@ -123,7 +123,7 @@ public class RestMethodController extends AbstractRestViewController {
      * @param restResourceId The id of the resource responsible for the REST method
      * @param restMethodId The id of the method that the action should be invoked upon
      * @param action The requested action
-     * @param restMockResponseModifierCommand The command object contains meta data required for certain actions
+     * @param command The command object contains meta data required for certain actions
      * @return Either a model related to the action or redirects the user to the REST method page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
@@ -133,11 +133,11 @@ public class RestMethodController extends AbstractRestViewController {
                                             @PathVariable final String restResourceId,
                                             @PathVariable final String restMethodId,
                                             @RequestParam final String action,
-                                            @ModelAttribute final RestMockResponseModifierCommand restMockResponseModifierCommand) {
+                                            @ModelAttribute(name="command") final RestMockResponseModifierCommand command) {
         LOGGER.debug("REST operation action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
-            final RestMockResponseStatus status = RestMockResponseStatus.valueOf(restMockResponseModifierCommand.getRestMockResponseStatus());
-            for(String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
+            final RestMockResponseStatus status = RestMockResponseStatus.valueOf(command.getRestMockResponseStatus());
+            for(String mockResponseId : command.getRestMockResponseIds()){
                 ReadRestMockResponseOutput readRestMockResponseOutput = serviceProcessor.process(ReadRestMockResponseInput.builder()
                         .restProjectId(restProjectId)
                         .restApplicationId(restApplicationId)
@@ -159,7 +159,7 @@ public class RestMethodController extends AbstractRestViewController {
             }
         } else if(DELETE_MOCK_RESPONSES.equalsIgnoreCase(action)) {
             final List<RestMockResponse> mockResponses = new ArrayList<RestMockResponse>();
-            for(String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()){
+            for(String mockResponseId : command.getRestMockResponseIds()){
                 final ReadRestMockResponseOutput output = serviceProcessor.process(ReadRestMockResponseInput.builder()
                         .restProjectId(restProjectId)
                         .restApplicationId(restApplicationId)
@@ -180,7 +180,7 @@ public class RestMethodController extends AbstractRestViewController {
             return model;
         } else if (DUPLICATE_MOCK_RESPONSE.equalsIgnoreCase(action)) {
             String copyOfLabel = messageSource.getMessage("rest.restmethod.label.copyOf", null, LocaleContextHolder.getLocale());
-            for (String mockResponseId : restMockResponseModifierCommand.getRestMockResponseIds()) {
+            for (String mockResponseId : command.getRestMockResponseIds()) {
                 ReadRestMockResponseOutput readRestMockResponseOutput = serviceProcessor.process(ReadRestMockResponseInput.builder()
                         .restProjectId(restProjectId)
                         .restApplicationId(restApplicationId)

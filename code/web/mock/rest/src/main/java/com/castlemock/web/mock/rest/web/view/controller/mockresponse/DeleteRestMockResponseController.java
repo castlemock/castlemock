@@ -94,13 +94,13 @@ public class DeleteRestMockResponseController extends AbstractRestViewController
                                                                 @PathVariable final String restApplicationId,
                                                                 @PathVariable final String restResourceId,
                                                                 @PathVariable final String restMethodId,
-                                                                @ModelAttribute final DeleteRestMockResponsesCommand deleteRestMockResponsesCommand) {
+                                                                @ModelAttribute(name="command") final DeleteRestMockResponsesCommand command) {
         serviceProcessor.process(DeleteRestMockResponsesInput.builder()
                 .restProjectId(restProjectId)
                 .restApplicationId(restApplicationId)
                 .restResourceId(restResourceId)
                 .restMethodId(restMethodId)
-                .restMockResponses(deleteRestMockResponsesCommand.getRestMockResponses())
+                .restMockResponses(command.getRestMockResponses())
                 .build());
         return redirect("/rest/project/" + restProjectId + "/application/" +
                 restApplicationId + "/resource/" + restResourceId + "/method/" + restMethodId);

@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -35,12 +37,11 @@ public final class CreateRestMethodInput implements Input {
     @NotNull
     private final RestMethod method;
 
-    private CreateRestMethodInput(final String projectId, final String applicationId,
-                                  final String resourceId, final RestMethod method) {
-        this.projectId = projectId;
-        this.applicationId = applicationId;
-        this.resourceId = resourceId;
-        this.method = method;
+    private CreateRestMethodInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.applicationId = Objects.requireNonNull(builder.applicationId);
+        this.resourceId = Objects.requireNonNull(builder.resourceId);
+        this.method = Objects.requireNonNull(builder.method);
     }
 
     public String getProjectId() {
@@ -90,7 +91,7 @@ public final class CreateRestMethodInput implements Input {
         }
 
         public CreateRestMethodInput build(){
-            return new CreateRestMethodInput(this.projectId, this.applicationId, this.resourceId, this.method);
+            return new CreateRestMethodInput(this);
         }
     }
 

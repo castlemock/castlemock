@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,8 +31,8 @@ public final class SearchRestProjectInput implements Input {
     @NotNull
     private final SearchQuery searchQuery;
 
-    private SearchRestProjectInput(SearchQuery searchQuery) {
-        this.searchQuery = searchQuery;
+    private SearchRestProjectInput(final Builder builder) {
+        this.searchQuery = Objects.requireNonNull(builder.searchQuery);
     }
 
     public SearchQuery getSearchQuery() {
@@ -51,7 +53,7 @@ public final class SearchRestProjectInput implements Input {
         }
 
         public SearchRestProjectInput build(){
-            return new SearchRestProjectInput(this.searchQuery);
+            return new SearchRestProjectInput(this);
         }
 
     }

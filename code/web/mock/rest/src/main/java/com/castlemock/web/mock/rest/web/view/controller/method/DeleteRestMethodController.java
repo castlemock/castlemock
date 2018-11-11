@@ -86,12 +86,12 @@ public class DeleteRestMethodController extends AbstractRestViewController {
     public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final String restProjectId,
                                                            @PathVariable final String restApplicationId,
                                                            @PathVariable final String restResourceId,
-                                                           @ModelAttribute final DeleteRestMethodsCommand deleteRestMethodsCommand) {
+                                                           @ModelAttribute(name="command") final DeleteRestMethodsCommand command) {
         serviceProcessor.process(DeleteRestMethodsInput.builder()
                 .restProjectId(restProjectId)
                 .restApplicationId(restApplicationId)
                 .restResourceId(restResourceId)
-                .restMethods(deleteRestMethodsCommand.getRestMethods())
+                .restMethods(command.getRestMethods())
                 .build());
         return redirect("/rest/project/" + restProjectId + "/application/" +
                 restApplicationId + "/resource/" + restResourceId);

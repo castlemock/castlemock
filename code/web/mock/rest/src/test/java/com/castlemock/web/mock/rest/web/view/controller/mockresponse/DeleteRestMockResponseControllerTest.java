@@ -122,15 +122,16 @@ public class DeleteRestMockResponseControllerTest extends AbstractRestController
         final RestResource restResource = RestResourceGenerator.generateRestResource();
         final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
         final RestMockResponse restMockResponse = RestMockResponseGenerator.generateRestMockResponse();
-        final DeleteRestMockResponsesCommand deleteRestMockResponsesCommand = new DeleteRestMockResponsesCommand();
-        deleteRestMockResponsesCommand.setRestMockResponses(new ArrayList<RestMockResponse>());
-        deleteRestMockResponsesCommand.getRestMockResponses().add(restMockResponse);
+        final DeleteRestMockResponsesCommand command = new DeleteRestMockResponsesCommand();
+        command.setRestMockResponses(new ArrayList<RestMockResponse>());
+        command.getRestMockResponses().add(restMockResponse);
 
         when(serviceProcessor.process(any(DeleteRestMockResponsesInput.class))).thenReturn(DeleteRestMockResponsesOutput.builder().build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
                 SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH +
                 RESOURCE + SLASH + restResource.getId() + SLASH + METHOD + SLASH + restMethod.getId() + SLASH +
-                RESPONSE + SLASH + DELETE + SLASH + CONFIRM);
+                RESPONSE + SLASH + DELETE + SLASH + CONFIRM)
+                .flashAttr("command", command);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

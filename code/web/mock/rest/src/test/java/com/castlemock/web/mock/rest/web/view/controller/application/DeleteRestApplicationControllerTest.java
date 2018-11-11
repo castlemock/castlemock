@@ -99,13 +99,15 @@ public class DeleteRestApplicationControllerTest extends AbstractRestControllerT
 
     @Test
     public void testConfirmDeletationOfMultpleProjects() throws Exception {
-        final DeleteRestApplicationsCommand deleteRestApplicationsCommand = new DeleteRestApplicationsCommand();
+        final DeleteRestApplicationsCommand command = new DeleteRestApplicationsCommand();
         final RestProject restProject = RestProjectGenerator.generateRestProject();
         final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
         final List<RestApplication> restApplications = new ArrayList<RestApplication>();
         restApplications.add(restApplication);
-        deleteRestApplicationsCommand.setRestApplications(restApplications);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + DELETE + SLASH + CONFIRM, deleteRestApplicationsCommand);
+        command.setRestApplications(restApplications);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + DELETE + SLASH + CONFIRM)
+                .flashAttr("command", command);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

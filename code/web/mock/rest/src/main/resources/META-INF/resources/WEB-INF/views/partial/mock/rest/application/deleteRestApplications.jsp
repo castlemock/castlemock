@@ -31,7 +31,7 @@
         <c:choose>
             <c:when test="${restApplications.size() > 0}">
                 <p><spring:message code="rest.deleteapplications.label.confirmation"/></p>
-                <form:form action="${delete_applications_url}" method="POST" modelAttribute="deleteRestApplicationsCommand">
+                <form:form action="${delete_applications_url}" method="POST" modelAttribute="command">
                     <ul>
                         <c:forEach items="${restApplications}" var="restApplication" varStatus="loopStatus">
                             <li>${restApplication.name}</li>

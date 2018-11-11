@@ -89,15 +89,19 @@ public class DeleteRestResourceController extends AbstractRestViewController {
      * The method provides the functionality to delete a list REST resources
      * @param restProjectId The id of the project that the REST resources belongs to
      * @param restApplicationId The id of the application that the REST resources belongs to
-     * @param deleteRestResourcesCommand The command object contains the REST resources that should be deleted
+     * @param command The command object contains the REST resources that should be deleted
      * @return Redirects the user to the REST application page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/delete/confirm", method = RequestMethod.POST)
     public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final String restProjectId,
                                                            @PathVariable final String restApplicationId,
-                                                           @ModelAttribute final DeleteRestResourcesCommand deleteRestResourcesCommand) {
-        serviceProcessor.process(new DeleteRestResourcesInput(restProjectId, restApplicationId, deleteRestResourcesCommand.getRestResources()));
+                                                           @ModelAttribute(name="command") final DeleteRestResourcesCommand command) {
+        serviceProcessor.process(DeleteRestResourcesInput.builder()
+                .restProjectId(restProjectId)
+                .restApplicationId(restApplicationId)
+                .restResources(command.getRestResources())
+                .build());
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);
     }
 

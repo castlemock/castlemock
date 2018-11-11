@@ -73,10 +73,10 @@ public class DeleteRestApplicationController extends AbstractRestViewController 
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/delete/confirm", method = RequestMethod.POST)
     public ModelAndView confirmDeletationOfMultpleApplications(@PathVariable final String restProjectId,
-                                                           @ModelAttribute final DeleteRestApplicationsCommand deleteRestApplicationsCommand) {
+                                                           @ModelAttribute(name="command") final DeleteRestApplicationsCommand command) {
         serviceProcessor.process(DeleteRestApplicationsInput.builder()
                 .restProjectId(restProjectId)
-                .restApplications(deleteRestApplicationsCommand.getRestApplications())
+                .restApplications(command.getRestApplications())
                 .build());
         return redirect("/rest/project/" + restProjectId);
     }

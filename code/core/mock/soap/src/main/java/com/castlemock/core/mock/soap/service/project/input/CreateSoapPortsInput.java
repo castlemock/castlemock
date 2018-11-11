@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.validation.NotNull;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -40,7 +41,7 @@ public final class CreateSoapPortsInput implements Input {
 
 
     private CreateSoapPortsInput(final Builder builder) {
-        this.projectId = builder.projectId;
+        this.projectId = Objects.requireNonNull(builder.projectId);
         this.includeImports = builder.includeImports;
         this.generateResponse = builder.generateResponse;
         this.files = builder.files;

@@ -19,6 +19,8 @@ package com.castlemock.core.mock.rest.service.project.input;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -34,12 +36,11 @@ public final class ReadRestMethodInput implements Input {
     @NotNull
     private final String restMethodId;
 
-    private ReadRestMethodInput(String restProjectId, String restApplicationId,
-                               String restResourceId, String restMethodId) {
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
-        this.restResourceId = restResourceId;
-        this.restMethodId = restMethodId;
+    private ReadRestMethodInput(final Builder builder) {
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
+        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
+        this.restMethodId = Objects.requireNonNull(builder.restMethodId);
     }
 
     public String getRestProjectId() {
@@ -90,8 +91,7 @@ public final class ReadRestMethodInput implements Input {
         }
 
         public ReadRestMethodInput build(){
-            return new ReadRestMethodInput(this.restProjectId,
-                    this.restApplicationId, this.restResourceId, this.restMethodId);
+            return new ReadRestMethodInput(this);
         }
 
     }

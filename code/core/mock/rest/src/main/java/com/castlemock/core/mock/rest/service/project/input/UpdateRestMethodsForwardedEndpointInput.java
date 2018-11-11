@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -39,16 +40,12 @@ public final class UpdateRestMethodsForwardedEndpointInput implements Input {
     @NotNull
     private final String forwardedEndpoint;
 
-    private UpdateRestMethodsForwardedEndpointInput(String restProjectId,
-                                                   String restApplicationId,
-                                                   String restResourceId,
-                                                   List<RestMethod> restMethods,
-                                                   String forwardedEndpoint) {
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
-        this.restResourceId = restResourceId;
-        this.restMethods = restMethods;
-        this.forwardedEndpoint = forwardedEndpoint;
+    private UpdateRestMethodsForwardedEndpointInput(final Builder builder) {
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
+        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
+        this.restMethods = Objects.requireNonNull(builder.restMethods);
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
     }
 
     public String getRestProjectId() {
@@ -110,9 +107,7 @@ public final class UpdateRestMethodsForwardedEndpointInput implements Input {
 
 
         public UpdateRestMethodsForwardedEndpointInput build(){
-            return new UpdateRestMethodsForwardedEndpointInput(this.restProjectId,
-                    this.restApplicationId, this.restResourceId,
-                    this.restMethods, this.forwardedEndpoint);
+            return new UpdateRestMethodsForwardedEndpointInput(this);
         }
 
     }

@@ -32,7 +32,7 @@
         <c:choose>
             <c:when test="${restResources.size() > 0}">
                 <p><spring:message code="rest.updaterestresourcesendpoint.label.confirmation"/></p>
-                <form:form action="${update_resources_endpoint_url}" method="POST" modelAttribute="updateRestResourcesEndpointCommand">
+                <form:form action="${update_resources_endpoint_url}" method="POST" modelAttribute="command">
                     <ul>
                         <c:forEach items="${restResources}" var="restResource" varStatus="loopStatus">
                             <li>${restResource.name}</li>
@@ -42,7 +42,7 @@
                     <table class="formTable">
                         <tr>
                             <td class="column1"><label path="forwardedEndpoint"><spring:message code="rest.updaterestresourcesendpoint.label.forwardedendpoint"/></label></td>
-                            <td class="column2"><form:input class="form-control" path="forwardedEndpoint" value="${updateRestResourcesEndpointCommand.forwardedEndpoint}"/></td>
+                            <td class="column2"><form:input class="form-control" path="forwardedEndpoint" value="${command.forwardedEndpoint}"/></td>
                         </tr>
                     </table>
                     <button class="btn btn-success"><i class="fas fa-check-circle"></i> <span><spring:message code="rest.updaterestresourcesendpoint.button.updateresources"/></span></button>

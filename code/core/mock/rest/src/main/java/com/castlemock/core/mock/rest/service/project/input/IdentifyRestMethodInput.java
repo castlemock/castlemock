@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -35,14 +37,11 @@ public final class IdentifyRestMethodInput implements Input {
     @NotNull
     private final HttpMethod httpMethod;
 
-    private IdentifyRestMethodInput(final String restProjectId,
-                                   final String restApplicationId,
-                                   final String restResourceUri,
-                                   final HttpMethod httpMethod) {
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
-        this.restResourceUri = restResourceUri;
-        this.httpMethod = httpMethod;
+    private IdentifyRestMethodInput(final Builder builder) {
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
+        this.restResourceUri = Objects.requireNonNull(builder.restResourceUri);
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
     }
 
     public String getRestProjectId() {
@@ -93,8 +92,7 @@ public final class IdentifyRestMethodInput implements Input {
         }
 
         public IdentifyRestMethodInput build(){
-            return new IdentifyRestMethodInput(this.restProjectId, this.restApplicationId,
-                    this.restResourceUri, this.httpMethod);
+            return new IdentifyRestMethodInput(this);
         }
 
     }

@@ -22,6 +22,7 @@ import com.castlemock.core.mock.rest.model.RestDefinitionType;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -39,13 +40,12 @@ public final class ImportRestDefinitionInput implements Input {
     private final List<File> files;
     private final String location;
 
-    private ImportRestDefinitionInput(final String restProjectId, final List<File> files, String location,
-                                     final boolean generateResponse, final RestDefinitionType definitionType) {
-        this.restProjectId = restProjectId;
-        this.files = files;
-        this.location = location;
-        this.generateResponse = generateResponse;
-        this.definitionType = definitionType;
+    private ImportRestDefinitionInput(final Builder builder) {
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.files = builder.files;
+        this.location = builder.location;
+        this.generateResponse = builder.generateResponse;
+        this.definitionType = Objects.requireNonNull(builder.definitionType);
     }
 
     public String getRestProjectId() {
@@ -106,8 +106,7 @@ public final class ImportRestDefinitionInput implements Input {
         }
 
         public ImportRestDefinitionInput build(){
-            return new ImportRestDefinitionInput(this.restProjectId, this.files, this.location,
-                    this.generateResponse, this.definitionType);
+            return new ImportRestDefinitionInput(this);
         }
 
     }

@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -37,16 +39,12 @@ public final class CreateRestMockResponseInput implements Input {
     @NotNull
     private final RestMockResponse mockResponse;
 
-    private CreateRestMockResponseInput(String projectId,
-                                       String applicationId,
-                                       String resourceId,
-                                       String methodId,
-                                       RestMockResponse mockResponse) {
-        this.projectId = projectId;
-        this.applicationId = applicationId;
-        this.resourceId = resourceId;
-        this.methodId = methodId;
-        this.mockResponse = mockResponse;
+    private CreateRestMockResponseInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.applicationId = Objects.requireNonNull(builder.applicationId);
+        this.resourceId = Objects.requireNonNull(builder.resourceId);
+        this.methodId = Objects.requireNonNull(builder.methodId);
+        this.mockResponse = Objects.requireNonNull(builder.mockResponse);
     }
 
     public String getProjectId() {
@@ -107,8 +105,7 @@ public final class CreateRestMockResponseInput implements Input {
         }
 
         public CreateRestMockResponseInput build(){
-            return new CreateRestMockResponseInput(this.projectId, this.applicationId,
-                    this.resourceId, this.methodId, this.mockResponse);
+            return new CreateRestMockResponseInput(this);
         }
     }
 
