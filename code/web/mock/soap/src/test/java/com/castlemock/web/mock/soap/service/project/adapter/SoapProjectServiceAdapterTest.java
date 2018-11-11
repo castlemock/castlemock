@@ -58,7 +58,9 @@ public class SoapProjectServiceAdapterTest {
     @Test
     public void testCreate(){
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
-        final CreateSoapProjectOutput output = new CreateSoapProjectOutput(project);
+        final CreateSoapProjectOutput output = CreateSoapProjectOutput.builder()
+                .project(project)
+                .build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(CreateSoapProjectInput.class))).thenReturn(output);
 
@@ -71,7 +73,9 @@ public class SoapProjectServiceAdapterTest {
     @Test
     public void testDelete(){
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
-        final DeleteSoapProjectOutput output = new DeleteSoapProjectOutput(project);
+        final DeleteSoapProjectOutput output = DeleteSoapProjectOutput.builder()
+                .project(project)
+                .build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(DeleteSoapProjectInput.class))).thenReturn(output);
 
@@ -84,7 +88,9 @@ public class SoapProjectServiceAdapterTest {
     @Test
     public void testUpdate(){
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
-        final UpdateSoapProjectOutput output = new UpdateSoapProjectOutput(project);
+        final UpdateSoapProjectOutput output = UpdateSoapProjectOutput.builder()
+                .project(project)
+                .build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(UpdateSoapProjectInput.class))).thenReturn(output);
 
@@ -98,7 +104,9 @@ public class SoapProjectServiceAdapterTest {
     public void testReadAll(){
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
         final List<SoapProject> projects = Arrays.asList(project);
-        final ReadAllSoapProjectsOutput output = new ReadAllSoapProjectsOutput(projects);
+        final ReadAllSoapProjectsOutput output = ReadAllSoapProjectsOutput.builder()
+                .projects(projects)
+                .build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadAllSoapProjectsInput.class))).thenReturn(output);
 
@@ -111,7 +119,9 @@ public class SoapProjectServiceAdapterTest {
     @Test
     public void testRead(){
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
-        final ReadSoapProjectOutput output = new ReadSoapProjectOutput(project);
+        final ReadSoapProjectOutput output = ReadSoapProjectOutput.builder()
+                .project(project)
+                .build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapProjectInput.class))).thenReturn(output);
 
@@ -132,7 +142,9 @@ public class SoapProjectServiceAdapterTest {
     public void testExportProject(){
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
         final String exportedProject = "Exported project";
-        final ExportSoapProjectOutput output = new ExportSoapProjectOutput(exportedProject);
+        final ExportSoapProjectOutput output = ExportSoapProjectOutput.builder()
+                .project(exportedProject)
+                .build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(ExportSoapProjectInput.class))).thenReturn(output);
 
@@ -146,7 +158,9 @@ public class SoapProjectServiceAdapterTest {
     public void testImportProject(){
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
         final String importedProject = "Imported project";
-        final ImportSoapProjectOutput output = new ImportSoapProjectOutput(project);
+        final ImportSoapProjectOutput output = ImportSoapProjectOutput.builder()
+                .project(project)
+                .build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(ImportSoapProjectInput.class))).thenReturn(output);
 
@@ -164,7 +178,9 @@ public class SoapProjectServiceAdapterTest {
         searchResult.setTitle("Title");
         searchResult.setDescription("Description");
         searchResults.add(searchResult);
-        final SearchSoapProjectOutput output = new SearchSoapProjectOutput(searchResults);
+        final SearchSoapProjectOutput output = SearchSoapProjectOutput.builder()
+                .searchResults(searchResults)
+                .build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(SearchSoapProjectInput.class))).thenReturn(output);
 

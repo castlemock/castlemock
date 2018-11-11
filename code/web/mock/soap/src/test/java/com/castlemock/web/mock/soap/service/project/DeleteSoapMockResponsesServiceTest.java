@@ -60,8 +60,12 @@ public class DeleteSoapMockResponsesServiceTest {
         final List<SoapMockResponse> responses = Arrays.asList(response1, response2);
 
 
-        final DeleteSoapMockResponsesInput input =
-                new DeleteSoapMockResponsesInput(projectId, portId, operationId, responses);
+        final DeleteSoapMockResponsesInput input = DeleteSoapMockResponsesInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .operationId(operationId)
+                .mockResponses(responses)
+                .build();
         final ServiceTask<DeleteSoapMockResponsesInput> serviceTask = new ServiceTask<DeleteSoapMockResponsesInput>(input);
         final ServiceResult<DeleteSoapMockResponsesOutput> serviceResult = service.process(serviceTask);
 

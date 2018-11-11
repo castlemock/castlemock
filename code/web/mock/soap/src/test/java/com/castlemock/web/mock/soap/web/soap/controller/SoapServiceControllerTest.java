@@ -136,8 +136,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final SoapOperation soapOperation = getSoapOperation();
         soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
 
-        final IdentifySoapOperationOutput identifySoapOperationOutput =
-                new IdentifySoapOperationOutput(PROJECT_ID, SOAP_PORT_ID, SOAP_OPERATION_ID, soapOperation);
+        final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
+                .projectId(PROJECT_ID)
+                .portId(SOAP_PORT_ID)
+                .operationId(SOAP_OPERATION_ID)
+                .operation(soapOperation)
+                .build();
 
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
@@ -163,9 +167,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final SoapOperation soapOperation = getSoapOperation();
         soapOperation.setResponseStrategy(SoapResponseStrategy.RANDOM);
 
-        final IdentifySoapOperationOutput identifySoapOperationOutput =
-                new IdentifySoapOperationOutput(PROJECT_ID, SOAP_PORT_ID, SOAP_OPERATION_ID, soapOperation);
-
+        final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
+                .projectId(PROJECT_ID)
+                .portId(SOAP_PORT_ID)
+                .operationId(SOAP_OPERATION_ID)
+                .operation(soapOperation)
+                .build();
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
@@ -192,9 +199,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         soapOperation.setDefaultXPathMockResponseId("MockResponseId");
         soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
 
-        final IdentifySoapOperationOutput identifySoapOperationOutput =
-                new IdentifySoapOperationOutput(PROJECT_ID, SOAP_PORT_ID, SOAP_OPERATION_ID, soapOperation);
-
+        final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
+                .projectId(PROJECT_ID)
+                .portId(SOAP_PORT_ID)
+                .operationId(SOAP_OPERATION_ID)
+                .operation(soapOperation)
+                .build();
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
@@ -223,9 +233,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
 
         soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
 
-        final IdentifySoapOperationOutput identifySoapOperationOutput =
-                new IdentifySoapOperationOutput(PROJECT_ID, SOAP_PORT_ID, SOAP_OPERATION_ID, soapOperation);
-
+        final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
+                .projectId(PROJECT_ID)
+                .portId(SOAP_PORT_ID)
+                .operationId(SOAP_OPERATION_ID)
+                .operation(soapOperation)
+                .build();
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
@@ -250,8 +263,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
 
         soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
 
-        final IdentifySoapOperationOutput identifySoapOperationOutput =
-                new IdentifySoapOperationOutput(PROJECT_ID, SOAP_PORT_ID, SOAP_OPERATION_ID, soapOperation);
+        final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
+                .projectId(PROJECT_ID)
+                .portId(SOAP_PORT_ID)
+                .operationId(SOAP_OPERATION_ID)
+                .operation(soapOperation)
+                .build();
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
@@ -270,9 +287,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final SoapOperation soapOperation = getSoapOperation();
         soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
 
-        final IdentifySoapOperationOutput identifySoapOperationOutput =
-                new IdentifySoapOperationOutput(PROJECT_ID, SOAP_PORT_ID, SOAP_OPERATION_ID, soapOperation);
-
+        final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
+                .projectId(PROJECT_ID)
+                .portId(SOAP_PORT_ID)
+                .operationId(SOAP_OPERATION_ID)
+                .operation(soapOperation)
+                .build();
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
@@ -300,9 +320,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
         soapOperation.setStatus(SoapOperationStatus.ECHO);
 
-        final IdentifySoapOperationOutput identifySoapOperationOutput =
-                new IdentifySoapOperationOutput(PROJECT_ID, SOAP_PORT_ID, SOAP_OPERATION_ID, soapOperation);
-
+        final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
+                .projectId(PROJECT_ID)
+                .portId(SOAP_PORT_ID)
+                .operationId(SOAP_OPERATION_ID)
+                .operation(soapOperation)
+                .build();
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
@@ -322,10 +345,14 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(Arrays.asList("wsdl")));
 
         final SoapProject soapProject = getSoapProject();
-        final ReadSoapProjectOutput readSoapProjectOutput = new ReadSoapProjectOutput(soapProject);
+        final ReadSoapProjectOutput readSoapProjectOutput = ReadSoapProjectOutput.builder()
+                .project(soapProject)
+                .build();
 
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
-        final LoadSoapResourceOutput loadSoapResourceOutput = new LoadSoapResourceOutput(WSDL);
+        final LoadSoapResourceOutput loadSoapResourceOutput = LoadSoapResourceOutput.builder()
+                .resource(WSDL)
+                .build();
 
         when(serviceProcessor.process(isA(ReadSoapProjectInput.class))).thenReturn(readSoapProjectOutput);
         when(serviceProcessor.process(isA(LoadSoapResourceInput.class))).thenReturn(loadSoapResourceOutput);
@@ -341,10 +368,14 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(Arrays.asList("wsdl")));
 
         final SoapProject soapProject = getSoapProject();
-        final ReadSoapProjectOutput readSoapProjectOutput = new ReadSoapProjectOutput(soapProject);
+        final ReadSoapProjectOutput readSoapProjectOutput = ReadSoapProjectOutput.builder()
+                .project(soapProject)
+                .build();
 
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
-        final LoadSoapResourceOutput loadSoapResourceOutput = new LoadSoapResourceOutput(WSDL);
+        final LoadSoapResourceOutput loadSoapResourceOutput = LoadSoapResourceOutput.builder()
+                .resource(WSDL)
+                .build();
 
         when(serviceProcessor.process(isA(ReadSoapProjectInput.class))).thenReturn(readSoapProjectOutput);
         when(serviceProcessor.process(isA(LoadSoapResourceInput.class))).thenReturn(loadSoapResourceOutput);

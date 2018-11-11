@@ -65,7 +65,12 @@ public class DeleteSoapMockResponseServiceTest {
         soapPort.getOperations().add(soapOperation);
         soapOperation.getMockResponses().add(soapMockResponse);
 
-        final DeleteSoapMockResponseInput input = new DeleteSoapMockResponseInput(soapProject.getId(), soapPort.getId(), soapOperation.getId(), soapMockResponse.getId());
+        final DeleteSoapMockResponseInput input = DeleteSoapMockResponseInput.builder()
+                .projectId(soapProject.getId())
+                .portId(soapPort.getId())
+                .operationId(soapOperation.getId())
+                .mockResponseId(soapMockResponse.getId())
+                .build();
         final ServiceTask<DeleteSoapMockResponseInput> serviceTask = new ServiceTask<DeleteSoapMockResponseInput>(input);
         final ServiceResult<DeleteSoapMockResponseOutput> serviceResult = service.process(serviceTask);
         serviceResult.getOutput();

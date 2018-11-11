@@ -34,7 +34,10 @@ public class ResourceController extends AbstractRestController {
     public String getResource(@PathVariable final String projectId,
                               @PathVariable final String resourceId) {
         final LoadSoapResourceOutput output =
-                this.serviceProcessor.process(new LoadSoapResourceInput(projectId, resourceId));
+                this.serviceProcessor.process(LoadSoapResourceInput.builder()
+                        .projectId(projectId)
+                        .resourceId(resourceId)
+                        .build());
         return output.getResource();
     }
 

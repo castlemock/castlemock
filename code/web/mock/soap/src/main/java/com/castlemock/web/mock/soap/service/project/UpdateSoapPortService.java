@@ -41,11 +41,13 @@ public class UpdateSoapPortService extends AbstractSoapProjectService implements
     @Override
     public ServiceResult<UpdateSoapPortOutput> process(final ServiceTask<UpdateSoapPortInput> serviceTask) {
         final UpdateSoapPortInput input = serviceTask.getInput();
-        final SoapPort updated = input.getUpdatedSoapPort();
-        final SoapPort soapPort = this.portRepository.findOne(input.getSoapPortId());
+        final SoapPort updated = input.getSoapPort();
+        final SoapPort soapPort = this.portRepository.findOne(input.getPortId());
         soapPort.setUri(updated.getUri());
 
-        final SoapPort updatedSoapPort = this.portRepository.update(input.getSoapPortId(), soapPort);
-        return createServiceResult(new UpdateSoapPortOutput(updatedSoapPort));
+        final SoapPort updatedSoapPort = this.portRepository.update(input.getPortId(), soapPort);
+        return createServiceResult(UpdateSoapPortOutput.builder()
+                .port(updatedSoapPort)
+                .build());
     }
 }

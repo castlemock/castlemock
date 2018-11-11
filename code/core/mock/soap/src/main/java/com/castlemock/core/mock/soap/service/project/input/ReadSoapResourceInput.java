@@ -19,6 +19,8 @@ package com.castlemock.core.mock.soap.service.project.input;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -26,21 +28,47 @@ import com.castlemock.core.basis.model.validation.NotNull;
 public final class ReadSoapResourceInput implements Input {
 
     @NotNull
-    private final String soapProjectId;
+    private final String projectId;
     @NotNull
-    private final String soapResourceId;
+    private final String resourceId;
 
-    public ReadSoapResourceInput(String soapProjectId, String soapResourceId) {
-        this.soapProjectId = soapProjectId;
-        this.soapResourceId = soapResourceId;
+    public ReadSoapResourceInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.resourceId = Objects.requireNonNull(builder.resourceId);
     }
 
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getSoapResourceId() {
-        return soapResourceId;
+    public String getResourceId() {
+        return resourceId;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String projectId;
+        private String resourceId;
+
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder resourceId(final String resourceId){
+            this.resourceId = resourceId;
+            return this;
+        }
+
+        public ReadSoapResourceInput build(){
+            return new ReadSoapResourceInput(this);
+        }
+    }
 }

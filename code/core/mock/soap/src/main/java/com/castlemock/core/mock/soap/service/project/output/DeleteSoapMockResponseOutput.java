@@ -23,4 +23,24 @@ import com.castlemock.core.basis.model.Output;
  * @since 1.0
  */
 public final class DeleteSoapMockResponseOutput implements Output {
+
+    private DeleteSoapMockResponseOutput(final Builder builder){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Builder(){
+
+        }
+
+        public DeleteSoapMockResponseOutput build(){
+            return new DeleteSoapMockResponseOutput(this);
+        }
+    }
+
 }

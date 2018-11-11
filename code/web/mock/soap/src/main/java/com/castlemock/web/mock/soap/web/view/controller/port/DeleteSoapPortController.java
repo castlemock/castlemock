@@ -54,10 +54,13 @@ public class DeleteSoapPortController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/delete", method = RequestMethod.GET)
     public ModelAndView showConfirmationPage(@PathVariable final String soapProjectId, @PathVariable final String soapPortId) {
-        final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
+        final ReadSoapPortOutput output = serviceProcessor.process(ReadSoapPortInput.builder()
+                .projectId(soapProjectId)
+                .portId(soapPortId)
+                .build());
         ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT_ID,soapProjectId);
-        model.addObject(SOAP_PORT, output.getSoapPort());
+        model.addObject(SOAP_PORT, output.getPort());
         return model;
     }
 
@@ -70,21 +73,29 @@ public class DeleteSoapPortController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/delete/confirm", method = RequestMethod.GET)
-    public ModelAndView confirm(@PathVariable final String soapProjectId, @PathVariable final String soapPortId) {
-        serviceProcessor.process(new DeleteSoapPortInput(soapProjectId, soapPortId));
+    public ModelAndView confirm(@PathVariable final String soapProjectId,
+                                @PathVariable final String soapPortId) {
+        serviceProcessor.process(DeleteSoapPortInput.builder()
+                .projectId(soapProjectId)
+                .portId(soapPortId)
+                .build());
         return redirect("/soap/project/" + soapProjectId);
     }
 
     /**
      * The method is responsible for deleting multiple port at once
      * @param soapProjectId The id of the project which the ports belongs to
-     * @param deleteSoapPortsCommand The command object that contains a list of the ports that should be deleted.
+     * @param command The command object that contains a list of the ports that should be deleted.
      * @return Redirect the user to the project page that matches the project id
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/delete/confirm", method = RequestMethod.POST)
-    public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final String soapProjectId, @ModelAttribute final DeleteSoapPortsCommand deleteSoapPortsCommand) {
-        serviceProcessor.process(new DeleteSoapPortsInput(soapProjectId, deleteSoapPortsCommand.getSoapPorts()));
+    public ModelAndView confirmDeletationOfMultpleProjects(@PathVariable final String soapProjectId,
+                                                           @ModelAttribute(name = "command") final DeleteSoapPortsCommand command) {
+        serviceProcessor.process(DeleteSoapPortsInput.builder()
+                .projectId(soapProjectId)
+                .ports(command.getSoapPorts())
+                .build());
         return redirect("/soap/project/" + soapProjectId);
     }
 

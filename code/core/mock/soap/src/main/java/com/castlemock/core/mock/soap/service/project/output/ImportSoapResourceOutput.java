@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.19
@@ -29,11 +31,32 @@ public final class ImportSoapResourceOutput implements Output{
     @NotNull
     private final SoapResource resource;
 
-    public ImportSoapResourceOutput(SoapResource resource) {
-        this.resource = resource;
+    private ImportSoapResourceOutput(final Builder builder) {
+        this.resource = Objects.requireNonNull(builder.resource);
     }
 
     public SoapResource getResource() {
         return resource;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private SoapResource resource;
+
+        private Builder(){
+
+        }
+
+        public Builder resource(final SoapResource resource){
+            this.resource = resource;
+            return this;
+        }
+
+        public ImportSoapResourceOutput build(){
+            return new ImportSoapResourceOutput(this);
+        }
     }
 }

@@ -41,7 +41,9 @@ public class ReadSoapResourceService extends AbstractSoapProjectService implemen
     @Override
     public ServiceResult<ReadSoapResourceOutput> process(final ServiceTask<ReadSoapResourceInput> serviceTask) {
         final ReadSoapResourceInput input = serviceTask.getInput();
-        final SoapResource soapResource = this.resourceRepository.findOne(input.getSoapResourceId());
-        return createServiceResult(new ReadSoapResourceOutput(soapResource));
+        final SoapResource soapResource = this.resourceRepository.findOne(input.getResourceId());
+        return createServiceResult(ReadSoapResourceOutput.builder()
+                .resource(soapResource)
+                .build());
     }
 }

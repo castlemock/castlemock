@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -27,14 +28,34 @@ import java.util.List;
  */
 public final class ReadAllSoapProjectsOutput implements Output {
 
-    private final List<SoapProject> soapProjects;
+    private final List<SoapProject> projects;
 
-    public ReadAllSoapProjectsOutput(List<SoapProject> soapProjects) {
-        this.soapProjects = soapProjects;
+    private ReadAllSoapProjectsOutput(final Builder builder) {
+        this.projects = Objects.requireNonNull(builder.projects);
     }
 
-    public List<SoapProject> getSoapProjects() {
-        return soapProjects;
+    public List<SoapProject> getProjects() {
+        return projects;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private List<SoapProject> projects;
+
+        private Builder(){
+
+        }
+
+        public Builder projects(final List<SoapProject> projects){
+            this.projects = projects;
+            return this;
+        }
+
+        public ReadAllSoapProjectsOutput build(){
+            return new ReadAllSoapProjectsOutput(this);
+        }
+    }
 }

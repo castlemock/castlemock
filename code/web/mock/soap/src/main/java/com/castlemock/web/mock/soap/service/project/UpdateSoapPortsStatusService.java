@@ -44,12 +44,12 @@ public class UpdateSoapPortsStatusService extends AbstractSoapProjectService imp
     @Override
     public ServiceResult<UpdateSoapPortsStatusOutput> process(final ServiceTask<UpdateSoapPortsStatusInput> serviceTask) {
         final UpdateSoapPortsStatusInput input = serviceTask.getInput();
-        final SoapOperationStatus soapOperationStatus = input.getSoapOperationStatus();
-        final List<SoapOperation> operations = this.operationRepository.findWithPortId(input.getSoapPortId());
+        final SoapOperationStatus soapOperationStatus = input.getOperationStatus();
+        final List<SoapOperation> operations = this.operationRepository.findWithPortId(input.getPortId());
         operations.forEach(soapOperation -> {
                     soapOperation.setStatus(soapOperationStatus);
                     this.operationRepository.update(soapOperation.getId(), soapOperation);
                 });
-        return createServiceResult(new UpdateSoapPortsStatusOutput());
+        return createServiceResult(UpdateSoapPortsStatusOutput.builder().build());
     }
 }

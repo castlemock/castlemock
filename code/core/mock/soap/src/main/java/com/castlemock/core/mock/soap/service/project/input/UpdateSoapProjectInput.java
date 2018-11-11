@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -27,21 +29,47 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 public final class UpdateSoapProjectInput implements Input {
 
     @NotNull
-    private final String soapProjectId;
+    private final String projectId;
     @NotNull
-    private final SoapProject soapProject;
+    private final SoapProject project;
 
-    public UpdateSoapProjectInput(String soapProjectId, SoapProject soapProject) {
-        this.soapProjectId = soapProjectId;
-        this.soapProject = soapProject;
+    public UpdateSoapProjectInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.project = Objects.requireNonNull(builder.project);
     }
 
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public SoapProject getSoapProject() {
-        return soapProject;
+    public SoapProject getProject() {
+        return project;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String projectId;
+        private SoapProject project;
+
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder project(final SoapProject project){
+            this.project = project;
+            return this;
+        }
+
+        public UpdateSoapProjectInput build(){
+            return new UpdateSoapProjectInput(this);
+        }
+    }
 }

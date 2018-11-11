@@ -74,8 +74,14 @@ public class UpdateSoapMockResponseControllerTest extends AbstractSoapController
         final SoapPort application = SoapPortGenerator.generateSoapPort();
         final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
         final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
-        when(serviceProcessor.process(any(UpdateSoapMockResponseInput.class))).thenReturn(new UpdateSoapMockResponseOutput(soapMockResponse));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + RESPONSE + SLASH + soapMockResponse.getId() + SLASH + UPDATE);
+
+        when(serviceProcessor.process(any(UpdateSoapMockResponseInput.class))).thenReturn(UpdateSoapMockResponseOutput.builder()
+                .mockResponse(soapMockResponse)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION +
+                SLASH + soapOperation.getId() + SLASH + RESPONSE + SLASH + soapMockResponse.getId() + SLASH + UPDATE)
+                .flashAttr("soapMockResponse", soapMockResponse);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

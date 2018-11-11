@@ -19,6 +19,8 @@ package com.castlemock.core.mock.soap.service.project.input;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -26,21 +28,47 @@ import com.castlemock.core.basis.model.validation.NotNull;
 public final class ReadSoapPortInput implements Input {
 
     @NotNull
-    private final String soapProjectId;
+    private final String projectId;
     @NotNull
-    private final String soapPortId;
+    private final String portId;
 
-    public ReadSoapPortInput(String soapProjectId, String soapPortId) {
-        this.soapProjectId = soapProjectId;
-        this.soapPortId = soapPortId;
+    private ReadSoapPortInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.portId = Objects.requireNonNull(builder.portId);
     }
 
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getSoapPortId() {
-        return soapPortId;
+    public String getPortId() {
+        return portId;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String projectId;
+        private String portId;
+
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder portId(final String portId){
+            this.portId = portId;
+            return this;
+        }
+
+        public ReadSoapPortInput build(){
+            return new ReadSoapPortInput(this);
+        }
+    }
 }

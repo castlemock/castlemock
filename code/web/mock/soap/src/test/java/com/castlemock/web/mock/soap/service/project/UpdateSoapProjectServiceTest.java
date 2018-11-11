@@ -52,7 +52,10 @@ public class UpdateSoapProjectServiceTest {
     @Test
     public void testProcess(){
         final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final UpdateSoapProjectInput input = new UpdateSoapProjectInput(soapProject.getId(), soapProject);
+        final UpdateSoapProjectInput input = UpdateSoapProjectInput.builder()
+                .projectId(soapProject.getId())
+                .project(soapProject)
+                .build();
         final ServiceTask<UpdateSoapProjectInput> serviceTask = new ServiceTask<>(input);
 
 
@@ -61,7 +64,7 @@ public class UpdateSoapProjectServiceTest {
 
         final ServiceResult<UpdateSoapProjectOutput> result = service.process(serviceTask);
         final UpdateSoapProjectOutput output = result.getOutput();
-        final SoapProject returnedSoapProject = output.getUpdatedSoapProject();
+        final SoapProject returnedSoapProject = output.getProject();
         Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapProject.class));
         Assert.assertEquals(soapProject.getId(), returnedSoapProject.getId());
         Assert.assertEquals(soapProject.getName(), returnedSoapProject.getName());

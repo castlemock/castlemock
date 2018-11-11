@@ -52,7 +52,11 @@ public class UpdateSoapPortServiceTest {
     public void testProcess(){
         final String projectId = "ProjectId";
         final SoapPort port = SoapPortGenerator.generateSoapPort();
-        final UpdateSoapPortInput input = new UpdateSoapPortInput(projectId, port.getId(), port);
+        final UpdateSoapPortInput input = UpdateSoapPortInput.builder()
+                .projectId(projectId)
+                .portId(port.getId())
+                .port(port)
+                .build();
         final ServiceTask<UpdateSoapPortInput> serviceTask = new ServiceTask<UpdateSoapPortInput>(input);
 
 
@@ -61,7 +65,7 @@ public class UpdateSoapPortServiceTest {
 
         final ServiceResult<UpdateSoapPortOutput> result = service.process(serviceTask);
         final UpdateSoapPortOutput output = result.getOutput();
-        final SoapPort returnedSoapPort = output.getSoapPort();
+        final SoapPort returnedSoapPort = output.getPort();
 
         Mockito.verify(soapPortRepository, Mockito.times(1)).findOne(port.getId());
         Mockito.verify(soapPortRepository, Mockito.times(1)).update(port.getId(), port);

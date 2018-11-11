@@ -70,12 +70,15 @@ public class DeleteSoapProjectServiceTest {
         final SoapResource soapResource = SoapResourceGenerator.generateSoapResource();
         final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
 
+        Mockito.when(repository.delete(soapProject.getId())).thenReturn(soapProject);
         Mockito.when(portRepository.findWithProjectId(soapProject.getId())).thenReturn(Arrays.asList(soapPort));
         Mockito.when(resourceRepository.findWithProjectId(soapProject.getId())).thenReturn(Arrays.asList(soapResource));
         Mockito.when(operationRepository.findWithPortId(soapPort.getId())).thenReturn(Arrays.asList(soapOperation));
         Mockito.when(mockResponseRepository.findWithOperationId(soapOperation.getId())).thenReturn(Arrays.asList(soapMockResponse));
 
-        final DeleteSoapProjectInput input = new DeleteSoapProjectInput(soapProject.getId());
+        final DeleteSoapProjectInput input = DeleteSoapProjectInput.builder()
+                .projectId(soapProject.getId())
+                .build();
         final ServiceTask<DeleteSoapProjectInput> serviceTask = new ServiceTask<DeleteSoapProjectInput>(input);
         final ServiceResult<DeleteSoapProjectOutput> serviceResult = service.process(serviceTask);
 

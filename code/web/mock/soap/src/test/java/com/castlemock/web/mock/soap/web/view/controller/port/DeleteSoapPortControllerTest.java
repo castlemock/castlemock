@@ -72,8 +72,11 @@ public class DeleteSoapPortControllerTest extends AbstractSoapControllerTest {
     public void testDeleteApplicationWithValidId() throws Exception {
         final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
         final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapPortOutput(soapPort));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + DELETE);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(ReadSoapPortOutput.builder()
+                .port(soapPort)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL +
+                PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + DELETE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(2 + GLOBAL_VIEW_MODEL_COUNT))
@@ -87,7 +90,9 @@ public class DeleteSoapPortControllerTest extends AbstractSoapControllerTest {
     public void testDeleteConfirmApplicationWithValidId() throws Exception {
         final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
         final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + DELETE + SLASH + CONFIRM);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL +
+                PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH +
+                DELETE + SLASH + CONFIRM);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(0));
@@ -95,13 +100,15 @@ public class DeleteSoapPortControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testConfirmDeletationOfMultpleProjects() throws Exception {
-        final DeleteSoapPortsCommand deleteSoapPortsCommand = new DeleteSoapPortsCommand();
+        final DeleteSoapPortsCommand command = new DeleteSoapPortsCommand();
         final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
         final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
         final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         soapPorts.add(soapPort);
-        deleteSoapPortsCommand.setSoapPorts(soapPorts);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + DELETE + SLASH + CONFIRM, deleteSoapPortsCommand);
+        command.setSoapPorts(soapPorts);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + soapProject.getId() + SLASH + PORT + SLASH + DELETE + SLASH + CONFIRM)
+                .flashAttr("command", command);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

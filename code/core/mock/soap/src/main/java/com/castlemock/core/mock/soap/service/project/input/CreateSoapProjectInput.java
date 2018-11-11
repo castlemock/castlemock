@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -27,14 +29,34 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 public final class CreateSoapProjectInput implements Input {
 
     @NotNull
-    private final SoapProject soapProject;
+    private final SoapProject project;
 
-    public CreateSoapProjectInput(SoapProject soapProject) {
-        this.soapProject = soapProject;
+    private CreateSoapProjectInput(final Builder builder) {
+        this.project = Objects.requireNonNull(builder.project);
     }
 
-    public SoapProject getSoapProject() {
-        return soapProject;
+    public SoapProject getProject() {
+        return project;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private SoapProject project;
+
+        private Builder(){
+
+        }
+
+        public Builder project(final SoapProject project){
+            this.project = project;
+            return this;
+        }
+
+        public CreateSoapProjectInput build(){
+            return new CreateSoapProjectInput(this);
+        }
+    }
 }

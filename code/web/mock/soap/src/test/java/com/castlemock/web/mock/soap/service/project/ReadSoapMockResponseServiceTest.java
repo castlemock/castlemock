@@ -35,7 +35,12 @@ public class ReadSoapMockResponseServiceTest {
         final String portId = "SOAP PORT";
         final String operationId = "OPERATION ID";
 
-        final ReadSoapMockResponseInput input = new ReadSoapMockResponseInput(projectId, portId, operationId, mockResponse.getId());
+        final ReadSoapMockResponseInput input = ReadSoapMockResponseInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .operationId(operationId)
+                .mockResponseId(mockResponse.getId())
+                .build();
         final ServiceTask<ReadSoapMockResponseInput> serviceTask = new ServiceTask<ReadSoapMockResponseInput>(input);
 
         Mockito.when(mockResponseRepository.findOne(mockResponse.getId())).thenReturn(mockResponse);
@@ -44,7 +49,7 @@ public class ReadSoapMockResponseServiceTest {
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findOne(mockResponse.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(mockResponse, result.getOutput().getSoapMockResponse());
+        Assert.assertEquals(mockResponse, result.getOutput().getMockResponse());
     }
 
 }

@@ -51,7 +51,7 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
     @Override
     public ServiceResult<CreateSoapPortsOutput> process(final ServiceTask<CreateSoapPortsInput> serviceTask) {
         final CreateSoapPortsInput input = serviceTask.getInput();
-        final String soapProjectId = input.getSoapProjectId();
+        final String soapProjectId = input.getProjectId();
 
         Set<SoapPortConverterResult> results = null;
         try {
@@ -121,7 +121,7 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
             this.resourceRepository.saveSoapResource(soapResource, result.getDefinition());
         }
 
-        return createServiceResult(new CreateSoapPortsOutput());
+        return createServiceResult(CreateSoapPortsOutput.builder().build());
     }
 
 }

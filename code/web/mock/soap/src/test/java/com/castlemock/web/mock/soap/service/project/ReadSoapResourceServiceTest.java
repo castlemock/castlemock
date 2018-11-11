@@ -33,7 +33,10 @@ public class ReadSoapResourceServiceTest {
         final SoapResource resource = SoapResourceGenerator.generateSoapResource();
         final String projectId = "SOAP PROJECT";
 
-        final ReadSoapResourceInput input = new ReadSoapResourceInput(projectId, resource.getId());
+        final ReadSoapResourceInput input = ReadSoapResourceInput.builder()
+                .projectId(projectId)
+                .resourceId(resource.getId())
+                .build();
         final ServiceTask<ReadSoapResourceInput> serviceTask = new ServiceTask<ReadSoapResourceInput>(input);
 
         Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(resource);
@@ -42,7 +45,7 @@ public class ReadSoapResourceServiceTest {
         Mockito.verify(resourceRepository, Mockito.times(1)).findOne(resource.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(resource, result.getOutput().getSoapResource());
+        Assert.assertEquals(resource, result.getOutput().getResource());
     }
 
 }

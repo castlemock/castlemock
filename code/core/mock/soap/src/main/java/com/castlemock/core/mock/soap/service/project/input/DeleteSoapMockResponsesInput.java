@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -29,35 +30,73 @@ import java.util.List;
 public final class DeleteSoapMockResponsesInput implements Input{
 
     @NotNull
-    private final String soapProjectId;
+    private final String projectId;
     @NotNull
-    private final String soapPortId;
+    private final String portId;
     @NotNull
-    private final String soapOperationId;
+    private final String operationId;
     @NotNull
     private final List<SoapMockResponse> mockResponses;
 
-    public DeleteSoapMockResponsesInput(String soapProjectId, String soapPortId, String soapOperationId, List<SoapMockResponse> mockResponses) {
-        this.soapProjectId = soapProjectId;
-        this.soapPortId = soapPortId;
-        this.soapOperationId = soapOperationId;
-        this.mockResponses = mockResponses;
+    private DeleteSoapMockResponsesInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.portId = Objects.requireNonNull(builder.portId);
+        this.operationId = Objects.requireNonNull(builder.operationId);
+        this.mockResponses = Objects.requireNonNull(builder.mockResponses);
     }
 
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getSoapPortId() {
-        return soapPortId;
+    public String getPortId() {
+        return portId;
     }
 
-    public String getSoapOperationId() {
-        return soapOperationId;
+    public String getOperationId() {
+        return operationId;
     }
 
     public List<SoapMockResponse> getMockResponses() {
         return mockResponses;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String projectId;
+        private String portId;
+        private String operationId;
+        private List<SoapMockResponse> mockResponses;
+
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder portId(final String portId){
+            this.portId = portId;
+            return this;
+        }
+
+        public Builder operationId(final String operationId){
+            this.operationId = operationId;
+            return this;
+        }
+
+        public Builder mockResponses(final List<SoapMockResponse> mockResponses){
+            this.mockResponses = mockResponses;
+            return this;
+        }
+
+        public DeleteSoapMockResponsesInput build(){
+            return new DeleteSoapMockResponsesInput(this);
+        }
+    }
 }

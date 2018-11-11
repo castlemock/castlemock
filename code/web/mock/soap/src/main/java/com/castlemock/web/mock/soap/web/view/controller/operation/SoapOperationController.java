@@ -52,8 +52,8 @@ import java.util.List;
 public class SoapOperationController extends AbstractSoapViewController {
 
     private static final String PAGE = "mock/soap/operation/soapOperation";
-    private static final String DELETE_SOAP_MOCK_RESPONSES_COMMAND = "deleteSoapMockResponsesCommand";
-    private static final String SOAP_MOCK_RESPONSE_MODIFIER_COMMAND = "soapMockResponseModifierCommand";
+    private static final String DELETE_SOAP_MOCK_RESPONSES_COMMAND = "command";
+    private static final String SOAP_MOCK_RESPONSE_MODIFIER_COMMAND = "command";
     private static final String DELETE_MOCK_RESPONSES_PAGE = "mock/soap/mockresponse/deleteSoapMockResponses";
     private static final String UPDATE_STATUS = "update";
     private static final String DELETE_MOCK_RESPONSES = "delete";
@@ -70,12 +70,22 @@ public class SoapOperationController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}", method = RequestMethod.GET)
-    public ModelAndView defaultPage(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, final ServletRequest request) {
-        final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
-        final SoapPort soapPort = readSoapPortOutput.getSoapPort();
+    public ModelAndView defaultPage(@PathVariable final String soapProjectId,
+                                    @PathVariable final String soapPortId,
+                                    @PathVariable final String soapOperationId,
+                                    final ServletRequest request) {
+        final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(ReadSoapPortInput.builder()
+                .projectId(soapProjectId)
+                .portId(soapPortId)
+                .build());
+        final SoapPort soapPort = readSoapPortOutput.getPort();
 
-        final ReadSoapOperationOutput readSoapOperationOutput = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
-        final SoapOperation soapOperation = readSoapOperationOutput.getSoapOperation();
+        final ReadSoapOperationOutput readSoapOperationOutput = serviceProcessor.process(ReadSoapOperationInput.builder()
+                .projectId(soapProjectId)
+                .portId(soapPortId)
+                .operationId(soapOperationId)
+                .build());
+        final SoapOperation soapOperation = readSoapOperationOutput.getOperation();
         final ReadSoapEventsByOperationIdOutput readSoapEventsByOperationIdOutput = serviceProcessor.process(ReadSoapEventsByOperationIdInput.builder()
                 .operationId(soapOperationId)
                 .build());
@@ -100,26 +110,46 @@ public class SoapOperationController extends AbstractSoapViewController {
      * @param soapPortId The id of the port that the mocked response(s) belongs to
      * @param soapOperationId The id of the operation that the mocked response(s) belongs to
      * @param action The name of the action that should be executed (delete or update).
-     * @param soapMockResponseModifierCommand The command object that contains the list of mocked responses that get affected by the executed action.
+     * @param command The command object that contains the list of mocked responses that get affected by the executed action.
      * @return Redirects the user back to the operation page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}", method = RequestMethod.POST)
-    public ModelAndView serviceFunctionality(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @RequestParam final String action, @ModelAttribute final SoapMockResponseModifierCommand soapMockResponseModifierCommand) {
+    public ModelAndView serviceFunctionality(@PathVariable final String soapProjectId,
+                                             @PathVariable final String soapPortId,
+                                             @PathVariable final String soapOperationId,
+                                             @RequestParam final String action,
+                                             @ModelAttribute(name = "command") final SoapMockResponseModifierCommand command) {
         LOGGER.debug("SOAP operation action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
-            final SoapMockResponseStatus status = SoapMockResponseStatus.valueOf(soapMockResponseModifierCommand.getSoapMockResponseStatus());
-            for(String mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()){
-                ReadSoapMockResponseOutput readSoapMockResponseOutput = serviceProcessor.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, mockResponseId));
-                SoapMockResponse soapMockResponse = readSoapMockResponseOutput.getSoapMockResponse();
+            final SoapMockResponseStatus status = SoapMockResponseStatus.valueOf(command.getSoapMockResponseStatus());
+            for(String mockResponseId : command.getSoapMockResponseIds()){
+                ReadSoapMockResponseOutput readSoapMockResponseOutput = serviceProcessor.process(ReadSoapMockResponseInput.builder()
+                        .projectId(soapProjectId)
+                        .portId(soapPortId)
+                        .operationId(soapOperationId)
+                        .mockResponseId(mockResponseId)
+                        .build());
+                SoapMockResponse soapMockResponse = readSoapMockResponseOutput.getMockResponse();
                 soapMockResponse.setStatus(status);
-                serviceProcessor.process(new UpdateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, mockResponseId, soapMockResponse));
+                serviceProcessor.process(UpdateSoapMockResponseInput.builder()
+                        .projectId(soapProjectId)
+                        .portId(soapPortId)
+                        .operationId(soapOperationId)
+                        .mockResponseId(mockResponseId)
+                        .mockResponse(soapMockResponse)
+                        .build());
             }
         } else if(DELETE_MOCK_RESPONSES.equalsIgnoreCase(action)) {
             final List<SoapMockResponse> mockResponses = new ArrayList<SoapMockResponse>();
-            for(String mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()){
-                final ReadSoapMockResponseOutput output = serviceProcessor.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, mockResponseId));
-                mockResponses.add(output.getSoapMockResponse());
+            for(String mockResponseId : command.getSoapMockResponseIds()){
+                final ReadSoapMockResponseOutput output = serviceProcessor.process(ReadSoapMockResponseInput.builder()
+                        .projectId(soapProjectId)
+                        .portId(soapPortId)
+                        .operationId(soapOperationId)
+                        .mockResponseId(mockResponseId)
+                        .build());
+                mockResponses.add(output.getMockResponse());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_MOCK_RESPONSES_PAGE);
             model.addObject(SOAP_PROJECT_ID, soapProjectId);
@@ -130,12 +160,22 @@ public class SoapOperationController extends AbstractSoapViewController {
             return model;
         } else if (DUPLICATE_MOCK_RESPONSE.equalsIgnoreCase(action)) {
             String copyOfLabel = messageSource.getMessage("soap.soapoperation.label.copyOf", null, LocaleContextHolder.getLocale());
-            for (String mockResponseId : soapMockResponseModifierCommand.getSoapMockResponseIds()) {
-                ReadSoapMockResponseOutput readSoapMockResponseOutput = serviceProcessor.process(new ReadSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, mockResponseId));
-                SoapMockResponse soapMockResponse = readSoapMockResponseOutput.getSoapMockResponse();
+            for (String mockResponseId : command.getSoapMockResponseIds()) {
+                ReadSoapMockResponseOutput readSoapMockResponseOutput = serviceProcessor.process(ReadSoapMockResponseInput.builder()
+                        .projectId(soapProjectId)
+                        .portId(soapPortId)
+                        .operationId(soapOperationId)
+                        .mockResponseId(mockResponseId)
+                        .build());
+                SoapMockResponse soapMockResponse = readSoapMockResponseOutput.getMockResponse();
                 soapMockResponse.setId(null);
                 soapMockResponse.setName(String.format("%s %s", copyOfLabel, soapMockResponse.getName()));
-                serviceProcessor.process(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponse));
+                serviceProcessor.process(CreateSoapMockResponseInput.builder()
+                        .projectId(soapProjectId)
+                        .portId(soapPortId)
+                        .operationId(soapOperationId)
+                        .mockResponse(soapMockResponse)
+                        .build());
             }
         }
 

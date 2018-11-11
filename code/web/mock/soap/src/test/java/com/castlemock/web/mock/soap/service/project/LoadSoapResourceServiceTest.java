@@ -35,7 +35,11 @@ public class LoadSoapResourceServiceTest {
         final String resourceContent = "Resource content";
         Mockito.when(resourceRepository.loadSoapResource(soapResource.getId())).thenReturn(resourceContent);
 
-        final LoadSoapResourceInput input = new LoadSoapResourceInput("Project id", soapResource.getId());
+
+        final LoadSoapResourceInput input = LoadSoapResourceInput.builder()
+                .projectId("Project id")
+                .resourceId(soapResource.getId())
+                .build();
         final ServiceTask<LoadSoapResourceInput> serviceTask = new ServiceTask<LoadSoapResourceInput>(input);
         final ServiceResult<LoadSoapResourceOutput> serviceResult = service.process(serviceTask);
 

@@ -46,9 +46,9 @@ public class ExportSoapProjectService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ExportSoapProjectOutput> process(final ServiceTask<ExportSoapProjectInput> serviceTask) {
         final ExportSoapProjectInput input = serviceTask.getInput();
-        final SoapProject project = repository.findOne(input.getRestProjectId());
-        final List<SoapPort> ports = this.portRepository.findWithProjectId(input.getRestProjectId());
-        final List<SoapResource> resources = this.resourceRepository.findWithProjectId(input.getRestProjectId());
+        final SoapProject project = repository.findOne(input.getProjectId());
+        final List<SoapPort> ports = this.portRepository.findWithProjectId(input.getProjectId());
+        final List<SoapResource> resources = this.resourceRepository.findWithProjectId(input.getProjectId());
         final List<SoapOperation> operations = new ArrayList<>();
         final List<SoapMockResponse> mockResponses = new ArrayList<>();
 
@@ -75,7 +75,9 @@ public class ExportSoapProjectService extends AbstractSoapProjectService impleme
         exportContainer.setMockResponses(mockResponses);
 
         final String serialized = ExportContainerSerializer.serialize(exportContainer);
-        return createServiceResult(new ExportSoapProjectOutput(serialized));
+        return createServiceResult(ExportSoapProjectOutput.builder()
+                .project(serialized)
+                .build());
     }
 
 }

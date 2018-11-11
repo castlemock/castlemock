@@ -41,9 +41,10 @@ public class CreateSoapProjectService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<CreateSoapProjectOutput> process(final ServiceTask<CreateSoapProjectInput> serviceTask) {
         final CreateSoapProjectInput input = serviceTask.getInput();
-        final SoapProject soapProject = input.getSoapProject();
+        final SoapProject soapProject = input.getProject();
         final SoapProject savedSoapProject = save(soapProject);
-        final CreateSoapProjectOutput output = new CreateSoapProjectOutput(savedSoapProject);
-        return createServiceResult(output);
+        return createServiceResult(CreateSoapProjectOutput.builder()
+                .project(savedSoapProject)
+                .build());
     }
 }

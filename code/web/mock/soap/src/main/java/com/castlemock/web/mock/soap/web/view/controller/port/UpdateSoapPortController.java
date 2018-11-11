@@ -61,9 +61,12 @@ public class UpdateSoapPortController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/update", method = RequestMethod.GET)
     public ModelAndView defaultPage(@PathVariable final String soapProjectId, @PathVariable final String soapPortId) {
-        final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
+        final ReadSoapPortOutput output = serviceProcessor.process(ReadSoapPortInput.builder()
+                .projectId(soapProjectId)
+                .portId(soapPortId)
+                .build());
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(SOAP_PORT, output.getSoapPort());
+        model.addObject(SOAP_PORT, output.getPort());
         model.addObject(SOAP_PROJECT_ID, soapProjectId);
         model.addObject(SOAP_PORT_ID, soapPortId);
         model.addObject(SOAP_MOCK_RESPONSE_STRATEGIES, SoapResponseStrategy.values());
@@ -80,8 +83,14 @@ public class UpdateSoapPortController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @ModelAttribute final SoapPort soapPort) {
-        serviceProcessor.process(new UpdateSoapPortInput(soapProjectId, soapPortId, soapPort));
+    public ModelAndView update(@PathVariable final String soapProjectId,
+                               @PathVariable final String soapPortId,
+                               @ModelAttribute(name = "soapPort") final SoapPort soapPort) {
+        serviceProcessor.process(UpdateSoapPortInput.builder()
+                .projectId(soapProjectId)
+                .portId(soapPortId)
+                .port(soapPort)
+                .build());
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId);
     }
 
@@ -89,15 +98,19 @@ public class UpdateSoapPortController extends AbstractSoapViewController {
      * The method provides the functionality to update the endpoint address for multiple
      * ports at once
      * @param projectId The id of the project that the ports belongs to
-     * @param updateSoapPortsEndpointCommand The command object contains both the port that
+     * @param command The command object contains both the port that
      *                                          will be updated and the new forwarded address
      * @return Redirects the user to the project page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}/port/update/confirm", method = RequestMethod.POST)
-    public ModelAndView updateEndpoint(@PathVariable final String projectId, @ModelAttribute final UpdateSoapPortsEndpointCommand updateSoapPortsEndpointCommand) {
-        Preconditions.checkNotNull(updateSoapPortsEndpointCommand, "The update port endpoint command cannot be null");
-        serviceProcessor.process(new UpdateSoapPortsForwardedEndpointInput(projectId, updateSoapPortsEndpointCommand.getSoapPorts(), updateSoapPortsEndpointCommand.getForwardedEndpoint()));
+    public ModelAndView updateEndpoint(@PathVariable final String projectId,
+                                       @ModelAttribute(name = "command") final UpdateSoapPortsEndpointCommand command) {
+        Preconditions.checkNotNull(command, "The update port endpoint command cannot be null");
+        serviceProcessor.process(UpdateSoapPortsForwardedEndpointInput.builder().projectId(projectId)
+                .ports(command.getSoapPorts())
+                .forwardedEndpoint(command.getForwardedEndpoint())
+                .build());
         return redirect("/soap/project/" + projectId);
     }
 

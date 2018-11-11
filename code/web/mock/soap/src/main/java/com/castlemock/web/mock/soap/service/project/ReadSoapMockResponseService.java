@@ -26,6 +26,8 @@ public class ReadSoapMockResponseService extends AbstractSoapProjectService impl
     public ServiceResult<ReadSoapMockResponseOutput> process(ServiceTask<ReadSoapMockResponseInput> serviceTask) {
         final ReadSoapMockResponseInput input = serviceTask.getInput();
         final SoapMockResponse soapMockResponse = this.mockResponseRepository.findOne(input.getSoapMockResponseId());
-        return createServiceResult(new ReadSoapMockResponseOutput(soapMockResponse));
+        return createServiceResult(ReadSoapMockResponseOutput.builder()
+                .mockResponse(soapMockResponse)
+                .build());
     }
 }

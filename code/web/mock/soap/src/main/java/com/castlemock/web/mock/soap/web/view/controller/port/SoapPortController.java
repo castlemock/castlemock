@@ -50,9 +50,9 @@ public class SoapPortController extends AbstractSoapViewController {
 
     private static final String PAGE = "mock/soap/port/soapPort";
     private static final String UPDATE_STATUS = "update";
-    private static final String SOAP_OPERATION_MODIFIER_COMMAND = "soapOperationModifierCommand";
+    private static final String SOAP_OPERATION_MODIFIER_COMMAND = "command";
     private static final String UPDATE_ENDPOINTS = "update-endpoint";
-    private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_COMMAND = "updateSoapOperationsEndpointCommand";
+    private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_COMMAND = "command";
     private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_PAGE = "mock/soap/operation/updateSoapOperationsEndpoint";
     private static final Logger LOGGER = Logger.getLogger(SoapPortController.class);
 
@@ -65,9 +65,14 @@ public class SoapPortController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}", method = RequestMethod.GET)
-    public ModelAndView getSoapPort(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, final ServletRequest request) {
-        final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(new ReadSoapPortInput(soapProjectId, soapPortId));
-        final SoapPort soapPort = readSoapPortOutput.getSoapPort();
+    public ModelAndView getSoapPort(@PathVariable final String soapProjectId,
+                                    @PathVariable final String soapPortId,
+                                    final ServletRequest request) {
+        final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(ReadSoapPortInput.builder()
+                .projectId(soapProjectId)
+                .portId(soapPortId)
+                .build());
+        final SoapPort soapPort = readSoapPortOutput.getPort();
         final String protocol = getProtocol(request);
         final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUri());
 
@@ -86,23 +91,35 @@ public class SoapPortController extends AbstractSoapViewController {
      * @param soapProjectId The id of the project that the operations belongs to
      * @param soapPortId The id of the port that the operations belongs to
      * @param action The requested action
-     * @param soapOperationModifierCommand The operation modifier command
+     * @param command The operation modifier command
      * @return Redirects the user to the port page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}", method = RequestMethod.POST)
-    public ModelAndView portFunctionality(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @RequestParam final String action, @ModelAttribute final SoapOperationModifierCommand soapOperationModifierCommand) {
+    public ModelAndView portFunctionality(@PathVariable final String soapProjectId,
+                                          @PathVariable final String soapPortId,
+                                          @RequestParam final String action,
+                                          @ModelAttribute(name = "command") final SoapOperationModifierCommand command) {
         LOGGER.debug("Requested SOAP port action: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
-            final SoapOperationStatus soapOperationStatus = SoapOperationStatus.valueOf(soapOperationModifierCommand.getSoapOperationStatus());
-            for(String operationId : soapOperationModifierCommand.getSoapOperationIds()){
-                serviceProcessor.process(new UpdateSoapOperationsStatusInput(soapProjectId, soapPortId, operationId, soapOperationStatus));
+            final SoapOperationStatus soapOperationStatus = SoapOperationStatus.valueOf(command.getSoapOperationStatus());
+            for(String operationId : command.getSoapOperationIds()){
+                serviceProcessor.process(UpdateSoapOperationsStatusInput.builder()
+                        .projectId(soapProjectId)
+                        .portId(soapPortId)
+                        .operationId(operationId)
+                        .operationStatus(soapOperationStatus)
+                        .build());
             }
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<SoapOperation> soapOperations = new ArrayList<SoapOperation>();
-            for(String soapOperationId : soapOperationModifierCommand.getSoapOperationIds()){
-                final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
-                soapOperations.add(output.getSoapOperation());
+            for(String soapOperationId : command.getSoapOperationIds()){
+                final ReadSoapOperationOutput output = serviceProcessor.process(ReadSoapOperationInput.builder()
+                        .projectId(soapProjectId)
+                        .portId(soapPortId)
+                        .operationId(soapOperationId)
+                        .build());
+                soapOperations.add(output.getOperation());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_SOAP_OPERATIONS_ENDPOINT_PAGE);
             model.addObject(SOAP_PROJECT_ID, soapProjectId);

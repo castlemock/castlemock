@@ -42,13 +42,13 @@ public class UpdateSoapPortsForwardedEndpointService extends AbstractSoapProject
     @Override
     public ServiceResult<UpdateSoapPortsForwardedEndpointOutput> process(final ServiceTask<UpdateSoapPortsForwardedEndpointInput> serviceTask) {
         final UpdateSoapPortsForwardedEndpointInput input = serviceTask.getInput();
-        input.getSoapPorts().stream()
+        input.getPorts().stream()
                 .map(soapPort -> this.operationRepository.findWithPortId(soapPort.getId()))
                 .flatMap(List::stream)
                 .forEach(operation -> {
                     operation.setForwardedEndpoint(input.getForwardedEndpoint());
                     this.operationRepository.update(operation.getId(), operation);
                 });
-        return createServiceResult(new UpdateSoapPortsForwardedEndpointOutput());
+        return createServiceResult(UpdateSoapPortsForwardedEndpointOutput.builder().build());
     }
 }

@@ -84,7 +84,11 @@ public class SoapRestController extends AbstractRestController {
             final SoapResource resource = new SoapResource();
             resource.setId(resourceId);
             resource.setType(resourceType);
-            ImportSoapResourceInput input = new ImportSoapResourceInput(projectId, resource, raw);
+            ImportSoapResourceInput input = ImportSoapResourceInput.builder()
+                    .projectId(projectId)
+                    .resource(resource)
+                    .raw(raw)
+                    .build();
             ImportSoapResourceOutput output = this.serviceProcessor.process(input);
             return output.getResource();
         } catch (IOException e) {

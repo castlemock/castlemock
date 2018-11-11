@@ -31,7 +31,7 @@
         <c:choose>
             <c:when test="${soapPorts.size() > 0}">
                 <p><spring:message code="soap.updatesoapportsendpoint.label.confirmation"/></p>
-                <form:form action="${update_ports_endpoint_url}" method="POST" modelAttribute="updateSoapPortsEndpointCommand">
+                <form:form action="${update_ports_endpoint_url}" method="POST" modelAttribute="command">
                     <ul>
                         <c:forEach items="${soapPorts}" var="soapPort" varStatus="loopStatus">
                             <li>${soapPort.name}</li>
@@ -41,7 +41,7 @@
                     <table class="formTable">
                         <tr>
                             <td class="column1"><label path="forwardedEndpoint"><spring:message code="soap.updatesoapportsendpoint.label.forwardedendpoint"/></label></td>
-                            <td class="column2"><form:input path="forwardedEndpoint" value="${updateSoapPortsEndpointCommand.forwardedEndpoint}"/></td>
+                            <td class="column2"><form:input path="forwardedEndpoint" value="${command.forwardedEndpoint}"/></td>
                         </tr>
                     </table>
                     <button class="btn btn-success"><i class="fas fa-check-circle"></i> <span><spring:message code="soap.updatesoapportsendpoint.button.updateport"/></span></button>

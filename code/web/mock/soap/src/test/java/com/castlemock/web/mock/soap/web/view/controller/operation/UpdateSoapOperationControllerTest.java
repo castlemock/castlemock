@@ -27,6 +27,7 @@ import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
+import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -78,8 +79,12 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
         final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
         final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
         final List<SoapOperationStatus> soapOperationStatuses = Arrays.asList(SoapOperationStatus.values());
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + UPDATE + SLASH);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(ReadSoapOperationOutput.builder()
+                .operation(soapOperation)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT +
+                SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION +
+                SLASH + soapOperation.getId() + SLASH + UPDATE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(7 + GLOBAL_VIEW_MODEL_COUNT))
@@ -99,8 +104,12 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
         final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
         final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
         final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + UPDATE + SLASH);
+        when(serviceProcessor.process(any(Input.class))).thenReturn(ReadSoapOperationOutput.builder()
+                .operation(soapOperation)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH + OPERATION +
+                SLASH + soapOperation.getId() + SLASH + UPDATE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
@@ -111,16 +120,20 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
         final String projectId = "projectId";
         final String portId = "portId";
 
-        final UpdateSoapOperationsEndpointCommand updateSoapOperationsEndpointCommand = new UpdateSoapOperationsEndpointCommand();
-        updateSoapOperationsEndpointCommand.setForwardedEndpoint("http://localhost:8080/web");
+        final UpdateSoapOperationsEndpointCommand command =
+                new UpdateSoapOperationsEndpointCommand();
+        command.setSoapOperations(ImmutableList.of());
+        command.setForwardedEndpoint("http://localhost:8080/web");
 
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + PORT + SLASH + portId + SLASH + OPERATION + SLASH  + "update/confirm")
-                .flashAttr("updateSoapOperationsEndpointCommand", updateSoapOperationsEndpointCommand);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + projectId + SLASH + PORT + SLASH + portId + SLASH + OPERATION + SLASH  + "update/confirm")
+                .flashAttr("command", command);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/web/soap/project/" + projectId + "/port/" + portId));
 
-        Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(UpdateSoapOperationsForwardedEndpointInput.class));
+        Mockito.verify(serviceProcessor, Mockito.times(1))
+                .process(Mockito.any(UpdateSoapOperationsForwardedEndpointInput.class));
     }
 
 }

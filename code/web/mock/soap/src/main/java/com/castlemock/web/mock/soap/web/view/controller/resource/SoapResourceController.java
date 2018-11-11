@@ -53,9 +53,15 @@ public class SoapResourceController extends AbstractSoapViewController {
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/resource/{soapResourceId}", method = RequestMethod.GET)
     public ModelAndView getSoapResource(@PathVariable final String soapProjectId, @PathVariable final String soapResourceId) {
-        final ReadSoapResourceOutput readSoapResourceOutput = serviceProcessor.process(new ReadSoapResourceInput(soapProjectId, soapResourceId));
-        final LoadSoapResourceOutput loadSoapResourceOutput = serviceProcessor.process(new LoadSoapResourceInput(soapProjectId, soapResourceId));
-        final SoapResource soapResource = readSoapResourceOutput.getSoapResource();
+        final ReadSoapResourceOutput readSoapResourceOutput = serviceProcessor.process(ReadSoapResourceInput.builder()
+                .projectId(soapProjectId)
+                .resourceId(soapResourceId)
+                .build());
+        final LoadSoapResourceOutput loadSoapResourceOutput = serviceProcessor.process(LoadSoapResourceInput.builder()
+                .projectId(soapProjectId)
+                .resourceId(soapResourceId)
+                .build());
+        final SoapResource soapResource = readSoapResourceOutput.getResource();
         final String resource = loadSoapResourceOutput.getResource();
 
         final ModelAndView model = createPartialModelAndView(PAGE);

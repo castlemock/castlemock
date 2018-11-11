@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,12 +31,32 @@ public final class SearchSoapProjectInput implements Input {
     @NotNull
     private final SearchQuery searchQuery;
 
-    public SearchSoapProjectInput(SearchQuery searchQuery) {
-        this.searchQuery = searchQuery;
+    private SearchSoapProjectInput(final Builder builder) {
+        this.searchQuery = Objects.requireNonNull(builder.searchQuery);
     }
 
     public SearchQuery getSearchQuery() {
         return searchQuery;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private SearchQuery searchQuery;
+
+        private Builder(){
+
+        }
+
+        public Builder searchQuery(final SearchQuery searchQuery){
+            this.searchQuery = searchQuery;
+            return this;
+        }
+
+        public SearchSoapProjectInput build(){
+            return new SearchSoapProjectInput(this);
+        }
+    }
 }

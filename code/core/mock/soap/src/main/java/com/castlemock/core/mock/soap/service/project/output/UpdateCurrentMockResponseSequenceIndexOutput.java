@@ -24,4 +24,22 @@ import com.castlemock.core.basis.model.Output;
  */
 public final class UpdateCurrentMockResponseSequenceIndexOutput implements Output {
 
+    private UpdateCurrentMockResponseSequenceIndexOutput(final Builder builder){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Builder(){
+
+        }
+
+        public UpdateCurrentMockResponseSequenceIndexOutput build(){
+            return new UpdateCurrentMockResponseSequenceIndexOutput(this);
+        }
+    }
 }

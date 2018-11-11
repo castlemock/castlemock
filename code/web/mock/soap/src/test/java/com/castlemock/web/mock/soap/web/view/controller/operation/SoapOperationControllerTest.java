@@ -65,7 +65,7 @@ import static org.mockito.Mockito.when;
 @WebAppConfiguration
 public class SoapOperationControllerTest extends AbstractSoapControllerTest {
 
-    private static final String DELETE_SOAP_MOCK_RESPONSES_COMMAND = "deleteSoapMockResponsesCommand";
+    private static final String DELETE_SOAP_MOCK_RESPONSES_COMMAND = "command";
     private static final String PAGE = "partial/mock/soap/operation/soapOperation.jsp";
     private static final String DELETE_MOCK_RESPONSES_PAGE = "partial/mock/soap/mockresponse/deleteSoapMockResponses.jsp";
     private static final String SLASH = "/";
@@ -92,8 +92,12 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
         final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
         final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
         final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
-        when(serviceProcessor.process(isA(ReadSoapPortInput.class))).thenReturn(new ReadSoapPortOutput(soapPort));
-        when(serviceProcessor.process(isA(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
+        when(serviceProcessor.process(isA(ReadSoapPortInput.class))).thenReturn(ReadSoapPortOutput.builder()
+                .port(soapPort)
+                .build());
+        when(serviceProcessor.process(isA(ReadSoapOperationInput.class))).thenReturn(ReadSoapOperationOutput.builder()
+                .operation(soapOperation)
+                .build());
         when(serviceProcessor.process(isA(ReadSoapEventsByOperationIdInput.class))).thenReturn(ReadSoapEventsByOperationIdOutput.builder()
                 .soapEvents(new ArrayList<SoapEvent>())
                 .build());
@@ -127,17 +131,17 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
         soapMockResponse2.setId("MockResponseId2");
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapMockResponseInput.class)))
-                .thenReturn(new ReadSoapMockResponseOutput(soapMockResponse1))
-                .thenReturn(new ReadSoapMockResponseOutput(soapMockResponse2));
+                .thenReturn(ReadSoapMockResponseOutput.builder().mockResponse(soapMockResponse1).build())
+                .thenReturn(ReadSoapMockResponseOutput.builder().mockResponse(soapMockResponse2).build());
 
 
-        final SoapMockResponseModifierCommand soapMockResponseModifierCommand = new SoapMockResponseModifierCommand();
-        soapMockResponseModifierCommand.setSoapMockResponseIds(soapMockResponseIds);
-        soapMockResponseModifierCommand.setSoapMockResponseStatus("ENABLED");
+        final SoapMockResponseModifierCommand command = new SoapMockResponseModifierCommand();
+        command.setSoapMockResponseIds(soapMockResponseIds);
+        command.setSoapMockResponseStatus("ENABLED");
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + PORT + SLASH + portId + SLASH + OPERATION + SLASH + operationId)
-                        .param("action", "update").flashAttr("soapMockResponseModifierCommand", soapMockResponseModifierCommand);
+                        .param("action", "update").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
@@ -166,20 +170,24 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
         final List<SoapMockResponse> mockResponses = Arrays.asList(soapMockResponse1, soapMockResponse2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapMockResponseInput.class)))
-                .thenReturn(new ReadSoapMockResponseOutput(soapMockResponse1))
-                .thenReturn(new ReadSoapMockResponseOutput(soapMockResponse2));
+                .thenReturn(ReadSoapMockResponseOutput.builder()
+                        .mockResponse(soapMockResponse1)
+                        .build())
+                .thenReturn(ReadSoapMockResponseOutput.builder()
+                        .mockResponse(soapMockResponse2)
+                        .build());
 
 
-        final SoapMockResponseModifierCommand soapMockResponseModifierCommand = new SoapMockResponseModifierCommand();
-        soapMockResponseModifierCommand.setSoapMockResponseIds(soapMockResponseIds);
+        final SoapMockResponseModifierCommand command = new SoapMockResponseModifierCommand();
+        command.setSoapMockResponseIds(soapMockResponseIds);
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + PORT + SLASH + portId + SLASH + OPERATION + SLASH + operationId)
-                        .param("action", "delete").flashAttr("soapMockResponseModifierCommand", soapMockResponseModifierCommand);
+                        .param("action", "delete").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(6 + GLOBAL_VIEW_MODEL_COUNT))
+                .andExpect(MockMvcResultMatchers.model().size(5 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, DELETE_MOCK_RESPONSES_PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, projectId))
@@ -207,16 +215,20 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
         soapMockResponse2.setId("MockResponseId2");
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapMockResponseInput.class)))
-                .thenReturn(new ReadSoapMockResponseOutput(soapMockResponse1))
-                .thenReturn(new ReadSoapMockResponseOutput(soapMockResponse2));
+                .thenReturn(ReadSoapMockResponseOutput.builder()
+                        .mockResponse(soapMockResponse1)
+                        .build())
+                .thenReturn(ReadSoapMockResponseOutput.builder()
+                        .mockResponse(soapMockResponse2)
+                        .build());
 
 
-        final SoapMockResponseModifierCommand soapMockResponseModifierCommand = new SoapMockResponseModifierCommand();
-        soapMockResponseModifierCommand.setSoapMockResponseIds(soapMockResponseIds);
+        final SoapMockResponseModifierCommand command = new SoapMockResponseModifierCommand();
+        command.setSoapMockResponseIds(soapMockResponseIds);
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + PORT + SLASH + portId + SLASH + OPERATION + SLASH + operationId)
-                        .param("action", "duplicate").flashAttr("soapMockResponseModifierCommand", soapMockResponseModifierCommand);
+                        .param("action", "duplicate").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())

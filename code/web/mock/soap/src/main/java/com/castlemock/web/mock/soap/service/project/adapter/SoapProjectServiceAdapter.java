@@ -52,9 +52,11 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @return The saved instance
      */
     @Override
-    public SoapProject create(SoapProject project) {
-        final CreateSoapProjectOutput output = serviceProcessor.process(new CreateSoapProjectInput(project));
-        return output.getSavedSoapProject();
+    public SoapProject create(final SoapProject project) {
+        final CreateSoapProjectOutput output = serviceProcessor.process(CreateSoapProjectInput.builder()
+                .project(project)
+                .build());
+        return output.getProject();
     }
 
     /**
@@ -65,8 +67,10 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @param id The id of the instance that will be deleted
      */
     @Override
-    public SoapProject delete(String id) {
-        final DeleteSoapProjectOutput output = serviceProcessor.process(new DeleteSoapProjectInput(id));
+    public SoapProject delete(final String id) {
+        final DeleteSoapProjectOutput output = serviceProcessor.process(DeleteSoapProjectInput.builder()
+                .projectId(id)
+                .build());
         return output.getProject();
     }
 
@@ -81,9 +85,13 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @return The updated instance
      */
     @Override
-    public SoapProject update(String id, SoapProject project) {
-        final UpdateSoapProjectOutput output = serviceProcessor.process(new UpdateSoapProjectInput(id, project));
-        return output.getUpdatedSoapProject();
+    public SoapProject update(final String id,
+                              final SoapProject project) {
+        final UpdateSoapProjectOutput output = serviceProcessor.process(UpdateSoapProjectInput.builder()
+                .projectId(id)
+                .project(project)
+                .build());
+        return output.getProject();
     }
 
     /**
@@ -92,8 +100,8 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      */
     @Override
     public List<SoapProject> readAll() {
-        final ReadAllSoapProjectsOutput output = serviceProcessor.process(new ReadAllSoapProjectsInput());
-        return output.getSoapProjects();
+        final ReadAllSoapProjectsOutput output = serviceProcessor.process(ReadAllSoapProjectsInput.builder().build());
+        return output.getProjects();
     }
 
     /**
@@ -105,9 +113,11 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      *         values, null will be returned.
      */
     @Override
-    public SoapProject read(String id) {
-        final ReadSoapProjectOutput output = serviceProcessor.process(new ReadSoapProjectInput(id));
-        return output.getSoapProject();
+    public SoapProject read(final String id) {
+        final ReadSoapProjectOutput output = serviceProcessor.process(ReadSoapProjectInput.builder()
+                .projectId(id)
+                .build());
+        return output.getProject();
     }
 
     /**
@@ -137,9 +147,11 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @return The project with the provided id as a String
      */
     @Override
-    public String exportProject(String id) {
-        final ExportSoapProjectOutput output = serviceProcessor.process(new ExportSoapProjectInput(id));
-        return output.getExportedProject();
+    public String exportProject(final String id) {
+        final ExportSoapProjectOutput output = serviceProcessor.process(ExportSoapProjectInput.builder()
+                .projectId(id)
+                .build());
+        return output.getProject();
     }
 
     /**
@@ -148,8 +160,10 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @return The imported project
      */
     @Override
-    public SoapProject importProject(String projectRaw) {
-        final ImportSoapProjectOutput output = serviceProcessor.process(new ImportSoapProjectInput(projectRaw));
+    public SoapProject importProject(final String projectRaw) {
+        final ImportSoapProjectOutput output = serviceProcessor.process(ImportSoapProjectInput.builder()
+                .projectRaw(projectRaw)
+                .build());
         return output.getProject();
     }
 
@@ -160,8 +174,10 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
      * @return A list of search results
      */
     @Override
-    public List<SearchResult> search(SearchQuery searchQuery) {
-        final SearchSoapProjectOutput output = serviceProcessor.process(new SearchSoapProjectInput(searchQuery));
+    public List<SearchResult> search(final SearchQuery searchQuery) {
+        final SearchSoapProjectOutput output = serviceProcessor.process(SearchSoapProjectInput.builder()
+                .searchQuery(searchQuery)
+                .build());
         return output.getSearchResults();
     }
 }

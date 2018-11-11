@@ -89,7 +89,9 @@ public class SearchSoapProjectServiceTest {
         final SearchQuery searchQuery = new SearchQuery();
         searchQuery.setQuery(query);
 
-        final SearchSoapProjectInput input = new SearchSoapProjectInput(searchQuery);
+        final SearchSoapProjectInput input = SearchSoapProjectInput.builder()
+                .searchQuery(searchQuery)
+                .build();
         final ServiceTask<SearchSoapProjectInput> serviceTask = new ServiceTask<SearchSoapProjectInput>();
         serviceTask.setInput(input);
 

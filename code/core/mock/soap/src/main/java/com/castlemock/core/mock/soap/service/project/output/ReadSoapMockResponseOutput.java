@@ -19,20 +19,42 @@ package com.castlemock.core.mock.soap.service.project.output;
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 public final class ReadSoapMockResponseOutput implements Output{
 
-    private final SoapMockResponse soapMockResponse;
+    private final SoapMockResponse mockResponse;
 
-    public ReadSoapMockResponseOutput(SoapMockResponse soapMockResponse) {
-        this.soapMockResponse = soapMockResponse;
+    private ReadSoapMockResponseOutput(final Builder builder) {
+        this.mockResponse = Objects.requireNonNull(builder.mockResponse);
     }
 
-    public SoapMockResponse getSoapMockResponse() {
-        return soapMockResponse;
+    public SoapMockResponse getMockResponse() {
+        return mockResponse;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private SoapMockResponse mockResponse;
+
+        private Builder(){
+
+        }
+
+        public Builder mockResponse(final SoapMockResponse mockResponse){
+            this.mockResponse = mockResponse;
+            return this;
+        }
+
+        public ReadSoapMockResponseOutput build(){
+            return new ReadSoapMockResponseOutput(this);
+        }
+    }
 }

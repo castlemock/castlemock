@@ -19,20 +19,42 @@ package com.castlemock.core.mock.soap.service.project.output;
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 public final class CreateSoapProjectOutput implements Output {
 
-    private final SoapProject savedSoapProject;
+    private final SoapProject project;
 
-    public CreateSoapProjectOutput(SoapProject savedSoapProject) {
-        this.savedSoapProject = savedSoapProject;
+    private CreateSoapProjectOutput(final Builder builder) {
+        this.project = Objects.requireNonNull(builder.project);
     }
 
-    public SoapProject getSavedSoapProject() {
-        return savedSoapProject;
+    public SoapProject getProject() {
+        return project;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private SoapProject project;
+
+        private Builder(){
+
+        }
+
+        public Builder project(final SoapProject project){
+            this.project = project;
+            return this;
+        }
+
+        public CreateSoapProjectOutput build(){
+            return new CreateSoapProjectOutput(this);
+        }
+    }
 }

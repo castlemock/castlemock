@@ -78,8 +78,11 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
     @Test
     public void testAddWSDLGet() throws Exception {
         final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(new ReadSoapProjectOutput(soapProject));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + ADD + SLASH + WSDL);
+        when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(ReadSoapProjectOutput.builder()
+                .project(soapProject)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + SLASH +
+                PROJECT + SLASH + soapProject.getId() + SLASH + ADD + SLASH + WSDL);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().size(2 + GLOBAL_VIEW_MODEL_COUNT))
@@ -96,9 +99,13 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
         final List<MultipartFile> uploadedFiles = new ArrayList<>();
         uploadForm.setFiles(uploadedFiles);
 
-        when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(new ReadSoapProjectOutput(soapProject));
+        when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(ReadSoapProjectOutput.builder()
+                .project(soapProject)
+                .build());
         when(fileManager.uploadFiles(anyListOf(MultipartFile.class))).thenReturn(files);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + ADD + SLASH + WSDL).param("type", "file").requestAttr("uploadForm", uploadForm);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH +
+                PROJECT + SLASH + soapProject.getId() + SLASH + ADD + SLASH + WSDL)
+                .param("type", "file").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
@@ -114,9 +121,13 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
         uploadForm.setFiles(uploadedFiles);
 
 
-        when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(new ReadSoapProjectOutput(soapProject));
+        when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(ReadSoapProjectOutput.builder()
+                .project(soapProject)
+                .build());
         when(fileManager.uploadFiles(anyString())).thenReturn(files);
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + ADD + SLASH + WSDL).param("type", "link").requestAttr("uploadForm", uploadForm);
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH +
+                PROJECT + SLASH + soapProject.getId() + SLASH + ADD + SLASH + WSDL)
+                .param("type", "link").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

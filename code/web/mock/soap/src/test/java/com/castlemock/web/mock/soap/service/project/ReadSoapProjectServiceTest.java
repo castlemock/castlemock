@@ -55,7 +55,9 @@ public class ReadSoapProjectServiceTest {
         final SoapResource resource = SoapResourceGenerator.generateSoapResource();
         final SoapOperation operation = SoapOperationGenerator.generateSoapOperation();
 
-        final ReadSoapProjectInput input = new ReadSoapProjectInput(project.getId());
+        final ReadSoapProjectInput input = ReadSoapProjectInput.builder()
+                .projectId(project.getId())
+                .build();
         final ServiceTask<ReadSoapProjectInput> serviceTask = new ServiceTask<ReadSoapProjectInput>(input);
 
         Mockito.when(repository.findOne(project.getId())).thenReturn(project);
@@ -70,7 +72,7 @@ public class ReadSoapProjectServiceTest {
         Mockito.verify(operationRepository, Mockito.times(1)).findWithPortId(port.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(project, result.getOutput().getSoapProject());
+        Assert.assertEquals(project, result.getOutput().getProject());
     }
 
 }

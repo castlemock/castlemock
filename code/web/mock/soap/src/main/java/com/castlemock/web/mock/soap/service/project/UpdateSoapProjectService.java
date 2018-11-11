@@ -41,10 +41,11 @@ public class UpdateSoapProjectService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<UpdateSoapProjectOutput> process(final ServiceTask<UpdateSoapProjectInput> serviceTask) {
         final UpdateSoapProjectInput input = serviceTask.getInput();
-        final String soapProjectId = input.getSoapProjectId();
-        final SoapProject soapProject = input.getSoapProject();
+        final String soapProjectId = input.getProjectId();
+        final SoapProject soapProject = input.getProject();
         final SoapProject updatedSoapProject = update(soapProjectId, soapProject);
-        final UpdateSoapProjectOutput output = new UpdateSoapProjectOutput(updatedSoapProject);
-        return createServiceResult(output);
+        return createServiceResult(UpdateSoapProjectOutput.builder()
+                .project(updatedSoapProject)
+                .build());
     }
 }

@@ -53,7 +53,12 @@ public class UpdateSoapOperationServiceTest {
         final String projectId = "ProjectId";
         final String portId = "PortId";
         final SoapOperation operation = SoapOperationGenerator.generateSoapOperation();
-        final UpdateSoapOperationInput input = new UpdateSoapOperationInput(projectId, portId, operation.getId(), operation);
+        final UpdateSoapOperationInput input = UpdateSoapOperationInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .operationId(operation.getId())
+                .operation(operation)
+                .build();
         final ServiceTask<UpdateSoapOperationInput> serviceTask = new ServiceTask<UpdateSoapOperationInput>(input);
 
 
@@ -62,7 +67,7 @@ public class UpdateSoapOperationServiceTest {
 
         final ServiceResult<UpdateSoapOperationOutput> result = service.process(serviceTask);
         final UpdateSoapOperationOutput output = result.getOutput();
-        final SoapOperation returnedSoapOperation = output.getSoapOperationDto();
+        final SoapOperation returnedSoapOperation = output.getOperation();
 
         Mockito.verify(operationRepository, Mockito.times(1)).findOne(operation.getId());
         Mockito.verify(operationRepository, Mockito.times(1)).update(operation.getId(), operation);

@@ -24,4 +24,22 @@ import com.castlemock.core.basis.model.Output;
  */
 public final class UpdateSoapOperationsStatusOutput implements Output {
 
+    private UpdateSoapOperationsStatusOutput(final Builder builder){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Builder(){
+
+        }
+
+        public UpdateSoapOperationsStatusOutput build(){
+            return new UpdateSoapOperationsStatusOutput(this);
+        }
+    }
 }

@@ -61,8 +61,8 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
     private static final String PAGE = "partial/mock/soap/project/soapProject.jsp";
     private static final String DELETE_SOAP_PORTS_PAGE = "partial/mock/soap/port/deleteSoapPorts.jsp";
     private static final String UPDATE_SOAP_PORTS_ENDPOINT_PAGE = "partial/mock/soap/port/updateSoapPortsEndpoint.jsp";
-    private static final String DELETE_SOAP_PORTS_COMMAND = "deleteSoapPortsCommand";
-    private static final String UPDATE_SOAP_PORTS_ENDPOINT_COMMAND = "updateSoapPortsEndpointCommand";
+    private static final String DELETE_SOAP_PORTS_COMMAND = "command";
+    private static final String UPDATE_SOAP_PORTS_ENDPOINT_COMMAND = "command";
     private static final String SOAP_PORTS = "soapPorts";
 
     @InjectMocks
@@ -83,7 +83,9 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
         final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         soapPorts.add(soapPort);
         soapProject.setPorts(soapPorts);
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProject));
+        when(serviceProcessor.process(any(Input.class))).thenReturn(ReadSoapProjectOutput.builder()
+                .project(soapProject)
+                .build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -101,7 +103,9 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
         final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         soapPorts.add(soapPort);
         soapProject.setPorts(soapPorts);
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProject));
+        when(serviceProcessor.process(any(Input.class))).thenReturn(ReadSoapProjectOutput.builder()
+                .project(soapProject)
+                .build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH)
                 .param("upload", "error");
         mockMvc.perform(message)
@@ -121,7 +125,9 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
         final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         soapPorts.add(soapPort);
         soapProject.setPorts(soapPorts);
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new ReadSoapProjectOutput(soapProject));
+        when(serviceProcessor.process(any(Input.class))).thenReturn(ReadSoapProjectOutput.builder()
+                .project(soapProject)
+                .build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH)
                 .param("upload", "success");
         mockMvc.perform(message)
@@ -139,13 +145,13 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
         final String projectId = "projectId";
         final String[] soapPortIds = {"soapPort1", "soapPort2"};
 
-        final SoapPortModifierCommand soapPortModifierCommand = new SoapPortModifierCommand();
-        soapPortModifierCommand.setSoapPortIds(soapPortIds);
-        soapPortModifierCommand.setSoapPortStatus("MOCKED");
+        final SoapPortModifierCommand command = new SoapPortModifierCommand();
+        command.setSoapPortIds(soapPortIds);
+        command.setSoapPortStatus("MOCKED");
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH)
-                        .param("action", "update").flashAttr("soapPortModifierCommand", soapPortModifierCommand);
+                        .param("action", "update").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
@@ -170,20 +176,24 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
         final List<SoapPort> soapPorts = Arrays.asList(soapPort1, soapPort2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapPortInput.class)))
-                .thenReturn(new ReadSoapPortOutput(soapPort1))
-                .thenReturn(new ReadSoapPortOutput(soapPort2));
+                .thenReturn(ReadSoapPortOutput.builder()
+                        .port(soapPort1)
+                        .build())
+                .thenReturn(ReadSoapPortOutput.builder()
+                        .port(soapPort2)
+                        .build());
 
 
-        final SoapPortModifierCommand soapPortModifierCommand = new SoapPortModifierCommand();
-        soapPortModifierCommand.setSoapPortIds(soapPortIds);
+        final SoapPortModifierCommand command = new SoapPortModifierCommand();
+        command.setSoapPortIds(soapPortIds);
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH)
-                        .param("action", "delete").flashAttr("soapPortModifierCommand", soapPortModifierCommand);
+                        .param("action", "delete").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(4 + GLOBAL_VIEW_MODEL_COUNT))
+                .andExpect(MockMvcResultMatchers.model().size(3 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, DELETE_SOAP_PORTS_PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, projectId))
@@ -209,20 +219,24 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
         final List<SoapPort> soapPorts = Arrays.asList(soapPort1, soapPort2);
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapPortInput.class)))
-                .thenReturn(new ReadSoapPortOutput(soapPort1))
-                .thenReturn(new ReadSoapPortOutput(soapPort2));
+                .thenReturn(ReadSoapPortOutput.builder()
+                        .port(soapPort1)
+                        .build())
+                .thenReturn(ReadSoapPortOutput.builder()
+                        .port(soapPort2)
+                        .build());
 
 
-        final SoapPortModifierCommand soapPortModifierCommand = new SoapPortModifierCommand();
-        soapPortModifierCommand.setSoapPortIds(soapPortIds);
+        final SoapPortModifierCommand command = new SoapPortModifierCommand();
+        command.setSoapPortIds(soapPortIds);
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH)
-                        .param("action", "update-endpoint").flashAttr("soapPortModifierCommand", soapPortModifierCommand);
+                        .param("action", "update-endpoint").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(4 + GLOBAL_VIEW_MODEL_COUNT))
+                .andExpect(MockMvcResultMatchers.model().size(3 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, UPDATE_SOAP_PORTS_ENDPOINT_PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, projectId))

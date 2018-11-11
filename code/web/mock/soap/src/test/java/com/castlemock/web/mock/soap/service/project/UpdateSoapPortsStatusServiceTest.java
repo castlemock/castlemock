@@ -56,7 +56,11 @@ public class UpdateSoapPortsStatusServiceTest {
         final String projectId = "SOAP PROJECT";
         final String portId = "SOAP PORT";
 
-        final UpdateSoapPortsStatusInput input = new UpdateSoapPortsStatusInput(projectId, portId, SoapOperationStatus.MOCKED);
+        final UpdateSoapPortsStatusInput input = UpdateSoapPortsStatusInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .operationStatus(SoapOperationStatus.MOCKED)
+                .build();
         final ServiceTask<UpdateSoapPortsStatusInput> serviceTask = new ServiceTask<UpdateSoapPortsStatusInput>(input);
 
         Mockito.when(operationRepository.findWithPortId("SOAP PORT")).thenReturn(Arrays.asList(soapOperation));

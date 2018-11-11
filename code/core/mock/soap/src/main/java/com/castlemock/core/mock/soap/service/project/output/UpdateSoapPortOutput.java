@@ -19,20 +19,42 @@ package com.castlemock.core.mock.soap.service.project.output;
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 public final class UpdateSoapPortOutput implements Output {
 
-    private final SoapPort soapPort;
+    private final SoapPort port;
 
-    public UpdateSoapPortOutput(SoapPort soapPort) {
-        this.soapPort = soapPort;
+    private UpdateSoapPortOutput(final Builder builder) {
+        this.port = Objects.requireNonNull(builder.port);
     }
 
-    public SoapPort getSoapPort() {
-        return soapPort;
+    public SoapPort getPort() {
+        return port;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private SoapPort port;
+
+        private Builder(){
+
+        }
+
+        public Builder port(final SoapPort port){
+            this.port = port;
+            return this;
+        }
+
+        public UpdateSoapPortOutput build(){
+            return new UpdateSoapPortOutput(this);
+        }
+    }
 }

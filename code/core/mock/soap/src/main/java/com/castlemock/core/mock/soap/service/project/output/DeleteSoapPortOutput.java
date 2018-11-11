@@ -23,4 +23,24 @@ import com.castlemock.core.basis.model.Output;
  * @since 1.0
  */
 public final class DeleteSoapPortOutput implements Output {
+
+    private DeleteSoapPortOutput(final Builder builder){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Builder(){
+
+        }
+
+        public DeleteSoapPortOutput build(){
+            return new DeleteSoapPortOutput(this);
+        }
+    }
+
 }

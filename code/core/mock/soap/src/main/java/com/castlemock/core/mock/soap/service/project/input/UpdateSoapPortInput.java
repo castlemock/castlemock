@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -27,27 +29,60 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 public final class UpdateSoapPortInput implements Input {
 
     @NotNull
-    private final String soapProjectId;
+    private final String projectId;
     @NotNull
-    private final String soapPortId;
+    private final String portId;
     @NotNull
-    private final SoapPort updatedSoapPort;
+    private final SoapPort soapPort;
 
-    public UpdateSoapPortInput(String soapProjectId, String soapPortId, SoapPort updatedSoapPort) {
-        this.soapProjectId = soapProjectId;
-        this.soapPortId = soapPortId;
-        this.updatedSoapPort = updatedSoapPort;
+    public UpdateSoapPortInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.portId = Objects.requireNonNull(builder.portId);
+        this.soapPort = Objects.requireNonNull(builder.port);
     }
 
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getSoapPortId() {
-        return soapPortId;
+    public String getPortId() {
+        return portId;
     }
 
-    public SoapPort getUpdatedSoapPort() {
-        return updatedSoapPort;
+    public SoapPort getSoapPort() {
+        return soapPort;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String projectId;
+        private String portId;
+        private SoapPort port;
+
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder portId(final String portId){
+            this.portId = portId;
+            return this;
+        }
+
+        public Builder port(final SoapPort port){
+            this.port = port;
+            return this;
+        }
+
+        public UpdateSoapPortInput build(){
+            return new UpdateSoapPortInput(this);
+        }
     }
 }

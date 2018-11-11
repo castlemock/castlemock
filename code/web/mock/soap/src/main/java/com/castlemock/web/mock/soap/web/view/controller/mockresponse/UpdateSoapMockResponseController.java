@@ -51,8 +51,18 @@ public class UpdateSoapMockResponseController extends AbstractSoapViewController
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/response/{soapMockResponseId}/update", method = RequestMethod.POST)
-    public ModelAndView updateSoapMockResponse(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @PathVariable final String soapMockResponseId,  @ModelAttribute final SoapMockResponse soapMockResponse) {
-        serviceProcessor.process(new UpdateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponseId, soapMockResponse));
+    public ModelAndView updateSoapMockResponse(@PathVariable final String soapProjectId,
+                                               @PathVariable final String soapPortId,
+                                               @PathVariable final String soapOperationId,
+                                               @PathVariable final String soapMockResponseId,
+                                               @ModelAttribute(name = "soapMockResponse") final SoapMockResponse soapMockResponse) {
+        serviceProcessor.process(UpdateSoapMockResponseInput.builder()
+                .projectId(soapProjectId)
+                .portId(soapPortId)
+                .operationId(soapOperationId)
+                .mockResponseId(soapMockResponseId)
+                .mockResponse(soapMockResponse)
+                .build());
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 

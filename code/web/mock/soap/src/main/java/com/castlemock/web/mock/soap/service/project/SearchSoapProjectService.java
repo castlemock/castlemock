@@ -123,7 +123,9 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
             searchResults.add(searchResult);
         });
 
-        return createServiceResult(new SearchSoapProjectOutput(searchResults));
+        return createServiceResult(SearchSoapProjectOutput.builder()
+                .searchResults(searchResults)
+                .build());
     }
 
 

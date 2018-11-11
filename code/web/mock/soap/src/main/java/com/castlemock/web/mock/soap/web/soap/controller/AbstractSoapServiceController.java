@@ -88,10 +88,16 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
             final SoapRequest request = prepareRequest(projectId, httpServletRequest);
-            final IdentifySoapOperationOutput output = serviceProcessor.process(new IdentifySoapOperationInput(projectId, request.getOperationIdentifier(), request.getUri(), request.getHttpMethod(), request.getSoapVersion()));
-            final SoapOperation operation = output.getSoapOperation();
+            final IdentifySoapOperationOutput output = serviceProcessor.process(IdentifySoapOperationInput.builder()
+                    .projectId(projectId)
+                    .operationIdentifier(request.getOperationIdentifier())
+                    .uri(request.getUri())
+                    .httpMethod(request.getHttpMethod())
+                    .type(request.getSoapVersion())
+                    .build());
+            final SoapOperation operation = output.getOperation();
             request.setOperationName(operation.getName());
-            return process(projectId, output.getSoapPortId(), operation, request, httpServletResponse);
+            return process(projectId, output.getPortId(), operation, request, httpServletResponse);
         }catch(Exception exception){
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
             throw new SoapException(exception.getMessage());
@@ -119,15 +125,20 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     }
 
     private String getWsdl(final String projectId){
-        final ReadSoapProjectOutput projectOutput = this.serviceProcessor.process(new ReadSoapProjectInput(projectId));
-        final SoapProject soapProject = projectOutput.getSoapProject();
+        final ReadSoapProjectOutput projectOutput = this.serviceProcessor.process(ReadSoapProjectInput.builder()
+                .projectId(projectId)
+                .build());
+        final SoapProject soapProject = projectOutput.getProject();
 
         return soapProject.getResources().stream()
                 .filter(soapResource -> SoapResourceType.WSDL.equals(soapResource.getType()))
                 .findFirst()
                 .map(soapResource -> {
                     final LoadSoapResourceOutput loadOutput =
-                            this.serviceProcessor.process(new LoadSoapResourceInput(projectId, soapResource.getId()));
+                            this.serviceProcessor.process(LoadSoapResourceInput.builder()
+                                    .projectId(projectId)
+                                    .resourceId(soapResource.getId())
+                                    .build());
                     return loadOutput.getResource();
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Unable to find a WSDL file for the following project: " + projectId));
@@ -289,7 +300,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 currentSequenceNumber = 0;
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
-            serviceProcessor.process(new UpdateCurrentMockResponseSequenceIndexInput(soapProjectId, soapPortId, soapOperation.getId(), currentSequenceNumber + 1));
+            serviceProcessor.process(  UpdateCurrentMockResponseSequenceIndexInput.builder()
+                    .projectId(soapProjectId)
+                    .portId(soapPortId)
+                    .operationId(soapOperation.getId())
+                    .currentResponseSequenceIndex(currentSequenceNumber + 1)
+                    .build());
         } else if (soapOperation.getResponseStrategy().equals(SoapResponseStrategy.XPATH_INPUT)) {
             for (SoapMockResponse testedMockResponse : mockResponses) {
                 for(SoapXPathExpression xPathExpression : testedMockResponse.getXpathExpressions()){
@@ -396,16 +412,23 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
                 mockResponse.setHttpStatusCode(response.getHttpStatusCode());
                 mockResponse.setHttpHeaders(response.getHttpHeaders());
-                serviceProcessor.processAsync(new CreateSoapMockResponseInput(soapProjectId,
-                        soapPortId, soapOperation.getId(), mockResponse));
+
+                serviceProcessor.processAsync(CreateSoapMockResponseInput.builder().projectId(soapProjectId)
+                        .portId(soapPortId)
+                        .operationId(soapOperation.getId())
+                        .mockResponse(mockResponse)
+                        .build());
 
 
                 if(SoapOperationStatus.RECORD_ONCE.equals(soapOperation.getStatus())){
                     // Change the operation status to mocked if the
                     // operation has been configured to only record once.
                     soapOperation.setStatus(SoapOperationStatus.MOCKED);
-                    serviceProcessor.process(new UpdateSoapOperationInput(soapProjectId,
-                            soapPortId, soapOperation.getId(), soapOperation));
+                    serviceProcessor.process(UpdateSoapOperationInput.builder().projectId(soapProjectId)
+                            .portId(soapPortId)
+                            .operationId(soapOperation.getId())
+                            .operation(soapOperation)
+                            .build());
                 }
             }
 

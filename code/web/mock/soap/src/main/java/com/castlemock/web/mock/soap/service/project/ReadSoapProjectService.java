@@ -50,9 +50,9 @@ public class ReadSoapProjectService extends AbstractSoapProjectService implement
     @Override
     public ServiceResult<ReadSoapProjectOutput> process(final ServiceTask<ReadSoapProjectInput> serviceTask) {
         final ReadSoapProjectInput input = serviceTask.getInput();
-        final SoapProject soapProject = find(input.getSoapProjectId());
-        final List<SoapResource> resources = this.resourceRepository.findWithProjectId(input.getSoapProjectId());
-        final List<SoapPort> ports = this.portRepository.findWithProjectId(input.getSoapProjectId());
+        final SoapProject soapProject = find(input.getProjectId());
+        final List<SoapResource> resources = this.resourceRepository.findWithProjectId(input.getProjectId());
+        final List<SoapPort> ports = this.portRepository.findWithProjectId(input.getProjectId());
         soapProject.setResources(resources);
         soapProject.setPorts(ports);
         for(final SoapPort soapPort : soapProject.getPorts()){
@@ -60,7 +60,9 @@ public class ReadSoapProjectService extends AbstractSoapProjectService implement
             final Map<SoapOperationStatus, Integer> soapOperationStatusCount = getSoapOperationStatusCount(operations);
             soapPort.setStatusCount(soapOperationStatusCount);
         }
-        return createServiceResult(new ReadSoapProjectOutput(soapProject));
+        return createServiceResult(ReadSoapProjectOutput.builder()
+                .project(soapProject)
+                .build());
     }
 
 

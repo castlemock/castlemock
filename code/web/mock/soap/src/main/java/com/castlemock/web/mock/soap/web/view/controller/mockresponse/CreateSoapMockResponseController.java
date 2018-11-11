@@ -59,8 +59,12 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/create/response", method = RequestMethod.GET)
     public ModelAndView dispayCreatePage(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId) {
-        final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
-        final SoapOperation soapOperation = output.getSoapOperation();
+        final ReadSoapOperationOutput output = serviceProcessor.process(ReadSoapOperationInput.builder()
+                .projectId(soapProjectId)
+                .portId(soapPortId)
+                .operationId(soapOperationId)
+                .build());
+        final SoapOperation soapOperation = output.getOperation();
         final SoapMockResponse mockResponse = new SoapMockResponse();
         mockResponse.setBody(soapOperation.getDefaultBody());
         mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
@@ -83,8 +87,16 @@ public class CreateSoapMockResponseController extends AbstractSoapViewController
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/{soapOperationId}/create/response", method = RequestMethod.POST)
-    public ModelAndView createResponse(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @PathVariable final String soapOperationId, @ModelAttribute final SoapMockResponse soapMockResponse) {
-        serviceProcessor.process(new CreateSoapMockResponseInput(soapProjectId, soapPortId, soapOperationId, soapMockResponse));
+    public ModelAndView createResponse(@PathVariable final String soapProjectId,
+                                       @PathVariable final String soapPortId,
+                                       @PathVariable final String soapOperationId,
+                                       @ModelAttribute(name = "soapMockResponse") final SoapMockResponse soapMockResponse) {
+        serviceProcessor.process(CreateSoapMockResponseInput.builder()
+                .projectId(soapProjectId)
+                .portId(soapPortId)
+                .operationId(soapOperationId)
+                .mockResponse(soapMockResponse)
+                .build());
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId + "/operation/" + soapOperationId);
     }
 

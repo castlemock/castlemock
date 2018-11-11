@@ -71,7 +71,9 @@ public class CreateSoapMockResponseControllerTest extends AbstractSoapController
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
         final SoapPort application = SoapPortGenerator.generateSoapPort();
         final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
-        when(serviceProcessor.process(any(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
+        when(serviceProcessor.process(any(ReadSoapOperationInput.class))).thenReturn(ReadSoapOperationOutput.builder()
+                .operation(soapOperation)
+                .build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + CREATE_RESPONSE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -89,8 +91,12 @@ public class CreateSoapMockResponseControllerTest extends AbstractSoapController
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
         final SoapPort application = SoapPortGenerator.generateSoapPort();
         final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
-        when(serviceProcessor.process(any(ReadSoapOperationInput.class))).thenReturn(new ReadSoapOperationOutput(soapOperation));
-        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION + SLASH + soapOperation.getId() + SLASH + CREATE_RESPONSE + SLASH);
+        when(serviceProcessor.process(any(ReadSoapOperationInput.class))).thenReturn(ReadSoapOperationOutput.builder()
+                .operation(soapOperation)
+                .build());
+        final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + PROJECT +
+                SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION +
+                SLASH + soapOperation.getId() + SLASH + CREATE_RESPONSE + SLASH);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));

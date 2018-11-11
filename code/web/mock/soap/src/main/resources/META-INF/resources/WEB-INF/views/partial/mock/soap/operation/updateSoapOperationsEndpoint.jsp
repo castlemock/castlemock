@@ -32,7 +32,7 @@
         <c:choose>
             <c:when test="${soapOperations.size() > 0}">
                 <p><spring:message code="soap.updatesoapoperationsendpoint.label.confirmation"/></p>
-                <form:form action="${update_operations_endpoint_url}" method="POST" modelAttribute="updateSoapOperationsEndpointCommand">
+                <form:form action="${update_operations_endpoint_url}" method="POST" modelAttribute="command">
                     <ul>
                         <c:forEach items="${soapOperations}" var="soapOperation" varStatus="loopStatus">
                             <li>${soapOperation.name}</li>
@@ -42,7 +42,7 @@
                     <table class="formTable">
                         <tr>
                             <td class="column1"><label path="forwardedEndpoint"><spring:message code="soap.updatesoapoperationsendpoint.label.forwardedendpoint"/></label></td>
-                            <td class="column2"><form:input class="form-control" path="forwardedEndpoint" value="${updateSoapOperationsEndpointCommand.forwardedEndpoint}"/></td>
+                            <td class="column2"><form:input class="form-control" path="forwardedEndpoint" value="${command.forwardedEndpoint}"/></td>
                         </tr>
                     </table>
                     <button class="btn btn-success"><i class="fas fa-check-circle"></i> <span><spring:message code="soap.updatesoapoperationsendpoint.button.updateoperation"/></span></button>

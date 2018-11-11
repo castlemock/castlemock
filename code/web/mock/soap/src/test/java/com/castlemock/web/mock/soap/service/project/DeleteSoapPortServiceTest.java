@@ -74,7 +74,10 @@ public class DeleteSoapPortServiceTest {
         Mockito.when(operationRepository.findWithPortId(soapPort.getId())).thenReturn(Arrays.asList(soapOperation));
         Mockito.when(mockResponseRepository.findWithOperationId(soapOperation.getId())).thenReturn(Arrays.asList(soapMockResponse));
 
-        final DeleteSoapPortInput input = new DeleteSoapPortInput(soapProject.getId(), soapPort.getId());
+        final DeleteSoapPortInput input = DeleteSoapPortInput.builder()
+                .projectId(soapProject.getId())
+                .portId(soapPort.getId())
+                .build();
         final ServiceTask<DeleteSoapPortInput> serviceTask = new ServiceTask<DeleteSoapPortInput>(input);
         final ServiceResult<DeleteSoapPortOutput> serviceResult = service.process(serviceTask);
 

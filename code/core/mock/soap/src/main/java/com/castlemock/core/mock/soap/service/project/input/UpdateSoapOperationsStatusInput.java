@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -27,38 +29,73 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 public final class UpdateSoapOperationsStatusInput implements Input {
 
     @NotNull
-    private final String soapProjectId;
+    private final String projectId;
     @NotNull
-    private final String soapPortId;
+    private final String portId;
     @NotNull
-    private final String soapOperationId;
+    private final String operationId;
     @NotNull
-    private final SoapOperationStatus soapOperationStatus;
+    private final SoapOperationStatus operationStatus;
 
-    public UpdateSoapOperationsStatusInput(String soapProjectId,
-                                           String soapPortId,
-                                           String soapOperationId,
-                                           SoapOperationStatus soapOperationStatus) {
-        this.soapProjectId = soapProjectId;
-        this.soapPortId = soapPortId;
-        this.soapOperationId = soapOperationId;
-        this.soapOperationStatus = soapOperationStatus;
+    public UpdateSoapOperationsStatusInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.portId = Objects.requireNonNull(builder.portId);
+        this.operationId = Objects.requireNonNull(builder.operationId);
+        this.operationStatus = Objects.requireNonNull(builder.operationStatus);
     }
 
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getSoapPortId() {
-        return soapPortId;
+    public String getPortId() {
+        return portId;
     }
 
-    public String getSoapOperationId() {
-        return soapOperationId;
+    public String getOperationId() {
+        return operationId;
     }
 
-    public SoapOperationStatus getSoapOperationStatus() {
-        return soapOperationStatus;
+    public SoapOperationStatus getOperationStatus() {
+        return operationStatus;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String projectId;
+        private String portId;
+        private String operationId;
+        private SoapOperationStatus operationStatus;
+
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder portId(final String portId){
+            this.portId = portId;
+            return this;
+        }
+
+        public Builder operationId(final String operationId){
+            this.operationId = operationId;
+            return this;
+        }
+
+        public Builder operationStatus(final SoapOperationStatus operationStatus){
+            this.operationStatus = operationStatus;
+            return this;
+        }
+
+        public UpdateSoapOperationsStatusInput build(){
+            return new UpdateSoapOperationsStatusInput(this);
+        }
+    }
 }

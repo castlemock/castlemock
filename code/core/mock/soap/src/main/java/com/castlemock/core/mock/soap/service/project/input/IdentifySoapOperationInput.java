@@ -22,6 +22,8 @@ import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,9 +31,9 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 public final class IdentifySoapOperationInput implements Input {
 
     @NotNull
-    private final String soapProjectId;
+    private final String projectId;
     @NotNull
-    private final SoapOperationIdentifier soapOperationIdentifier;
+    private final SoapOperationIdentifier operationIdentifier;
     @NotNull
     private final String uri;
     @NotNull
@@ -39,24 +41,20 @@ public final class IdentifySoapOperationInput implements Input {
     @NotNull
     private final SoapVersion type;
 
-    public IdentifySoapOperationInput(final String soapProjectId,
-                                      final SoapOperationIdentifier soapOperationIdentifier,
-                                      final String uri,
-                                      final HttpMethod httpMethod,
-                                      final SoapVersion type) {
-        this.soapProjectId = soapProjectId;
-        this.soapOperationIdentifier = soapOperationIdentifier;
-        this.uri = uri;
-        this.httpMethod = httpMethod;
-        this.type = type;
+    private IdentifySoapOperationInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier);
+        this.uri = Objects.requireNonNull(builder.uri);
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
+        this.type = Objects.requireNonNull(builder.type);
     }
 
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public SoapOperationIdentifier getSoapOperationIdentifier() {
-        return soapOperationIdentifier;
+    public SoapOperationIdentifier getOperationIdentifier() {
+        return operationIdentifier;
     }
 
     public String getUri() {
@@ -69,6 +67,52 @@ public final class IdentifySoapOperationInput implements Input {
 
     public SoapVersion getType() {
         return type;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private String projectId;
+        private SoapOperationIdentifier operationIdentifier;
+        private String uri;
+        private HttpMethod httpMethod;
+        private SoapVersion type;
+
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder operationIdentifier(final SoapOperationIdentifier operationIdentifier){
+            this.operationIdentifier = operationIdentifier;
+            return this;
+        }
+
+        public Builder uri(final String uri){
+            this.uri = uri;
+            return this;
+        }
+
+        public Builder httpMethod(final HttpMethod httpMethod){
+            this.httpMethod = httpMethod;
+            return this;
+        }
+
+        public Builder type(final SoapVersion type){
+            this.type = type;
+            return this;
+        }
+
+        public IdentifySoapOperationInput build(){
+            return new IdentifySoapOperationInput(this);
+        }
     }
 
 }

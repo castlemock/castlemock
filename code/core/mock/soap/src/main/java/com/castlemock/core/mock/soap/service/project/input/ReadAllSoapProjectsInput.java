@@ -23,4 +23,23 @@ import com.castlemock.core.basis.model.Input;
  * @since 1.0
  */
 public final class ReadAllSoapProjectsInput implements Input {
+
+    private ReadAllSoapProjectsInput(final Builder builder) {
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Builder(){
+
+        }
+
+        public ReadAllSoapProjectsInput build(){
+            return new ReadAllSoapProjectsInput(this);
+        }
+    }
+
 }

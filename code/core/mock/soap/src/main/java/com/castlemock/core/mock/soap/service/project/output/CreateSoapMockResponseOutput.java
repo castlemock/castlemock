@@ -24,4 +24,23 @@ import com.castlemock.core.basis.model.Output;
  */
 public final class CreateSoapMockResponseOutput implements Output {
 
+    private CreateSoapMockResponseOutput(final Builder builder){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Builder(){
+
+        }
+
+        public CreateSoapMockResponseOutput build(){
+            return new CreateSoapMockResponseOutput(this);
+        }
+    }
+
 }

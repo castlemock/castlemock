@@ -52,9 +52,9 @@ public class SoapProjectController extends AbstractSoapViewController {
     private static final String UPDATE_STATUS = "update";
     private static final String DELETE_SOAP_PORTS = "delete";
     private static final String UPDATE_ENDPOINTS = "update-endpoint";
-    private static final String DELETE_SOAP_PORTS_COMMAND = "deleteSoapPortsCommand";
-    private static final String SOAP_PORT_MODIFIER_COMMAND = "soapPortModifierCommand";
-    private static final String UPDATE_SOAP_PORTS_ENDPOINT_COMMAND = "updateSoapPortsEndpointCommand";
+    private static final String DELETE_SOAP_PORTS_COMMAND = "command";
+    private static final String SOAP_PORT_MODIFIER_COMMAND = "command";
+    private static final String UPDATE_SOAP_PORTS_ENDPOINT_COMMAND = "command";
     private static final String UPLOAD = "upload";
     private static final String UPLOAD_OUTCOME_SUCCESS = "success";
     private static final String UPLOAD_OUTCOME_ERROR = "error";
@@ -67,9 +67,12 @@ public class SoapProjectController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
-    public ModelAndView getProject(@PathVariable final String projectId, @RequestParam(value = UPLOAD, required = false) final String upload) {
-        final ReadSoapProjectOutput readSoapProjectOutput = serviceProcessor.process(new ReadSoapProjectInput(projectId));
-        final SoapProject project = readSoapProjectOutput.getSoapProject();
+    public ModelAndView getProject(@PathVariable final String projectId,
+                                   @RequestParam(value = UPLOAD, required = false) final String upload) {
+        final ReadSoapProjectOutput readSoapProjectOutput = serviceProcessor.process(ReadSoapProjectInput.builder()
+                .projectId(projectId)
+                .build());
+        final SoapProject project = readSoapProjectOutput.getProject();
         final ModelAndView model = createPartialModelAndView(PAGE);
         model.addObject(SOAP_PROJECT, project);
         model.addObject(SOAP_OPERATION_STATUSES, getSoapOperationStatuses());
@@ -92,23 +95,32 @@ public class SoapProjectController extends AbstractSoapViewController {
      * to a specific project
      * @param projectId The id of the project that the ports belong to
      * @param action The name of the action that should be executed (delete or update).
-     * @param soapPortModifierCommand The command object that contains the list of ports that get affected by the executed action.
+     * @param command The command object that contains the list of ports that get affected by the executed action.
      * @return Redirects the user back to the main page for the project with the provided id.
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{projectId}", method = RequestMethod.POST)
-    public ModelAndView projectFunctionality(@PathVariable final String projectId, @RequestParam final String action, @ModelAttribute final SoapPortModifierCommand soapPortModifierCommand) {
+    public ModelAndView projectFunctionality(@PathVariable final String projectId,
+                                             @RequestParam final String action,
+                                             @ModelAttribute(name = "command") final SoapPortModifierCommand command) {
         LOGGER.debug("Requested SOAP project action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
-            final SoapOperationStatus soapOperationStatus = SoapOperationStatus.valueOf(soapPortModifierCommand.getSoapPortStatus());
-            for(String soapPortId : soapPortModifierCommand.getSoapPortIds()){
-                serviceProcessor.process(new UpdateSoapPortsStatusInput(projectId, soapPortId, soapOperationStatus));
+            final SoapOperationStatus soapOperationStatus = SoapOperationStatus.valueOf(command.getSoapPortStatus());
+            for(String soapPortId : command.getSoapPortIds()){
+                serviceProcessor.process(UpdateSoapPortsStatusInput.builder()
+                        .projectId(projectId)
+                        .portId(soapPortId)
+                        .operationStatus(soapOperationStatus)
+                        .build());
             }
         } else if(DELETE_SOAP_PORTS.equalsIgnoreCase(action)) {
             final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
-            for(String soapPortId : soapPortModifierCommand.getSoapPortIds()){
-                final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(projectId, soapPortId));
-                soapPorts.add(output.getSoapPort());
+            for(String soapPortId : command.getSoapPortIds()){
+                final ReadSoapPortOutput output = serviceProcessor.process(ReadSoapPortInput.builder()
+                        .projectId(projectId)
+                        .portId(soapPortId)
+                        .build());
+                soapPorts.add(output.getPort());
             }
             final ModelAndView model = createPartialModelAndView(DELETE_SOAP_PORTS_PAGE);
             model.addObject(SOAP_PROJECT_ID, projectId);
@@ -117,9 +129,12 @@ public class SoapProjectController extends AbstractSoapViewController {
             return model;
         } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
-            for(String soapPortId : soapPortModifierCommand.getSoapPortIds()){
-                final ReadSoapPortOutput output = serviceProcessor.process(new ReadSoapPortInput(projectId, soapPortId));
-                soapPorts.add(output.getSoapPort());
+            for(String soapPortId : command.getSoapPortIds()){
+                final ReadSoapPortOutput output = serviceProcessor.process(ReadSoapPortInput.builder()
+                        .projectId(projectId)
+                        .portId(soapPortId)
+                        .build());
+                soapPorts.add(output.getPort());
             }
             final ModelAndView model = createPartialModelAndView(UPDATE_SOAP_PORTS_ENDPOINT_PAGE);
             model.addObject(SOAP_PROJECT_ID, projectId);

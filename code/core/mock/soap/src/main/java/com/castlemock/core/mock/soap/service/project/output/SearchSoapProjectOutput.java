@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.validation.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -31,12 +32,32 @@ public final class SearchSoapProjectOutput implements Output {
     @NotNull
     private final List<SearchResult> searchResults;
 
-    public SearchSoapProjectOutput(List<SearchResult> searchResults) {
-        this.searchResults = searchResults;
+    private SearchSoapProjectOutput(final Builder builder) {
+        this.searchResults = Objects.requireNonNull(builder.searchResults);
     }
 
     public List<SearchResult> getSearchResults() {
         return searchResults;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private List<SearchResult> searchResults;
+
+        private Builder(){
+
+        }
+
+        public Builder searchResults(final List<SearchResult> searchResults){
+            this.searchResults = searchResults;
+            return this;
+        }
+
+        public SearchSoapProjectOutput build(){
+            return new SearchSoapProjectOutput(this);
+        }
+    }
 }

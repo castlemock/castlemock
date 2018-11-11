@@ -47,8 +47,8 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ReadSoapOperationOutput> process(final ServiceTask<ReadSoapOperationInput> serviceTask) {
         final ReadSoapOperationInput input = serviceTask.getInput();
-        final SoapOperation soapOperation = this.operationRepository.findOne(input.getSoapOperationId());
-        final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(input.getSoapOperationId());
+        final SoapOperation soapOperation = this.operationRepository.findOne(input.getOperationId());
+        final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(input.getOperationId());
         soapOperation.setMockResponses(mockResponses);
 
         if(soapOperation.getDefaultXPathMockResponseId() != null){
@@ -73,6 +73,8 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
 
 
 
-        return createServiceResult(new ReadSoapOperationOutput(soapOperation));
+        return createServiceResult(ReadSoapOperationOutput.builder()
+                .operation(soapOperation)
+                .build());
     }
 }

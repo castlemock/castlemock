@@ -64,7 +64,7 @@ public class SoapPortControllerTest extends AbstractSoapControllerTest {
 
     private static final String PAGE = "partial/mock/soap/port/soapPort.jsp";
     private static final String SOAP_OPERATIONS = "soapOperations";
-    private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_COMMAND = "updateSoapOperationsEndpointCommand";
+    private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_COMMAND = "command";
     private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_PAGE = "partial/mock/soap/operation/updateSoapOperationsEndpoint.jsp";
 
     @InjectMocks
@@ -86,7 +86,9 @@ public class SoapPortControllerTest extends AbstractSoapControllerTest {
         final List<SoapOperation> operations = new ArrayList<SoapOperation>();
         operations.add(soapOperation);
         soapPort.setOperations(operations);
-        when(serviceProcessor.process(any(ReadSoapPortInput.class))).thenReturn(new ReadSoapPortOutput(soapPort));
+        when(serviceProcessor.process(any(ReadSoapPortInput.class))).thenReturn(ReadSoapPortOutput.builder()
+                .port(soapPort)
+                .build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH);
         ResultActions result = mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -104,13 +106,13 @@ public class SoapPortControllerTest extends AbstractSoapControllerTest {
         final String portId = "portId";
         final String[] soapOperationIds = {"Operation1", "Operation2"};
 
-        final SoapOperationModifierCommand soapOperationModifierCommand = new SoapOperationModifierCommand();
-        soapOperationModifierCommand.setSoapOperationIds(soapOperationIds);
-        soapOperationModifierCommand.setSoapOperationStatus("MOCKED");
+        final SoapOperationModifierCommand command = new SoapOperationModifierCommand();
+        command.setSoapOperationIds(soapOperationIds);
+        command.setSoapOperationStatus("MOCKED");
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + PORT + SLASH + portId)
-                        .param("action", "update").flashAttr("soapOperationModifierCommand", soapOperationModifierCommand);
+                        .param("action", "update").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
@@ -135,24 +137,24 @@ public class SoapPortControllerTest extends AbstractSoapControllerTest {
         soapOperation2.setId("SoapOperation2");
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadSoapOperationInput.class)))
-                .thenReturn(new ReadSoapOperationOutput(soapOperation1))
-                .thenReturn(new ReadSoapOperationOutput(soapOperation2));
+                .thenReturn(ReadSoapOperationOutput.builder().operation(soapOperation1).build())
+                .thenReturn(ReadSoapOperationOutput.builder().operation(soapOperation2).build());
 
 
         final List<SoapOperation> operations = Arrays.asList(soapOperation1, soapOperation2);
 
 
-        final SoapOperationModifierCommand soapOperationModifierCommand = new SoapOperationModifierCommand();
-        soapOperationModifierCommand.setSoapOperationIds(soapOperationIds);
-        soapOperationModifierCommand.setSoapOperationStatus("ENABLED");
+        final SoapOperationModifierCommand command = new SoapOperationModifierCommand();
+        command.setSoapOperationIds(soapOperationIds);
+        command.setSoapOperationStatus("ENABLED");
 
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.post(SERVICE_URL + PROJECT + SLASH + projectId + SLASH + PORT + SLASH + portId)
-                        .param("action", "update-endpoint").flashAttr("soapOperationModifierCommand", soapOperationModifierCommand);
+                        .param("action", "update-endpoint").flashAttr("command", command);
 
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(5 + GLOBAL_VIEW_MODEL_COUNT))
+                .andExpect(MockMvcResultMatchers.model().size(4 + GLOBAL_VIEW_MODEL_COUNT))
                 .andExpect(MockMvcResultMatchers.forwardedUrl(INDEX))
                 .andExpect(MockMvcResultMatchers.model().attribute(PARTIAL, UPDATE_SOAP_OPERATIONS_ENDPOINT_PAGE))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PROJECT_ID, projectId))

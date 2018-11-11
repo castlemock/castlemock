@@ -80,7 +80,7 @@
                 </div>
                 <c:choose>
                     <c:when test="${soapProject.ports.size() > 0}">
-                        <form:form action="${soap_port_update_url}/" method="POST"  modelAttribute="soapPortModifierCommand">
+                        <form:form action="${soap_port_update_url}/" method="POST"  modelAttribute="command">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover sortable">
                                     <col width="5%">

@@ -20,6 +20,9 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 
+import java.util.Objects;
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.19
@@ -32,16 +35,14 @@ public final class ImportSoapResourceInput implements Input {
     @NotNull
     private final String raw;
 
-    public ImportSoapResourceInput(final String projectId,
-                                   final SoapResource resource,
-                                   final String raw) {
-        this.projectId = projectId;
-        this.resource = resource;
-        this.raw = raw;
+    private ImportSoapResourceInput(final Builder builder) {
+        this.projectId = builder.projectId;
+        this.resource = Objects.requireNonNull(builder.resource);
+        this.raw = Objects.requireNonNull(builder.raw);
     }
 
-    public String getProjectId() {
-        return projectId;
+    public Optional<String> getProjectId() {
+        return Optional.ofNullable(projectId);
     }
 
     public SoapResource getResource() {
@@ -52,4 +53,36 @@ public final class ImportSoapResourceInput implements Input {
         return raw;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String projectId;
+        private SoapResource resource;
+        private String raw;
+
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder resource(final SoapResource resource){
+            this.resource = resource;
+            return this;
+        }
+
+        public Builder raw(final String raw){
+            this.raw = raw;
+            return this;
+        }
+
+        public ImportSoapResourceInput build(){
+            return new ImportSoapResourceInput(this);
+        }
+    }
 }

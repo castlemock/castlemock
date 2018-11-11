@@ -62,7 +62,12 @@ public class CreateSoapMockResponseServiceTest {
         final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
 
 
-        final CreateSoapMockResponseInput input = new CreateSoapMockResponseInput(soapProject.getId(), soapPort.getId(), soapOperation.getId(), soapMockResponse);
+        final CreateSoapMockResponseInput input = CreateSoapMockResponseInput.builder()
+                .projectId(soapProject.getId())
+                .portId(soapPort.getId())
+                .operationId(soapOperation.getId())
+                .mockResponse(soapMockResponse)
+                .build();
         final ServiceTask<CreateSoapMockResponseInput> serviceTask = new ServiceTask<>(input);
         final ServiceResult<CreateSoapMockResponseOutput> serviceResult = service.process(serviceTask);
         final CreateSoapMockResponseOutput output = serviceResult.getOutput();

@@ -52,7 +52,12 @@ public class UpdateCurrentMockResponseSequenceIndexServiceTest {
         final String operationId = "SOAP OPERATION";
         final int responseIndex = 1;
 
-        final UpdateCurrentMockResponseSequenceIndexInput input = new UpdateCurrentMockResponseSequenceIndexInput(projectId, portId, operationId, responseIndex);
+        final UpdateCurrentMockResponseSequenceIndexInput input = UpdateCurrentMockResponseSequenceIndexInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .operationId(operationId)
+                .currentResponseSequenceIndex(responseIndex)
+                .build();
         final ServiceTask<UpdateCurrentMockResponseSequenceIndexInput> serviceTask = new ServiceTask<UpdateCurrentMockResponseSequenceIndexInput>(input);
         final ServiceResult<UpdateCurrentMockResponseSequenceIndexOutput> result = service.process(serviceTask);
 

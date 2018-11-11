@@ -40,13 +40,13 @@ public class UpdateSoapOperationsForwardedEndpointService extends AbstractSoapPr
     @Override
     public ServiceResult<UpdateSoapOperationsForwardedEndpointOutput> process(final ServiceTask<UpdateSoapOperationsForwardedEndpointInput> serviceTask) {
         final UpdateSoapOperationsForwardedEndpointInput input = serviceTask.getInput();
-        input.getSoapOperations().stream()
+        input.getOperations().stream()
                 .map(soapOperation -> this.operationRepository.findOne(soapOperation.getId()))
                 .findFirst()
                 .map(soapOperation -> {
                     soapOperation.setForwardedEndpoint(input.getForwardedEndpoint());
                     return this.operationRepository.update(soapOperation.getId(), soapOperation);
                 });
-        return createServiceResult(new UpdateSoapOperationsForwardedEndpointOutput());
+        return createServiceResult(UpdateSoapOperationsForwardedEndpointOutput.builder().build());
     }
 }

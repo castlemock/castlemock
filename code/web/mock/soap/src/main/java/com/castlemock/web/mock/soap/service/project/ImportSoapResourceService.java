@@ -26,6 +26,7 @@ import com.castlemock.core.mock.soap.service.project.output.ImportSoapResourceOu
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -45,7 +46,7 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
     @Override
     public ServiceResult<ImportSoapResourceOutput> process(final ServiceTask<ImportSoapResourceInput> serviceTask) {
         final ImportSoapResourceInput input = serviceTask.getInput();
-        final String projectId = input.getProjectId();
+        final Optional<String> projectId = input.getProjectId();
         final SoapResource soapResource = input.getResource();
         final String raw = input.getRaw();
 
@@ -57,22 +58,24 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
         }
 
         SoapResource result = null;
-        if(projectId != null){
+        if(projectId.isPresent()){
 
             if(SoapResourceType.WSDL.equals(soapResource.getType())){
                 // Remove the already existing WSDL file if a new one is being uploaded.
-                this.resourceRepository.findSoapResources(projectId, SoapResourceType.WSDL)
+                this.resourceRepository.findSoapResources(projectId.get(), SoapResourceType.WSDL)
                         .stream()
                         .map(SoapResource::getId)
                         .forEach(this.resourceRepository::deleteWithProjectId);
             }
-            soapResource.setProjectId(projectId);
+            soapResource.setProjectId(projectId.get());
             result = this.resourceRepository.saveSoapResource(soapResource, raw);
         } else {
             result = this.resourceRepository.saveSoapResource(soapResource, raw);
         }
 
 
-        return createServiceResult(new ImportSoapResourceOutput(result));
+        return createServiceResult(ImportSoapResourceOutput.builder()
+                .resource(result)
+                .build());
     }
 }

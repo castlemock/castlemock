@@ -19,16 +19,12 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsStatusInput;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsForwardedEndpointInput;
-import com.castlemock.core.mock.soap.service.project.output.UpdateSoapOperationsStatusOutput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapPortsForwardedEndpointOutput;
 import com.castlemock.web.mock.soap.model.project.SoapOperationGenerator;
 import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
 import com.castlemock.web.mock.soap.repository.project.SoapOperationRepository;
-import com.castlemock.web.mock.soap.repository.project.SoapPortRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -61,7 +57,11 @@ public class UpdateSoapPortsForwardedEndpointServiceTest {
         final SoapOperation operation = SoapOperationGenerator.generateSoapOperation();
         final String projectId = "SOAP PROJECT";
 
-        final UpdateSoapPortsForwardedEndpointInput input = new UpdateSoapPortsForwardedEndpointInput(projectId, Arrays.asList(port), "Forward Endpoint");
+        final UpdateSoapPortsForwardedEndpointInput input = UpdateSoapPortsForwardedEndpointInput.builder()
+                .projectId(projectId)
+                .ports(Arrays.asList(port))
+                .forwardedEndpoint("Forward Endpoint")
+                .build();
         final ServiceTask<UpdateSoapPortsForwardedEndpointInput> serviceTask = new ServiceTask<UpdateSoapPortsForwardedEndpointInput>(input);
 
         Mockito.when(operationRepository.findWithPortId(port.getId())).thenReturn(Arrays.asList(operation));

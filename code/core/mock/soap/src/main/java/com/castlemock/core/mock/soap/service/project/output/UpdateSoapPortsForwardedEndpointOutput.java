@@ -24,4 +24,22 @@ import com.castlemock.core.basis.model.Output;
  */
 public final class UpdateSoapPortsForwardedEndpointOutput implements Output {
 
+    private UpdateSoapPortsForwardedEndpointOutput(final Builder builder){
+
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Builder(){
+
+        }
+
+        public UpdateSoapPortsForwardedEndpointOutput build(){
+            return new UpdateSoapPortsForwardedEndpointOutput(this);
+        }
+    }
 }

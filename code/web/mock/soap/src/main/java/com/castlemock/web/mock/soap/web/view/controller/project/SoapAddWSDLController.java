@@ -87,7 +87,7 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
 
         try {
             serviceProcessor.process(CreateSoapPortsInput.builder()
-                    .soapProjectId(projectId)
+                    .projectId(projectId)
                     .files(uploadedFiles)
                     .includeImports(uploadForm.isIncludeImports())
                     .generateResponse(uploadForm.isGenerateResponse())

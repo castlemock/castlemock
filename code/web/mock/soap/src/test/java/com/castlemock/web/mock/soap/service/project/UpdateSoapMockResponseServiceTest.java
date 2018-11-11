@@ -55,7 +55,13 @@ public class UpdateSoapMockResponseServiceTest {
         final String operation = "OperationId";
         final SoapMockResponse mockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
 
-        final UpdateSoapMockResponseInput input = new UpdateSoapMockResponseInput(projectId, portId, operation, mockResponse.getId(), mockResponse);
+        final UpdateSoapMockResponseInput input = UpdateSoapMockResponseInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .operationId(operation)
+                .mockResponseId(mockResponse.getId())
+                .mockResponse(mockResponse)
+                .build();
         final ServiceTask<UpdateSoapMockResponseInput> serviceTask = new ServiceTask<UpdateSoapMockResponseInput>(input);
 
 
@@ -64,7 +70,7 @@ public class UpdateSoapMockResponseServiceTest {
 
         final ServiceResult<UpdateSoapMockResponseOutput> result = service.process(serviceTask);
         final UpdateSoapMockResponseOutput output = result.getOutput();
-        final SoapMockResponse returnedSoapMockResponse = output.getUpdatedSoapMockResponse();
+        final SoapMockResponse returnedSoapMockResponse = output.getMockResponse();
 
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findOne(mockResponse.getId());
         Mockito.verify(mockResponseRepository, Mockito.times(1)).update(mockResponse.getId(), mockResponse);

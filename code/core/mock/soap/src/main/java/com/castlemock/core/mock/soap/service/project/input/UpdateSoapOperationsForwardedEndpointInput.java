@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -29,35 +30,75 @@ import java.util.List;
 public final class UpdateSoapOperationsForwardedEndpointInput implements Input {
 
     @NotNull
-    private final String soapProjectId;
+    private final String projectId;
     @NotNull
-    private final String soapPortId;
+    private final String portId;
     @NotNull
-    private final List<SoapOperation> soapOperations;
+    private final List<SoapOperation> operations;
     @NotNull
     private final String forwardedEndpoint;
 
-    public UpdateSoapOperationsForwardedEndpointInput(String soapProjectId, String soapPortId, List<SoapOperation> soapOperations, String forwardedEndpoint) {
-        this.soapProjectId = soapProjectId;
-        this.soapPortId = soapPortId;
-        this.soapOperations = soapOperations;
-        this.forwardedEndpoint = forwardedEndpoint;
+    public UpdateSoapOperationsForwardedEndpointInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.portId = Objects.requireNonNull(builder.portId);
+        this.operations = Objects.requireNonNull(builder.operations);
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
     }
 
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getSoapPortId() {
-        return soapPortId;
+    public String getPortId() {
+        return portId;
     }
 
-    public List<SoapOperation> getSoapOperations() {
-        return soapOperations;
+    public List<SoapOperation> getOperations() {
+        return operations;
     }
 
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
+    }
+
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String projectId;
+        private String portId;
+        private List<SoapOperation> operations;
+        private String forwardedEndpoint;
+
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder portId(final String portId){
+            this.portId = portId;
+            return this;
+        }
+
+        public Builder operations(final List<SoapOperation> operations){
+            this.operations = operations;
+            return this;
+        }
+
+        public Builder forwardedEndpoint(final String forwardedEndpoint){
+            this.forwardedEndpoint = forwardedEndpoint;
+            return this;
+        }
+
+        public UpdateSoapOperationsForwardedEndpointInput build(){
+            return new UpdateSoapOperationsForwardedEndpointInput(this);
+        }
     }
 
 }

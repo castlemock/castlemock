@@ -29,7 +29,7 @@ import java.util.List;
 public final class CreateSoapPortsInput implements Input {
 
     @NotNull
-    private final String soapProjectId;
+    private final String projectId;
     @NotNull
     private final boolean generateResponse;
 
@@ -40,15 +40,15 @@ public final class CreateSoapPortsInput implements Input {
 
 
     private CreateSoapPortsInput(final Builder builder) {
-        this.soapProjectId = builder.soapProjectId;
+        this.projectId = builder.projectId;
         this.includeImports = builder.includeImports;
         this.generateResponse = builder.generateResponse;
         this.files = builder.files;
         this.location = builder.location;
     }
 
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
     public boolean isGenerateResponse() {
@@ -73,14 +73,18 @@ public final class CreateSoapPortsInput implements Input {
 
     public static final class Builder {
 
-        private String soapProjectId;
+        private String projectId;
         private boolean includeImports;
         private boolean generateResponse;
         private List<File> files;
         private String location;
 
-        public Builder soapProjectId(final String soapProjectId){
-            this.soapProjectId = soapProjectId;
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 

@@ -43,7 +43,11 @@ public class ReadSoapOperationServiceTest {
         final String projectId = "SOAP PROJECT";
         final String portId = "SOAP PORT";
 
-        final ReadSoapOperationInput input = new ReadSoapOperationInput(projectId, portId, operation.getId());
+        final ReadSoapOperationInput input = ReadSoapOperationInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .operationId(operation.getId())
+                .build();
         final ServiceTask<ReadSoapOperationInput> serviceTask = new ServiceTask<ReadSoapOperationInput>(input);
 
         Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(operation);
@@ -54,7 +58,7 @@ public class ReadSoapOperationServiceTest {
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithOperationId(operation.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(operation, result.getOutput().getSoapOperation());
+        Assert.assertEquals(operation, result.getOutput().getOperation());
         Assert.assertEquals(operation.getDefaultXPathResponseName(), null);
     }
 
@@ -67,7 +71,11 @@ public class ReadSoapOperationServiceTest {
 
         operation.setDefaultXPathMockResponseId(mockResponse.getId());
 
-        final ReadSoapOperationInput input = new ReadSoapOperationInput(projectId, portId, operation.getId());
+        final ReadSoapOperationInput input = ReadSoapOperationInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .operationId(operation.getId())
+                .build();
         final ServiceTask<ReadSoapOperationInput> serviceTask = new ServiceTask<ReadSoapOperationInput>(input);
 
         Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(operation);
@@ -78,7 +86,7 @@ public class ReadSoapOperationServiceTest {
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithOperationId(operation.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(operation, result.getOutput().getSoapOperation());
+        Assert.assertEquals(operation, result.getOutput().getOperation());
         Assert.assertEquals(mockResponse.getName(), operation.getDefaultXPathResponseName());
     }
 

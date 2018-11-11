@@ -70,10 +70,13 @@ public class SoapResourceControllerTest extends AbstractSoapControllerTest {
         final String resourceId = "ResourceId";
         final SoapResource soapResource = new SoapResource();
         soapResource.setName("SOAP resource name");
-        final ReadSoapResourceOutput readSoapResourceOutput = new ReadSoapResourceOutput(soapResource);
+        final ReadSoapResourceOutput readSoapResourceOutput = ReadSoapResourceOutput.builder()
+                .resource(soapResource).build();
 
         final String resource = "Resource";
-        final LoadSoapResourceOutput loadSoapResourceOutput = new LoadSoapResourceOutput(resource);
+        final LoadSoapResourceOutput loadSoapResourceOutput = LoadSoapResourceOutput.builder()
+                .resource(resource)
+                .build();
 
 
         when(serviceProcessor.process(isA(ReadSoapResourceInput.class))).thenReturn(readSoapResourceOutput);

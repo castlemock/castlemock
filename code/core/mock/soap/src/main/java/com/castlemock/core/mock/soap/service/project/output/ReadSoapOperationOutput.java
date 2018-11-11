@@ -19,20 +19,42 @@ package com.castlemock.core.mock.soap.service.project.output;
 import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 public final class ReadSoapOperationOutput implements Output{
 
-    private final SoapOperation soapOperation;
+    private final SoapOperation operation;
 
-    public ReadSoapOperationOutput(SoapOperation soapOperation) {
-        this.soapOperation = soapOperation;
+    private ReadSoapOperationOutput(final Builder builder) {
+        this.operation = Objects.requireNonNull(builder.operation);
     }
 
-    public SoapOperation getSoapOperation() {
-        return soapOperation;
+    public SoapOperation getOperation() {
+        return operation;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private SoapOperation operation;
+
+        private Builder(){
+
+        }
+
+        public Builder operation(final SoapOperation operation){
+            this.operation = operation;
+            return this;
+        }
+
+        public ReadSoapOperationOutput build(){
+            return new ReadSoapOperationOutput(this);
+        }
+    }
 }

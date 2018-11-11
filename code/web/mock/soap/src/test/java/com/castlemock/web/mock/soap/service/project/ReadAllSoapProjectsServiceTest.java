@@ -36,7 +36,7 @@ public class ReadAllSoapProjectsServiceTest {
         final SoapProject project = SoapProjectGenerator.generateSoapProject();
         final List<SoapProject> projects = Arrays.asList(project);
 
-        final ReadAllSoapProjectsInput input = new ReadAllSoapProjectsInput();
+        final ReadAllSoapProjectsInput input = ReadAllSoapProjectsInput.builder().build();
         final ServiceTask<ReadAllSoapProjectsInput> serviceTask = new ServiceTask<ReadAllSoapProjectsInput>(input);
 
         Mockito.when(repository.findAll()).thenReturn(projects);
@@ -45,7 +45,7 @@ public class ReadAllSoapProjectsServiceTest {
         Mockito.verify(repository, Mockito.times(1)).findAll();
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(projects, result.getOutput().getSoapProjects());
+        Assert.assertEquals(projects, result.getOutput().getProjects());
     }
 
 }

@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -29,28 +30,60 @@ import java.util.List;
 public final class UpdateSoapPortsForwardedEndpointInput implements Input {
 
     @NotNull
-    private final String soapProjectId;
+    private final String projectId;
     @NotNull
-    private final List<SoapPort> soapPorts;
+    private final List<SoapPort> ports;
     @NotNull
     private final String forwardedEndpoint;
 
-    public UpdateSoapPortsForwardedEndpointInput(String soapProjectId, List<SoapPort> soapPorts, String forwardedEndpoint) {
-        this.soapProjectId = soapProjectId;
-        this.soapPorts = soapPorts;
-        this.forwardedEndpoint = forwardedEndpoint;
+    public UpdateSoapPortsForwardedEndpointInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.ports = Objects.requireNonNull(builder.ports);
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
     }
 
-    public String getSoapProjectId() {
-        return soapProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public List<SoapPort> getSoapPorts() {
-        return soapPorts;
+    public List<SoapPort> getPorts() {
+        return ports;
     }
 
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String projectId;
+        private List<SoapPort> ports;
+        private String forwardedEndpoint;
+
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder ports(final List<SoapPort> ports){
+            this.ports = ports;
+            return this;
+        }
+
+        public Builder forwardedEndpoint(final String forwardedEndpoint){
+            this.forwardedEndpoint = forwardedEndpoint;
+            return this;
+        }
+
+        public UpdateSoapPortsForwardedEndpointInput build(){
+            return new UpdateSoapPortsForwardedEndpointInput(this);
+        }
+    }
 }

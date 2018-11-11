@@ -40,7 +40,9 @@ public class LoadSoapResourceService extends AbstractSoapProjectService implemen
     @Override
     public ServiceResult<LoadSoapResourceOutput> process(final ServiceTask<LoadSoapResourceInput> serviceTask) {
         final LoadSoapResourceInput input = serviceTask.getInput();
-        final String resource = this.resourceRepository.loadSoapResource(input.getSoapResourceId());
-        return createServiceResult(new LoadSoapResourceOutput(resource));
+        final String resource = this.resourceRepository.loadSoapResource(input.getResourceId());
+        return createServiceResult(LoadSoapResourceOutput.builder()
+                .resource(resource)
+                .build());
     }
 }

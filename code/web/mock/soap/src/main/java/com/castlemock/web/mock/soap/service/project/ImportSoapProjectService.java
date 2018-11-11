@@ -124,6 +124,8 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
             }
         }
 
-        return createServiceResult(new ImportSoapProjectOutput(project));
+        return createServiceResult(ImportSoapProjectOutput.builder()
+                .project(project)
+                .build());
     }
 }

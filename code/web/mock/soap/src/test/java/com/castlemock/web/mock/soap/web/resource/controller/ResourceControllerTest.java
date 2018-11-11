@@ -57,7 +57,9 @@ public class ResourceControllerTest extends AbstractControllerTest {
     @Test
     public void getResource() throws Exception {
         final String wsdl = "Loaded resource";
-        when(serviceProcessor.process(any(Input.class))).thenReturn(new LoadSoapResourceOutput(wsdl));
+        when(serviceProcessor.process(any(Input.class))).thenReturn(LoadSoapResourceOutput.builder()
+                .resource(wsdl)
+                .build());
         final MockHttpServletRequestBuilder message =
                 MockMvcRequestBuilders.get("/resource/soap/project/ProjectId1/resource/wsdl.wsdl");
 

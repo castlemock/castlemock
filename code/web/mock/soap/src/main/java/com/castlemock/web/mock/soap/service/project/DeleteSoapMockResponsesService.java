@@ -44,6 +44,6 @@ public class DeleteSoapMockResponsesService extends AbstractSoapProjectService i
         input.getMockResponses().stream()
                 .map(SoapMockResponse::getId)
                 .forEach(this::deleteMockResponse);
-        return createServiceResult(new DeleteSoapMockResponsesOutput());
+        return createServiceResult(DeleteSoapMockResponsesOutput.builder().build());
     }
 }

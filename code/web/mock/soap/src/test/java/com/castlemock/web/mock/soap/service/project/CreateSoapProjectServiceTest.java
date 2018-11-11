@@ -55,11 +55,13 @@ public class CreateSoapProjectServiceTest {
 
         Mockito.when(repository.save(Mockito.any(SoapProject.class))).thenReturn(soapProject);
 
-        final CreateSoapProjectInput input = new CreateSoapProjectInput(soapProject);
+        final CreateSoapProjectInput input = CreateSoapProjectInput.builder()
+                .project(soapProject)
+                .build();
         final ServiceTask<CreateSoapProjectInput> serviceTask = new ServiceTask<CreateSoapProjectInput>(input);
         final ServiceResult<CreateSoapProjectOutput> serviceResult = service.process(serviceTask);
         final CreateSoapProjectOutput output = serviceResult.getOutput();
-        final SoapProject returnedSoapProject = output.getSavedSoapProject();
+        final SoapProject returnedSoapProject = output.getProject();
 
         Assert.assertEquals(soapProject.getName(), returnedSoapProject.getName());
         Assert.assertEquals(soapProject.getDescription(), returnedSoapProject.getDescription());

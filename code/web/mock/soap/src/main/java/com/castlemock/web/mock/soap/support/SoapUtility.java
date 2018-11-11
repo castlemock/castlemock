@@ -50,7 +50,8 @@ public class SoapUtility {
      * @param namespace The namespace of the address
      * @return The SOAP port address
      */
-    public static Optional<String> extractSoapAddress(Element portElement, String namespace){
+    public static Optional<String> extractSoapAddress(final Element portElement,
+                                                      final String namespace){
         return DocumentUtility.getElements(portElement, namespace, ADDRESS_NAMESPACE).stream()
                 .map(element -> element.getAttribute(LOCATION_NAMESPACE))
                 .filter(Objects::nonNull)
@@ -175,8 +176,8 @@ public class SoapUtility {
             final InputSource inputSource = new InputSource(new StringReader(body));
             final Document document = documentBuilder.parse(inputSource);
 
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            NodeList evaluate = (NodeList) xPath.compile(xpathExpr).evaluate(document, XPathConstants.NODESET);
+            final XPath xPath = XPathFactory.newInstance().newXPath();
+            final NodeList evaluate = (NodeList) xPath.compile(xpathExpr).evaluate(document, XPathConstants.NODESET);
             return evaluate.getLength() > 0;
 
         } catch (Exception exception) {

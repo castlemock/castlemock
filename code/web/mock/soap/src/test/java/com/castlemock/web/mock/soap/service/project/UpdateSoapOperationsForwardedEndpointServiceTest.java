@@ -56,7 +56,13 @@ public class UpdateSoapOperationsForwardedEndpointServiceTest {
         final String projectId = "SOAP PROJECT";
         final String portId = "SOAP PORT";
 
-        final UpdateSoapOperationsForwardedEndpointInput input = new UpdateSoapOperationsForwardedEndpointInput(projectId, portId, Arrays.asList(operation), "Forward Endpoint");
+        final UpdateSoapOperationsForwardedEndpointInput input = UpdateSoapOperationsForwardedEndpointInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .operations(Arrays.asList(operation))
+                .forwardedEndpoint("Forward Endpoint")
+                .build();
+
         final ServiceTask<UpdateSoapOperationsForwardedEndpointInput> serviceTask = new ServiceTask<UpdateSoapOperationsForwardedEndpointInput>(input);
 
         Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(operation);
