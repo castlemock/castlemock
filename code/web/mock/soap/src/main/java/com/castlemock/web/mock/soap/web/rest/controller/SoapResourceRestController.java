@@ -39,13 +39,13 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("api/rest/soap")
-@Api(value="SOAP", description="REST Operations for Castle Mock SOAP", tags = {"SOAP"})
-public class SoapRestController extends AbstractRestController {
+@Api(value="SOAP", description="REST Operations for Castle Mock SOAP", tags = {"SOAP - Resource"})
+public class SoapResourceRestController extends AbstractRestController {
 
     @Autowired
     private FileManager fileManager;
 
-    private static final Logger LOGGER = Logger.getLogger(SoapRestController.class);
+    private static final Logger LOGGER = Logger.getLogger(SoapResourceRestController.class);
 
     @ApiOperation(value = "Import resource", notes = "The service will upload a SOAP resource. " +
             "Either the project id or the resource id is required. Required authorization: Modifier or Admin.",
