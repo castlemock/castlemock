@@ -113,7 +113,11 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 String parameterName = parameterNames.nextElement();
                 if(parameterName.equalsIgnoreCase("wsdl")){
                     final String wsdl = getWsdl(projectId);
-                    return new ResponseEntity<String>(wsdl, HttpStatus.OK);
+
+                    final HttpHeaders responseHeaders = new HttpHeaders();
+                    responseHeaders.put(CONTENT_TYPE, ImmutableList.of("text/plain; " + DEFAULT_CHAR_SET));
+
+                    return new ResponseEntity<String>(wsdl, responseHeaders, HttpStatus.OK);
                 }
             }
 
