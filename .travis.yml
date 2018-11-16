@@ -15,9 +15,9 @@ deploy:
   draft: true
   file: code/web/war/build/libs/castlemock.war
   skip_cleanup: true
-  name: develop
-  tag_name: develop
+  name: master
+  tag_name: master
   file_glob: true
   overwrite: true
   on:
-    branch: develop
+    branch: master
