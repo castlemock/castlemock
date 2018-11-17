@@ -4,7 +4,6 @@ jdk:
   - oraclejdk8
   - oraclejdk9
   - openjdk10
-  - openjdk11
 
 after_success:
   - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
@@ -44,6 +43,16 @@ deploy:
   local_dir: code/web/war/build/libs
   skip_cleanup: true
   upload-dir: package/war/daily/latest
+  on:
+    branch: master
+    jdk: openjdk10
+
+deploy:
+  provider: bintray
+  file: code/web/war/build/libs/castlemock.war
+  user: $BINTRAY_USER
+  key: $BINTRAY_API_KEY
+  skip_cleanup: true
   on:
     branch: master
     jdk: openjdk10
