@@ -2,7 +2,7 @@
     "package": {
         "name": "castlemock",
         "repo": "distribution",
-        "subject": "Castle Mock - Latest build",
+        "subject": "castlemock",
         "desc": "Latest build of Castle Mock",
         "website_url": "https://castlemock.com",
         "issue_tracker_url": "https://github.com/castlemock/castlemock/issues",
