@@ -10,16 +10,6 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 deploy:
-  provider: bintray
-  file: .bintray
-  user: $BINTRAY_USER
-  key: $BINTRAY_API_KEY
-  skip_cleanup: true
-  on:
-    branch: master
-    jdk: openjdk10
-
-deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
   draft: false
