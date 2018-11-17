@@ -16,7 +16,19 @@ deploy:
   bucket: "castlemock"
   local_dir: code/web/war/build/libs
   skip_cleanup: true
-  upload-dir: war/latest
+  upload-dir: package/war/latest
   on:
     branch: master
-    jdk: openjdk10
+    jdk: oraclejdk8
+
+deploy:
+  provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  bucket: "castlemock"
+  local_dir: code/web/war/build/libs
+  skip_cleanup: true
+  upload-dir: package/war/$TRAVIS_TAG
+  on:
+    tags: true
+    jdk: oraclejdk8
