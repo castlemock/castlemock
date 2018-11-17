@@ -8,7 +8,7 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.7'
+    gradleVersion = '4.10.2'
 }
 
 allprojects {
@@ -133,7 +133,9 @@ project(':code:core:basis') {
     dependencies {
         compile(project(":code:core:expression"))
         compile(group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion)
-
+        compile(group: 'javax.xml.bind', name: 'jaxb-api', version: jaxbVersion)
+        compile(group: 'com.sun.xml.bind', name: 'jaxb-core', version: jaxbVersion)
+        compile(group: 'com.sun.xml.bind', name: 'jaxb-impl', version: jaxbVersion)
     }
 
 }
