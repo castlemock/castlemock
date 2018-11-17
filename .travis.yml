@@ -4,6 +4,7 @@ jdk:
   - oraclejdk8
   - oraclejdk9
   - openjdk10
+  - openjdk11
 
 after_success:
   - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
