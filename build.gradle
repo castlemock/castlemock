@@ -85,6 +85,10 @@ subprojects {
     }
 }
 
+jacoco {
+    toolVersion = "0.8.2"
+}
+
 task codeCoverageReport(type: JacocoReport) {
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 
