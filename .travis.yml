@@ -49,7 +49,7 @@ deploy:
 
 deploy:
   provider: bintray
-  file: code/web/war/build/libs/castlemock.war
+  file: .bintray
   user: $BINTRAY_USER
   key: $BINTRAY_API_KEY
   skip_cleanup: true

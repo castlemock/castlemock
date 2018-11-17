@@ -1,0 +1,25 @@
+{
+    "package": {
+        "name": "Castle Mock",
+        "repo": "distribution",
+        "subject": "Castle Mock - Latest build",
+        "desc": "Latest build of Castle Mock",
+        "website_url": "https://castlemock.com",
+        "issue_tracker_url": "https://github.com/castlemock/castlemock/issues",
+        "vcs_url": "https://github.com/castlemock/castlemock.git",
+        "licenses": ["APACHE-2.0"],
+        "labels": ["mock", "soap", "rest"],
+        "public_download_numbers": false,
+        "public_stats": false
+    },
+
+    "version": {
+        "name": "latest"
+    },
+
+    "files":
+        [
+        {"includePattern": "code/web/war/build/libs/(.*)", "uploadPattern": "package/war/daily/latest/$1"}
+        ],
+    "publish": true
+}
