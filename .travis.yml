@@ -10,44 +10,6 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 deploy:
-  provider: s3
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_ACCESS_KEY
-  bucket: "castlemock"
-  local_dir: code/web/war/build/libs
-  skip_cleanup: true
-  upload-dir: package/war/stable/latest
-  on:
-    branch: master
-    tags: true
-    jdk: openjdk10
-
-deploy:
-  provider: s3
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_ACCESS_KEY
-  bucket: "castlemock"
-  local_dir: code/web/war/build/libs
-  skip_cleanup: true
-  upload-dir: package/war/stable/$TRAVIS_TAG
-  on:
-    branch: master
-    tags: true
-    jdk: openjdk10
-
-deploy:
-  provider: s3
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_ACCESS_KEY
-  bucket: "castlemock"
-  local_dir: code/web/war/build/libs
-  skip_cleanup: true
-  upload-dir: package/war/daily/latest
-  on:
-    branch: master
-    jdk: openjdk10
-
-deploy:
   provider: bintray
   file: .bintray
   user: $BINTRAY_USER
@@ -55,4 +17,25 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
+    jdk: openjdk10
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_OAUTH_TOKEN
+  draft: false
+  file: code/web/war/build/libs/castlemock.war
+  skip_cleanup: true
+  name: "Castle Mock v" $TRAVIS_TAG
+  tag_name: $TRAVIS_TAG
+  on:
+    branch: master
+    tags: true
+    jdk: openjdk10
+
+deploy:
+  provider: script
+  script: bash docker-upgrade.sh $TRAVIS_TAG
+  on:
+    branch: master
+    tags: true
     jdk: openjdk10
