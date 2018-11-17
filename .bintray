@@ -1,6 +1,6 @@
 {
     "package": {
-        "name": "Castle Mock",
+        "name": "castlemock",
         "repo": "distribution",
         "subject": "Castle Mock - Latest build",
         "desc": "Latest build of Castle Mock",
