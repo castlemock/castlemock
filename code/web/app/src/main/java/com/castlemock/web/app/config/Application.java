@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.war.config;
+package com.castlemock.web.app.config;
 
 import com.castlemock.core.basis.model.LegacyRepository;
 import com.castlemock.core.basis.model.ServiceFacade;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.war.config;
+package com.castlemock.web.app.config;
 
 import com.castlemock.web.basis.web.AbstractController;
 import org.apache.log4j.Logger;

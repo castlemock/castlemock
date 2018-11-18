@@ -7,4 +7,6 @@ include 'code:core:expression',
         'code:web:mock:rest',
         'code:web:mock:soap',
         'code:web:mock:graphql',
+        'code:web:app',
+        'code:web:jar',
         'code:web:war'

@@ -14,22 +14,32 @@
  * limitations under the License.
  */
 
-package com.castlemock.war.config;
+package com.castlemock.web.app.config;
 
+import com.castlemock.web.basis.repository.token.SessionTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * The class {@link MockSecurityConfig} provides the configuration for security regarding the mock services.
+ * The class {@link WebSecurityConfig} provides the configuration for the web interface.
  *
  * @author Karl Dahlgren
  * @since 1.25
  */
 @Configuration
-@Order(1)
-public class MockSecurityConfig extends WebSecurityConfigurerAdapter {
+@Order(3)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    @Qualifier("tokenRepository")
+    private SessionTokenRepository tokenRepository;
+    @Value(value = "${token.validity.seconds}")
+    private Integer tokenValiditySeconds;
 
     /**
      * The method configure is responsible for the security configuration.
@@ -40,13 +50,22 @@ public class MockSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .antMatcher("/mock/**")
-                    .authorizeRequests()
-                    .anyRequest()
-                    .permitAll()
+                .authorizeRequests()
+                    .antMatchers("/web/**")
+                    .authenticated()
                     .and()
-                .csrf()
-                    .disable();
+                .formLogin()
+                    .loginPage("/login").failureUrl("/login?error")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .and()
+                .logout()
+                    .logoutSuccessUrl("/login?logout")
+                    .and()
+                .csrf().and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(tokenValiditySeconds)
+                .and().exceptionHandling().accessDeniedPage("/forbidden");
+
+        httpSecurity.headers().cacheControl().disable();
     }
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.war.config;
+package com.castlemock.web.app.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

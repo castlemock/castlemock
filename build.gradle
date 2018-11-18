@@ -276,31 +276,10 @@ project(':code:web:mock:soap') {
     }
 }
 
-project(':code:web:war') {
-    description = "Castle Mock web: WAR"
+project(':code:web:app') {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'war'
     group = "com.castlemock.web"
-
-    archivesBaseName = "${it.group}-${it.name}"
-
-    bootWar {
-        archiveName = 'castlemock.war'
-        baseName = 'castlemock'
-        mainClassName = "com.castlemock.war.config.Application"
-        rootSpec.eachFile {
-            if (it.name == 'application.properties') {
-                ant.replace(file: it.file, token: "\${project.version}", value: version)
-            }
-        }
-        from('../../../') {
-            include 'LICENSE-3RD-PARTY'
-            include 'LICENSE'
-            include 'AUTHORS'
-        }
-    }
-
 
     dependencies {
         compile(project(":code:web:basis"))
@@ -313,6 +292,67 @@ project(':code:web:war') {
         compile(group: 'javax.servlet.jsp', name: 'jsp-api', 'version': servletJspVersion)
         compile(group: 'javax.servlet', name: 'jstl', 'version': jstlVersion)
         compile(group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', 'version': jacksonVersion)
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+project(':code:web:jar') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    description = "Castle Mock web: JAR"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    bootJar {
+        archiveName = 'castlemock.jar'
+        baseName = 'castlemock'
+        mainClassName = "com.castlemock.web.jar.config.JarApplication"
+        rootSpec.eachFile {
+            if (it.name == 'application.properties') {
+                ant.replace(file: it.file, token: "\${project.version}", value: version)
+            }
+        }
+        from('../../../') {
+            include 'LICENSE-3RD-PARTY'
+            include 'LICENSE'
+            include 'AUTHORS'
+        }
+    }
+
+    dependencies {
+        compile(project(":code:web:app"))
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+project(':code:web:war') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'war'
+    group = "com.castlemock.web"
+    description = "Castle Mock web: WAR"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    bootWar {
+        archiveName = 'castlemock.war'
+        baseName = 'castlemock'
+        mainClassName = "com.castlemock.web.war.config.WarApplication"
+        rootSpec.eachFile {
+            if (it.name == 'application.properties') {
+                ant.replace(file: it.file, token: "\${project.version}", value: version)
+            }
+        }
+        from('../../../') {
+            include 'LICENSE-3RD-PARTY'
+            include 'LICENSE'
+            include 'AUTHORS'
+        }
+    }
+
+    dependencies {
+        compile(project(":code:web:app"))
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
     }
 }
