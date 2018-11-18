@@ -8,6 +8,7 @@ import org.springframework.context.annotation.PropertySource;
         "classpath:file-repository.properties",
         "classpath:spring.properties",
         "classpath:swagger.properties",
+        "classpath:version.properties",
 })
 public class PropertyConfig {
 }
