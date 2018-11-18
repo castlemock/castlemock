@@ -188,14 +188,12 @@ project(':code:web:basis') {
     bootJar.enabled = false
     jar.enabled = true
 
-    configurations {
-        providedRuntime
-    }
-
     dependencies {
         compile(project(":code:core:basis"))
-        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
-        providedRuntime(group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat')
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web') {
+            exclude(group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat')
+        }
+        compile(group: 'javax.servlet', name: 'javax.servlet-api', 'version': servletApiVersion)
         compile(group: 'org.springframework', name: 'spring-tx', version: springFrameworkVersion)
         compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security')
         compile(group: 'org.springframework.security', name: 'spring-security-taglibs', version: springSecurityVersion)
@@ -276,19 +274,63 @@ project(':code:web:mock:soap') {
     }
 }
 
-project(':code:web:war') {
-    description = "Castle Mock web: WAR"
+project(':code:app') {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'war'
-    group = "com.castlemock.web"
+    group = "com.castlemock.app"
+
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:web:basis"))
+        compile(project(":code:web:mock:rest"))
+        compile(project(":code:web:mock:soap"))
+        compile(project(":code:web:mock:graphql"))
+
+        compile(group: 'javax.servlet', name: 'javax.servlet-api', 'version': servletApiVersion)
+        compile(group: 'javax.servlet.jsp', name: 'jsp-api', 'version': servletJspVersion)
+        compile(group: 'javax.servlet', name: 'jstl', 'version': jstlVersion)
+        compile(group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', 'version': jacksonVersion)
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+
+project(':code:deploy:tomcat:common') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    group = "com.castlemock.deploy.tomcat"
+
+    description = "Castle Mock: Tomcat Common"
+
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+project(':code:deploy:tomcat:jar') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    group = "com.castlemock.deploy.tomcat"
+
+    description = "Castle Mock: Tomcat JAR"
 
     archivesBaseName = "${it.group}-${it.name}"
 
-    bootWar {
-        archiveName = 'castlemock.war'
+    configurations {
+        providedRuntime
+    }
+
+    bootJar {
+        archiveName = 'castlemock.jar'
         baseName = 'castlemock'
-        mainClassName = "com.castlemock.war.config.Application"
+        mainClassName = "com.castlemock.deploy.tomcat.jar.config.JarApplication"
         rootSpec.eachFile {
             if (it.name == 'application.properties') {
                 ant.replace(file: it.file, token: "\${project.version}", value: version)
@@ -301,18 +343,106 @@ project(':code:web:war') {
         }
     }
 
+    dependencies {
+        compile(project(":code:app"))
+        compile(project(":code:deploy:tomcat:common"))
+        compile(group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', 'version': tomcatEmbedVersion)
+        providedRuntime(group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat')
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+project(':code:deploy:tomcat:war') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'war'
+    group = "com.castlemock.deploy.tomcat"
+    description = "Castle Mock: Tomcat WAR"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    configurations {
+        providedRuntime
+    }
+
+    bootWar {
+        archiveName = 'castlemock.war'
+        baseName = 'castlemock'
+        mainClassName = "com.castlemock.deploy.tomcat.war.config.JarTomcatApplication"
+        rootSpec.eachFile {
+            if (it.name == 'application.properties') {
+                ant.replace(file: it.file, token: "\${project.version}", value: version)
+            }
+        }
+        from('../../../') {
+            include 'LICENSE-3RD-PARTY'
+            include 'LICENSE'
+            include 'AUTHORS'
+        }
+    }
 
     dependencies {
-        compile(project(":code:web:basis"))
-        compile(project(":code:web:mock:rest"))
-        compile(project(":code:web:mock:soap"))
-        compile(project(":code:web:mock:graphql"))
-
+        compile(project(":code:app"))
+        compile(project(":code:deploy:tomcat:common"))
         compile(group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', 'version': tomcatEmbedVersion)
-        compile(group: 'javax.servlet', name: 'javax.servlet-api', 'version': servletApiVersion)
-        compile(group: 'javax.servlet.jsp', name: 'jsp-api', 'version': servletJspVersion)
-        compile(group: 'javax.servlet', name: 'jstl', 'version': jstlVersion)
-        compile(group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', 'version': jacksonVersion)
+        providedRuntime(group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat')
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+project(':code:deploy:jetty:common') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    group = "com.castlemock.deploy.jetty"
+
+    description = "Castle Mock: Jetty Common"
+
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', 'version': tomcatEmbedVersion)
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jetty')
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web') {
+            exclude(group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat')
+        }
+    }
+}
+
+
+project(':code:deploy:jetty:jar') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    group = "com.castlemock.deploy.jetty"
+    description = "Castle Mock: Jetty JAR"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    configurations {
+        providedRuntime
+    }
+
+    bootJar {
+        archiveName = 'castlemock.jar'
+        baseName = 'castlemock'
+        mainClassName = "com.castlemock.deploy.jetty.jar.config.JarJettyApplication"
+        rootSpec.eachFile {
+            if (it.name == 'application.properties') {
+                ant.replace(file: it.file, token: "\${project.version}", value: version)
+            }
+        }
+        from('../../../') {
+            include 'LICENSE-3RD-PARTY'
+            include 'LICENSE'
+            include 'AUTHORS'
+        }
+    }
+
+    dependencies {
+        compile(project(":code:app"))
+        compile(project(":code:deploy:jetty:common"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jetty')
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
     }
 }
