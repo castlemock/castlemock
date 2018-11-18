@@ -330,7 +330,7 @@ project(':code:deploy:tomcat:jar') {
     bootJar {
         archiveName = 'castlemock.jar'
         baseName = 'castlemock'
-        mainClassName = "com.castlemock.deploy.tomcat.jar.config.JarApplication"
+        mainClassName = "com.castlemock.deploy.tomcat.jar.config.JarTomcatApplication"
         rootSpec.eachFile {
             if (it.name == 'application.properties') {
                 ant.replace(file: it.file, token: "\${project.version}", value: version)
@@ -368,7 +368,7 @@ project(':code:deploy:tomcat:war') {
     bootWar {
         archiveName = 'castlemock.war'
         baseName = 'castlemock'
-        mainClassName = "com.castlemock.deploy.tomcat.war.config.JarTomcatApplication"
+        mainClassName = "com.castlemock.deploy.tomcat.war.config.WarTomcatApplication"
         rootSpec.eachFile {
             if (it.name == 'application.properties') {
                 ant.replace(file: it.file, token: "\${project.version}", value: version)
