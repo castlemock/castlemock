@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.castlemock.deploy.tomcat.war.config;
+package com.castlemock.deploy.jetty.jar.config;
 
 import com.castlemock.app.config.*;
+import com.castlemock.deploy.jetty.common.JettyConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +29,7 @@ import org.springframework.web.WebApplicationInitializer;
 @EnableAsync
 @SpringBootApplication(scanBasePackages = "com.castlemock")
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-public class WarApplication extends Application implements WebApplicationInitializer {
+public class JarJettyApplication extends Application implements WebApplicationInitializer {
 
     /**
      * The main method for Castle Mock. The method is responsible for triggering the Spring application to
@@ -37,7 +38,7 @@ public class WarApplication extends Application implements WebApplicationInitial
      * @see org.springframework.boot.SpringApplication
      */
     public static void main(final String[] args) {
-        SpringApplication.run(WarApplication.class, args);
+        SpringApplication.run(JarJettyApplication.class, args);
     }
 
     /**
@@ -49,9 +50,8 @@ public class WarApplication extends Application implements WebApplicationInitial
      */
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
-        return application.sources(WarApplication.class, MvcConfig.class, SecurityConfig.class,
+        return application.sources(JarJettyApplication.class, MvcConfig.class, SecurityConfig.class,
                 WebSecurityConfig.class, RestSecurityConfig.class, MockSecurityConfig.class,
-                PropertyConfig.class);
+                PropertyConfig.class, JettyConfig.class);
     }
-
 }

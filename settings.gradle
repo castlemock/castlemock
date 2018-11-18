@@ -8,5 +8,8 @@ include 'code:core:expression',
         'code:web:mock:soap',
         'code:web:mock:graphql',
         'code:app',
+        'code:deploy:tomcat:common',
         'code:deploy:tomcat:jar',
-        'code:deploy:tomcat:war'
+        'code:deploy:tomcat:war',
+        'code:deploy:jetty:common',
+        'code:deploy:jetty:jar'

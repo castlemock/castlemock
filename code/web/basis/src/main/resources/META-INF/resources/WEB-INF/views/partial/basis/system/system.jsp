@@ -42,15 +42,15 @@
                 <td class="column2"><label path="javaVersion">${systemInformation.javaVendor}</label></td>
             </tr>
             <tr>
-                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.tomcatinfo"/></label></td>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.serverinfo"/></label></td>
                 <td class="column2"><label path="javaVersion">${systemInformation.tomcatInfo}</label></td>
             </tr>
             <tr>
-                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.tomcatbuilt"/></label></td>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.serverbuilt"/></label></td>
                 <td class="column2"><label path="javaVersion">${systemInformation.tomcatBuilt}</label></td>
             </tr>
             <tr>
-                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.tomcatversion"/></label></td>
+                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.serverversion"/></label></td>
                 <td class="column2"><label path="javaVersion">${systemInformation.tomcatVersion}</label></td>
             </tr>
             <tr>

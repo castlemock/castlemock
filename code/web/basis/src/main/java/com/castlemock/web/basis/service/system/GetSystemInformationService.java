@@ -22,8 +22,9 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.system.service.dto.SystemInformationDto;
 import com.castlemock.core.basis.service.system.input.GetSystemInformationInput;
 import com.castlemock.core.basis.service.system.output.GetSystemInformationOutput;
+import com.castlemock.core.basis.Environment;
 import com.castlemock.web.basis.service.configuration.AbstractConfigurationGroupService;
-import org.apache.catalina.util.ServerInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -37,6 +38,9 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
 
     @Value("${base.file.directory}")
     private String castleMockHomeDirectory;
+
+    @Autowired
+    private Environment environment;
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -52,9 +56,9 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
         systemInformation.setJavaVersion(System.getProperty("java.version"));
         systemInformation.setJavaVendor(System.getProperty("java.vendor"));
         systemInformation.setOperatingSystemName(System.getProperty("os.name"));
-        systemInformation.setTomcatBuilt(ServerInfo.getServerBuilt());
-        systemInformation.setTomcatInfo(ServerInfo.getServerInfo());
-        systemInformation.setTomcatVersion(ServerInfo.getServerNumber());
+        systemInformation.setTomcatBuilt(environment.getServerBuilt());
+        systemInformation.setTomcatInfo(environment.getServerInfo());
+        systemInformation.setTomcatVersion(environment.getServerNumber());
         systemInformation.setAvailableProcessors(Runtime.getRuntime().availableProcessors());
         systemInformation.setTotalMemory(Runtime.getRuntime().totalMemory() / 1000000); // Megabytes
         systemInformation.setMaxMemory(Runtime.getRuntime().maxMemory() / 1000000); // Megabytes

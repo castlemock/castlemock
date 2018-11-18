@@ -17,13 +17,13 @@
 package com.castlemock.web.basis.web.view.controller.project;
 
 import com.castlemock.core.basis.model.project.domain.Project;
+import com.castlemock.core.basis.Environment;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.service.project.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.view.command.project.DeleteProjectsCommand;
 import com.castlemock.web.basis.web.view.command.project.ProjectModifierCommand;
 import com.castlemock.web.basis.web.view.controller.AbstractViewController;
 import org.apache.log4j.Logger;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -70,6 +70,9 @@ public class ProjectsOverviewController extends AbstractViewController {
 
     @Autowired
     private FileManager fileManager;
+
+    @Autowired
+    private Environment environment;
 
     @Value(value = "${temp.file.directory}")
     private String tempFilesFolder;
@@ -129,7 +132,11 @@ public class ProjectsOverviewController extends AbstractViewController {
                 zipOutputStream.close();
 
                 inputStream = new FileInputStream(outputFilename);
-                IOUtils.copy(inputStream, response.getOutputStream());
+                boolean copyResult = environment.copy(inputStream, response.getOutputStream());
+
+                if(!copyResult){
+                    throw new IllegalStateException("Unable to copy the exported projects to an output stream");
+                }
 
                 response.setContentType("application/zip");
                 response.flushBuffer();

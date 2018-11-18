@@ -17,6 +17,7 @@
 package com.castlemock.deploy.tomcat.jar.config;
 
 import com.castlemock.app.config.*;
+import com.castlemock.deploy.tomcat.common.TomcatConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +29,7 @@ import org.springframework.web.WebApplicationInitializer;
 @EnableAsync
 @SpringBootApplication(scanBasePackages = "com.castlemock")
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-public class JarApplication extends Application implements WebApplicationInitializer {
+public class JarTomcatApplication extends Application implements WebApplicationInitializer {
 
     /**
      * The main method for Castle Mock. The method is responsible for triggering the Spring application to
@@ -37,7 +38,7 @@ public class JarApplication extends Application implements WebApplicationInitial
      * @see org.springframework.boot.SpringApplication
      */
     public static void main(final String[] args) {
-        SpringApplication.run(JarApplication.class, args);
+        SpringApplication.run(JarTomcatApplication.class, args);
     }
 
     /**
@@ -49,8 +50,8 @@ public class JarApplication extends Application implements WebApplicationInitial
      */
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
-        return application.sources(JarApplication.class, MvcConfig.class, SecurityConfig.class,
+        return application.sources(JarTomcatApplication.class, MvcConfig.class, SecurityConfig.class,
                 WebSecurityConfig.class, RestSecurityConfig.class, MockSecurityConfig.class,
-                PropertyConfig.class);
+                PropertyConfig.class, TomcatConfig.class);
     }
 }
