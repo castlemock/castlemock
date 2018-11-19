@@ -1,6 +1,6 @@
 web: java
 -Dserver.port=$PORT
--Dserver.mode.demo=true
--Dserver.endpoint.address=https://castlemock.herokuapp.com
--Dserver.servlet.context-path=/
+-Dserver.mode.demo=$DEMO
+-Dserver.endpoint.address=$ENDPOINT_ADDRESS
+-Dserver.servlet.context-path=$CONTEXT_PATH
 $JAVA_OPTS -jar code/deploy/tomcat/jar/build/libs/castlemock.jar
