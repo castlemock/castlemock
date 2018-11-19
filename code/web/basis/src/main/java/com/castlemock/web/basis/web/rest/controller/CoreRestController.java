@@ -22,6 +22,7 @@ import com.castlemock.web.basis.manager.FileManager;
 import io.swagger.annotations.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,7 @@ import java.io.FileReader;
 @Controller
 @RequestMapping("/api/rest/core")
 @Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class CoreRestController extends AbstractRestController {
 
     @Autowired

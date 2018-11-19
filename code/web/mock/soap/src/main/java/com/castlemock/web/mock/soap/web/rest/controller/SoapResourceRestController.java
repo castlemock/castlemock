@@ -25,6 +25,7 @@ import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import io.swagger.annotations.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("api/rest/soap")
 @Api(value="SOAP", description="REST Operations for Castle Mock SOAP", tags = {"SOAP - Resource"})
+@ConditionalOnExpression("${server.mode.demo} == false")
 public class SoapResourceRestController extends AbstractRestController {
 
     @Autowired
