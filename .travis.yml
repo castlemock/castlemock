@@ -29,3 +29,15 @@ deploy:
     branch: master
     tags: true
     jdk: openjdk10
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: $HEROKU_KEY
+    app: castlemock
+  on:
+    branch: master
+    jdk: openjdk10
+
+ notifications:
+    slack: $SLACK_KEY
