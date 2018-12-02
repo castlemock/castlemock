@@ -17,11 +17,11 @@
 package com.castlemock.web.basis.web.view.controller.configuration;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
+import com.castlemock.core.basis.model.configuration.ConfigurationGroupDtoGenerator;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.service.configuration.input.ReadAllConfigurationGroupsInput;
 import com.castlemock.core.basis.service.configuration.output.ReadAllConfigurationGroupsOutput;
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.web.basis.model.configuration.dto.ConfigurationGroupDtoGenerator;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.AbstractControllerTest;
 import org.junit.Test;

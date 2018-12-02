@@ -18,8 +18,8 @@ package com.castlemock.web.mock.graphql.service.event;
 
 
 import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
+import com.castlemock.repository.graphql.event.GraphQLEventRepository;
 import com.castlemock.web.basis.service.event.AbstractEventService;
-import com.castlemock.web.mock.graphql.repository.event.GraphQLEventRepository;
 
 /**
  * The GraphQL event service is responsible for all the functionality related to the GraphQL events.

@@ -18,10 +18,10 @@ package com.castlemock.web.basis.web.view.controller.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
 import com.castlemock.core.basis.service.user.input.CreateUserInput;
 import com.castlemock.core.basis.service.user.output.CreateUserOutput;
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.web.basis.model.user.dto.UserDtoGenerator;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.AbstractControllerTest;
 import org.junit.Test;

@@ -24,7 +24,7 @@ import com.castlemock.core.mock.soap.model.SoapExportContainer;
 import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.core.mock.soap.service.project.input.ImportSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.output.ImportSoapProjectOutput;
-import com.castlemock.web.mock.soap.legacy.repository.project.v1.SoapProjectV1LegacyRepository;
+import com.castlemock.repository.soap.file.project.legacy.SoapProjectV1LegacyRepository;
 import com.google.common.base.Strings;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

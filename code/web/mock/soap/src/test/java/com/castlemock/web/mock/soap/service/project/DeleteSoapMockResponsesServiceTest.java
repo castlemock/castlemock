@@ -21,7 +21,7 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.service.project.input.DeleteSoapMockResponsesInput;
 import com.castlemock.core.mock.soap.service.project.output.DeleteSoapMockResponsesOutput;
-import com.castlemock.web.mock.soap.repository.project.SoapMockResponseRepository;
+import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;

@@ -17,9 +17,8 @@
 package com.castlemock.web.mock.soap.service.project;
 
 import com.castlemock.core.mock.soap.model.project.domain.*;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.repository.soap.project.*;
 import com.castlemock.web.basis.service.AbstractService;
-import com.castlemock.web.mock.soap.repository.project.*;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 

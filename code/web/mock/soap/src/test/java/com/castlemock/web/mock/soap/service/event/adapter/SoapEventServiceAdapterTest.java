@@ -26,7 +26,7 @@ import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ReadAllSoapEventOutput;
 import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventOutput;
 import com.castlemock.web.mock.soap.model.SoapTypeIdentifier;
-import com.castlemock.web.mock.soap.model.event.SoapEventGenerator;
+import com.castlemock.core.mock.soap.model.event.SoapEventGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

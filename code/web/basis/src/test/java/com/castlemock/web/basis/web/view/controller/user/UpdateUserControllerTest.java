@@ -27,7 +27,7 @@ import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 import com.castlemock.core.basis.service.user.output.ReadUserOutput;
 import com.castlemock.core.basis.service.user.output.UpdateUserOutput;
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.web.basis.model.user.dto.UserDtoGenerator;
+import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
 import com.castlemock.web.basis.service.user.UserDetailSecurityService;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.AbstractControllerTest;

@@ -24,7 +24,7 @@ import com.castlemock.core.mock.rest.model.RestExportContainer;
 import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.service.project.input.ImportRestProjectInput;
 import com.castlemock.core.mock.rest.service.project.output.ImportRestProjectOutput;
-import com.castlemock.web.mock.rest.legacy.repository.project.v1.RestProjectV1LegacyRepository;
+import com.castlemock.repository.rest.file.project.legacy.RestProjectV1LegacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

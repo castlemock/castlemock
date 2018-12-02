@@ -17,6 +17,10 @@
 package com.castlemock.web.mock.rest.web.view.controller.method;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
+import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
+import com.castlemock.core.mock.rest.model.project.RestMethodGenerator;
+import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
+import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
@@ -28,10 +32,6 @@ import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput
 import com.castlemock.core.mock.rest.service.project.output.UpdateRestResourceOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
-import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.web.mock.rest.model.project.RestMethodGenerator;
-import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
-import com.castlemock.web.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.web.mock.rest.web.view.command.method.UpdateRestMethodsEndpointCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestControllerTest;
 import com.google.common.collect.ImmutableList;

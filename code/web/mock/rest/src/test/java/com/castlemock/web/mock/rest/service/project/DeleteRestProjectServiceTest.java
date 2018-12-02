@@ -18,11 +18,11 @@ package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.rest.model.project.*;
 import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.service.project.input.DeleteRestProjectInput;
 import com.castlemock.core.mock.rest.service.project.output.DeleteRestProjectOutput;
-import com.castlemock.web.mock.rest.model.project.*;
-import com.castlemock.web.mock.rest.repository.project.*;
+import com.castlemock.repository.rest.project.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

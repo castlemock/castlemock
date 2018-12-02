@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.service.event.input.ClearAllRestEventInput;
 import com.castlemock.core.mock.rest.service.event.output.ClearAllRestEventOutput;
-import com.castlemock.web.mock.rest.repository.event.RestEventRepository;
+import com.castlemock.repository.rest.event.RestEventRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;

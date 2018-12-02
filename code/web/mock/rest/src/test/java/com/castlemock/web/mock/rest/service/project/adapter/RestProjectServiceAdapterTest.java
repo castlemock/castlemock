@@ -25,7 +25,7 @@ import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.service.project.input.*;
 import com.castlemock.core.mock.rest.service.project.output.*;
 import com.castlemock.web.mock.rest.model.RestTypeIdentifier;
-import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
+import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

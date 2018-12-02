@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.service.project.input.UpdateCurrentMockResponseSequenceIndexInput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateCurrentMockResponseSequenceIndexOutput;
-import com.castlemock.web.mock.soap.repository.project.SoapOperationRepository;
+import com.castlemock.repository.soap.project.SoapOperationRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

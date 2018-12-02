@@ -17,9 +17,9 @@
 package com.castlemock.web.basis.service.event;
 
 import com.castlemock.core.basis.model.TypeIdentifier;
+import com.castlemock.core.basis.model.event.EventDtoGenerator;
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.basis.service.event.EventServiceAdapter;
-import com.castlemock.web.basis.model.event.dto.EventDtoGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

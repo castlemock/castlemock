@@ -17,6 +17,8 @@
 package com.castlemock.web.mock.rest.web.view.controller.application;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
+import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
+import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestApplicationInput;
@@ -25,8 +27,6 @@ import com.castlemock.core.mock.rest.service.project.output.CreateRestApplicatio
 import com.castlemock.core.mock.rest.service.project.output.ReadRestProjectOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
-import com.castlemock.web.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.web.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;

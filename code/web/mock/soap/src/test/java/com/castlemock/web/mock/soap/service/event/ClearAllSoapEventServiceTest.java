@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.service.event.input.ClearAllSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ClearAllSoapEventOutput;
-import com.castlemock.web.mock.soap.repository.event.SoapEventRepository;
+import com.castlemock.repository.soap.event.SoapEventRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;

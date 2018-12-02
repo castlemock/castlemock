@@ -18,9 +18,9 @@ package com.castlemock.app.config;
 
 import com.castlemock.core.basis.model.LegacyRepository;
 import com.castlemock.core.basis.model.ServiceFacade;
+import com.castlemock.repository.Repository;
+import com.castlemock.repository.core.file.token.SessionTokenFileRepository;
 import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.repository.Repository;
-import com.castlemock.web.basis.repository.token.SessionTokenRepository;
 import com.castlemock.web.basis.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,7 +50,7 @@ public abstract class Application extends SpringBootServletInitializer{
     @Autowired
     private ServiceRegistry serviceRegistry;
     @Autowired
-    private SessionTokenRepository tokenRepository;
+    private SessionTokenFileRepository tokenRepository;
     @Autowired
     private FileManager fileManager;
 

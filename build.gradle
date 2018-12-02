@@ -71,6 +71,14 @@ allprojects {
                 srcDir 'src/main/resources'
             }
         }
+        test {
+            java {
+                srcDir 'src/test/java'
+            }
+            resources {
+                srcDir 'src/test/resources'
+            }
+        }
     }
 }
 
@@ -118,6 +126,7 @@ project(':code:core:expression') {
 
     dependencies {
         antlr group: "org.antlr", name: "antlr4", version: antlrVersion
+        testCompile(group: 'org.mockito', name: 'mockito-all', version: mockitoVersion)
     }
 
     generateGrammarSource {
@@ -152,6 +161,7 @@ project(':code:core:mock:rest') {
 
     dependencies {
         compile(project(":code:core:basis"))
+        testCompile(project(":code:core:basis").sourceSets.test.output)
     }
 }
 
@@ -163,6 +173,7 @@ project(':code:core:mock:soap') {
 
     dependencies {
         compile(project(":code:core:basis"))
+        testCompile(project(":code:core:basis").sourceSets.test.output)
     }
 }
 
@@ -174,6 +185,170 @@ project(':code:core:mock:graphql') {
 
     dependencies {
         compile(project(":code:core:basis"))
+        testCompile(project(":code:core:basis").sourceSets.test.output)
+    }
+}
+
+
+project(':code:repository:core:file') {
+    description = "Castle Mock repository: Mock Core"
+    group = "com.castlemock.repository"
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    archivesBaseName = "${it.group}-${it.name}"
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:repository:core:model"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
+        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
+            exclude(group:'org.slf4j', module:'slf4j-log4j12')
+            exclude(group:'log4j', module:'log4j')
+        }
+        testCompile(project(":code:core:basis").sourceSets.test.output)
+        testCompile(project(":code:repository:core:model").sourceSets.test.output)
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+project(':code:repository:core:model') {
+    description = "Castle Mock repository: Mock Core"
+    group = "com.castlemock.repository.core.model"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(group: 'org.springframework.security', name: 'spring-security-taglibs', version: springSecurityVersion)
+
+        testCompile(project(":code:core:basis").sourceSets.test.output)
+    }
+}
+
+
+project(':code:repository:mock:soap:model') {
+    description = "Castle Mock repository: Mock SOAP"
+    group = "com.castlemock.repository.soap.model"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(project(":code:core:mock:soap"))
+        compile(project(":code:repository:core:model"))
+        testCompile(project(":code:core:mock:soap").sourceSets.test.output)
+    }
+}
+
+
+project(':code:repository:mock:rest:model') {
+    description = "Castle Mock repository: Mock REST"
+    group = "com.castlemock.repository.rest.model"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(project(":code:core:mock:rest"))
+        compile(project(":code:repository:core:model"))
+        testCompile(project(":code:core:mock:rest").sourceSets.test.output)
+    }
+}
+
+project(':code:repository:mock:graphql:model') {
+    description = "Castle Mock repository: Mock SOAP"
+    group = "com.castlemock.repository.graphql.model"
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(project(":code:core:mock:graphql"))
+        compile(project(":code:repository:core:model"))
+        testCompile(project(":code:core:mock:graphql").sourceSets.test.output)
+    }
+}
+
+project(':code:repository:mock:soap:file') {
+    description = "Castle Mock repository: Mock SOAP"
+    group = "com.castlemock.repository.soap.file"
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(project(":code:core:mock:soap"))
+        compile(project(":code:repository:core:model"))
+        compile(project(":code:repository:core:file"))
+        compile(project(":code:repository:mock:soap:model"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
+        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
+            exclude(group:'org.slf4j', module:'slf4j-log4j12')
+            exclude(group:'log4j', module:'log4j')
+        }
+        testCompile(project(":code:core:mock:soap").sourceSets.test.output)
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+
+project(':code:repository:mock:rest:file') {
+    description = "Castle Mock repository: Mock REST"
+    group = "com.castlemock.repository.rest.file"
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(project(":code:core:mock:rest"))
+        compile(project(":code:repository:core:model"))
+        compile(project(":code:repository:core:file"))
+        compile(project(":code:repository:mock:rest:model"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
+        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
+            exclude(group:'org.slf4j', module:'slf4j-log4j12')
+            exclude(group:'log4j', module:'log4j')
+        }
+        testCompile(project(":code:core:mock:rest").sourceSets.test.output)
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+    }
+}
+
+project(':code:repository:mock:graphql:file') {
+    description = "Castle Mock repository: Mock GraphQL"
+    group = "com.castlemock.repository.graphql.file"
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(project(":code:core:mock:graphql"))
+        compile(project(":code:repository:core:model"))
+        compile(project(":code:repository:core:file"))
+        compile(project(":code:repository:mock:graphql:model"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
+        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
+            exclude(group:'org.slf4j', module:'slf4j-log4j12')
+            exclude(group:'log4j', module:'log4j')
+        }
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
     }
 }
 
@@ -190,6 +365,7 @@ project(':code:web:basis') {
 
     dependencies {
         compile(project(":code:core:basis"))
+        compile(project(":code:repository:core:model"))
         compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web') {
             exclude(group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat')
         }
@@ -204,6 +380,8 @@ project(':code:web:basis') {
         compile(group: 'com.sun.xml.bind', name: 'jaxb-impl', version: jaxbVersion)
         compile(group: 'javax.activation', name: 'activation', version: activationVersion)
 
+        testCompile(project(":code:core:basis").sourceSets.test.output)
+        testCompile(project(":code:repository:core:model").sourceSets.test.output)
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
 
         compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
@@ -227,8 +405,11 @@ project(':code:web:mock:rest') {
     dependencies {
         compile(project(":code:web:basis"))
         compile(project(":code:core:mock:rest"))
+        compile(project(":code:repository:mock:rest:model"))
+        compile(project(":code:repository:mock:rest:file"))
         compile(group: 'io.swagger', name: 'swagger-parser', version: swaggerVersion)
         compile(group: 'org.raml', name: 'raml-parser-2', version: ramlVersion)
+        testCompile(project(":code:core:mock:rest").sourceSets.test.output)
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
     }
 }
@@ -249,6 +430,8 @@ project(':code:web:mock:graphql') {
     dependencies {
         compile(project(":code:web:basis"))
         compile(project(":code:core:mock:graphql"))
+        compile(project(":code:repository:mock:graphql:model"))
+        compile(project(":code:repository:mock:graphql:file"))
         compile(group: 'com.graphql-java', name: 'graphql-java', version: graphqlVersion)
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
     }
@@ -268,11 +451,16 @@ project(':code:web:mock:soap') {
     dependencies {
         compile(group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxws', version: cxfVersion)
         compile(project(":code:web:basis"))
+        compile(project(":code:repository:mock:soap:model"))
+        compile(project(":code:repository:mock:soap:file"))
         compile(project(":code:core:mock:soap"))
         compile(group: 'wsdl4j', name: 'wsdl4j', version: wsdl4jVersion)
+        testCompile(project(":code:core:mock:soap").sourceSets.test.output)
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
     }
 }
+
+
 
 project(':code:app') {
     apply plugin: 'org.springframework.boot'

@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.service.configuration;
 
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.web.basis.repository.configuration.ConfigurationRepository;
+import com.castlemock.repository.configuration.ConfigurationRepository;
 import com.castlemock.web.basis.service.AbstractService;
 
 /**

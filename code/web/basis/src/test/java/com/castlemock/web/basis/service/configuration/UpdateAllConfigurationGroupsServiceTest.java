@@ -16,15 +16,14 @@
 
 package com.castlemock.web.basis.service.configuration;
 
-import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.basis.model.configuration.domain.Configuration;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
-import com.castlemock.core.basis.model.configuration.domain.Configuration;
 import com.castlemock.core.basis.service.configuration.input.UpdateAllConfigurationGroupsInput;
 import com.castlemock.core.basis.service.configuration.output.UpdateAllConfigurationGroupsOutput;
-import com.castlemock.web.basis.service.configuration.UpdateAllConfigurationGroupsService;
+import com.castlemock.repository.Repository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;

@@ -16,11 +16,11 @@
 
 package com.castlemock.web.mock.graphql.service.project;
 
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
+import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
+import com.castlemock.repository.graphql.project.*;
 import com.castlemock.web.basis.service.AbstractService;
-import com.castlemock.web.mock.graphql.repository.project.*;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 

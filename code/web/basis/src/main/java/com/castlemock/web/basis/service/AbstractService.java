@@ -17,8 +17,8 @@
 package com.castlemock.web.basis.service;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
+import com.castlemock.repository.Repository;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 

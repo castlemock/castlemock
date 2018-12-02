@@ -21,7 +21,7 @@ import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.user.input.ReadUserInput;
 import com.castlemock.core.basis.service.user.output.ReadUserOutput;
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.web.basis.model.user.dto.UserDtoGenerator;
+import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.AbstractControllerTest;
 import org.junit.Test;

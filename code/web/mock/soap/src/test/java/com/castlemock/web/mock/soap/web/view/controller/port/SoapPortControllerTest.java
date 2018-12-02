@@ -28,9 +28,9 @@ import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOut
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.web.mock.soap.model.project.SoapOperationGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
+import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
+import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.operation.SoapOperationModifierCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import org.junit.Test;

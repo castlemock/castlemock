@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.service.project.input.DeleteRestMockResponseInput;
 import com.castlemock.core.mock.rest.service.project.output.DeleteRestMockResponseOutput;
-import com.castlemock.web.mock.rest.repository.project.RestMockResponseRepository;
+import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

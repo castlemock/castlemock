@@ -22,9 +22,9 @@ import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsF
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.web.mock.soap.model.project.SoapOperationGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapPortGenerator;
-import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
+import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
+import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
+import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import com.google.common.collect.ImmutableList;

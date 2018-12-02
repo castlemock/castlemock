@@ -16,8 +16,8 @@
 
 package com.castlemock.web.basis.service.event;
 
-import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.repository.Repository;
 import com.castlemock.web.basis.service.AbstractService;
 
 /**

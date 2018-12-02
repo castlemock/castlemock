@@ -16,7 +16,7 @@
 
 package com.castlemock.app.config;
 
-import com.castlemock.web.basis.repository.token.SessionTokenRepository;
+import com.castlemock.repository.core.file.token.SessionTokenFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     @Qualifier("tokenRepository")
-    private SessionTokenRepository tokenRepository;
+    private SessionTokenFileRepository tokenRepository;
     @Value(value = "${token.validity.seconds}")
     private Integer tokenValiditySeconds;
 

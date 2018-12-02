@@ -16,13 +16,13 @@
 
 package com.castlemock.web.mock.soap.service.event;
 
-import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventOutput;
-import com.castlemock.web.mock.soap.model.event.SoapEventGenerator;
+import com.castlemock.repository.Repository;
+import com.castlemock.core.mock.soap.model.event.SoapEventGenerator;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;

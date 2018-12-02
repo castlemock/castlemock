@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.mock.rest.model.project.domain.*;
+import com.castlemock.repository.rest.project.*;
 import com.castlemock.web.basis.service.AbstractService;
-import com.castlemock.web.mock.rest.repository.project.*;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.beans.factory.annotation.Autowired;

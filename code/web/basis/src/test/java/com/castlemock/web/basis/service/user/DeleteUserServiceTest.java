@@ -16,14 +16,13 @@
 
 package com.castlemock.web.basis.service.user;
 
-import com.castlemock.web.basis.repository.Repository;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.user.input.DeleteUserInput;
 import com.castlemock.core.basis.service.user.output.DeleteUserOutput;
-import com.castlemock.web.basis.service.user.DeleteUserService;
+import com.castlemock.repository.Repository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;

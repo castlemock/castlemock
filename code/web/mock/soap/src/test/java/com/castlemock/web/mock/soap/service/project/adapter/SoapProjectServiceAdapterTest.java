@@ -25,7 +25,7 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.service.project.input.*;
 import com.castlemock.core.mock.soap.service.project.output.*;
 import com.castlemock.web.mock.soap.model.SoapTypeIdentifier;
-import com.castlemock.web.mock.soap.model.project.SoapProjectGenerator;
+import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
