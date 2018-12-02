@@ -24,7 +24,7 @@ import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.user.input.UpdateUserInput;
 import com.castlemock.core.basis.service.user.output.UpdateUserOutput;
 import com.castlemock.repository.Repository;
-import com.castlemock.repository.core.file.token.SessionTokenRepository;
+import com.castlemock.repository.token.SessionTokenRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;

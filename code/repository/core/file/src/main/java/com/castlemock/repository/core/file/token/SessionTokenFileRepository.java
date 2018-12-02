@@ -1,5 +1,6 @@
 package com.castlemock.repository.core.file.token;
 
+import com.castlemock.repository.token.SessionTokenRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -32,7 +33,7 @@ import java.util.*;
  * @see SessionTokenList
  */
 @Component("tokenRepository")
-public class SessionTokenFileRepository implements com.castlemock.repository.core.file.token.SessionTokenRepository {
+public class SessionTokenFileRepository implements SessionTokenRepository {
 
     @Value(value = "${token.file.directory}")
     private String tokenDirectory;

@@ -19,7 +19,7 @@ package com.castlemock.web.basis.service.user;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.repository.core.file.token.SessionTokenRepository;
+import com.castlemock.repository.token.SessionTokenRepository;
 import com.castlemock.repository.user.UserRepository;
 import com.castlemock.web.basis.service.AbstractService;
 import com.google.common.base.Preconditions;
