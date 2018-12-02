@@ -39,5 +39,5 @@ deploy:
     branch: master
     jdk: openjdk10
 
- notifications:
-    slack: $SLACK_KEY
+notifications:
+  slack: $SLACK_KEY
