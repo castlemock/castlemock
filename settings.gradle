@@ -20,4 +20,8 @@ include 'code:core:expression',
         'code:deploy:tomcat:jar',
         'code:deploy:tomcat:war',
         'code:deploy:jetty:common',
-        'code:deploy:jetty:jar'
+        'code:deploy:jetty:jar',
+        'code:test:basis',
+        'code:test:mock:rest',
+        'code:test:mock:soap',
+        'code:test:mock:graphql'
