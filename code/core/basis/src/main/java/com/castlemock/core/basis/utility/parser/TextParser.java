@@ -56,6 +56,7 @@ public class TextParser {
         EXPRESSIONS.put(RandomDateTimeExpression.IDENTIFIER, new RandomDateTimeExpression());
         EXPRESSIONS.put(RandomEnumExpression.IDENTIFIER, new RandomEnumExpression());
         EXPRESSIONS.put(PathParameterExpression.IDENTIFIER, new PathParameterExpression());
+        EXPRESSIONS.put(QueryStringExpression.IDENTIFIER, new QueryStringExpression());
 
     }
 
