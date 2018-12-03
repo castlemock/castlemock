@@ -22,6 +22,7 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpParameter;
 import com.castlemock.core.basis.utility.parser.TextParser;
 import com.castlemock.core.basis.utility.parser.expression.PathParameterExpression;
+import com.castlemock.core.basis.utility.parser.expression.QueryStringExpression;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentMap;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentString;
@@ -46,6 +47,7 @@ import com.castlemock.web.mock.rest.model.RestException;
 import com.castlemock.web.mock.rest.utility.RestParameterQueryValidator;
 import com.castlemock.web.mock.rest.utility.compare.RestMockResponseNameComparator;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -432,14 +434,23 @@ public abstract class AbstractRestServiceController extends AbstractController {
         String body = mockResponse.getBody();
         if(mockResponse.isUsingExpressions()){
             final ExpressionArgumentMap pathParametersArgument = new ExpressionArgumentMap();
+            pathParameters.forEach((key, value) -> {
+                ExpressionArgument pathParameterArgument = new ExpressionArgumentString(value);
+                pathParametersArgument.addArgument(key, pathParameterArgument);
+            });
 
-            for(Map.Entry<String, String> pathParameter : pathParameters.entrySet()){
-                ExpressionArgument pathParameterArgument = new ExpressionArgumentString(pathParameter.getValue());
-                pathParametersArgument.addArgument(pathParameter.getKey(), pathParameterArgument);
-            }
+            final ExpressionArgumentMap queryStringArgument = new ExpressionArgumentMap();
+            restRequest.getHttpParameters().forEach(parameter -> {
+                ExpressionArgument pathParameterArgument = new ExpressionArgumentString(parameter.getValue());
+                queryStringArgument.addArgument(parameter.getName(), pathParameterArgument);
+            });
 
             final Map<String, ExpressionArgument<?>> externalInput =
-                    Collections.singletonMap(PathParameterExpression.PATH_PARAMETERS, pathParametersArgument);
+                    ImmutableMap.of(
+                            PathParameterExpression.PATH_PARAMETERS, pathParametersArgument,
+                            QueryStringExpression.QUERY_STRINGS, queryStringArgument
+                    );
+
 
 
             // Parse the text and apply expression functionality if
