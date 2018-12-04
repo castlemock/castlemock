@@ -387,6 +387,29 @@ project(':code:repository:mock:graphql:file') {
     }
 }
 
+project(':code:repository:core:mongodb') {
+    description = "Castle Mock repository: Mock Mongodb"
+    group = "com.castlemock.repository"
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    archivesBaseName = "${it.group}-${it.name}"
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:repository:core:model"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb')
+        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
+            exclude(group:'org.slf4j', module:'slf4j-log4j12')
+            exclude(group:'log4j', module:'log4j')
+        }
+        testCompile(project(":code:test:basis"))
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+        testCompile(group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo')
+    }
+}
+
 project(':code:web:basis') {
     description = "Castle Mock web: Basis"
     apply plugin: 'org.springframework.boot'
