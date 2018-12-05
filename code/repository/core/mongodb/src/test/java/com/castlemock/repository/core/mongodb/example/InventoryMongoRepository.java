@@ -16,7 +16,9 @@ public class InventoryMongoRepository extends MongoRepository<InventoryDocument,
 
     @Override
     protected void checkType(InventoryDocument type) {
-
+        if (type.item.contains("samsung")){
+            throw new IllegalArgumentException("samsung not allowed");
+        }
     }
 
     @Override
@@ -71,6 +73,26 @@ public class InventoryMongoRepository extends MongoRepository<InventoryDocument,
         public Inventory(String item, Double cost) {
             this.item = item;
             this.cost = cost;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getItem() {
+            return item;
+        }
+
+        public void setItem(String item) {
+            this.item = item;
+        }
+
+        public void setCost(Double cost) {
+            this.cost = cost;
+        }
+
+        public Double getCost() {
+            return cost;
         }
 
         @Override
