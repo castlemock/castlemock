@@ -533,6 +533,7 @@ project(':code:app') {
         compile(project(":code:web:mock:rest"))
         compile(project(":code:web:mock:soap"))
         compile(project(":code:web:mock:graphql"))
+        compile(project(":code:repository:core:mongodb"))
 
         compile(group: 'javax.servlet', name: 'javax.servlet-api', 'version': servletApiVersion)
         compile(group: 'javax.servlet.jsp', name: 'jsp-api', 'version': servletJspVersion)

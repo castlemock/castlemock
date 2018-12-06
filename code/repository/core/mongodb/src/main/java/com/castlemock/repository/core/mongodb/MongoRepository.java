@@ -25,7 +25,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
  *
  * @param <T> The type that is being managed by mongodb.
  * @param <I> The id is used as an identifier for the type.
- * @author mohammad hewedy
+ * @author Mohammad hewedy
  * @see Saveable
  * @since 1.34
  */
@@ -55,12 +55,13 @@ public abstract class MongoRepository<T extends Saveable<I>, D, I extends Serial
     }
 
     /**
-     * The initialize method is responsible for initiating the file repository.
+     * The initialize method is responsible for initiating the repository.
      * has empty implementation by default.
+     * @see #postInitiate()
      */
     @Override
     public void initialize() {
-
+        postInitiate();
     }
 
     /**
@@ -165,6 +166,17 @@ public abstract class MongoRepository<T extends Saveable<I>, D, I extends Serial
      */
     public boolean exists(I id) {
         return mongoOperations.exists(getIdQuery(id), entityClass);
+    }
+
+    /**
+     * The post initialize method can be used to run functionality for a specific service. The method is called when
+     * the method {@link #initialize} has finished successful. The method does not contain any functionality and the
+     * whole idea is the it should be overridden by subclasses, but only if certain functionality is required to
+     * run after the {@link #initialize} method has completed.
+     * @see #initialize
+     */
+    protected void postInitiate(){
+        LOGGER.debug("Post initialize method not implemented for " + entityClass.getSimpleName());
     }
 
     /**

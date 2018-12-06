@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.repository.core.file.configuration;
+package com.castlemock.repository.core.mongodb.configuration;
 
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
@@ -22,74 +22,45 @@ import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.configuration.ConfigurationRepository;
-import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.core.mongodb.MongoRepository;
 import com.google.common.base.Preconditions;
 import org.dozer.Mapping;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
- * The class is an implementation of the file repository and provides the functionality to interact with the file system.
- * The repository is responsible for loading and saving configuration groups for the file system. Each configuration
- * group is stored as a separate file. The class also contains the directory and the filename extension for the
- * configuration group.
- * @author Karl Dahlgren
- * @since 1.0
+ * The class is an implementation of mongodb repository and provides the functionality to interact with mongodb.
+ * The repository is responsible for loading and saving configuration groups for mongodb.
+ *
+ * @author Mohammad Hewedy
+ * @since 1.34
  */
 @Repository
-@Profile(Profiles.FILE)
-public class ConfigurationFileRepository extends FileRepository<ConfigurationFileRepository.ConfigurationGroupFile, ConfigurationGroup, String> implements ConfigurationRepository {
-
-    @Value(value = "${configuration.file.directory}")
-    private String configurationFileDirectory;
-    @Value(value = "${configuration.file.extension}")
-    private String configurationFileExtension;
+@Profile(Profiles.MONGODB)
+public class ConfigurationMongoRepository extends MongoRepository<ConfigurationMongoRepository.ConfigurationGroupDocument, ConfigurationGroup, String> implements ConfigurationRepository {
 
     /**
-     * The method returns the directory for the specific file repository. The directory will be used to indicate
-     * where files should be saved and loaded from.
-     * @return The file directory where the files for the specific file repository could be saved and loaded from.
-     */
-    @Override
-    protected String getFileDirectory() {
-        return configurationFileDirectory;
-    }
-
-    /**
-     * The method returns the postfix for the file that the file repository is responsible for managing.
-     * @return The file extension for the file type that the repository is responsible for managing .
-     */
-    @Override
-    protected String getFileExtension() {
-        return configurationFileExtension;
-    }
-
-    /**
-     * The method is responsible for controller that the type that is about the be saved to the file system is valid.
+     * The method is responsible for controller that the type that is about the be saved to mongodb is valid.
      * The method should check if the type contains all the necessary values and that the values are valid. This method
      * will always be called before a type is about to be saved. The main reason for why this is vital and done before
-     * saving is to make sure that the type can be correctly saved to the file system, but also loaded from the
-     * file system upon application startup. The method will throw an exception in case of the type not being acceptable.
+     * saving is to make sure that the type can be correctly saved to mongodb, but also loaded from the
+     * mongodb upon application startup. The method will throw an exception in case of the type not being acceptable.
+     *
      * @param configurationGroup The instance of the type that will be checked and controlled before it is allowed to be saved on
-     *             the file system.
+     *                           mongodb.
      * @see #save
-     * @see ConfigurationGroupFile
+     * @see ConfigurationGroupDocument
      */
     @Override
-    protected void checkType(final ConfigurationGroupFile configurationGroup) {
+    protected void checkType(final ConfigurationGroupDocument configurationGroup) {
         Preconditions.checkNotNull(configurationGroup, "Configuration group cannot be null");
-        Preconditions.checkNotNull(configurationGroup.getId(), "Configuration group id cannot be null");
         Preconditions.checkNotNull(configurationGroup.getName(), "Configuration group name cannot be null");
         Preconditions.checkNotNull(configurationGroup.getConfigurations(), "Configuration group configuration list cannot be null");
         Preconditions.checkArgument(!configurationGroup.getName().isEmpty(), "Configuration group name cannot be empty");
 
-        for(ConfigurationFile configuration : configurationGroup.getConfigurations()){
+        for (ConfigurationDocument configuration : configurationGroup.getConfigurations()) {
             Preconditions.checkNotNull(configuration.getType());
             Preconditions.checkNotNull(configuration.getKey());
             Preconditions.checkNotNull(configuration.getValue());
@@ -104,8 +75,7 @@ public class ConfigurationFileRepository extends FileRepository<ConfigurationFil
         throw new UnsupportedOperationException("Search method is not supported in the Configuration repository");
     }
 
-    @XmlRootElement(name = "configuration")
-    protected static class ConfigurationFile {
+    protected static class ConfigurationDocument {
 
         @Mapping("key")
         private String key;
@@ -116,15 +86,16 @@ public class ConfigurationFileRepository extends FileRepository<ConfigurationFil
 
         /**
          * Returns the identifier for the configuration
+         *
          * @return The configuration key
          */
-        @XmlElement
         public String getKey() {
             return key;
         }
 
         /**
          * Sets the configuration key
+         *
          * @param key The new configuration key
          */
         public void setKey(String key) {
@@ -133,15 +104,16 @@ public class ConfigurationFileRepository extends FileRepository<ConfigurationFil
 
         /**
          * Returns the value for the configuration
+         *
          * @return Configuration value
          */
-        @XmlElement
         public String getValue() {
             return value;
         }
 
         /**
          * Sets the configuration value
+         *
          * @param value The new configuration value
          */
         public void setValue(String value) {
@@ -150,15 +122,16 @@ public class ConfigurationFileRepository extends FileRepository<ConfigurationFil
 
         /**
          * Returns the configuration type
+         *
          * @return The configuration type
          */
-        @XmlElement
         public ConfigurationType getType() {
             return type;
         }
 
         /**
          * Sets the configuration type
+         *
          * @param type The new configuration type
          */
         public void setType(ConfigurationType type) {
@@ -168,24 +141,24 @@ public class ConfigurationFileRepository extends FileRepository<ConfigurationFil
 
     /**
      * The configuration group is responsible for grouping configurations together.
-     * @author Karl Dahlgren
-     * @since 1.0
+     *
+     * @author Mohammad Hewedy
+     * @since 1.34
      */
-    @XmlRootElement(name = "configurationGroup")
-    protected static class ConfigurationGroupFile implements Saveable<String> {
+    protected static class ConfigurationGroupDocument implements Saveable<String> {
 
         @Mapping("id")
         private String id;
         @Mapping("name")
         private String name;
         @Mapping("configurations")
-        private List<ConfigurationFile> configurations;
+        private List<ConfigurationDocument> configurations;
 
         /**
          * Returns the configuration group id
+         *
          * @return The configuration group id
          */
-        @XmlElement
         @Override
         public String getId() {
             return id;
@@ -193,6 +166,7 @@ public class ConfigurationFileRepository extends FileRepository<ConfigurationFil
 
         /**
          * Sets a new id value for the configuration group
+         *
          * @param id The new id for the configuration group
          */
         @Override
@@ -202,15 +176,16 @@ public class ConfigurationFileRepository extends FileRepository<ConfigurationFil
 
         /**
          * Returns the name of the configuration group
+         *
          * @return The new of the configuration group
          */
-        @XmlElement
         public String getName() {
             return name;
         }
 
         /**
          * Sets a new name of the configuration group
+         *
          * @param name The new name for the configuration group
          */
         public void setName(String name) {
@@ -219,23 +194,21 @@ public class ConfigurationFileRepository extends FileRepository<ConfigurationFil
 
         /**
          * Returns a list of configurations the belongs to the group
+         *
          * @return Configurations that belongs to the configuration group
          */
-        @XmlElementWrapper(name = "configurations")
-        @XmlElement(name = "configuration")
-        public List<ConfigurationFile> getConfigurations() {
+        public List<ConfigurationDocument> getConfigurations() {
             return configurations;
         }
 
         /**
          * Set a new list of configurations that belong to the configuration group
+         *
          * @param configurations The new list of configurations
          */
-        public void setConfigurations(List<ConfigurationFile> configurations) {
+        public void setConfigurations(List<ConfigurationDocument> configurations) {
             this.configurations = configurations;
         }
 
     }
-
-
 }
