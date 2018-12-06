@@ -13,7 +13,7 @@ deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
   draft: false
-  file: code/web/war/build/libs/castlemock.war
+  file: code/deploy/tomcat/war/build/libs/castlemock.war
   skip_cleanup: true
   name: Castle Mock v$TRAVIS_TAG
   tag_name: $TRAVIS_TAG
