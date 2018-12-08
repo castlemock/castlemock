@@ -27,6 +27,7 @@ import com.castlemock.repository.user.UserRepository;
 import com.google.common.base.Preconditions;
 import org.dozer.Mapping;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -44,7 +45,7 @@ import java.util.List;
  * @see MongoRepository
  * @see UserDocument
  * @see User
- * @since 1.34
+ * @since 1.35
  */
 @Repository
 @Profile(Profiles.MONGODB)
@@ -108,6 +109,7 @@ public class UserMongoRepository extends MongoRepository<UserMongoRepository.Use
     }
 
 
+    @Document(collection = "user")
     protected static class UserDocument implements Saveable<String> {
 
         @Mapping("id")

@@ -262,6 +262,28 @@ project(':code:repository:core:model') {
     }
 }
 
+project(':code:repository:core:mongodb') {
+    description = "Castle Mock repository: Mock Mongodb"
+    group = "com.castlemock.repository"
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    archivesBaseName = "${it.group}-${it.name}"
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:repository:core:model"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb')
+        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
+            exclude(group:'org.slf4j', module:'slf4j-log4j12')
+            exclude(group:'log4j', module:'log4j')
+        }
+        testCompile(project(":code:test:basis"))
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+        testCompile(group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo')
+    }
+}
 
 project(':code:repository:mock:soap:model') {
     description = "Castle Mock repository: Mock SOAP"
@@ -387,28 +409,88 @@ project(':code:repository:mock:graphql:file') {
     }
 }
 
-project(':code:repository:core:mongodb') {
-    description = "Castle Mock repository: Mock Mongodb"
-    group = "com.castlemock.repository"
+project(':code:repository:mock:soap:mongodb') {
+    description = "Castle Mock repository: Mock SOAP"
+    group = "com.castlemock.repository.soap.mongodb"
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
     archivesBaseName = "${it.group}-${it.name}"
+
     bootJar.enabled = false
     jar.enabled = true
 
     dependencies {
+        compile(project(":code:core:basis"))
+        compile(project(":code:core:mock:soap"))
         compile(project(":code:repository:core:model"))
-        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb')
+        compile(project(":code:repository:core:mongodb"))
+        compile(project(":code:repository:mock:soap:model"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
         compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
             exclude(group:'org.slf4j', module:'slf4j-log4j12')
             exclude(group:'log4j', module:'log4j')
         }
-        testCompile(project(":code:test:basis"))
+        testCompile(project(":code:test:mock:soap"))
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
         testCompile(group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo')
     }
 }
+
+/*project(':code:repository:mock:rest:mongodb') {
+    description = "Castle Mock repository: Mock REST"
+    group = "com.castlemock.repository.rest.mongodb"
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(project(":code:core:mock:rest"))
+        compile(project(":code:repository:core:model"))
+        compile(project(":code:repository:core:mongodb"))
+        compile(project(":code:repository:mock:rest:model"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
+        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
+            exclude(group:'org.slf4j', module:'slf4j-log4j12')
+            exclude(group:'log4j', module:'log4j')
+        }
+        testCompile(project(":code:test:mock:rest"))
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+        testCompile(group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo')
+    }
+}
+
+project(':code:repository:mock:graphql:mongodb') {
+    description = "Castle Mock repository: Mock GraphQL"
+    group = "com.castlemock.repository.graphql.mongodb"
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    archivesBaseName = "${it.group}-${it.name}"
+
+    bootJar.enabled = false
+    jar.enabled = true
+
+    dependencies {
+        compile(project(":code:core:basis"))
+        compile(project(":code:core:mock:graphql"))
+        compile(project(":code:repository:core:model"))
+        compile(project(":code:repository:core:mongodb"))
+        compile(project(":code:repository:mock:graphql:model"))
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
+        compile(group: 'net.sf.dozer', name: 'dozer', 'version': dozerVersion){
+            exclude(group:'org.slf4j', module:'slf4j-log4j12')
+            exclude(group:'log4j', module:'log4j')
+        }
+        testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+        testCompile(group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo')
+    }
+}*/
 
 project(':code:web:basis') {
     description = "Castle Mock web: Basis"
@@ -465,6 +547,7 @@ project(':code:web:mock:rest') {
         compile(project(":code:core:mock:rest"))
         compile(project(":code:repository:mock:rest:model"))
         compile(project(":code:repository:mock:rest:file"))
+//        compile(project(":code:repository:mock:rest:mongodb"))
         compile(group: 'io.swagger', name: 'swagger-parser', version: swaggerVersion)
         compile(group: 'org.raml', name: 'raml-parser-2', version: ramlVersion)
         testCompile(project(":code:test:mock:rest"))
@@ -490,6 +573,7 @@ project(':code:web:mock:graphql') {
         compile(project(":code:core:mock:graphql"))
         compile(project(":code:repository:mock:graphql:model"))
         compile(project(":code:repository:mock:graphql:file"))
+//        compile(project(":code:repository:mock:graphql:mongodb"))
         compile(group: 'com.graphql-java', name: 'graphql-java', version: graphqlVersion)
         testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
     }
@@ -511,6 +595,7 @@ project(':code:web:mock:soap') {
         compile(project(":code:web:basis"))
         compile(project(":code:repository:mock:soap:model"))
         compile(project(":code:repository:mock:soap:file"))
+        compile(project(":code:repository:mock:soap:mongodb"))
         compile(project(":code:core:mock:soap"))
         compile(group: 'wsdl4j', name: 'wsdl4j', version: wsdl4jVersion)
         testCompile(project(":code:test:mock:soap"))
@@ -533,7 +618,6 @@ project(':code:app') {
         compile(project(":code:web:mock:rest"))
         compile(project(":code:web:mock:soap"))
         compile(project(":code:web:mock:graphql"))
-        compile(project(":code:repository:core:mongodb"))
 
         compile(group: 'javax.servlet', name: 'javax.servlet-api', 'version': servletApiVersion)
         compile(group: 'javax.servlet.jsp', name: 'jsp-api', 'version': servletJspVersion)

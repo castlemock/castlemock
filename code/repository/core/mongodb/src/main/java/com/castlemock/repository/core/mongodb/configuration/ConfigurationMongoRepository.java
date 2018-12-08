@@ -26,6 +26,7 @@ import com.castlemock.repository.core.mongodb.MongoRepository;
 import com.google.common.base.Preconditions;
 import org.dozer.Mapping;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,7 +36,7 @@ import java.util.List;
  * The repository is responsible for loading and saving configuration groups for mongodb.
  *
  * @author Mohammad Hewedy
- * @since 1.34
+ * @since 1.35
  */
 @Repository
 @Profile(Profiles.MONGODB)
@@ -75,6 +76,7 @@ public class ConfigurationMongoRepository extends MongoRepository<ConfigurationM
         throw new UnsupportedOperationException("Search method is not supported in the Configuration repository");
     }
 
+    @Document(collection = "configuration")
     protected static class ConfigurationDocument {
 
         @Mapping("key")
@@ -143,8 +145,9 @@ public class ConfigurationMongoRepository extends MongoRepository<ConfigurationM
      * The configuration group is responsible for grouping configurations together.
      *
      * @author Mohammad Hewedy
-     * @since 1.34
+     * @since 1.35
      */
+    @Document(collection = "configurationGroup")
     protected static class ConfigurationGroupDocument implements Saveable<String> {
 
         @Mapping("id")

@@ -15,107 +15,50 @@
  */
 
 
-package com.castlemock.repository.soap.file.project;
+package com.castlemock.repository.soap.mongodb.project;
 
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.repository.Profiles;
-import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.core.mongodb.MongoRepository;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import org.dozer.Mapping;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
+/**
+ * @author Mohammad Hewedy
+ * @since 1.35
+ */
 @Repository
-@Profile(Profiles.FILE)
-public class SoapOperationFileRepository extends FileRepository<SoapOperationFileRepository.SoapOperationFile, SoapOperation, String> implements SoapOperationRepository {
-
-    @Value(value = "${soap.operation.file.directory}")
-    private String fileDirectory;
-    @Value(value = "${soap.operation.file.extension}")
-    private String fileExtension;
+@Profile(Profiles.MONGODB)
+public class SoapOperationMongoRepository extends MongoRepository<SoapOperationMongoRepository.SoapOperationDocument, SoapOperation, String> implements SoapOperationRepository {
 
     /**
-     * The method returns the directory for the specific file repository. The directory will be used to indicate
-     * where files should be saved and loaded from. The method is abstract and every subclass is responsible for
-     * overriding the method and provided the directory for their corresponding file type.
-     *
-     * @return The file directory where the files for the specific file repository could be saved and loaded from.
-     */
-    @Override
-    protected String getFileDirectory() {
-        return fileDirectory;
-    }
-
-    /**
-     * The method returns the postfix for the file that the file repository is responsible for managing.
-     * The method is abstract and every subclass is responsible for overriding the method and provided the postfix
-     * for their corresponding file type.
-     *
-     * @return The file extension for the file type that the repository is responsible for managing .
-     */
-    @Override
-    protected String getFileExtension() {
-        return fileExtension;
-    }
-
-    /**
-     * The method is responsible for controller that the type that is about the be saved to the file system is valid.
+     * The method is responsible for controller that the type that is about the be saved to mongodb is valid.
      * The method should check if the type contains all the necessary values and that the values are valid. This method
      * will always be called before a type is about to be saved. The main reason for why this is vital and done before
-     * saving is to make sure that the type can be correctly saved to the file system, but also loaded from the
+     * saving is to make sure that the type can be correctly saved to mongodb, but also loaded from the
      * file system upon application startup. The method will throw an exception in case of the type not being acceptable.
      *
      * @param type The instance of the type that will be checked and controlled before it is allowed to be saved on
-     *             the file system.
+     *             mongodb.
      * @see #save
      */
     @Override
-    protected void checkType(SoapOperationFile type) {
+    protected void checkType(SoapOperationDocument type) {
 
-    }
-
-    /**
-     * The post initialize method can be used to run functionality for a specific service. The method is called when
-     * the method {@link #initialize} has finished successful. The method does not contain any functionality and the
-     * whole idea is the it should be overridden by subclasses, but only if certain functionality is required to
-     * run after the {@link #initialize} method has completed.
-     * @see #initialize
-     */
-    @Override
-    public void postInitiate(){
-        for(SoapOperationFile soapOperation : this.collection.values()){
-            if(soapOperation.getOperationIdentifier() == null){
-                SoapOperationIdentifierFile operationIdentifier =
-                        new SoapOperationIdentifierFile();
-                operationIdentifier.setName(soapOperation.getIdentifier());
-
-                soapOperation.setOperationIdentifier(operationIdentifier);
-                soapOperation.setIdentifier(null);
-                save(soapOperation);
-            }
-
-            if(soapOperation.getIdentifyStrategy() == null){
-                soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
-                save(soapOperation);
-            }
-
-            if(soapOperation.getCurrentResponseSequenceIndex() == null){
-                soapOperation.setCurrentResponseSequenceIndex(0);
-            }
-        }
     }
 
     /**
@@ -126,64 +69,47 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
      */
     @Override
     public List<SoapOperation> search(SearchQuery query) {
-        final List<SoapOperation> result = new LinkedList<SoapOperation>();
-        for(SoapOperationFile soapOperationFile : collection.values()){
-            if(SearchValidator.validate(soapOperationFile.getName(), query.getQuery())){
-                SoapOperation soapOperation = mapper.map(soapOperationFile, SoapOperation.class);
-                result.add(soapOperation);
-            }
-        }
-        return result;
+        Query nameQuery = getSearchQuery("name", query);
+        List<SoapOperationDocument> operations =
+                mongoOperations.find(nameQuery, SoapOperationDocument.class);
+        return toDtoList(operations, SoapOperation.class);
     }
 
     @Override
     public void deleteWithPortId(String portId) {
-        Iterator<SoapOperationFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            SoapOperationFile operation = iterator.next();
-            if(operation.getPortId().equals(portId)){
-                delete(operation.getId());
-            }
-        }
+        mongoOperations.remove(getPortIdQuery(portId), SoapOperationDocument.class);
     }
 
 
     @Override
     public List<SoapOperation> findWithPortId(String portId) {
-        final List<SoapOperation> operations = new ArrayList<>();
-        for(SoapOperationFile operationFile : this.collection.values()){
-            if(operationFile.getPortId().equals(portId)){
-                SoapOperation operation = this.mapper.map(operationFile, SoapOperation.class);
-                operations.add(operation);
-            }
-        }
-        return operations;
+        List<SoapOperationDocument> responses =
+                mongoOperations.find(getPortIdQuery(portId), SoapOperationDocument.class);
+        return toDtoList(responses, SoapOperation.class);
     }
 
     /**
      * The method provides the functionality to find a SOAP operation with a specific name
+     *
      * @param soapOperationName The name of the SOAP operation that should be retrieved
      * @return A SOAP operation that matches the search criteria. If no SOAP operation matches the provided
      * name then null will be returned.
      */
     @Override
     public SoapOperation findWithName(final String soapPortId,
-                                      final String soapOperationName){
-        for(SoapOperationFile soapOperation : this.collection.values()){
-            if(soapOperation.getPortId().equals(soapPortId) &&
-                    soapOperation.getName().equals(soapOperationName)){
-                return mapper.map(soapOperation, SoapOperation.class);
-            }
-        }
-        return null;
+                                      final String soapOperationName) {
+        Query portIdAndNameQuery = query(where("portId").is(soapPortId).and("name").is(soapOperationName));
+        SoapOperationDocument operation =
+                mongoOperations.findOne(portIdAndNameQuery, SoapOperationDocument.class);
+        return operation == null ? null : mapper.map(operation, SoapOperation.class);
     }
 
     /**
      * Find a {@link SoapOperation} with a provided {@link HttpMethod}, {@link SoapVersion}
      * and an identifier.
      *
-     * @param method     The HTTP method
-     * @param version    The SOAP version
+     * @param method              The HTTP method
+     * @param version             The SOAP version
      * @param operationIdentifier The identifier
      * @return A {@link SoapOperation} that matches the provided search criteria.
      */
@@ -191,25 +117,26 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
     public SoapOperation findWithMethodAndVersionAndIdentifier(final String portId, final HttpMethod method,
                                                                final SoapVersion version,
                                                                final SoapOperationIdentifier operationIdentifier) {
-        for(SoapOperationFile soapOperation : this.collection.values()){
-            if(soapOperation.getPortId().equals(portId) &&
-                    soapOperation.getHttpMethod().equals(method) &&
-                    soapOperation.getSoapVersion().equals(version)){
+        Query portIdMethodAndVersionQuery = query(where("portId").is(portId)
+                .and("httpMethod").is(method)
+                .and("soapVersion").is(version));
+        List<SoapOperationDocument> soapOperations =
+                mongoOperations.find(portIdMethodAndVersionQuery, SoapOperationDocument.class);
 
-                final SoapOperationIdentifierFile operationIdentifierFile =
-                        soapOperation.getOperationIdentifier();
+        for (SoapOperationDocument soapOperation : soapOperations) {
+            final SoapOperationIdentifierDocument operationIdentifierFile =
+                    soapOperation.getOperationIdentifier();
 
-                if(operationIdentifier.getName().equalsIgnoreCase(operationIdentifierFile.getName())){
+            if (operationIdentifier.getName().equalsIgnoreCase(operationIdentifierFile.getName())) {
 
-                    // Three ways to identify SOAP operation:
-                    // 1. Namespace is missing from the stored files (Legacy)
-                    // 2. The identify strategy is ELEMENT (Ignore namespace)
-                    // 3. Both the name and namespace is matching
-                    if(operationIdentifierFile.getNamespace() == null ||
-                            soapOperation.getIdentifyStrategy() == SoapOperationIdentifyStrategy.ELEMENT ||
-                            operationIdentifierFile.getNamespace().equalsIgnoreCase(operationIdentifier.getNamespace())) {
-                        return this.mapper.map(soapOperation, SoapOperation.class);
-                    }
+                // Three ways to identify SOAP operation:
+                // 1. Namespace is missing from the stored files (Legacy)
+                // 2. The identify strategy is ELEMENT (Ignore namespace)
+                // 3. Both the name and namespace is matching
+                if (operationIdentifierFile.getNamespace() == null ||
+                        soapOperation.getIdentifyStrategy() == SoapOperationIdentifyStrategy.ELEMENT ||
+                        operationIdentifierFile.getNamespace().equalsIgnoreCase(operationIdentifier.getNamespace())) {
+                    return this.mapper.map(soapOperation, SoapOperation.class);
                 }
             }
         }
@@ -221,11 +148,14 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
      *
      * @param soapOperationId The operation id.
      * @param index           The new response sequence index.
-     * @since 1.17
      */
     @Override
     public void setCurrentResponseSequenceIndex(final String soapOperationId, final Integer index) {
-        SoapOperationFile soapOperation = collection.get(soapOperationId);
+        SoapOperationDocument soapOperation = mongoOperations.findById(soapOperationId, SoapOperationDocument.class);
+
+        if (soapOperation == null) {
+            throw new IllegalArgumentException("Unable to find an operation with the following id: " + soapOperationId);
+        }
         soapOperation.setCurrentResponseSequenceIndex(index);
     }
 
@@ -235,20 +165,19 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
      *
      * @param operationId The id of the {@link SoapOperation}.
      * @return The id of the port.
-     * @since 1.20
      */
     @Override
     public String getPortId(String operationId) {
-        final SoapOperationFile operationFile = this.collection.get(operationId);
+        SoapOperationDocument soapOperation = mongoOperations.findById(operationId, SoapOperationDocument.class);
 
-        if(operationFile == null){
+        if (soapOperation == null) {
             throw new IllegalArgumentException("Unable to find an operation with the following id: " + operationId);
         }
-        return operationFile.getPortId();
+        return soapOperation.getPortId();
     }
 
-    @XmlRootElement(name = "soapOperation")
-    protected static class SoapOperationFile implements Saveable<String> {
+    @Document(collection = "soapOperation")
+    protected static class SoapOperationDocument implements Saveable<String> {
 
         @Mapping("id")
         private String id;
@@ -261,7 +190,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         @Mapping("identifier")
         private String identifier;
         @Mapping("operationIdentifier")
-        private SoapOperationIdentifierFile operationIdentifier;
+        private SoapOperationIdentifierDocument operationIdentifier;
         @Mapping("status")
         private SoapOperationStatus status;
         @Mapping("httpMethod")
@@ -287,7 +216,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         @Mapping("identifyStrategy")
         private SoapOperationIdentifyStrategy identifyStrategy;
 
-        @XmlElement
         @Override
         public String getId() {
             return id;
@@ -298,7 +226,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.id = id;
         }
 
-        @XmlElement
         public String getName() {
             return name;
         }
@@ -307,7 +234,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.name = name;
         }
 
-        @XmlElement
         public String getIdentifier() {
             return identifier;
         }
@@ -316,16 +242,14 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.identifier = identifier;
         }
 
-        @XmlElement
-        public SoapOperationIdentifierFile getOperationIdentifier() {
+        public SoapOperationIdentifierDocument getOperationIdentifier() {
             return operationIdentifier;
         }
 
-        public void setOperationIdentifier(SoapOperationIdentifierFile operationIdentifier) {
+        public void setOperationIdentifier(SoapOperationIdentifierDocument operationIdentifier) {
             this.operationIdentifier = operationIdentifier;
         }
 
-        @XmlElement
         public String getPortId() {
             return portId;
         }
@@ -334,7 +258,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.portId = portId;
         }
 
-        @XmlElement
         public SoapResponseStrategy getResponseStrategy() {
             return responseStrategy;
         }
@@ -343,7 +266,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.responseStrategy = responseStrategy;
         }
 
-        @XmlElement
         public SoapOperationStatus getStatus() {
             return status;
         }
@@ -352,7 +274,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.status = status;
         }
 
-        @XmlElement
         public HttpMethod getHttpMethod() {
             return httpMethod;
         }
@@ -361,7 +282,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.httpMethod = httpMethod;
         }
 
-        @XmlElement
         public SoapVersion getSoapVersion() {
             return soapVersion;
         }
@@ -370,7 +290,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.soapVersion = soapVersion;
         }
 
-        @XmlElement
         public String getDefaultBody() {
             return defaultBody;
         }
@@ -379,7 +298,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.defaultBody = defaultBody;
         }
 
-        @XmlElement
         public Integer getCurrentResponseSequenceIndex() {
             return currentResponseSequenceIndex;
         }
@@ -388,7 +306,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.currentResponseSequenceIndex = currentResponseSequenceIndex;
         }
 
-        @XmlElement
         public String getForwardedEndpoint() {
             return forwardedEndpoint;
         }
@@ -397,7 +314,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.forwardedEndpoint = forwardedEndpoint;
         }
 
-        @XmlElement
         public String getOriginalEndpoint() {
             return originalEndpoint;
         }
@@ -406,7 +322,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.originalEndpoint = originalEndpoint;
         }
 
-        @XmlElement
         public boolean getSimulateNetworkDelay() {
             return simulateNetworkDelay;
         }
@@ -415,7 +330,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.simulateNetworkDelay = simulateNetworkDelay;
         }
 
-        @XmlElement
         public long getNetworkDelay() {
             return networkDelay;
         }
@@ -424,7 +338,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.networkDelay = networkDelay;
         }
 
-        @XmlElement
         public String getDefaultXPathMockResponseId() {
             return defaultXPathMockResponseId;
         }
@@ -433,7 +346,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.defaultXPathMockResponseId = defaultXPathMockResponseId;
         }
 
-        @XmlElement
         public boolean getMockOnFailure() {
             return mockOnFailure;
         }
@@ -442,7 +354,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.mockOnFailure = mockOnFailure;
         }
 
-        @XmlElement
         public SoapOperationIdentifyStrategy getIdentifyStrategy() {
             return identifyStrategy;
         }
@@ -452,16 +363,14 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         }
     }
 
-
-    @XmlRootElement(name = "soapOperationIdentifier")
-    protected static class SoapOperationIdentifierFile {
+    @Document(collection = "soapOperationIdentifier")
+    protected static class SoapOperationIdentifierDocument {
 
         @Mapping("name")
         private String name;
         @Mapping("namespace")
         private String namespace;
 
-        @XmlElement
         public String getName() {
             return name;
         }
@@ -470,7 +379,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             this.name = name;
         }
 
-        @XmlElement
         public String getNamespace() {
             return namespace;
         }
@@ -478,9 +386,15 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         public void setNamespace(String namespace) {
             this.namespace = namespace;
         }
-
     }
 
+    private Query getPortIdQuery(String portId) {
+        return query(getPortIdCriteria(portId));
+    }
+
+    private Criteria getPortIdCriteria(String portId) {
+        return where("portId").is(portId);
+    }
 }
 
 

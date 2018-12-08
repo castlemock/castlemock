@@ -15,121 +15,55 @@
  */
 
 
-package com.castlemock.repository.soap.file.project;
+package com.castlemock.repository.soap.mongodb.project;
 
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.repository.Profiles;
-import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.core.mongodb.MongoRepository;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
-import com.google.common.base.Strings;
 import org.dozer.Mapping;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
+/**
+ * @author Mohammad Hewedy
+ * @since 1.35
+ */
 @Repository
-@Profile(Profiles.FILE)
-public class SoapMockResponseFileRepository extends FileRepository<SoapMockResponseFileRepository.SoapMockResponseFile, SoapMockResponse, String> implements SoapMockResponseRepository {
-
-    @Value(value = "${soap.response.file.directory}")
-    private String fileDirectory;
-    @Value(value = "${soap.response.file.extension}")
-    private String fileExtension;
+@Profile(Profiles.MONGODB)
+public class SoapMockResponseMongoRepository extends MongoRepository<SoapMockResponseMongoRepository.SoapMockResponseDocument, SoapMockResponse, String> implements SoapMockResponseRepository {
 
     /**
-     * The method returns the directory for the specific file repository. The directory will be used to indicate
-     * where files should be saved and loaded from. The method is abstract and every subclass is responsible for
-     * overriding the method and provided the directory for their corresponding file type.
-     *
-     * @return The file directory where the files for the specific file repository could be saved and loaded from.
-     */
-    @Override
-    protected String getFileDirectory() {
-        return fileDirectory;
-    }
-
-    /**
-     * The method returns the postfix for the file that the file repository is responsible for managing.
-     * The method is abstract and every subclass is responsible for overriding the method and provided the postfix
-     * for their corresponding file type.
-     *
-     * @return The file extension for the file type that the repository is responsible for managing .
-     */
-    @Override
-    protected String getFileExtension() {
-        return fileExtension;
-    }
-
-    /**
-     * The method is responsible for controller that the type that is about the be saved to the file system is valid.
+     * The method is responsible for controller that the type that is about the be saved to mongodb is valid.
      * The method should check if the type contains all the necessary values and that the values are valid. This method
      * will always be called before a type is about to be saved. The main reason for why this is vital and done before
-     * saving is to make sure that the type can be correctly saved to the file system, but also loaded from the
-     * file system upon application startup. The method will throw an exception in case of the type not being acceptable.
+     * saving is to make sure that the type can be correctly saved to mongodb, but also loaded from
+     * mongodb upon application startup. The method will throw an exception in case of the type not being acceptable.
      *
      * @param type The instance of the type that will be checked and controlled before it is allowed to be saved on
-     *             the file system.
+     *             mongodb.
      * @see #save
      */
     @Override
-    protected void checkType(SoapMockResponseFile type) {
+    protected void checkType(SoapMockResponseDocument type) {
 
     }
-
-
-    /**
-     * The post initialize method can be used to run functionality for a specific service. The method is called when
-     * the method {@link #initialize} has finished successful.
-     *
-     * The method is responsible to validate the imported types and make certain that all the collections are
-     * initialized.
-     * @see #initialize
-     * @since 1.4
-     */
-    @Override
-    protected void postInitiate() {
-        for(SoapMockResponseFile soapMockResponse : collection.values()) {
-            List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
-            if (soapMockResponse.getHttpHeaders() != null) {
-                httpHeaders.addAll(soapMockResponse.getHttpHeaders());
-            }
-            soapMockResponse.setHttpHeaders(httpHeaders);
-
-            List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
-            if (soapMockResponse.getContentEncodings() != null) {
-                contentEncodings.addAll(soapMockResponse.getContentEncodings());
-            }
-
-            soapMockResponse.setContentEncodings(contentEncodings);
-
-            if(!Strings.isNullOrEmpty(soapMockResponse.getXpathExpression())){
-                final SoapXPathExpressionFile xPathExpression = new SoapXPathExpressionFile();
-                xPathExpression.setExpression(soapMockResponse.getXpathExpression());
-                soapMockResponse.getXpathExpressions().add(xPathExpression);
-                soapMockResponse.setXpathExpression(null);
-            }
-
-            save(soapMockResponse);
-        }
-    }
-
 
     /**
      * The method provides the functionality to search in the repository with a {@link SearchQuery}
@@ -139,37 +73,22 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
      */
     @Override
     public List<SoapMockResponse> search(SearchQuery query) {
-        final List<SoapMockResponse> result = new LinkedList<SoapMockResponse>();
-        for(SoapMockResponseFile soapMockResponseFile : collection.values()){
-            if(SearchValidator.validate(soapMockResponseFile.getName(), query.getQuery())){
-                SoapMockResponse mockResponse = mapper.map(soapMockResponseFile, SoapMockResponse.class);
-                result.add(mockResponse);
-            }
-        }
-        return result;
+        Query nameQuery = getSearchQuery("name", query);
+        List<SoapMockResponseDocument> responses =
+                mongoOperations.find(nameQuery, SoapMockResponseDocument.class);
+        return toDtoList(responses, SoapMockResponse.class);
     }
 
     @Override
     public void deleteWithOperationId(String operationId) {
-        Iterator<SoapMockResponseFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            SoapMockResponseFile mockResponse = iterator.next();
-            if(mockResponse.getOperationId().equals(operationId)){
-                delete(mockResponse.getId());
-            }
-        }
+        mongoOperations.remove(getOperationIdQuery(operationId), SoapMockResponseDocument.class);
     }
 
     @Override
     public List<SoapMockResponse> findWithOperationId(String operationId) {
-        final List<SoapMockResponse> mockResponses = new ArrayList<>();
-        for(SoapMockResponseFile mockResponse : this.collection.values()){
-            if(mockResponse.getOperationId().equals(operationId)){
-                SoapMockResponse operation = this.mapper.map(mockResponse, SoapMockResponse.class);
-                mockResponses.add(operation);
-            }
-        }
-        return mockResponses;
+        List<SoapMockResponseDocument> responses =
+                mongoOperations.find(getOperationIdQuery(operationId), SoapMockResponseDocument.class);
+        return toDtoList(responses, SoapMockResponse.class);
     }
 
     /**
@@ -178,20 +97,19 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
      *
      * @param mockResponseId The id of the {@link SoapMockResponse}.
      * @return The id of the operation.
-     * @since 1.20
      */
     @Override
     public String getOperationId(String mockResponseId) {
-        final SoapMockResponseFile mockResponse = this.collection.get(mockResponseId);
-
-        if(mockResponse == null){
+        SoapMockResponseDocument mockResponse =
+                mongoOperations.findById(mockResponseId, SoapMockResponseDocument.class);
+        if (mockResponse == null) {
             throw new IllegalArgumentException("Unable to find a mock response with the following id: " + mockResponseId);
         }
         return mockResponse.getOperationId();
     }
 
-    @XmlRootElement(name = "soapMockResponse")
-    protected static class SoapMockResponseFile implements Saveable<String> {
+    @Document(collection = "soapMockResponse")
+    protected static class SoapMockResponseDocument implements Saveable<String> {
 
         @Mapping("id")
         private String id;
@@ -215,9 +133,8 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
         @Mapping("xpathExpressions")
-        private List<SoapXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpressionFile>();
+        private List<SoapXPathExpressionDocument> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpressionDocument>();
 
-        @XmlElement
         @Override
         public String getId() {
             return id;
@@ -228,7 +145,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.id = id;
         }
 
-        @XmlElement
         public String getName() {
             return name;
         }
@@ -237,7 +153,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.name = name;
         }
 
-        @XmlElement
         public String getBody() {
             return body;
         }
@@ -246,7 +161,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.body = body;
         }
 
-        @XmlElement
         public String getOperationId() {
             return operationId;
         }
@@ -255,7 +169,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.operationId = operationId;
         }
 
-        @XmlElement
         public SoapMockResponseStatus getStatus() {
             return status;
         }
@@ -264,7 +177,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.status = status;
         }
 
-        @XmlElement
         public Integer getHttpStatusCode() {
             return httpStatusCode;
         }
@@ -273,7 +185,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.httpStatusCode = httpStatusCode;
         }
 
-        @XmlElement
         public boolean isUsingExpressions() {
             return usingExpressions;
         }
@@ -282,8 +193,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.usingExpressions = usingExpressions;
         }
 
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
         public List<HttpHeader> getHttpHeaders() {
             return httpHeaders;
         }
@@ -292,8 +201,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.httpHeaders = httpHeaders;
         }
 
-
-        @XmlElement
         public String getXpathExpression() {
             return xpathExpression;
         }
@@ -302,8 +209,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.xpathExpression = xpathExpression;
         }
 
-        @XmlElementWrapper(name = "contentEncodings")
-        @XmlElement(name = "contentEncoding")
         public List<ContentEncoding> getContentEncodings() {
             return contentEncodings;
         }
@@ -312,13 +217,11 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             this.contentEncodings = contentEncodings;
         }
 
-        @XmlElementWrapper(name = "xpathExpressions")
-        @XmlElement(name = "xpathExpression")
-        public List<SoapXPathExpressionFile> getXpathExpressions() {
+        public List<SoapXPathExpressionDocument> getXpathExpressions() {
             return xpathExpressions;
         }
 
-        public void setXpathExpressions(List<SoapXPathExpressionFile> xpathExpressions) {
+        public void setXpathExpressions(List<SoapXPathExpressionDocument> xpathExpressions) {
             this.xpathExpressions = xpathExpressions;
         }
 
@@ -326,10 +229,10 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         public boolean equals(Object o) {
             if (this == o)
                 return true;
-            if (!(o instanceof SoapMockResponseFile))
+            if (!(o instanceof SoapMockResponseDocument))
                 return false;
 
-            SoapMockResponseFile that = (SoapMockResponseFile) o;
+            SoapMockResponseDocument that = (SoapMockResponseDocument) o;
 
             if (id != null ? !id.equals(that.id) : that.id != null)
                 return false;
@@ -343,12 +246,11 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         }
     }
 
-    @XmlRootElement(name = "soapXPathExpression")
-    protected static class SoapXPathExpressionFile {
+    @Document(collection = "soapXPathExpression")
+    protected static class SoapXPathExpressionDocument {
 
         private String expression;
 
-        @XmlElement
         public String getExpression() {
             return expression;
         }
@@ -356,6 +258,13 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         public void setExpression(String expression) {
             this.expression = expression;
         }
+    }
 
+    private Query getOperationIdQuery(String operationId) {
+        return query(getOperationIdCriteria(operationId));
+    }
+
+    private Criteria getOperationIdCriteria(String operationId) {
+        return where("operationId").is(operationId);
     }
 }

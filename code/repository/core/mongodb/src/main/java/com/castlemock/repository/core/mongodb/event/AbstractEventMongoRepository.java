@@ -6,6 +6,10 @@ import org.dozer.Mapping;
 
 import java.util.Date;
 
+/**
+ * @author Mohammad Hewedy
+ * @since 1.35
+ */
 public abstract class AbstractEventMongoRepository<T extends AbstractEventMongoRepository.EventDocument, D> extends MongoRepository<T, D, String> {
 
     public static abstract class EventDocument implements Saveable<String> {

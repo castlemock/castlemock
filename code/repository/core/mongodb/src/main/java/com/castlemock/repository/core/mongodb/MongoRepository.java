@@ -1,12 +1,15 @@
 package com.castlemock.repository.core.mongodb;
 
 import com.castlemock.core.basis.model.Saveable;
+import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.repository.Repository;
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
+import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
@@ -17,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
  * The abstract repository provides functionality to interact with the mongodb in order to manage a specific type.
@@ -27,7 +31,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
  * @param <I> The id is used as an identifier for the type.
  * @author Mohammad hewedy
  * @see Saveable
- * @since 1.34
+ * @since 1.35
  */
 @org.springframework.stereotype.Repository
 public abstract class MongoRepository<T extends Saveable<I>, D, I extends Serializable> implements Repository<D, I> {
@@ -57,6 +61,7 @@ public abstract class MongoRepository<T extends Saveable<I>, D, I extends Serial
     /**
      * The initialize method is responsible for initiating the repository.
      * has empty implementation by default.
+     *
      * @see #postInitiate()
      */
     @Override
@@ -173,9 +178,10 @@ public abstract class MongoRepository<T extends Saveable<I>, D, I extends Serial
      * the method {@link #initialize} has finished successful. The method does not contain any functionality and the
      * whole idea is the it should be overridden by subclasses, but only if certain functionality is required to
      * run after the {@link #initialize} method has completed.
+     *
      * @see #initialize
      */
-    protected void postInitiate(){
+    protected void postInitiate() {
         LOGGER.debug("Post initialize method not implemented for " + entityClass.getSimpleName());
     }
 
@@ -207,6 +213,65 @@ public abstract class MongoRepository<T extends Saveable<I>, D, I extends Serial
             dtos.add(mapper.map(type, clazz));
         }
         return dtos;
+    }
+
+    /**
+     * Case-insensitive contains search.
+     *
+     * @see com.castlemock.core.basis.model.SearchValidator#validate(String, String)
+     */
+    protected Query getSearchQuery(String property, SearchQuery searchQuery) {
+        return query(where(property).regex(".*" + searchQuery.getQuery() + ".*", "i"));
+    }
+
+    @Document(collection = "httpHeader")
+    protected static class HttpHeaderDocument {
+
+        @Mapping("name")
+        private String name;
+        @Mapping("value")
+        private String value;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+    }
+
+    @Document(collection = "httpParameter")
+    protected static class HttpParameterDocument {
+
+        @Mapping("name")
+        private String name;
+        @Mapping("value")
+        private String value;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
     }
 
     private Query getIdQuery(Object id) {

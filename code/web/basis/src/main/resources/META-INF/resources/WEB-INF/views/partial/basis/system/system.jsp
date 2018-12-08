@@ -69,10 +69,34 @@
                 <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.availableprocessors"/></label></td>
                 <td class="column2"><label path="javaVersion">${systemInformation.availableProcessors}</label></td>
             </tr>
-            <tr>
-                <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.castlemockhomedirectory"/></label></td>
-                <td class="column2"><label path="javaVersion">${systemInformation.castleMockHomeDirectory}</label></td>
-            </tr>
+            <c:if test="${systemInformation.showCastleMockHomeDirectory}">
+                <tr>
+                    <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.castlemockhomedirectory"/></label></td>
+                    <td class="column2"><label path="javaVersion">${systemInformation.castleMockHomeDirectory}</label></td>
+                </tr>
+            </c:if>
+            <c:if test="${systemInformation.showMongoProperties}">
+                <c:if test="${systemInformation.mongoProperties.usesUri == false}">
+                    <tr>
+                        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.mongo.host"/></label></td>
+                        <td class="column2"><label path="javaVersion">${systemInformation.mongoProperties.host}</label></td>
+                    </tr>
+                    <tr>
+                        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.mongo.port"/></label></td>
+                        <td class="column2"><label path="javaVersion">${systemInformation.mongoProperties.port}</label></td>
+                    </tr>
+                </c:if>
+                <c:if test="${systemInformation.mongoProperties.usesUri}">
+                    <tr>
+                        <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.mongo.uri"/></label></td>
+                        <td class="column2"><label path="javaVersion">${systemInformation.mongoProperties.uri}</label></td>
+                    </tr>
+                </c:if>
+                <tr>
+                    <td class="column1"><label path="javaVersion"><spring:message code="general.system.label.mongo.database"/></label></td>
+                    <td class="column2"><label path="javaVersion">${systemInformation.mongoProperties.database}</label></td>
+                </tr>
+            </c:if>
         </table>
     </section>
 </div>

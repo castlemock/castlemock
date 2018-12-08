@@ -23,10 +23,12 @@ import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.soap.project.SoapPortRepository;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -37,6 +39,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Repository
+@Profile(Profiles.FILE)
 public class SoapPortFileRepository extends FileRepository<SoapPortFileRepository.SoapPortFile, SoapPort, String> implements SoapPortRepository {
 
     @Value(value = "${soap.port.file.directory}")

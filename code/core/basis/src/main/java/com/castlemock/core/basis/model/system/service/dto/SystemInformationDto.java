@@ -35,6 +35,9 @@ public class SystemInformationDto {
     private long freeMemory;
     private int availableProcessors;
     private String castleMockHomeDirectory;
+    private boolean showCastleMockHomeDirectory;
+    private MongoProperties mongoProperties;
+    private boolean showMongoProperties;
 
     public String getOperatingSystemName() {
         return operatingSystemName;
@@ -122,5 +125,29 @@ public class SystemInformationDto {
 
     public void setCastleMockHomeDirectory(String castleMockHomeDirectory) {
         this.castleMockHomeDirectory = castleMockHomeDirectory;
+    }
+
+    public boolean isShowCastleMockHomeDirectory() {
+        return showCastleMockHomeDirectory;
+    }
+
+    public void setShowCastleMockHomeDirectory(boolean showCastleMockHomeDirectory) {
+        this.showCastleMockHomeDirectory = showCastleMockHomeDirectory;
+    }
+
+    public MongoProperties getMongoProperties() {
+        return mongoProperties;
+    }
+
+    public void setMongoProperties(MongoProperties mongoProperties) {
+        this.mongoProperties = mongoProperties;
+    }
+
+    public boolean isShowMongoProperties() {
+        return showMongoProperties;
+    }
+
+    public void setShowMongoProperties(boolean showMongoProperties) {
+        this.showMongoProperties = showMongoProperties;
     }
 }

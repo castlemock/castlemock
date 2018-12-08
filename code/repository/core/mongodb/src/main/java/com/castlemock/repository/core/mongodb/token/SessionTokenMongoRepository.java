@@ -25,7 +25,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
  *
  * @author Mohammad Hewedy
  * @see SessionToken
- * @since 1.34
+ * @since 1.35
  */
 @Profile(Profiles.MONGODB)
 @Component("tokenRepository")
