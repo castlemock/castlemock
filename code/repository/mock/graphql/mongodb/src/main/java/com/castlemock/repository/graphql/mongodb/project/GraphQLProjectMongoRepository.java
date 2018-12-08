@@ -14,127 +14,67 @@
  * limitations under the License.
  */
 
-package com.castlemock.repository.graphql.file.project;
+package com.castlemock.repository.graphql.mongodb.project;
 
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestArgument;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestField;
 import com.castlemock.repository.Profiles;
-import com.castlemock.repository.core.file.project.AbstractProjectFileRepository;
+import com.castlemock.repository.core.mongodb.project.AbstractProjectMongoRepository;
 import com.castlemock.repository.graphql.project.GraphQLProjectRepository;
 import com.google.common.base.Preconditions;
-import org.apache.log4j.Logger;
 import org.dozer.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
+/**
+ * @author Mohammad Hewedy
+ * @since 1.35
+ */
 @Repository
-@Profile(Profiles.FILE)
-public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<GraphQLProjectRepositoryFile.GraphQLProjectFile, GraphQLProject> implements GraphQLProjectRepository {
-
-    @Autowired
-    private MessageSource messageSource;
-    @Value(value = "${graphql.project.file.directory}")
-    private String graphQLProjectFileDirectory;
-    @Value(value = "${graphql.project.file.extension}")
-    private String graphQLProjectFileExtension;
-
-    private static final String SLASH = "/";
-    private static final String GRAPHQL = "graphql";
-    private static final String PROJECT = "project";
-    private static final String COMMA = ", ";
-    private static final String GRAPHQL_TYPE = "GraphQL";
-    private static final String QUERY = "query";
-    private static final String MUTATION = "mutation";
-    private static final String SUBSCRIPTION = "subscription";
-    private static final String OBJECT_TYPE = "object";
-    private static final String ENUM_TYPE = "enum";
-
-
-    private static final Logger LOGGER = Logger.getLogger(GraphQLProjectRepositoryFile.class);
+@Profile(Profiles.MONGODB)
+public class GraphQLProjectMongoRepository extends AbstractProjectMongoRepository<GraphQLProjectMongoRepository.GraphQLProjectDocument, GraphQLProject> implements GraphQLProjectRepository {
 
     /**
-     * The method returns the directory for the specific file repository. The directory will be used to indicate
-     * where files should be saved and loaded from. The method is abstract and every subclass is responsible for
-     * overriding the method and provided the directory for their corresponding file type.
-     *
-     * @return The file directory where the files for the specific file repository could be saved and loaded from.
-     */
-    @Override
-    protected String getFileDirectory() {
-        return graphQLProjectFileDirectory;
-    }
-
-    /**
-     * The method returns the postfix for the file that the file repository is responsible for managing.
-     * The method is abstract and every subclass is responsible for overriding the method and provided the postfix
-     * for their corresponding file type.
-     *
-     * @return The file extension for the file type that the repository is responsible for managing .
-     */
-    @Override
-    protected String getFileExtension() {
-        return graphQLProjectFileExtension;
-    }
-
-    /**
-     * The method is responsible for controller that the type that is about the be saved to the file system is valid.
+     * The method is responsible for controller that the type that is about the be saved to mongodb is valid.
      * The method should check if the type contains all the necessary values and that the values are valid. This method
      * will always be called before a type is about to be saved. The main reason for why this is vital and done before
-     * saving is to make sure that the type can be correctly saved to the file system, but also loaded from the
-     * file system upon application startup. The method will throw an exception in case of the type not being acceptable.
+     * saving is to make sure that the type can be correctly saved to mongodb, but also loaded from
+     * mongodb upon application startup. The method will throw an exception in case of the type not being acceptable.
      *
      * @param type The instance of the type that will be checked and controlled before it is allowed to be saved on
-     *             the file system.
+     *             mongodb.
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLProjectFile type) {
+    protected void checkType(GraphQLProjectDocument type) {
 
     }
 
     /**
      * The method provides the functionality to search in the repository with a {@link SearchQuery}
+     *
      * @param query The search query
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
     public List<GraphQLProject> search(SearchQuery query) {
-        final List<GraphQLProject> result = new LinkedList<GraphQLProject>();
-        for(GraphQLProjectFile graphQLProjectFile : collection.values()){
-            if(SearchValidator.validate(graphQLProjectFile.getName(), query.getQuery())){
-                GraphQLProject graphQLProject = mapper.map(graphQLProjectFile, GraphQLProject.class);
-                result.add(graphQLProject);
-            }
-        }
-        return result;
-    }
-
-    /**
-     * The save method provides the functionality to save an instance to the file system.
-     * @param project The type that will be saved to the file system.
-     * @return The type that was saved to the file system. The main reason for it is being returned is because
-     *         there could be modifications of the object during the save process. For example, if the type does not
-     *         have an identifier, then the method will generate a new identifier for the type.
-     */
-    @Override
-    public GraphQLProject save(final GraphQLProjectFile project) {
-        return super.save(project);
+        Query nameQuery = getSearchQuery("name", query);
+        List<GraphQLProjectDocument> operations =
+                mongoOperations.find(nameQuery, GraphQLProjectDocument.class);
+        return toDtoList(operations, GraphQLProject.class);
     }
 
 
@@ -149,25 +89,19 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
     public GraphQLProject findGraphQLProjectWithName(String name) {
         Preconditions.checkNotNull(name, "Project name cannot be null");
         Preconditions.checkArgument(!name.isEmpty(), "Project name cannot be empty");
-        for(GraphQLProjectFile graphQLProject : collection.values()){
-            if(graphQLProject.getName().equalsIgnoreCase(name)) {
-                return mapper.map(graphQLProject, GraphQLProject.class);
-            }
-        }
-        return null;
+
+        Query exactNameIgnoreCaseQuery = query(where("name").regex("^" + name + "$", "i"));
+        GraphQLProjectDocument project = mongoOperations.findOne(exactNameIgnoreCaseQuery, GraphQLProjectDocument.class);
+        return project == null ? null : mapper.map(project, GraphQLProject.class);
     }
 
-    @XmlRootElement(name = "graphQLProject")
-    protected static class GraphQLProjectFile extends AbstractProjectFileRepository.ProjectFile {
+    @Document(collection = "graphQLProject")
+    protected static class GraphQLProjectDocument extends AbstractProjectMongoRepository.ProjectDocument {
 
     }
 
-    /**
-     * @author Karl Dahlgren
-     * @since 1.19
-     */
-    @XmlRootElement(name = "graphQLRequestQuery")
-    protected static class GraphQLRequestQueryFile implements Saveable<String> {
+    @Document(collection = "graphQLRequestQuery")
+    protected static class GraphQLRequestQueryDocument implements Saveable<String> {
 
         @Mapping("id")
         private String id;
@@ -179,7 +113,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
         private List<GraphQLRequestArgument> arguments = new CopyOnWriteArrayList<GraphQLRequestArgument>();
 
         @Override
-        @XmlElement
         public String getId() {
             return id;
         }
@@ -189,7 +122,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.id = id;
         }
 
-        @XmlElement
         public String getOperationName() {
             return operationName;
         }
@@ -198,8 +130,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.operationName = operationName;
         }
 
-        @XmlElementWrapper(name = "fields")
-        @XmlElement(name = "field")
         public List<GraphQLRequestField> getFields() {
             return fields;
         }
@@ -208,8 +138,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.fields = fields;
         }
 
-        @XmlElementWrapper(name = "arguments")
-        @XmlElement(name = "argument")
         public List<GraphQLRequestArgument> getArguments() {
             return arguments;
         }
@@ -219,8 +147,8 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
         }
     }
 
-    @XmlRootElement(name = "graphQLAttribute")
-    protected static class GraphQLAttributeFile implements Saveable<String> {
+    @Document(collection = "graphQLAttribute")
+    protected static class GraphQLAttributeDocument implements Saveable<String> {
 
         private String id;
         private String name;
@@ -232,10 +160,8 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
         private String objectTypeId;
         private String value;
         private GraphQLAttributeType attributeType;
-        private List<GraphQLArgumentFile> arguments = new CopyOnWriteArrayList<GraphQLArgumentFile>();
+        private List<GraphQLArgumentDocument> arguments = new CopyOnWriteArrayList<GraphQLArgumentDocument>();
 
-        @Override
-        @XmlElement
         public String getId() {
             return id;
         }
@@ -245,7 +171,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.id = id;
         }
 
-        @XmlElement
         public String getName() {
             return name;
         }
@@ -254,7 +179,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.name = name;
         }
 
-        @XmlElement
         public String getValue() {
             return value;
         }
@@ -263,7 +187,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.value = value;
         }
 
-        @XmlElement
         public String getDescription() {
             return description;
         }
@@ -272,7 +195,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.description = description;
         }
 
-        @XmlElement
         public String getTypeId() {
             return typeId;
         }
@@ -281,7 +203,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.typeId = typeId;
         }
 
-        @XmlElement
         public String getTypeName() {
             return typeName;
         }
@@ -290,7 +211,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.typeName = typeName;
         }
 
-        @XmlElement
         public Boolean getNullable() {
             return nullable;
         }
@@ -299,7 +219,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.nullable = nullable;
         }
 
-        @XmlElement
         public Boolean getListable() {
             return listable;
         }
@@ -308,7 +227,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.listable = listable;
         }
 
-        @XmlElement
         public GraphQLAttributeType getAttributeType() {
             return attributeType;
         }
@@ -317,17 +235,14 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.attributeType = attributeType;
         }
 
-        @XmlElementWrapper(name = "arguments")
-        @XmlElement(name = "argument")
-        public List<GraphQLArgumentFile> getArguments() {
+        public List<GraphQLArgumentDocument> getArguments() {
             return arguments;
         }
 
-        public void setArguments(List<GraphQLArgumentFile> arguments) {
+        public void setArguments(List<GraphQLArgumentDocument> arguments) {
             this.arguments = arguments;
         }
 
-        @XmlElement
         public String getObjectTypeId() {
             return objectTypeId;
         }
@@ -337,15 +252,14 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
         }
     }
 
-    @XmlRootElement(name = "graphQLRequestArgument")
-    protected static class GraphQLRequestArgumentFile {
+    @Document(collection = "graphQLRequestArgument")
+    protected static class GraphQLRequestArgumentDocument {
 
         @Mapping("name")
         private String name;
         @Mapping("arguments")
-        private List<GraphQLRequestArgumentFile> arguments = new CopyOnWriteArrayList<GraphQLRequestArgumentFile>();
+        private List<GraphQLRequestArgumentDocument> arguments = new CopyOnWriteArrayList<GraphQLRequestArgumentDocument>();
 
-        @XmlElement
         public String getName() {
             return name;
         }
@@ -354,26 +268,23 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.name = name;
         }
 
-        @XmlElementWrapper(name = "arguments")
-        @XmlElement(name = "argument")
-        public List<GraphQLRequestArgumentFile> getArguments() {
+        public List<GraphQLRequestArgumentDocument> getArguments() {
             return arguments;
         }
 
-        public void setArguments(List<GraphQLRequestArgumentFile> arguments) {
+        public void setArguments(List<GraphQLRequestArgumentDocument> arguments) {
             this.arguments = arguments;
         }
     }
 
-    @XmlRootElement(name = "graphQLRequestField")
-    public class GraphQLRequestFieldFile {
+    @Document(collection = "graphQLRequestField")
+    public class GraphQLRequestFieldDocument {
 
         @Mapping("name")
         private String name;
         @Mapping("fields")
-        private List<GraphQLRequestFieldFile> fields = new CopyOnWriteArrayList<GraphQLRequestFieldFile>();
+        private List<GraphQLRequestFieldDocument> fields = new CopyOnWriteArrayList<GraphQLRequestFieldDocument>();
 
-        @XmlElement
         public String getName() {
             return name;
         }
@@ -382,20 +293,18 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.name = name;
         }
 
-        @XmlElementWrapper(name = "fields")
-        @XmlElement(name = "field")
-        public List<GraphQLRequestFieldFile> getFields() {
+        public List<GraphQLRequestFieldDocument> getFields() {
             return fields;
         }
 
-        public void setFields(List<GraphQLRequestFieldFile> fields) {
+        public void setFields(List<GraphQLRequestFieldDocument> fields) {
             this.fields = fields;
         }
     }
 
 
-    @XmlRootElement(name = "graphQLArgument")
-    protected static class GraphQLArgumentFile implements Saveable<String> {
+    @Document(collection = "graphQLArgument")
+    protected static class GraphQLArgumentDocument implements Saveable<String> {
 
         @Mapping("id")
         private String id;
@@ -417,7 +326,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
         private GraphQLAttributeType attributeType;
 
         @Override
-        @XmlElement
         public String getId() {
             return id;
         }
@@ -427,7 +335,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.id = id;
         }
 
-        @XmlElement
         public String getName() {
             return name;
         }
@@ -436,7 +343,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.name = name;
         }
 
-        @XmlElement
         public String getDescription() {
             return description;
         }
@@ -445,7 +351,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.description = description;
         }
 
-        @XmlElement
         public String getTypeName() {
             return typeName;
         }
@@ -454,7 +359,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.typeName = typeName;
         }
 
-        @XmlElement
         public String getTypeId() {
             return typeId;
         }
@@ -463,7 +367,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.typeId = typeId;
         }
 
-        @XmlElement
         public Object getDefaultValue() {
             return defaultValue;
         }
@@ -472,7 +375,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.defaultValue = defaultValue;
         }
 
-        @XmlElement
         public Boolean getNullable() {
             return nullable;
         }
@@ -481,7 +383,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.nullable = nullable;
         }
 
-        @XmlElement
         public Boolean getListable() {
             return listable;
         }
@@ -490,7 +391,6 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
             this.listable = listable;
         }
 
-        @XmlElement
         public GraphQLAttributeType getAttributeType() {
             return attributeType;
         }
@@ -498,8 +398,5 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
         public void setAttributeType(GraphQLAttributeType attributeType) {
             this.attributeType = attributeType;
         }
-
     }
-
-
 }

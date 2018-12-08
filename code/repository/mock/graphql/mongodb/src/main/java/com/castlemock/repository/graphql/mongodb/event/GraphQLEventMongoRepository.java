@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.repository.graphql.file.event;
+package com.castlemock.repository.graphql.mongodb.event;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
@@ -22,95 +22,63 @@ import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
 import com.castlemock.repository.Profiles;
-import com.castlemock.repository.core.file.FileRepository;
-import com.castlemock.repository.core.file.event.AbstractEventFileRepository;
+import com.castlemock.repository.core.mongodb.MongoRepository;
+import com.castlemock.repository.core.mongodb.event.AbstractEventMongoRepository;
 import com.castlemock.repository.graphql.event.GraphQLEventRepository;
 import com.google.common.base.Preconditions;
 import org.dozer.Mapping;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Iterator;
 import java.util.List;
 
+
+/**
+ * @author Mohammad Hewedy
+ * @since 1.35
+ */
 @Repository
-@Profile(Profiles.FILE)
-public class GraphQLEventFileRepository extends AbstractEventFileRepository<GraphQLEventFileRepository.GraphQLEventFile, GraphQLEvent> implements GraphQLEventRepository {
-
-    @Value(value = "${graphql.event.file.directory}")
-    private String graphQLEventFileDirectory;
-    @Value(value = "${graphql.event.file.extension}")
-    private String graphQLEventFileExtension;
+@Profile(Profiles.MONGODB)
+public class GraphQLEventMongoRepository extends AbstractEventMongoRepository<GraphQLEventMongoRepository.GraphQLEventDocument, GraphQLEvent> implements GraphQLEventRepository {
 
     /**
-     * The method returns the directory for the specific file repository. The directory will be used to indicate
-     * where files should be saved and loaded from. The method is abstract and every subclass is responsible for
-     * overriding the method and provided the directory for their corresponding file type.
-     *
-     * @return The file directory where the files for the specific file repository could be saved and loaded from.
-     */
-    @Override
-    protected String getFileDirectory() {
-        return graphQLEventFileDirectory;
-    }
-
-    /**
-     * The method returns the postfix for the file that the file repository is responsible for managing.
-     * The method is abstract and every subclass is responsible for overriding the method and provided the postfix
-     * for their corresponding file type.
-     *
-     * @return The file extension for the file type that the repository is responsible for managing .
-     */
-    @Override
-    protected String getFileExtension() {
-        return graphQLEventFileExtension;
-    }
-
-    /**
-     * The method is responsible for controller that the type that is about the be saved to the file system is valid.
+     * The method is responsible for controller that the type that is about the be saved to mongodb is valid.
      * The method should check if the type contains all the necessary values and that the values are valid. This method
      * will always be called before a type is about to be saved. The main reason for why this is vital and done before
-     * saving is to make sure that the type can be correctly saved to the file system, but also loaded from the
-     * file system upon application startup. The method will throw an exception in case of the type not being acceptable.
+     * saving is to make sure that the type can be correctly saved to mongodb, but also loaded from
+     * mongodb upon application startup. The method will throw an exception in case of the type not being acceptable.
      *
      * @param type The instance of the type that will be checked and controlled before it is allowed to be saved on
-     *             the file system.
+     *             mongodb.
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLEventFile type) {
+    protected void checkType(GraphQLEventDocument type) {
         Preconditions.checkNotNull(type, "Event cannot be null");
-        Preconditions.checkNotNull(type.getId(), "Event id cannot be null");
         Preconditions.checkNotNull(type.getEndDate(), "Event end date cannot be null");
         Preconditions.checkNotNull(type.getStartDate(), "Event start date cannot be null");
     }
 
     /**
      * The service finds the oldest event
+     *
      * @return The oldest event
      */
     @Override
     public GraphQLEvent getOldestEvent() {
-        GraphQLEventFile oldestEvent = null;
-        for(GraphQLEventFile event : collection.values()){
-            if(oldestEvent == null){
-                oldestEvent = event;
-            } else if(event.getStartDate().before(oldestEvent.getStartDate())){
-                oldestEvent = event;
-            }
-        }
-
+        GraphQLEventDocument oldestEvent =
+                mongoOperations.findOne(getOldestStartDateQuery(), GraphQLEventDocument.class);
         return oldestEvent == null ? null : mapper.map(oldestEvent, GraphQLEvent.class);
     }
 
     /**
      * The method provides the functionality to search in the repository with a {@link SearchQuery}
+     *
      * @param query The search query
-     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
+     * @return A <code>list</code> of {@link GraphQLEvent} that matches the provided {@link SearchQuery}
      */
     @Override
     public List<GraphQLEvent> search(SearchQuery query) {
@@ -119,60 +87,55 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
 
     /**
      * The method finds and deletes the oldest event.
+     *
      * @return The event that was deleted.
-     * @since 1.5
      */
     @Override
-    public synchronized GraphQLEvent deleteOldestEvent(){
-        GraphQLEvent event = getOldestEvent();
-        delete(event.getId());
-        return event;
+    public synchronized GraphQLEvent deleteOldestEvent() {
+        GraphQLEventDocument oldestEvent =
+                mongoOperations.findAndRemove(getOldestStartDateQuery(), GraphQLEventDocument.class);
+        return oldestEvent == null ? null : mapper.map(oldestEvent, GraphQLEvent.class);
     }
 
     /**
      * The method clears and deletes all logs.
+     *
      * @since 1.7
      */
     @Override
     public void clearAll() {
-        Iterator<GraphQLEventFile> iterator = collection.values().iterator();
-        while(iterator.hasNext()){
-            GraphQLEventFile soapEvent = iterator.next();
-            delete(soapEvent.getId());
-        }
+        //drop vs remove => https://stackoverflow.com/q/12147783
+        mongoOperations.dropCollection(GraphQLEventDocument.class);
     }
 
-    @XmlRootElement(name = "graphQLEvent")
-    protected static class GraphQLEventFile extends AbstractEventFileRepository.EventFile {
+    @Document(collection = "graphQLEvent")
+    protected static class GraphQLEventDocument extends AbstractEventMongoRepository.EventDocument {
 
         @Mapping("request")
-        private GraphQLRequestFile request;
+        private GraphQLRequestDocument request;
         @Mapping("response")
-        private GraphQLResponseFile response;
+        private GraphQLResponseDocument response;
         @Mapping("projectId")
         private String projectId;
         @Mapping("applicationId")
         private String applicationId;
 
-        @XmlElement
-        public GraphQLRequestFile getRequest() {
+        public GraphQLRequestDocument getRequest() {
             return request;
         }
 
-        public void setRequest(GraphQLRequestFile request) {
+        public void setRequest(GraphQLRequestDocument request) {
             this.request = request;
         }
 
-        @XmlElement
-        public GraphQLResponseFile getResponse() {
+        public GraphQLResponseDocument getResponse() {
             return response;
         }
 
-        public void setResponse(GraphQLResponseFile response) {
+        public void setResponse(GraphQLResponseDocument response) {
             this.response = response;
         }
 
-        @XmlElement
         public String getProjectId() {
             return projectId;
         }
@@ -181,7 +144,6 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
             this.projectId = projectId;
         }
 
-        @XmlElement
         public String getApplicationId() {
             return applicationId;
         }
@@ -192,8 +154,8 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
 
     }
 
-    @XmlRootElement(name = "graphQLRequest")
-    protected static class GraphQLRequestFile {
+    @Document(collection = "graphQLRequest")
+    protected static class GraphQLRequestDocument {
 
         @Mapping("body")
         private String body;
@@ -206,9 +168,8 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
         @Mapping("queries")
         private List<GraphQLRequestQuery> queries;
         @Mapping("httpHeaders")
-        private List<FileRepository.HttpHeaderFile> httpHeaders;
+        private List<MongoRepository.HttpHeaderDocument> httpHeaders;
 
-        @XmlElement
         public String getBody() {
             return body;
         }
@@ -217,7 +178,6 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
             this.body = body;
         }
 
-        @XmlElement
         public String getContentType() {
             return contentType;
         }
@@ -226,7 +186,6 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
             this.contentType = contentType;
         }
 
-        @XmlElement
         public String getUri() {
             return uri;
         }
@@ -235,7 +194,6 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
             this.uri = uri;
         }
 
-        @XmlElement
         public HttpMethod getHttpMethod() {
             return httpMethod;
         }
@@ -244,9 +202,6 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
             this.httpMethod = httpMethod;
         }
 
-
-        @XmlElementWrapper(name = "queries")
-        @XmlElement(name = "query")
         public List<GraphQLRequestQuery> getQueries() {
             return queries;
         }
@@ -255,20 +210,18 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
             this.queries = queries;
         }
 
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
-        public List<FileRepository.HttpHeaderFile> getHttpHeaders() {
+        public List<MongoRepository.HttpHeaderDocument> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<FileRepository.HttpHeaderFile> httpHeaders) {
+        public void setHttpHeaders(List<MongoRepository.HttpHeaderDocument> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 
     }
 
-    @XmlRootElement(name = "graphQLResponse")
-    protected static class GraphQLResponseFile {
+    @Document(collection = "graphQLResponse")
+    protected static class GraphQLResponseDocument {
 
         @Mapping("body")
         private String body;
@@ -277,11 +230,10 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
         @Mapping("contentType")
         private String contentType;
         @Mapping("httpHeaders")
-        private List<FileRepository.HttpHeaderFile> httpHeaders;
+        private List<MongoRepository.HttpHeaderDocument> httpHeaders;
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings;
 
-        @XmlElement
         public String getBody() {
             return body;
         }
@@ -290,7 +242,6 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
             this.body = body;
         }
 
-        @XmlElement
         public Integer getHttpStatusCode() {
             return httpStatusCode;
         }
@@ -299,7 +250,6 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
             this.httpStatusCode = httpStatusCode;
         }
 
-        @XmlElement
         public String getContentType() {
             return contentType;
         }
@@ -308,18 +258,14 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
             this.contentType = contentType;
         }
 
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
-        public List<FileRepository.HttpHeaderFile> getHttpHeaders() {
+        public List<MongoRepository.HttpHeaderDocument> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<FileRepository.HttpHeaderFile> httpHeaders) {
+        public void setHttpHeaders(List<MongoRepository.HttpHeaderDocument> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 
-        @XmlElementWrapper(name = "contentEncodings")
-        @XmlElement(name = "contentEncoding")
         public List<ContentEncoding> getContentEncodings() {
             return contentEncodings;
         }
@@ -327,7 +273,9 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
         public void setContentEncodings(List<ContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
         }
-
     }
 
+    private Query getOldestStartDateQuery() {
+        return new Query().with(Sort.by("startDate")).limit(1);
+    }
 }

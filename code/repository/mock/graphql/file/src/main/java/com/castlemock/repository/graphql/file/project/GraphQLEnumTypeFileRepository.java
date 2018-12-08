@@ -21,11 +21,13 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLEnumType;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.graphql.project.GraphQLEnumTypeRepository;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -38,6 +40,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
+@Profile(Profiles.FILE)
 public class GraphQLEnumTypeFileRepository extends AbstractGraphQLTypeFileRepository<GraphQLEnumTypeFileRepository.GraphQLEnumTypeFile, GraphQLEnumType> implements GraphQLEnumTypeRepository {
 
     @Autowired

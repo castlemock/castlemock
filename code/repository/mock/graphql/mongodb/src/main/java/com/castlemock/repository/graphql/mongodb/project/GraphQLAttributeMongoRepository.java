@@ -14,82 +14,51 @@
  * limitations under the License.
  */
 
-package com.castlemock.repository.graphql.file.project;
+package com.castlemock.repository.graphql.mongodb.project;
 
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLArgument;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttribute;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
 import com.castlemock.repository.Profiles;
-import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.core.mongodb.MongoRepository;
 import com.castlemock.repository.graphql.project.GraphQLAttributeRepository;
 import org.dozer.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
+/**
+ * @author Mohammad Hewedy
+ * @since 1.35
+ */
 @Repository
-@Profile(Profiles.FILE)
-public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttributeFileRepository.GraphQLAttributeFile, GraphQLAttribute, String> implements GraphQLAttributeRepository {
-
-    @Autowired
-    private MessageSource messageSource;
-    @Value(value = "${graphql.attribute.file.directory}")
-    private String fileDirectory;
-    @Value(value = "${graphql.attribute.file.extension}")
-    private String fileExtension;
+@Profile(Profiles.MONGODB)
+public class GraphQLAttributeMongoRepository extends MongoRepository<GraphQLAttributeMongoRepository.GraphQLAttributeDocument, GraphQLAttribute, String> implements GraphQLAttributeRepository {
 
     /**
-     * The method returns the directory for the specific file repository. The directory will be used to indicate
-     * where files should be saved and loaded from. The method is abstract and every subclass is responsible for
-     * overriding the method and provided the directory for their corresponding file type.
-     *
-     * @return The file directory where the files for the specific file repository could be saved and loaded from.
-     */
-    @Override
-    protected String getFileDirectory() {
-        return fileDirectory;
-    }
-
-    /**
-     * The method returns the postfix for the file that the file repository is responsible for managing.
-     * The method is abstract and every subclass is responsible for overriding the method and provided the postfix
-     * for their corresponding file type.
-     *
-     * @return The file extension for the file type that the repository is responsible for managing .
-     */
-    @Override
-    protected String getFileExtension() {
-        return fileExtension;
-    }
-
-    /**
-     * The method is responsible for controller that the type that is about the be saved to the file system is valid.
+     * The method is responsible for controller that the type that is about the be saved to mongodb is valid.
      * The method should check if the type contains all the necessary values and that the values are valid. This method
      * will always be called before a type is about to be saved. The main reason for why this is vital and done before
-     * saving is to make sure that the type can be correctly saved to the file system, but also loaded from the
-     * file system upon application startup. The method will throw an exception in case of the type not being acceptable.
+     * saving is to make sure that the type can be correctly saved mongodb, but also loaded from the
+     * mongodb upon application startup. The method will throw an exception in case of the type not being acceptable.
      *
      * @param type The instance of the type that will be checked and controlled before it is allowed to be saved on
      *             the file system.
      * @see #save
      */
     @Override
-    protected void checkType(GraphQLAttributeFile type) {
+    protected void checkType(GraphQLAttributeDocument type) {
 
     }
 
@@ -117,41 +86,26 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
      */
     @Override
     public List<GraphQLAttribute> search(SearchQuery query) {
-        final List<GraphQLAttribute> result = new LinkedList<GraphQLAttribute>();
-        for(GraphQLAttributeFile graphQLAttributeFile : collection.values()){
-            if(SearchValidator.validate(graphQLAttributeFile.getName(), query.getQuery())){
-                GraphQLAttribute graphQLAttribute = mapper.map(graphQLAttributeFile, GraphQLAttribute.class);
-                result.add(graphQLAttribute);
-            }
-        }
-        return result;
+        Query nameQuery = getSearchQuery("name", query);
+        List<GraphQLAttributeDocument> operations =
+                mongoOperations.find(nameQuery, GraphQLAttributeDocument.class);
+        return toDtoList(operations, GraphQLAttribute.class);
     }
 
     @Override
-    public List<GraphQLAttribute> findWithObjectTypeId(final String projectId) {
-        final List<GraphQLAttribute> attributes = new ArrayList<>();
-        for(GraphQLAttributeFile attribute : this.collection.values()){
-            if(attribute.getObjectTypeId().equals(projectId)){
-                GraphQLAttribute application = this.mapper.map(attribute, GraphQLAttribute.class);
-                attributes.add(application);
-            }
-        }
-        return attributes;
+    public List<GraphQLAttribute> findWithObjectTypeId(final String objectId) {
+        List<GraphQLAttributeDocument> responses =
+                mongoOperations.find(getObjectTypeIdQuery(objectId), GraphQLAttributeDocument.class);
+        return toDtoList(responses, GraphQLAttribute.class);
     }
 
     @Override
-    public void deleteWithObjectTypeId(final String objectTypeId) {
-        Iterator<GraphQLAttributeFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            GraphQLAttributeFile attribute = iterator.next();
-            if(attribute.getObjectTypeId().equals(objectTypeId)){
-                delete(attribute.getId());
-            }
-        }
+    public void deleteWithObjectTypeId(final String objectId) {
+        mongoOperations.remove(getObjectTypeIdQuery(objectId), GraphQLAttribute.class);
     }
 
-    @XmlRootElement(name = "graphQLAttribute")
-    protected static class GraphQLAttributeFile implements Saveable<String> {
+    @Document(collection = "graphQLAttribute")
+    protected static class GraphQLAttributeDocument implements Saveable<String> {
 
         @Mapping("id")
         private String id;
@@ -177,7 +131,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
         private List<GraphQLArgument> arguments = new CopyOnWriteArrayList<GraphQLArgument>();
 
         @Override
-        @XmlElement
         public String getId() {
             return id;
         }
@@ -187,7 +140,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
             this.id = id;
         }
 
-        @XmlElement
         public String getName() {
             return name;
         }
@@ -196,7 +148,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
             this.name = name;
         }
 
-        @XmlElement
         public String getValue() {
             return value;
         }
@@ -205,7 +156,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
             this.value = value;
         }
 
-        @XmlElement
         public String getDescription() {
             return description;
         }
@@ -214,7 +164,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
             this.description = description;
         }
 
-        @XmlElement
         public String getTypeId() {
             return typeId;
         }
@@ -223,7 +172,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
             this.typeId = typeId;
         }
 
-        @XmlElement
         public String getTypeName() {
             return typeName;
         }
@@ -232,7 +180,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
             this.typeName = typeName;
         }
 
-        @XmlElement
         public Boolean getNullable() {
             return nullable;
         }
@@ -241,7 +188,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
             this.nullable = nullable;
         }
 
-        @XmlElement
         public Boolean getListable() {
             return listable;
         }
@@ -250,7 +196,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
             this.listable = listable;
         }
 
-        @XmlElement
         public GraphQLAttributeType getAttributeType() {
             return attributeType;
         }
@@ -259,8 +204,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
             this.attributeType = attributeType;
         }
 
-        @XmlElementWrapper(name = "arguments")
-        @XmlElement(name = "argument")
         public List<GraphQLArgument> getArguments() {
             return arguments;
         }
@@ -269,7 +212,6 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
             this.arguments = arguments;
         }
 
-        @XmlElement
         public String getObjectTypeId() {
             return objectTypeId;
         }
@@ -279,5 +221,11 @@ public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttrib
         }
     }
 
+    private Query getObjectTypeIdQuery(String objectTypeId) {
+        return query(getObjectTypeIdCriteria(objectTypeId));
+    }
 
+    private Criteria getObjectTypeIdCriteria(String objectTypeId) {
+        return where("objectTypeId").is(objectTypeId);
+    }
 }
