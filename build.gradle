@@ -437,7 +437,7 @@ project(':code:repository:mock:soap:mongodb') {
     }
 }
 
-/*project(':code:repository:mock:rest:mongodb') {
+project(':code:repository:mock:rest:mongodb') {
     description = "Castle Mock repository: Mock REST"
     group = "com.castlemock.repository.rest.mongodb"
     apply plugin: 'org.springframework.boot'
@@ -464,7 +464,7 @@ project(':code:repository:mock:soap:mongodb') {
         testCompile(group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo')
     }
 }
-
+/*
 project(':code:repository:mock:graphql:mongodb') {
     description = "Castle Mock repository: Mock GraphQL"
     group = "com.castlemock.repository.graphql.mongodb"
@@ -547,7 +547,7 @@ project(':code:web:mock:rest') {
         compile(project(":code:core:mock:rest"))
         compile(project(":code:repository:mock:rest:model"))
         compile(project(":code:repository:mock:rest:file"))
-//        compile(project(":code:repository:mock:rest:mongodb"))
+        compile(project(":code:repository:mock:rest:mongodb"))
         compile(group: 'io.swagger', name: 'swagger-parser', version: swaggerVersion)
         compile(group: 'org.raml', name: 'raml-parser-2', version: ramlVersion)
         testCompile(project(":code:test:mock:rest"))

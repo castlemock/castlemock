@@ -14,101 +14,73 @@
  * limitations under the License.
  */
 
-package com.castlemock.repository.rest.file.project;
+package com.castlemock.repository.rest.mongo.project;
 
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.repository.Profiles;
-import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.core.mongodb.MongoRepository;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import org.dozer.Mapping;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.BasicUpdate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
+/**
+ * @author Mohammad Hewedy
+ * @since 1.35
+ */
 @Repository
-@Profile(Profiles.FILE)
-public class RestMockResponseFileRepository extends FileRepository<RestMockResponseFileRepository.RestMockResponseFile, RestMockResponse, String> implements RestMockResponseRepository {
-
-    @Value(value = "${rest.response.file.directory}")
-    private String fileDirectory;
-    @Value(value = "${rest.response.file.extension}")
-    private String fileExtension;
+@Profile(Profiles.MONGODB)
+public class RestMockResponseMongoRepository extends MongoRepository<RestMockResponseMongoRepository.RestMockResponseDocument, RestMockResponse, String> implements RestMockResponseRepository {
 
     /**
-     * The method returns the directory for the specific file repository. The directory will be used to indicate
-     * where files should be saved and loaded from. The method is abstract and every subclass is responsible for
-     * overriding the method and provided the directory for their corresponding file type.
-     *
-     * @return The file directory where the files for the specific file repository could be saved and loaded from.
-     */
-    @Override
-    protected String getFileDirectory() {
-        return fileDirectory;
-    }
-
-    /**
-     * The method returns the postfix for the file that the file repository is responsible for managing.
-     * The method is abstract and every subclass is responsible for overriding the method and provided the postfix
-     * for their corresponding file type.
-     *
-     * @return The file extension for the file type that the repository is responsible for managing .
-     */
-    @Override
-    protected String getFileExtension() {
-        return fileExtension;
-    }
-
-    /**
-     * The method is responsible for controller that the type that is about the be saved to the file system is valid.
+     * The method is responsible for controller that the type that is about the be saved to mongodb is valid.
      * The method should check if the type contains all the necessary values and that the values are valid. This method
      * will always be called before a type is about to be saved. The main reason for why this is vital and done before
-     * saving is to make sure that the type can be correctly saved to the file system, but also loaded from the
-     * file system upon application startup. The method will throw an exception in case of the type not being acceptable.
+     * saving is to make sure that the type can be correctly saved to mongodb, but also loaded from
+     * mongodb upon application startup. The method will throw an exception in case of the type not being acceptable.
      *
      * @param type The instance of the type that will be checked and controlled before it is allowed to be saved on
-     *             the file system.
+     *             mongodb.
      * @see #save
      */
     @Override
-    protected void checkType(RestMockResponseFile type) {
+    protected void checkType(RestMockResponseDocument type) {
 
     }
 
     /**
      * The post initialize method can be used to run functionality for a specific service. The method is called when
      * the method {@link #initialize} has finished successful.
-     *
+     * <p>
      * The method is responsible to validate the imported types and make certain that all the collections are
      * initialized.
+     *
      * @see #initialize
-     * @since 1.4
      */
     @Override
     protected void postInitiate() {
-        for(RestMockResponseFile restMockResponse : collection.values()) {
-            if(restMockResponse.getParameterQueries() == null){
-                List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryFile>();
-                restMockResponse.setParameterQueries(parameterQueries);
-                save(restMockResponse);
-            }
-        }
+        final String parameterQueries = "parameterQueries";
+        mongoOperations.updateMulti(query(where(parameterQueries).is(null)),
+                BasicUpdate.update(parameterQueries, Collections.emptyList()),
+                RestMockResponseDocument.class);
     }
 
     /**
@@ -119,31 +91,21 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
      */
     @Override
     public List<RestMockResponse> search(SearchQuery query) {
-        final List<RestMockResponse> result = new LinkedList<RestMockResponse>();
-        for(RestMockResponseFile restMockResponseFile : collection.values()){
-            if(SearchValidator.validate(restMockResponseFile.getName(), query.getQuery())){
-                RestMockResponse restMockResponse = mapper.map(restMockResponseFile, RestMockResponse.class);
-                result.add(restMockResponse);
-            }
-        }
-        return result;
+        Query nameQuery = getSearchQuery("name", query);
+        List<RestMockResponseDocument> responses =
+                mongoOperations.find(nameQuery, RestMockResponseDocument.class);
+        return toDtoList(responses, RestMockResponse.class);
     }
 
     /**
-     * Delete all {@link RestMockResponseFile} that matches the provided
+     * Delete all {@link RestMockResponseDocument} that matches the provided
      * <code>methodId</code>.
      *
      * @param methodId The id of the method.
      */
     @Override
     public void deleteWithMethodId(String methodId) {
-        Iterator<RestMockResponseFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            RestMockResponseFile response = iterator.next();
-            if(response.getMethodId().equals(methodId)){
-                delete(response.getId());
-            }
-        }
+        mongoOperations.remove(getMethodIdQuery(methodId), RestMockResponseDocument.class);
     }
 
     /**
@@ -155,14 +117,9 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
      */
     @Override
     public List<RestMockResponse> findWithMethodId(String methodId) {
-        final List<RestMockResponse> applications = new ArrayList<>();
-        for(RestMockResponseFile responseFile : this.collection.values()){
-            if(responseFile.getMethodId().equals(methodId)){
-                RestMockResponse response = this.mapper.map(responseFile, RestMockResponse.class);
-                applications.add(response);
-            }
-        }
-        return applications;
+        List<RestMockResponseDocument> responses =
+                mongoOperations.find(getMethodIdQuery(methodId), RestMockResponseDocument.class);
+        return toDtoList(responses, RestMockResponse.class);
     }
 
     /**
@@ -171,21 +128,20 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
      *
      * @param mockResponseId The id of the {@link RestMockResponse}.
      * @return The id of the method.
-     * @since 1.20
      */
     @Override
     public String getMethodId(String mockResponseId) {
-        final RestMockResponseFile mockResponseFile = this.collection.get(mockResponseId);
-
-        if(mockResponseFile == null){
+        RestMockResponseDocument mockResponse =
+                mongoOperations.findById(mockResponseId, RestMockResponseDocument.class);
+        if (mockResponse == null) {
             throw new IllegalArgumentException("Unable to find a mock response with the following id: " + mockResponseId);
         }
-        return mockResponseFile.getMethodId();
+        return mockResponse.getMethodId();
     }
 
 
-    @XmlRootElement(name = "restMockResponse")
-    protected static class RestMockResponseFile implements Saveable<String> {
+    @Document(collection = "restMockResponse")
+    protected static class RestMockResponseDocument implements Saveable<String> {
 
         @Mapping("id")
         private String id;
@@ -206,10 +162,9 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
         @Mapping("parameterQueries")
-        private List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryFile>();
+        private List<RestParameterQueryDocument> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryDocument>();
 
         @Override
-        @XmlElement
         public String getId() {
             return id;
         }
@@ -219,7 +174,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.id = id;
         }
 
-        @XmlElement
         public String getName() {
             return name;
         }
@@ -228,7 +182,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.name = name;
         }
 
-        @XmlElement
         public String getBody() {
             return body;
         }
@@ -237,7 +190,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.body = body;
         }
 
-        @XmlElement
         public String getMethodId() {
             return methodId;
         }
@@ -246,7 +198,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.methodId = methodId;
         }
 
-        @XmlElement
         public RestMockResponseStatus getStatus() {
             return status;
         }
@@ -255,7 +206,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.status = status;
         }
 
-        @XmlElement
         public Integer getHttpStatusCode() {
             return httpStatusCode;
         }
@@ -264,7 +214,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.httpStatusCode = httpStatusCode;
         }
 
-        @XmlElement
         public boolean isUsingExpressions() {
             return usingExpressions;
         }
@@ -273,8 +222,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.usingExpressions = usingExpressions;
         }
 
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
         public List<HttpHeader> getHttpHeaders() {
             return httpHeaders;
         }
@@ -283,8 +230,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.httpHeaders = httpHeaders;
         }
 
-        @XmlElementWrapper(name = "contentEncodings")
-        @XmlElement(name = "contentEncoding")
         public List<ContentEncoding> getContentEncodings() {
             return contentEncodings;
         }
@@ -293,13 +238,11 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.contentEncodings = contentEncodings;
         }
 
-        @XmlElementWrapper(name = "parameterQueries")
-        @XmlElement(name = "parameterQuery")
-        public List<RestParameterQueryFile> getParameterQueries() {
+        public List<RestParameterQueryDocument> getParameterQueries() {
             return parameterQueries;
         }
 
-        public void setParameterQueries(List<RestParameterQueryFile> parameterQueries) {
+        public void setParameterQueries(List<RestParameterQueryDocument> parameterQueries) {
             this.parameterQueries = parameterQueries;
         }
 
@@ -307,10 +250,10 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         public boolean equals(Object o) {
             if (this == o)
                 return true;
-            if (!(o instanceof RestMockResponseFile))
+            if (!(o instanceof RestMockResponseDocument))
                 return false;
 
-            RestMockResponseFile that = (RestMockResponseFile) o;
+            RestMockResponseDocument that = (RestMockResponseDocument) o;
 
             if (id != null ? !id.equals(that.id) : that.id != null)
                 return false;
@@ -324,8 +267,8 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         }
     }
 
-    @XmlRootElement(name = "restParameterQuery")
-    protected static class RestParameterQueryFile {
+    @Document(collection = "restParameterQuery")
+    protected static class RestParameterQueryDocument {
 
         private String parameter;
         private String query;
@@ -333,7 +276,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         private boolean matchAny;
         private boolean matchRegex;
 
-        @XmlElement
         public String getParameter() {
             return parameter;
         }
@@ -342,7 +284,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.parameter = parameter;
         }
 
-        @XmlElement
         public String getQuery() {
             return query;
         }
@@ -351,7 +292,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.query = query;
         }
 
-        @XmlElement
         public boolean getMatchCase() {
             return matchCase;
         }
@@ -360,7 +300,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.matchCase = matchCase;
         }
 
-        @XmlElement
         public boolean getMatchAny() {
             return matchAny;
         }
@@ -369,7 +308,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.matchAny = matchAny;
         }
 
-        @XmlElement
         public boolean getMatchRegex() {
             return matchRegex;
         }
@@ -377,5 +315,13 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         public void setMatchRegex(boolean matchRegex) {
             this.matchRegex = matchRegex;
         }
+    }
+
+    private Query getMethodIdQuery(String methodId) {
+        return query(getMethodIdCriteria(methodId));
+    }
+
+    private Criteria getMethodIdCriteria(String methodId) {
+        return where("methodId").is(methodId);
     }
 }

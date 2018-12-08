@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.repository.rest.file.event;
+package com.castlemock.repository.rest.mongo.event;
 
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
@@ -22,132 +22,82 @@ import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.repository.Profiles;
-import com.castlemock.repository.core.file.FileRepository;
-import com.castlemock.repository.core.file.event.AbstractEventFileRepository;
+import com.castlemock.repository.core.mongodb.MongoRepository;
+import com.castlemock.repository.core.mongodb.event.AbstractEventMongoRepository;
 import com.castlemock.repository.rest.event.RestEventRepository;
 import com.google.common.base.Preconditions;
 import org.dozer.Mapping;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
 /**
- * The class is an implementation of the REST event repository and provides the functionality to interact with the file system.
- * The repository is responsible for loading and saving rest events from the file system. Each rest event is stored as
- * a separate file. The class also contains the directory and the filename extension for the rest event.
- * @author Karl Dahlgren
- * @since 1.0
- * @see RestEventFileRepository
- * @see FileRepository
+ * The class is an implementation of the REST event repository and provides the functionality to interact with mongodb.
+ * The repository is responsible for loading and saving rest events from mongodb.
+ *
+ * @author Mohammad Hewedy
+ * @see RestEventMongoRepository
+ * @see MongoRepository
+ * @since 1.35
  */
 @Repository
-@Profile(Profiles.FILE)
-public class RestEventFileRepository extends AbstractEventFileRepository<RestEventFileRepository.RestEventFile, RestEvent> implements RestEventRepository {
-
-    @Value(value = "${rest.event.file.directory}")
-    private String restEventFileDirectory;
-    @Value(value = "${legacy.rest.event.v1.directory}")
-    private String restEventLegacyV1FileDirectory;
-    @Value(value = "${rest.event.file.extension}")
-    private String restEventFileExtension;
+@Profile(Profiles.MONGODB)
+public class RestEventMongoRepository extends AbstractEventMongoRepository<RestEventMongoRepository.RestEventDocument, RestEvent> implements RestEventRepository {
 
     /**
-     * The method returns the directory for the specific file repository. The directory will be used to indicate
-     * where files should be saved and loaded from.
-     * @return The file directory where the files for the specific file repository could be saved and loaded from.
-     */
-    @Override
-    protected String getFileDirectory() {
-        return restEventFileDirectory;
-    }
-
-    /**
-     * The method returns the postfix for the file that the file repository is responsible for managing.
-     * @return The file extension for the file type that the repository is responsible for managing .
-     */
-    @Override
-    protected String getFileExtension() {
-        return restEventFileExtension;
-    }
-
-    /**
-     * The method is responsible for controller that the type that is about the be saved to the file system is valid.
+     * The method is responsible for controller that the type that is about the be saved to mongodb is valid.
      * The method should check if the type contains all the necessary values and that the values are valid. This method
      * will always be called before a type is about to be saved. The main reason for why this is vital and done before
-     * saving is to make sure that the type can be correctly saved to the file system, but also loaded from the
-     * file system upon application startup. The method will throw an exception in case of the type not being acceptable.
+     * saving is to make sure that the type can be correctly saved to mongodb, but also loaded from
+     * mongodb upon application startup. The method will throw an exception in case of the type not being acceptable.
+     *
      * @param restEvent The instance of the type that will be checked and controlled before it is allowed to be saved on
-     *             the file system.
+     *                  mongodb.
      * @see #save
      */
     @Override
-    protected void checkType(final RestEventFile restEvent) {
+    protected void checkType(final RestEventDocument restEvent) {
         Preconditions.checkNotNull(restEvent, "Event cannot be null");
-        Preconditions.checkNotNull(restEvent.getId(), "Event id cannot be null");
         Preconditions.checkNotNull(restEvent.getEndDate(), "Event end date cannot be null");
         Preconditions.checkNotNull(restEvent.getStartDate(), "Event start date cannot be null");
     }
 
     /**
-     * The initialize method is responsible for initiating the file repository. This procedure involves loading
-     * the types (TYPE) from the file system and store them in the collection.
-     * @see #loadFiles()
-     * @see #postInitiate()
-     */
-    @Override
-    public void initialize(){
-
-        // Move the old event files to the new directory
-        fileRepositorySupport.moveAllFiles(restEventLegacyV1FileDirectory,
-                restEventFileDirectory, restEventFileExtension);
-
-        super.initialize();
-    }
-
-
-    /**
      * The service finds the oldest event
+     *
      * @return The oldest event
      */
     @Override
     public RestEvent getOldestEvent() {
-        RestEventFile oldestEvent = null;
-        for(RestEventFile event : collection.values()){
-            if(oldestEvent == null){
-                oldestEvent = event;
-            } else if(event.getStartDate().before(oldestEvent.getStartDate())){
-                oldestEvent = event;
-            }
-        }
-
+        RestEventDocument oldestEvent =
+                mongoOperations.findOne(getOldestStartDateQuery(), RestEventDocument.class);
         return oldestEvent == null ? null : mapper.map(oldestEvent, RestEvent.class);
     }
 
     /**
      * Find events by REST method ID
+     *
      * @param restMethodId The id of the REST method
      * @return A list of {@link RestEvent} that matches the provided <code>restMethodId</code>
      */
     @Override
     public List<RestEvent> findEventsByMethodId(final String restMethodId) {
-        final List<RestEventFile> events = new ArrayList<RestEventFile>();
-        for(RestEventFile event : collection.values()){
-            if(event.getMethodId().equals(restMethodId)){
-                events.add(event);
-            }
-        }
+        Query operationIdQuery = query(where("methodId").is(restMethodId));
+        final List<RestEventDocument> events =
+                mongoOperations.find(operationIdQuery, RestEventDocument.class);
         return toDtoList(events, RestEvent.class);
     }
 
     /**
      * The method provides the functionality to search in the repository with a {@link SearchQuery}
+     *
      * @param query The search query
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
@@ -158,36 +108,32 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
 
     /**
      * The method finds and deletes the oldest event.
+     *
      * @return The event that was deleted.
-     * @since 1.5
      */
     @Override
-    public synchronized RestEvent deleteOldestEvent(){
-        RestEvent event = getOldestEvent();
-        delete(event.getId());
-        return event;
+    public RestEvent deleteOldestEvent() {
+        RestEventDocument oldestEvent =
+                mongoOperations.findAndRemove(getOldestStartDateQuery(), RestEventDocument.class);
+        return oldestEvent == null ? null : mapper.map(oldestEvent, RestEvent.class);
     }
 
     /**
      * The method clears and deletes all logs.
-     * @since 1.7
      */
     @Override
     public void clearAll() {
-        Iterator<RestEventFile> iterator = collection.values().iterator();
-        while(iterator.hasNext()){
-            RestEventFile restEvent = iterator.next();
-            delete(restEvent.getId());
-        }
+        //drop vs remove => https://stackoverflow.com/q/12147783
+        mongoOperations.dropCollection(RestEventDocument.class);
     }
 
-    @XmlRootElement(name = "restEvent")
-    protected static class RestEventFile extends AbstractEventFileRepository.EventFile {
+    @Document(collection = "restEvent")
+    protected static class RestEventDocument extends AbstractEventMongoRepository.EventDocument {
 
         @Mapping("request")
-        private RestRequestFile request;
+        private RestRequestDocument request;
         @Mapping("response")
-        private RestResponseFile response;
+        private RestResponseDocument response;
         @Mapping("projectId")
         private String projectId;
         @Mapping("applicationId")
@@ -197,19 +143,19 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
         @Mapping("methodId")
         private String methodId;
 
-        public RestRequestFile getRequest() {
+        public RestRequestDocument getRequest() {
             return request;
         }
 
-        public void setRequest(RestRequestFile request) {
+        public void setRequest(RestRequestDocument request) {
             this.request = request;
         }
 
-        public RestResponseFile getResponse() {
+        public RestResponseDocument getResponse() {
             return response;
         }
 
-        public void setResponse(RestResponseFile response) {
+        public void setResponse(RestResponseDocument response) {
             this.response = response;
         }
 
@@ -246,8 +192,8 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
         }
     }
 
-    @XmlRootElement(name = "restRequest")
-    protected static class RestRequestFile {
+    @Document(collection = "restRequest")
+    protected static class RestRequestDocument {
 
         @Mapping("body")
         private String body;
@@ -258,11 +204,10 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
         @Mapping("httpMethod")
         private HttpMethod httpMethod;
         @Mapping("httpParameters")
-        private List<FileRepository.HttpParameterFile> httpParameters;
+        private List<MongoRepository.HttpParameterDocument> httpParameters;
         @Mapping("httpHeaders")
-        private List<FileRepository.HttpHeaderFile> httpHeaders;
+        private List<MongoRepository.HttpHeaderDocument> httpHeaders;
 
-        @XmlElement
         public String getBody() {
             return body;
         }
@@ -271,7 +216,6 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
             this.body = body;
         }
 
-        @XmlElement
         public String getContentType() {
             return contentType;
         }
@@ -280,7 +224,6 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
             this.contentType = contentType;
         }
 
-        @XmlElement
         public String getUri() {
             return uri;
         }
@@ -289,7 +232,6 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
             this.uri = uri;
         }
 
-        @XmlElement
         public HttpMethod getHttpMethod() {
             return httpMethod;
         }
@@ -298,29 +240,25 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
             this.httpMethod = httpMethod;
         }
 
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
-        public List<FileRepository.HttpHeaderFile> getHttpHeaders() {
+        public List<MongoRepository.HttpHeaderDocument> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<FileRepository.HttpHeaderFile> httpHeaders) {
+        public void setHttpHeaders(List<MongoRepository.HttpHeaderDocument> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 
-        @XmlElementWrapper(name = "httpParameters")
-        @XmlElement(name = "httpParameter")
-        public List<FileRepository.HttpParameterFile> getHttpParameters() {
+        public List<MongoRepository.HttpParameterDocument> getHttpParameters() {
             return httpParameters;
         }
 
-        public void setHttpParameters(List<FileRepository.HttpParameterFile> httpParameters) {
+        public void setHttpParameters(List<MongoRepository.HttpParameterDocument> httpParameters) {
             this.httpParameters = httpParameters;
         }
     }
 
-    @XmlRootElement(name = "restResponse")
-    protected static class RestResponseFile {
+    @Document(collection = "restResponse")
+    protected static class RestResponseDocument {
 
         @Mapping("body")
         private String body;
@@ -331,11 +269,10 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
         @Mapping("contentType")
         private String contentType;
         @Mapping("httpHeaders")
-        private List<FileRepository.HttpHeaderFile> httpHeaders;
+        private List<MongoRepository.HttpHeaderDocument> httpHeaders;
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings;
 
-        @XmlElement
         public String getBody() {
             return body;
         }
@@ -344,7 +281,6 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
             this.body = body;
         }
 
-        @XmlElement
         public String getMockResponseName() {
             return mockResponseName;
         }
@@ -353,7 +289,6 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
             this.mockResponseName = mockResponseName;
         }
 
-        @XmlElement
         public Integer getHttpStatusCode() {
             return httpStatusCode;
         }
@@ -362,7 +297,6 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
             this.httpStatusCode = httpStatusCode;
         }
 
-        @XmlElement
         public String getContentType() {
             return contentType;
         }
@@ -371,18 +305,14 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
             this.contentType = contentType;
         }
 
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
-        public List<FileRepository.HttpHeaderFile> getHttpHeaders() {
+        public List<MongoRepository.HttpHeaderDocument> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<FileRepository.HttpHeaderFile> httpHeaders) {
+        public void setHttpHeaders(List<MongoRepository.HttpHeaderDocument> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 
-        @XmlElementWrapper(name = "contentEncodings")
-        @XmlElement(name = "contentEncoding")
         public List<ContentEncoding> getContentEncodings() {
             return contentEncodings;
         }
@@ -392,5 +322,7 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
         }
     }
 
-
+    private Query getOldestStartDateQuery() {
+        return new Query().with(Sort.by("startDate")).limit(1);
+    }
 }

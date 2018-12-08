@@ -14,78 +14,53 @@
  * limitations under the License.
  */
 
-package com.castlemock.repository.rest.file.project;
+package com.castlemock.repository.rest.mongo.project;
 
 import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.repository.Profiles;
-import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.core.mongodb.MongoRepository;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import org.dozer.Mapping;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
+/**
+ * @author Mohammad Hewedy
+ * @since 1.35
+ */
 @Repository
-@Profile(Profiles.FILE)
-public class RestMethodFileRepository extends FileRepository<RestMethodFileRepository.RestMethodFile, RestMethod, String> implements RestMethodRepository {
-
-    @Value(value = "${rest.method.file.directory}")
-    private String fileDirectory;
-    @Value(value = "${rest.method.file.extension}")
-    private String fileExtension;
+@Profile(Profiles.MONGODB)
+public class RestMethodMongoRepository extends MongoRepository<RestMethodMongoRepository.RestMethodDocument, RestMethod, String> implements RestMethodRepository {
 
     /**
-     * The method returns the directory for the specific file repository. The directory will be used to indicate
-     * where files should be saved and loaded from. The method is abstract and every subclass is responsible for
-     * overriding the method and provided the directory for their corresponding file type.
-     *
-     * @return The file directory where the files for the specific file repository could be saved and loaded from.
-     */
-    @Override
-    protected String getFileDirectory() {
-        return fileDirectory;
-    }
-
-    /**
-     * The method returns the postfix for the file that the file repository is responsible for managing.
-     * The method is abstract and every subclass is responsible for overriding the method and provided the postfix
-     * for their corresponding file type.
-     *
-     * @return The file extension for the file type that the repository is responsible for managing .
-     */
-    @Override
-    protected String getFileExtension() {
-        return fileExtension;
-    }
-
-    /**
-     * The method is responsible for controller that the type that is about the be saved to the file system is valid.
+     * The method is responsible for controller that the type that is about the be saved to mongodb is valid.
      * The method should check if the type contains all the necessary values and that the values are valid. This method
      * will always be called before a type is about to be saved. The main reason for why this is vital and done before
-     * saving is to make sure that the type can be correctly saved to the file system, but also loaded from the
-     * file system upon application startup. The method will throw an exception in case of the type not being acceptable.
+     * saving is to make sure that the type can be correctly saved to mongodb, but also loaded from
+     * mongodb upon application startup. The method will throw an exception in case of the type not being acceptable.
      *
      * @param type The instance of the type that will be checked and controlled before it is allowed to be saved on
-     *             the file system.
+     *             mongodb.
      * @see #save
      */
     @Override
-    protected void checkType(RestMethodFile type) {
+    protected void checkType(RestMethodDocument type) {
 
     }
 
@@ -97,28 +72,28 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      */
     @Override
     public List<RestMethod> search(SearchQuery query) {
-        final List<RestMethod> result = new LinkedList<RestMethod>();
-        for(RestMethodFile restMethodFile : collection.values()){
-            if(SearchValidator.validate(restMethodFile.getName(), query.getQuery())){
-                RestMethod restMethod = mapper.map(restMethodFile, RestMethod.class);
-                result.add(restMethod);
-            }
-        }
-        return result;
+        Query nameQuery = getSearchQuery("name", query);
+        List<RestMethodDocument> operations =
+                mongoOperations.find(nameQuery, RestMethodDocument.class);
+        return toDtoList(operations, RestMethod.class);
     }
 
 
     /**
      * Updates the current response sequence index.
      *
-     * @param restMethodId      The method id.
-     * @param index             The new response sequence index.
+     * @param restMethodId The method id.
+     * @param index        The new response sequence index.
      * @since 1.17
      */
     @Override
     public void setCurrentResponseSequenceIndex(final String restMethodId,
                                                 final Integer index) {
-        RestMethodFile restMethod = this.collection.get(restMethodId);
+        RestMethodDocument restMethod = mongoOperations.findById(restMethodId, RestMethodDocument.class);
+
+        if (restMethod == null) {
+            throw new IllegalArgumentException("Unable to find a method with the following id: " + restMethodId);
+        }
         restMethod.setCurrentResponseSequenceIndex(index);
     }
 
@@ -130,13 +105,7 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      */
     @Override
     public void deleteWithResourceId(String resourceId) {
-        Iterator<RestMethodFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            RestMethodFile method = iterator.next();
-            if(method.getResourceId().equals(resourceId)){
-                delete(method.getId());
-            }
-        }
+        mongoOperations.remove(getResourceIdQuery(resourceId), RestMethodDocument.class);
     }
 
     /**
@@ -149,14 +118,9 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      */
     @Override
     public List<RestMethod> findWithResourceId(String resourceId) {
-        final List<RestMethod> methods = new ArrayList<>();
-        for(RestMethodFile methodFile : this.collection.values()){
-            if(methodFile.getResourceId().equals(resourceId)){
-                RestMethod method = this.mapper.map(methodFile, RestMethod.class);
-                methods.add(method);
-            }
-        }
-        return methods;
+        List<RestMethodDocument> responses =
+                mongoOperations.find(getResourceIdQuery(resourceId), RestMethodDocument.class);
+        return toDtoList(responses, RestMethod.class);
     }
 
     /**
@@ -169,13 +133,10 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      */
     @Override
     public List<String> findIdsWithResourceId(String resourceId) {
-        final List<String> ids = new ArrayList<>();
-        for(RestMethodFile methodFile : this.collection.values()){
-            if(methodFile.getResourceId().equals(resourceId)){
-                ids.add(methodFile.getId());
-            }
-        }
-        return ids;
+        return findWithResourceId(resourceId)
+                .stream()
+                .map(RestMethod::getId)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -188,16 +149,16 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      */
     @Override
     public String getResourceId(String methodId) {
-        final RestMethodFile methodFile = this.collection.get(methodId);
+        RestMethodDocument methodDocument = mongoOperations.findById(methodId, RestMethodDocument.class);
 
-        if(methodFile == null){
+        if (methodDocument == null) {
             throw new IllegalArgumentException("Unable to find a method with the following id: " + methodId);
         }
-        return methodFile.getResourceId();
+        return methodDocument.getResourceId();
     }
 
-    @XmlRootElement(name = "restMethod")
-    protected static class RestMethodFile implements Saveable<String> {
+    @Document(collection = "restMethod")
+    protected static class RestMethodDocument implements Saveable<String> {
 
         @Mapping("id")
         private String id;
@@ -225,7 +186,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         private String defaultQueryMockResponseId;
 
         @Override
-        @XmlElement
         public String getId() {
             return id;
         }
@@ -235,7 +195,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.id = id;
         }
 
-        @XmlElement
         public String getName() {
             return name;
         }
@@ -244,7 +203,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.name = name;
         }
 
-        @XmlElement
         public String getResourceId() {
             return resourceId;
         }
@@ -253,7 +211,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.resourceId = resourceId;
         }
 
-        @XmlElement
         public String getDefaultBody() {
             return defaultBody;
         }
@@ -262,7 +219,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.defaultBody = defaultBody;
         }
 
-        @XmlElement
         public HttpMethod getHttpMethod() {
             return httpMethod;
         }
@@ -271,7 +227,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.httpMethod = httpMethod;
         }
 
-        @XmlElement
         public String getForwardedEndpoint() {
             return forwardedEndpoint;
         }
@@ -280,7 +235,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.forwardedEndpoint = forwardedEndpoint;
         }
 
-        @XmlElement
         public RestMethodStatus getStatus() {
             return status;
         }
@@ -289,7 +243,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.status = status;
         }
 
-        @XmlElement
         public RestResponseStrategy getResponseStrategy() {
             return responseStrategy;
         }
@@ -298,7 +251,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.responseStrategy = responseStrategy;
         }
 
-        @XmlElement
         public Integer getCurrentResponseSequenceIndex() {
             return currentResponseSequenceIndex;
         }
@@ -307,7 +259,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.currentResponseSequenceIndex = currentResponseSequenceIndex;
         }
 
-        @XmlElement
         public boolean getSimulateNetworkDelay() {
             return simulateNetworkDelay;
         }
@@ -316,7 +267,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.simulateNetworkDelay = simulateNetworkDelay;
         }
 
-        @XmlElement
         public long getNetworkDelay() {
             return networkDelay;
         }
@@ -325,7 +275,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
             this.networkDelay = networkDelay;
         }
 
-        @XmlElement
         public String getDefaultQueryMockResponseId() {
             return defaultQueryMockResponseId;
         }
@@ -333,5 +282,13 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         public void setDefaultQueryMockResponseId(String defaultQueryMockResponseId) {
             this.defaultQueryMockResponseId = defaultQueryMockResponseId;
         }
+    }
+
+    private Query getResourceIdQuery(String resourceId) {
+        return query(getResourceIdCriteria(resourceId));
+    }
+
+    private Criteria getResourceIdCriteria(String resourceId) {
+        return where("resourceId").is(resourceId);
     }
 }
