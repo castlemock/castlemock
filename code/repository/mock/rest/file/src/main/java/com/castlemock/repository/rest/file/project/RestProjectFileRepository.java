@@ -20,10 +20,12 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.project.AbstractProjectFileRepository;
 import com.castlemock.repository.rest.project.RestProjectRepository;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,6 +41,7 @@ import java.util.List;
  * @see RestProjectRepository
  */
 @Repository
+@Profile(Profiles.FILE)
 public class RestProjectFileRepository extends AbstractProjectFileRepository<RestProjectFileRepository.RestProjectFile, RestProject> implements RestProjectRepository {
 
     @Value(value = "${rest.project.file.directory}")

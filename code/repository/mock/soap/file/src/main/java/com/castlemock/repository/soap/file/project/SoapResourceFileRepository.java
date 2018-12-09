@@ -24,6 +24,7 @@ import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.soap.project.SoapResourceRepository;
@@ -32,6 +33,7 @@ import org.apache.log4j.Logger;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -40,6 +42,7 @@ import java.io.File;
 import java.util.*;
 
 @Repository
+@Profile(Profiles.FILE)
 public class SoapResourceFileRepository extends FileRepository<SoapResourceFileRepository.SoapResourceFile, SoapResource, String> implements SoapResourceRepository {
 
     private static final String WSDL_DIRECTORY = "wsdl";

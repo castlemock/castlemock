@@ -28,7 +28,9 @@ public class SearchValidator {
 
     }
 
-
+    /**
+     * Case-insensitive contains search
+     */
     public static boolean validate(final String input, final String query){
         return input.toLowerCase().contains(query.toLowerCase());
     }

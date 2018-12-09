@@ -20,11 +20,13 @@ import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.configuration.ConfigurationRepository;
 import com.castlemock.repository.core.file.FileRepository;
 import com.google.common.base.Preconditions;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -41,6 +43,7 @@ import java.util.List;
  * @since 1.0
  */
 @Repository
+@Profile(Profiles.FILE)
 public class ConfigurationFileRepository extends FileRepository<ConfigurationFileRepository.ConfigurationGroupFile, ConfigurationGroup, String> implements ConfigurationRepository {
 
     @Value(value = "${configuration.file.directory}")

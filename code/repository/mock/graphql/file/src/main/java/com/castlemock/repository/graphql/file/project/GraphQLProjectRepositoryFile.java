@@ -24,6 +24,7 @@ import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeTyp
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLProject;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestArgument;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestField;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.project.AbstractProjectFileRepository;
 import com.castlemock.repository.graphql.project.GraphQLProjectRepository;
 import com.google.common.base.Preconditions;
@@ -32,6 +33,7 @@ import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -42,6 +44,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
+@Profile(Profiles.FILE)
 public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<GraphQLProjectRepositoryFile.GraphQLProjectFile, GraphQLProject> implements GraphQLProjectRepository {
 
     @Autowired

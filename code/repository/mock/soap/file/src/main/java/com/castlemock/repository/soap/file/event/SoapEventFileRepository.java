@@ -22,12 +22,14 @@ import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.event.AbstractEventFileRepository;
 import com.castlemock.repository.soap.event.SoapEventRepository;
 import com.google.common.base.Preconditions;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -47,6 +49,7 @@ import java.util.List;
  * @see FileRepository
  */
 @Repository
+@Profile(Profiles.FILE)
 public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEventFileRepository.SoapEventFile, SoapEvent> implements SoapEventRepository {
 
     @Value(value = "${soap.event.file.directory}")

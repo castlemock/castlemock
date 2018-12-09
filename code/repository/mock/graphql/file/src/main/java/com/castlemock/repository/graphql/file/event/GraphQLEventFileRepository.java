@@ -21,12 +21,14 @@ import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.event.AbstractEventFileRepository;
 import com.castlemock.repository.graphql.event.GraphQLEventRepository;
 import com.google.common.base.Preconditions;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -35,8 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Iterator;
 import java.util.List;
 
-
 @Repository
+@Profile(Profiles.FILE)
 public class GraphQLEventFileRepository extends AbstractEventFileRepository<GraphQLEventFileRepository.GraphQLEventFile, GraphQLEvent> implements GraphQLEventRepository {
 
     @Value(value = "${graphql.event.file.directory}")

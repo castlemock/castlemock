@@ -26,11 +26,13 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import com.google.common.base.Strings;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -43,6 +45,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
+@Profile(Profiles.FILE)
 public class SoapMockResponseFileRepository extends FileRepository<SoapMockResponseFileRepository.SoapMockResponseFile, SoapMockResponse, String> implements SoapMockResponseRepository {
 
     @Value(value = "${soap.response.file.directory}")

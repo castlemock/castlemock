@@ -23,12 +23,14 @@ import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLArgument;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttribute;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLAttributeType;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.graphql.project.GraphQLAttributeRepository;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -41,6 +43,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
+@Profile(Profiles.FILE)
 public class GraphQLAttributeFileRepository extends FileRepository<GraphQLAttributeFileRepository.GraphQLAttributeFile, GraphQLAttribute, String> implements GraphQLAttributeRepository {
 
     @Autowired

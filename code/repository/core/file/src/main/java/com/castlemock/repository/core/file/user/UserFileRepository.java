@@ -21,11 +21,13 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.user.UserRepository;
 import com.google.common.base.Preconditions;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -48,6 +50,7 @@ import java.util.List;
  * @see User
  */
 @Repository
+@Profile(Profiles.FILE)
 public class UserFileRepository extends FileRepository<UserFileRepository.UserFile, User, String> implements UserRepository {
 
     @Value(value = "${user.file.directory}")

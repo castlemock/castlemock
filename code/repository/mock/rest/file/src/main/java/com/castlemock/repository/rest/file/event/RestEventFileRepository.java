@@ -21,12 +21,14 @@ import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.event.AbstractEventFileRepository;
 import com.castlemock.repository.rest.event.RestEventRepository;
 import com.google.common.base.Preconditions;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -46,6 +48,7 @@ import java.util.List;
  * @see FileRepository
  */
 @Repository
+@Profile(Profiles.FILE)
 public class RestEventFileRepository extends AbstractEventFileRepository<RestEventFileRepository.RestEventFile, RestEvent> implements RestEventRepository {
 
     @Value(value = "${rest.event.file.directory}")

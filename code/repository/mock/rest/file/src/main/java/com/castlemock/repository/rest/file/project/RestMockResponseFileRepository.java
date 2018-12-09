@@ -25,10 +25,12 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -41,6 +43,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
+@Profile(Profiles.FILE)
 public class RestMockResponseFileRepository extends FileRepository<RestMockResponseFileRepository.RestMockResponseFile, RestMockResponse, String> implements RestMockResponseRepository {
 
     @Value(value = "${rest.response.file.directory}")

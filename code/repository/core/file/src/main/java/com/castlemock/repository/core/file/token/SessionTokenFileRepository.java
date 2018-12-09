@@ -1,8 +1,10 @@
 package com.castlemock.repository.core.file.token;
 
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.token.SessionTokenRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.stereotype.Component;
@@ -32,6 +34,7 @@ import java.util.*;
  * @see SessionToken
  * @see SessionTokenList
  */
+@Profile(Profiles.FILE)
 @Component("tokenRepository")
 public class SessionTokenFileRepository implements SessionTokenRepository {
 

@@ -20,10 +20,12 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLQuery;
+import com.castlemock.repository.Profiles;
 import com.castlemock.repository.graphql.project.GraphQLQueryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,6 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Repository
+@Profile(Profiles.FILE)
 public class GraphQLQueryRepositoryFile extends AbstractGraphQLOperationFileRepository<GraphQLQueryRepositoryFile.GraphQLQueryFile, GraphQLQuery> implements GraphQLQueryRepository {
 
     @Autowired
