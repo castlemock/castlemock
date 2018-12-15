@@ -115,7 +115,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                     final String wsdl = getWsdl(projectId);
 
                     final HttpHeaders responseHeaders = new HttpHeaders();
-                    responseHeaders.put(CONTENT_TYPE, ImmutableList.of("text/plain; " + DEFAULT_CHAR_SET));
+                    responseHeaders.put(CONTENT_TYPE, ImmutableList.of("text/xml; " + DEFAULT_CHAR_SET));
 
                     return new ResponseEntity<String>(wsdl, responseHeaders, HttpStatus.OK);
                 }
