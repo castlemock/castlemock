@@ -20,14 +20,15 @@ import com.castlemock.core.basis.Environment;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.system.service.dto.MongoProperties;
 import com.castlemock.core.basis.model.system.service.dto.SystemInformationDto;
 import com.castlemock.core.basis.service.system.input.GetSystemInformationInput;
 import com.castlemock.core.basis.service.system.output.GetSystemInformationOutput;
 import com.castlemock.repository.Profiles;
 import com.castlemock.web.basis.service.configuration.AbstractConfigurationGroupService;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 
 /**
  * The {@link GetSystemInformationService} is used to retrieve information about the system which
@@ -49,7 +50,7 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
     private org.springframework.core.env.Environment springEnvironment;
 
     @Autowired
-    private org.springframework.boot.autoconfigure.mongo.MongoProperties mongoProperties;
+    private ObjectProvider<MongoProperties> mongoPropertiesProvider;
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -75,8 +76,12 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
         systemInformation.setFreeMemory(Runtime.getRuntime().freeMemory() / 1000000); // Megabytes
         systemInformation.setCastleMockHomeDirectory(this.castleMockHomeDirectory);
         if (springEnvironment.acceptsProfiles(Profiles.MONGODB)) {
-            systemInformation.setMongoProperties(new MongoProperties(mongoProperties.getHost(), mongoProperties.getPort(),
-                    mongoProperties.determineUri(), mongoProperties.getMongoClientDatabase(), isMongoUsesUri()));
+            mongoPropertiesProvider.ifAvailable(props ->
+                    systemInformation.setMongoProperties(
+                            new com.castlemock.core.basis.model.system.service.dto.MongoProperties(
+                                    props.getHost(), props.getPort(), props.determineUri(),
+                                    props.getMongoClientDatabase(), isMongoUsesUri(props)))
+            );
         }
         systemInformation.setShowCastleMockHomeDirectory(springEnvironment.acceptsProfiles(Profiles.FILE));
         systemInformation.setShowMongoProperties(springEnvironment.acceptsProfiles(Profiles.MONGODB));
@@ -85,18 +90,18 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
     }
 
     // see org.springframework.boot.autoconfigure.mongo.MongoClientFactory
-    private boolean isMongoUsesUri() {
+    private boolean isMongoUsesUri(MongoProperties mongoProperties) {
         if (mongoProperties.getUri() != null) {
             return true;
         }
-        return !hasMongoCustomAddress() && !hasMongoCustomCredentials();
+        return !hasMongoCustomAddress(mongoProperties) && !hasMongoCustomCredentials(mongoProperties);
     }
 
-    private boolean hasMongoCustomAddress() {
+    private boolean hasMongoCustomAddress(MongoProperties mongoProperties) {
         return mongoProperties.getHost() != null || mongoProperties.getPort() != null;
     }
 
-    private boolean hasMongoCustomCredentials() {
+    private boolean hasMongoCustomCredentials(MongoProperties mongoProperties) {
         return mongoProperties.getUsername() != null
                 && mongoProperties.getPassword() != null;
     }
