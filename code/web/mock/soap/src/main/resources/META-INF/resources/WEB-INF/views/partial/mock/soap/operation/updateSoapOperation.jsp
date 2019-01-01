@@ -82,7 +82,7 @@
                 </tr>
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="soap.updatesoapoperation.label.networkdelay"/> (ms)</label></td>
-                    <td class="column2"><form:input class="form-control" path="networkDelay" value="${command.networkDelay}"/></td>
+                    <td class="column2"><form:input class="form-control" path="networkDelay" type="number" value="${command.networkDelay}"/></td>
                 </tr>
                 <tr>
                     <td class="column1"><spring:message code="soap.updatesoapoperation.label.defaultresponse"/></td>

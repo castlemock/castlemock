@@ -39,7 +39,7 @@
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="httpStatusCode"><spring:message code="soap.createsoapmockresponse.label.httpstatuscode"/></form:label></td>
-                        <td class="column2"><form:input class="form-control" path="httpStatusCode" id="soapMockResponseHttpStatusCodeInput"/></td>
+                        <td class="column2"><form:input class="form-control" path="httpStatusCode" type="number" id="soapMockResponseHttpStatusCodeInput"/></td>
                         <td><label id="httpCodeDefinitionLabel"><spring:message code="soap.createsoapmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
                     </tr>
                     <tr>

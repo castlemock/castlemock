@@ -47,7 +47,7 @@
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.restmockresponse.label.httpstatuscode"/></form:label></td>
-                        <td class="column2"><form:input class="form-control" path="httpStatusCode" id="restMockResponseHttpResponseCodeInput"/></td>
+                        <td class="column2"><form:input class="form-control" path="httpStatusCode" type="number" id="restMockResponseHttpResponseCodeInput"/></td>
                         <td><label id="httpCodeDefinitionLabel"><spring:message code="rest.restmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
                     </tr>
                     <tr>

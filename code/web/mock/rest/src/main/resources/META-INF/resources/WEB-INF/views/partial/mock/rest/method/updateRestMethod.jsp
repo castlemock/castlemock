@@ -81,7 +81,7 @@
                 </tr>
                 <tr>
                     <td class="column1"><label path="name"><spring:message code="rest.updatemethod.label.networkdelay"/> (ms)</label></td>
-                    <td class="column2"><form:input class="form-control" path="networkDelay" value="${restMethod.networkDelay}"/></td>
+                    <td class="column2"><form:input class="form-control" type="number" path="networkDelay" value="${restMethod.networkDelay}"/></td>
                 </tr>
                 <tr>
                     <td class="column1"><spring:message code="rest.updatemethod.label.defaultresponse"/></td>
