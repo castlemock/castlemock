@@ -163,6 +163,10 @@ public class RestMockResponseMongoRepository extends MongoRepository<RestMockRes
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
         @Mapping("parameterQueries")
         private List<RestParameterQueryDocument> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryDocument>();
+        @Mapping("xpathExpressions")
+        private List<RestXPathExpressionDocument> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpressionDocument>();
+        @Mapping("jsonPathExpressions")
+        private List<RestJsonPathExpressionDocument> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpressionDocument>();
 
         @Override
         public String getId() {
@@ -246,6 +250,22 @@ public class RestMockResponseMongoRepository extends MongoRepository<RestMockRes
             this.parameterQueries = parameterQueries;
         }
 
+        public List<RestXPathExpressionDocument> getXpathExpressions() {
+            return xpathExpressions;
+        }
+
+        public void setXpathExpressions(List<RestXPathExpressionDocument> xpathExpressions) {
+            this.xpathExpressions = xpathExpressions;
+        }
+
+        public List<RestJsonPathExpressionDocument> getJsonPathExpressions() {
+            return jsonPathExpressions;
+        }
+
+        public void setJsonPathExpressions(List<RestJsonPathExpressionDocument> jsonPathExpressions) {
+            this.jsonPathExpressions = jsonPathExpressions;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o)
@@ -315,6 +335,34 @@ public class RestMockResponseMongoRepository extends MongoRepository<RestMockRes
         public void setMatchRegex(boolean matchRegex) {
             this.matchRegex = matchRegex;
         }
+    }
+
+    protected static class RestXPathExpressionDocument {
+
+        private String expression;
+
+        public String getExpression() {
+            return expression;
+        }
+
+        public void setExpression(String expression) {
+            this.expression = expression;
+        }
+
+    }
+
+    protected static class RestJsonPathExpressionDocument {
+
+        private String expression;
+
+        public String getExpression() {
+            return expression;
+        }
+
+        public void setExpression(String expression) {
+            this.expression = expression;
+        }
+
     }
 
     private Query getMethodIdQuery(String methodId) {

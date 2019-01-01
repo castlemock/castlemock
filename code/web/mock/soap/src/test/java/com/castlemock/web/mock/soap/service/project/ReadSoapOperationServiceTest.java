@@ -59,7 +59,7 @@ public class ReadSoapOperationServiceTest {
 
         Assert.assertNotNull(result.getOutput());
         Assert.assertEquals(operation, result.getOutput().getOperation());
-        Assert.assertEquals(operation.getDefaultXPathResponseName(), null);
+        Assert.assertEquals(operation.getDefaultResponseName(), null);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class ReadSoapOperationServiceTest {
         final String projectId = "SOAP PROJECT";
         final String portId = "SOAP PORT";
 
-        operation.setDefaultXPathMockResponseId(mockResponse.getId());
+        operation.setDefaultMockResponseId(mockResponse.getId());
 
         final ReadSoapOperationInput input = ReadSoapOperationInput.builder()
                 .projectId(projectId)
@@ -87,7 +87,7 @@ public class ReadSoapOperationServiceTest {
 
         Assert.assertNotNull(result.getOutput());
         Assert.assertEquals(operation, result.getOutput().getOperation());
-        Assert.assertEquals(mockResponse.getName(), operation.getDefaultXPathResponseName());
+        Assert.assertEquals(mockResponse.getName(), operation.getDefaultResponseName());
     }
 
 }

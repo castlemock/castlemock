@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Karl Dahlgren
+ * Copyright 2018 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,22 @@
 
 package com.castlemock.core.mock.rest.model.project.domain;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * The response strategy defines how mocked instances should decide which response
- * should be returned to the consumer.
- * @author Karl Dahlgren
- * @since 1.0
- */
-@XmlType
-@XmlEnum(String.class)
-public enum RestResponseStrategy {
+@XmlRootElement
+public class RestJsonPathExpression {
 
-    RANDOM, SEQUENCE, QUERY_MATCH, XPATH, JSON_PATH
+    private String expression;
+
+    @XmlElement
+    public String getExpression() {
+        return expression;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
+    }
+
 
 }

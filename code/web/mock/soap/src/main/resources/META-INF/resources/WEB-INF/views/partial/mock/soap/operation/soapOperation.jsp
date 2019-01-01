@@ -85,8 +85,8 @@
                     <td class="column2"><label path="networkDelay">${soapOperation.networkDelay} ms</label></td>
                 </tr>
                 <tr>
-                    <td class="column1"><label path="defaultXPathResponse"><spring:message code="soap.soapoperation.label.defaultxpathresponse"/></label></td>
-                    <td class="column2"><label path="defaultXPathResponse">${soapOperation.defaultXPathResponseName}</label></td>
+                    <td class="column1"><label path="defaultResponse"><spring:message code="soap.soapoperation.label.defaultresponse"/></label></td>
+                    <td class="column2"><label path="defaultResponse">${soapOperation.defaultResponseName}</label></td>
                 </tr>
                 <tr>
                     <td class="column1"><label path="mockOnFailure"><spring:message code="soap.soapoperation.label.mockonfailure"/></label></td>

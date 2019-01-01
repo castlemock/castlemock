@@ -51,13 +51,13 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
         final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(input.getOperationId());
         soapOperation.setMockResponses(mockResponses);
 
-        if(soapOperation.getDefaultXPathMockResponseId() != null){
+        if(soapOperation.getDefaultMockResponseId() != null){
             // Iterate through all the mocked responses to identify
             // which has been set to be the default XPath mock response.
             boolean defaultXpathMockResponseFound = false;
             for(SoapMockResponse mockResponse : mockResponses){
-                if(mockResponse.getId().equals(soapOperation.getDefaultXPathMockResponseId())){
-                    soapOperation.setDefaultXPathResponseName(mockResponse.getName());
+                if(mockResponse.getId().equals(soapOperation.getDefaultMockResponseId())){
+                    soapOperation.setDefaultResponseName(mockResponse.getName());
                     defaultXpathMockResponseFound = true;
                     break;
                 }

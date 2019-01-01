@@ -51,6 +51,7 @@ allprojects {
     ext.commonsLangVersion = "3.7"
     ext.jaxbVersion = "2.3.0"
     ext.activationVersion = "1.1.1"
+    ext.jsonPathVersion = "2.4.0"
 
     compileJava {
         sourceCompatibility = 1.8
@@ -141,6 +142,7 @@ project(':code:core:basis') {
         compile(group: 'javax.xml.bind', name: 'jaxb-api', version: jaxbVersion)
         compile(group: 'com.sun.xml.bind', name: 'jaxb-core', version: jaxbVersion)
         compile(group: 'com.sun.xml.bind', name: 'jaxb-impl', version: jaxbVersion)
+        compile(group: 'com.jayway.jsonpath', name: 'json-path', version: jsonPathVersion)
     }
 
 }

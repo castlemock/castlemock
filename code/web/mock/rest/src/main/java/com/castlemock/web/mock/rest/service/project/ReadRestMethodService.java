@@ -51,13 +51,13 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
         final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(input.getRestMethodId());
         restMethod.setMockResponses(mockResponses);
 
-        if(restMethod.getDefaultQueryMockResponseId() != null){
+        if(restMethod.getDefaultMockResponseId() != null){
             // Iterate through all the mocked responses to identify
             // which has been set to be the default XPath mock response.
             boolean defaultQueryMockResponseId = false;
             for(RestMockResponse mockResponse : mockResponses){
-                if(mockResponse.getId().equals(restMethod.getDefaultQueryMockResponseId())){
-                    restMethod.setDefaultQueryResponseName(mockResponse.getName());
+                if(mockResponse.getId().equals(restMethod.getDefaultMockResponseId())){
+                    restMethod.setDefaultResponseName(mockResponse.getName());
                     defaultQueryMockResponseId = true;
                     break;
                 }
@@ -67,7 +67,7 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
                 // Unable to find the default XPath mock response.
                 // Log only an error message for now.
                 LOGGER.error("Unable to find the default Query mock response with the following id: " +
-                        restMethod.getDefaultQueryMockResponseId());
+                        restMethod.getDefaultMockResponseId());
             }
         }
 

@@ -24,9 +24,6 @@ import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathFactory;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +31,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+/**
+ * @author Karl Dahlgren
+ * @since 1.35
+ */
 public class SoapUtility {
 
     private static final String DIVIDER = ":";
@@ -165,25 +166,6 @@ public class SoapUtility {
         }
 
         throw new IllegalArgumentException("Unable to find the name or prefix in the XML element");
-    }
-
-
-    public static boolean isValidXPathExpr(final String body,
-                                           final String xpathExpr) {
-        try {
-            final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            final InputSource inputSource = new InputSource(new StringReader(body));
-            final Document document = documentBuilder.parse(inputSource);
-
-            final XPath xPath = XPathFactory.newInstance().newXPath();
-            final NodeList evaluate = (NodeList) xPath.compile(xpathExpr).evaluate(document, XPathConstants.NODESET);
-            return evaluate.getLength() > 0;
-
-        } catch (Exception exception) {
-            LOGGER.error("Unable to evaluate xpath expression", exception);
-            return false;
-        }
     }
 
 }

@@ -45,7 +45,9 @@ public class SoapOperation {
     private String originalEndpoint;
     private Boolean simulateNetworkDelay;
     private Long networkDelay;
+    @Deprecated
     private String defaultXPathMockResponseId;
+    private String defaultMockResponseId;
     private String portId;
     private Boolean mockOnFailure;
     private SoapOperationIdentifyStrategy identifyStrategy;
@@ -54,7 +56,7 @@ public class SoapOperation {
 
     private String invokeAddress;
 
-    private String defaultXPathResponseName;
+    private String defaultResponseName;
 
     @XmlElement
     public String getId() {
@@ -211,6 +213,7 @@ public class SoapOperation {
     }
 
     @XmlElement
+    @Deprecated
     public String getDefaultXPathMockResponseId() {
         return defaultXPathMockResponseId;
     }
@@ -220,12 +223,12 @@ public class SoapOperation {
     }
 
     @XmlElement
-    public String getDefaultXPathResponseName() {
-        return defaultXPathResponseName;
+    public String getDefaultResponseName() {
+        return defaultResponseName;
     }
 
-    public void setDefaultXPathResponseName(String defaultXPathResponseName) {
-        this.defaultXPathResponseName = defaultXPathResponseName;
+    public void setDefaultResponseName(String defaultResponseName) {
+        this.defaultResponseName = defaultResponseName;
     }
 
     @XmlElement
@@ -244,5 +247,14 @@ public class SoapOperation {
 
     public void setIdentifyStrategy(SoapOperationIdentifyStrategy identifyStrategy) {
         this.identifyStrategy = identifyStrategy;
+    }
+
+    @XmlElement
+    public String getDefaultMockResponseId() {
+        return defaultMockResponseId;
+    }
+
+    public void setDefaultMockResponseId(String defaultMockResponseId) {
+        this.defaultMockResponseId = defaultMockResponseId;
     }
 }

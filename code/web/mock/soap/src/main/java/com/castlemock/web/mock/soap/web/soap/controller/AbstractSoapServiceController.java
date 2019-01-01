@@ -19,6 +19,7 @@ package com.castlemock.web.mock.soap.web.soap.controller;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.TextParser;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.domain.SoapRequest;
@@ -313,32 +314,18 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         } else if (soapOperation.getResponseStrategy().equals(SoapResponseStrategy.XPATH_INPUT)) {
             for (SoapMockResponse testedMockResponse : mockResponses) {
                 for(SoapXPathExpression xPathExpression : testedMockResponse.getXpathExpressions()){
-                    if (SoapUtility.isValidXPathExpr(request.getBody(), xPathExpression.getExpression())) {
+                    if (XPathUtility.isValidXPathExpr(request.getBody(), xPathExpression.getExpression())) {
                         mockResponse = testedMockResponse;
                         break;
                     }
                 }
             }
 
+
             if(mockResponse == null){
                 LOGGER.info("Unable to match the input XPath to a response");
-                final String defaultXPathResponseId = soapOperation.getDefaultXPathMockResponseId();
-
-                if(defaultXPathResponseId != null && !defaultXPathResponseId.isEmpty()){
-                    LOGGER.info("Use the default XPath response");
-                    for (SoapMockResponse tmpMockResponse : mockResponses) {
-                        if(defaultXPathResponseId.equals(tmpMockResponse.getId())){
-                            mockResponse = tmpMockResponse;
-                            break;
-                        }
-                    }
-
-                    if(mockResponse == null){
-                        LOGGER.error("Unable to find the default XPath response");
-                    }
-                }
+                mockResponse = this.getDefaultMockResponse(soapOperation, mockResponses).orElse(null);
             }
-
         }
 
         if(mockResponse == null){
@@ -359,6 +346,22 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         response.setContentEncodings(mockResponse.getContentEncodings());
         return response;
 
+    }
+
+    private Optional<SoapMockResponse> getDefaultMockResponse(final SoapOperation soapOperation,
+                                                              final List<SoapMockResponse> mockResponses){
+        final String defaultResponseId = soapOperation.getDefaultMockResponseId();
+
+        if(defaultResponseId != null && !defaultResponseId.isEmpty()){
+            LOGGER.info("Use the default response");
+            for (SoapMockResponse tmpMockResponse : mockResponses) {
+                if(defaultResponseId.equals(tmpMockResponse.getId())){
+                    return Optional.of(tmpMockResponse);
+                }
+            }
+            LOGGER.error("Unable to find the default response");
+        }
+        return Optional.empty();
     }
 
     /**

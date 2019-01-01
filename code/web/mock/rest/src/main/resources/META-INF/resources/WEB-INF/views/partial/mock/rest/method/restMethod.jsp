@@ -67,8 +67,8 @@
                     <td class="column2"><span class="checkbox"><input type="checkbox" path="simulateNetworkDelay" ${restMethod.simulateNetworkDelay == 'true' ? 'checked' : ''} disabled /></span></td>
                 </tr>
                 <tr>
-                    <td class="column1"><label path="defaultQueryResponse"><spring:message code="rest.restmethod.label.defaultqueryresponse"/></label></td>
-                    <td class="column2"><label path="defaultQueryResponse">${restMethod.defaultQueryResponseName}</label></td>
+                    <td class="column1"><label path="defaultResponse"><spring:message code="rest.restmethod.label.defaultresponse"/></label></td>
+                    <td class="column2"><label path="defaultResponse">${restMethod.defaultResponseName}</label></td>
                 </tr>
                 <tr>
                     <td class="column1"><label path="networkDelay"><spring:message code="rest.restmethod.label.networkdelay"/></label></td>
