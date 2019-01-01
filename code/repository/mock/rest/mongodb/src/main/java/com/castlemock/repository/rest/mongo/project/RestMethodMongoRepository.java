@@ -183,7 +183,7 @@ public class RestMethodMongoRepository extends MongoRepository<RestMethodMongoRe
         @Mapping("networkDelay")
         private long networkDelay;
         @Mapping("defaultQueryMockResponseId")
-        private String defaultQueryMockResponseId;
+        private String defaultMockResponseId;
 
         @Override
         public String getId() {
@@ -275,12 +275,12 @@ public class RestMethodMongoRepository extends MongoRepository<RestMethodMongoRe
             this.networkDelay = networkDelay;
         }
 
-        public String getDefaultQueryMockResponseId() {
-            return defaultQueryMockResponseId;
+        public String getDefaultMockResponseId() {
+            return defaultMockResponseId;
         }
 
-        public void setDefaultQueryMockResponseId(String defaultQueryMockResponseId) {
-            this.defaultQueryMockResponseId = defaultQueryMockResponseId;
+        public void setDefaultMockResponseId(String defaultMockResponseId) {
+            this.defaultMockResponseId = defaultMockResponseId;
         }
     }
 

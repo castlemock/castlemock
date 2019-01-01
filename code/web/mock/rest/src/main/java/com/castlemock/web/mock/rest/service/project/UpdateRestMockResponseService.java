@@ -52,6 +52,8 @@ public class UpdateRestMockResponseService extends AbstractRestProjectService im
         existing.setStatus(updatedRestMockResponse.getStatus());
         existing.setUsingExpressions(updatedRestMockResponse.isUsingExpressions());
         existing.setParameterQueries(updatedRestMockResponse.getParameterQueries());
+        existing.setXpathExpressions(updatedRestMockResponse.getXpathExpressions());
+        existing.setJsonPathExpressions(updatedRestMockResponse.getJsonPathExpressions());
 
         this.mockResponseRepository.update(input.getRestMockResponseId(), existing);
         return createServiceResult(UpdateRestMockResponseOutput.builder()

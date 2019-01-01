@@ -205,8 +205,8 @@ public class SoapOperationMongoRepository extends MongoRepository<SoapOperationM
         private String forwardedEndpoint;
         @Mapping("originalEndpoint")
         private String originalEndpoint;
-        @Mapping("defaultXPathMockResponseId")
-        private String defaultXPathMockResponseId;
+        @Mapping("defaultMockResponseId")
+        private String defaultMockResponseId;
         @Mapping("simulateNetworkDelay")
         private boolean simulateNetworkDelay;
         @Mapping("networkDelay")
@@ -338,12 +338,12 @@ public class SoapOperationMongoRepository extends MongoRepository<SoapOperationM
             this.networkDelay = networkDelay;
         }
 
-        public String getDefaultXPathMockResponseId() {
-            return defaultXPathMockResponseId;
+        public String getDefaultMockResponseId() {
+            return defaultMockResponseId;
         }
 
-        public void setDefaultXPathMockResponseId(String defaultXPathMockResponseId) {
-            this.defaultXPathMockResponseId = defaultXPathMockResponseId;
+        public void setDefaultMockResponseId(String defaultMockResponseId) {
+            this.defaultMockResponseId = defaultMockResponseId;
         }
 
         public boolean getMockOnFailure() {

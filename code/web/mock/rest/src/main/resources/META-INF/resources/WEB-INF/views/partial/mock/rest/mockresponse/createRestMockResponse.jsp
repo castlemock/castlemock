@@ -71,6 +71,8 @@
                                 <li><a data-toggle="tab" href="#tab-queries"><spring:message code="rest.createrestmockresponse.header.queries"/></a></li>
                             </c:when>
                         </c:choose>
+                        <li><a data-toggle="tab" href="#tab-xpaths"><spring:message code="rest.createrestmockresponse.header.xpaths"/></a></li>
+                        <li><a data-toggle="tab" href="#tab-jsonpath"><spring:message code="rest.createrestmockresponse.header.jsonpaths"/></a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
@@ -180,6 +182,59 @@
                                 </div>
                             </c:when>
                         </c:choose>
+
+                        <div id="tab-xpaths" class="tab-pane fade">
+                            <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.field.addxpath"/></span></h2>
+                            <div>
+                                <table class="formTable">
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.xpath"/></form:label></td>
+                                        <td class="column2"><input type="text" class="form-control" name="xpathInput" id="xpathInput"></td>
+                                    </tr>
+                                </table>
+                                <button class="btn btn-success" onclick="addXpath()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.restmockresponse.button.addxpath"/></span></button>
+                            </div>
+
+                            <div class="invisible-divider"></div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover sortable" id="xpathTable">
+                                    <col width="4%">
+                                    <col width="96%">
+                                    <tr>
+                                        <th></th>
+                                        <th><spring:message code="rest.createrestmockresponse.column.xpath"/></th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="tab-jsonpath" class="tab-pane fade">
+                            <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.field.addjsonpath"/></span></h2>
+                            <div>
+                                <table class="formTable">
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.jsonpath"/></form:label></td>
+                                        <td class="column2"><input type="text" class="form-control" name="jsonPathInput" id="jsonPathInput"></td>
+                                    </tr>
+                                </table>
+                                <button class="btn btn-success" onclick="addJsonPath()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.createrestmockresponse.button.addjsonpath"/></span></button>
+                            </div>
+
+                            <div class="invisible-divider"></div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover sortable" id="jsonPathTable">
+                                    <col width="4%">
+                                    <col width="96%">
+                                    <tr>
+                                        <th></th>
+                                        <th><spring:message code="rest.createrestmockresponse.column.jsonpath"/></th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -193,6 +248,8 @@
 </div>
 <script src=<c:url value="/resources/js/headerTable.js"/>></script>
 <script src=<c:url value="/resources/js/queryTable.js"/>></script>
+<script src=<c:url value="/resources/js/xpathTable.js"/>></script>
+<script src=<c:url value="/resources/js/jsonPathTable.js"/>></script>
 <script src=<c:url value="/resources/js/editor.js"/>></script>
 <script>
     $("#restMockResponseNameInput").attr('required', '');

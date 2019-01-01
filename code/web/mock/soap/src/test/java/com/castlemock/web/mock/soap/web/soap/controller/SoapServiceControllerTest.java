@@ -195,8 +195,8 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
 
         final SoapOperation soapOperation = getSoapOperation();
 
-        soapOperation.setDefaultXPathResponseName("Mocked response");
-        soapOperation.setDefaultXPathMockResponseId("MockResponseId");
+        soapOperation.setDefaultResponseName("Mocked response");
+        soapOperation.setDefaultMockResponseId("MockResponseId");
         soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()

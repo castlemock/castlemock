@@ -26,6 +26,7 @@ import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
+import com.google.common.base.Strings;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -114,6 +115,13 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
 
             if(soapOperation.getCurrentResponseSequenceIndex() == null){
                 soapOperation.setCurrentResponseSequenceIndex(0);
+                save(soapOperation);
+            }
+
+            if(!Strings.isNullOrEmpty(soapOperation.getDefaultXPathMockResponseId())){
+                soapOperation.setDefaultMockResponseId(soapOperation.getDefaultXPathMockResponseId());
+                soapOperation.setDefaultXPathMockResponseId(null);
+                save(soapOperation);
             }
         }
     }
@@ -277,7 +285,10 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         @Mapping("originalEndpoint")
         private String originalEndpoint;
         @Mapping("defaultXPathMockResponseId")
+        @Deprecated
         private String defaultXPathMockResponseId;
+        @Mapping("defaultMockResponseId")
+        private String defaultMockResponseId;
         @Mapping("simulateNetworkDelay")
         private boolean simulateNetworkDelay;
         @Mapping("networkDelay")
@@ -425,6 +436,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         }
 
         @XmlElement
+        @Deprecated
         public String getDefaultXPathMockResponseId() {
             return defaultXPathMockResponseId;
         }
@@ -449,6 +461,15 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
 
         public void setIdentifyStrategy(SoapOperationIdentifyStrategy identifyStrategy) {
             this.identifyStrategy = identifyStrategy;
+        }
+
+        @XmlElement
+        public String getDefaultMockResponseId() {
+            return defaultMockResponseId;
+        }
+
+        public void setDefaultMockResponseId(String defaultMockResponseId) {
+            this.defaultMockResponseId = defaultMockResponseId;
         }
     }
 

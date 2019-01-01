@@ -48,7 +48,7 @@
                     <tr>
                         <td class="column1"><form:label path="httpStatusCode"><spring:message code="rest.restmockresponse.label.httpstatuscode"/></form:label></td>
                         <td class="column2"><form:input class="form-control" path="httpStatusCode" id="restMockResponseHttpResponseCodeInput"/></td>
-                        <td><label id="httpCodeDefinitionLabel"><spring:message code="soap.restmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
+                        <td><label id="httpCodeDefinitionLabel"><spring:message code="rest.restmockresponse.label.httpstatuscodedefinition"/>:&nbsp;</label><label id="httpCodeLabel"></label></td>
                     </tr>
                     <tr>
                         <td class="column1"><form:label path="status"><spring:message code="rest.restmockresponse.label.status"/></form:label></td>
@@ -78,6 +78,8 @@
                                 <li><a data-toggle="tab" href="#tab-queries"><spring:message code="rest.restmockresponse.header.queries"/></a></li>
                             </c:when>
                         </c:choose>
+                        <li><a data-toggle="tab" href="#tab-xpaths"><spring:message code="rest.restmockresponse.header.xpaths"/></a></li>
+                        <li><a data-toggle="tab" href="#tab-jsonpath"><spring:message code="rest.restmockresponse.header.jsonpaths"/></a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
@@ -142,7 +144,7 @@
                                             <tr>
                                                 <td class="column1"><form:label path="name"><spring:message code="rest.restmockresponse.column.parameter"/></form:label></td>
                                                 <td>
-                                                    <select name="parameterSelect" id="parameterSelect" class="form-control">
+                                                    <select name="queryParameterSelect" id="queryParameterSelect" class="form-control">
                                                         <c:forEach items="${restQueryParameters}" var="restQueryParameter">
                                                             <option value="${restQueryParameter.query}" >${restQueryParameter.query}</option>
                                                         </c:forEach>
@@ -203,6 +205,71 @@
                                 </div>
                             </c:when>
                         </c:choose>
+
+                        <div id="tab-xpaths" class="tab-pane fade">
+                            <h2 class="decorated"><span><spring:message code="rest.restmockresponse.field.addxpath"/></span></h2>
+                            <div>
+                                <table class="formTable">
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.restmockresponse.label.xpath"/></form:label></td>
+                                        <td class="column2"><input type="text" class="form-control" name="xpathInput" id="xpathInput"></td>
+                                    </tr>
+                                </table>
+                                <button class="btn btn-success" onclick="addXpath()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.restmockresponse.button.addxpath"/></span></button>
+                            </div>
+
+                            <div class="invisible-divider"></div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover sortable" id="xpathTable">
+                                    <col width="4%">
+                                    <col width="96%">
+                                    <tr>
+                                        <th></th>
+                                        <th><spring:message code="rest.restmockresponse.column.xpath"/></th>
+                                    </tr>
+                                    <c:forEach items="${restMockResponse.xpathExpressions}" var="xpathExpression" varStatus="loopStatus">
+                                        <tr class="even">
+                                            <td><div class="delete" onclick="removeXpath('${xpathExpression.expression}')"></div></td>
+                                            <td><input name="xpathExpressions[${loopStatus.index}].expression" id="xpathExpressions[${loopStatus.index}].expression" value="${xpathExpression.expression}" type="hidden" />${xpathExpression.expression}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="tab-jsonpath" class="tab-pane fade">
+                            <h2 class="decorated"><span><spring:message code="rest.restmockresponse.field.addjsonpath"/></span></h2>
+                            <div>
+                                <table class="formTable">
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.restmockresponse.label.jsonpath"/></form:label></td>
+                                        <td class="column2"><input type="text" class="form-control" name="jsonPathInput" id="jsonPathInput"></td>
+                                    </tr>
+                                </table>
+                                <button class="btn btn-success" onclick="addJsonPath()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.restmockresponse.button.addjsonpath"/></span></button>
+                            </div>
+
+                            <div class="invisible-divider"></div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover sortable" id="jsonPathTable">
+                                    <col width="4%">
+                                    <col width="96%">
+                                    <tr>
+                                        <th></th>
+                                        <th><spring:message code="rest.restmockresponse.column.jsonpath"/></th>
+                                    </tr>
+                                    <c:forEach items="${restMockResponse.jsonPathExpressions}" var="jsonPathExpression" varStatus="loopStatus">
+                                        <tr class="even">
+                                            <td><div class="delete" onclick="removeJsonPath('${jsonPathExpression.expression}')"></div></td>
+                                            <td><input name="jsonPathExpressions[${loopStatus.index}].expression" id="jsonPathExpressions[${loopStatus.index}].expression" value="${jsonPathExpression.expression}" type="hidden" />${jsonPathExpression.expression}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -216,6 +283,8 @@
 </div>
 <script src=<c:url value="/resources/js/headerTable.js"/>></script>
 <script src=<c:url value="/resources/js/queryTable.js"/>></script>
+<script src=<c:url value="/resources/js/xpathTable.js"/>></script>
+<script src=<c:url value="/resources/js/jsonPathTable.js"/>></script>
 <script src=<c:url value="/resources/js/editor.js"/>></script>
 <script>
     $("#restMockResponseNameInput").attr('required', '');

@@ -28,6 +28,7 @@ import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.rest.project.RestMethodRepository;
+import com.google.common.base.Strings;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -87,6 +88,26 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
     @Override
     protected void checkType(RestMethodFile type) {
 
+    }
+
+    /**
+     * The post initialize method can be used to run functionality for a specific service. The method is called when
+     * the method {@link #initialize} has finished successful.
+     *
+     * The method is responsible to validate the imported types and make certain that all the collections are
+     * initialized.
+     * @see #initialize
+     * @since 1.35
+     */
+    @Override
+    protected void postInitiate() {
+        collection.values().stream()
+                .filter(restMethod -> !Strings.isNullOrEmpty(restMethod.getDefaultQueryMockResponseId()))
+                .forEach(restMethod -> {
+                    restMethod.setDefaultMockResponseId(restMethod.getDefaultQueryMockResponseId());
+                    restMethod.setDefaultQueryMockResponseId(null);
+                    save(restMethod);
+                });
     }
 
     /**
@@ -222,7 +243,10 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         @Mapping("networkDelay")
         private long networkDelay;
         @Mapping("defaultQueryMockResponseId")
+        @Deprecated
         private String defaultQueryMockResponseId;
+        @Mapping("defaultMockResponseId")
+        private String defaultMockResponseId;
 
         @Override
         @XmlElement
@@ -326,12 +350,22 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         }
 
         @XmlElement
+        @Deprecated
         public String getDefaultQueryMockResponseId() {
             return defaultQueryMockResponseId;
         }
 
         public void setDefaultQueryMockResponseId(String defaultQueryMockResponseId) {
             this.defaultQueryMockResponseId = defaultQueryMockResponseId;
+        }
+
+        @XmlElement
+        public String getDefaultMockResponseId() {
+            return defaultMockResponseId;
+        }
+
+        public void setDefaultMockResponseId(String defaultMockResponseId) {
+            this.defaultMockResponseId = defaultMockResponseId;
         }
     }
 }

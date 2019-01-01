@@ -74,11 +74,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
 
 
-    private static final String REQUEST_BODY = "<request>\n" +
+    private static final String XML_REQUEST_BODY = "<request>\n" +
             "\t<variable>Value 1</variable>\n" +
             "</request>";
 
-    private static final String RESPONSE_BODY = "<response>\n" +
+    private static final String XML_RESPONSE_BODY = "<response>\n" +
             "\t<variable>Value 1</variable>\n" +
             "</response>";
 
@@ -86,7 +86,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
             "\t<variable>Default value 1</variable>\n" +
             "</response>";
 
-
+    private static final String JSON_REQUEST_BODY = "{\n" +
+            "\t\"request\": {\n" +
+            "\t\t\"variable\": \"Value 1\"\n" +
+            "\t}\n" +
+            "}";
 
     @Test
     public void testMockedSequence(){
@@ -113,7 +117,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 SLASH + PROJECT_ID + SLASH + APPLICATION + SLASH + APPLICATION_ID + "/method/test");
 
         final ResponseEntity responseEntity = restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
-        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assert.assertEquals(XML_RESPONSE_BODY, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
@@ -144,7 +148,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
 
         final ResponseEntity responseEntity = restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
-        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assert.assertEquals(XML_RESPONSE_BODY, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
@@ -174,7 +178,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
 
         final ResponseEntity responseEntity = restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
-        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assert.assertEquals(XML_RESPONSE_BODY, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
@@ -216,7 +220,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     @Test
     public void testEcho(){
         // Input
-        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(XML_REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
         final RestMethod restMethod = getMockedRestMethod();
@@ -237,10 +241,82 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 SLASH + PROJECT_ID + SLASH + APPLICATION + SLASH + APPLICATION_ID + "/method/test");
 
         final ResponseEntity responseEntity = restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
-        Assert.assertEquals(REQUEST_BODY, responseEntity.getBody());
+        Assert.assertEquals(XML_REQUEST_BODY, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertEquals(APPLICATION_JSON, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
+    }
+
+    @Test
+    public void testMockedXpathMatch(){
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(XML_REQUEST_BODY);
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestXPathExpression xPathExpression = new RestXPathExpression();
+        xPathExpression.setExpression("//request/variable[text()='Value 1']");
+
+        final RestMethod restMethod = getMockedRestMethod();
+        restMethod.getMockResponses().get(0).getXpathExpressions().add(xPathExpression);
+
+        restMethod.setResponseStrategy(RestResponseStrategy.XPATH);
+
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
+
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+        when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + REST + SLASH + PROJECT +
+                SLASH + PROJECT_ID + SLASH + APPLICATION + SLASH + APPLICATION_ID + "/method/test");
+
+        final ResponseEntity responseEntity = restServiceController.postMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
+        Assert.assertEquals(XML_RESPONSE_BODY, responseEntity.getBody());
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+    }
+
+    @Test
+    public void testMockedJsonPathMatch(){
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(JSON_REQUEST_BODY);
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestJsonPathExpression restJsonPathExpression = new RestJsonPathExpression();
+        restJsonPathExpression.setExpression("$.request[?(@.variable == 'Value 1')]");
+
+        final RestMethod restMethod = getMockedRestMethod();
+        restMethod.getMockResponses().get(0).getJsonPathExpressions().add(restJsonPathExpression);
+
+        restMethod.setResponseStrategy(RestResponseStrategy.JSON_PATH);
+
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
+
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+        when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + REST + SLASH + PROJECT +
+                SLASH + PROJECT_ID + SLASH + APPLICATION + SLASH + APPLICATION_ID + "/method/test");
+
+        final ResponseEntity responseEntity = restServiceController.postMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
+        Assert.assertEquals(XML_RESPONSE_BODY, responseEntity.getBody());
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
     }
 
     @Override
@@ -335,7 +411,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
         // Mock
         final RestMockResponse restMockResponse = new RestMockResponse();
-        restMockResponse.setBody(RESPONSE_BODY);
+        restMockResponse.setBody(XML_RESPONSE_BODY);
         restMockResponse.setContentEncodings(new ArrayList<>());
         restMockResponse.setHttpHeaders(Arrays.asList(contentTypeHeader, acceptHeader));
         restMockResponse.setHttpStatusCode(200);
@@ -381,7 +457,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
         // Mock
         final RestMockResponse restMockResponse1 = new RestMockResponse();
-        restMockResponse1.setBody(RESPONSE_BODY);
+        restMockResponse1.setBody(XML_RESPONSE_BODY);
         restMockResponse1.setContentEncodings(new ArrayList<>());
         restMockResponse1.setHttpHeaders(Arrays.asList(contentTypeHeader, acceptHeader));
         restMockResponse1.setHttpStatusCode(200);
@@ -416,8 +492,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         restMethod.setSimulateNetworkDelay(false);
         restMethod.setStatus(RestMethodStatus.MOCKED);
         restMethod.setMockResponses(Arrays.asList(restMockResponse1, restMockResponse2));
-        restMethod.setDefaultQueryResponseName("Mocked response 2");
-        restMethod.setDefaultQueryMockResponseId("MockResponseId2");
+        restMethod.setDefaultResponseName("Mocked response 2");
+        restMethod.setDefaultMockResponseId("MockResponseId2");
 
         return restMethod;
     }

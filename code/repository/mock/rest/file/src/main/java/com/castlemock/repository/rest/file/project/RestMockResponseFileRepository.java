@@ -207,6 +207,10 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
         @Mapping("parameterQueries")
         private List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryFile>();
+        @Mapping("xpathExpressions")
+        private List<RestXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpressionFile>();
+        @Mapping("jsonPathExpressions")
+        private List<RestJsonPathExpressionFile> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpressionFile>();
 
         @Override
         @XmlElement
@@ -303,6 +307,26 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.parameterQueries = parameterQueries;
         }
 
+        @XmlElementWrapper(name = "xpathExpressions")
+        @XmlElement(name = "xpathExpression")
+        public List<RestXPathExpressionFile> getXpathExpressions() {
+            return xpathExpressions;
+        }
+
+        public void setXpathExpressions(List<RestXPathExpressionFile> xpathExpressions) {
+            this.xpathExpressions = xpathExpressions;
+        }
+
+        @XmlElementWrapper(name = "jsonPathExpressions")
+        @XmlElement(name = "jsonPathExpression")
+        public List<RestJsonPathExpressionFile> getJsonPathExpressions() {
+            return jsonPathExpressions;
+        }
+
+        public void setJsonPathExpressions(List<RestJsonPathExpressionFile> jsonPathExpressions) {
+            this.jsonPathExpressions = jsonPathExpressions;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o)
@@ -377,5 +401,38 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         public void setMatchRegex(boolean matchRegex) {
             this.matchRegex = matchRegex;
         }
+    }
+
+
+    @XmlRootElement(name = "restXPathExpression")
+    protected static class RestXPathExpressionFile {
+
+        private String expression;
+
+        @XmlElement
+        public String getExpression() {
+            return expression;
+        }
+
+        public void setExpression(String expression) {
+            this.expression = expression;
+        }
+
+    }
+
+    @XmlRootElement(name = "restJsonPathExpression")
+    protected static class RestJsonPathExpressionFile {
+
+        private String expression;
+
+        @XmlElement
+        public String getExpression() {
+            return expression;
+        }
+
+        public void setExpression(String expression) {
+            this.expression = expression;
+        }
+
     }
 }

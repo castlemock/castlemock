@@ -103,6 +103,10 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
                 if(operation.getCurrentResponseSequenceIndex() == null){
                     operation.setCurrentResponseSequenceIndex(0);
                 }
+                if(!Strings.isNullOrEmpty(operation.getDefaultXPathMockResponseId())){
+                    operation.setDefaultMockResponseId(operation.getDefaultXPathMockResponseId());
+                    operation.setDefaultXPathMockResponseId(null);
+                }
                 
                 operation.setCurrentResponseSequenceIndex(0);
                 this.operationRepository.save(operation);

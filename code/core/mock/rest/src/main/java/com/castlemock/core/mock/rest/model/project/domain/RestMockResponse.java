@@ -42,6 +42,8 @@ public class RestMockResponse {
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
     private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<RestParameterQuery>();
+    private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpression>();
+    private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpression>();
 
     @XmlElement
     public String getId() {
@@ -134,5 +136,27 @@ public class RestMockResponse {
 
     public void setParameterQueries(List<RestParameterQuery> parameterQueries) {
         this.parameterQueries = parameterQueries;
+    }
+
+
+    @XmlElementWrapper(name = "xpathExpressions")
+    @XmlElement(name = "xpathExpression")
+    public List<RestXPathExpression> getXpathExpressions() {
+        return xpathExpressions;
+    }
+
+    public void setXpathExpressions(List<RestXPathExpression> xpathExpressions) {
+        this.xpathExpressions = xpathExpressions;
+    }
+
+
+    @XmlElementWrapper(name = "jsonPathExpressions")
+    @XmlElement(name = "jsonPathExpression")
+    public List<RestJsonPathExpression> getJsonPathExpressions() {
+        return jsonPathExpressions;
+    }
+
+    public void setJsonPathExpressions(List<RestJsonPathExpression> jsonPathExpressions) {
+        this.jsonPathExpressions = jsonPathExpressions;
     }
 }
