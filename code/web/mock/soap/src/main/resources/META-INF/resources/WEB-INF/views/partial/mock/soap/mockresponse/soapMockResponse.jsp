@@ -1,3 +1,4 @@
+<%@ page import="java.util.UUID" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
  Copyright 2016 Karl Dahlgren
@@ -153,7 +154,9 @@
                                 </tr>
                                 <c:forEach items="${soapMockResponse.xpathExpressions}" var="xpathExpression" varStatus="loopStatus">
                                     <tr class="even">
-                                        <td><div class="delete" onclick="removeXpath('${xpathExpression.expression}')"></div></td>
+                                        <c:set var = "xpathId" value = "${UUID.randomUUID().toString()}"/>
+                                        <td hidden="hidden"><c:out value = "${xpathId}"/></td>
+                                        <td><div class="delete" onclick="removeXpath('${xpathId}')"></div></td>
                                         <td><input name="xpathExpressions[${loopStatus.index}].expression" id="xpathExpressions[${loopStatus.index}].expression" value="${xpathExpression.expression}" type="hidden" />${xpathExpression.expression}</td>
                                     </tr>
                                 </c:forEach>

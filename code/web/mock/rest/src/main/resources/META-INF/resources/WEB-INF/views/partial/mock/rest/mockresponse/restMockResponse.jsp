@@ -1,3 +1,4 @@
+<%@ page import="java.util.UUID" %>
 <%@ include file="../../../../includes.jspf"%>
 <%--
   ~ Copyright 2015 Karl Dahlgren
@@ -192,7 +193,9 @@
                                             </tr>
                                             <c:forEach items="${restMockResponse.parameterQueries}" var="parameterQuery" varStatus="loopStatus">
                                                 <tr class="even">
-                                                    <td><div class="delete" onclick="removeParameterQuery('${parameterQuery.parameter}','${parameterQuery.query}','${parameterQuery.matchAny}','${parameterQuery.matchCase}','${parameterQuery.matchRegex}')"></div></td>
+                                                    <c:set var = "parameterQueryId" value = "${UUID.randomUUID().toString()}"/>
+                                                    <td hidden="hidden"><c:out value = "${parameterQueryId}"/></td>
+                                                    <td><div class="delete" onclick="removeParameterQuery('${parameterQueryId}')"></div></td>
                                                     <td><input name="parameterQueries[${loopStatus.index}].parameter" id="parameterQueries[${loopStatus.index}].parameter" value="${parameterQuery.parameter}" type="hidden" />${parameterQuery.parameter}</td>
                                                     <td><input name="parameterQueries[${loopStatus.index}].query" id="parameterQueries[${loopStatus.index}].query" value="${parameterQuery.query}" type="hidden"/>${parameterQuery.query}</td>
                                                     <td><input name="parameterQueries[${loopStatus.index}].matchAny" id="parameterQueries[${loopStatus.index}].matchAny" value="${parameterQuery.matchAny}" type="hidden"/>${parameterQuery.matchAny}</td>
@@ -230,7 +233,9 @@
                                     </tr>
                                     <c:forEach items="${restMockResponse.xpathExpressions}" var="xpathExpression" varStatus="loopStatus">
                                         <tr class="even">
-                                            <td><div class="delete" onclick="removeXpath('${xpathExpression.expression}')"></div></td>
+                                            <c:set var = "xpathId" value = "${UUID.randomUUID().toString()}"/>
+                                            <td hidden="hidden"><c:out value = "${xpathId}"/></td>
+                                            <td><div class="delete" onclick="removeXpath('${xpathId}')"></div></td>
                                             <td><input name="xpathExpressions[${loopStatus.index}].expression" id="xpathExpressions[${loopStatus.index}].expression" value="${xpathExpression.expression}" type="hidden" />${xpathExpression.expression}</td>
                                         </tr>
                                     </c:forEach>
@@ -262,7 +267,9 @@
                                     </tr>
                                     <c:forEach items="${restMockResponse.jsonPathExpressions}" var="jsonPathExpression" varStatus="loopStatus">
                                         <tr class="even">
-                                            <td><div class="delete" onclick="removeJsonPath('${jsonPathExpression.expression}')"></div></td>
+                                            <c:set var = "jsonPathId" value = "${UUID.randomUUID().toString()}"/>
+                                            <td hidden="hidden"><c:out value = "${jsonPathId}"/></td>
+                                            <td><div class="delete" onclick="removeJsonPath('${jsonPathId}')"></div></td>
                                             <td><input name="jsonPathExpressions[${loopStatus.index}].expression" id="jsonPathExpressions[${loopStatus.index}].expression" value="${jsonPathExpression.expression}" type="hidden" />${jsonPathExpression.expression}</td>
                                         </tr>
                                     </c:forEach>
