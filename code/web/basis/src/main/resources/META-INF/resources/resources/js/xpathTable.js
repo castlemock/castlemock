@@ -15,12 +15,12 @@
  */
 
 
-function findXpath(xpathName){
+function findXpath(xpathId){
     var xpathTable = document.getElementById("xpathTable");
     for (var index = 1, row; row = xpathTable.rows[index]; index++) {
-        var cell = row.cells[1];
-        var xpathNameInputValue = cell.getElementsByTagName("input")[0].value;
-        if(xpathNameInputValue === xpathName){
+        var cell = row.cells[0];
+        var otherXpathId = cell.innerHTML;
+        if(otherXpathId === xpathId){
             return index;
         }
 
@@ -31,8 +31,8 @@ function findXpath(xpathName){
 function alignXpathTableRowValues(){
     var xpathTable = document.getElementById("xpathTable");
     for (var index = 1, row; row = xpathTable.rows[index]; index++) {
-        var nameCell = row.cells[1];
-        var xpathNameInputValue = nameCell.getElementsByTagName("input")[0];
+        var xpathExpression = row.cells[2];
+        var xpathNameInputValue = xpathExpression.getElementsByTagName("input")[0];
 
         var rowIndex = index - 1;
         xpathNameInputValue.id = "xpathExpressions[" + rowIndex + "].expression";
@@ -44,24 +44,23 @@ function addXpath() {
     var xpathTable = document.getElementById("xpathTable");
     var xpath = document.getElementById("xpathInput").value;
 
-    var index = findXpath(xpath);
-    if(index !== -1){
-        return;
-    }
-
+    var xpathId = Math.random().toString(36).substring(7);
     var insertIndex = xpathTable.rows.length - 1;
     var row = xpathTable.insertRow(-1);
-    var xpathSelected = row.insertCell(0);
-    var xpathColumn = row.insertCell(1);
+    var xpathIdColumn = row.insertCell(0);
+    var xpathDeleteColumn = row.insertCell(1);
+    var xpathExpressionColumn = row.insertCell(2);
 
-    xpathSelected.innerHTML = "<div class=\"delete\" onclick=\"removeXpath(\'" + xpath + "')\" \>";
-    xpathColumn.innerHTML = "<input name=\"xpathExpressions[" + insertIndex + "].expression\" value=\"" + xpath + "\" type=\"hidden\" \> " + xpath;
+    xpathIdColumn.hidden = true;
+    xpathIdColumn.innerHTML = xpathId;
+    xpathDeleteColumn.innerHTML = "<div class=\"delete\" onclick=\"removeXpath(\'" + xpathId + "')\" \>";
+    xpathExpressionColumn.innerHTML = "<input name=\"xpathExpressions[" + insertIndex + "].expression\" value=\"" + xpath + "\" type=\"hidden\" \> " + xpath;
     alignXpathTableRowValues();
 }
 
-function removeXpath(deleteXPath) {
+function removeXpath(xpathId) {
     var xpathTable = document.getElementById("xpathTable");
-    var index = findXpath(deleteXPath);
+    var index = findXpath(xpathId);
     xpathTable.deleteRow(index);
     alignXpathTableRowValues();
 }

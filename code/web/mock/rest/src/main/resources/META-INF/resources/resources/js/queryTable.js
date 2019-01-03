@@ -15,24 +15,12 @@
  */
 
 
-function findParameterQuery(parameter, query, matchAny, matchCase, matchRegex){
+function findParameterQuery(parameterQueryId){
     var queryTable = document.getElementById("queryTable");
     for (var index = 1, row; row = queryTable.rows[index]; index++) {
-        var parameterCell = row.cells[1];
-        var queryCell = row.cells[2];
-        var matchAnyCell = row.cells[3];
-        var matchCaseCell = row.cells[4];
-        var matchRegexCell = row.cells[5];
-        var parameterInputValue = parameterCell.getElementsByTagName("input")[0].value;
-        var queryInputValue = queryCell.getElementsByTagName("input")[0].value;
-        var matchAnyInputValue = matchAnyCell.getElementsByTagName("input")[0].value;
-        var matchCaseInputValue = matchCaseCell.getElementsByTagName("input")[0].value;
-        var matchRegexInputValue = matchRegexCell.getElementsByTagName("input")[0].value;
-        if(parameter === parameterInputValue &&
-            query === queryInputValue &&
-            matchAny === matchAnyInputValue &&
-            matchCase === matchCaseInputValue &&
-            matchRegex === matchRegexInputValue){
+        var cell = row.cells[0];
+        var otherParameterQueryId = cell.innerHTML;
+        if(parameterQueryId === otherParameterQueryId){
             return index;
         }
 
@@ -43,11 +31,11 @@ function findParameterQuery(parameter, query, matchAny, matchCase, matchRegex){
 function alignParameterQueryTableRowValues(){
     var queryTable = document.getElementById("queryTable");
     for (var index = 1, row; row = queryTable.rows[index]; index++) {
-        var parameterCell = row.cells[1];
-        var queryCell = row.cells[2];
-        var matchAnyCell = row.cells[3];
-        var matchCaseCell = row.cells[4];
-        var matchRegexCell = row.cells[5];
+        var parameterCell = row.cells[2];
+        var queryCell = row.cells[3];
+        var matchAnyCell = row.cells[4];
+        var matchCaseCell = row.cells[5];
+        var matchRegexCell = row.cells[6];
         var parameterInputValue = parameterCell.getElementsByTagName("input")[0];
         var queryInputValue = queryCell.getElementsByTagName("input")[0];
         var matchAnyInputValue = matchAnyCell.getElementsByTagName("input")[0];
@@ -74,22 +62,26 @@ function alignParameterQueryTableRowValues(){
 
 function addParameterQuery() {
     var queryTable = document.getElementById("queryTable");
-    var parameterSelect = document.getElementById("parameterSelect").value;
+    var parameterSelect = document.getElementById("queryParameterSelect").value;
     var queryInput = document.getElementById("queryInput").value;
     var matchAnyInput = document.getElementById("matchAnyInput").checked;
     var matchCaseInput = document.getElementById("matchCaseInput").checked;
     var matchRegexInput = document.getElementById("regexInput").checked;
 
+    var parameterQueryId = Math.random().toString(36).substring(7);
     var insertIndex = queryTable.rows.length - 1;
     var row = queryTable.insertRow(-1);
-    var querySelected = row.insertCell(0);
-    var parameterColumn = row.insertCell(1);
-    var queryColumn = row.insertCell(2);
-    var matchAnyColumn = row.insertCell(3);
-    var matchCaseColumn = row.insertCell(4);
-    var matchRegexColumn = row.insertCell(5);
+    var queryIdColumn = row.insertCell(0);
+    var queryDeleteColumn = row.insertCell(1);
+    var parameterColumn = row.insertCell(2);
+    var queryColumn = row.insertCell(3);
+    var matchAnyColumn = row.insertCell(4);
+    var matchCaseColumn = row.insertCell(5);
+    var matchRegexColumn = row.insertCell(6);
 
-    querySelected.innerHTML = "<div class=\"delete\" onclick=\"removeParameterQuery(\'" + parameterSelect + "','" + queryInput + "','" + matchAnyInput + "','" + matchCaseInput + "','" + matchRegexInput + "')\" \>";
+    queryIdColumn.hidden = true;
+    queryIdColumn.innerHTML = parameterQueryId;
+    queryDeleteColumn.innerHTML = "<div class=\"delete\" onclick=\"removeParameterQuery(\'" + parameterQueryId + "')\" \>";
     parameterColumn.innerHTML = "<input name=\"parameterQueries[" + insertIndex + "].parameter\" value=\"" + parameterSelect + "\" type=\"hidden\" \> " + parameterSelect;
     queryColumn.innerHTML = "<input name=\"parameterQueries[" + insertIndex + "].query\" value=\"" + queryInput + "\" type=\"hidden\" \> " + queryInput;
     matchAnyColumn.innerHTML = "<input name=\"parameterQueries[" + insertIndex + "].matchAny\" value=\"" + matchAnyInput + "\" type=\"hidden\" \> " + matchAnyInput;
@@ -98,9 +90,9 @@ function addParameterQuery() {
     alignParameterQueryTableRowValues();
 }
 
-function removeParameterQuery(parameter, query, matchAny, matchCase, matchRegex) {
+function removeParameterQuery(parameterQueryId) {
     var queryTable = document.getElementById("queryTable");
-    var index = findParameterQuery(parameter, query, matchAny, matchCase, matchRegex);
+    var index = findParameterQuery(parameterQueryId);
     queryTable.deleteRow(index);
     alignParameterQueryTableRowValues();
 }
