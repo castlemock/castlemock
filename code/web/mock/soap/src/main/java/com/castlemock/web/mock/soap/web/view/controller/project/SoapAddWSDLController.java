@@ -95,7 +95,7 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
                     .build());
             return redirect("/soap/project/" + projectId + "?upload=success");
         }catch (Exception e){
-            return redirect("/soap/project/" + projectId + "?upload=error");
+            return redirect("/soap/project/" + projectId + "?upload=error", e);
         } finally {
             if(uploadedFiles != null){
                 for(File uploadedFile : uploadedFiles){

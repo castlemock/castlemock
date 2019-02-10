@@ -19,9 +19,11 @@ package com.castlemock.web.basis.web.view.controller;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.view.command.search.SearchCommand;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.core.NestedExceptionUtils;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,9 +37,12 @@ import java.util.Date;
  * The AbstractViewController provides functionality that are shared amongst
  * all the view controllers
  * @author Karl Dahlgren
+ * @author Mohammad Hewedy
  * @since 1.0
  */
 public abstract class AbstractViewController extends AbstractController {
+
+    private static final Logger LOGGER = Logger.getLogger(AbstractViewController.class);
 
     @Autowired
     protected MessageSource messageSource;
@@ -104,6 +109,19 @@ public abstract class AbstractViewController extends AbstractController {
      */
     public ModelAndView redirect(final String url){
         return new ModelAndView("redirect:/web" + url);
+    }
+
+    /**
+     * Create a model and view that redirects the user to a specific url
+     * @param url The url that the user should be redirected to.
+     * @param ex the exception to log its root cause
+     * @return A model and view that redirects the user to a specific url
+     * @since 1.36
+     */
+    public ModelAndView redirect(final String url, Exception ex){
+        Throwable rootCause = NestedExceptionUtils.getRootCause(ex);
+        LOGGER.error("Exception: " + rootCause);
+        return redirect(url);
     }
 
     /**
