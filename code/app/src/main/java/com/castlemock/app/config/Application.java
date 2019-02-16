@@ -29,6 +29,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.security.cert.X509Certificate;
 import java.util.Map;
 
 /**
@@ -37,6 +42,7 @@ import java.util.Map;
  * and mark them as configuration sources.
  *
  * @author Karl Dahlgren
+ * @author Mohammad Hewedy
  * @since 1.0
  */
 public abstract class Application extends SpringBootServletInitializer{
@@ -45,6 +51,8 @@ public abstract class Application extends SpringBootServletInitializer{
     private String version;
     @Value("${base.file.directory}")
     private String baseFileDirectory;
+    @Value("${http.sslverify:true}")
+    private boolean securityCertificationValidationEnabled;
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
@@ -62,6 +70,7 @@ public abstract class Application extends SpringBootServletInitializer{
     @PostConstruct
     protected void initiate(){
         printLogo();
+        initializeUnSecureTLS();
         updateBaseFileDirectory(); // This is required to change the base folder name from .fortmocks to .castlemock
         initializeProcessRegistry();
         initializeRepository();
@@ -152,6 +161,40 @@ public abstract class Application extends SpringBootServletInitializer{
     private void updateBaseFileDirectory(){
         String previousBaseFolderDirectory = baseFileDirectory.replace(".castlemock", ".fortmocks");
         fileManager.renameDirectory(previousBaseFolderDirectory, baseFileDirectory);
+    }
+
+    /**
+     * Conditionally bypass http ssl/tls check for all websites
+     * @since 1.36
+     */
+    private void initializeUnSecureTLS() {
+        if (!securityCertificationValidationEnabled) {
+            try {
+                // Create a trust manager that does not validate certificate chains
+                TrustManager[] trustAllCerts = new TrustManager[]{
+                        new X509TrustManager() {
+                            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                                return null;
+                            }
+
+                            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                            }
+
+                            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                            }
+                        }
+                };
+                // Install the all-trusting trust manager
+                SSLContext sc = SSLContext.getInstance("SSL");
+                sc.init(null, trustAllCerts, new java.security.SecureRandom());
+                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+                // Install the all-trusting host verifier
+                HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }
