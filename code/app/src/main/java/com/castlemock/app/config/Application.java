@@ -52,7 +52,7 @@ public abstract class Application extends SpringBootServletInitializer{
     @Value("${base.file.directory}")
     private String baseFileDirectory;
     @Value("${http.sslverify:true}")
-    private boolean httpSslVerify;
+    private boolean securityCertificationValidationEnabled;
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
@@ -168,7 +168,7 @@ public abstract class Application extends SpringBootServletInitializer{
      * @since 1.36
      */
     private void initializeUnSecureTLS() {
-        if (!httpSslVerify) {
+        if (!securityCertificationValidationEnabled) {
             try {
                 // Create a trust manager that does not validate certificate chains
                 TrustManager[] trustAllCerts = new TrustManager[]{
