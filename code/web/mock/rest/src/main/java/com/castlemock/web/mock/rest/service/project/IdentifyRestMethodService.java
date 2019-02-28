@@ -69,6 +69,8 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
         final Map<String, String> pathParameters =
                 UrlUtility.getPathParameters(restResource.getUri(), restResourceUriParts);
 
+        pathParameters.putAll(UrlUtility.getQueryStringParameters(restResource.getUri(), input.getHttpParameters()));
+
         final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(foundRestMethod.getId());
         foundRestMethod.setMockResponses(mockResponses);
 

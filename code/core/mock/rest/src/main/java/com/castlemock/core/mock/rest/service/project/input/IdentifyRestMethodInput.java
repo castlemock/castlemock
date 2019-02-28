@@ -18,9 +18,10 @@ package com.castlemock.core.mock.rest.service.project.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.basis.model.http.domain.HttpParameter;
 import com.castlemock.core.basis.model.validation.NotNull;
 
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author Karl Dahlgren
@@ -37,11 +38,22 @@ public final class IdentifyRestMethodInput implements Input {
     @NotNull
     private final HttpMethod httpMethod;
 
+    private Map<String, String> httpParameters;
+
     private IdentifyRestMethodInput(final Builder builder) {
         this.restProjectId = Objects.requireNonNull(builder.restProjectId);
         this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
         this.restResourceUri = Objects.requireNonNull(builder.restResourceUri);
         this.httpMethod = Objects.requireNonNull(builder.httpMethod);
+        this.httpParameters = builder.httpParameters != null ? convert(builder.httpParameters) : Collections.emptyMap();
+    }
+
+    private static Map<String, String> convert(List<HttpParameter> httpParameters) {
+        Map<String, String> out = new HashMap<>();
+        for(HttpParameter httpParam:httpParameters){
+            out.put(httpParam.getName(), httpParam.getValue());
+        }
+        return out;
     }
 
     public String getRestProjectId() {
@@ -60,6 +72,8 @@ public final class IdentifyRestMethodInput implements Input {
         return httpMethod;
     }
 
+    public Map<String, String> getHttpParameters(){ return httpParameters; }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -70,6 +84,7 @@ public final class IdentifyRestMethodInput implements Input {
         private String restApplicationId;
         private String restResourceUri;
         private HttpMethod httpMethod;
+        private List<HttpParameter> httpParameters;
 
         public Builder restProjectId(final String restProjectId){
             this.restProjectId = restProjectId;
@@ -88,6 +103,11 @@ public final class IdentifyRestMethodInput implements Input {
 
         public Builder httpMethod(final HttpMethod httpMethod){
             this.httpMethod = httpMethod;
+            return this;
+        }
+
+        public Builder httpParameters(final List<HttpParameter>  httpParameters){
+            this.httpParameters = httpParameters;
             return this;
         }
 
