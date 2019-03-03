@@ -42,7 +42,7 @@ import java.util.Date;
  */
 public abstract class AbstractViewController extends AbstractController {
 
-    private static final Logger LOGGER = Logger.getLogger(AbstractViewController.class);
+    private final Logger logger = Logger.getLogger(this.getClass());
 
     @Autowired
     protected MessageSource messageSource;
@@ -120,7 +120,7 @@ public abstract class AbstractViewController extends AbstractController {
      */
     public ModelAndView redirect(final String url, Exception ex){
         Throwable rootCause = NestedExceptionUtils.getRootCause(ex);
-        LOGGER.error("Exception: " + rootCause);
+        logger.error("Exception: " + rootCause);
         return redirect(url);
     }
 
