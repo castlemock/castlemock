@@ -20,6 +20,8 @@ package com.castlemock.core.basis.utility.compare;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -95,6 +97,35 @@ public class UrlUtilityTest {
         final Set<String> parts = UrlUtility.getPathParameters("/rest/api/user/{userId}/");
         Assert.assertEquals(1, parts.size());
         Assert.assertTrue(parts.contains("userId"));
+    }
+
+    @Test
+    public void canGetQueryStringParameters(){
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("userId", "1");
+
+        Map<String, String> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}", queryParams);
+
+        Assert.assertTrue(map.containsKey("userId"));
+        Assert.assertEquals("1", map.get("userId"));
+    }
+
+
+    @Test
+    public void getPathParametersShouldNotConsiderQueryParameters(){
+        Map<String, String> pathParameters = UrlUtility.getPathParameters("/rest/api/{user}?param={param}", new String[]{"", "rest", "api", "johndoe"});
+        Assert.assertEquals(1, pathParameters.size());
+        Assert.assertTrue(pathParameters.containsKey("user"));
+        Assert.assertEquals("johndoe", pathParameters.get("user"));
+    }
+
+
+    @Test
+    public void getQueryStringParameters(){
+        final Set<String> parts = UrlUtility.getPathParameters("/rest/api/user/?userId={userId}&id={id}");
+        Assert.assertEquals(2, parts.size());
+        Assert.assertTrue(parts.contains("userId"));
+        Assert.assertTrue(parts.contains("id"));
     }
 
     @Test

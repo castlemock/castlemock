@@ -19,7 +19,8 @@ package com.castlemock.core.basis.utility.compare;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Karl Dahlgren
@@ -117,7 +118,10 @@ public class UrlUtility {
 
     public static Map<String, String> getPathParameters(final String uri1, final String[] uriParts2){
         final Map<String, String> pathParameters = new HashMap<>();
-        final String[] uriParts1 = uri1.split(SLASH);
+
+        // work excluding the query string part
+        final String[] uriParts1 = uri1.indexOf('?') > 0 ?
+                uri1.split("\\?")[0].split(SLASH) : uri1.split(SLASH);
 
         if(uriParts1.length != uriParts2.length){
             return pathParameters;
@@ -141,24 +145,51 @@ public class UrlUtility {
         return pathParameters;
     }
 
+    private final static Pattern VARIABLE_PATTERN = Pattern.compile("\\{(.+?)\\}");
+
+    /**
+     *
+     * /path?id={id}&user={user}
+     *
+     * @param uri
+     * @param httpParameters
+     * @return
+     */
+    public static Map<String, String> getQueryStringParameters(String uri, Map<String, String> httpParameters) {
+        HashMap<String, String> output = new HashMap<>();
+
+        if(uri.indexOf('?') > 0){
+            String queryString = uri.split("\\?")[1];
+
+            Matcher matcher = VARIABLE_PATTERN.matcher(queryString);
+            while (matcher.find()){
+                String paramName = matcher.group(1);
+                String value = httpParameters.get(paramName);
+                if(value != null){
+                    output.put(paramName, value);
+                }
+            }
+
+        }
+
+        return output;
+    }
+
+
+
 
     public static Set<String> getPathParameters(final String uri){
-        return Arrays.stream(uri.split(SLASH))
-                .map(part -> {
-                    int startBracketIndex = part.indexOf(START_BRACKET);
-                    int endBracketIndex = part.indexOf(END_BRACKET);
 
-                    if(startBracketIndex != -1 && endBracketIndex != -1
-                            && startBracketIndex < endBracketIndex){
-                        part = part.replaceAll("\\{", EMPTY_STRING);
-                        part = part.replaceAll("\\}", EMPTY_STRING);
-                        return part;
-                    } else {
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
+        Set<String> parameters = new HashSet<>();
+
+        Matcher matcher = VARIABLE_PATTERN.matcher(uri);
+        while (matcher.find()){
+            String paramName = matcher.group(1);
+            if(paramName != null){
+                parameters.add(paramName);
+            }
+        }
+        return parameters;
     }
 
     public static String getPath(final String originalPath,
@@ -171,5 +202,4 @@ public class UrlUtility {
             return null;
         }
     }
-
 }

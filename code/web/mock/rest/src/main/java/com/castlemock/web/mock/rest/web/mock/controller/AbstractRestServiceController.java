@@ -98,11 +98,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
             Preconditions.checkNotNull(httpServletResponse, "The HTTP Servlet Response cannot be null");
             final RestRequest restRequest = prepareRequest(projectId, applicationId, httpMethod, httpServletRequest);
+
             final IdentifyRestMethodOutput output = serviceProcessor.process(IdentifyRestMethodInput.builder()
                     .restProjectId(projectId)
                     .restApplicationId(applicationId)
                     .restResourceUri(restRequest.getUri())
                     .httpMethod(httpMethod)
+                    .httpParameters(restRequest.getHttpParameters())
                     .build());
             final String resourceId = output.getRestResourceId();
 
