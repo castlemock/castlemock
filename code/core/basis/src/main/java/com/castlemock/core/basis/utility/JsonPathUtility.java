@@ -32,18 +32,15 @@ public final class JsonPathUtility {
 
     }
 
-    public static boolean isValidJsonPathExpr(final HashMap headers,
+    public static boolean isValidJsonPathExpr(final HashMap<String, String> headers,
                                               final String body,
                                               final String expression) {
         final Object document = Configuration.defaultConfiguration().jsonProvider().parse(body);
-        final JSONArray array;
-        if (expression.contains("Header")) {
-            array = JsonPath.read(headers, expression.replace("Header.", "").toLowerCase());
-        } else {
-            array = JsonPath.read(document, expression);
-        }
-
+        final JSONArray array = JsonPath.read(document, expression);
+        final JSONArray headersArray = JsonPath.read(headers, expression.toLowerCase());
+        array.merge(headersArray);
         return !array.isEmpty();
     }
+
 
 }
