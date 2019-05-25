@@ -449,9 +449,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
             }
 
         } else if(restMethod.getResponseStrategy().equals(RestResponseStrategy.JSON_PATH)){
+            HashMap headers = new HashMap();
+            for(HttpHeader httpHeader : restRequest.getHttpHeaders()){
+                headers.put(httpHeader.getName(),httpHeader.getValue().toLowerCase());
+            }
             for (RestMockResponse testedMockResponse : mockResponses) {
                 for(RestJsonPathExpression jsonPathExpression : testedMockResponse.getJsonPathExpressions()){
-                    if (JsonPathUtility.isValidJsonPathExpr(restRequest.getBody(), jsonPathExpression.getExpression())) {
+                    if (JsonPathUtility.isValidJsonPathExpr(headers, restRequest.getBody(), jsonPathExpression.getExpression())) {
                         mockResponse = testedMockResponse;
                         break;
                     }

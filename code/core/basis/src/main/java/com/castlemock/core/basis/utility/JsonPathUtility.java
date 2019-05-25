@@ -20,20 +20,28 @@ import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 
+import java.util.HashMap;
+
 /**
  * @author Karl Dahlgren
  * @since 1.35
  */
 public final class JsonPathUtility {
 
-    private JsonPathUtility(){
+    private JsonPathUtility() {
 
     }
 
-    public static boolean isValidJsonPathExpr(final String body,
-                                              final String expression){
+    public static boolean isValidJsonPathExpr(final HashMap headers,
+                                              final String body,
+                                              final String expression) {
         final Object document = Configuration.defaultConfiguration().jsonProvider().parse(body);
-        final JSONArray array = JsonPath.read(document, expression);
+        final JSONArray array;
+        if (expression.contains("Header")) {
+            array = JsonPath.read(headers, expression.replace("Header.", "").toLowerCase());
+        } else {
+            array = JsonPath.read(document, expression);
+        }
 
         return !array.isEmpty();
     }

@@ -18,52 +18,59 @@ package com.castlemock.core.basis.utility;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class JsonPathUtilityTest {
 
     @Test
-    public void testExpression1(){
+    public void testExpression1() {
         final String body = getBody();
+        final HashMap<String, String> headers = getHeaders();
         final String expression = "$.store.book[?(@.price < 10)]";
-        final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
+        final boolean result = JsonPathUtility.isValidJsonPathExpr(headers, body, expression);
         assertTrue(result);
     }
 
     @Test
-    public void testExpression2(){
+    public void testExpression2() {
         final String body = getBody();
+        final HashMap<String, String> headers = getHeaders();
         final String expression = "$.store.book[?(@.author == 'Nigel Rees')]";
-        final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
+        final boolean result = JsonPathUtility.isValidJsonPathExpr(headers, body, expression);
         assertTrue(result);
     }
 
     @Test
-    public void testExpression3(){
+    public void testExpression3() {
         final String body = getBody();
+        final HashMap<String, String> headers = getHeaders();
         final String expression = "$.store.book[?(@.author == 'Karl Dahlgren')]";
-        final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
+        final boolean result = JsonPathUtility.isValidJsonPathExpr(headers, body, expression);
         assertFalse(result);
     }
 
     @Test
-    public void testExpression4(){
+    public void testExpression4() {
         final String body = getBody();
+        final HashMap<String, String> headers = getHeaders();
         final String expression = "$.[?(@.expensive == 10)]";
-        final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
+        final boolean result = JsonPathUtility.isValidJsonPathExpr(headers, body, expression);
         assertTrue(result);
     }
 
     @Test
-    public void testExpression5(){
+    public void testExpression5() {
         final String body = getBody();
+        final HashMap<String, String> headers = getHeaders();
         final String expression = "$.[?(@.expensive == 11)]";
-        final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
+        final boolean result = JsonPathUtility.isValidJsonPathExpr(headers, body, expression);
         assertFalse(result);
     }
 
-    private String getBody(){
+    private String getBody() {
         return "{\n" +
                 "  \"store\": {\n" +
                 "    \"book\": [\n" +
@@ -95,6 +102,14 @@ public class JsonPathUtilityTest {
                 "  },\n" +
                 "  \"expensive\": 10\n" +
                 "}";
+    }
+
+    private HashMap<String, String> getHeaders() {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("content-length", "966");
+        headers.put("content-type", "text/plain");
+        headers.put("connection", "keep-alive");
+        return headers;
     }
 
 }
