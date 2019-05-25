@@ -18,6 +18,7 @@ package com.castlemock.core.basis.utility;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 import net.minidev.json.JSONArray;
 
 import java.util.HashMap;
@@ -37,8 +38,12 @@ public final class JsonPathUtility {
                                               final String expression) {
         final Object document = Configuration.defaultConfiguration().jsonProvider().parse(body);
         final JSONArray array = JsonPath.read(document, expression);
-        final JSONArray headersArray = JsonPath.read(headers, expression.toLowerCase());
-        array.merge(headersArray);
+        try {
+            final JSONArray headersArray = JsonPath.read(headers, expression.toLowerCase());
+            array.merge(headersArray);
+        } catch (PathNotFoundException e) {
+            e.printStackTrace();
+        }
         return !array.isEmpty();
     }
 
