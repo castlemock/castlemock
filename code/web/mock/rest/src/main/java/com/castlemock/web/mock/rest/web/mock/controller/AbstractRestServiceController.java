@@ -556,7 +556,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
     private HashMap<String, String> transformHeaderListToMap(List<HttpHeader> headerList) {
         HashMap<String, String> headers = new HashMap<>();
         for (HttpHeader httpHeader : headerList) {
-            headers.put(httpHeader.getName(), httpHeader.getValue().toLowerCase());
+            String value = httpHeader.getValue() != null ? httpHeader.getValue().toLowerCase() : null;
+            headers.put(httpHeader.getName(), value);
         }
         return headers;
     }
