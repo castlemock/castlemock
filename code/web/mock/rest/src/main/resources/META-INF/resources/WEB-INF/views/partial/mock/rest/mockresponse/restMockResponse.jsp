@@ -1,4 +1,3 @@
-<%@ page import="java.util.UUID" %>
 <%@ include file="../../../../includes.jspf"%>
 <%--
   ~ Copyright 2015 Karl Dahlgren
@@ -81,6 +80,7 @@
                         </c:choose>
                         <li><a data-toggle="tab" href="#tab-xpaths"><spring:message code="rest.restmockresponse.header.xpaths"/></a></li>
                         <li><a data-toggle="tab" href="#tab-jsonpath"><spring:message code="rest.restmockresponse.header.jsonpaths"/></a></li>
+                        <li><a data-toggle="tab" href="#tab-headermatch"><spring:message code="rest.restmockresponse.header.headermatch"/></a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
@@ -276,7 +276,41 @@
                                 </table>
                             </div>
                         </div>
-                        
+
+                        <div id="tab-headermatch" class="tab-pane fade">
+                            <h2 class="decorated"><span><spring:message code="rest.restmockresponse.field.addheadermatch"/></span></h2>
+                            <div>
+                                <table class="formTable">
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.restmockresponse.label.headermatch"/></form:label></td>
+                                        <td class="column2"><input type="text" class="form-control" name="parameterHeaderInput" id="parameterHeaderInput"></td>
+                                    </tr>
+                                </table>
+                                <button class="btn btn-success" onclick="addParameterHeader()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.restmockresponse.button.addheadermatch"/></span></button>
+                            </div>
+
+                            <div class="invisible-divider"></div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover sortable" id="headerMatchTable">
+                                    <col width="4%">
+                                    <col width="96%">
+                                    <tr>
+                                        <th></th>
+                                        <th><spring:message code="rest.restmockresponse.column.headermatch"/></th>
+                                    </tr>
+                                    <c:forEach items="${restMockResponse.parameterHeaderExpressions}" var="parameterHeaderExpression" varStatus="loopStatus">
+                                        <tr class="even">
+                                            <c:set var = "parameterHeaderId" value = "${UUID.randomUUID().toString()}"/>
+                                            <td hidden="hidden"><c:out value = "${parameterHeaderId}"/></td>
+                                            <td><div class="delete" onclick="removeParameterHeader('${parameterHeaderId}')"></div></td>
+                                            <td><input name="parameterHeaderExpressions[${loopStatus.index}].expression" id="parameterHeaderExpressions[${loopStatus.index}].expression" value="${parameterHeaderExpression.expression}" type="hidden" />${parameterHeaderExpression.expression}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -292,6 +326,7 @@
 <script src=<c:url value="/resources/js/queryTable.js"/>></script>
 <script src=<c:url value="/resources/js/xpathTable.js"/>></script>
 <script src=<c:url value="/resources/js/jsonPathTable.js"/>></script>
+<script src=<c:url value="/resources/js/headerMatchTable.js"/>></script>
 <script src=<c:url value="/resources/js/editor.js"/>></script>
 <script>
     $("#restMockResponseNameInput").attr('required', '');

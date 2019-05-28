@@ -25,6 +25,7 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestParameterHeaderExpression;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
@@ -211,6 +212,8 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         private List<RestXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpressionFile>();
         @Mapping("jsonPathExpressions")
         private List<RestJsonPathExpressionFile> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpressionFile>();
+        @Mapping("parameterHeaderExpressions")
+        private List<RestParameterHeaderExpression> parameterHeaderExpressions = new CopyOnWriteArrayList<RestParameterHeaderExpression>();
 
         @Override
         @XmlElement
@@ -325,6 +328,16 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
 
         public void setJsonPathExpressions(List<RestJsonPathExpressionFile> jsonPathExpressions) {
             this.jsonPathExpressions = jsonPathExpressions;
+        }
+
+        @XmlElementWrapper(name = "parameterHeaderExpressions")
+        @XmlElement(name = "parameterHeaderExpressions")
+        public List<RestParameterHeaderExpression> getParameterHeaderExpressions() {
+            return parameterHeaderExpressions;
+        }
+
+        public void setParameterHeaderExpressions(List<RestParameterHeaderExpression> parameterHeaderExpressions) {
+            this.parameterHeaderExpressions = parameterHeaderExpressions;
         }
 
         @Override
