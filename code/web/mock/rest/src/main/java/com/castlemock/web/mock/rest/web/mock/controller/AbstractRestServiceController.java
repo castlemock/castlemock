@@ -456,7 +456,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.JSON_PATH)) {
             for (RestMockResponse testedMockResponse : mockResponses) {
                 for (RestJsonPathExpression jsonPathExpression : testedMockResponse.getJsonPathExpressions()) {
-                    if (JsonPathUtility.isValidJsonPathExpr(transformHeaderListToMap(restRequest.getHttpHeaders()), restRequest.getBody(), jsonPathExpression.getExpression())) {
+                    if (JsonPathUtility.isValidJsonPathExpr(restRequest.getBody(), jsonPathExpression.getExpression())) {
                         mockResponse = testedMockResponse;
                         break;
                     }
@@ -569,12 +569,4 @@ public abstract class AbstractRestServiceController extends AbstractController {
         return result;
     }
 
-    private HashMap<String, String> transformHeaderListToMap(List<HttpHeader> headerList) {
-        HashMap<String, String> headers = new HashMap<>();
-        for (HttpHeader httpHeader : headerList) {
-            String value = httpHeader.getValue() != null ? httpHeader.getValue().toLowerCase() : null;
-            headers.put(httpHeader.getName(), value);
-        }
-        return headers;
-    }
 }
