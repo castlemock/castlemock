@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpParameter;
+import com.castlemock.core.basis.utility.HeaderMatchUtility;
 import com.castlemock.core.basis.utility.JsonPathUtility;
 import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.TextParser;
@@ -464,6 +465,21 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
             if (mockResponse == null) {
                 LOGGER.info("Unable to match the input JSON Path to a response");
+                mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
+            }
+
+        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.HEADER_MATCH)) {
+            for (RestMockResponse testedMockResponse : mockResponses) {
+                for (RestParameterHeaderExpression parameterHeaderExpression : testedMockResponse.getParameterHeaderExpressions()) {
+                    if(HeaderMatchUtility.isValidHeaderParameterExpr(restRequest.getHttpHeaders(), parameterHeaderExpression.getExpression())){
+                        mockResponse = testedMockResponse;
+                        break;
+                    }
+                }
+            }
+
+            if (mockResponse == null) {
+                LOGGER.info("Unable to match the input Header match to a response");
                 mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
             }
         }
