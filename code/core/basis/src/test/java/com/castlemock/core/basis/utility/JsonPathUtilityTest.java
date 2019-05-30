@@ -63,14 +63,6 @@ public class JsonPathUtilityTest {
         assertFalse(result);
     }
 
-    @Test
-    public void testExpression6() {
-        final String body = getBody();
-        final String expression = "$.[?(@.connection == 'keep-alive')]";
-        final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
-        assertTrue(result);
-    }
-
     private String getBody() {
         return "{\n" +
                 "  \"store\": {\n" +
