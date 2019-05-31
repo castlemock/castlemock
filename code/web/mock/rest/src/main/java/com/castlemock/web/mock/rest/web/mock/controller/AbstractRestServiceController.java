@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpParameter;
+import com.castlemock.core.basis.utility.HeaderMatchUtility;
 import com.castlemock.core.basis.utility.JsonPathUtility;
 import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.TextParser;
@@ -61,6 +62,7 @@ import java.util.*;
 
 /**
  * The abstract REST controller is a base class shared among all the REST service classes.
+ *
  * @author Karl Dahlgren
  * @since 1.0
  */
@@ -78,11 +80,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
             new RestMockResponseNameComparator();
 
     /**
-     *
-     * @param projectId The id of the project which the incoming request and mocked response belongs to
-     * @param applicationId The id of the application which the incoming and mocked response belongs to
-     * @param httpMethod The request method
-     * @param httpServletRequest The incoming request
+     * @param projectId           The id of the project which the incoming request and mocked response belongs to
+     * @param applicationId       The id of the application which the incoming and mocked response belongs to
+     * @param httpMethod          The request method
+     * @param httpServletRequest  The incoming request
      * @param httpServletResponse The outgoing response
      * @return Returns the response as an String
      */
@@ -90,8 +91,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                              final String applicationId,
                                              final HttpMethod httpMethod,
                                              final HttpServletRequest httpServletRequest,
-                                             final HttpServletResponse httpServletResponse){
-        try{
+                                             final HttpServletResponse httpServletResponse) {
+        try {
             Preconditions.checkNotNull(projectId, "The project id cannot be null");
             Preconditions.checkNotNull(applicationId, "The application id cannot be null");
             Preconditions.checkNotNull(httpMethod, "The REST method cannot be null");
@@ -110,9 +111,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
             return process(restRequest, projectId, applicationId, resourceId,
                     output.getRestMethod(), output.getPathParameters(), httpServletResponse);
-        }
-
-        catch (Exception exception){
+        } catch (Exception exception) {
             LOGGER.debug("REST service exception: " + exception.getMessage(), exception);
             throw new RestException(exception.getMessage());
         }
@@ -120,9 +119,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
     /**
      * The method prepares an request
-     * @param projectId The id of the project that the incoming request belongs to
-     * @param applicationId The id of the application that the incoming request belongs to
-     * @param httpMethod The HTTP method that should be mocked, such as GET or POST
+     *
+     * @param projectId          The id of the project that the incoming request belongs to
+     * @param applicationId      The id of the application that the incoming request belongs to
+     * @param httpMethod         The HTTP method that should be mocked, such as GET or POST
      * @param httpServletRequest The incoming request
      * @return A new created project
      */
@@ -151,11 +151,12 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * The process method provides the functionality to process an incoming request. The request will be identified
      * and a corresponding action will be applied for the request. The following actions are support:
      * Forward, record, mock or disable.
-     * @param restRequest The incoming request
-     * @param projectId The id of the project that the incoming request belongs to
-     * @param applicationId The id of the application that the incoming request belongs to
-     * @param resourceId The id of the resource that the incoming request belongs to
-     * @param restMethod The REST method which the incoming request belongs to
+     *
+     * @param restRequest         The incoming request
+     * @param projectId           The id of the project that the incoming request belongs to
+     * @param applicationId       The id of the application that the incoming request belongs to
+     * @param resourceId          The id of the resource that the incoming request belongs to
+     * @param restMethod          The REST method which the incoming request belongs to
      * @param httpServletResponse The HTTP servlet response
      * @return A response in String format
      */
@@ -165,7 +166,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                              final String resourceId,
                                              final RestMethod restMethod,
                                              final Map<String, String> pathParameters,
-                                             final HttpServletResponse httpServletResponse){
+                                             final HttpServletResponse httpServletResponse) {
         Preconditions.checkNotNull(restRequest, "Rest request cannot be null");
         RestEvent event = null;
         RestResponse response = null;
@@ -186,14 +187,14 @@ public abstract class AbstractRestServiceController extends AbstractController {
             }
 
             HttpHeaders responseHeaders = new HttpHeaders();
-            for(HttpHeader httpHeader : response.getHttpHeaders()){
+            for (HttpHeader httpHeader : response.getHttpHeaders()) {
                 List<String> headerValues = new LinkedList<String>();
                 headerValues.add(httpHeader.getValue());
                 responseHeaders.put(httpHeader.getName(), headerValues);
             }
 
-            if(restMethod.getSimulateNetworkDelay() &&
-                    restMethod.getNetworkDelay() >= 0){
+            if (restMethod.getSimulateNetworkDelay() &&
+                    restMethod.getNetworkDelay() >= 0) {
                 try {
                     Thread.sleep(restMethod.getNetworkDelay());
                 } catch (InterruptedException e) {
@@ -202,8 +203,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
             }
 
             return new ResponseEntity<String>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
-        } finally{
-            if(event != null){
+        } finally {
+            if (event != null) {
                 event.finish(response);
                 serviceProcessor.processAsync(CreateRestEventInput.builder()
                         .restEvent(event)
@@ -214,7 +215,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
     /**
      * The method provides the functionality to forward a request to another endpoint
-     * @param request The incoming request
+     *
+     * @param request    The incoming request
      * @param restMethod The REST method which the incoming request belongs to
      * @return The response received from the external endpoint
      */
@@ -223,8 +225,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                           final String applicationId,
                                           final String resourceId,
                                           final RestMethod restMethod,
-                                          final Map<String, String> pathParameters){
-        if(demoMode){
+                                          final Map<String, String> pathParameters) {
+        if (demoMode) {
             // If the application is configured to run in demo mode, then use mocked response instead
             return mockResponse(request, projectId, applicationId, resourceId, restMethod, pathParameters);
         }
@@ -236,9 +238,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
             String requestBody = null;
 
-            if(HttpMethod.POST.equals(request.getHttpMethod()) ||
+            if (HttpMethod.POST.equals(request.getHttpMethod()) ||
                     HttpMethod.PUT.equals(request.getHttpMethod()) ||
-                    HttpMethod.DELETE.equals(request.getHttpMethod())){
+                    HttpMethod.DELETE.equals(request.getHttpMethod())) {
                 requestBody = request.getBody();
             }
 
@@ -265,7 +267,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             LOGGER.error("Unable to forward request", exception);
             throw new RestException("Unable to forward request to configured endpoint");
         } finally {
-            if(connection != null){
+            if (connection != null) {
                 connection.disconnect();
             }
         }
@@ -274,8 +276,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
     /**
      * The method provides the functionality to forward a request to another endpoint. The response
      * will be recorded and can later be used as a mocked response
+     *
      * @param restRequest The incoming request
-     * @param restMethod The REST method which the incoming request belongs to
+     * @param restMethod  The REST method which the incoming request belongs to
      * @return The response received from the external endpoint
      */
     protected RestResponse forwardRequestAndRecordResponse(final RestRequest restRequest,
@@ -283,7 +286,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                                            final String applicationId,
                                                            final String resourceId,
                                                            final RestMethod restMethod,
-                                                           final Map<String, String> pathParameters){
+                                                           final Map<String, String> pathParameters) {
         final RestResponse response = forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters);
         final RestMockResponse mockResponse = new RestMockResponse();
         final Date date = new Date();
@@ -306,11 +309,12 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * The method provides the functionality to forward a request to another endpoint. The response
      * will be recorded and can later be used as a mocked response. The REST method status will be updated
      * to mocked.
-     * @param restRequest The incoming request
-     * @param projectId The id of the project that the incoming request belongs to
+     *
+     * @param restRequest   The incoming request
+     * @param projectId     The id of the project that the incoming request belongs to
      * @param applicationId The id of the application that the incoming request belongs to
-     * @param resourceId The id of the resource that the incoming request belongs to
-     * @param restMethod The REST method which the incoming request belongs to
+     * @param resourceId    The id of the resource that the incoming request belongs to
+     * @param restMethod    The REST method which the incoming request belongs to
      * @return The response received from the external endpoint
      */
     protected RestResponse forwardRequestAndRecordResponseOnce(final RestRequest restRequest,
@@ -318,7 +322,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                                                final String applicationId,
                                                                final String resourceId,
                                                                final RestMethod restMethod,
-                                                               final Map<String, String> pathParameters){
+                                                               final Map<String, String> pathParameters) {
         final RestResponse response =
                 forwardRequestAndRecordResponse(restRequest, projectId,
                         applicationId, resourceId, restMethod, pathParameters);
@@ -360,6 +364,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
     /**
      * The method is responsible for mocking a REST service. The method will identify which mocked response
      * will be returned.
+     *
      * @param restMethod The REST method which the incoming request belongs to
      * @return Returns a selected mocked response which will be returned to the service consumer
      */
@@ -368,7 +373,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                         final String applicationId,
                                         final String resourceId,
                                         final RestMethod restMethod,
-                                        final Map<String, String> pathParameters){
+                                        final Map<String, String> pathParameters) {
         // Extract the accept header value.
         final Collection<String> acceptHeaderValues = getHeaderValues(ACCEPT_HEADER, restRequest.getHttpHeaders());
 
@@ -376,8 +381,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
         // Iterate through all mocked responses and extract the ones
         // that are active.
         final List<RestMockResponse> enabledMockResponses = new ArrayList<RestMockResponse>();
-        for(RestMockResponse mockResponse : restMethod.getMockResponses()){
-            if(mockResponse.getStatus().equals(RestMockResponseStatus.ENABLED)){
+        for (RestMockResponse mockResponse : restMethod.getMockResponses()) {
+            if (mockResponse.getStatus().equals(RestMockResponseStatus.ENABLED)) {
                 enabledMockResponses.add(mockResponse);
             }
         }
@@ -386,13 +391,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
         final List<RestMockResponse> mockResponses = new ArrayList<>();
 
-        if(acceptHeaderValues != null){
+        if (acceptHeaderValues != null) {
             // Find request that matches the accept header.
-            for(RestMockResponse mockResponse : enabledMockResponses){
+            for (RestMockResponse mockResponse : enabledMockResponses) {
                 // The accept header has to match the content type.
                 final Collection<String> mockResponseContentTypeValues = getHeaderValues(CONTENT_TYPE, mockResponse.getHttpHeaders());
                 mockResponseContentTypeValues.retainAll(acceptHeaderValues);
-                if(!mockResponseContentTypeValues.isEmpty()){
+                if (!mockResponseContentTypeValues.isEmpty()) {
                     mockResponses.add(mockResponse);
                 }
             }
@@ -400,19 +405,19 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
         // If no mock responses are matching the accept header, then
         // any mock response will do.
-        if(mockResponses.isEmpty()){
+        if (mockResponses.isEmpty()) {
             mockResponses.addAll(enabledMockResponses);
         }
 
         RestMockResponse mockResponse = null;
-        if(mockResponses.isEmpty()){
+        if (mockResponses.isEmpty()) {
             throw new RestException("No mocked response created for operation " + restMethod.getName());
-        } else if(restMethod.getResponseStrategy().equals(RestResponseStrategy.RANDOM)){
+        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.RANDOM)) {
             final Integer responseIndex = RANDOM.nextInt(mockResponses.size());
             mockResponse = mockResponses.get(responseIndex);
-        } else if(restMethod.getResponseStrategy().equals(RestResponseStrategy.SEQUENCE)){
+        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.SEQUENCE)) {
             Integer currentSequenceNumber = restMethod.getCurrentResponseSequenceIndex();
-            if(currentSequenceNumber >= mockResponses.size()){
+            if (currentSequenceNumber >= mockResponses.size()) {
                 currentSequenceNumber = 0;
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
@@ -423,19 +428,19 @@ public abstract class AbstractRestServiceController extends AbstractController {
                     .restMethodId(restMethod.getId())
                     .currentRestMockResponseSequenceIndex(currentSequenceNumber + 1)
                     .build());
-        } else if(restMethod.getResponseStrategy().equals(RestResponseStrategy.QUERY_MATCH)){
+        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.QUERY_MATCH)) {
             mockResponse = mockResponses.stream()
                     .filter(tmp -> RestParameterQueryValidator.validate(tmp.getParameterQueries(), pathParameters))
                     .findFirst()
                     .orElse(null);
 
-            if(mockResponse == null){
+            if (mockResponse == null) {
                 LOGGER.info("Unable to match the input Query to a response");
                 mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
             }
-        } else if(restMethod.getResponseStrategy().equals(RestResponseStrategy.XPATH)){
+        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.XPATH)) {
             for (RestMockResponse testedMockResponse : mockResponses) {
-                for(RestXPathExpression xPathExpression : testedMockResponse.getXpathExpressions()){
+                for (RestXPathExpression xPathExpression : testedMockResponse.getXpathExpressions()) {
                     if (XPathUtility.isValidXPathExpr(restRequest.getBody(), xPathExpression.getExpression())) {
                         mockResponse = testedMockResponse;
                         break;
@@ -443,14 +448,14 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 }
             }
 
-            if(mockResponse == null){
+            if (mockResponse == null) {
                 LOGGER.info("Unable to match the input XPath to a response");
                 mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
             }
 
-        } else if(restMethod.getResponseStrategy().equals(RestResponseStrategy.JSON_PATH)){
+        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.JSON_PATH)) {
             for (RestMockResponse testedMockResponse : mockResponses) {
-                for(RestJsonPathExpression jsonPathExpression : testedMockResponse.getJsonPathExpressions()){
+                for (RestJsonPathExpression jsonPathExpression : testedMockResponse.getJsonPathExpressions()) {
                     if (JsonPathUtility.isValidJsonPathExpr(restRequest.getBody(), jsonPathExpression.getExpression())) {
                         mockResponse = testedMockResponse;
                         break;
@@ -458,18 +463,33 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 }
             }
 
-            if(mockResponse == null){
+            if (mockResponse == null) {
                 LOGGER.info("Unable to match the input JSON Path to a response");
+                mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
+            }
+
+        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.HEADER_MATCH)) {
+            for (RestMockResponse testedMockResponse : mockResponses) {
+                for (RestParameterHeaderExpression parameterHeaderExpression : testedMockResponse.getParameterHeaderExpressions()) {
+                    if(HeaderMatchUtility.isValidHeaderParameterExpr(restRequest.getHttpHeaders(), parameterHeaderExpression.getExpression())){
+                        mockResponse = testedMockResponse;
+                        break;
+                    }
+                }
+            }
+
+            if (mockResponse == null) {
+                LOGGER.info("Unable to match the input Header match to a response");
                 mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
             }
         }
 
-        if(mockResponse == null){
+        if (mockResponse == null) {
             throw new RestException("No mocked response created for operation " + restMethod.getName());
         }
 
         String body = mockResponse.getBody();
-        if(mockResponse.isUsingExpressions()){
+        if (mockResponse.isUsingExpressions()) {
             final ExpressionArgumentMap pathParametersArgument = new ExpressionArgumentMap();
             pathParameters.forEach((key, value) -> {
                 ExpressionArgument pathParameterArgument = new ExpressionArgumentString(value);
@@ -489,7 +509,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
                     );
 
 
-
             // Parse the text and apply expression functionality if
             // the mock response is configured to use expressions
             body = TextParser.parse(body, externalInput);
@@ -504,13 +523,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
     }
 
     private Optional<RestMockResponse> getDefaultMockResponse(final RestMethod restMethod,
-                                                    final List<RestMockResponse> mockResponses){
+                                                              final List<RestMockResponse> mockResponses) {
         final String defaultResponseId = restMethod.getDefaultMockResponseId();
 
-        if(defaultResponseId != null && !defaultResponseId.isEmpty()){
+        if (defaultResponseId != null && !defaultResponseId.isEmpty()) {
             LOGGER.info("Use the default response");
             for (RestMockResponse tmpMockResponse : mockResponses) {
-                if(defaultResponseId.equals(tmpMockResponse.getId())){
+                if (defaultResponseId.equals(tmpMockResponse.getId())) {
                     return Optional.of(tmpMockResponse);
                 }
             }
@@ -521,26 +540,27 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
     /**
      * The method returns a list of values for a header ({@link HttpHeader}).
-     * @param headerName The name of the header which value will be extracted and returned.
+     *
+     * @param headerName  The name of the header which value will be extracted and returned.
      * @param httpHeaders A list of {@link HttpHeader}s
      * @return A list of HTTP header values
      * @since 1.13
      */
     private Collection<String> getHeaderValues(final String headerName,
-                                               final List<HttpHeader> httpHeaders){
+                                               final List<HttpHeader> httpHeaders) {
         HttpHeader httpHeader = null;
-        for(HttpHeader tmpHeader : httpHeaders){
-            if(headerName.equalsIgnoreCase(tmpHeader.getName())){
+        for (HttpHeader tmpHeader : httpHeaders) {
+            if (headerName.equalsIgnoreCase(tmpHeader.getName())) {
                 httpHeader = tmpHeader;
             }
         }
 
         List<String> result = new ArrayList<>();
 
-        if(httpHeader != null){
+        if (httpHeader != null) {
             String value = httpHeader.getValue();
             String[] headerValues = value.split(",");
-            for(String headerValue : headerValues){
+            for (String headerValue : headerValues) {
                 result.add(headerValue.toLowerCase());
             }
 
@@ -548,4 +568,5 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
         return result;
     }
+
 }

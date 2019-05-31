@@ -14,26 +14,24 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.basis.utility;
+package com.castlemock.core.mock.rest.model.project.domain;
 
-import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.JsonPath;
-import net.minidev.json.JSONArray;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * @author Karl Dahlgren
- * @since 1.35
- */
-public final class JsonPathUtility {
+@XmlRootElement
+public class RestParameterHeaderExpression {
 
-    private JsonPathUtility() {
+    private String expression;
 
+    @XmlElement
+    public String getExpression() {
+        return expression;
     }
 
-    public static boolean isValidJsonPathExpr(final String body,
-                                              final String expression) {
-        final Object document = Configuration.defaultConfiguration().jsonProvider().parse(body);
-        final JSONArray array = JsonPath.read(document, expression);
-        return !array.isEmpty();
+    public void setExpression(String expression) {
+        this.expression = expression;
     }
+
+
 }

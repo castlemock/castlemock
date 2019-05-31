@@ -63,7 +63,7 @@
                     <td class="column1"><spring:message code="rest.updatemethod.label.responsestrategy"/></td>
                     <td>
                         <form:select id="responseStrategy" class="form-control" path="responseStrategy"
-                                     onchange="toggleEnabled('responseStrategy', ['QUERY_MATCH', 'XPATH', 'JSON_PATH'], ['defaultMockResponseId'])">
+                                     onchange="toggleEnabled('responseStrategy', ['QUERY_MATCH', 'XPATH', 'JSON_PATH', 'HEADER_MATCH'], ['defaultMockResponseId'])">
                             <c:forEach items="${restResponsestrategies}" var="restResponseStrategy">
                                 <spring:message var="label" code="rest.type.responsestrategy.${restResponseStrategy}"/>
                                 <form:option value="${restResponseStrategy}" label="${label}"/>
@@ -107,5 +107,5 @@
 <script>
     $("#restMethodNameInput").attr('required', '');
     toggleEnabled('status', 'MOCKED', ['responseStrategy', 'defaultMockResponseId']);
-    toggleEnabled('responseStrategy', ['QUERY_MATCH', 'XPATH', 'JSON_PATH'], ['defaultMockResponseId']);
+    toggleEnabled('responseStrategy', ['QUERY_MATCH', 'XPATH', 'JSON_PATH', 'HEADER_MATCH'], ['defaultMockResponseId']);
 </script>

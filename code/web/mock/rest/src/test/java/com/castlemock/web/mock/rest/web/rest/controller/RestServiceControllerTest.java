@@ -69,9 +69,10 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private static final String APPLICATION_JSON = "application/json";
     private static final String CONTENT_TYPE_HEADER = "Content-type";
     private static final String ACCEPT_HEADER = "Accept";
+    private static final String DASH = "-";
+    private static final String GREATHER_THAN_SIGN = ">";
     private static final Map<String, String> PATH_PARAMETERS = ImmutableMap.of("Path", "Value");
     private static final Map<String, String> NO_MATCHING_PATH_PARAMETERS = ImmutableMap.of("Path", "OtherValue");
-
 
 
     private static final String XML_REQUEST_BODY = "<request>\n" +
@@ -93,7 +94,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
             "}";
 
     @Test
-    public void testMockedSequence(){
+    public void testMockedSequence() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -127,7 +128,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
 
     @Test
-    public void testMockedRandom(){
+    public void testMockedRandom() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -157,7 +158,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testMockedQuery(){
+    public void testMockedQuery() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -187,7 +188,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testMockedQueryDefaultMockResponse(){
+    public void testMockedQueryDefaultMockResponse() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -218,7 +219,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
 
     @Test
-    public void testEcho(){
+    public void testEcho() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(XML_REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -248,7 +249,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testMockedXpathMatch(){
+    public void testMockedXpathMatch() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(XML_REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -284,7 +285,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testMockedJsonPathMatch(){
+    public void testMockedJsonPathMatch() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(JSON_REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -311,6 +312,42 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 SLASH + PROJECT_ID + SLASH + APPLICATION + SLASH + APPLICATION_ID + "/method/test");
 
         final ResponseEntity responseEntity = restServiceController.postMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
+        Assert.assertEquals(XML_RESPONSE_BODY, responseEntity.getBody());
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+    }
+
+    @Test
+    public void testMockedHeaderMatchMatch() {
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(JSON_REQUEST_BODY);
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestParameterHeaderExpression restParameterHeaderExpression = new RestParameterHeaderExpression();
+        restParameterHeaderExpression.setExpression(ACCEPT_HEADER + DASH + GREATHER_THAN_SIGN + APPLICATION_JSON);
+
+        final RestMethod restMethod = getMockedRestMethod();
+        restMethod.getMockResponses().get(0).getParameterHeaderExpressions().add(restParameterHeaderExpression);
+
+        restMethod.setResponseStrategy(RestResponseStrategy.HEADER_MATCH);
+
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
+
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+        when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + REST + SLASH + PROJECT +
+                SLASH + PROJECT_ID + SLASH + APPLICATION + SLASH + APPLICATION_ID + "/method/test");
+
+        final ResponseEntity responseEntity = restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
         Assert.assertEquals(XML_RESPONSE_BODY, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
@@ -375,7 +412,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         }
     }
 
-    private HttpServletRequest getMockedHttpServletRequest(final String body){
+    private HttpServletRequest getMockedHttpServletRequest(final String body) {
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         final HttpServletRequest httpServletRequestWrapper = new HttpServletRequestTest(httpServletRequest, body);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + REST + SLASH + PROJECT +
@@ -394,12 +431,12 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
     }
 
-    private HttpServletResponse getHttpServletResponse(){
+    private HttpServletResponse getHttpServletResponse() {
         final HttpServletResponse httpServletResponse = Mockito.mock(HttpServletResponse.class);
         return httpServletResponse;
     }
 
-    private RestMethod getMockedRestMethod(){
+    private RestMethod getMockedRestMethod() {
 
         final HttpHeader contentTypeHeader = new HttpHeader();
         contentTypeHeader.setName(CONTENT_TYPE_HEADER);
@@ -438,7 +475,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         return restMethod;
     }
 
-    private RestMethod getQueryRestMethod(){
+    private RestMethod getQueryRestMethod() {
 
         final HttpHeader contentTypeHeader = new HttpHeader();
         contentTypeHeader.setName(CONTENT_TYPE_HEADER);

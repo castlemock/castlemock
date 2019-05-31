@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 public class JsonPathUtilityTest {
 
     @Test
-    public void testExpression1(){
+    public void testExpression1() {
         final String body = getBody();
         final String expression = "$.store.book[?(@.price < 10)]";
         final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
@@ -32,7 +32,7 @@ public class JsonPathUtilityTest {
     }
 
     @Test
-    public void testExpression2(){
+    public void testExpression2() {
         final String body = getBody();
         final String expression = "$.store.book[?(@.author == 'Nigel Rees')]";
         final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
@@ -40,7 +40,7 @@ public class JsonPathUtilityTest {
     }
 
     @Test
-    public void testExpression3(){
+    public void testExpression3() {
         final String body = getBody();
         final String expression = "$.store.book[?(@.author == 'Karl Dahlgren')]";
         final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
@@ -48,7 +48,7 @@ public class JsonPathUtilityTest {
     }
 
     @Test
-    public void testExpression4(){
+    public void testExpression4() {
         final String body = getBody();
         final String expression = "$.[?(@.expensive == 10)]";
         final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
@@ -56,14 +56,14 @@ public class JsonPathUtilityTest {
     }
 
     @Test
-    public void testExpression5(){
+    public void testExpression5() {
         final String body = getBody();
         final String expression = "$.[?(@.expensive == 11)]";
         final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
         assertFalse(result);
     }
 
-    private String getBody(){
+    private String getBody() {
         return "{\n" +
                 "  \"store\": {\n" +
                 "    \"book\": [\n" +

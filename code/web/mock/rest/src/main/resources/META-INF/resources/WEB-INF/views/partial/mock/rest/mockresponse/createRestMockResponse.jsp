@@ -1,3 +1,5 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="../../../../includes.jspf"%>
 <%--
   ~ Copyright 2015 Karl Dahlgren
@@ -73,6 +75,7 @@
                         </c:choose>
                         <li><a data-toggle="tab" href="#tab-xpaths"><spring:message code="rest.createrestmockresponse.header.xpaths"/></a></li>
                         <li><a data-toggle="tab" href="#tab-jsonpath"><spring:message code="rest.createrestmockresponse.header.jsonpaths"/></a></li>
+                        <li><a data-toggle="tab" href="#tab-headermatch"><spring:message code="rest.createrestmockresponse.header.headermatch"/></a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
@@ -235,6 +238,32 @@
                             </div>
                         </div>
 
+                        <div id="tab-headermatch" class="tab-pane fade">
+                            <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.field.addheadermatch"/></span></h2>
+                            <div>
+                                <table class="formTable">
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.headermatch"/></form:label></td>
+                                        <td class="column2"><input type="text" class="form-control" name="parameterHeaderInput" id="parameterHeaderInput"></td>
+                                    </tr>
+                                </table>
+                                <button class="btn btn-success" onclick="addParameterHeader()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.createrestmockresponse.button.addheadermatch"/></span></button>
+                            </div>
+
+                            <div class="invisible-divider"></div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover sortable" id="headerMatchTable">
+                                    <col width="4%">
+                                    <col width="96%">
+                                    <tr>
+                                        <th></th>
+                                        <th><spring:message code="rest.createrestmockresponse.column.headermatch"/></th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -250,6 +279,7 @@
 <script src=<c:url value="/resources/js/queryTable.js"/>></script>
 <script src=<c:url value="/resources/js/xpathTable.js"/>></script>
 <script src=<c:url value="/resources/js/jsonPathTable.js"/>></script>
+<script src=<c:url value="/resources/js/headerMatchTable.js"/>></script>
 <script src=<c:url value="/resources/js/editor.js"/>></script>
 <script>
     $("#restMockResponseNameInput").attr('required', '');
