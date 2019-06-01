@@ -20,6 +20,8 @@ import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.35
@@ -35,5 +37,23 @@ public final class JsonPathUtility {
         final Object document = Configuration.defaultConfiguration().jsonProvider().parse(body);
         final JSONArray array = JsonPath.read(document, expression);
         return !array.isEmpty();
+    }
+
+    /**
+     * The method extracts a value from the provided <code>body</code> with
+     * the JSON Path <code>expression</code>
+     * @param body The body which contains the value that will be extracted.
+     * @param expression The expression used to locate the requested value.
+     * @return The value or an empty optional.
+     */
+    public static Optional<String> getValueWithJsonPathExpr(final String body,
+                                                            final String expression) {
+        final Object document = Configuration.defaultConfiguration().jsonProvider().parse(body);
+        final JSONArray array = JsonPath.read(document, expression);
+
+        return array
+                .stream()
+                .findFirst()
+                .map(Object::toString);
     }
 }

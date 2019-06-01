@@ -57,7 +57,7 @@ public class TextParser {
         EXPRESSIONS.put(RandomEnumExpression.IDENTIFIER, new RandomEnumExpression());
         EXPRESSIONS.put(PathParameterExpression.IDENTIFIER, new PathParameterExpression());
         EXPRESSIONS.put(QueryStringExpression.IDENTIFIER, new QueryStringExpression());
-
+        EXPRESSIONS.put(BodyJsonPathExpression.IDENTIFIER, new BodyJsonPathExpression());
     }
 
     /**

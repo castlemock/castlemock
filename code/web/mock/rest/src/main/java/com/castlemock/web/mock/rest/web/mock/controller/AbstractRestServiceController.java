@@ -24,6 +24,7 @@ import com.castlemock.core.basis.utility.HeaderMatchUtility;
 import com.castlemock.core.basis.utility.JsonPathUtility;
 import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.TextParser;
+import com.castlemock.core.basis.utility.parser.expression.BodyJsonPathExpression;
 import com.castlemock.core.basis.utility.parser.expression.PathParameterExpression;
 import com.castlemock.core.basis.utility.parser.expression.QueryStringExpression;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
@@ -502,12 +503,14 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 queryStringArgument.addArgument(parameter.getName(), pathParameterArgument);
             });
 
+            final ExpressionArgument bodyArgument = new ExpressionArgumentString(restRequest.getBody());
+
             final Map<String, ExpressionArgument<?>> externalInput =
                     ImmutableMap.of(
                             PathParameterExpression.PATH_PARAMETERS, pathParametersArgument,
-                            QueryStringExpression.QUERY_STRINGS, queryStringArgument
+                            QueryStringExpression.QUERY_STRINGS, queryStringArgument,
+                            BodyJsonPathExpression.BODY_ARGUMENT, bodyArgument
                     );
-
 
             // Parse the text and apply expression functionality if
             // the mock response is configured to use expressions
