@@ -10,27 +10,6 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 deploy:
-  provider: releases
-  api_key: $GITHUB_OAUTH_TOKEN
-  draft: false
-  file: code/deploy/tomcat/war/build/libs/castlemock.war
-  skip_cleanup: true
-  name: Castle Mock v$TRAVIS_TAG
-  tag_name: $TRAVIS_TAG
-  on:
-    branch: master
-    tags: true
-    jdk: openjdk10
-
-deploy:
-  provider: script
-  script: bash docker-upgrade.sh $TRAVIS_TAG
-  on:
-    branch: master
-    tags: true
-    jdk: openjdk10
-
-deploy:
   provider: heroku
   api_key:
     secure: $HEROKU_KEY
