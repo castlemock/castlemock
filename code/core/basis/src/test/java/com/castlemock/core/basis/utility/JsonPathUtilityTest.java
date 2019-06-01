@@ -18,6 +18,9 @@ package com.castlemock.core.basis.utility;
 
 import org.junit.Test;
 
+import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -61,6 +64,14 @@ public class JsonPathUtilityTest {
         final String expression = "$.[?(@.expensive == 11)]";
         final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
         assertFalse(result);
+    }
+
+    @Test
+    public void testGetValue1(){
+        final String body = getBody();
+        final String expression = "$.store.book[?(@.price > 20)].author";
+        final Optional<String> value = JsonPathUtility.getValueWithJsonPathExpr(body, expression);
+        assertEquals("J.R.R. Tolkien", value.orElse(null));
     }
 
     private String getBody() {
