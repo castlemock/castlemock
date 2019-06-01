@@ -22,7 +22,6 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
@@ -54,8 +53,8 @@ public class MongoConfig {
     public static class MongoDataAutoConfiguration
             extends org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration {
 
-        public MongoDataAutoConfiguration(ApplicationContext applicationContext, MongoProperties properties) {
-            super(applicationContext, properties);
+        public MongoDataAutoConfiguration(MongoProperties properties) {
+            super(properties);
         }
     }
 
