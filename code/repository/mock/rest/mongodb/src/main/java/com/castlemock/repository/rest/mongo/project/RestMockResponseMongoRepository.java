@@ -167,6 +167,8 @@ public class RestMockResponseMongoRepository extends MongoRepository<RestMockRes
         private List<RestXPathExpressionDocument> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpressionDocument>();
         @Mapping("jsonPathExpressions")
         private List<RestJsonPathExpressionDocument> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpressionDocument>();
+        @Mapping("headerQueries")
+        private List<RestHeaderQueryDocument> headerQueries = new CopyOnWriteArrayList<RestHeaderQueryDocument>();
 
         @Override
         public String getId() {
@@ -266,6 +268,14 @@ public class RestMockResponseMongoRepository extends MongoRepository<RestMockRes
             this.jsonPathExpressions = jsonPathExpressions;
         }
 
+        public List<RestHeaderQueryDocument> getHeaderQueries() {
+            return headerQueries;
+        }
+
+        public void setHeaderQueries(List<RestHeaderQueryDocument> headerQueries) {
+            this.headerQueries = headerQueries;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o)
@@ -302,6 +312,56 @@ public class RestMockResponseMongoRepository extends MongoRepository<RestMockRes
 
         public void setParameter(String parameter) {
             this.parameter = parameter;
+        }
+
+        public String getQuery() {
+            return query;
+        }
+
+        public void setQuery(String query) {
+            this.query = query;
+        }
+
+        public boolean getMatchCase() {
+            return matchCase;
+        }
+
+        public void setMatchCase(boolean matchCase) {
+            this.matchCase = matchCase;
+        }
+
+        public boolean getMatchAny() {
+            return matchAny;
+        }
+
+        public void setMatchAny(boolean matchAny) {
+            this.matchAny = matchAny;
+        }
+
+        public boolean getMatchRegex() {
+            return matchRegex;
+        }
+
+        public void setMatchRegex(boolean matchRegex) {
+            this.matchRegex = matchRegex;
+        }
+    }
+
+    @Document(collection = "RestHeaderQueryDocument")
+    protected static class RestHeaderQueryDocument {
+
+        private String header;
+        private String query;
+        private boolean matchCase;
+        private boolean matchAny;
+        private boolean matchRegex;
+
+        public String getHeader() {
+            return header;
+        }
+
+        public void setHeader(String header) {
+            this.header = header;
         }
 
         public String getQuery() {

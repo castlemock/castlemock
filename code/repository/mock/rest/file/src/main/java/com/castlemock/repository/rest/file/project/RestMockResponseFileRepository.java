@@ -25,7 +25,6 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
-import com.castlemock.core.mock.rest.model.project.domain.RestParameterHeaderExpression;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
@@ -105,8 +104,13 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
     protected void postInitiate() {
         for(RestMockResponseFile restMockResponse : collection.values()) {
             if(restMockResponse.getParameterQueries() == null){
-                List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryFile>();
+                final List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryFile>();
                 restMockResponse.setParameterQueries(parameterQueries);
+                save(restMockResponse);
+            }
+            if(restMockResponse.getHeaderQueries() == null){
+                final List<RestHeaderQueryFile> headerQueries = new CopyOnWriteArrayList<RestHeaderQueryFile>();
+                restMockResponse.setHeaderQueries(headerQueries);
                 save(restMockResponse);
             }
         }
@@ -212,8 +216,8 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         private List<RestXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpressionFile>();
         @Mapping("jsonPathExpressions")
         private List<RestJsonPathExpressionFile> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpressionFile>();
-        @Mapping("parameterHeaderExpressions")
-        private List<RestParameterHeaderExpression> parameterHeaderExpressions = new CopyOnWriteArrayList<RestParameterHeaderExpression>();
+        @Mapping("headerQueries")
+        private List<RestHeaderQueryFile> headerQueries = new CopyOnWriteArrayList<RestHeaderQueryFile>();
 
         @Override
         @XmlElement
@@ -330,14 +334,14 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             this.jsonPathExpressions = jsonPathExpressions;
         }
 
-        @XmlElementWrapper(name = "parameterHeaderExpressions")
-        @XmlElement(name = "parameterHeaderExpressions")
-        public List<RestParameterHeaderExpression> getParameterHeaderExpressions() {
-            return parameterHeaderExpressions;
+        @XmlElementWrapper(name = "headerQueries")
+        @XmlElement(name = "headerQueries")
+        public List<RestHeaderQueryFile> getHeaderQueries() {
+            return headerQueries;
         }
 
-        public void setParameterHeaderExpressions(List<RestParameterHeaderExpression> parameterHeaderExpressions) {
-            this.parameterHeaderExpressions = parameterHeaderExpressions;
+        public void setHeaderQueries(List<RestHeaderQueryFile> headerQueries) {
+            this.headerQueries = headerQueries;
         }
 
         @Override
@@ -416,6 +420,60 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         }
     }
 
+    @XmlRootElement(name = "restHeaderQueryFile")
+    protected static class RestHeaderQueryFile {
+
+        private String header;
+        private String query;
+        private boolean matchCase;
+        private boolean matchAny;
+        private boolean matchRegex;
+
+        @XmlElement
+        public String getHeader() {
+            return header;
+        }
+
+        public void setHeader(String header) {
+            this.header = header;
+        }
+
+        @XmlElement
+        public String getQuery() {
+            return query;
+        }
+
+        public void setQuery(String query) {
+            this.query = query;
+        }
+
+        @XmlElement
+        public boolean getMatchCase() {
+            return matchCase;
+        }
+
+        public void setMatchCase(boolean matchCase) {
+            this.matchCase = matchCase;
+        }
+
+        @XmlElement
+        public boolean getMatchAny() {
+            return matchAny;
+        }
+
+        public void setMatchAny(boolean matchAny) {
+            this.matchAny = matchAny;
+        }
+
+        @XmlElement
+        public boolean getMatchRegex() {
+            return matchRegex;
+        }
+
+        public void setMatchRegex(boolean matchRegex) {
+            this.matchRegex = matchRegex;
+        }
+    }
 
     @XmlRootElement(name = "restXPathExpression")
     protected static class RestXPathExpressionFile {

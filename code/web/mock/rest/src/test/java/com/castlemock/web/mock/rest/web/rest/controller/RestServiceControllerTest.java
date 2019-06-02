@@ -320,42 +320,6 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
     }
 
-    @Test
-    public void testMockedHeaderMatchMatch() {
-        // Input
-        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(JSON_REQUEST_BODY);
-        final HttpServletResponse httpServletResponse = getHttpServletResponse();
-
-        final RestParameterHeaderExpression restParameterHeaderExpression = new RestParameterHeaderExpression();
-        restParameterHeaderExpression.setExpression(ACCEPT_HEADER + DASH + GREATHER_THAN_SIGN + APPLICATION_JSON);
-
-        final RestMethod restMethod = getMockedRestMethod();
-        restMethod.getMockResponses().get(0).getParameterHeaderExpressions().add(restParameterHeaderExpression);
-
-        restMethod.setResponseStrategy(RestResponseStrategy.HEADER_MATCH);
-
-        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
-                .pathParameters(PATH_PARAMETERS)
-                .build();
-
-        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
-        when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + REST + SLASH + PROJECT +
-                SLASH + PROJECT_ID + SLASH + APPLICATION + SLASH + APPLICATION_ID + "/method/test");
-
-        final ResponseEntity responseEntity = restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
-        Assert.assertEquals(XML_RESPONSE_BODY, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
-    }
-
     @Override
     protected AbstractController getController() {
         return restServiceController;

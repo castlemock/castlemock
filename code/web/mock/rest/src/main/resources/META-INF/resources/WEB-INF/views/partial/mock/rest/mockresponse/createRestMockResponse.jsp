@@ -75,7 +75,7 @@
                         </c:choose>
                         <li><a data-toggle="tab" href="#tab-xpaths"><spring:message code="rest.createrestmockresponse.header.xpaths"/></a></li>
                         <li><a data-toggle="tab" href="#tab-jsonpath"><spring:message code="rest.createrestmockresponse.header.jsonpaths"/></a></li>
-                        <li><a data-toggle="tab" href="#tab-headermatch"><spring:message code="rest.createrestmockresponse.header.headermatch"/></a></li>
+                        <li><a data-toggle="tab" href="#tab-headerqueries"><spring:message code="rest.createrestmockresponse.header.headerqueries"/></a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
@@ -132,7 +132,7 @@
                                     <div>
                                         <table class="formTable">
                                             <tr>
-                                                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.parameter"/></form:label></td>
+                                                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.header"/></form:label></td>
                                                 <td>
                                                     <select name="queryParameterSelect" id="queryParameterSelect" class="form-control">
                                                         <c:forEach items="${restQueryParameters}" var="restQueryParameter">
@@ -174,7 +174,7 @@
                                             <col width="10%">
                                             <tr>
                                                 <th></th>
-                                                <th><spring:message code="rest.createrestmockresponse.column.parameter"/></th>
+                                                <th><spring:message code="rest.createrestmockresponse.column.header"/></th>
                                                 <th><spring:message code="rest.createrestmockresponse.column.query"/></th>
                                                 <th><spring:message code="rest.createrestmockresponse.column.matchany"/></th>
                                                 <th><spring:message code="rest.createrestmockresponse.column.matchcase"/></th>
@@ -238,32 +238,56 @@
                             </div>
                         </div>
 
-                        <div id="tab-headermatch" class="tab-pane fade">
-                            <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.field.addheadermatch"/></span></h2>
+                        <div id="tab-headerqueries" class="tab-pane fade">
+                            <h2 class="decorated"><span><spring:message code="rest.createrestmockresponse.field.addheaderquery"/></span></h2>
                             <div>
                                 <table class="formTable">
                                     <tr>
-                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.label.headermatch"/></form:label></td>
-                                        <td class="column2"><input type="text" class="form-control" name="parameterHeaderInput" id="parameterHeaderInput"></td>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.header"/></form:label></td>
+                                        <td class="column2"><input type="text" class="form-control" name="headerInput" id="headerInput"></td>
                                     </tr>
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.query"/></form:label></td>
+                                        <td class="column2"><input type="text" class="form-control" name="headerQueryInput" id="headerQueryInput"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.matchany"/></form:label></td>
+                                        <td class="column2"><span class="checkbox"><input type="checkbox" name="headerMatchAnyInput" id="headerMatchAnyInput" class="form-control"/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.matchcase"/></form:label></td>
+                                        <td class="column2"><span class="checkbox"><input type="checkbox" name="headerMatchCaseInput" id="headerMatchCaseInput" class="form-control"/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.matchregex"/></form:label></td>
+                                        <td class="column2"><span class="checkbox"><input type="checkbox" name="headerRegexInput" id="headerRegexInput" class="form-control"/></span></td>
+                                    </tr>
+
                                 </table>
-                                <button class="btn btn-success" onclick="addParameterHeader()" type="button"><i class="fas fa-plus-circle"></i>  <span><spring:message code="rest.createrestmockresponse.button.addheadermatch"/></span></button>
+                                <button class="btn btn-success" onclick="addHeaderQuery()" type="button"><i class="fas fa-plus-circle"></i><span><spring:message code="rest.createrestmockresponse.button.addquery"/></span></button>
                             </div>
 
                             <div class="invisible-divider"></div>
 
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover sortable" id="headerMatchTable">
-                                    <col width="4%">
-                                    <col width="96%">
+                                <table class="table table-bordered table-striped table-hover sortable" id="headerQueryTable">
+                                    <col width="5%">
+                                    <col width="32.5%">
+                                    <col width="32.5%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                    <col width="10%">
                                     <tr>
                                         <th></th>
-                                        <th><spring:message code="rest.createrestmockresponse.column.headermatch"/></th>
+                                        <th><spring:message code="rest.restmockresponse.column.header"/></th>
+                                        <th><spring:message code="rest.restmockresponse.column.query"/></th>
+                                        <th><spring:message code="rest.restmockresponse.column.matchany"/></th>
+                                        <th><spring:message code="rest.restmockresponse.column.matchcase"/></th>
+                                        <th><spring:message code="rest.restmockresponse.column.matchregex"/></th>
                                     </tr>
                                 </table>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -279,7 +303,7 @@
 <script src=<c:url value="/resources/js/queryTable.js"/>></script>
 <script src=<c:url value="/resources/js/xpathTable.js"/>></script>
 <script src=<c:url value="/resources/js/jsonPathTable.js"/>></script>
-<script src=<c:url value="/resources/js/headerMatchTable.js"/>></script>
+<script src=<c:url value="/resources/js/headerQueryTable.js"/>></script>
 <script src=<c:url value="/resources/js/editor.js"/>></script>
 <script>
     $("#restMockResponseNameInput").attr('required', '');
