@@ -20,7 +20,6 @@ import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpParameter;
-import com.castlemock.core.basis.utility.HeaderMatchUtility;
 import com.castlemock.core.basis.utility.JsonPathUtility;
 import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.TextParser;
@@ -33,7 +32,13 @@ import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionAr
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.domain.RestRequest;
 import com.castlemock.core.mock.rest.model.event.domain.RestResponse;
-import com.castlemock.core.mock.rest.model.project.domain.*;
+import com.castlemock.core.mock.rest.model.project.domain.RestJsonPathExpression;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
+import com.castlemock.core.mock.rest.model.project.domain.RestXPathExpression;
 import com.castlemock.core.mock.rest.service.event.input.CreateRestEventInput;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestMockResponseInput;
 import com.castlemock.core.mock.rest.service.project.input.IdentifyRestMethodInput;
@@ -44,6 +49,7 @@ import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.model.RestException;
+import com.castlemock.web.mock.rest.utility.RestHeaderQueryValidator;
 import com.castlemock.web.mock.rest.utility.RestParameterQueryValidator;
 import com.castlemock.web.mock.rest.utility.compare.RestMockResponseNameComparator;
 import com.google.common.base.Preconditions;
@@ -59,7 +65,14 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
 
 /**
  * The abstract REST controller is a base class shared among all the REST service classes.
@@ -469,18 +482,14 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
             }
 
-        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.HEADER_MATCH)) {
-            for (RestMockResponse testedMockResponse : mockResponses) {
-                for (RestParameterHeaderExpression parameterHeaderExpression : testedMockResponse.getParameterHeaderExpressions()) {
-                    if(HeaderMatchUtility.isValidHeaderParameterExpr(restRequest.getHttpHeaders(), parameterHeaderExpression.getExpression())){
-                        mockResponse = testedMockResponse;
-                        break;
-                    }
-                }
-            }
+        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.HEADER_QUERY_MATCH)) {
+            mockResponse = mockResponses.stream()
+                    .filter(tmp -> RestHeaderQueryValidator.validate(tmp.getHeaderQueries(), restRequest.getHttpHeaders()))
+                    .findFirst()
+                    .orElse(null);
 
             if (mockResponse == null) {
-                LOGGER.info("Unable to match the input Header match to a response");
+                LOGGER.info("Unable to match the input Query to a response");
                 mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
             }
         }
