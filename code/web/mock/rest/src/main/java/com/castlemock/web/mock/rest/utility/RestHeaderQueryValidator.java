@@ -37,16 +37,16 @@ public final class RestHeaderQueryValidator {
         for(HttpHeader header : headers){
 
             final Set<RestHeaderQuery> matching = headerQueries.stream()
-                    .filter(headerQuery -> headerQuery.getHeader().equals(header.getName()))
+                    .filter(headerQuery -> headerQuery.getHeader().equalsIgnoreCase(header.getName()))
                     .filter(headerQuery -> validate(header.getValue(), headerQuery))
                     .collect(Collectors.toSet());
 
-            if(matching.isEmpty()){
-                return false;
+            if(!matching.isEmpty()){
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     private static boolean validate(final String inputQuery,

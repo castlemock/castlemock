@@ -132,7 +132,7 @@
                                     <div>
                                         <table class="formTable">
                                             <tr>
-                                                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.header"/></form:label></td>
+                                                <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.parameter"/></form:label></td>
                                                 <td>
                                                     <select name="queryParameterSelect" id="queryParameterSelect" class="form-control">
                                                         <c:forEach items="${restQueryParameters}" var="restQueryParameter">

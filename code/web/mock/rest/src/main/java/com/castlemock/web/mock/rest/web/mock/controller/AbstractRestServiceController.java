@@ -482,7 +482,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
             }
 
-        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.HEADER_MATCH)) {
+        } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.HEADER_QUERY_MATCH)) {
             mockResponse = mockResponses.stream()
                     .filter(tmp -> RestHeaderQueryValidator.validate(tmp.getHeaderQueries(), restRequest.getHttpHeaders()))
                     .findFirst()
