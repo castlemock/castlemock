@@ -335,7 +335,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         }
 
         @XmlElementWrapper(name = "headerQueries")
-        @XmlElement(name = "headerQueries")
+        @XmlElement(name = "headerQuery")
         public List<RestHeaderQueryFile> getHeaderQueries() {
             return headerQueries;
         }
@@ -420,7 +420,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         }
     }
 
-    @XmlRootElement(name = "restHeaderQueryFile")
+    @XmlRootElement(name = "restHeaderQuery")
     protected static class RestHeaderQueryFile {
 
         private String header;

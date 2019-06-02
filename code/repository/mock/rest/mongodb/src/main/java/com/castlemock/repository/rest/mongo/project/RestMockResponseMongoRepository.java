@@ -347,7 +347,7 @@ public class RestMockResponseMongoRepository extends MongoRepository<RestMockRes
         }
     }
 
-    @Document(collection = "RestHeaderQueryDocument")
+    @Document(collection = "restHeaderQuery")
     protected static class RestHeaderQueryDocument {
 
         private String header;

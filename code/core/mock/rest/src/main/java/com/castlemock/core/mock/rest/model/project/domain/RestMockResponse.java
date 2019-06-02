@@ -162,7 +162,7 @@ public class RestMockResponse {
     }
 
     @XmlElementWrapper(name = "headerQueries")
-    @XmlElement(name = "headerQueries")
+    @XmlElement(name = "headerQuery")
     public List<RestHeaderQuery> getHeaderQueries() {
         return headerQueries;
     }
