@@ -185,7 +185,7 @@
                                             <col width="10%">
                                             <tr>
                                                 <th></th>
-                                                <th><spring:message code="rest.restmockresponse.column.header"/></th>
+                                                <th><spring:message code="rest.restmockresponse.column.parameter"/></th>
                                                 <th><spring:message code="rest.restmockresponse.column.query"/></th>
                                                 <th><spring:message code="rest.restmockresponse.column.matchany"/></th>
                                                 <th><spring:message code="rest.restmockresponse.column.matchcase"/></th>
@@ -196,7 +196,7 @@
                                                     <c:set var = "parameterQueryId" value = "${UUID.randomUUID().toString()}"/>
                                                     <td hidden="hidden"><c:out value = "${parameterQueryId}"/></td>
                                                     <td><div class="delete" onclick="removeParameterQuery('${parameterQueryId}')"></div></td>
-                                                    <td><input name="parameterQueries[${loopStatus.index}].header" id="parameterQueries[${loopStatus.index}].header" value="${parameterQuery.header}" type="hidden" />${parameterQuery.header}</td>
+                                                    <td><input name="parameterQueries[${loopStatus.index}].header" id="parameterQueries[${loopStatus.index}].header" value="${parameterQuery.parameter}" type="hidden" />${parameterQuery.parameter}</td>
                                                     <td><input name="parameterQueries[${loopStatus.index}].query" id="parameterQueries[${loopStatus.index}].query" value="${parameterQuery.query}" type="hidden"/>${parameterQuery.query}</td>
                                                     <td><input name="parameterQueries[${loopStatus.index}].matchAny" id="parameterQueries[${loopStatus.index}].matchAny" value="${parameterQuery.matchAny}" type="hidden"/>${parameterQuery.matchAny}</td>
                                                     <td><input name="parameterQueries[${loopStatus.index}].matchCase" id="parameterQueries[${loopStatus.index}].matchCase" value="${parameterQuery.matchCase}" type="hidden"/>${parameterQuery.matchCase}</td>

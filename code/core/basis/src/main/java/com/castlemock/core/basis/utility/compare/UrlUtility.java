@@ -155,21 +155,30 @@ public class UrlUtility {
      * @param httpParameters
      * @return
      */
-    public static Map<String, String> getQueryStringParameters(String uri, Map<String, String> httpParameters) {
-        HashMap<String, String> output = new HashMap<>();
-
+    public static Map<String, String> getQueryStringParameters(final String uri,
+                                                               final Map<String, String> httpParameters) {
+        final HashMap<String, String> output = new HashMap<>();
         if(uri.indexOf('?') > 0){
-            String queryString = uri.split("\\?")[1];
+            final String queryString = uri.split("\\?")[1];
+            final String[] queries = queryString.split("&");
 
-            Matcher matcher = VARIABLE_PATTERN.matcher(queryString);
-            while (matcher.find()){
-                String paramName = matcher.group(1);
-                String value = httpParameters.get(paramName);
-                if(value != null){
-                    output.put(paramName, value);
+            for(String query : queries){
+                final String[] queryParts = query.split("=");
+
+                if(queryParts.length != 2){
+                    continue;
+                }
+
+                final String queryName = queryParts[0];
+                final String queryValue = queryParts[1];
+
+                if(queryValue.startsWith("{") && queryValue.endsWith("}")){
+                    final String value = httpParameters.get(queryName);
+                    if(value != null){
+                        output.put(queryName, value);
+                    }
                 }
             }
-
         }
 
         return output;
