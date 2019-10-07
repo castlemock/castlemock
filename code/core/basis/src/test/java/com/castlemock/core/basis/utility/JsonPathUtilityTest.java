@@ -74,6 +74,14 @@ public class JsonPathUtilityTest {
         assertEquals("J.R.R. Tolkien", value.orElse(null));
     }
 
+    @Test
+    public void shouldParseValueWhenPropertyIsDefinite(){
+        final String body = getBodyWithDefiniteProperty();
+        final String expression = "$.definite";
+        final Optional<String> value = JsonPathUtility.getValueWithJsonPathExpr(body, expression);
+        assertEquals("value", value.orElse(null));
+    }
+
     private String getBody() {
         return "{\n" +
                 "  \"store\": {\n" +
@@ -105,6 +113,12 @@ public class JsonPathUtilityTest {
                 "    }\n" +
                 "  },\n" +
                 "  \"expensive\": 10\n" +
+                "}";
+    }
+
+    private String getBodyWithDefiniteProperty() {
+        return "{\n" +
+                "   \"definite\": \"value\"\n" +
                 "}";
     }
 
