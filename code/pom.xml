@@ -195,6 +195,36 @@
                 <artifactId>common</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.castlemock.core</groupId>
+                <artifactId>basis</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.castlemock.core.mock</groupId>
+                <artifactId>rest</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.castlemock.core.mock</groupId>
+                <artifactId>soap</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.castlemock.core.mock</groupId>
+                <artifactId>graphql</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
             <!-- Third party -->
             <dependency>
                 <groupId>net.sf.dozer</groupId>

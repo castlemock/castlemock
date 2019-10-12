@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.view.controller.system;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.system.service.dto.SystemInformationDto;
+import com.castlemock.core.basis.model.system.service.dto.SystemInformation;
 import com.castlemock.core.basis.service.system.input.GetSystemInformationInput;
 import com.castlemock.core.basis.service.system.output.GetSystemInformationOutput;
 import com.castlemock.web.basis.config.TestApplication;
@@ -65,7 +65,7 @@ public class SystemControllerTest extends AbstractControllerTest {
 
     @Test
     public void getDefaultPage() throws Exception {
-        final SystemInformationDto systemInformation = new SystemInformationDto();
+        final SystemInformation systemInformation = new SystemInformation();
         systemInformation.setAvailableProcessors(1);
         systemInformation.setCastleMockHomeDirectory("/HOME/CastleMock");
         systemInformation.setFreeMemory(512L);

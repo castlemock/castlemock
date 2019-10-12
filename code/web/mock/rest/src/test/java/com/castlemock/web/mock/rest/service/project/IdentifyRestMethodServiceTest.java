@@ -20,10 +20,10 @@ package com.castlemock.web.mock.rest.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.rest.model.project.RestMethodGenerator;
-import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.IdentifyRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.output.IdentifyRestMethodOutput;
 import com.castlemock.repository.rest.project.RestMethodRepository;
@@ -65,25 +65,25 @@ public class IdentifyRestMethodServiceTest {
 
     @Test
     public void testProcess(){
-        RestResource restResource1 = RestResourceGenerator.generateRestResource();
+        RestResource restResource1 = RestResourceTestBuilder.builder().build();
         restResource1.setId("Resource1");
         restResource1.setUri("/user");
-        RestMethod restMethod1 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod1 = RestMethodTestBuilder.builder().build();
         restMethod1.setHttpMethod(HttpMethod.POST);
-        RestMethod restMethod2 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod2 = RestMethodTestBuilder.builder().build();
         restMethod2.setHttpMethod(HttpMethod.GET);
-        RestMethod restMethod3 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod3 = RestMethodTestBuilder.builder().build();
         restMethod3.setHttpMethod(HttpMethod.PUT);
         restResource1.getMethods().add(restMethod1);
         restResource1.getMethods().add(restMethod2);
         restResource1.getMethods().add(restMethod3);
 
-        RestResource restResource2 = RestResourceGenerator.generateRestResource();
+        RestResource restResource2 = RestResourceTestBuilder.builder().build();
         restResource2.setId("Resource2");
         restResource2.setUri("/user/resource");
-        RestMethod restMethod4 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod4 = RestMethodTestBuilder.builder().build();
         restMethod4.setHttpMethod(HttpMethod.POST);
-        RestMethod restMethod5 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod5 = RestMethodTestBuilder.builder().build();
         restMethod5.setHttpMethod(HttpMethod.GET);
         restResource2.getMethods().add(restMethod4);
         restResource2.getMethods().add(restMethod5);
@@ -133,25 +133,25 @@ public class IdentifyRestMethodServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessMethodNotFound(){
-        RestResource restResource1 = RestResourceGenerator.generateRestResource();
+        RestResource restResource1 = RestResourceTestBuilder.builder().build();
         restResource1.setId("Resource1");
         restResource1.setUri("/user");
-        RestMethod restMethod1 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod1 = RestMethodTestBuilder.builder().build();
         restMethod1.setHttpMethod(HttpMethod.POST);
-        RestMethod restMethod2 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod2 = RestMethodTestBuilder.builder().build();
         restMethod2.setHttpMethod(HttpMethod.GET);
-        RestMethod restMethod3 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod3 = RestMethodTestBuilder.builder().build();
         restMethod3.setHttpMethod(HttpMethod.PUT);
         restResource1.getMethods().add(restMethod1);
         restResource1.getMethods().add(restMethod2);
         restResource1.getMethods().add(restMethod3);
 
-        RestResource restResource2 = RestResourceGenerator.generateRestResource();
+        RestResource restResource2 = RestResourceTestBuilder.builder().build();
         restResource2.setId("Resource2");
         restResource2.setUri("/user/resource");
-        RestMethod restMethod4 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod4 = RestMethodTestBuilder.builder().build();
         restMethod4.setHttpMethod(HttpMethod.POST);
-        RestMethod restMethod5 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod5 = RestMethodTestBuilder.builder().build();
         restMethod5.setHttpMethod(HttpMethod.GET);
         restResource2.getMethods().add(restMethod4);
         restResource2.getMethods().add(restMethod5);
@@ -175,14 +175,14 @@ public class IdentifyRestMethodServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessResourceNotFound(){
-        RestResource restResource1 = RestResourceGenerator.generateRestResource();
+        RestResource restResource1 = RestResourceTestBuilder.builder().build();
         restResource1.setId("Resource1");
         restResource1.setUri("/user");
-        RestMethod restMethod1 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod1 = RestMethodTestBuilder.builder().build();
         restMethod1.setHttpMethod(HttpMethod.POST);
-        RestMethod restMethod2 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod2 = RestMethodTestBuilder.builder().build();
         restMethod2.setHttpMethod(HttpMethod.GET);
-        RestMethod restMethod3 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod3 = RestMethodTestBuilder.builder().build();
         restMethod3.setHttpMethod(HttpMethod.PUT);
         restResource1.getMethods().add(restMethod1);
         restResource1.getMethods().add(restMethod2);
@@ -206,16 +206,16 @@ public class IdentifyRestMethodServiceTest {
 
     @Test
     public void testVariableProcess1(){
-        RestResource restResource1 = RestResourceGenerator.generateRestResource();
+        RestResource restResource1 = RestResourceTestBuilder.builder().build();
         restResource1.setId("Resource1");
         restResource1.setUri("/user/{test}");
-        RestMethod restMethod1 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod1 = RestMethodTestBuilder.builder().build();
         restMethod1.setHttpMethod(HttpMethod.GET);
 
-        RestResource restResource2 = RestResourceGenerator.generateRestResource();
+        RestResource restResource2 = RestResourceTestBuilder.builder().build();
         restResource2.setId("Resource2");
         restResource2.setUri("/user/{test}/resource");
-        RestMethod restMethod2 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod2 = RestMethodTestBuilder.builder().build();
         restMethod2.setHttpMethod(HttpMethod.POST);
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2));
@@ -252,22 +252,22 @@ public class IdentifyRestMethodServiceTest {
 
     @Test
     public void testVariableProcess2(){
-        RestResource restResource1 = RestResourceGenerator.generateRestResource();
+        RestResource restResource1 = RestResourceTestBuilder.builder().build();
         restResource1.setId("Resource1");
         restResource1.setUri("/user/{variable}.json");
-        RestMethod restMethod1 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod1 = RestMethodTestBuilder.builder().build();
         restMethod1.setHttpMethod(HttpMethod.GET);
 
-        RestResource restResource2 = RestResourceGenerator.generateRestResource();
+        RestResource restResource2 = RestResourceTestBuilder.builder().build();
         restResource2.setId("Resource2");
         restResource2.setUri("/user/id.{type}");
-        RestMethod restMethod2 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod2 = RestMethodTestBuilder.builder().build();
         restMethod2.setHttpMethod(HttpMethod.GET);
 
-        RestResource restResource3 = RestResourceGenerator.generateRestResource();
+        RestResource restResource3 = RestResourceTestBuilder.builder().build();
         restResource3.setId("Resource3");
         restResource3.setUri("/resource/{id}...{type}");
-        RestMethod restMethod3 = RestMethodGenerator.generateRestMethod();
+        RestMethod restMethod3 = RestMethodTestBuilder.builder().build();
         restMethod3.setHttpMethod(HttpMethod.GET);
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2, restResource3));

@@ -18,9 +18,9 @@ package com.castlemock.web.basis.service.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
-import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,7 +52,7 @@ public class UserDetailSecurityServiceTest {
 
     @Test
     public void testLoadUserByUsername(){
-        final User user = UserDtoGenerator.generateUserDto();
+        final User user = UserTestBuilder.builder().build();
         final ReadUserByUsernameOutput output = new ReadUserByUsernameOutput(user);
         Mockito.when(serviceProcessor.process(Mockito.any(ReadUserByUsernameInput.class))).thenReturn(output);
 

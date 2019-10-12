@@ -16,14 +16,18 @@
 
 package com.castlemock.repository.core.file.configuration;
 
-import com.castlemock.core.basis.model.configuration.ConfigurationGroupDtoGenerator;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
+import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroupTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -56,7 +60,7 @@ public class ConfigurationRepositoryTest {
     @Test
     public void testInitialize(){
         List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
-        ConfigurationGroup configurationGroup = ConfigurationGroupDtoGenerator.generateConfigurationGroup();
+        ConfigurationGroup configurationGroup = ConfigurationGroupTestBuilder.builder().build();
         configurationGroups.add(configurationGroup);
         Mockito.when(fileRepositorySupport.load(ConfigurationGroup.class, DIRECTORY, EXTENSION)).thenReturn(configurationGroups);
         repository.initialize();
@@ -101,7 +105,7 @@ public class ConfigurationRepositoryTest {
     }
 
     private ConfigurationGroup save(){
-        final ConfigurationGroup configurationGroup = ConfigurationGroupDtoGenerator.generateConfigurationGroupDto();
+        final ConfigurationGroup configurationGroup = ConfigurationGroupTestBuilder.builder().build();
         repository.save(configurationGroup);
         return configurationGroup;
     }

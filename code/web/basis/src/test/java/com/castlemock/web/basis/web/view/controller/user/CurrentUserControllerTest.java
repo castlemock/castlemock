@@ -18,7 +18,7 @@ package com.castlemock.web.basis.web.view.controller.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 import com.castlemock.web.basis.config.TestApplication;
@@ -63,7 +63,7 @@ public class CurrentUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCurrentUser() throws Exception {
-        final User userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserTestBuilder.builder().build();
         final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput(userDto);
 
         when(serviceProcessor.process(any(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);

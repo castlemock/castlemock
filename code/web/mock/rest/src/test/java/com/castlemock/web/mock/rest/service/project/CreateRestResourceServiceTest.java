@@ -19,9 +19,9 @@ package com.castlemock.web.mock.rest.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestResourceInput;
 import com.castlemock.core.mock.rest.service.project.output.CreateRestResourceOutput;
-import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.repository.rest.project.RestResourceRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,7 +52,7 @@ public class CreateRestResourceServiceTest {
     public void testProcess(){
         final String projectId = "ProjectId";
         final String applicationId = "ApplicationId";
-        final RestResource resource = RestResourceGenerator.generateRestResource();
+        final RestResource resource = RestResourceTestBuilder.builder().build();
         Mockito.when(resourceRepository.save(Mockito.any(RestResource.class))).thenReturn(resource);
 
         final CreateRestResourceInput input = CreateRestResourceInput.builder()

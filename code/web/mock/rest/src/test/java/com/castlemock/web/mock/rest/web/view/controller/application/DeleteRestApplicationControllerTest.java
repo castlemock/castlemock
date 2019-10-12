@@ -17,10 +17,10 @@
 package com.castlemock.web.mock.rest.web.view.controller.application;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestApplicationOutput;
 import com.castlemock.web.basis.web.AbstractController;
@@ -70,8 +70,8 @@ public class DeleteRestApplicationControllerTest extends AbstractRestControllerT
 
     @Test
     public void testDeleteApplicationWithValidId() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestApplicationInput.class))).thenReturn(ReadRestApplicationOutput.builder()
                 .restApplication(restApplication)
                 .build());
@@ -89,8 +89,8 @@ public class DeleteRestApplicationControllerTest extends AbstractRestControllerT
 
     @Test
     public void testDeleteConfirmApplicationWithValidId() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + DELETE + SLASH + CONFIRM);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
@@ -100,8 +100,8 @@ public class DeleteRestApplicationControllerTest extends AbstractRestControllerT
     @Test
     public void testConfirmDeletationOfMultpleProjects() throws Exception {
         final DeleteRestApplicationsCommand command = new DeleteRestApplicationsCommand();
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
         final List<RestApplication> restApplications = new ArrayList<RestApplication>();
         restApplications.add(restApplication);
         command.setRestApplications(restApplications);

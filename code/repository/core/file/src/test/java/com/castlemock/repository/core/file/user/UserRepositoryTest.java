@@ -18,13 +18,17 @@ package com.castlemock.repository.core.file.user;
 
 
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -57,7 +61,7 @@ public class UserRepositoryTest {
     @Test
     public void testInitialize(){
         List<User> users = new ArrayList<User>();
-        User user = UserDtoGenerator.generateUser();
+        User user = UserTestBuilder.builder().build();
         users.add(user);
         Mockito.when(fileRepositorySupport.load(User.class, DIRECTORY, EXTENSION)).thenReturn(users);
         repository.initialize();
@@ -105,7 +109,7 @@ public class UserRepositoryTest {
     }
 
     private User save(){
-        final User user = UserDtoGenerator.generateUserDto();
+        final User user = UserTestBuilder.builder().build();
         repository.save(user);
         return user;
     }

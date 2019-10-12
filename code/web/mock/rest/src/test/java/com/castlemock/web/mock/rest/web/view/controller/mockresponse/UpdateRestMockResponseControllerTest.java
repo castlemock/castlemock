@@ -64,11 +64,11 @@ public class UpdateRestMockResponseControllerTest extends AbstractRestController
 
     @Test
     public void testUpdateMockResponse() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
-        final RestMockResponse restMockResponse = RestMockResponseGenerator.generateRestMockResponse();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
+        final RestMockResponse restMockResponse = RestMockResponseTestBuilder.builder().build();
         when(serviceProcessor.process(any(UpdateRestMockResponseInput.class))).thenReturn(UpdateRestMockResponseOutput.builder()
                 .updatedRestMockResponse(restMockResponse)
                 .build());

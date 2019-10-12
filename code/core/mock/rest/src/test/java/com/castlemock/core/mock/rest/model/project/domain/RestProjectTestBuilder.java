@@ -23,10 +23,19 @@ public final class RestProjectTestBuilder {
         this.created = Date.from(Instant.now());
         this.updated = Date.from(Instant.now());
         this.description = "Project generated from Swagger file";
-        this.typeIdentifier = null;
         this.applications = new CopyOnWriteArrayList<RestApplication>();
-
         this.applications.add(RestApplicationTestBuilder.builder().build());
+        this.typeIdentifier = new TypeIdentifier() {
+            @Override
+            public String getType() {
+                return "REST";
+            }
+
+            @Override
+            public String getTypeUrl() {
+                return "rest";
+            }
+        };
     }
 
     public RestProjectTestBuilder applications(final List<RestApplication> applications) {

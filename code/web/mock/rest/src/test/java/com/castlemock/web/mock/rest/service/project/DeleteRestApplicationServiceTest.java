@@ -18,12 +18,12 @@ package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.RestMethodGenerator;
-import com.castlemock.core.mock.rest.model.project.RestMockResponseGenerator;
-import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.DeleteRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.output.DeleteRestApplicationOutput;
 import com.castlemock.repository.rest.project.RestApplicationRepository;
@@ -69,9 +69,9 @@ public class DeleteRestApplicationServiceTest {
     public void testProcess(){
         final String projectId = "ProjectId";
         final String applicationId = "ApplicationId";
-        final RestResource resource = RestResourceGenerator.generateRestResource();
-        final RestMethod method = RestMethodGenerator.generateRestMethod();
-        final RestMockResponse mockResponse = RestMockResponseGenerator.generateRestMockResponse();
+        final RestResource resource = RestResourceTestBuilder.builder().build();
+        final RestMethod method = RestMethodTestBuilder.builder().build();
+        final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
 
         Mockito.when(resourceRepository.findWithApplicationId(applicationId)).thenReturn(Arrays.asList(resource));
         Mockito.when(methodRepository.findWithResourceId(resource.getId())).thenReturn(Arrays.asList(method));

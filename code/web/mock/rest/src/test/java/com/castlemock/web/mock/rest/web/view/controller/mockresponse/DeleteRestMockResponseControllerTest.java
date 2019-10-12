@@ -72,11 +72,11 @@ public class DeleteRestMockResponseControllerTest extends AbstractRestController
 
     @Test
     public void testDeleteMockResponse() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
-        final RestMockResponse restMockResponse = RestMockResponseGenerator.generateRestMockResponse();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
+        final RestMockResponse restMockResponse = RestMockResponseTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestMockResponseInput.class))).thenReturn(ReadRestMockResponseOutput.builder()
                 .restMockResponse(restMockResponse)
                 .build());
@@ -98,11 +98,11 @@ public class DeleteRestMockResponseControllerTest extends AbstractRestController
 
     @Test
     public void testDeleteMockResponseConfirm() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
-        final RestMockResponse restMockResponse = RestMockResponseGenerator.generateRestMockResponse();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
+        final RestMockResponse restMockResponse = RestMockResponseTestBuilder.builder().build();
         when(serviceProcessor.process(any(DeleteRestMockResponseInput.class))).thenReturn(DeleteRestMockResponsesOutput.builder().build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT +
                 SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH +
@@ -117,11 +117,11 @@ public class DeleteRestMockResponseControllerTest extends AbstractRestController
 
     @Test
     public void testConfirmDeletationOfMultipleMockResponses() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
-        final RestMockResponse restMockResponse = RestMockResponseGenerator.generateRestMockResponse();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
+        final RestMockResponse restMockResponse = RestMockResponseTestBuilder.builder().build();
         final DeleteRestMockResponsesCommand command = new DeleteRestMockResponsesCommand();
         command.setRestMockResponses(new ArrayList<RestMockResponse>());
         command.getRestMockResponses().add(restMockResponse);

@@ -16,7 +16,7 @@
 
 package com.castlemock.web.basis.web.view.controller.system;
 
-import com.castlemock.core.basis.model.system.service.dto.SystemInformationDto;
+import com.castlemock.core.basis.model.system.service.dto.SystemInformation;
 import com.castlemock.core.basis.service.system.input.GetSystemInformationInput;
 import com.castlemock.core.basis.service.system.output.GetSystemInformationOutput;
 import com.castlemock.web.basis.web.view.controller.AbstractViewController;
@@ -51,9 +51,9 @@ public class SystemController extends AbstractViewController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView defaultPage() {
         final GetSystemInformationOutput output = serviceProcessor.process(new GetSystemInformationInput());
-        final SystemInformationDto systemInformationDto = output.getSystemInformation();
+        final SystemInformation systemInformation = output.getSystemInformation();
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(SYSTEM_INFORMATION, systemInformationDto);
+        model.addObject(SYSTEM_INFORMATION, systemInformation);
         model.addObject(SELECTED_MENU, MenuItem.SYSTEM);
         return model;
     }

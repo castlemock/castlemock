@@ -16,12 +16,12 @@
 package com.castlemock.web.mock.rest.web.view.controller.resource;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
-import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestResourceInput;
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestResourceInput;
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestResourcesForwardedEndpointInput;
@@ -72,9 +72,9 @@ public class UpdateRestResourceControllerTest extends AbstractRestControllerTest
 
     @Test
     public void testGetRestResource() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestResourceInput.class))).thenReturn(ReadRestResourceOutput.builder().restResource(restResource).build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT +
                 SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() + SLASH + RESOURCE +
@@ -92,9 +92,9 @@ public class UpdateRestResourceControllerTest extends AbstractRestControllerTest
 
     @Test
     public void testUpdateRestResource() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
         when(serviceProcessor.process(any(UpdateRestResourceInput.class))).thenReturn(UpdateRestResourceOutput.builder().updatedRestResource(restResource).build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL +
                 PROJECT + SLASH + restProject.getId() + SLASH + APPLICATION + SLASH + restApplication.getId() +

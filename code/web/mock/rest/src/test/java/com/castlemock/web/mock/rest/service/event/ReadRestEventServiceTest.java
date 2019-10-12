@@ -18,8 +18,8 @@ package com.castlemock.web.mock.rest.service.event;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.event.RestEventGenerator;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
+import com.castlemock.core.mock.rest.model.event.domain.RestEventTestBuilder;
 import com.castlemock.core.mock.rest.service.event.input.ReadRestEventInput;
 import com.castlemock.core.mock.rest.service.event.output.ReadRestEventOutput;
 import com.castlemock.repository.Repository;
@@ -27,7 +27,11 @@ import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 /**
  * @author Karl Dahlgren
@@ -52,7 +56,7 @@ public class ReadRestEventServiceTest {
 
     @Test
     public void testProcess(){
-        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        final RestEvent restEvent = RestEventTestBuilder.builder().build();
         Mockito.when(repository.findOne(restEvent.getId())).thenReturn(restEvent);
 
         final ReadRestEventInput input = ReadRestEventInput.builder()

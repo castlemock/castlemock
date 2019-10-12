@@ -18,7 +18,7 @@ package com.castlemock.web.basis.web.view.controller.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.CreateUserInput;
 import com.castlemock.core.basis.service.user.output.CreateUserOutput;
 import com.castlemock.web.basis.config.TestApplication;
@@ -65,7 +65,7 @@ public class CreateUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        final User userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserTestBuilder.builder().build();
         final CreateUserOutput createUserOutput = new CreateUserOutput(userDto);
         when(serviceProcessor.process(any(CreateUserInput.class))).thenReturn(createUserOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL);

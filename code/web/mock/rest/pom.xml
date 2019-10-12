@@ -46,6 +46,12 @@
             <artifactId>rest</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.castlemock.core.mock</groupId>
+            <artifactId>rest</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>

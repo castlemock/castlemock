@@ -18,13 +18,18 @@ package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.domain.*;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.output.CreateRestMethodOutput;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.core.mock.rest.model.project.RestMethodGenerator;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
-import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,9 +51,9 @@ public class CreateRestMethodServiceTest {
     @InjectMocks
     private CreateRestMethodService service;
 
-    private RestProject restProject = RestProjectGenerator.generateRestProject();
-    private RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-    private RestResource restResource = RestResourceGenerator.generateRestResource();
+    private RestProject restProject = RestProjectTestBuilder.builder().build();
+    private RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+    private RestResource restResource = RestResourceTestBuilder.builder().build();
 
     @Before
     public void setup() {
@@ -57,7 +62,7 @@ public class CreateRestMethodServiceTest {
 
     @Test
     public void testProcess(){
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
         Mockito.when(methodRepository.save(Mockito.any(RestMethod.class))).thenReturn(restMethod);
 
         final CreateRestMethodInput input = CreateRestMethodInput.builder()
@@ -82,7 +87,7 @@ public class CreateRestMethodServiceTest {
 
     @Test
     public void testProcessWithoutStatus(){
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
         restMethod.setStatus(null);
         Mockito.when(methodRepository.save(Mockito.any(RestMethod.class))).thenReturn(restMethod);
 
@@ -108,7 +113,7 @@ public class CreateRestMethodServiceTest {
 
     @Test
     public void testProcessWithoutResponseStrategy(){
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
         restMethod.setResponseStrategy(null);
         Mockito.when(methodRepository.save(Mockito.any(RestMethod.class))).thenReturn(restMethod);
 

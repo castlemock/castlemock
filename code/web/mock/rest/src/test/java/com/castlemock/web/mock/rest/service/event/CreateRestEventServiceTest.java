@@ -18,8 +18,8 @@ package com.castlemock.web.mock.rest.service.event;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.event.RestEventGenerator;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
+import com.castlemock.core.mock.rest.model.event.domain.RestEventTestBuilder;
 import com.castlemock.core.mock.rest.service.event.input.CreateRestEventInput;
 import com.castlemock.core.mock.rest.service.event.output.CreateRestEventOutput;
 import com.castlemock.repository.rest.event.RestEventRepository;
@@ -27,7 +27,11 @@ import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 /**
@@ -53,8 +57,8 @@ public class CreateRestEventServiceTest {
 
     @Test
     public void testProcess(){
-        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
-        Mockito.when(repository.save(Mockito.any(RestEvent.class))).thenReturn(RestEventGenerator.generateRestEvent());
+        final RestEvent restEvent = RestEventTestBuilder.builder().build();
+        Mockito.when(repository.save(Mockito.any(RestEvent.class))).thenReturn(RestEventTestBuilder.builder().build());
 
         final CreateRestEventInput input = CreateRestEventInput.builder().restEvent(restEvent).build();
         final ServiceTask<CreateRestEventInput> serviceTask = new ServiceTask<CreateRestEventInput>(input);
@@ -71,7 +75,7 @@ public class CreateRestEventServiceTest {
 
     @Test
     public void testMaxCountReached(){
-        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        final RestEvent restEvent = RestEventTestBuilder.builder().build();
         Mockito.when(repository.save(Mockito.any(RestEvent.class))).thenReturn(restEvent);
         Mockito.when(repository.count()).thenReturn(6);
 

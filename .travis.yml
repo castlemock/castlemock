@@ -5,10 +5,6 @@ jdk:
   - oraclejdk9
   - openjdk10
 
-after_success:
-  - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
-  - bash <(curl -s https://codecov.io/bash)
-
 deploy:
   provider: heroku
   api_key:

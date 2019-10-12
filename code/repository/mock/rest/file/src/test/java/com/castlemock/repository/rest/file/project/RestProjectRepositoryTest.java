@@ -17,14 +17,18 @@
 package com.castlemock.repository.rest.file.project;
 
 
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -56,7 +60,7 @@ public class RestProjectRepositoryTest {
     @Test
     public void testInitialize(){
         List<RestProject> restProjects = new ArrayList<RestProject>();
-        RestProject restProject = RestProjectGenerator.generateFullRestProject();
+        RestProject restProject = RestProjectTestBuilder.builder().build();
         restProjects.add(restProject);
         Mockito.when(fileRepositorySupport.load(RestProject.class, DIRECTORY, EXTENSION)).thenReturn(restProjects);
         repository.initialize();
@@ -103,7 +107,7 @@ public class RestProjectRepositoryTest {
     }
 
     private RestProject save(){
-        RestProject restProject = RestProjectGenerator.generateFullRestProject();
+        RestProject restProject = RestProjectTestBuilder.builder().build();
         repository.save(restProject);
         return restProject;
     }

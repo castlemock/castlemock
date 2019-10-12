@@ -20,6 +20,7 @@ import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.service.user.input.ReadUserInput;
 import com.castlemock.core.basis.service.user.input.UpdateUserInput;
@@ -27,7 +28,6 @@ import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 import com.castlemock.core.basis.service.user.output.ReadUserOutput;
 import com.castlemock.core.basis.service.user.output.UpdateUserOutput;
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
 import com.castlemock.web.basis.service.user.UserDetailSecurityService;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.AbstractControllerTest;
@@ -78,7 +78,7 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateUserWithValidId() throws Exception {
-        final User userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserTestBuilder.builder().build();
         final ReadUserOutput readUserOutput = new ReadUserOutput(userDto);
 
         when(serviceProcessor.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
@@ -95,7 +95,7 @@ public class UpdateUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateUserConfirmWithValidId() throws Exception {
-        final User userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserTestBuilder.builder().build();
         final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput(userDto);
         final UpdateUserOutput updateUserOutput = new UpdateUserOutput(userDto);
         when(serviceProcessor.process(isA(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);

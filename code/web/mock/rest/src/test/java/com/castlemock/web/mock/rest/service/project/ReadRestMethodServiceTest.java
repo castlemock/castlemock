@@ -3,11 +3,11 @@ package com.castlemock.web.mock.rest.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
-import com.castlemock.core.mock.rest.model.project.RestMethodGenerator;
-import com.castlemock.core.mock.rest.model.project.RestMockResponseGenerator;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import org.junit.Assert;
@@ -41,8 +41,8 @@ public class ReadRestMethodServiceTest {
         final String projectId = "ProjectId";
         final String applicationId = "ApplicationId";
         final String resourceId = "ResourceId";
-        final RestMethod method = RestMethodGenerator.generateRestMethod();
-        final RestMockResponse mockResponse = RestMockResponseGenerator.generateRestMockResponse();
+        final RestMethod method = RestMethodTestBuilder.builder().build();
+        final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
 
         final ReadRestMethodInput input =
                 ReadRestMethodInput.builder()

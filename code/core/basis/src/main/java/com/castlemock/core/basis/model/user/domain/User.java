@@ -19,6 +19,7 @@ package com.castlemock.core.basis.model.user.domain;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * The User DTO class is a DTO (Data transfer object) for the user class
@@ -36,6 +37,21 @@ public class User {
     private Date created;
     private Status status;
     private Role role;
+
+    public User(){
+
+    }
+
+    private User(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.username = Objects.requireNonNull(builder.username);
+        this.password = Objects.requireNonNull(builder.password);
+        this.email = builder.email;
+        this.updated = Objects.requireNonNull(builder.updated);
+        this.created = Objects.requireNonNull(builder.created);
+        this.status = Objects.requireNonNull(builder.status);
+        this.role = Objects.requireNonNull(builder.role);
+    }
 
     /**
      * Get the user id
@@ -232,5 +248,67 @@ public class User {
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String id;
+        private String username;
+        private String password;
+        private String email;
+        private Date updated;
+        private Date created;
+        private Status status;
+        private Role role;
+
+        private Builder() {
+        }
+
+        public Builder id(final String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder username(final String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder password(final String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder email(final String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder updated(final Date updated) {
+            this.updated = updated;
+            return this;
+        }
+
+        public Builder created(final Date created) {
+            this.created = created;
+            return this;
+        }
+
+        public Builder status(final Status status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder role(final Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
     }
 }

@@ -24,6 +24,7 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -40,6 +41,22 @@ public class SoapRequest {
     private SoapVersion soapVersion;
     private List<HttpHeader> httpHeaders;
     private SoapOperationIdentifier operationIdentifier;
+
+    public SoapRequest(){
+
+    }
+
+    private SoapRequest(final Builder builder){
+        this.body = builder.body;
+        this.contentType = builder.contentType;
+        this.uri = Objects.requireNonNull(builder.uri);
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
+        this.operationName = Objects.requireNonNull(builder.operationName);
+        this.soapVersion = Objects.requireNonNull(builder.soapVersion);
+        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
+        this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier);
+    }
+
 
     @XmlElement
     public String getBody() {
@@ -111,5 +128,67 @@ public class SoapRequest {
 
     public void setHttpHeaders(List<HttpHeader> httpHeaders) {
         this.httpHeaders = httpHeaders;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String body;
+        private String contentType;
+        private String uri;
+        private HttpMethod httpMethod;
+        private String operationName;
+        private SoapVersion soapVersion;
+        private List<HttpHeader> httpHeaders;
+        private SoapOperationIdentifier operationIdentifier;
+
+        private Builder() {
+        }
+
+        public Builder body(String body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder contentType(String contentType) {
+            this.contentType = contentType;
+            return this;
+        }
+
+        public Builder uri(String uri) {
+            this.uri = uri;
+            return this;
+        }
+
+        public Builder httpMethod(HttpMethod httpMethod) {
+            this.httpMethod = httpMethod;
+            return this;
+        }
+
+        public Builder operationName(String operationName) {
+            this.operationName = operationName;
+            return this;
+        }
+
+        public Builder soapVersion(SoapVersion soapVersion) {
+            this.soapVersion = soapVersion;
+            return this;
+        }
+
+        public Builder httpHeaders(List<HttpHeader> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+            return this;
+        }
+
+        public Builder operationIdentifier(SoapOperationIdentifier operationIdentifier) {
+            this.operationIdentifier = operationIdentifier;
+            return this;
+        }
+
+        public SoapRequest build() {
+            return new SoapRequest(this);
+        }
     }
 }
