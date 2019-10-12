@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>file</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>com.castlemock.repository.mock.soap</groupId>
+        <artifactId>soap</artifactId>
+        <version>${project.version}</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.castlemock.core</groupId>
+            <artifactId>basis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.core.mock</groupId>
+            <artifactId>soap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.repository.core</groupId>
+            <artifactId>model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.repository.core</groupId>
+            <artifactId>file</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.repository.mock.soap</groupId>
+            <artifactId>model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.test.mock</groupId>
+            <artifactId>soap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

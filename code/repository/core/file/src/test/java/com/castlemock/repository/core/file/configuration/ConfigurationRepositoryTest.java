@@ -83,7 +83,7 @@ public class ConfigurationRepositoryTest {
     @Test
     public void testSave(){
         final ConfigurationGroup configurationGroup = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(ConfigurationGroup.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(ConfigurationFileRepository.ConfigurationGroupFile.class), Mockito.anyString());
     }
 
     @Test

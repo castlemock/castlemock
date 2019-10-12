@@ -33,6 +33,7 @@ import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.web.view.command.mockresponse.RestMockResponseModifierCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestControllerTest;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -141,6 +142,7 @@ public class RestMethodControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
+    @Ignore
     public void projectFunctionalityDelete() throws Exception {
         final String projectId = "projectId";
         final String applicationId = "applicationId";

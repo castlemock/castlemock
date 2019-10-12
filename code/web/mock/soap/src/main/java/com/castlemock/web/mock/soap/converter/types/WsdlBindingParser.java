@@ -99,7 +99,7 @@ public final class WsdlBindingParser extends WsdlParser {
     }
 
     private Optional<BindingOperationInputBody> parseInputBody(final Element inputElement){
-        return DocumentUtility.getElement(inputElement, SOAP_11_NAMESPACE, BODY_NAMESPACE)
+        final Optional<BindingOperationInputBody> body = DocumentUtility.getElement(inputElement, SOAP_11_NAMESPACE, BODY_NAMESPACE)
                         .map(element -> {
                             final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
                                     .orElse(null);
@@ -117,6 +117,8 @@ public final class WsdlBindingParser extends WsdlParser {
                                                 .build());
                                     }).orElse(Optional.empty());
                         });
+
+        return body;
     }
 
     private Optional<BindingOperationOutputBody> parseOutputBody(final Element outputElement){

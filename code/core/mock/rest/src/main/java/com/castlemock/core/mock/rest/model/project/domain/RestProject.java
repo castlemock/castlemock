@@ -16,12 +16,15 @@
 
 package com.castlemock.core.mock.rest.model.project.domain;
 
+import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.project.domain.Project;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -38,6 +41,17 @@ public class RestProject extends Project {
      */
     public RestProject() {
     }
+
+    private RestProject(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.name = Objects.requireNonNull(builder.name);
+        this.created = Objects.requireNonNull(builder.created);
+        this.updated = Objects.requireNonNull(builder.updated);
+        this.description = Objects.requireNonNull(builder.description);
+        this.typeIdentifier = Objects.requireNonNull(builder.typeIdentifier);
+        this.applications = Objects.requireNonNull(builder.applications);
+    }
+
 
     /**
      * The constructor will create a new REST project DTO based on the provided projectDto
@@ -56,5 +70,82 @@ public class RestProject extends Project {
 
     public void setApplications(List<RestApplication> applications) {
         this.applications = applications;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RestProject)) return false;
+        if (!super.equals(o)) return false;
+        RestProject that = (RestProject) o;
+        return Objects.equals(applications, that.applications);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), applications);
+    }
+
+    @Override
+    public String toString() {
+        return "RestProject{" +
+                "applications=" + applications +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private List<RestApplication> applications = new CopyOnWriteArrayList<RestApplication>();
+        private String id;
+        private String name;
+        private Date updated;
+        private Date created;
+        private String description;
+        private TypeIdentifier typeIdentifier;
+
+        private Builder() {
+        }
+
+        public Builder applications(final List<RestApplication> applications) {
+            this.applications = applications;
+            return this;
+        }
+
+        public Builder id(final String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder updated(final Date updated) {
+            this.updated = updated;
+            return this;
+        }
+
+        public Builder created(final Date created) {
+            this.created = created;
+            return this;
+        }
+
+        public Builder description(final String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder typeIdentifier(final TypeIdentifier typeIdentifier) {
+            this.typeIdentifier = typeIdentifier;
+            return this;
+        }
+
+        public RestProject build() {
+            return new RestProject(this);
+        }
     }
 }

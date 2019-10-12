@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -37,6 +38,19 @@ public class RestResponse {
     private String contentType;
     private List<HttpHeader> httpHeaders;
     private List<ContentEncoding> contentEncodings;
+
+    public RestResponse(){
+
+    }
+
+    private RestResponse(final Builder builder){
+        this.body = Objects.requireNonNull(builder.body);
+        this.mockResponseName = Objects.requireNonNull(builder.mockResponseName);
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
+        this.contentType = Objects.requireNonNull(builder.contentType);
+        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
+        this.contentEncodings = Objects.requireNonNull(builder.contentEncodings);
+    }
 
     @XmlElement
     public String getBody() {
@@ -92,5 +106,85 @@ public class RestResponse {
 
     public void setContentEncodings(List<ContentEncoding> contentEncodings) {
         this.contentEncodings = contentEncodings;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RestResponse)) return false;
+        RestResponse that = (RestResponse) o;
+        return Objects.equals(body, that.body) &&
+                Objects.equals(mockResponseName, that.mockResponseName) &&
+                Objects.equals(httpStatusCode, that.httpStatusCode) &&
+                Objects.equals(contentType, that.contentType) &&
+                Objects.equals(httpHeaders, that.httpHeaders) &&
+                Objects.equals(contentEncodings, that.contentEncodings);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(body, mockResponseName, httpStatusCode, contentType, httpHeaders, contentEncodings);
+    }
+
+    @Override
+    public String toString() {
+        return "RestResponse{" +
+                "body='" + body + '\'' +
+                ", mockResponseName='" + mockResponseName + '\'' +
+                ", httpStatusCode=" + httpStatusCode +
+                ", contentType='" + contentType + '\'' +
+                ", httpHeaders=" + httpHeaders +
+                ", contentEncodings=" + contentEncodings +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String body;
+        private String mockResponseName;
+        private Integer httpStatusCode;
+        private String contentType;
+        private List<HttpHeader> httpHeaders;
+        private List<ContentEncoding> contentEncodings;
+
+        private Builder() {
+        }
+
+        public Builder body(final String body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder mockResponseName(final String mockResponseName) {
+            this.mockResponseName = mockResponseName;
+            return this;
+        }
+
+        public Builder httpStatusCode(final Integer httpStatusCode) {
+            this.httpStatusCode = httpStatusCode;
+            return this;
+        }
+
+        public Builder contentType(final String contentType) {
+            this.contentType = contentType;
+            return this;
+        }
+
+        public Builder httpHeaders(final List<HttpHeader> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+            return this;
+        }
+
+        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+            this.contentEncodings = contentEncodings;
+            return this;
+        }
+
+        public RestResponse build() {
+            return new RestResponse(this);
+        }
     }
 }

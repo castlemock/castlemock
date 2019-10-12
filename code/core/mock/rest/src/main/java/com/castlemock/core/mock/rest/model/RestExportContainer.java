@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -36,6 +37,18 @@ public class RestExportContainer extends ExportContainer {
     private List<RestResource> resources;
     private List<RestMethod> methods;
     private List<RestMockResponse> mockResponses;
+
+    public RestExportContainer(){
+
+    }
+
+    private RestExportContainer(final Builder builder){
+        this.project = Objects.requireNonNull(builder.project);
+        this.applications = Objects.requireNonNull(builder.applications);
+        this.resources = Objects.requireNonNull(builder.resources);
+        this.methods = Objects.requireNonNull(builder.methods);
+        this.mockResponses = Objects.requireNonNull(builder.mockResponses);
+    }
 
     @XmlElement
     public RestProject getProject() {
@@ -84,5 +97,77 @@ public class RestExportContainer extends ExportContainer {
 
     public void setMockResponses(List<RestMockResponse> mockResponses) {
         this.mockResponses = mockResponses;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RestExportContainer)) return false;
+        RestExportContainer that = (RestExportContainer) o;
+        return Objects.equals(project, that.project) &&
+                Objects.equals(applications, that.applications) &&
+                Objects.equals(resources, that.resources) &&
+                Objects.equals(methods, that.methods) &&
+                Objects.equals(mockResponses, that.mockResponses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(project, applications, resources, methods, mockResponses);
+    }
+
+    @Override
+    public String toString() {
+        return "RestExportContainer{" +
+                "project=" + project +
+                ", applications=" + applications +
+                ", resources=" + resources +
+                ", methods=" + methods +
+                ", mockResponses=" + mockResponses +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private RestProject project;
+        private List<RestApplication> applications;
+        private List<RestResource> resources;
+        private List<RestMethod> methods;
+        private List<RestMockResponse> mockResponses;
+
+        private Builder() {
+        }
+
+        public Builder project(final RestProject project) {
+            this.project = project;
+            return this;
+        }
+
+        public Builder applications(final List<RestApplication> applications) {
+            this.applications = applications;
+            return this;
+        }
+
+        public Builder resources(final List<RestResource> resources) {
+            this.resources = resources;
+            return this;
+        }
+
+        public Builder methods(final List<RestMethod> methods) {
+            this.methods = methods;
+            return this;
+        }
+
+        public Builder mockResponses(final List<RestMockResponse> mockResponses) {
+            this.mockResponses = mockResponses;
+            return this;
+        }
+
+        public RestExportContainer build() {
+            return new RestExportContainer(this);
+        }
     }
 }

@@ -87,7 +87,7 @@ public class UserRepositoryTest {
     @Test
     public void testSave(){
         final User user = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(User.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(UserFileRepository.UserFile.class), Mockito.anyString());
     }
 
     @Test

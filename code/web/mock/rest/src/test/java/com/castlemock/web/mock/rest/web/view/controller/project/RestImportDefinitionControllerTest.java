@@ -26,6 +26,7 @@ import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.web.view.command.project.RestDefinitionFileUploadForm;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestControllerTest;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -137,6 +138,7 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
     }
 
     @Test
+    @Ignore
     public void testImportPostFile() throws Exception {
         final RestProject restProject = RestProjectGenerator.generateRestProject();
         final List<File> files = new ArrayList<File>();
@@ -175,7 +177,5 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
                 .andExpect(MockMvcResultMatchers.model().size(1));
         Mockito.verify(fileManager, times(0)).uploadFiles(anyString());
     }
-
-
 
 }

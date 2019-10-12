@@ -87,7 +87,7 @@ public class SoapProjectRepositoryTest {
     @Test
     public void testSave(){
         final SoapProject soapProject = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapProject.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapProjectFileRepository.SoapProjectFile.class), Mockito.anyString());
     }
 
     @Test
