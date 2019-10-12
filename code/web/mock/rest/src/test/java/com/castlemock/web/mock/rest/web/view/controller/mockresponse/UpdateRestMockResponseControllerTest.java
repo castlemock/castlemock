@@ -40,8 +40,8 @@ import static org.mockito.Mockito.when;
 
 
 /**
- * @author: Karl Dahlgren
- * @since: 1.0
+ * @author Karl Dahlgren
+ * @since 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestApplication.class)
