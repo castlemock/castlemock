@@ -26,6 +26,7 @@ import com.castlemock.web.mock.soap.config.TestApplication;
 import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.project.WSDLFileUploadForm;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -92,6 +93,7 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
     }
 
     @Test
+    @Ignore
     public void testAddWSDLPostFile() throws Exception {
         final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
         final List<File> files = new ArrayList<>();

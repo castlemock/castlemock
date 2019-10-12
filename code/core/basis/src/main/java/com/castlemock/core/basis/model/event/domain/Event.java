@@ -32,12 +32,12 @@ import java.util.Date;
 @XmlRootElement
 public class Event implements TypeIdentifiable {
 
-    private String id;
-    private String resourceName;
-    private Date startDate;
-    private Date endDate;
-    private TypeIdentifier typeIdentifier;
-    private String resourceLink;
+    protected String id;
+    protected String resourceName;
+    protected Date startDate;
+    protected Date endDate;
+    protected TypeIdentifier typeIdentifier;
+    protected String resourceLink;
 
     /**
      * The default constructor for the event DTO

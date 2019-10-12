@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -38,6 +39,19 @@ public class RestRequest {
     private HttpMethod httpMethod;
     private List<HttpHeader> httpHeaders;
     private List<HttpParameter> httpParameters;
+
+    public RestRequest(){
+
+    }
+
+    private RestRequest(final Builder builder){
+        this.body = Objects.requireNonNull(builder.body);
+        this.contentType = Objects.requireNonNull(builder.contentType);
+        this.uri = Objects.requireNonNull(builder.uri);
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
+        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
+        this.httpParameters = Objects.requireNonNull(builder.httpParameters);
+    }
 
     @XmlElement
     public String getBody() {
@@ -93,5 +107,85 @@ public class RestRequest {
 
     public void setHttpParameters(List<HttpParameter> httpParameters) {
         this.httpParameters = httpParameters;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RestRequest)) return false;
+        RestRequest that = (RestRequest) o;
+        return Objects.equals(body, that.body) &&
+                Objects.equals(contentType, that.contentType) &&
+                Objects.equals(uri, that.uri) &&
+                httpMethod == that.httpMethod &&
+                Objects.equals(httpHeaders, that.httpHeaders) &&
+                Objects.equals(httpParameters, that.httpParameters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(body, contentType, uri, httpMethod, httpHeaders, httpParameters);
+    }
+
+    @Override
+    public String toString() {
+        return "RestRequest{" +
+                "body='" + body + '\'' +
+                ", contentType='" + contentType + '\'' +
+                ", uri='" + uri + '\'' +
+                ", httpMethod=" + httpMethod +
+                ", httpHeaders=" + httpHeaders +
+                ", httpParameters=" + httpParameters +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String body;
+        private String contentType;
+        private String uri;
+        private HttpMethod httpMethod;
+        private List<HttpHeader> httpHeaders;
+        private List<HttpParameter> httpParameters;
+
+        private Builder() {
+        }
+
+        public Builder body(final String body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder contentType(final String contentType) {
+            this.contentType = contentType;
+            return this;
+        }
+
+        public Builder uri(final String uri) {
+            this.uri = uri;
+            return this;
+        }
+
+        public Builder httpMethod(final HttpMethod httpMethod) {
+            this.httpMethod = httpMethod;
+            return this;
+        }
+
+        public Builder httpHeaders(final List<HttpHeader> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+            return this;
+        }
+
+        public Builder httpParameters(final List<HttpParameter> httpParameters) {
+            this.httpParameters = httpParameters;
+            return this;
+        }
+
+        public RestRequest build() {
+            return new RestRequest();
+        }
     }
 }

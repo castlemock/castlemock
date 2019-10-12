@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -35,10 +36,20 @@ public class RestApplication {
     private String id;
     private String name;
     private String projectId;
-
     private List<RestResource> resources = new CopyOnWriteArrayList<RestResource>();
-
     private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
+
+    public RestApplication(){
+
+    }
+
+    private RestApplication(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.name = Objects.requireNonNull(builder.name);
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.resources = Objects.requireNonNull(builder.resources);
+        this.statusCount = Objects.requireNonNull(builder.statusCount);
+    }
 
     @XmlElement
     public String getId() {
@@ -84,5 +95,77 @@ public class RestApplication {
 
     public void setStatusCount(Map<RestMethodStatus, Integer> statusCount) {
         this.statusCount = statusCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RestApplication that = (RestApplication) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(projectId, that.projectId) &&
+                Objects.equals(resources, that.resources) &&
+                Objects.equals(statusCount, that.statusCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, projectId, resources, statusCount);
+    }
+
+    @Override
+    public String toString() {
+        return "RestApplication{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", projectId='" + projectId + '\'' +
+                ", resources=" + resources +
+                ", statusCount=" + statusCount +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String id;
+        private String name;
+        private String projectId;
+        private List<RestResource> resources = new CopyOnWriteArrayList<RestResource>();
+        private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
+
+        private Builder() {
+        }
+
+        public Builder id(final String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder projectId(final String projectId) {
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder resources(final List<RestResource> resources) {
+            this.resources = resources;
+            return this;
+        }
+
+        public Builder statusCount(final Map<RestMethodStatus, Integer> statusCount) {
+            this.statusCount = statusCount;
+            return this;
+        }
+
+        public RestApplication build() {
+            return new RestApplication(this);
+        }
     }
 }

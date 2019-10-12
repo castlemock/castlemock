@@ -85,7 +85,7 @@ public class RestProjectRepositoryTest {
     @Test
     public void testSave(){
         final RestProject restProject = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(RestProject.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(RestProjectFileRepository.RestProjectFile.class), Mockito.anyString());
     }
 
     @Test

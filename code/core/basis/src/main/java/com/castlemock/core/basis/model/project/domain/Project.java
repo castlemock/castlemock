@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * The Project DTO is a DTO (Data transfer object) class for the project class.
@@ -33,13 +34,12 @@ import java.util.Date;
 public class Project implements TypeIdentifiable {
 
 
-    private String id;
-    private String name;
-    private Date updated;
-    private Date created;
-    private String description;
-
-    private TypeIdentifier typeIdentifier;
+    protected String id;
+    protected String name;
+    protected Date updated;
+    protected Date created;
+    protected String description;
+    protected TypeIdentifier typeIdentifier;
 
     /**
      * The default constructor for the project DTO
@@ -115,4 +115,36 @@ public class Project implements TypeIdentifiable {
     public void setTypeIdentifier(final TypeIdentifier typeIdentifier) {
         this.typeIdentifier = typeIdentifier;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return Objects.equals(id, project.id) &&
+                Objects.equals(name, project.name) &&
+                Objects.equals(updated, project.updated) &&
+                Objects.equals(created, project.created) &&
+                Objects.equals(description, project.description) &&
+                Objects.equals(typeIdentifier, project.typeIdentifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, updated, created, description, typeIdentifier);
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", updated=" + updated +
+                ", created=" + created +
+                ", description='" + description + '\'' +
+                ", typeIdentifier=" + typeIdentifier +
+                '}';
+    }
+
+
 }

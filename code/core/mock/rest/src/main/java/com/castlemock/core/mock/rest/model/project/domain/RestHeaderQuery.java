@@ -18,6 +18,7 @@ package com.castlemock.core.mock.rest.model.project.domain;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 @XmlRootElement
 public class RestHeaderQuery {
@@ -27,6 +28,18 @@ public class RestHeaderQuery {
     private boolean matchCase;
     private boolean matchAny;
     private boolean matchRegex;
+
+    public RestHeaderQuery(){
+
+    }
+
+    private RestHeaderQuery(final Builder builder){
+        this.header = Objects.requireNonNull(builder.header);
+        this.query = Objects.requireNonNull(builder.query);
+        this.matchCase = Objects.requireNonNull(builder.matchCase);
+        this.matchAny = Objects.requireNonNull(builder.matchAny);
+        this.matchRegex = Objects.requireNonNull(builder.matchRegex);
+    }
 
     @XmlElement
     public String getHeader() {
@@ -73,5 +86,75 @@ public class RestHeaderQuery {
         this.matchRegex = matchRegex;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RestHeaderQuery that = (RestHeaderQuery) o;
+        return matchCase == that.matchCase &&
+                matchAny == that.matchAny &&
+                matchRegex == that.matchRegex &&
+                Objects.equals(header, that.header) &&
+                Objects.equals(query, that.query);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(header, query, matchCase, matchAny, matchRegex);
+    }
+
+    @Override
+    public String toString() {
+        return "RestHeaderQuery{" +
+                "header='" + header + '\'' +
+                ", query='" + query + '\'' +
+                ", matchCase=" + matchCase +
+                ", matchAny=" + matchAny +
+                ", matchRegex=" + matchRegex +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String header;
+        private String query;
+        private Boolean matchCase;
+        private Boolean matchAny;
+        private Boolean matchRegex;
+
+        private Builder() {
+        }
+
+        public Builder header(final String header) {
+            this.header = header;
+            return this;
+        }
+
+        public Builder query(final String query) {
+            this.query = query;
+            return this;
+        }
+
+        public Builder matchCase(final Boolean matchCase) {
+            this.matchCase = matchCase;
+            return this;
+        }
+
+        public Builder matchAny(final Boolean matchAny) {
+            this.matchAny = matchAny;
+            return this;
+        }
+
+        public Builder matchRegex(final Boolean matchRegex) {
+            this.matchRegex = matchRegex;
+            return this;
+        }
+
+        public RestHeaderQuery build() {
+            return new RestHeaderQuery(this);
+        }
+    }
 }

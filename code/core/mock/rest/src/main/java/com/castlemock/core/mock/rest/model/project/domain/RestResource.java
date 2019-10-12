@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -36,12 +37,23 @@ public class RestResource {
     private String name;
     private String uri;
     private String applicationId;
-
-    private List<RestMethod> methods = new CopyOnWriteArrayList<RestMethod>();
-
     private String invokeAddress;
-
+    private List<RestMethod> methods = new CopyOnWriteArrayList<RestMethod>();
     private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
+
+    public RestResource(){
+
+    }
+
+    private RestResource(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.name = Objects.requireNonNull(builder.name);
+        this.uri = Objects.requireNonNull(builder.uri);
+        this.applicationId = Objects.requireNonNull(builder.applicationId);
+        this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
+        this.methods = Objects.requireNonNull(builder.methods);
+        this.statusCount = Objects.requireNonNull(builder.statusCount);
+    }
 
     @XmlElement
     public String getId() {
@@ -57,7 +69,7 @@ public class RestResource {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -66,7 +78,7 @@ public class RestResource {
         return uri;
     }
 
-    public void setUri(String uri) {
+    public void setUri(final String uri) {
         this.uri = uri;
     }
 
@@ -75,7 +87,7 @@ public class RestResource {
         return applicationId;
     }
 
-    public void setApplicationId(String applicationId) {
+    public void setApplicationId(final String applicationId) {
         this.applicationId = applicationId;
     }
 
@@ -85,7 +97,7 @@ public class RestResource {
         return methods;
     }
 
-    public void setMethods(List<RestMethod> methods) {
+    public void setMethods(final List<RestMethod> methods) {
         this.methods = methods;
     }
 
@@ -94,7 +106,7 @@ public class RestResource {
         return invokeAddress;
     }
 
-    public void setInvokeAddress(String invokeAddress) {
+    public void setInvokeAddress(final String invokeAddress) {
         this.invokeAddress = invokeAddress;
     }
 
@@ -103,7 +115,95 @@ public class RestResource {
         return statusCount;
     }
 
-    public void setStatusCount(Map<RestMethodStatus, Integer> statusCount) {
+    public void setStatusCount(final Map<RestMethodStatus, Integer> statusCount) {
         this.statusCount = statusCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RestResource that = (RestResource) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(uri, that.uri) &&
+                Objects.equals(applicationId, that.applicationId) &&
+                Objects.equals(invokeAddress, that.invokeAddress) &&
+                Objects.equals(methods, that.methods) &&
+                Objects.equals(statusCount, that.statusCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, uri, applicationId, invokeAddress, methods, statusCount);
+    }
+
+    @Override
+    public String toString() {
+        return "RestResource{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", uri='" + uri + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", invokeAddress='" + invokeAddress + '\'' +
+                ", methods=" + methods +
+                ", statusCount=" + statusCount +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String id;
+        private String name;
+        private String uri;
+        private String applicationId;
+        private String invokeAddress;
+        private List<RestMethod> methods = new CopyOnWriteArrayList<RestMethod>();
+        private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
+
+        private Builder() {
+        }
+
+        public Builder id(final String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder uri(final String uri) {
+            this.uri = uri;
+            return this;
+        }
+
+        public Builder applicationId(final String applicationId) {
+            this.applicationId = applicationId;
+            return this;
+        }
+
+        public Builder invokeAddress(final String invokeAddress) {
+            this.invokeAddress = invokeAddress;
+            return this;
+        }
+
+        public Builder methods(final List<RestMethod> methods) {
+            this.methods = methods;
+            return this;
+        }
+
+        public Builder statusCount(final Map<RestMethodStatus, Integer> statusCount) {
+            this.statusCount = statusCount;
+            return this;
+        }
+
+        public RestResource build() {
+            return new RestResource(this);
+        }
     }
 }

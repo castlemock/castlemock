@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -45,6 +46,26 @@ public class RestMockResponse {
     private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpression>();
     private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpression>();
     private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<RestHeaderQuery>();
+
+    public RestMockResponse(){
+
+    }
+
+    private RestMockResponse(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.name = Objects.requireNonNull(builder.name);
+        this.body = Objects.requireNonNull(builder.body);
+        this.methodId = Objects.requireNonNull(builder.methodId);
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
+        this.status = Objects.requireNonNull(builder.status);
+        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
+        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
+        this.contentEncodings = Objects.requireNonNull(builder.contentEncodings);
+        this.parameterQueries = Objects.requireNonNull(builder.parameterQueries);
+        this.xpathExpressions = Objects.requireNonNull(builder.xpathExpressions);
+        this.jsonPathExpressions = Objects.requireNonNull(builder.jsonPathExpressions);
+        this.headerQueries = Objects.requireNonNull(builder.headerQueries);
+    }
 
     @XmlElement
     public String getId() {
@@ -171,4 +192,139 @@ public class RestMockResponse {
         this.headerQueries = headerQueries;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RestMockResponse that = (RestMockResponse) o;
+        return usingExpressions == that.usingExpressions &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(body, that.body) &&
+                Objects.equals(methodId, that.methodId) &&
+                Objects.equals(httpStatusCode, that.httpStatusCode) &&
+                status == that.status &&
+                Objects.equals(httpHeaders, that.httpHeaders) &&
+                Objects.equals(contentEncodings, that.contentEncodings) &&
+                Objects.equals(parameterQueries, that.parameterQueries) &&
+                Objects.equals(xpathExpressions, that.xpathExpressions) &&
+                Objects.equals(jsonPathExpressions, that.jsonPathExpressions) &&
+                Objects.equals(headerQueries, that.headerQueries);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, body, methodId, httpStatusCode, status, usingExpressions, httpHeaders, contentEncodings, parameterQueries, xpathExpressions, jsonPathExpressions, headerQueries);
+    }
+
+    @Override
+    public String toString() {
+        return "RestMockResponse{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", body='" + body + '\'' +
+                ", methodId='" + methodId + '\'' +
+                ", httpStatusCode=" + httpStatusCode +
+                ", status=" + status +
+                ", usingExpressions=" + usingExpressions +
+                ", httpHeaders=" + httpHeaders +
+                ", contentEncodings=" + contentEncodings +
+                ", parameterQueries=" + parameterQueries +
+                ", xpathExpressions=" + xpathExpressions +
+                ", jsonPathExpressions=" + jsonPathExpressions +
+                ", headerQueries=" + headerQueries +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String id;
+        private String name;
+        private String body;
+        private String methodId;
+        private Integer httpStatusCode;
+        private RestMockResponseStatus status;
+        private Boolean usingExpressions;
+        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+        private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<RestParameterQuery>();
+        private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpression>();
+        private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpression>();
+        private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<RestHeaderQuery>();
+
+        private Builder() {
+        }
+
+        public Builder id(final String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder body(final String body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder methodId(final String methodId) {
+            this.methodId = methodId;
+            return this;
+        }
+
+        public Builder httpStatusCode(final Integer httpStatusCode) {
+            this.httpStatusCode = httpStatusCode;
+            return this;
+        }
+
+        public Builder status(final RestMockResponseStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder usingExpressions(final Boolean usingExpressions) {
+            this.usingExpressions = usingExpressions;
+            return this;
+        }
+
+        public Builder httpHeaders(final List<HttpHeader> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+            return this;
+        }
+
+        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+            this.contentEncodings = contentEncodings;
+            return this;
+        }
+
+        public Builder parameterQueries(final List<RestParameterQuery> parameterQueries) {
+            this.parameterQueries = parameterQueries;
+            return this;
+        }
+
+        public Builder xpathExpressions(final List<RestXPathExpression> xpathExpressions) {
+            this.xpathExpressions = xpathExpressions;
+            return this;
+        }
+
+        public Builder jsonPathExpressions(final List<RestJsonPathExpression> jsonPathExpressions) {
+            this.jsonPathExpressions = jsonPathExpressions;
+            return this;
+        }
+
+        public Builder headerQueries(final List<RestHeaderQuery> headerQueries) {
+            this.headerQueries = headerQueries;
+            return this;
+        }
+
+        public RestMockResponse build() {
+            return new RestMockResponse(this);
+        }
+    }
 }

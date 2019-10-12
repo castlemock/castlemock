@@ -16,11 +16,13 @@
 
 package com.castlemock.core.mock.rest.model.event.domain;
 
+import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.event.domain.Event;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -28,7 +30,6 @@ import java.util.Date;
  */
 @XmlRootElement
 public class RestEvent extends Event {
-
 
     private RestRequest request;
     private RestResponse response;
@@ -48,6 +49,21 @@ public class RestEvent extends Event {
      */
     public RestEvent(final Event eventDto) {
         super(eventDto);
+    }
+
+    public RestEvent(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.resourceName = Objects.requireNonNull(builder.resourceName);
+        this.startDate = Objects.requireNonNull(builder.startDate);
+        this.endDate = Objects.requireNonNull(builder.endDate);
+        this.typeIdentifier = Objects.requireNonNull(builder.typeIdentifier);
+        this.resourceLink = Objects.requireNonNull(builder.resourceLink);
+        this.request = Objects.requireNonNull(builder.request);
+        this.response = Objects.requireNonNull(builder.response);
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.applicationId = Objects.requireNonNull(builder.applicationId);
+        this.resourceId = Objects.requireNonNull(builder.resourceId);
+        this.methodId = Objects.requireNonNull(builder.methodId);
     }
 
     /**
@@ -129,5 +145,121 @@ public class RestEvent extends Event {
 
     public void setMethodId(String methodId) {
         this.methodId = methodId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RestEvent)) return false;
+        RestEvent restEvent = (RestEvent) o;
+        return Objects.equals(request, restEvent.request) &&
+                Objects.equals(response, restEvent.response) &&
+                Objects.equals(projectId, restEvent.projectId) &&
+                Objects.equals(applicationId, restEvent.applicationId) &&
+                Objects.equals(resourceId, restEvent.resourceId) &&
+                Objects.equals(methodId, restEvent.methodId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(request, response, projectId, applicationId, resourceId, methodId);
+    }
+
+    @Override
+    public String toString() {
+        return "RestEvent{" +
+                "request=" + request +
+                ", response=" + response +
+                ", projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", resourceId='" + resourceId + '\'' +
+                ", methodId='" + methodId + '\'' +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private RestRequest request;
+        private RestResponse response;
+        private String projectId;
+        private String applicationId;
+        private String id;
+        private String resourceId;
+        private String resourceName;
+        private String methodId;
+        private Date startDate;
+        private Date endDate;
+        private TypeIdentifier typeIdentifier;
+        private String resourceLink;
+
+        private Builder() {
+        }
+
+        public Builder request(final RestRequest request) {
+            this.request = request;
+            return this;
+        }
+
+        public Builder response(final RestResponse response) {
+            this.response = response;
+            return this;
+        }
+
+        public Builder projectId(final String projectId) {
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder applicationId(final String applicationId) {
+            this.applicationId = applicationId;
+            return this;
+        }
+
+        public Builder id(final String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder resourceId(final String resourceId) {
+            this.resourceId = resourceId;
+            return this;
+        }
+
+        public Builder resourceName(final String resourceName) {
+            this.resourceName = resourceName;
+            return this;
+        }
+
+        public Builder methodId(final String methodId) {
+            this.methodId = methodId;
+            return this;
+        }
+
+        public Builder startDate(final Date startDate) {
+            this.startDate = startDate;
+            return this;
+        }
+
+        public Builder endDate(final Date endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public Builder typeIdentifier(final TypeIdentifier typeIdentifier) {
+            this.typeIdentifier = typeIdentifier;
+            return this;
+        }
+
+        public Builder resourceLink(final String resourceLink) {
+            this.resourceLink = resourceLink;
+            return this;
+        }
+
+        public RestEvent build() {
+            return new RestEvent(this);
+        }
     }
 }

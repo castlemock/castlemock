@@ -89,7 +89,7 @@ public class RestEventRepositoryTest {
     @Test
     public void testSave(){
         final RestEvent restEvent = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(RestEvent.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(RestEventFileRepository.RestEventFile.class), Mockito.anyString());
     }
 
     @Test

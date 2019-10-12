@@ -18,11 +18,20 @@ package com.castlemock.core.mock.rest.model.project.domain;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 @XmlRootElement
 public class RestJsonPathExpression {
 
     private String expression;
+
+    public RestJsonPathExpression(){
+
+    }
+
+    private RestJsonPathExpression(final Builder builder){
+        this.expression = Objects.requireNonNull(builder.expression);
+    }
 
     @XmlElement
     public String getExpression() {
@@ -33,5 +42,43 @@ public class RestJsonPathExpression {
         this.expression = expression;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RestJsonPathExpression that = (RestJsonPathExpression) o;
+        return Objects.equals(expression, that.expression);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(expression);
+    }
+
+    @Override
+    public String toString() {
+        return "RestJsonPathExpression{" +
+                "expression='" + expression + '\'' +
+                '}';
+    }
+
+    public static final class Builder {
+        private String expression;
+
+        private Builder() {
+        }
+
+        public Builder expression(String expression) {
+            this.expression = expression;
+            return this;
+        }
+
+        public RestJsonPathExpression build() {
+            return new RestJsonPathExpression(this);
+        }
+    }
 }

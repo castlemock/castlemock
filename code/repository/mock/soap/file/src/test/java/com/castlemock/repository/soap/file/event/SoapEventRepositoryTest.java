@@ -94,7 +94,7 @@ public class SoapEventRepositoryTest {
     @Test
     public void testSave(){
         final SoapEvent soapEvent = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapEvent.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapEventFileRepository.SoapEventFile.class), Mockito.anyString());
     }
 
     @Test
