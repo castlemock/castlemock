@@ -3,13 +3,13 @@ package com.castlemock.web.mock.rest.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestApplicationOutput;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.core.mock.rest.model.project.RestMethodGenerator;
-import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.repository.rest.project.RestApplicationRepository;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestProjectRepository;
@@ -49,9 +49,9 @@ public class ReadRestApplicationServiceTest {
     @Test
     public void testProcess(){
         final String projectId = "ProjectId";
-        final RestApplication application = RestApplicationGenerator.generateRestApplication();
-        final RestResource resource = RestResourceGenerator.generateRestResource();
-        final RestMethod method = RestMethodGenerator.generateRestMethod();
+        final RestApplication application = RestApplicationTestBuilder.builder().build();
+        final RestResource resource = RestResourceTestBuilder.builder().build();
+        final RestMethod method = RestMethodTestBuilder.builder().build();
 
         final ReadRestApplicationInput input = ReadRestApplicationInput.builder()
                 .restProjectId(projectId)

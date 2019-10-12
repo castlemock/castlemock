@@ -16,12 +16,14 @@
 
 package com.castlemock.core.mock.soap.model.event.domain;
 
+import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -41,6 +43,21 @@ public class SoapEvent extends Event {
      */
     public SoapEvent() {
     }
+
+    private SoapEvent(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.resourceName = Objects.requireNonNull(builder.resourceName);
+        this.startDate = Objects.requireNonNull(builder.startDate);
+        this.endDate = Objects.requireNonNull(builder.endDate);
+        this.typeIdentifier = Objects.requireNonNull(builder.typeIdentifier);
+        this.resourceLink = Objects.requireNonNull(builder.resourceLink);
+        this.request = Objects.requireNonNull(builder.request);
+        this.response = Objects.requireNonNull(builder.response);
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.portId = Objects.requireNonNull(builder.portId);
+        this.operationId = Objects.requireNonNull(builder.operationId);
+    }
+
 
     /**
      * Default constructor for the SOAP event DTO
@@ -160,5 +177,85 @@ public class SoapEvent extends Event {
      */
     public void setPortId(String portId) {
         this.portId = portId;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String id;
+        private String resourceName;
+        private Date startDate;
+        private Date endDate;
+        private TypeIdentifier typeIdentifier;
+        private String resourceLink;
+        private SoapRequest request;
+        private SoapResponse response;
+        private String projectId;
+        private String portId;
+        private String operationId;
+
+        private Builder() {
+        }
+
+        public Builder request(SoapRequest request) {
+            this.request = request;
+            return this;
+        }
+
+        public Builder response(SoapResponse response) {
+            this.response = response;
+            return this;
+        }
+
+        public Builder projectId(String projectId) {
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder portId(String portId) {
+            this.portId = portId;
+            return this;
+        }
+
+        public Builder resourceName(String resourceName) {
+            this.resourceName = resourceName;
+            return this;
+        }
+
+        public Builder operationId(String operationId) {
+            this.operationId = operationId;
+            return this;
+        }
+
+        public Builder startDate(Date startDate) {
+            this.startDate = startDate;
+            return this;
+        }
+
+        public Builder endDate(Date endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public Builder typeIdentifier(TypeIdentifier typeIdentifier) {
+            this.typeIdentifier = typeIdentifier;
+            return this;
+        }
+
+        public Builder resourceLink(String resourceLink) {
+            this.resourceLink = resourceLink;
+            return this;
+        }
+
+        public SoapEvent build() {
+            return new SoapEvent(this);
+        }
     }
 }

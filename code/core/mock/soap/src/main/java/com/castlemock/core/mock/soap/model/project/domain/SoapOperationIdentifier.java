@@ -19,12 +19,23 @@ package com.castlemock.core.mock.soap.model.project.domain;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 @XmlRootElement
 public class SoapOperationIdentifier {
 
     private String name;
     private String namespace;
+
+    public SoapOperationIdentifier(){
+
+    }
+
+    private SoapOperationIdentifier(final Builder builder){
+        this.name = Objects.requireNonNull(builder.name);
+        this.namespace = Objects.requireNonNull(builder.namespace);
+    }
+
 
     @XmlElement
     public String getName() {
@@ -42,5 +53,31 @@ public class SoapOperationIdentifier {
 
     public void setNamespace(String namespace) {
         this.namespace = namespace;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String name;
+        private String namespace;
+
+        private Builder() {
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder namespace(String namespace) {
+            this.namespace = namespace;
+            return this;
+        }
+
+        public SoapOperationIdentifier build() {
+            return new SoapOperationIdentifier(this);
+        }
     }
 }

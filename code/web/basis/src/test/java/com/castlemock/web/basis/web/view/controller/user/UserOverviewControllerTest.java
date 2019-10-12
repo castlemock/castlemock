@@ -19,17 +19,16 @@ package com.castlemock.web.basis.web.view.controller.user;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.ReadAllUsersInput;
 import com.castlemock.core.basis.service.user.output.ReadAllUsersOutput;
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.AbstractControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -75,7 +74,7 @@ public class UserOverviewControllerTest extends AbstractControllerTest {
     public void testGetUsersValid() throws Exception {
         final List<User> userDtos = new ArrayList<User>();
         for(int index = 0; index < USER_COUNT; index++){
-            userDtos.add(UserDtoGenerator.generateUserDto());
+            userDtos.add(UserTestBuilder.builder().build());
         }
         final ReadAllUsersOutput readAllUsersOutput = new ReadAllUsersOutput(userDtos);
         when(serviceProcessor.process(any(ReadAllUsersInput.class))).thenReturn(readAllUsersOutput);

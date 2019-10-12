@@ -16,8 +16,8 @@
 
 package com.castlemock.web.basis.web.view.controller.event;
 
-import com.castlemock.core.basis.model.event.EventDtoGenerator;
 import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.core.basis.model.event.domain.EventTestBuilder;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.service.event.EventServiceFacadeImpl;
 import com.castlemock.web.basis.web.AbstractController;
@@ -66,7 +66,7 @@ public class EventOverviewControllerTest extends AbstractControllerTest {
     public void testGetUserWithValidId() throws Exception {
         List<Event> eventDtos = new ArrayList<Event>();
         for(int index = 0; index < EVENT_COUNT; index++){
-            eventDtos.add(EventDtoGenerator.generateEventDto());
+            eventDtos.add(EventTestBuilder.builder().build());
         }
         when(eventServiceComponent.findAll()).thenReturn(eventDtos);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);

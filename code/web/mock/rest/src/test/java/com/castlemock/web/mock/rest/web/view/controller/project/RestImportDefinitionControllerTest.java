@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.web.view.controller.project;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestProjectInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestProjectOutput;
@@ -85,7 +85,7 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
 
     @Test
     public void testImportWADLGet() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
                 .restProject(restProject)
                 .build());
@@ -103,7 +103,7 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
 
     @Test
     public void testImportSwaggerGet() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
                 .restProject(restProject)
                 .build());
@@ -121,7 +121,7 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
 
     @Test
     public void testImportRAMLGet() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
                 .restProject(restProject)
                 .build());
@@ -140,7 +140,7 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
     @Test
     @Ignore
     public void testImportPostFile() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
         final List<File> files = new ArrayList<File>();
         final RestDefinitionFileUploadForm uploadForm = new RestDefinitionFileUploadForm();
         final List<MultipartFile> uploadedFiles = new ArrayList<>();
@@ -161,7 +161,7 @@ public class RestImportDefinitionControllerTest extends AbstractRestControllerTe
 
     @Test
     public void testImportPostLink() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
         final List<File> files = new ArrayList<File>();
         final RestDefinitionFileUploadForm uploadForm = new RestDefinitionFileUploadForm();
         final List<MultipartFile> uploadedFiles = new ArrayList<>();

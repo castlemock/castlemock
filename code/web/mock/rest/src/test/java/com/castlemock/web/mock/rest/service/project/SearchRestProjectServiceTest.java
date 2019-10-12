@@ -20,11 +20,15 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.SearchRestProjectInput;
 import com.castlemock.core.mock.rest.service.project.output.SearchRestProjectOutput;
-import com.castlemock.repository.rest.project.*;
+import com.castlemock.repository.rest.project.RestApplicationRepository;
+import com.castlemock.repository.rest.project.RestMethodRepository;
+import com.castlemock.repository.rest.project.RestMockResponseRepository;
+import com.castlemock.repository.rest.project.RestProjectRepository;
+import com.castlemock.repository.rest.project.RestResourceRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,7 +73,7 @@ public class SearchRestProjectServiceTest {
 
     @Test
     public void testProcess(){
-        RestProject restProject = RestProjectGenerator.generateRestProject();
+        RestProject restProject = RestProjectTestBuilder.builder().build();
 
         Mockito.when(repository.search(Mockito.any(SearchQuery.class))).thenReturn(Arrays.asList(restProject));
         Mockito.when(applicationRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());

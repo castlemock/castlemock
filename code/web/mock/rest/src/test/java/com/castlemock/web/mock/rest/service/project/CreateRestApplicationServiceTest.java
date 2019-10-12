@@ -19,9 +19,9 @@ package com.castlemock.web.mock.rest.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.output.CreateRestApplicationOutput;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
 import com.castlemock.repository.rest.project.RestApplicationRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,7 +51,7 @@ public class CreateRestApplicationServiceTest {
     @Test
     public void testProcess(){
         final String projectId = "ProjectId";
-        final RestApplication application = RestApplicationGenerator.generateRestApplication();
+        final RestApplication application = RestApplicationTestBuilder.builder().build();
         Mockito.when(applicationRepository.save(Mockito.any(RestApplication.class))).thenReturn(application);
 
         final CreateRestApplicationInput input = CreateRestApplicationInput.builder()

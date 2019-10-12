@@ -17,14 +17,18 @@
 package com.castlemock.repository.rest.file.event;
 
 
-import com.castlemock.core.mock.rest.model.event.RestEventGenerator;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
+import com.castlemock.core.mock.rest.model.event.domain.RestEventTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -56,7 +60,7 @@ public class RestEventRepositoryTest {
     @Test
     public void testInitialize(){
         List<RestEvent> restEvents = new ArrayList<RestEvent>();
-        RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        RestEvent restEvent = RestEventTestBuilder.builder().build();
         restEvents.add(restEvent);
         Mockito.when(fileRepositorySupport.load(RestEvent.class, DIRECTORY, EXTENSION)).thenReturn(restEvents);
         repository.initialize();
@@ -107,7 +111,7 @@ public class RestEventRepositoryTest {
     }
 
     private RestEvent save(){
-        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        final RestEvent restEvent = RestEventTestBuilder.builder().build();
         repository.save(restEvent);
         return restEvent;
     }

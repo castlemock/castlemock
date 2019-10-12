@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.rest.web.view.controller.event;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.event.RestEventGenerator;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
+import com.castlemock.core.mock.rest.model.event.domain.RestEventTestBuilder;
 import com.castlemock.core.mock.rest.service.event.input.ReadRestEventInput;
 import com.castlemock.core.mock.rest.service.event.output.ReadRestEventOutput;
 import com.castlemock.web.basis.web.AbstractController;
@@ -62,7 +62,7 @@ public class RestEventControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testGetServiceValid() throws Exception {
-        final RestEvent restEvent = RestEventGenerator.generateRestEvent();
+        final RestEvent restEvent = RestEventTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestEventInput.class))).thenReturn(ReadRestEventOutput.builder()
                 .restEvent(restEvent)
                 .build());

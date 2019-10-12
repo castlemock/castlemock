@@ -17,7 +17,7 @@
 package com.castlemock.core.basis.service.system.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.basis.model.system.service.dto.SystemInformationDto;
+import com.castlemock.core.basis.model.system.service.dto.SystemInformation;
 
 /**
  * Get system information output
@@ -27,13 +27,13 @@ import com.castlemock.core.basis.model.system.service.dto.SystemInformationDto;
  */
 public final class GetSystemInformationOutput implements Output {
 
-    private final SystemInformationDto systemInformation;
+    private final SystemInformation systemInformation;
 
-    public GetSystemInformationOutput(final SystemInformationDto systemInformation) {
+    public GetSystemInformationOutput(final SystemInformation systemInformation) {
         this.systemInformation = systemInformation;
     }
 
-    public SystemInformationDto getSystemInformation() {
+    public SystemInformation getSystemInformation() {
         return systemInformation;
     }
 }

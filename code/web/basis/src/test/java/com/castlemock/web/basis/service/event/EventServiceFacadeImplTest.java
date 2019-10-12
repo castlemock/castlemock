@@ -17,8 +17,8 @@
 package com.castlemock.web.basis.service.event;
 
 import com.castlemock.core.basis.model.TypeIdentifier;
-import com.castlemock.core.basis.model.event.EventDtoGenerator;
 import com.castlemock.core.basis.model.event.domain.Event;
+import com.castlemock.core.basis.model.event.domain.EventTestBuilder;
 import com.castlemock.core.basis.service.event.EventServiceAdapter;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,7 +29,11 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.ApplicationContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Karl Dahlgren
@@ -90,9 +94,9 @@ public class EventServiceFacadeImplTest {
 
     @Test
     public void testFindAll(){
-        final Event oldEvent = EventDtoGenerator.generateEventDto();
+        final Event oldEvent = EventTestBuilder.builder().build();
         oldEvent.setStartDate(new Date(2016, 1, 1));
-        final Event newEvent = EventDtoGenerator.generateEventDto();
+        final Event newEvent = EventTestBuilder.builder().build();
         newEvent.setStartDate(new Date(2016, 1, 2));
         final List<Event> eventDtos = new ArrayList<Event>();
         eventDtos.add(oldEvent);

@@ -17,12 +17,12 @@
 package com.castlemock.web.mock.rest.web.view.controller.resource;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
-import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestResourceInput;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.output.CreateRestResourceOutput;
@@ -70,8 +70,8 @@ public class CreateRestResourceControllerTest extends AbstractRestControllerTest
 
     @Test
     public void testCreateMethod() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestApplicationInput.class))).thenReturn(ReadRestApplicationOutput.builder()
                 .restApplication(restApplication).build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL +
@@ -89,9 +89,9 @@ public class CreateRestResourceControllerTest extends AbstractRestControllerTest
 
     @Test
     public void testPostCreateMethod() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
         when(serviceProcessor.process(any(CreateRestResourceInput.class))).thenReturn(CreateRestResourceOutput
                 .builder().savedRestApplication(restResource)
                 .build());

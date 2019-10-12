@@ -17,12 +17,12 @@
 package com.castlemock.core.basis.model.system.service.dto;
 
 /**
- * The {@link SystemInformationDto} contains information about the system
+ * The {@link SystemInformation} contains information about the system
  * which the application is running on.
  * @author Karl Dahlgren
  * @since 1.7
  */
-public class SystemInformationDto {
+public class SystemInformation {
 
     private String operatingSystemName;
     private String javaVersion;

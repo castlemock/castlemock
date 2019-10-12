@@ -17,8 +17,18 @@
 package com.castlemock.web.mock.rest.web.view.controller.mockresponse;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.*;
-import com.castlemock.core.mock.rest.model.project.domain.*;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestParameterQuery;
+import com.castlemock.core.mock.rest.model.project.domain.RestParameterQueryTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestMockResponseInput;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestResourceQueryParametersInput;
@@ -70,11 +80,11 @@ public class CreateRestMockResponseControllerTest extends AbstractRestController
 
     @Test
     public void testCreateResponse() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
-        final RestParameterQuery restParameterQuery = RestParameterQueryGenerator.generateRestParameterQuery();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
+        final RestParameterQuery restParameterQuery = RestParameterQueryTestBuilder.builder().build();
         when(serviceProcessor.process(isA(ReadRestMethodInput.class)))
                 .thenReturn(ReadRestMethodOutput.builder()
                         .restMethod(restMethod)
@@ -102,11 +112,11 @@ public class CreateRestMockResponseControllerTest extends AbstractRestController
 
     @Test
     public void testPostCreateResponse() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
-        final RestMockResponse restMockResponse = RestMockResponseGenerator.generateRestMockResponse();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
+        final RestMockResponse restMockResponse = RestMockResponseTestBuilder.builder().build();
         when(serviceProcessor.process(any(CreateRestMockResponseInput.class))).thenReturn(CreateRestMockResponseOutput.builder()
                 .restMockResponse(restMockResponse)
                 .build());

@@ -18,10 +18,10 @@ package com.castlemock.web.basis.web.view.controller.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.ReadUserInput;
 import com.castlemock.core.basis.service.user.output.ReadUserOutput;
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.AbstractControllerTest;
 import org.junit.Test;
@@ -65,7 +65,7 @@ public class DeleteUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteUserWithValidId() throws Exception {
-        final User userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserTestBuilder.builder().build();
         final ReadUserOutput readUserOutput = new ReadUserOutput(userDto);
 
         when(serviceProcessor.process(any(ReadUserInput.class))).thenReturn(readUserOutput);
@@ -80,7 +80,7 @@ public class DeleteUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteConfirmUserWithValidId() throws Exception {
-        final User userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserTestBuilder.builder().build();
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + userDto.getId() + DELETE_CONFIRM);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())

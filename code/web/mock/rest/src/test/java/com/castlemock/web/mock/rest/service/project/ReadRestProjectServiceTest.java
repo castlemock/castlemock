@@ -3,15 +3,15 @@ package com.castlemock.web.mock.rest.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestProjectInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestProjectOutput;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.core.mock.rest.model.project.RestMethodGenerator;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
-import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.repository.rest.project.RestApplicationRepository;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestProjectRepository;
@@ -50,10 +50,10 @@ public class ReadRestProjectServiceTest {
 
     @Test
     public void testProcess(){
-        final RestProject project = RestProjectGenerator.generateRestProject();
-        final RestApplication application = RestApplicationGenerator.generateRestApplication();
-        final RestResource resource = RestResourceGenerator.generateRestResource();
-        final RestMethod method = RestMethodGenerator.generateRestMethod();
+        final RestProject project = RestProjectTestBuilder.builder().build();
+        final RestApplication application = RestApplicationTestBuilder.builder().build();
+        final RestResource resource = RestResourceTestBuilder.builder().build();
+        final RestMethod method = RestMethodTestBuilder.builder().build();
 
         final ReadRestProjectInput input = ReadRestProjectInput.builder()
                 .restProjectId(project.getId())

@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.rest.web.view.controller.project;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestApplicationInput;
@@ -76,7 +76,7 @@ public class RestProjectControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testGetServiceValid() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
                 .restProject(restProject)
                 .build());
@@ -92,7 +92,7 @@ public class RestProjectControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testGetServiceValidUploadSuccess() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
                 .restProject(restProject)
                 .build());
@@ -110,7 +110,7 @@ public class RestProjectControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testGetServiceValidUploadError() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
                 .restProject(restProject)
                 .build());

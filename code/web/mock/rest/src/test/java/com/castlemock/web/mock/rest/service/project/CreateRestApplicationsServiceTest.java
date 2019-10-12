@@ -17,14 +17,18 @@
 package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
 import com.castlemock.repository.rest.project.RestProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +62,7 @@ public class CreateRestApplicationsServiceTest {
 
         final List<RestApplication> restApplications = new ArrayList<RestApplication>();
         for(int index = 0; index < 3; index++){
-            final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+            final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
             restApplications.add(restApplication);
         }
         /*

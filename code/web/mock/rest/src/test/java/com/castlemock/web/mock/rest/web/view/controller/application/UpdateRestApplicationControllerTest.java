@@ -17,10 +17,10 @@
 package com.castlemock.web.mock.rest.web.view.controller.application;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationsForwardedEndpointInput;
@@ -72,8 +72,8 @@ public class UpdateRestApplicationControllerTest extends AbstractRestControllerT
 
     @Test
     public void testUpdatePortWithValidId() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestApplicationInput.class))).thenReturn(ReadRestApplicationOutput.builder()
                 .restApplication(restApplication
                 ).build());
@@ -91,8 +91,8 @@ public class UpdateRestApplicationControllerTest extends AbstractRestControllerT
 
     @Test
     public void testUpdateConfirmPortWithValidId() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
         when(serviceProcessor.process(any(UpdateRestApplicationInput.class))).thenReturn(UpdateRestApplicationOutput.builder()
                 .updatedRestApplication(restApplication)
                 .build());

@@ -20,7 +20,7 @@ import com.castlemock.core.basis.Environment;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.system.service.dto.SystemInformationDto;
+import com.castlemock.core.basis.model.system.service.dto.SystemInformation;
 import com.castlemock.core.basis.service.system.input.GetSystemInformationInput;
 import com.castlemock.core.basis.service.system.output.GetSystemInformationOutput;
 import com.castlemock.repository.Profiles;
@@ -63,7 +63,7 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
      */
     @Override
     public ServiceResult<GetSystemInformationOutput> process(final ServiceTask<GetSystemInformationInput> serviceTask) {
-        final SystemInformationDto systemInformation = new SystemInformationDto();
+        final SystemInformation systemInformation = new SystemInformation();
         systemInformation.setJavaVersion(System.getProperty("java.version"));
         systemInformation.setJavaVendor(System.getProperty("java.vendor"));
         systemInformation.setOperatingSystemName(System.getProperty("os.name"));

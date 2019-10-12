@@ -18,14 +18,22 @@ package com.castlemock.web.mock.rest.web.view.controller.method;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.core.mock.rest.model.project.RestMethodGenerator;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
-import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
-import com.castlemock.core.mock.rest.model.project.domain.*;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.event.input.ReadRestEventWithMethodIdInput;
 import com.castlemock.core.mock.rest.service.event.output.ReadRestEventWithMethodIdOutput;
-import com.castlemock.core.mock.rest.service.project.input.*;
+import com.castlemock.core.mock.rest.service.project.input.CreateRestMockResponseInput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestMockResponseInput;
+import com.castlemock.core.mock.rest.service.project.input.ReadRestResourceInput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestMockResponseInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMockResponseOutput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestResourceOutput;
@@ -81,10 +89,10 @@ public class RestMethodControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testGetMethod() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
         when(serviceProcessor.process(isA(ReadRestResourceInput.class))).thenReturn(ReadRestResourceOutput.builder()
                 .restResource(restResource)
                 .build());

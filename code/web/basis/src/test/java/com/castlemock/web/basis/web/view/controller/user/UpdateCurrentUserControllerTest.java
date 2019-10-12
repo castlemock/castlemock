@@ -18,16 +18,16 @@ package com.castlemock.web.basis.web.view.controller.user;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.service.user.input.UpdateCurrentUserInput;
 import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 import com.castlemock.core.basis.service.user.output.UpdateCurrentUserOutput;
 import com.castlemock.web.basis.config.TestApplication;
-import com.castlemock.core.basis.model.user.domain.UserDtoGenerator;
 import com.castlemock.web.basis.service.user.UserDetailSecurityService;
-import com.castlemock.web.basis.web.view.command.user.UpdateCurrentUserCommand;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.AbstractControllerTest;
+import com.castlemock.web.basis.web.view.command.user.UpdateCurrentUserCommand;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -70,7 +70,7 @@ public class UpdateCurrentUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDefaultPage() throws Exception {
-        final User userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserTestBuilder.builder().build();
         final ReadUserByUsernameOutput readUserByUsernameOutput = new ReadUserByUsernameOutput(userDto);
         when(serviceProcessor.process(any(ReadUserByUsernameInput.class))).thenReturn(readUserByUsernameOutput);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL);
@@ -83,7 +83,7 @@ public class UpdateCurrentUserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        final User userDto = UserDtoGenerator.generateUserDto();
+        final User userDto = UserTestBuilder.builder().build();
 
         final UpdateCurrentUserOutput updateCurrentUserOutput = new UpdateCurrentUserOutput(userDto);
         when(serviceProcessor.process(any(UpdateCurrentUserInput.class))).thenReturn(updateCurrentUserOutput);

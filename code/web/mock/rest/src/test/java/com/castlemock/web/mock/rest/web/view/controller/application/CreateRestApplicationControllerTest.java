@@ -17,10 +17,10 @@
 package com.castlemock.web.mock.rest.web.view.controller.application;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestProjectInput;
 import com.castlemock.core.mock.rest.service.project.output.CreateRestApplicationOutput;
@@ -68,7 +68,7 @@ public class CreateRestApplicationControllerTest extends AbstractRestControllerT
 
     @Test
     public void testCreateMethod() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestProjectInput.class))).thenReturn(ReadRestProjectOutput.builder()
                 .restProject(restProject)
                 .build());
@@ -85,8 +85,8 @@ public class CreateRestApplicationControllerTest extends AbstractRestControllerT
 
     @Test
     public void testPostCreateMethod() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
         when(serviceProcessor.process(any(CreateRestApplicationInput.class))).thenReturn(CreateRestApplicationOutput.builder()
                 .savedRestApplication(restApplication)
                 .build());

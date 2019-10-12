@@ -18,6 +18,7 @@ package com.castlemock.core.basis.model.configuration.domain;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 /**
  * The configuration DTO is a DTO (Data transfer object) class for the configuration class. The configuration class
@@ -37,6 +38,20 @@ public class Configuration {
 
 
     private ConfigurationType type;
+
+    public Configuration(){
+
+    }
+
+    private Configuration(final Builder builder){
+        this.key = Objects.requireNonNull(builder.key);
+        this.value = Objects.requireNonNull(builder.value);
+        this.type = Objects.requireNonNull(builder.type);
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
 
     /**
      * Returns the identifier for the configuration
@@ -87,5 +102,34 @@ public class Configuration {
      */
     public void setType(ConfigurationType type) {
         this.type = type;
+    }
+
+
+    public static final class Builder {
+        private String key;
+        private String value;
+        private ConfigurationType type;
+
+        private Builder() {
+        }
+
+        public Builder key(final String key) {
+            this.key = key;
+            return this;
+        }
+
+        public Builder value(final String value) {
+            this.value = value;
+            return this;
+        }
+
+        public Builder type(final ConfigurationType type) {
+            this.type = type;
+            return this;
+        }
+
+        public Configuration build() {
+            return new Configuration(this);
+        }
     }
 }

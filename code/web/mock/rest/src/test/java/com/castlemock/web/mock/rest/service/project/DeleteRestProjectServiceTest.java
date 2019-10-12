@@ -18,11 +18,23 @@ package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.*;
-import com.castlemock.core.mock.rest.model.project.domain.*;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.DeleteRestProjectInput;
 import com.castlemock.core.mock.rest.service.project.output.DeleteRestProjectOutput;
-import com.castlemock.repository.rest.project.*;
+import com.castlemock.repository.rest.project.RestApplicationRepository;
+import com.castlemock.repository.rest.project.RestMethodRepository;
+import com.castlemock.repository.rest.project.RestMockResponseRepository;
+import com.castlemock.repository.rest.project.RestProjectRepository;
+import com.castlemock.repository.rest.project.RestResourceRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -63,11 +75,11 @@ public class DeleteRestProjectServiceTest {
 
     @Test
     public void testProcess(){
-        final RestProject project = RestProjectGenerator.generateRestProject();
-        final RestApplication application = RestApplicationGenerator.generateRestApplication();
-        final RestResource resource = RestResourceGenerator.generateRestResource();
-        final RestMethod method = RestMethodGenerator.generateRestMethod();
-        final RestMockResponse mockResponse = RestMockResponseGenerator.generateRestMockResponse();
+        final RestProject project = RestProjectTestBuilder.builder().build();
+        final RestApplication application = RestApplicationTestBuilder.builder().build();
+        final RestResource resource = RestResourceTestBuilder.builder().build();
+        final RestMethod method = RestMethodTestBuilder.builder().build();
+        final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
 
         Mockito.when(applicationRepository.findWithProjectId(project.getId())).thenReturn(Arrays.asList(application));
         Mockito.when(resourceRepository.findWithApplicationId(application.getId())).thenReturn(Arrays.asList(resource));

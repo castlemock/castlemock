@@ -17,14 +17,14 @@
 package com.castlemock.web.mock.rest.web.view.controller.method;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.project.RestApplicationGenerator;
-import com.castlemock.core.mock.rest.model.project.RestMethodGenerator;
-import com.castlemock.core.mock.rest.model.project.RestProjectGenerator;
-import com.castlemock.core.mock.rest.model.project.RestResourceGenerator;
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplicationTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestResourceInput;
 import com.castlemock.core.mock.rest.service.project.output.CreateRestMethodOutput;
@@ -72,9 +72,9 @@ public class CreateRestMethodControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testCreateMethod() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadRestResourceInput.class))).thenReturn(ReadRestResourceOutput.builder()
                 .restResource(restResource)
                 .build());
@@ -94,10 +94,10 @@ public class CreateRestMethodControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testPostCreateMethod() throws Exception {
-        final RestProject restProject = RestProjectGenerator.generateRestProject();
-        final RestApplication restApplication = RestApplicationGenerator.generateRestApplication();
-        final RestResource restResource = RestResourceGenerator.generateRestResource();
-        final RestMethod restMethod = RestMethodGenerator.generateRestMethod();
+        final RestProject restProject = RestProjectTestBuilder.builder().build();
+        final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
+        final RestResource restResource = RestResourceTestBuilder.builder().build();
+        final RestMethod restMethod = RestMethodTestBuilder.builder().build();
         when(serviceProcessor.process(any(CreateRestMethodInput.class))).thenReturn(CreateRestMethodOutput.builder()
                 .createdRestMethod(restMethod)
                 .build());
