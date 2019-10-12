@@ -40,12 +40,6 @@
             <artifactId>swagger-parser</artifactId>
             <version>1.0.35</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.castlemock.test.mock</groupId>
-            <artifactId>rest</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>com.castlemock.core.mock</groupId>
             <artifactId>rest</artifactId>

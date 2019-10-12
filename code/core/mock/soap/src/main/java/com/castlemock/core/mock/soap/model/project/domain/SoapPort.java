@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -36,12 +37,23 @@ public class SoapPort {
     private String name;
     private String uri;
     private String projectId;
-
-    private List<SoapOperation> operations = new CopyOnWriteArrayList<SoapOperation>();
-
     private String invokeAddress;
-
+    private List<SoapOperation> operations = new CopyOnWriteArrayList<SoapOperation>();
     private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
+
+    public SoapPort(){
+
+    }
+
+    public SoapPort(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.name = Objects.requireNonNull(builder.name);
+        this.uri = Objects.requireNonNull(builder.uri);
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
+        this.operations = Objects.requireNonNull(builder.operations);
+        this.statusCount = Objects.requireNonNull(builder.statusCount);
+    }
 
     @XmlElement
     public String getId() {
@@ -105,5 +117,61 @@ public class SoapPort {
 
     public void setInvokeAddress(String invokeAddress) {
         this.invokeAddress = invokeAddress;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String id;
+        private String name;
+        private String uri;
+        private String projectId;
+        private String invokeAddress;
+        private List<SoapOperation> operations = new CopyOnWriteArrayList<SoapOperation>();
+        private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
+
+        private Builder() {
+        }
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder uri(String uri) {
+            this.uri = uri;
+            return this;
+        }
+
+        public Builder projectId(String projectId) {
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder operations(List<SoapOperation> operations) {
+            this.operations = operations;
+            return this;
+        }
+
+        public Builder invokeAddress(String invokeAddress) {
+            this.invokeAddress = invokeAddress;
+            return this;
+        }
+
+        public Builder statusCount(Map<SoapOperationStatus, Integer> statusCount) {
+            this.statusCount = statusCount;
+            return this;
+        }
+
+        public SoapPort build() {
+            return new SoapPort(this);
+        }
     }
 }

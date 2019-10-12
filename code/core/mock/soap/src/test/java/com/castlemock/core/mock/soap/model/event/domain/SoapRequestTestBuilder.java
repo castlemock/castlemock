@@ -26,6 +26,7 @@ public final class SoapRequestTestBuilder {
         this.httpMethod = HttpMethod.POST;
         this.soapVersion = SoapVersion.SOAP11;
         this.httpHeaders = ImmutableList.of();
+        this.uri = "";
         this.operationIdentifier = SoapOperationIdentifier.builder()
                 .name("")
                 .namespace("")

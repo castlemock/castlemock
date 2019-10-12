@@ -19,13 +19,13 @@ package com.castlemock.web.mock.soap.web.view.controller.port;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPortTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapPortOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.port.UpdateSoapPortsEndpointCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import org.junit.Test;
@@ -71,8 +71,8 @@ public class UpdateSoapPortControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testUpdatePortWithValidId() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
 
         when(serviceProcessor.process(any(Input.class))).thenReturn(ReadSoapPortOutput.builder()
                 .port(soapPort)
@@ -90,8 +90,8 @@ public class UpdateSoapPortControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testUpdateConfirmPortWithValidId() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
         when(serviceProcessor.process(any(Input.class))).thenReturn(UpdateSoapPortOutput.builder()
                 .port(soapPort)
                 .build());
@@ -105,8 +105,8 @@ public class UpdateSoapPortControllerTest extends AbstractSoapControllerTest {
     @Test
     public void testUpdatePortEndpoint() throws Exception {
         final UpdateSoapPortsEndpointCommand command = new UpdateSoapPortsEndpointCommand();
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
         final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         soapPorts.add(soapPort);
         command.setSoapPorts(soapPorts);

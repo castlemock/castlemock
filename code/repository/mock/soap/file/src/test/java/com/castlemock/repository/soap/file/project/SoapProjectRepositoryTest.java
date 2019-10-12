@@ -17,14 +17,18 @@
 package com.castlemock.repository.soap.file.project;
 
 
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -56,7 +60,7 @@ public class SoapProjectRepositoryTest {
     @Test
     public void testInitialize(){
         List<SoapProject> soapProjects = new ArrayList<SoapProject>();
-        SoapProject soapProject = SoapProjectGenerator.generateFullSoapProject();
+        SoapProject soapProject = SoapProjectTestBuilder.builder().build();;
         soapProjects.add(soapProject);
         Mockito.when(fileRepositorySupport.load(SoapProject.class, DIRECTORY, EXTENSION)).thenReturn(soapProjects);
         repository.initialize();
@@ -105,7 +109,7 @@ public class SoapProjectRepositoryTest {
     }
 
     private SoapProject save(){
-        SoapProject soapProject = SoapProjectGenerator.generateFullSoapProject();
+        SoapProject soapProject = SoapProjectTestBuilder.builder().build();;
         repository.save(soapProject);
         return soapProject;
     }

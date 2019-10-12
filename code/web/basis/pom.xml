@@ -81,11 +81,6 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.castlemock.test</groupId>
-            <artifactId>basis</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.castlemock.core</groupId>
             <artifactId>basis</artifactId>
             <type>test-jar</type>

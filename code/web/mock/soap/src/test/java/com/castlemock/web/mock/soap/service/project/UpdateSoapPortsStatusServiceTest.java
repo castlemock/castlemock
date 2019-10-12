@@ -20,9 +20,9 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsStatusInput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapPortsStatusOutput;
-import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,7 +52,7 @@ public class UpdateSoapPortsStatusServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
         final String projectId = "SOAP PROJECT";
         final String portId = "SOAP PORT";
 

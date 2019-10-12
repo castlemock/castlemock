@@ -3,9 +3,9 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.ReadAllSoapProjectsInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadAllSoapProjectsOutput;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.repository.soap.project.SoapProjectRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,7 +33,7 @@ public class ReadAllSoapProjectsServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
         final List<SoapProject> projects = Arrays.asList(project);
 
         final ReadAllSoapProjectsInput input = ReadAllSoapProjectsInput.builder().build();

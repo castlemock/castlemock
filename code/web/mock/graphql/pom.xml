@@ -34,11 +34,6 @@
             <artifactId>graphql-java</artifactId>
             <version>8.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.castlemock.test.mock</groupId>
-            <artifactId>graphql</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
 </project>

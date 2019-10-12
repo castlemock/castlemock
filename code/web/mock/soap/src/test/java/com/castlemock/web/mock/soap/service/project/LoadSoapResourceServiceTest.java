@@ -3,15 +3,19 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResourceTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.LoadSoapResourceInput;
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
-import com.castlemock.core.mock.soap.model.project.SoapResourceGenerator;
 import com.castlemock.repository.soap.project.SoapResourceRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 public class LoadSoapResourceServiceTest {
 
@@ -31,7 +35,7 @@ public class LoadSoapResourceServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapResource soapResource = SoapResourceGenerator.generateSoapResource();
+        final SoapResource soapResource = SoapResourceTestBuilder.builder().build();
         final String resourceContent = "Resource content";
         Mockito.when(resourceRepository.loadSoapResource(soapResource.getId())).thenReturn(resourceContent);
 

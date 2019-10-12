@@ -18,6 +18,7 @@ package com.castlemock.core.mock.soap.model.project.domain;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -28,9 +29,21 @@ public class SoapResource {
 
     private String id;
     private String name;
-    private SoapResourceType type;
     private String projectId;
     private String content;
+    private SoapResourceType type;
+
+    public SoapResource(){
+
+    }
+
+    private SoapResource(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.name = Objects.requireNonNull(builder.name);
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.content = Objects.requireNonNull(builder.content);
+        this.type = Objects.requireNonNull(builder.type);
+    }
 
     @XmlElement
     public String getId() {
@@ -75,5 +88,49 @@ public class SoapResource {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String id;
+        private String name;
+        private String projectId;
+        private String content;
+        private SoapResourceType type;
+
+        private Builder() {
+        }
+
+        public Builder id(final String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder projectId(final String projectId) {
+            this.projectId = projectId;
+            return this;
+        }
+
+        public Builder content(final String content) {
+            this.content = content;
+            return this;
+        }
+
+        public Builder type(final SoapResourceType type) {
+            this.type = type;
+            return this;
+        }
+
+        public SoapResource build() {
+            return new SoapResource(this);
+        }
     }
 }

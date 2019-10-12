@@ -19,9 +19,9 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsForwardedEndpointInput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapOperationsForwardedEndpointOutput;
-import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public class UpdateSoapOperationsForwardedEndpointServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapOperation operation = SoapOperationGenerator.generateSoapOperation();
+        final SoapOperation operation = SoapOperationTestBuilder.builder().build();
 
         final String projectId = "SOAP PROJECT";
         final String portId = "SOAP PORT";

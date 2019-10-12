@@ -19,15 +19,19 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.CreateSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.output.CreateSoapProjectOutput;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.repository.soap.project.SoapProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 /**
  * @author Karl Dahlgren
@@ -51,7 +55,7 @@ public class CreateSoapProjectServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
 
         Mockito.when(repository.save(Mockito.any(SoapProject.class))).thenReturn(soapProject);
 

@@ -19,9 +19,9 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationInput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapOperationOutput;
-import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import junit.framework.Assert;
 import org.junit.Before;
@@ -52,7 +52,7 @@ public class UpdateSoapOperationServiceTest {
     public void testProcess(){
         final String projectId = "ProjectId";
         final String portId = "PortId";
-        final SoapOperation operation = SoapOperationGenerator.generateSoapOperation();
+        final SoapOperation operation = SoapOperationTestBuilder.builder().build();
         final UpdateSoapOperationInput input = UpdateSoapOperationInput.builder()
                 .projectId(projectId)
                 .portId(portId)

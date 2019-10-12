@@ -16,15 +16,18 @@
 
 package com.castlemock.core.mock.soap.model.project.domain;
 
+import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.project.domain.Project;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -44,6 +47,17 @@ public class SoapProject extends Project {
      * The default SOAP project constructor
      */
     public SoapProject() {
+    }
+
+    private SoapProject(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.name = Objects.requireNonNull(builder.name);
+        this.updated = Objects.requireNonNull(builder.updated);
+        this.created = Objects.requireNonNull(builder.created);
+        this.description = Objects.requireNonNull(builder.description);
+        this.ports = Objects.requireNonNull(builder.ports);
+        this.resources = Objects.requireNonNull(builder.resources);
+        this.statusCount = Objects.requireNonNull(builder.statusCount);
     }
 
     /**
@@ -108,4 +122,71 @@ public class SoapProject extends Project {
         this.statusCount = statusCount;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String id;
+        private String name;
+        private Date updated;
+        private Date created;
+        private String description;
+        private TypeIdentifier typeIdentifier;
+        private List<SoapPort> ports = new CopyOnWriteArrayList<SoapPort>();
+        private List<SoapResource> resources = new CopyOnWriteArrayList<SoapResource>();
+        private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
+
+        private Builder() {
+        }
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder updated(Date updated) {
+            this.updated = updated;
+            return this;
+        }
+
+        public Builder ports(List<SoapPort> ports) {
+            this.ports = ports;
+            return this;
+        }
+
+        public Builder created(Date created) {
+            this.created = created;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder resources(List<SoapResource> resources) {
+            this.resources = resources;
+            return this;
+        }
+
+        public Builder typeIdentifier(TypeIdentifier typeIdentifier) {
+            this.typeIdentifier = typeIdentifier;
+            return this;
+        }
+
+        public Builder statusCount(Map<SoapOperationStatus, Integer> statusCount) {
+            this.statusCount = statusCount;
+            return this;
+        }
+
+        public SoapProject build() {
+            return new SoapProject(this);
+        }
+    }
 }

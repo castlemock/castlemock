@@ -21,11 +21,6 @@
             <groupId>com.castlemock.core.mock</groupId>
             <artifactId>soap</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.castlemock.test.mock</groupId>
-            <artifactId>soap</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
 </project>

@@ -21,11 +21,6 @@
             <groupId>com.castlemock.core.mock</groupId>
             <artifactId>graphql</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.castlemock.test.mock</groupId>
-            <artifactId>graphql</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
 </project>

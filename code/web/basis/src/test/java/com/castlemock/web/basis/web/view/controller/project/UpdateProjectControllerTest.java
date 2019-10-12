@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.view.controller.project;
 
 import com.castlemock.core.basis.model.project.domain.Project;
-import com.castlemock.core.basis.model.project.domain.ProjectDtoGenerator;
+import com.castlemock.core.basis.model.project.domain.ProjectTestBuilder;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.service.project.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.AbstractController;
@@ -63,7 +63,7 @@ public class UpdateProjectControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateProjectWithValidId() throws Exception {
-        final Project projectDto = ProjectDtoGenerator.generateProjectDto();
+        final Project projectDto = ProjectTestBuilder.builder().build();
         when(projectServiceComponent.findOne(anyString(), anyString())).thenReturn(projectDto);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + projectDto.getId() + UPDATE);
         mockMvc.perform(message)
@@ -76,7 +76,7 @@ public class UpdateProjectControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateProjectConfirmWithValidId() throws Exception {
-        final Project projectDto = ProjectDtoGenerator.generateProjectDto();
+        final Project projectDto = ProjectTestBuilder.builder().build();
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + projectDto.getId() + UPDATE);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())

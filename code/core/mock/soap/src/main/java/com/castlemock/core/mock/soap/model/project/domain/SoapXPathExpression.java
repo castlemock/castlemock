@@ -18,11 +18,20 @@ package com.castlemock.core.mock.soap.model.project.domain;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 @XmlRootElement
 public class SoapXPathExpression {
 
     private String expression;
+
+    public SoapXPathExpression(){
+
+    }
+
+    private SoapXPathExpression(final Builder builder){
+        this.expression = Objects.requireNonNull(builder.expression);
+    }
 
     @XmlElement
     public String getExpression() {
@@ -33,5 +42,23 @@ public class SoapXPathExpression {
         this.expression = expression;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
 
+    public static final class Builder {
+        private String expression;
+
+        private Builder() {
+        }
+
+        public Builder expression(String expression) {
+            this.expression = expression;
+            return this;
+        }
+
+        public SoapXPathExpression build() {
+            return new SoapXPathExpression(this);
+        }
+    }
 }
