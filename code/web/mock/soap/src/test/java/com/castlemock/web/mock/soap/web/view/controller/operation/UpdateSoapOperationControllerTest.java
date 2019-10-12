@@ -17,14 +17,19 @@ package com.castlemock.web.mock.soap.web.view.controller.operation;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.domain.*;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifyStrategy;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuilder;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPortTestBuilder;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsForwardedEndpointInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import com.google.common.collect.ImmutableList;
@@ -75,9 +80,9 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
 
     @Test
     public void updateSoapOperationGet() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
-        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
         final List<SoapOperationStatus> soapOperationStatuses = Arrays.asList(SoapOperationStatus.values());
         when(serviceProcessor.process(any(Input.class))).thenReturn(ReadSoapOperationOutput.builder()
                 .operation(soapOperation)
@@ -101,9 +106,9 @@ public class UpdateSoapOperationControllerTest extends AbstractSoapControllerTes
 
     @Test
     public void updateSoapOperationPost() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
-        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
         when(serviceProcessor.process(any(Input.class))).thenReturn(ReadSoapOperationOutput.builder()
                 .operation(soapOperation)
                 .build());

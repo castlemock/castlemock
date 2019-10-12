@@ -3,9 +3,9 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapMockResponseInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
-import com.castlemock.core.mock.soap.model.project.SoapMockResponseGenerator;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,7 +30,7 @@ public class ReadSoapMockResponseServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapMockResponse mockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
+        final SoapMockResponse mockResponse = SoapMockResponseTestBuilder.builder().build();
         final String projectId = "SOAP PROJECT";
         final String portId = "SOAP PORT";
         final String operationId = "OPERATION ID";

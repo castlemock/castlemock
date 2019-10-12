@@ -3,11 +3,11 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
-import com.castlemock.core.mock.soap.model.project.SoapMockResponseGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import org.junit.Assert;
@@ -38,8 +38,8 @@ public class ReadSoapOperationServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapOperation operation = SoapOperationGenerator.generateSoapOperation();
-        final SoapMockResponse mockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
+        final SoapOperation operation = SoapOperationTestBuilder.builder().build();
+        final SoapMockResponse mockResponse = SoapMockResponseTestBuilder.builder().build();
         final String projectId = "SOAP PROJECT";
         final String portId = "SOAP PORT";
 
@@ -64,8 +64,8 @@ public class ReadSoapOperationServiceTest {
 
     @Test
     public void testProcessWithDefaultXPathResponse(){
-        final SoapOperation operation = SoapOperationGenerator.generateSoapOperation();
-        final SoapMockResponse mockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
+        final SoapOperation operation = SoapOperationTestBuilder.builder().build();
+        final SoapMockResponse mockResponse = SoapMockResponseTestBuilder.builder().build();
         final String projectId = "SOAP PROJECT";
         final String portId = "SOAP PORT";
 

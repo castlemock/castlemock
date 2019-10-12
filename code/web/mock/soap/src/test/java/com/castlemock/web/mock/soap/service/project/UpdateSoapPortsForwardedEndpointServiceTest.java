@@ -19,11 +19,11 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPortTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsForwardedEndpointInput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapPortsForwardedEndpointOutput;
-import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,8 +53,8 @@ public class UpdateSoapPortsForwardedEndpointServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapPort port = SoapPortGenerator.generateSoapPort();
-        final SoapOperation operation = SoapOperationGenerator.generateSoapOperation();
+        final SoapPort port = SoapPortTestBuilder.builder().build();
+        final SoapOperation operation = SoapOperationTestBuilder.builder().build();
         final String projectId = "SOAP PROJECT";
 
         final UpdateSoapPortsForwardedEndpointInput input = UpdateSoapPortsForwardedEndpointInput.builder()

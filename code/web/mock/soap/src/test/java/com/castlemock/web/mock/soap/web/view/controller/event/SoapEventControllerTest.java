@@ -18,11 +18,11 @@ package com.castlemock.web.mock.soap.web.view.controller.event;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEventTestBuilder;
 import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.core.mock.soap.model.event.SoapEventGenerator;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,7 +62,7 @@ public class SoapEventControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testGetServiceValid() throws Exception {
-        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadSoapEventInput.class))).thenReturn(ReadSoapEventOutput.builder()
                 .soapEvent(soapEvent)
                 .build());

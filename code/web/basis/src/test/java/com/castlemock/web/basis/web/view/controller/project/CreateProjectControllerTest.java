@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.web.view.controller.project;
 
 import com.castlemock.core.basis.model.project.domain.Project;
-import com.castlemock.core.basis.model.project.domain.ProjectDtoGenerator;
+import com.castlemock.core.basis.model.project.domain.ProjectTestBuilder;
 import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.service.project.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.AbstractController;
@@ -76,7 +76,7 @@ public class CreateProjectControllerTest extends AbstractControllerTest {
     @Test
     @Ignore
     public void testCreateProject() throws Exception {
-        final Project projectDto = ProjectDtoGenerator.generateProjectDto();
+        final Project projectDto = ProjectTestBuilder.builder().build();
         when(projectServiceFacade.save(anyString(), any(Project.class))).thenReturn(projectDto);
         when(projectServiceFacade.getTypeUrl(anyString())).thenReturn("rest");
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL);

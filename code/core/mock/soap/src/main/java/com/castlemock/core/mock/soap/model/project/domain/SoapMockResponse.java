@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -44,6 +45,25 @@ public class SoapMockResponse {
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
     private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpression>();
+
+    public SoapMockResponse(){
+
+    }
+
+    private SoapMockResponse(final Builder builder){
+        this.id = Objects.requireNonNull(builder.id);
+        this.name = Objects.requireNonNull(builder.name);
+        this.body = Objects.requireNonNull(builder.body);
+        this.operationId = Objects.requireNonNull(builder.operationId);
+        this.status = Objects.requireNonNull(builder.status);
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
+        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
+        this.xpathExpression = builder.xpathExpression;
+        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
+        this.contentEncodings = Objects.requireNonNull(builder.contentEncodings);
+        this.xpathExpressions = Objects.requireNonNull(builder.xpathExpressions);
+
+    }
 
     @XmlElement
     public String getId() {
@@ -147,5 +167,85 @@ public class SoapMockResponse {
 
     public void setXpathExpressions(List<SoapXPathExpression> xpathExpressions) {
         this.xpathExpressions = xpathExpressions;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String id;
+        private String name;
+        private String body;
+        private String operationId;
+        private SoapMockResponseStatus status;
+        private Integer httpStatusCode;
+        private Boolean usingExpressions;
+        private String xpathExpression;
+        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+        private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpression>();
+
+        private Builder() {
+        }
+
+        public Builder id(final String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder body(final String body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder operationId(final String operationId) {
+            this.operationId = operationId;
+            return this;
+        }
+
+        public Builder status(final SoapMockResponseStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder httpStatusCode(final Integer httpStatusCode) {
+            this.httpStatusCode = httpStatusCode;
+            return this;
+        }
+
+        public Builder usingExpressions(final Boolean usingExpressions) {
+            this.usingExpressions = usingExpressions;
+            return this;
+        }
+
+        public Builder xpathExpression(final String xpathExpression) {
+            this.xpathExpression = xpathExpression;
+            return this;
+        }
+
+        public Builder httpHeaders(final List<HttpHeader> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+            return this;
+        }
+
+        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+            this.contentEncodings = contentEncodings;
+            return this;
+        }
+
+        public Builder xpathExpressions(final List<SoapXPathExpression> xpathExpressions) {
+            this.xpathExpressions = xpathExpressions;
+            return this;
+        }
+
+        public SoapMockResponse build() {
+            return new SoapMockResponse(this);
+        }
     }
 }

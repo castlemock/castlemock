@@ -19,8 +19,11 @@ package com.castlemock.web.mock.soap.web.view.controller.port;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPortTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapPortInput;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsStatusInput;
@@ -28,9 +31,6 @@ import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOut
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.operation.SoapOperationModifierCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import org.junit.Test;
@@ -80,9 +80,9 @@ public class SoapPortControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void getSoapPort() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
-        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
         final List<SoapOperation> operations = new ArrayList<SoapOperation>();
         operations.add(soapOperation);
         soapPort.setOperations(operations);

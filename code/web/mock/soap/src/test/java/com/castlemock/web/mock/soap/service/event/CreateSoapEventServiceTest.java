@@ -19,15 +19,19 @@ package com.castlemock.web.mock.soap.service.event;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEventTestBuilder;
 import com.castlemock.core.mock.soap.service.event.input.CreateSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.CreateSoapEventOutput;
 import com.castlemock.repository.soap.event.SoapEventRepository;
-import com.castlemock.core.mock.soap.model.event.SoapEventGenerator;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 /**
@@ -53,7 +57,7 @@ public class CreateSoapEventServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
         Mockito.when(repository.save(Mockito.any(SoapEvent.class))).thenReturn(soapEvent);
         Mockito.when(repository.count()).thenReturn(0);
 
@@ -73,7 +77,7 @@ public class CreateSoapEventServiceTest {
 
     @Test
     public void testMaxCountReached(){
-        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
         Mockito.when(repository.save(Mockito.any(SoapEvent.class))).thenReturn(soapEvent);
         Mockito.when(repository.count()).thenReturn(6);
 

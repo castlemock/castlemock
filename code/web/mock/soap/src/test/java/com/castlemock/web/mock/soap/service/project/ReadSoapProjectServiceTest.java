@@ -3,15 +3,15 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPortTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResourceTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
-import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapResourceGenerator;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.repository.soap.project.SoapPortRepository;
 import com.castlemock.repository.soap.project.SoapProjectRepository;
@@ -50,10 +50,10 @@ public class ReadSoapProjectServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
-        final SoapPort port = SoapPortGenerator.generateSoapPort();
-        final SoapResource resource = SoapResourceGenerator.generateSoapResource();
-        final SoapOperation operation = SoapOperationGenerator.generateSoapOperation();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
+        final SoapPort port = SoapPortTestBuilder.builder().build();
+        final SoapResource resource = SoapResourceTestBuilder.builder().build();
+        final SoapOperation operation = SoapOperationTestBuilder.builder().build();
 
         final ReadSoapProjectInput input = ReadSoapProjectInput.builder()
                 .projectId(project.getId())

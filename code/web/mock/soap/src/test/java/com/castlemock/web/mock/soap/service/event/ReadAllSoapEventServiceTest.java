@@ -19,15 +19,19 @@ package com.castlemock.web.mock.soap.service.event;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEventTestBuilder;
 import com.castlemock.core.mock.soap.service.event.input.ReadAllSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ReadAllSoapEventOutput;
 import com.castlemock.repository.Repository;
-import com.castlemock.core.mock.soap.model.event.SoapEventGenerator;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +61,7 @@ public class ReadAllSoapEventServiceTest {
     public void testProcess(){
         final List<SoapEvent> soapEvents = new ArrayList<SoapEvent>();
         for(int index = 0; index < 3; index++){
-            final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+            final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
             soapEvents.add(soapEvent);
         }
 

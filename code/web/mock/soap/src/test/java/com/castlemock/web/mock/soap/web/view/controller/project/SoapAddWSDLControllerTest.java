@@ -18,12 +18,12 @@ package com.castlemock.web.mock.soap.web.view.controller.project;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.project.WSDLFileUploadForm;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import org.junit.Ignore;
@@ -44,7 +44,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
@@ -78,7 +80,7 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testAddWSDLGet() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(ReadSoapProjectOutput.builder()
                 .project(soapProject)
                 .build());
@@ -95,7 +97,7 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
     @Test
     @Ignore
     public void testAddWSDLPostFile() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
         final List<File> files = new ArrayList<>();
         final WSDLFileUploadForm uploadForm = new WSDLFileUploadForm();
         final List<MultipartFile> uploadedFiles = new ArrayList<>();
@@ -116,7 +118,7 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testAddWSDLPostLink() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
         final List<File> files = new ArrayList<>();
         final WSDLFileUploadForm uploadForm = new WSDLFileUploadForm();
         final List<MultipartFile> uploadedFiles = new ArrayList<>();

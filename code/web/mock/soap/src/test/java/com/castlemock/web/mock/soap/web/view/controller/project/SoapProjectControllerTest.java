@@ -19,15 +19,15 @@ package com.castlemock.web.mock.soap.web.view.controller.project;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPortTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapPortInput;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsStatusInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.port.SoapPortModifierCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import org.junit.Test;
@@ -78,8 +78,8 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void getProject() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
         final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         soapPorts.add(soapPort);
         soapProject.setPorts(soapPorts);
@@ -98,8 +98,8 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void getProjectUploadError() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
         final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         soapPorts.add(soapPort);
         soapProject.setPorts(soapPorts);
@@ -120,8 +120,8 @@ public class SoapProjectControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void getProjectUploadSuccess() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
         final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         soapPorts.add(soapPort);
         soapProject.setPorts(soapPorts);

@@ -19,12 +19,12 @@ package com.castlemock.web.mock.soap.web.view.controller.port;
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPortTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.port.DeleteSoapPortsCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import org.junit.Test;
@@ -70,8 +70,8 @@ public class DeleteSoapPortControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testDeleteApplicationWithValidId() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
         when(serviceProcessor.process(any(Input.class))).thenReturn(ReadSoapPortOutput.builder()
                 .port(soapPort)
                 .build());
@@ -88,8 +88,8 @@ public class DeleteSoapPortControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testDeleteConfirmApplicationWithValidId() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL +
                 PROJECT + SLASH + soapProject.getId() + SLASH + PORT + SLASH + soapPort.getId() + SLASH +
                 DELETE + SLASH + CONFIRM);
@@ -101,8 +101,8 @@ public class DeleteSoapPortControllerTest extends AbstractSoapControllerTest {
     @Test
     public void testConfirmDeletationOfMultpleProjects() throws Exception {
         final DeleteSoapPortsCommand command = new DeleteSoapPortsCommand();
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
         final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
         soapPorts.add(soapPort);
         command.setSoapPorts(soapPorts);

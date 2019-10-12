@@ -3,9 +3,9 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResourceTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapResourceInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapResourceOutput;
-import com.castlemock.core.mock.soap.model.project.SoapResourceGenerator;
 import com.castlemock.repository.soap.project.SoapResourceRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,7 +30,7 @@ public class ReadSoapResourceServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapResource resource = SoapResourceGenerator.generateSoapResource();
+        final SoapResource resource = SoapResourceTestBuilder.builder().build();
         final String projectId = "SOAP PROJECT";
 
         final ReadSoapResourceInput input = ReadSoapResourceInput.builder()

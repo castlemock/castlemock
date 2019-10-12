@@ -21,15 +21,23 @@ import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.SearchSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.output.SearchSoapProjectOutput;
-import com.castlemock.repository.soap.project.*;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
+import com.castlemock.repository.soap.project.SoapMockResponseRepository;
+import com.castlemock.repository.soap.project.SoapOperationRepository;
+import com.castlemock.repository.soap.project.SoapPortRepository;
+import com.castlemock.repository.soap.project.SoapProjectRepository;
+import com.castlemock.repository.soap.project.SoapResourceRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
@@ -75,7 +83,7 @@ public class SearchSoapProjectServiceTest {
 
     @Test
     public void testProcess(){
-        SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
+        SoapProject soapProject = SoapProjectTestBuilder.builder().build();
 
         Mockito.when(repository.search(Mockito.any(SearchQuery.class))).thenReturn(Arrays.asList(soapProject));
         Mockito.when(portRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());

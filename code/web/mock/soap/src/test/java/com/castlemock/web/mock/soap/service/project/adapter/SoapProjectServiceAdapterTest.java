@@ -22,10 +22,24 @@ import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.service.project.input.*;
-import com.castlemock.core.mock.soap.service.project.output.*;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
+import com.castlemock.core.mock.soap.service.project.input.CreateSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.input.DeleteSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.input.ExportSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.input.ImportSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.input.ReadAllSoapProjectsInput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.input.SearchSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.output.CreateSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.output.DeleteSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.output.ExportSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.output.ImportSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.output.ReadAllSoapProjectsOutput;
+import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.output.SearchSoapProjectOutput;
+import com.castlemock.core.mock.soap.service.project.output.UpdateSoapProjectOutput;
 import com.castlemock.web.mock.soap.model.SoapTypeIdentifier;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +71,7 @@ public class SoapProjectServiceAdapterTest {
 
     @Test
     public void testCreate(){
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
         final CreateSoapProjectOutput output = CreateSoapProjectOutput.builder()
                 .project(project)
                 .build();
@@ -72,7 +86,7 @@ public class SoapProjectServiceAdapterTest {
 
     @Test
     public void testDelete(){
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
         final DeleteSoapProjectOutput output = DeleteSoapProjectOutput.builder()
                 .project(project)
                 .build();
@@ -87,7 +101,7 @@ public class SoapProjectServiceAdapterTest {
 
     @Test
     public void testUpdate(){
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
         final UpdateSoapProjectOutput output = UpdateSoapProjectOutput.builder()
                 .project(project)
                 .build();
@@ -102,7 +116,7 @@ public class SoapProjectServiceAdapterTest {
 
     @Test
     public void testReadAll(){
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
         final List<SoapProject> projects = Arrays.asList(project);
         final ReadAllSoapProjectsOutput output = ReadAllSoapProjectsOutput.builder()
                 .projects(projects)
@@ -118,7 +132,7 @@ public class SoapProjectServiceAdapterTest {
 
     @Test
     public void testRead(){
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
         final ReadSoapProjectOutput output = ReadSoapProjectOutput.builder()
                 .project(project)
                 .build();
@@ -140,7 +154,7 @@ public class SoapProjectServiceAdapterTest {
 
     @Test
     public void testExportProject(){
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
         final String exportedProject = "Exported project";
         final ExportSoapProjectOutput output = ExportSoapProjectOutput.builder()
                 .project(exportedProject)
@@ -156,7 +170,7 @@ public class SoapProjectServiceAdapterTest {
 
     @Test
     public void testImportProject(){
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
         final String importedProject = "Imported project";
         final ImportSoapProjectOutput output = ImportSoapProjectOutput.builder()
                 .project(project)

@@ -18,21 +18,25 @@ package com.castlemock.web.mock.soap.web.view.controller.operation;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
-import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventsByOperationIdInput;
-import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventsByOperationIdOutput;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPortTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.service.project.input.*;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
+import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventsByOperationIdInput;
+import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventsByOperationIdOutput;
+import com.castlemock.core.mock.soap.service.project.input.CreateSoapMockResponseInput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapMockResponseInput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapOperationInput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapPortInput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapMockResponseInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.mockresponse.SoapMockResponseModifierCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import org.junit.Assert;
@@ -89,9 +93,9 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
 
     @Test
     public void testDefaultPage() throws Exception {
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
-        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
         when(serviceProcessor.process(isA(ReadSoapPortInput.class))).thenReturn(ReadSoapPortOutput.builder()
                 .port(soapPort)
                 .build());

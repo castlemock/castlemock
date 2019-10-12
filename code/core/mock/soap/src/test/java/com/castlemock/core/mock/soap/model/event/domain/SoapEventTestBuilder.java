@@ -25,8 +25,22 @@ public class SoapEventTestBuilder {
         this.operationId = "OperationId";
         this.portId = "PortId";
         this.projectId = "Project id";
+        this.resourceName = "resource name";
+        this.resourceLink = "resourcelink";
         this.request = SoapRequestTestBuilder.builder().build();
         this.response = SoapResponseTestBuilder.builder().build();
+
+        this.typeIdentifier = new TypeIdentifier() {
+            @Override
+            public String getType() {
+                return "SOAP";
+            }
+
+            @Override
+            public String getTypeUrl() {
+                return "soap";
+            }
+        };
     }
 
     public static SoapEventTestBuilder builder() {

@@ -18,19 +18,19 @@ package com.castlemock.web.mock.soap.web.view.controller.mockresponse;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPortTestBuilder;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
 import com.castlemock.core.mock.soap.service.project.input.DeleteSoapMockResponseInput;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapMockResponseInput;
 import com.castlemock.core.mock.soap.service.project.output.DeleteSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.soap.config.TestApplication;
-import com.castlemock.core.mock.soap.model.project.SoapMockResponseGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapOperationGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapPortGenerator;
-import com.castlemock.core.mock.soap.model.project.SoapProjectGenerator;
 import com.castlemock.web.mock.soap.web.view.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapControllerTest;
 import org.junit.Test;
@@ -77,10 +77,10 @@ public class DeleteSoapMockResponseControllerTest extends AbstractSoapController
 
     @Test
     public void testDeleteMockResponse() throws Exception {
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
-        final SoapPort application = SoapPortGenerator.generateSoapPort();
-        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
-        final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
+        final SoapPort application = SoapPortTestBuilder.builder().build();
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
+        final SoapMockResponse soapMockResponse = SoapMockResponseTestBuilder.builder().build();
         when(serviceProcessor.process(any(ReadSoapMockResponseInput.class))).thenReturn(ReadSoapMockResponseOutput.builder()
                 .mockResponse(soapMockResponse)
                 .build());
@@ -100,10 +100,10 @@ public class DeleteSoapMockResponseControllerTest extends AbstractSoapController
 
     @Test
     public void testDeleteMockResponseConfirm() throws Exception {
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
-        final SoapPort application = SoapPortGenerator.generateSoapPort();
-        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
-        final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
+        final SoapPort application = SoapPortTestBuilder.builder().build();
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
+        final SoapMockResponse soapMockResponse = SoapMockResponseTestBuilder.builder().build();
         when(serviceProcessor.process(any(DeleteSoapMockResponseInput.class))).thenReturn(DeleteSoapMockResponseOutput.builder().build());
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.get(SERVICE_URL + PROJECT +
                 SLASH + project.getId() + SLASH + PORT + SLASH + application.getId() + SLASH + OPERATION + SLASH +
@@ -117,10 +117,10 @@ public class DeleteSoapMockResponseControllerTest extends AbstractSoapController
 
     @Test
     public void testConfirmDeletationOfMultipleMockResponses() throws Exception {
-        final SoapProject project = SoapProjectGenerator.generateSoapProject();
-        final SoapPort application = SoapPortGenerator.generateSoapPort();
-        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
-        final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
+        final SoapProject project = SoapProjectTestBuilder.builder().build();
+        final SoapPort application = SoapPortTestBuilder.builder().build();
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
+        final SoapMockResponse soapMockResponse = SoapMockResponseTestBuilder.builder().build();
         final DeleteSoapMockResponsesCommand deleteSoapMockResponsesCommand = new DeleteSoapMockResponsesCommand();
         deleteSoapMockResponsesCommand.setSoapMockResponses(new ArrayList<SoapMockResponse>());
         deleteSoapMockResponsesCommand.getSoapMockResponses().add(soapMockResponse);

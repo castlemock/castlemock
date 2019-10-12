@@ -64,11 +64,11 @@ public class DeleteSoapProjectServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapProject soapProject = SoapProjectGenerator.generateSoapProject();
-        final SoapPort soapPort = SoapPortGenerator.generateSoapPort();
-        final SoapOperation soapOperation = SoapOperationGenerator.generateSoapOperation();
-        final SoapResource soapResource = SoapResourceGenerator.generateSoapResource();
-        final SoapMockResponse soapMockResponse = SoapMockResponseGenerator.generateSoapMockResponse();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
+        final SoapResource soapResource = SoapResourceTestBuilder.builder().build();
+        final SoapMockResponse soapMockResponse = SoapMockResponseTestBuilder.builder().build();
 
         Mockito.when(repository.delete(soapProject.getId())).thenReturn(soapProject);
         Mockito.when(portRepository.findWithProjectId(soapProject.getId())).thenReturn(Arrays.asList(soapPort));

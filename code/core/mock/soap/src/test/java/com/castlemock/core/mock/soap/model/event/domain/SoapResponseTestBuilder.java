@@ -2,6 +2,7 @@ package com.castlemock.core.mock.soap.model.event.domain;
 
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
@@ -15,6 +16,12 @@ public final class SoapResponseTestBuilder {
     private List<ContentEncoding> contentEncodings;
 
     private SoapResponseTestBuilder() {
+        this.body = "";
+        this.mockResponseName = "";
+        this.httpStatusCode = 200;
+        this.contentType = "application/json";
+        this.httpHeaders = ImmutableList.of();
+        this.contentEncodings = ImmutableList.of();
     }
 
     public static SoapResponseTestBuilder builder() {

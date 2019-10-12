@@ -20,13 +20,13 @@ import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.event.domain.Event;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
+import com.castlemock.core.mock.soap.model.event.domain.SoapEventTestBuilder;
 import com.castlemock.core.mock.soap.service.event.input.ClearAllSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.input.ReadAllSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ReadAllSoapEventOutput;
 import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventOutput;
 import com.castlemock.web.mock.soap.model.SoapTypeIdentifier;
-import com.castlemock.core.mock.soap.model.event.SoapEventGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,19 +57,19 @@ public class SoapEventServiceAdapterTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testCreate(){
-        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
         serviceAdapter.create(soapEvent);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testDelete(){
-        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
         serviceAdapter.delete(soapEvent.getProjectId());
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testUpdate(){
-        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
         serviceAdapter.update(soapEvent.getProjectId(), soapEvent);
     }
 
@@ -77,7 +77,7 @@ public class SoapEventServiceAdapterTest {
     public void testReadAll(){
         final List<SoapEvent> soapEvents = new ArrayList<SoapEvent>();
         for(int index = 0; index < 3; index++){
-            final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+            final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
             soapEvents.add(soapEvent);
 
         }
@@ -100,7 +100,7 @@ public class SoapEventServiceAdapterTest {
 
     @Test
     public void testRead(){
-        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
         final ReadSoapEventOutput output = ReadSoapEventOutput.builder()
                 .soapEvent(soapEvent)
                 .build();
@@ -125,7 +125,7 @@ public class SoapEventServiceAdapterTest {
 
     @Test
     public void testConvertType(){
-        Event event = SoapEventGenerator.generateSoapEvent();
+        Event event = SoapEventTestBuilder.builder().build();
         SoapEvent returnedSoapEvent = serviceAdapter.convertType(event);
         Assert.assertEquals(event.getId(), returnedSoapEvent.getId());
         Assert.assertEquals(event.getEndDate(), returnedSoapEvent.getEndDate());
@@ -136,7 +136,7 @@ public class SoapEventServiceAdapterTest {
 
     @Test
     public void testGenerateResourceLink(){
-        final SoapEvent soapEvent = SoapEventGenerator.generateSoapEvent();
+        final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
         final String generatedResourceLink = serviceAdapter.generateResourceLink(soapEvent);
         Assert.assertEquals("/web/soap/project/" + soapEvent.getProjectId() + "/port/" + soapEvent.getPortId() + "/operation/" + soapEvent.getOperationId(), generatedResourceLink);
     }

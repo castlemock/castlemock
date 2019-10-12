@@ -40,7 +40,6 @@
         <module>deploy</module>
         <module>repository</module>
         <module>web</module>
-        <module>test</module>
     </modules>
 
     <dependencyManagement>
@@ -160,30 +159,6 @@
                 <groupId>com.castlemock.app</groupId>
                 <artifactId>app</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.castlemock.test</groupId>
-                <artifactId>basis</artifactId>
-                <version>${project.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.castlemock.test.mock</groupId>
-                <artifactId>rest</artifactId>
-                <version>${project.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.castlemock.test.mock</groupId>
-                <artifactId>soap</artifactId>
-                <version>${project.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.castlemock.test.mock</groupId>
-                <artifactId>graphql</artifactId>
-                <version>${project.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.deploy.tomcat</groupId>
