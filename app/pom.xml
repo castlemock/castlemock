@@ -8,7 +8,7 @@
 
     <parent>
         <groupId>com.castlemock</groupId>
-        <artifactId>root</artifactId>
+        <artifactId>castlemock</artifactId>
         <version>${project.version}</version>
         <relativePath>../</relativePath>
     </parent>

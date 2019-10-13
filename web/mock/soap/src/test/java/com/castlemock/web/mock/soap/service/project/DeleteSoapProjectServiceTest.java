@@ -18,7 +18,6 @@ package com.castlemock.web.mock.soap.service.project;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.soap.model.project.*;
 import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.core.mock.soap.service.project.input.DeleteSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.output.DeleteSoapProjectOutput;
