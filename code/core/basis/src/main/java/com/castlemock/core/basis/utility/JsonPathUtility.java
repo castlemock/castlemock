@@ -18,6 +18,7 @@ package com.castlemock.core.basis.utility;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.Option;
 import net.minidev.json.JSONArray;
 
 import java.util.Optional;
@@ -49,11 +50,15 @@ public final class JsonPathUtility {
     public static Optional<String> getValueWithJsonPathExpr(final String body,
                                                             final String expression) {
         final Object document = Configuration.defaultConfiguration().jsonProvider().parse(body);
-        final JSONArray array = JsonPath.read(document, expression);
+        final JSONArray array = JsonPath.using(configuration()).parse(document).read(expression);
 
         return array
                 .stream()
                 .findFirst()
                 .map(Object::toString);
+    }
+
+    private static Configuration configuration() {
+        return Configuration.builder().options(Option.ALWAYS_RETURN_LIST).build();
     }
 }
