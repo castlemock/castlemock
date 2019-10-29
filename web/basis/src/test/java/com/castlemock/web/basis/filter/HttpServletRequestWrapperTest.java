@@ -24,6 +24,8 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+import static org.mockito.Matchers.anyInt;
+
 /**
  * @author Karl Dahlgren
  * @since 1.18
@@ -34,7 +36,7 @@ public class HttpServletRequestWrapperTest {
     public void testGetInputStream() throws IOException {
         final ServletInputStream inputStream = Mockito.mock(ServletInputStream.class);
         final HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        Mockito.when(inputStream.read(Mockito.any(byte[].class))).thenReturn(-1);
+        Mockito.when(inputStream.read(Mockito.any(byte[].class), anyInt(), anyInt())).thenReturn(-1);
         Mockito.when(request.getInputStream()).thenReturn(inputStream);
 
         final HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request);
@@ -43,7 +45,7 @@ public class HttpServletRequestWrapperTest {
         Assert.assertNotNull(stream);
         Assert.assertEquals(-1, stream.read());
 
-        Mockito.verify(inputStream, Mockito.times(1)).read(Mockito.any(byte[].class));
+        Mockito.verify(inputStream, Mockito.times(1)).read(Mockito.any(byte[].class), anyInt(), anyInt());
     }
 
 }

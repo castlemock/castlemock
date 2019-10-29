@@ -23,6 +23,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+import static org.mockito.Matchers.anyInt;
+
 /**
  * @author Karl Dahlgren
  * @since 1.18
@@ -39,7 +41,7 @@ public class HttpServletRequestWrapperFilterTest {
         final ServletResponse response = Mockito.mock(ServletResponse.class);
         final FilterChain chain = Mockito.mock(FilterChain.class);
 
-        Mockito.when(inputStream.read(Mockito.any(byte[].class))).thenReturn(-1);
+        Mockito.when(inputStream.read(Mockito.any(byte[].class), anyInt(), anyInt())).thenReturn(-1);
         Mockito.when(request.getInputStream()).thenReturn(inputStream);
 
 

@@ -38,7 +38,7 @@
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-parser</artifactId>
-            <version>1.0.35</version>
+            <version>1.0.36</version>
         </dependency>
         <dependency>
             <groupId>com.castlemock.core.mock</groupId>
