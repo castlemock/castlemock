@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.castlemock.web</groupId>
+    <artifactId>web</artifactId>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>com.castlemock</groupId>
+        <artifactId>castlemock</artifactId>
+        <version>${project.version}</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <modules>
+        <module>basis</module>
+        <module>mock</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
