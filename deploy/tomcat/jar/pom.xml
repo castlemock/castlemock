@@ -23,4 +23,27 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <finalName>castlemock</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <addResources>true</addResources>
+                    <fork>true</fork>
+                    <skip>false</skip>
+                    <mainClass>>com.castlemock.deploy.tomcat.jar.config.JarTomcatApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
