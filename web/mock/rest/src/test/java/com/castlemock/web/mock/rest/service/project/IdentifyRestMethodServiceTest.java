@@ -29,6 +29,7 @@ import com.castlemock.core.mock.rest.service.project.output.IdentifyRestMethodOu
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
+import com.google.common.collect.ImmutableList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +40,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Karl Dahlgren
@@ -65,96 +67,120 @@ public class IdentifyRestMethodServiceTest {
 
     @Test
     public void testProcess(){
-        RestResource restResource1 = RestResourceTestBuilder.builder().build();
-        restResource1.setId("Resource1");
-        restResource1.setUri("/user");
-        RestMethod restMethod1 = RestMethodTestBuilder.builder().build();
-        restMethod1.setHttpMethod(HttpMethod.POST);
-        RestMethod restMethod2 = RestMethodTestBuilder.builder().build();
-        restMethod2.setHttpMethod(HttpMethod.GET);
-        RestMethod restMethod3 = RestMethodTestBuilder.builder().build();
-        restMethod3.setHttpMethod(HttpMethod.PUT);
-        restResource1.getMethods().add(restMethod1);
-        restResource1.getMethods().add(restMethod2);
-        restResource1.getMethods().add(restMethod3);
+        final RestMethod restMethod1 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.POST)
+                .build();
+        final RestMethod restMethod2 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.GET)
+                .build();
+        final RestMethod restMethod3 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.PUT)
+                .build();
+        final RestResource restResource1 = RestResourceTestBuilder.builder()
+                .id("Resource1")
+                .uri("/user")
+                .methods(ImmutableList.of(restMethod1, restMethod2, restMethod3))
+                .build();
 
-        RestResource restResource2 = RestResourceTestBuilder.builder().build();
-        restResource2.setId("Resource2");
-        restResource2.setUri("/user/resource");
-        RestMethod restMethod4 = RestMethodTestBuilder.builder().build();
-        restMethod4.setHttpMethod(HttpMethod.POST);
-        RestMethod restMethod5 = RestMethodTestBuilder.builder().build();
-        restMethod5.setHttpMethod(HttpMethod.GET);
-        restResource2.getMethods().add(restMethod4);
-        restResource2.getMethods().add(restMethod5);
 
-        Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2));
+        final RestMethod restMethod4 = RestMethodTestBuilder.builder()
+                .resourceId("Resource2")
+                .httpMethod(HttpMethod.POST)
+                .build();
+        final RestMethod restMethod5 = RestMethodTestBuilder.builder()
+                .resourceId("Resource2")
+                .httpMethod(HttpMethod.GET)
+                .build();
+        final RestResource restResource2 = RestResourceTestBuilder.builder()
+                .id("Resource2")
+                .uri("/user/resource")
+                .methods(ImmutableList.of(restMethod4, restMethod5))
+                .build();
 
-        Mockito.when(methodRepository.findWithResourceId(restResource1.getId())).thenReturn(Arrays.asList(restMethod1, restMethod2, restMethod3));
-        Mockito.when(methodRepository.findWithResourceId(restResource2.getId())).thenReturn(Arrays.asList(restMethod4, restMethod5));
+        Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId"))
+                .thenReturn(Arrays.asList(restResource1, restResource2));
+
+        Mockito.when(methodRepository.findWithResourceId(restResource1.getId()))
+                .thenReturn(Arrays.asList(restMethod1, restMethod2, restMethod3));
+        Mockito.when(methodRepository.findWithResourceId(restResource2.getId()))
+                .thenReturn(Arrays.asList(restMethod4, restMethod5));
 
         Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
 
-        IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+        final IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
                 .restApplicationId("RestApplicationId")
                 .restResourceUri("/user")
                 .httpMethod(HttpMethod.GET)
                 .build();
-        ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
-        ServiceResult<IdentifyRestMethodOutput> serviceResult1 = service.process(serviceTask1);
-        IdentifyRestMethodOutput output1 = serviceResult1.getOutput();
+        final ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<>(input1);
+        final ServiceResult<IdentifyRestMethodOutput> serviceResult1 = service.process(serviceTask1);
+        final IdentifyRestMethodOutput output1 = serviceResult1.getOutput();
         Assert.assertEquals(restMethod2, output1.getRestMethod());
 
 
-        IdentifyRestMethodInput input2 =  IdentifyRestMethodInput.builder()
+        final IdentifyRestMethodInput input2 =  IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
                 .restApplicationId("RestApplicationId")
                 .restResourceUri("/user")
                 .httpMethod(HttpMethod.PUT)
                 .build();
-        ServiceTask<IdentifyRestMethodInput> serviceTask2 = new ServiceTask<IdentifyRestMethodInput>(input2);
-        ServiceResult<IdentifyRestMethodOutput> serviceResult2 = service.process(serviceTask2);
-        IdentifyRestMethodOutput output2 = serviceResult2.getOutput();
+        final ServiceTask<IdentifyRestMethodInput> serviceTask2 = new ServiceTask<>(input2);
+        final ServiceResult<IdentifyRestMethodOutput> serviceResult2 = service.process(serviceTask2);
+        final IdentifyRestMethodOutput output2 = serviceResult2.getOutput();
         Assert.assertEquals(restMethod3, output2.getRestMethod());
 
 
-        IdentifyRestMethodInput input3 = IdentifyRestMethodInput.builder()
+        final IdentifyRestMethodInput input3 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
                 .restApplicationId("RestApplicationId")
                 .restResourceUri("/user/resource")
                 .httpMethod(HttpMethod.POST)
                 .build();
-        ServiceTask<IdentifyRestMethodInput> serviceTask3 = new ServiceTask<IdentifyRestMethodInput>(input3);
-        ServiceResult<IdentifyRestMethodOutput> serviceResult3 = service.process(serviceTask3);
-        IdentifyRestMethodOutput output3 = serviceResult3.getOutput();
+        final ServiceTask<IdentifyRestMethodInput> serviceTask3 = new ServiceTask<IdentifyRestMethodInput>(input3);
+        final ServiceResult<IdentifyRestMethodOutput> serviceResult3 = service.process(serviceTask3);
+        final IdentifyRestMethodOutput output3 = serviceResult3.getOutput();
         Assert.assertEquals(restMethod4, output3.getRestMethod());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessMethodNotFound(){
-        RestResource restResource1 = RestResourceTestBuilder.builder().build();
-        restResource1.setId("Resource1");
-        restResource1.setUri("/user");
-        RestMethod restMethod1 = RestMethodTestBuilder.builder().build();
-        restMethod1.setHttpMethod(HttpMethod.POST);
-        RestMethod restMethod2 = RestMethodTestBuilder.builder().build();
-        restMethod2.setHttpMethod(HttpMethod.GET);
-        RestMethod restMethod3 = RestMethodTestBuilder.builder().build();
-        restMethod3.setHttpMethod(HttpMethod.PUT);
-        restResource1.getMethods().add(restMethod1);
-        restResource1.getMethods().add(restMethod2);
-        restResource1.getMethods().add(restMethod3);
+        final RestMethod restMethod1 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.POST)
+                .build();
+        final RestMethod restMethod2 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.GET)
+                .build();
+        final RestMethod restMethod3 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.PUT)
+                .build();
 
-        RestResource restResource2 = RestResourceTestBuilder.builder().build();
-        restResource2.setId("Resource2");
-        restResource2.setUri("/user/resource");
-        RestMethod restMethod4 = RestMethodTestBuilder.builder().build();
-        restMethod4.setHttpMethod(HttpMethod.POST);
-        RestMethod restMethod5 = RestMethodTestBuilder.builder().build();
-        restMethod5.setHttpMethod(HttpMethod.GET);
-        restResource2.getMethods().add(restMethod4);
-        restResource2.getMethods().add(restMethod5);
+        final RestResource restResource1 = RestResourceTestBuilder.builder()
+                .id("Resource1")
+                .uri("/user")
+                .methods(ImmutableList.of(restMethod1, restMethod2, restMethod3))
+                .build();
+
+        final RestMethod restMethod4 = RestMethodTestBuilder.builder()
+                .resourceId("Resource2")
+                .httpMethod(HttpMethod.POST)
+                .build();
+        final RestMethod restMethod5 = RestMethodTestBuilder.builder()
+                .resourceId("Resource2")
+                .httpMethod(HttpMethod.GET)
+                .build();
+
+        final RestResource restResource2 = RestResourceTestBuilder.builder()
+                .id("Resource2")
+                .uri("/user/resource")
+                .methods(ImmutableList.of(restMethod4, restMethod5))
+                .build();
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2));
 
@@ -163,30 +189,35 @@ public class IdentifyRestMethodServiceTest {
 
         Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
 
-        IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+        final IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
                 .restApplicationId("RestApplicationId")
                 .restResourceUri("/user/random")
                 .httpMethod(HttpMethod.GET)
                 .build();
-        ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
+        final ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
         service.process(serviceTask1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessResourceNotFound(){
-        RestResource restResource1 = RestResourceTestBuilder.builder().build();
-        restResource1.setId("Resource1");
-        restResource1.setUri("/user");
-        RestMethod restMethod1 = RestMethodTestBuilder.builder().build();
-        restMethod1.setHttpMethod(HttpMethod.POST);
-        RestMethod restMethod2 = RestMethodTestBuilder.builder().build();
-        restMethod2.setHttpMethod(HttpMethod.GET);
-        RestMethod restMethod3 = RestMethodTestBuilder.builder().build();
-        restMethod3.setHttpMethod(HttpMethod.PUT);
-        restResource1.getMethods().add(restMethod1);
-        restResource1.getMethods().add(restMethod2);
-        restResource1.getMethods().add(restMethod3);
+        final RestMethod restMethod1 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.POST)
+                .build();
+        final RestMethod restMethod2 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.GET)
+                .build();
+        final RestMethod restMethod3 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.PUT)
+                .build();
+        final RestResource restResource1 = RestResourceTestBuilder.builder()
+                .id("Resource1")
+                .uri("/user")
+                .methods(ImmutableList.of(restMethod1, restMethod2, restMethod3))
+                .build();
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1));
 
@@ -194,29 +225,34 @@ public class IdentifyRestMethodServiceTest {
 
         Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
 
-        IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+        final IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
                 .restApplicationId("RestApplicationId")
                 .restResourceUri("/random")
                 .httpMethod(HttpMethod.GET)
                 .build();
-        ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
+        final ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
         service.process(serviceTask1);
     }
 
     @Test
     public void testVariableProcess1(){
-        RestResource restResource1 = RestResourceTestBuilder.builder().build();
-        restResource1.setId("Resource1");
-        restResource1.setUri("/user/{test}");
-        RestMethod restMethod1 = RestMethodTestBuilder.builder().build();
-        restMethod1.setHttpMethod(HttpMethod.GET);
-
-        RestResource restResource2 = RestResourceTestBuilder.builder().build();
-        restResource2.setId("Resource2");
-        restResource2.setUri("/user/{test}/resource");
-        RestMethod restMethod2 = RestMethodTestBuilder.builder().build();
-        restMethod2.setHttpMethod(HttpMethod.POST);
+        final RestResource restResource1 = RestResourceTestBuilder.builder()
+                .id("Resource1")
+                .uri("/user/{test}")
+                .build();
+        final RestMethod restMethod1 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.GET)
+                .build();
+        final RestResource restResource2 = RestResourceTestBuilder.builder()
+                .id("Resource2")
+                .uri("/user/{test}/resource")
+                .build();
+        final RestMethod restMethod2 = RestMethodTestBuilder.builder()
+                .resourceId("Resource2")
+                .httpMethod(HttpMethod.POST)
+                .build();
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2));
 
@@ -225,92 +261,137 @@ public class IdentifyRestMethodServiceTest {
 
         Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
 
-        IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+        final IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
                 .restApplicationId("RestApplicationId")
                 .restResourceUri("/user/random")
                 .httpMethod(HttpMethod.GET)
                 .build();
-        ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
-        ServiceResult<IdentifyRestMethodOutput> serviceResult1 = service.process(serviceTask1);
-        IdentifyRestMethodOutput output1 = serviceResult1.getOutput();
+        final ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
+        final ServiceResult<IdentifyRestMethodOutput> serviceResult1 = service.process(serviceTask1);
+        final IdentifyRestMethodOutput output1 = serviceResult1.getOutput();
         Assert.assertEquals(restMethod1, output1.getRestMethod());
 
-        IdentifyRestMethodInput input2 = IdentifyRestMethodInput.builder()
+        final IdentifyRestMethodInput input2 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
                 .restApplicationId("RestApplicationId")
                 .restResourceUri("/user/random/resource")
                 .httpMethod(HttpMethod.POST)
                 .build();
-        ServiceTask<IdentifyRestMethodInput> serviceTask2 = new ServiceTask<IdentifyRestMethodInput>(input2);
-        ServiceResult<IdentifyRestMethodOutput> serviceResult2 = service.process(serviceTask2);
-        IdentifyRestMethodOutput output2 = serviceResult2.getOutput();
+        final ServiceTask<IdentifyRestMethodInput> serviceTask2 = new ServiceTask<IdentifyRestMethodInput>(input2);
+        final ServiceResult<IdentifyRestMethodOutput> serviceResult2 = service.process(serviceTask2);
+        final IdentifyRestMethodOutput output2 = serviceResult2.getOutput();
         Assert.assertEquals(restMethod2, output2.getRestMethod());
     }
 
-
-
     @Test
     public void testVariableProcess2(){
-        RestResource restResource1 = RestResourceTestBuilder.builder().build();
-        restResource1.setId("Resource1");
-        restResource1.setUri("/user/{variable}.json");
-        RestMethod restMethod1 = RestMethodTestBuilder.builder().build();
-        restMethod1.setHttpMethod(HttpMethod.GET);
+        final RestResource restResource1 = RestResourceTestBuilder.builder()
+                .id("Resource1")
+                .uri("/user/{variable}.json")
+                .build();
+        final RestMethod restMethod1 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.GET)
+                .build();
 
-        RestResource restResource2 = RestResourceTestBuilder.builder().build();
-        restResource2.setId("Resource2");
-        restResource2.setUri("/user/id.{type}");
-        RestMethod restMethod2 = RestMethodTestBuilder.builder().build();
-        restMethod2.setHttpMethod(HttpMethod.GET);
+        final RestResource restResource2 = RestResourceTestBuilder.builder()
+                .id("Resource2")
+                .uri("/user/id.{type}")
+                .build();
+        final RestMethod restMethod2 = RestMethodTestBuilder.builder()
+                .resourceId("Resource2")
+                .httpMethod(HttpMethod.GET)
+                .build();
 
-        RestResource restResource3 = RestResourceTestBuilder.builder().build();
-        restResource3.setId("Resource3");
-        restResource3.setUri("/resource/{id}...{type}");
-        RestMethod restMethod3 = RestMethodTestBuilder.builder().build();
-        restMethod3.setHttpMethod(HttpMethod.GET);
+        final RestResource restResource3 = RestResourceTestBuilder.builder()
+                .id("Resource3")
+                .uri("/resource/{id}...{type}")
+                .build();
+        final RestMethod restMethod3 = RestMethodTestBuilder.builder()
+                .resourceId("Resource3")
+                .httpMethod(HttpMethod.GET)
+                .build();
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2, restResource3));
 
-        Mockito.when(methodRepository.findWithResourceId(restResource1.getId())).thenReturn(Arrays.asList(restMethod1));
-        Mockito.when(methodRepository.findWithResourceId(restResource2.getId())).thenReturn(Arrays.asList(restMethod2));
-        Mockito.when(methodRepository.findWithResourceId(restResource3.getId())).thenReturn(Arrays.asList(restMethod3));
+        Mockito.when(methodRepository.findWithResourceId(restResource1.getId())).thenReturn(Collections.singletonList(restMethod1));
+        Mockito.when(methodRepository.findWithResourceId(restResource2.getId())).thenReturn(Collections.singletonList(restMethod2));
+        Mockito.when(methodRepository.findWithResourceId(restResource3.getId())).thenReturn(Collections.singletonList(restMethod3));
 
         Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
 
-        IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+        final IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
                 .restApplicationId("RestApplicationId")
                 .restResourceUri("/user/random.json")
                 .httpMethod(HttpMethod.GET)
                 .build();
-        ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
-        ServiceResult<IdentifyRestMethodOutput> serviceResult1 = service.process(serviceTask1);
-        IdentifyRestMethodOutput output1 = serviceResult1.getOutput();
+        final ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
+        final ServiceResult<IdentifyRestMethodOutput> serviceResult1 = service.process(serviceTask1);
+        final IdentifyRestMethodOutput output1 = serviceResult1.getOutput();
         Assert.assertEquals(restMethod1, output1.getRestMethod());
 
-        IdentifyRestMethodInput input2 = IdentifyRestMethodInput.builder()
+        final IdentifyRestMethodInput input2 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
                 .restApplicationId("RestApplicationId")
                 .restResourceUri("/user/id.xml")
                 .httpMethod(HttpMethod.GET)
                 .build();
-        ServiceTask<IdentifyRestMethodInput> serviceTask2 = new ServiceTask<IdentifyRestMethodInput>(input2);
-        ServiceResult<IdentifyRestMethodOutput> serviceResult2 = service.process(serviceTask2);
-        IdentifyRestMethodOutput output2 = serviceResult2.getOutput();
+        final ServiceTask<IdentifyRestMethodInput> serviceTask2 = new ServiceTask<IdentifyRestMethodInput>(input2);
+        final ServiceResult<IdentifyRestMethodOutput> serviceResult2 = service.process(serviceTask2);
+        final IdentifyRestMethodOutput output2 = serviceResult2.getOutput();
         Assert.assertEquals(restMethod2, output2.getRestMethod());
 
-        IdentifyRestMethodInput input3 = IdentifyRestMethodInput.builder()
+        final IdentifyRestMethodInput input3 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
                 .restApplicationId("RestApplicationId")
                 .restResourceUri("/resource/test...xml")
                 .httpMethod(HttpMethod.GET)
                 .build();
-        ServiceTask<IdentifyRestMethodInput> serviceTask3 = new ServiceTask<IdentifyRestMethodInput>(input3);
-        ServiceResult<IdentifyRestMethodOutput> serviceResult3 = service.process(serviceTask3);
-        IdentifyRestMethodOutput output3 = serviceResult3.getOutput();
+        final ServiceTask<IdentifyRestMethodInput> serviceTask3 = new ServiceTask<IdentifyRestMethodInput>(input3);
+        final ServiceResult<IdentifyRestMethodOutput> serviceResult3 = service.process(serviceTask3);
+        final IdentifyRestMethodOutput output3 = serviceResult3.getOutput();
         Assert.assertEquals(restMethod3, output3.getRestMethod());
     }
 
+    @Test
+    public void testProcessSamePath(){
+        final RestMethod restMethod1 = RestMethodTestBuilder.builder()
+                .resourceId("Resource1")
+                .httpMethod(HttpMethod.GET)
+                .build();
+        final RestResource restResource1 = RestResourceTestBuilder.builder()
+                .id("Resource1")
+                .uri("/user/{userId}")
+                .methods(ImmutableList.of(restMethod1))
+                .build();
+
+        final RestMethod restMethod2 = RestMethodTestBuilder.builder()
+                .resourceId("Resource2")
+                .httpMethod(HttpMethod.POST)
+                .build();
+        final RestResource restResource2 = RestResourceTestBuilder.builder()
+                .id("Resource2")
+                .uri("/user/search")
+                .methods(ImmutableList.of(restMethod1))
+                .build();
+
+        Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2));
+        Mockito.when(methodRepository.findWithResourceId(restResource1.getId())).thenReturn(Collections.singletonList(restMethod1));
+        Mockito.when(methodRepository.findWithResourceId(restResource2.getId())).thenReturn(Collections.singletonList(restMethod2));
+        Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
+
+        final IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
+                .restProjectId("RestProjectId")
+                .restApplicationId("RestApplicationId")
+                .restResourceUri("/user/search")
+                .httpMethod(HttpMethod.POST)
+                .build();
+        final ServiceTask<IdentifyRestMethodInput> serviceTask1 = new ServiceTask<IdentifyRestMethodInput>(input1);
+        final ServiceResult<IdentifyRestMethodOutput> serviceResult1 = service.process(serviceTask1);
+        final IdentifyRestMethodOutput output1 = serviceResult1.getOutput();
+        Assert.assertEquals(restMethod2, output1.getRestMethod());
+    }
 
 }
