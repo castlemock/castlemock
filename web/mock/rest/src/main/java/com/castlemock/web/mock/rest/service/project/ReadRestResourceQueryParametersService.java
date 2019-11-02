@@ -19,7 +19,7 @@ package com.castlemock.web.mock.rest.service.project;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.utility.compare.UrlUtility;
+import com.castlemock.web.basis.utility.UrlUtility;
 import com.castlemock.core.mock.rest.model.project.domain.RestParameterQuery;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestResourceQueryParametersInput;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.basis.utility.compare;
+package com.castlemock.web.basis.utility;
 
 
 import com.google.common.collect.ImmutableMap;
@@ -32,64 +32,57 @@ import java.util.Set;
 public class UrlUtilityTest {
 
     @Test
-    public void compareTest1(){
-        Assert.assertTrue(UrlUtility.compareUri("/user", "/user"));
+    public void isPatternMatch1(){
+        Assert.assertTrue(UrlUtility.isPatternMatch("/user", "/user"));
     }
 
     @Test
-    public void compareTest2(){
-        Assert.assertTrue(UrlUtility.compareUri("/user/id", "/user/id"));
+    public void isPatternMatch2(){
+        Assert.assertTrue(UrlUtility.isPatternMatch("/user/id", "/user/id"));
     }
 
 
     @Test
-    public void compareTest3(){
-        Assert.assertTrue(UrlUtility.compareUri("/user/id.json", "/user/id.json"));
+    public void isPatternMatch3(){
+        Assert.assertTrue(UrlUtility.isPatternMatch("/user/id.json", "/user/id.json"));
     }
 
     @Test
-    public void compareTest4(){
-        Assert.assertTrue(UrlUtility.compareUri("/user/{id}", "/user/1"));
+    public void isPatternMatch4(){
+        Assert.assertTrue(UrlUtility.isPatternMatch("/user/{id}", "/user/1"));
     }
 
     @Test
-    public void compareTest5(){
-        Assert.assertTrue(UrlUtility.compareUri("/user/{id}.json", "/user/1.json"));
+    public void isPatternMatch5(){
+        Assert.assertTrue(UrlUtility.isPatternMatch("/user/{id}.json", "/user/1.json"));
     }
 
     @Test
-    public void compareTest6(){
-        Assert.assertTrue(UrlUtility.compareUri("/user/1.{format}", "/user/1.json"));
-        Assert.assertTrue(UrlUtility.compareUri("/user/1.{format}", "/user/1.xml"));
-        Assert.assertFalse(UrlUtility.compareUri("/user/1.{format}", "/user/2.xml"));
+    public void isPatternMatch6(){
+        Assert.assertTrue(UrlUtility.isPatternMatch("/user/1.{format}", "/user/1.json"));
+        Assert.assertTrue(UrlUtility.isPatternMatch("/user/1.{format}", "/user/1.xml"));
+        Assert.assertFalse(UrlUtility.isPatternMatch("/user/1.{format}", "/user/2.xml"));
     }
 
     @Test
-    public void compareTest7(){
-        Assert.assertTrue(UrlUtility.compareUri("/user/{id}.{format}", "/user/1.json"));
-        Assert.assertTrue(UrlUtility.compareUri("/user/{id}.{format}", "/user/2.xml"));
+    public void isPatternMatch7(){
+        Assert.assertTrue(UrlUtility.isPatternMatch("/user/{id}.{format}", "/user/1.json"));
+        Assert.assertTrue(UrlUtility.isPatternMatch("/user/{id}.{format}", "/user/2.xml"));
     }
 
     @Test
-    public void compareTest8(){
-        Assert.assertTrue(UrlUtility.compareUri("/company/{company}/user/{id}.{format}", "/company/Castle Mock/user/1.json"));
+    public void isPatternMatch8(){
+        Assert.assertTrue(UrlUtility.isPatternMatch("/company/{company}/user/{id}.{format}", "/company/Castle Mock/user/1.json"));
     }
 
     @Test
-    public void compareTest9(){
-        Assert.assertFalse(UrlUtility.compareUri("/user/{id", "/user/1"));
+    public void isPatternMatch9(){
+        Assert.assertFalse(UrlUtility.isPatternMatch("/user/{id", "/user/1"));
     }
 
     @Test
-    public void testGetPath(){
-        Assert.assertEquals("http://castlemock.com/wsdl2.wsdl",
-                UrlUtility.getPath("http://castlemock.com/wsdl1.wsdl", "./wsdl2.wsdl"));
-    }
-
-    @Test
-    public void testGetPathFull(){
-        Assert.assertEquals("http://castlemock.com/wsdl2.wsdl",
-                UrlUtility.getPath("http://castlemock.com/wsdl1.wsdl", "http://castlemock.com/wsdl2.wsdl"));
+    public void isPatternMatch10(){
+        Assert.assertTrue(UrlUtility.isPatternMatch("/user/id?test={hej}", "/user/id"));
     }
 
     @Test
@@ -130,15 +123,13 @@ public class UrlUtilityTest {
         Assert.assertEquals("Karl", map.get("username"));
     }
 
-
     @Test
     public void getPathParametersShouldNotConsiderQueryParameters(){
-        Map<String, String> pathParameters = UrlUtility.getPathParameters("/rest/api/{user}?param={param}", new String[]{"", "rest", "api", "johndoe"});
+        Map<String, String> pathParameters = UrlUtility.getPathParameters("/rest/api/{user}?param={param}", "/rest/api/johndoe");
         Assert.assertEquals(1, pathParameters.size());
         Assert.assertTrue(pathParameters.containsKey("user"));
         Assert.assertEquals("johndoe", pathParameters.get("user"));
     }
-
 
     @Test
     public void getQueryStringParameters(){
@@ -155,5 +146,15 @@ public class UrlUtilityTest {
         Assert.assertTrue(parts.contains("userId"));
         Assert.assertTrue(parts.contains("format"));
         Assert.assertTrue(parts.contains("parameter"));
+    }
+
+    @Test
+    public void getPatternMatchScore1(){
+        Assert.assertEquals(0, UrlUtility.getPatternMatchScore("/user", "/user"));
+    }
+
+    @Test
+    public void getPatternMatchScore2(){
+        Assert.assertEquals(1, UrlUtility.getPatternMatchScore("/user/{id}.json", "/user/1.json"));
     }
 }

@@ -17,10 +17,10 @@
 package com.castlemock.web.mock.soap.converter;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.basis.utility.compare.UrlUtility;
 import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.support.DocumentUtility;
+import com.castlemock.web.basis.utility.UrlUtility;
 import com.castlemock.web.mock.soap.converter.types.*;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,8 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -336,4 +338,5 @@ public class SoapPortConverter {
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
     }
+
 }
