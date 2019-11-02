@@ -45,8 +45,8 @@ public class RestRequest {
     }
 
     private RestRequest(final Builder builder){
-        this.body = Objects.requireNonNull(builder.body);
-        this.contentType = Objects.requireNonNull(builder.contentType);
+        this.body = builder.body;
+        this.contentType = builder.contentType;
         this.uri = Objects.requireNonNull(builder.uri);
         this.httpMethod = Objects.requireNonNull(builder.httpMethod);
         this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);

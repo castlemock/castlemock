@@ -130,7 +130,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             return process(restRequest, projectId, applicationId, resourceId,
                     output.getRestMethod(), output.getPathParameters(), httpServletResponse);
         } catch (Exception exception) {
-            LOGGER.debug("REST service exception: " + exception.getMessage(), exception);
+            LOGGER.error("REST service exception: " + exception.getMessage(), exception);
             throw new RestException(exception.getMessage());
         }
     }

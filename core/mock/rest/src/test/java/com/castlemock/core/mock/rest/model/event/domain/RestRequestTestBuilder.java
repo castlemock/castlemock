@@ -2,6 +2,7 @@ package com.castlemock.core.mock.rest.model.event.domain;
 
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.basis.model.http.domain.HttpParameter;
 import com.google.common.collect.ImmutableList;
 
 import java.util.List;
@@ -13,29 +14,32 @@ public final class RestRequestTestBuilder {
     private String uri;
     private HttpMethod httpMethod;
     private List<HttpHeader> httpHeaders;
+    private List<HttpParameter> httpParameters;
 
     private RestRequestTestBuilder() {
+        this.uri = "/test";
         this.body = "Rest request body";
         this.contentType = "application/json";
         this.httpMethod = HttpMethod.POST;
         this.httpHeaders = ImmutableList.of();
+        this.httpParameters = ImmutableList.of();
     }
 
     public static RestRequestTestBuilder builder(){
         return new RestRequestTestBuilder();
     }
 
-    public RestRequestTestBuilder body(String body) {
+    public RestRequestTestBuilder body(final String body) {
         this.body = body;
         return this;
     }
 
-    public RestRequestTestBuilder contentType(String contentType) {
+    public RestRequestTestBuilder contentType(final String contentType) {
         this.contentType = contentType;
         return this;
     }
 
-    public RestRequestTestBuilder uri(String uri) {
+    public RestRequestTestBuilder uri(final String uri) {
         this.uri = uri;
         return this;
     }
@@ -50,13 +54,19 @@ public final class RestRequestTestBuilder {
         return this;
     }
 
+    public RestRequestTestBuilder httpParameters(final List<HttpParameter> httpParameters) {
+        this.httpParameters = httpParameters;
+        return this;
+    }
+
     public RestRequest build() {
         return RestRequest.builder()
+                .uri(uri)
                 .body(body)
                 .contentType(contentType)
                 .httpHeaders(httpHeaders)
                 .httpMethod(httpMethod)
-                .uri(uri)
+                .httpParameters(httpParameters)
                 .build();
     }
 }
