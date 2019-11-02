@@ -185,7 +185,7 @@ public class RestRequest {
         }
 
         public RestRequest build() {
-            return new RestRequest();
+            return new RestRequest(this);
         }
     }
 }

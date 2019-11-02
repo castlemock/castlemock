@@ -67,12 +67,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The abstract REST controller is a base class shared among all the REST service classes.
@@ -84,8 +87,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
     private static final String REST = "rest";
     private static final String APPLICATION = "application";
-    private static final String FORWARDED_RESPONSE_NAME = "Forwarded response";
+    private static final String CONTENT_ENCODING = "Content-Encoding";
     private static final String RECORDED_RESPONSE_NAME = "Recorded response";
+    private static final String FORWARDED_RESPONSE_NAME = "Forwarded response";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static final Random RANDOM = new Random();
     private static final Logger LOGGER = Logger.getLogger(AbstractRestServiceController.class);
@@ -140,25 +144,25 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param httpServletRequest The incoming request
      * @return A new created project
      */
-    protected RestRequest prepareRequest(final String projectId,
-                                         final String applicationId,
-                                         final HttpMethod httpMethod,
-                                         final HttpServletRequest httpServletRequest) {
-        final RestRequest request = new RestRequest();
+    private RestRequest prepareRequest(final String projectId,
+                                       final String applicationId,
+                                       final HttpMethod httpMethod,
+                                       final HttpServletRequest httpServletRequest) {
+
         final String body = HttpMessageSupport.getBody(httpServletRequest);
         final String incomingRequestUri = httpServletRequest.getRequestURI();
         final String restResourceUri = incomingRequestUri.replace(getContext() + SLASH + MOCK + SLASH + REST +
                 SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId, EMPTY);
         final List<HttpParameter> httpParameters = HttpMessageSupport.extractParameters(httpServletRequest);
         final List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
-
-        request.setHttpMethod(httpMethod);
-        request.setBody(body);
-        request.setUri(restResourceUri);
-        request.setHttpParameters(httpParameters);
-        request.setHttpHeaders(httpHeaders);
-        request.setContentType(httpServletRequest.getContentType());
-        return request;
+        return RestRequest.builder()
+                .body(body)
+                .uri(restResourceUri)
+                .httpMethod(httpMethod)
+                .httpHeaders(httpHeaders)
+                .httpParameters(httpParameters)
+                .contentType(httpServletRequest.getContentType())
+                .build();
     }
 
     /**
@@ -200,12 +204,16 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 response = mockResponse(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters);
             }
 
-            HttpHeaders responseHeaders = new HttpHeaders();
-            for (HttpHeader httpHeader : response.getHttpHeaders()) {
-                List<String> headerValues = new LinkedList<String>();
-                headerValues.add(httpHeader.getValue());
-                responseHeaders.put(httpHeader.getName(), headerValues);
-            }
+            final HttpHeaders responseHeaders = new HttpHeaders();
+
+            response.getHttpHeaders()
+                    .stream()
+                    .filter(httpHeader -> !httpHeader.getName().equalsIgnoreCase(CONTENT_ENCODING))
+                    .forEach(httpHeader -> {
+                        final List<String> headerValues = new LinkedList<String>();
+                        headerValues.add(httpHeader.getValue());
+                        responseHeaders.put(httpHeader.getName(), headerValues);
+                    });
 
             if (restMethod.getSimulateNetworkDelay() &&
                     restMethod.getNetworkDelay() >= 0) {
@@ -234,19 +242,19 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param restMethod The REST method which the incoming request belongs to
      * @return The response received from the external endpoint
      */
-    protected RestResponse forwardRequest(final RestRequest request,
-                                          final String projectId,
-                                          final String applicationId,
-                                          final String resourceId,
-                                          final RestMethod restMethod,
-                                          final Map<String, String> pathParameters) {
+    private RestResponse forwardRequest(final RestRequest request,
+                                        final String projectId,
+                                        final String applicationId,
+                                        final String resourceId,
+                                        final RestMethod restMethod,
+                                        final Map<String, String> pathParameters) {
         if (demoMode) {
             // If the application is configured to run in demo mode, then use mocked response instead
             return mockResponse(request, projectId, applicationId, resourceId, restMethod, pathParameters);
         }
 
 
-        final RestResponse response = new RestResponse();
+
         HttpURLConnection connection = null;
         try {
 
@@ -271,12 +279,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
             final List<HttpHeader> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
             final String characterEncoding = CharsetUtility.parseHttpHeaders(responseHttpHeaders);
             final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings, characterEncoding);
-            response.setBody(responseBody);
-            response.setMockResponseName(FORWARDED_RESPONSE_NAME);
-            response.setHttpHeaders(responseHttpHeaders);
-            response.setHttpStatusCode(connection.getResponseCode());
-            response.setContentEncodings(encodings);
-            return response;
+            return RestResponse.builder()
+                    .body(responseBody)
+                    .mockResponseName(FORWARDED_RESPONSE_NAME)
+                    .httpHeaders(responseHttpHeaders)
+                    .httpStatusCode(connection.getResponseCode())
+                    .contentEncodings(encodings)
+                    .build();
         } catch (IOException exception) {
             LOGGER.error("Unable to forward request", exception);
             throw new RestException("Unable to forward request to configured endpoint");
@@ -295,20 +304,20 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param restMethod  The REST method which the incoming request belongs to
      * @return The response received from the external endpoint
      */
-    protected RestResponse forwardRequestAndRecordResponse(final RestRequest restRequest,
-                                                           final String projectId,
-                                                           final String applicationId,
-                                                           final String resourceId,
-                                                           final RestMethod restMethod,
-                                                           final Map<String, String> pathParameters) {
+    private RestResponse forwardRequestAndRecordResponse(final RestRequest restRequest,
+                                                         final String projectId,
+                                                         final String applicationId,
+                                                         final String resourceId,
+                                                         final RestMethod restMethod,
+                                                         final Map<String, String> pathParameters) {
         final RestResponse response = forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters);
-        final RestMockResponse mockResponse = new RestMockResponse();
-        final Date date = new Date();
-        mockResponse.setBody(response.getBody());
-        mockResponse.setStatus(RestMockResponseStatus.ENABLED);
-        mockResponse.setHttpHeaders(response.getHttpHeaders());
-        mockResponse.setName(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(date));
-        mockResponse.setHttpStatusCode(response.getHttpStatusCode());
+        final RestMockResponse mockResponse = RestMockResponse.builder()
+                .body(response.getBody())
+                .status(RestMockResponseStatus.ENABLED)
+                .httpHeaders(response.getHttpHeaders())
+                .name(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(new Date()))
+                .httpStatusCode(response.getHttpStatusCode())
+                .build();
         serviceProcessor.processAsync(CreateRestMockResponseInput.builder()
                 .projectId(projectId)
                 .applicationId(applicationId)
@@ -331,12 +340,12 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param restMethod    The REST method which the incoming request belongs to
      * @return The response received from the external endpoint
      */
-    protected RestResponse forwardRequestAndRecordResponseOnce(final RestRequest restRequest,
-                                                               final String projectId,
-                                                               final String applicationId,
-                                                               final String resourceId,
-                                                               final RestMethod restMethod,
-                                                               final Map<String, String> pathParameters) {
+    private RestResponse forwardRequestAndRecordResponseOnce(final RestRequest restRequest,
+                                                             final String projectId,
+                                                             final String applicationId,
+                                                             final String resourceId,
+                                                             final RestMethod restMethod,
+                                                             final Map<String, String> pathParameters) {
         final RestResponse response =
                 forwardRequestAndRecordResponse(restRequest, projectId,
                         applicationId, resourceId, restMethod, pathParameters);
@@ -560,25 +569,17 @@ public abstract class AbstractRestServiceController extends AbstractController {
      */
     private Collection<String> getHeaderValues(final String headerName,
                                                final List<HttpHeader> httpHeaders) {
-        HttpHeader httpHeader = null;
-        for (HttpHeader tmpHeader : httpHeaders) {
-            if (headerName.equalsIgnoreCase(tmpHeader.getName())) {
-                httpHeader = tmpHeader;
-            }
-        }
-
-        List<String> result = new ArrayList<>();
-
-        if (httpHeader != null) {
-            String value = httpHeader.getValue();
-            String[] headerValues = value.split(",");
-            for (String headerValue : headerValues) {
-                result.add(headerValue.toLowerCase());
-            }
-
-        }
-
-        return result;
+        return httpHeaders
+                .stream()
+                .filter(header -> headerName.equalsIgnoreCase(header.getName()))
+                .findFirst()
+                .map(HttpHeader::getValue)
+                .map(header -> header.split(","))
+                .map(Stream::of)
+                .map(stream -> stream
+                        .map(String::toLowerCase)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
     }
 
 }
