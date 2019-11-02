@@ -18,6 +18,7 @@ package com.castlemock.core.basis.model.http.domain;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -28,6 +29,15 @@ public class HttpHeader {
 
     private String name;
     private String value;
+
+    public HttpHeader(){
+
+    }
+
+    private HttpHeader(final Builder builder){
+        this.name = Objects.requireNonNull(builder.name);
+        this.value = Objects.requireNonNull(builder.value);
+    }
 
     @XmlElement
     public String getName() {
@@ -45,5 +55,31 @@ public class HttpHeader {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String name;
+        private String value;
+
+        private Builder() {
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder value(String value) {
+            this.value = value;
+            return this;
+        }
+
+        public HttpHeader build() {
+            return new HttpHeader(this);
+        }
     }
 }
