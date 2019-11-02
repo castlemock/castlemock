@@ -34,8 +34,6 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class ReadRestMethodService extends AbstractRestProjectService implements Service<ReadRestMethodInput, ReadRestMethodOutput> {
 
-    private static final Logger LOGGER = Logger.getLogger(ReadRestMethodService.class);
-
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
      * a response based on the incoming serviceTask input
@@ -54,21 +52,11 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
         if(restMethod.getDefaultMockResponseId() != null){
             // Iterate through all the mocked responses to identify
             // which has been set to be the default XPath mock response.
-            boolean defaultQueryMockResponseId = false;
-            for(RestMockResponse mockResponse : mockResponses){
-                if(mockResponse.getId().equals(restMethod.getDefaultMockResponseId())){
-                    restMethod.setDefaultResponseName(mockResponse.getName());
-                    defaultQueryMockResponseId = true;
-                    break;
-                }
-            }
-
-            if(!defaultQueryMockResponseId){
-                // Unable to find the default XPath mock response.
-                // Log only an error message for now.
-                LOGGER.error("Unable to find the default Query mock response with the following id: " +
-                        restMethod.getDefaultMockResponseId());
-            }
+            mockResponses
+                    .stream()
+                    .filter(mockResponse -> mockResponse.getId().equals(restMethod.getDefaultMockResponseId()))
+                    .findFirst()
+                    .ifPresent(mockResponse -> restMethod.setDefaultResponseName(mockResponse.getName()));
         }
 
         return createServiceResult(ReadRestMethodOutput.builder()
