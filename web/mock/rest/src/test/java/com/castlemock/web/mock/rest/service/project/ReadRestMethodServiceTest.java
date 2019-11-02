@@ -19,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class ReadRestMethodServiceTest {
 
@@ -38,23 +39,25 @@ public class ReadRestMethodServiceTest {
 
     @Test
     public void testProcess(){
-        final String projectId = "ProjectId";
-        final String applicationId = "ApplicationId";
-        final String resourceId = "ResourceId";
-        final RestMethod method = RestMethodTestBuilder.builder().build();
-        final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
-
+        final String defaultMockResponseId = "MockResponseId";
+        final RestMethod method = RestMethodTestBuilder.builder()
+                .defaultMockResponseId(defaultMockResponseId)
+                .build();
+        final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder()
+                .id(defaultMockResponseId)
+                .build();
         final ReadRestMethodInput input =
                 ReadRestMethodInput.builder()
-                        .restProjectId(projectId)
-                        .restApplicationId(applicationId)
-                        .restResourceId(resourceId)
+                        .restProjectId("ProjectId")
+                        .restApplicationId("ApplicationId")
+                        .restResourceId("ResourceId")
                         .restMethodId(method.getId())
                         .build();
         final ServiceTask<ReadRestMethodInput> serviceTask = new ServiceTask<ReadRestMethodInput>(input);
 
         Mockito.when(methodRepository.findOne(method.getId())).thenReturn(method);
-        Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(Arrays.asList(mockResponse));
+        Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(Collections.singletonList(mockResponse));
+
         final ServiceResult<ReadRestMethodOutput> result = service.process(serviceTask);
 
         Mockito.verify(methodRepository, Mockito.times(1)).findOne(method.getId());
@@ -62,6 +65,31 @@ public class ReadRestMethodServiceTest {
 
         Assert.assertNotNull(result.getOutput());
         Assert.assertEquals(method, result.getOutput().getRestMethod());
+        Assert.assertEquals(mockResponse.getName(), method.getDefaultResponseName());
     }
 
+    @Test
+    public void testProcessMissingMockResponse(){
+        final RestMethod method = RestMethodTestBuilder.builder().build();
+        final ReadRestMethodInput input =
+                ReadRestMethodInput.builder()
+                        .restProjectId("ProjectId")
+                        .restApplicationId("ApplicationId")
+                        .restResourceId("ResourceId")
+                        .restMethodId(method.getId())
+                        .build();
+        final ServiceTask<ReadRestMethodInput> serviceTask = new ServiceTask<ReadRestMethodInput>(input);
+
+        Mockito.when(methodRepository.findOne(method.getId())).thenReturn(method);
+        Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(Collections.emptyList());
+
+        final ServiceResult<ReadRestMethodOutput> result = service.process(serviceTask);
+
+        Mockito.verify(methodRepository, Mockito.times(1)).findOne(method.getId());
+        Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithMethodId(method.getId());
+
+        Assert.assertNotNull(result.getOutput());
+        Assert.assertEquals(method, result.getOutput().getRestMethod());
+        Assert.assertEquals("", method.getDefaultResponseName());
+    }
 }
