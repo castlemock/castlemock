@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutSuccessUrl("/login?logout")
                     .and()
                 .csrf().and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(tokenValiditySeconds)
-                .and().exceptionHandling().accessDeniedPage("/forbidden");
+                .and().exceptionHandling().accessDeniedPage("/web/forbidden");
 
         httpSecurity.headers().cacheControl().disable();
     }
