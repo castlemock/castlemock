@@ -21,6 +21,8 @@ import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.basis.service.user.output.CreateUserOutput;
 
+import java.util.Objects;
+
 /**
  * Creates a new user
  * @author Karl Dahlgren
@@ -32,12 +34,32 @@ public final class CreateUserInput implements Input {
     @NotNull
     private final User user;
 
-    public CreateUserInput(final User user) {
-        this.user = user;
+    public CreateUserInput(final Builder builder) {
+        this.user = Objects.requireNonNull(builder.user);
     }
 
     public User getUser() {
         return user;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private User user;
+
+        private Builder() {
+        }
+
+
+        public Builder user(final User user) {
+            this.user = user;
+            return this;
+        }
+
+        public CreateUserInput build() {
+            return new CreateUserInput(this);
+        }
+    }
 }

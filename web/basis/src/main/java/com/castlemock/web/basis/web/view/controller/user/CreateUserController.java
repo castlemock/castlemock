@@ -42,13 +42,13 @@ public class CreateUserController extends AbstractViewController {
     /**
      * The method takes a new user and stores it in the database. When the user is created,
      * the user will redirected to the user specific page
-     * @param userDto The new user that will be created
+     * @param user The new user that will be created
      * @return A view that displays the new user
      */
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView defaultPage(@ModelAttribute final User userDto) {
-        serviceProcessor.process(new CreateUserInput(userDto));
+    public ModelAndView defaultPage(@ModelAttribute final User user) {
+        serviceProcessor.process(CreateUserInput.builder().user(user).build());
         return redirect("/user/");
     }
 

@@ -21,6 +21,8 @@ import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.basis.service.user.output.UpdateUserOutput;
 
+import java.util.Objects;
+
 /**
  * Update a user with a specific user id
  * @author Karl Dahlgren
@@ -34,9 +36,9 @@ public final class UpdateUserInput implements Input {
     @NotNull
     private final User user;
 
-    public UpdateUserInput(String userId, User user) {
-        this.userId = userId;
-        this.user = user;
+    public UpdateUserInput(final Builder builder) {
+        this.userId = Objects.requireNonNull(builder.userId);
+        this.user = Objects.requireNonNull(builder.user);
     }
 
     public String getUserId() {
@@ -47,4 +49,29 @@ public final class UpdateUserInput implements Input {
         return user;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String userId;
+        private User user;
+
+        private Builder() {
+        }
+
+        public Builder userId(final String userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder user(final User user) {
+            this.user = user;
+            return this;
+        }
+
+        public UpdateUserInput build() {
+            return new UpdateUserInput(this);
+        }
+    }
 }

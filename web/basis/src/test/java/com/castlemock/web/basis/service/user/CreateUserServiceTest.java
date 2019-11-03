@@ -68,7 +68,7 @@ public class CreateUserServiceTest {
         createdUser.setEmail("email@email.com");
 
         Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(createdUser);
-        final CreateUserInput input = new CreateUserInput(user);
+        final CreateUserInput input = CreateUserInput.builder().user(user).build();
         final ServiceTask<CreateUserInput> serviceTask = new ServiceTask<CreateUserInput>();
         serviceTask.setInput(input);
         final ServiceResult<CreateUserOutput> serviceResult = service.process(serviceTask);

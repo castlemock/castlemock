@@ -35,7 +35,7 @@ import java.io.File;
 import java.io.FileReader;
 
 /**
- * The {@link CoreRestController} is the REST controller that provides
+ * The {@link ProjectCoreRestController} is the REST controller that provides
  * the interface for the core operations.
  * @author Karl Dahlgren
  * @since 1.19
@@ -44,14 +44,14 @@ import java.io.FileReader;
 @RequestMapping("/api/rest/core")
 @Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
 @ConditionalOnExpression("${server.mode.demo} == false")
-public class CoreRestController extends AbstractRestController {
+public class ProjectCoreRestController extends AbstractRestController {
 
     @Autowired
     private FileManager fileManager;
     @Autowired
     private ProjectServiceFacade projectServiceFacade;
 
-    private static final Logger LOGGER = Logger.getLogger(CoreRestController.class);
+    private static final Logger LOGGER = Logger.getLogger(ProjectCoreRestController.class);
 
 
     /**

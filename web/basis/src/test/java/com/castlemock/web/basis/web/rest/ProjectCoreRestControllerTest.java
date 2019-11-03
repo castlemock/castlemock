@@ -21,7 +21,7 @@ import com.castlemock.web.basis.config.TestApplication;
 import com.castlemock.web.basis.service.project.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.AbstractControllerTest;
-import com.castlemock.web.basis.web.rest.controller.CoreRestController;
+import com.castlemock.web.basis.web.rest.controller.ProjectCoreRestController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -41,10 +41,10 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestApplication.class)
 @WebAppConfiguration
-public class CoreRestControllerTest extends AbstractControllerTest {
+public class ProjectCoreRestControllerTest extends AbstractControllerTest {
 
     @InjectMocks
-    private CoreRestController coreRestController;
+    private ProjectCoreRestController projectCoreRestController;
 
     @Mock
     private ProjectServiceFacadeImpl projectServiceComponent;
@@ -124,6 +124,6 @@ public class CoreRestControllerTest extends AbstractControllerTest {
 
     @Override
     protected AbstractController getController() {
-        return coreRestController;
+        return projectCoreRestController;
     }
 }

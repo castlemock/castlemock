@@ -57,7 +57,7 @@ public class ServiceRegistryTest {
 
     @Test
     public void testGetService(){
-        final ReadUserInput readUserInput = new ReadUserInput("Username");
+        final ReadUserInput readUserInput = ReadUserInput.builder().userId("Username").build();
 
         // Get registered service
         final ReadUserService readUserService = (ReadUserService) serviceRegistry.getService(readUserInput);
@@ -66,7 +66,9 @@ public class ServiceRegistryTest {
 
     @Test
     public void testServiceInvalid(){
-        final DeleteUserInput deleteUserInput = new DeleteUserInput("Username");
+        final DeleteUserInput deleteUserInput = DeleteUserInput.builder()
+                .userId("Username")
+                .build();
 
         // Try to get a non-registered service
         final DeleteUserService deleteUserService = (DeleteUserService) serviceRegistry.getService(deleteUserInput);

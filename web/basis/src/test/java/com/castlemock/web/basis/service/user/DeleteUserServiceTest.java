@@ -58,7 +58,9 @@ public class DeleteUserServiceTest {
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
 
-        final DeleteUserInput input = new DeleteUserInput(new String());
+        final DeleteUserInput input = DeleteUserInput.builder()
+                .userId("")
+                .build();
         final ServiceTask<DeleteUserInput> serviceTask = new ServiceTask<DeleteUserInput>();
         serviceTask.setInput(input);
         final ServiceResult<DeleteUserOutput> serviceResult = service.process(serviceTask);
@@ -77,7 +79,9 @@ public class DeleteUserServiceTest {
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         Mockito.when(repository.findAll()).thenReturn(users);
 
-        final DeleteUserInput input = new DeleteUserInput(new String());
+        final DeleteUserInput input = DeleteUserInput.builder()
+                .userId("")
+                .build();
         final ServiceTask<DeleteUserInput> serviceTask = new ServiceTask<DeleteUserInput>();
         serviceTask.setInput(input);
         final ServiceResult<DeleteUserOutput> serviceResult = service.process(serviceTask);

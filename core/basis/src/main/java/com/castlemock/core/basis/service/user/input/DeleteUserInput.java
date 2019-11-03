@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.basis.service.user.output.DeleteUserOutput;
 
+import java.util.Objects;
+
 /**
  * Deletes a user
  * @author Karl Dahlgren
@@ -31,12 +33,32 @@ public final class DeleteUserInput implements Input {
     @NotNull
     private final String userId;
 
-    public DeleteUserInput(String userId) {
-        this.userId = userId;
+    public DeleteUserInput(final Builder builder) {
+        this.userId = Objects.requireNonNull(builder.userId);
     }
 
     public String getUserId() {
         return userId;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String userId;
+
+        private Builder() {
+        }
+
+
+        public Builder userId(String userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public DeleteUserInput build() {
+            return new DeleteUserInput(this);
+        }
+    }
 }
