@@ -282,8 +282,8 @@ a {
     top: 10px;
     margin: auto;
     position: absolute;
-    left: 0;
-    right: 0; }
+    left: 40%;
+    right: 50%; }
     .main-header .stylish-input-group .input-group-addon {
       background: #3ca8d6 !important;
       border-color: #3ca8d6 !important;
@@ -822,5 +822,4 @@ select {
 
 .disabled {
   opacity: 0.6;
-  pointer-events: none;
-}
+  pointer-events: none; }
