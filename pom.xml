@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <project.version>1.40-SNAPSHOT</project.version>
+        <project.version>1.40</project.version>
         <java.release>8</java.release>
         <java.version>1.8</java.version>
         <guava.version>28.1-jre</guava.version>
