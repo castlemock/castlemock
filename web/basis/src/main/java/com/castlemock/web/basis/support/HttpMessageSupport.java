@@ -263,14 +263,14 @@ public class HttpMessageSupport {
         BufferedReader bufferedReader = null;
         try {
 
-            if (connection.getResponseCode() == OK_RESPONSE) {
-                // The connection returned a response with HTTP status 200.
+            if (connection.getResponseCode() >= OK_RESPONSE && connection.getResponseCode() < 500) {
+                // The connection returned a response with HTTP status 2xx.
                 // Use the input stream.
                 inputStream = connection.getInputStream();
 
             } else {
                 // The connection returned a response with a HTTP status
-                // that is not 200 (500 error code).
+                // that is not 2xx (5xx error code).
                 // Use the error stream instead.
                 inputStream = connection.getErrorStream();
             }
