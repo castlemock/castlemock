@@ -75,6 +75,11 @@ public class MvcConfig implements WebMvcConfigurer {
         configurer.enable();
     }
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedMethods("*").allowedOrigins("*");
+    }
+
 
     /**
      * The method takes an interceptor registry and add the interceptor created in the method localeChangeInterceptor
