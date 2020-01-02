@@ -45,9 +45,9 @@ public class SoapResponse {
 
     private SoapResponse(final Builder builder){
         this.body = Objects.requireNonNull(builder.body);
-        this.mockResponseName = Objects.requireNonNull(builder.mockResponseName);
+        this.mockResponseName = builder.mockResponseName;
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
-        this.contentType = Objects.requireNonNull(builder.contentType);
+        this.contentType = builder.contentType;
         this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
         this.contentEncodings = Objects.requireNonNull(builder.contentEncodings);
     }

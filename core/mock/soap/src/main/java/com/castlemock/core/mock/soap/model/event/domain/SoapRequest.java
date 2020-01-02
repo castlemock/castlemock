@@ -51,7 +51,7 @@ public class SoapRequest {
         this.contentType = builder.contentType;
         this.uri = Objects.requireNonNull(builder.uri);
         this.httpMethod = Objects.requireNonNull(builder.httpMethod);
-        this.operationName = Objects.requireNonNull(builder.operationName);
+        this.operationName = builder.operationName;
         this.soapVersion = Objects.requireNonNull(builder.soapVersion);
         this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
         this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier);
@@ -147,42 +147,42 @@ public class SoapRequest {
         private Builder() {
         }
 
-        public Builder body(String body) {
+        public Builder body(final String body) {
             this.body = body;
             return this;
         }
 
-        public Builder contentType(String contentType) {
+        public Builder contentType(final String contentType) {
             this.contentType = contentType;
             return this;
         }
 
-        public Builder uri(String uri) {
+        public Builder uri(final String uri) {
             this.uri = uri;
             return this;
         }
 
-        public Builder httpMethod(HttpMethod httpMethod) {
+        public Builder httpMethod(final HttpMethod httpMethod) {
             this.httpMethod = httpMethod;
             return this;
         }
 
-        public Builder operationName(String operationName) {
+        public Builder operationName(final String operationName) {
             this.operationName = operationName;
             return this;
         }
 
-        public Builder soapVersion(SoapVersion soapVersion) {
+        public Builder soapVersion(final SoapVersion soapVersion) {
             this.soapVersion = soapVersion;
             return this;
         }
 
-        public Builder httpHeaders(List<HttpHeader> httpHeaders) {
+        public Builder httpHeaders(final List<HttpHeader> httpHeaders) {
             this.httpHeaders = httpHeaders;
             return this;
         }
 
-        public Builder operationIdentifier(SoapOperationIdentifier operationIdentifier) {
+        public Builder operationIdentifier(final SoapOperationIdentifier operationIdentifier) {
             this.operationIdentifier = operationIdentifier;
             return this;
         }

@@ -23,6 +23,7 @@ import com.castlemock.core.basis.model.http.domain.HttpParameter;
 import com.castlemock.core.basis.utility.JsonPathUtility;
 import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.TextParser;
+import com.castlemock.core.basis.utility.parser.expression.UrlHostExpression;
 import com.castlemock.core.basis.utility.parser.expression.BodyJsonPathExpression;
 import com.castlemock.core.basis.utility.parser.expression.PathParameterExpression;
 import com.castlemock.core.basis.utility.parser.expression.QueryStringExpression;
@@ -53,6 +54,7 @@ import com.castlemock.web.mock.rest.utility.RestHeaderQueryValidator;
 import com.castlemock.web.mock.rest.utility.RestParameterQueryValidator;
 import com.castlemock.web.mock.rest.utility.compare.RestMockResponseNameComparator;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpHeaders;
@@ -128,7 +130,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
             final String resourceId = output.getRestResourceId();
 
             return process(restRequest, projectId, applicationId, resourceId,
-                    output.getRestMethod(), output.getPathParameters(), httpServletResponse);
+                    output.getRestMethod(), output.getPathParameters(),
+                    httpServletRequest, httpServletResponse);
         } catch (Exception exception) {
             LOGGER.error("REST service exception: " + exception.getMessage(), exception);
             throw new RestException(exception.getMessage());
@@ -184,6 +187,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                              final String resourceId,
                                              final RestMethod restMethod,
                                              final Map<String, String> pathParameters,
+                                             final HttpServletRequest httpServletRequest,
                                              final HttpServletResponse httpServletResponse) {
         Preconditions.checkNotNull(restRequest, "Rest request cannot be null");
         RestEvent event = null;
@@ -193,15 +197,15 @@ public abstract class AbstractRestServiceController extends AbstractController {
             if (RestMethodStatus.DISABLED.equals(restMethod.getStatus())) {
                 throw new RestException("The requested REST method, " + restMethod.getName() + ", is disabled");
             } else if (RestMethodStatus.FORWARDED.equals(restMethod.getStatus())) {
-                response = forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters);
+                response = forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
             } else if (RestMethodStatus.RECORDING.equals(restMethod.getStatus())) {
-                response = forwardRequestAndRecordResponse(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters);
+                response = forwardRequestAndRecordResponse(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
             } else if (RestMethodStatus.RECORD_ONCE.equals(restMethod.getStatus())) {
-                response = forwardRequestAndRecordResponseOnce(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters);
+                response = forwardRequestAndRecordResponseOnce(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
             } else if (RestMethodStatus.ECHO.equals(restMethod.getStatus())) {
                 response = echoResponse(restRequest);
             } else { // Status.MOCKED
-                response = mockResponse(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters);
+                response = mockResponse(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
             }
 
             final HttpHeaders responseHeaders = new HttpHeaders();
@@ -247,10 +251,11 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                         final String applicationId,
                                         final String resourceId,
                                         final RestMethod restMethod,
-                                        final Map<String, String> pathParameters) {
+                                        final Map<String, String> pathParameters,
+                                        final HttpServletRequest httpServletRequest) {
         if (demoMode) {
             // If the application is configured to run in demo mode, then use mocked response instead
-            return mockResponse(request, projectId, applicationId, resourceId, restMethod, pathParameters);
+            return mockResponse(request, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
         }
 
 
@@ -309,8 +314,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                                          final String applicationId,
                                                          final String resourceId,
                                                          final RestMethod restMethod,
-                                                         final Map<String, String> pathParameters) {
-        final RestResponse response = forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters);
+                                                         final Map<String, String> pathParameters,
+                                                         final HttpServletRequest httpServletRequest) {
+        final RestResponse response = forwardRequest(restRequest, projectId, applicationId, resourceId,
+                restMethod, pathParameters, httpServletRequest);
         final RestMockResponse mockResponse = RestMockResponse.builder()
                 .body(response.getBody())
                 .status(RestMockResponseStatus.ENABLED)
@@ -345,10 +352,11 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                                              final String applicationId,
                                                              final String resourceId,
                                                              final RestMethod restMethod,
-                                                             final Map<String, String> pathParameters) {
+                                                             final Map<String, String> pathParameters,
+                                                             final HttpServletRequest httpServletRequest) {
         final RestResponse response =
                 forwardRequestAndRecordResponse(restRequest, projectId,
-                        applicationId, resourceId, restMethod, pathParameters);
+                        applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
         restMethod.setStatus(RestMethodStatus.MOCKED);
         serviceProcessor.process(UpdateRestMethodInput.builder()
                 .restProjectId(projectId)
@@ -370,18 +378,17 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @since 1.14
      */
     private RestResponse echoResponse(final RestRequest request) {
-        final List<HttpHeader> headers = new ArrayList<HttpHeader>();
-        final HttpHeader contentTypeHeader = new HttpHeader();
-        contentTypeHeader.setName(CONTENT_TYPE);
-        contentTypeHeader.setValue(request.getContentType());
-        headers.add(contentTypeHeader);
+        final List<HttpHeader> headers = ImmutableList.of(HttpHeader.builder()
+                .name(CONTENT_TYPE)
+                .value(request.getContentType())
+                .build());
 
-        final RestResponse response = new RestResponse();
-        response.setBody(request.getBody());
-        response.setContentType(request.getContentType());
-        response.setHttpHeaders(headers);
-        response.setHttpStatusCode(DEFAULT_ECHO_RESPONSE_CODE);
-        return response;
+        return RestResponse.builder()
+                .body(request.getBody())
+                .contentType(request.getContentType())
+                .httpHeaders(headers)
+                .httpStatusCode(DEFAULT_ECHO_RESPONSE_CODE)
+                .build();
     }
 
     /**
@@ -396,7 +403,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                         final String applicationId,
                                         final String resourceId,
                                         final RestMethod restMethod,
-                                        final Map<String, String> pathParameters) {
+                                        final Map<String, String> pathParameters,
+                                        final HttpServletRequest httpServletRequest) {
         // Extract the accept header value.
         final Collection<String> acceptHeaderValues = getHeaderValues(ACCEPT_HEADER, restRequest.getHttpHeaders());
 
@@ -436,7 +444,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         if (mockResponses.isEmpty()) {
             throw new RestException("No mocked response created for operation " + restMethod.getName());
         } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.RANDOM)) {
-            final Integer responseIndex = RANDOM.nextInt(mockResponses.size());
+            final int responseIndex = RANDOM.nextInt(mockResponses.size());
             mockResponse = mockResponses.get(responseIndex);
         } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.SEQUENCE)) {
             Integer currentSequenceNumber = restMethod.getCurrentResponseSequenceIndex();
@@ -521,26 +529,28 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 queryStringArgument.addArgument(parameter.getName(), pathParameterArgument);
             });
 
+            final ExpressionArgument urlArgument = new ExpressionArgumentString(httpServletRequest.getRequestURL().toString());
             final ExpressionArgument bodyArgument = new ExpressionArgumentString(restRequest.getBody());
 
             final Map<String, ExpressionArgument<?>> externalInput =
                     ImmutableMap.of(
                             PathParameterExpression.PATH_PARAMETERS, pathParametersArgument,
                             QueryStringExpression.QUERY_STRINGS, queryStringArgument,
-                            BodyJsonPathExpression.BODY_ARGUMENT, bodyArgument
+                            BodyJsonPathExpression.BODY_ARGUMENT, bodyArgument,
+                            UrlHostExpression.URL_ARGUMENT, urlArgument
                     );
 
             // Parse the text and apply expression functionality if
             // the mock response is configured to use expressions
             body = TextParser.parse(body, externalInput);
         }
-        final RestResponse response = new RestResponse();
-        response.setBody(body);
-        response.setMockResponseName(mockResponse.getName());
-        response.setHttpStatusCode(mockResponse.getHttpStatusCode());
-        response.setHttpHeaders(mockResponse.getHttpHeaders());
-        response.setContentEncodings(mockResponse.getContentEncodings());
-        return response;
+        return RestResponse.builder()
+                .body(body)
+                .mockResponseName(mockResponse.getName())
+                .httpStatusCode(mockResponse.getHttpStatusCode())
+                .httpHeaders(mockResponse.getHttpHeaders())
+                .contentEncodings(mockResponse.getContentEncodings())
+                .build();
     }
 
     private Optional<RestMockResponse> getDefaultMockResponse(final RestMethod restMethod,

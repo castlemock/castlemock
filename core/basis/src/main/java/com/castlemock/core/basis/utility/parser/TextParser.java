@@ -58,6 +58,7 @@ public class TextParser {
         EXPRESSIONS.put(PathParameterExpression.IDENTIFIER, new PathParameterExpression());
         EXPRESSIONS.put(QueryStringExpression.IDENTIFIER, new QueryStringExpression());
         EXPRESSIONS.put(BodyJsonPathExpression.IDENTIFIER, new BodyJsonPathExpression());
+        EXPRESSIONS.put(UrlHostExpression.IDENTIFIER, new UrlHostExpression());
     }
 
     /**
