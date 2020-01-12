@@ -35,10 +35,9 @@ class App extends Component {
             <div className = "site-wrapper">
                 <Router>
                     <Switch>
-                        <Route path="/beta/login"  component={LoginContainer} />
-                        <Route path="/beta/web/*"  component={MainContainer} />
-                        <Route path="/beta/*"  component={MainContainer} />
-                        <Route path="/beta"  component={MainContainer} />
+                        <Route path="/login"  component={LoginContainer} />
+                        <Route path="/web/*"  component={MainContainer} />
+                        <Route path="/*"  component={MainContainer} />
                     </Switch>
                 </Router>
             </div>

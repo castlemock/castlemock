@@ -18,7 +18,6 @@ import React, {PureComponent} from 'react'
 import '../css/Footer.css';
 
 class Footer extends PureComponent {
-
     render() {
         return (
             <div className="footer">
@@ -26,14 +25,14 @@ class Footer extends PureComponent {
                 </div>
 
                 <div className="login-footer-info">
-                    <a href="https://www.castlemock.com" target="_blank" rel="noopener noreferrer">Castle Mock version. 1.45-SNAPSHOT</a>
+                    <a href="https://www.castlemock.com" target="_blank" rel="noopener noreferrer">Castle Mock version. 1.42-SNAPSHOT</a>
                 </div>
 
                 <div className="login-footer-info-api">
                     <a href="/doc/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
             </div>
         <div className="page-created">
-            Page created: {new Date().toISOString()}
+            Page created:
         </div>
     </div>
     );
