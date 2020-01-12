@@ -19,14 +19,22 @@ package com.castlemock.web.basis.web.rest.controller;
 import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.service.project.ProjectServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
-import io.swagger.annotations.*;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +42,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.List;
 
 /**
  * The {@link ProjectCoreRestController} is the REST controller that provides
@@ -54,6 +63,21 @@ public class ProjectCoreRestController extends AbstractRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectCoreRestController.class);
 
+    /**
+     * The method retrieves all projects
+     * @return The retrieved project.
+     */
+    @ApiOperation(value = "Get projects",response = Project.class,
+            notes = "Get projects. Required authorization: Reader, Modifier or Admin.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved project")
+    })
+    @RequestMapping(method = RequestMethod.GET, value = "/project")
+    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    List<Project> getProjects() {
+        return  projectServiceFacade.findAll();
+    }
 
     /**
      * The method retrieves a project with a particular ID.

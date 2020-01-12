@@ -1,0 +1,166 @@
+.main-header {
+    background: #1696cc;
+    color: #fff;
+    border: 0px solid #1696cc;
+    top: 0px;
+    font-size: 13px;
+    z-index: 1;
+    height: 60px;
+    min-width: 100%;
+    position: absolute;
+}
+
+.main-header .navbar-toggle {
+    border: none;
+    background: transparent !important;
+    margin-top: 11px;
+}
+.main-header :hover {
+     background: transparent !important;
+ }
+.main-header .icon-bar {
+    width: 22px;
+    transition: all 0.2s;
+    background-color: #fff;
+}
+.main-header .top-bar {
+    transform: rotate(45deg);
+    transform-origin: 10% 10%;
+}
+.main-header .middle-bar {
+    opacity: 0;
+}
+.bottom-bar {
+    transform: rotate(-45deg);
+    transform-origin: 10% 90%;
+}
+.navbar-toggle.collapsed .top-bar {
+    transform: rotate(0);
+}
+.navbar-toggle.collapsed .middle-bar {
+    opacity: 1;
+}
+.navbar-toggle.collapsed .bottom-bar {
+    transform: rotate(0);
+}
+.navbar-default {
+    background-color: inherit;
+    border-color: inherit;
+    color: inherit;
+    margin-bottom: 0px;
+}
+
+
+.navbar-default .navbar-form {
+    color: #000;
+}
+
+.navbar-default .container-fluid {
+
+
+}
+
+.navbar-default .navbar-collapse {
+    border: 0px solid #3E444D;
+}
+
+.navbar-default .navbar-header {
+    color: inherit;
+
+}
+
+.logo {
+    float: left;
+    margin-top: 2px;
+    font-size: 30px;
+}
+
+#header-logo {
+    height: 30px;
+    margin-top: -10px;
+}
+
+.links {
+    float: right;
+}
+
+.fa-2x {
+    font-size: 28px;
+}
+
+.title {
+    visibility: hidden;
+    display: none;
+}
+
+.avatar-username {
+    float:left;
+}
+
+
+.stylish-input-group {
+    width: 30%;
+    top: 10px;
+    margin: auto;
+    position: absolute;
+    left: 40%;
+    right: 50%;
+}
+
+.input-group-addon {
+    background: #3ca8d6 !important;
+    border-color: #3ca8d6 !important;
+    color: #FFFFFF;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+    width: 50px;
+    height: 35px;
+    float: right;
+}
+
+button{
+    border:0;
+    background:transparent;
+    margin-top: 3px;
+}
+
+.input-group-field {
+    padding-right: 50px;
+}
+
+.form-control{
+    border-right:0;
+    box-shadow:0 0 0;
+    border-color:#ccc;
+}
+
+.search {
+    border-bottom-left-radius: 50px;
+    border-top-left-radius: 50px;
+    color: #FFFFFF;
+    background: #3ca8d6 !important;
+    border-color: #3ca8d6 !important;
+    height: 35px;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
+::-webkit-input-placeholder {
+    text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    text-align: center;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    text-align: center;
+}
+
+:-ms-input-placeholder {
+    text-align: center;
+    color: white;
+}

@@ -1,0 +1,112 @@
+#login-body {
+    display: table;
+    background-color: #1696cc;
+    color: #FFFFFF;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    font-family: "Roboto Regular", sans-serif;
+}
+
+#login-box {
+    width: 350px;
+    padding: 30px 40px;
+    margin: 5% auto;
+    font-size: 12px;
+    text-align: center;
+    background-color: #1696cc;
+}
+
+#login-box input[type=text],
+#login-box input[type=password] {
+    padding: 5px;
+    margin: 3px 0;
+    width: 100%;
+    font-size: 12px;
+    font-family: "Roboto Regular", sans-serif;
+}
+
+#logo {
+    width: 150px;
+    height: auto;
+    margin: 10px 0 20px 0;
+    background-color: #1696cc;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    text-align: center;
+}
+
+#logo-title {
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#logo-meta-text {
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-family: "Roboto Thin", sans-serif;
+}
+
+#login-remember-me {
+    margin-left: 20px;
+    margin-top: 16px;
+    float: left;
+}
+
+#login-button {
+    margin-top: 10px;
+    float: right;
+}
+
+#login-button .btn-success {
+    font-size: 12px;
+    border-color: #FFFFFF;
+    background-color: #FFFFFF;
+    color: #1696cc;
+}
+
+#login-button .btn-success .btn-success:hover {
+    background-color: #E9E9E9;
+    color: #1696cc;
+}
+
+#not-found-button {
+    margin-top: 30px;
+}
+
+#login-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 26px;
+    background-color: #1696cc;
+}
+
+#login-footer a:link {
+    text-decoration: underline;
+    font-family: "Roboto Regular", sans-serif;
+    font-size: 11px;
+    color: #FFFFFF;
+}
+#login-footer a:visited,
+#login-footer a:hover,
+#login-footer a:active {
+    color: #FFFFFF;
+}
+
+#login-footer-info {
+    float: right;
+    text-align: right;
+    padding-right:20px;
+}
+
+#login-footer-info-api {
+    float: right;
+    width: 100px;
+    text-align: right;
+    padding-right:20px;
+}

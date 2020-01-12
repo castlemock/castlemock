@@ -54,6 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/web/**")
                     .authenticated()
                     .and()
+                .httpBasic()
+                    .and()
                 .formLogin()
                     .loginPage("/login").failureUrl("/login?error")
                     .usernameParameter("username")
