@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -69,9 +70,9 @@ public class RestMethod {
         this.networkDelay = Objects.requireNonNull(builder.networkDelay);
         this.defaultQueryMockResponseId = Objects.requireNonNull(builder.defaultQueryMockResponseId);
         this.defaultMockResponseId = Objects.requireNonNull(builder.defaultMockResponseId);
-        this.mockResponses = Objects.requireNonNull(builder.mockResponses);
         this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
         this.defaultResponseName = Objects.requireNonNull(builder.defaultResponseName);
+        this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(CopyOnWriteArrayList::new);
     }
 
 

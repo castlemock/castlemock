@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -51,8 +52,8 @@ public class RestResource {
         this.uri = Objects.requireNonNull(builder.uri);
         this.applicationId = Objects.requireNonNull(builder.applicationId);
         this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
-        this.methods = Objects.requireNonNull(builder.methods);
-        this.statusCount = Objects.requireNonNull(builder.statusCount);
+        this.methods = Optional.ofNullable(builder.methods).orElseGet(CopyOnWriteArrayList::new);
+        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(HashMap::new);
     }
 
     @XmlElement

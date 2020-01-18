@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -52,19 +53,19 @@ public class RestMockResponse {
     }
 
     private RestMockResponse(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
+        this.id = builder.id;
         this.name = Objects.requireNonNull(builder.name);
         this.body = Objects.requireNonNull(builder.body);
         this.methodId = Objects.requireNonNull(builder.methodId);
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
         this.status = Objects.requireNonNull(builder.status);
         this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
-        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
-        this.contentEncodings = Objects.requireNonNull(builder.contentEncodings);
-        this.parameterQueries = Objects.requireNonNull(builder.parameterQueries);
-        this.xpathExpressions = Objects.requireNonNull(builder.xpathExpressions);
-        this.jsonPathExpressions = Objects.requireNonNull(builder.jsonPathExpressions);
-        this.headerQueries = Objects.requireNonNull(builder.headerQueries);
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
+        this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(CopyOnWriteArrayList::new);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
+        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions).orElseGet(CopyOnWriteArrayList::new);
+        this.headerQueries = Optional.ofNullable(builder.headerQueries).orElseGet(CopyOnWriteArrayList::new);
     }
 
     @XmlElement

@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -49,7 +50,7 @@ public class RestProject extends Project {
         this.updated = Objects.requireNonNull(builder.updated);
         this.description = Objects.requireNonNull(builder.description);
         this.typeIdentifier = Objects.requireNonNull(builder.typeIdentifier);
-        this.applications = Objects.requireNonNull(builder.applications);
+        this.applications = Optional.ofNullable(builder.applications).orElseGet(CopyOnWriteArrayList::new);
     }
 
 

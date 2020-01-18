@@ -21,18 +21,29 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.TextParser;
-import com.castlemock.core.basis.utility.parser.expression.BodyJsonPathExpression;
-import com.castlemock.core.basis.utility.parser.expression.PathParameterExpression;
-import com.castlemock.core.basis.utility.parser.expression.QueryStringExpression;
 import com.castlemock.core.basis.utility.parser.expression.UrlHostExpression;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentString;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.domain.SoapRequest;
 import com.castlemock.core.mock.soap.model.event.domain.SoapResponse;
-import com.castlemock.core.mock.soap.model.project.domain.*;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
+import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
+import com.castlemock.core.mock.soap.model.project.domain.SoapXPathExpression;
 import com.castlemock.core.mock.soap.service.event.input.CreateSoapEventInput;
-import com.castlemock.core.mock.soap.service.project.input.*;
+import com.castlemock.core.mock.soap.service.project.input.CreateSoapMockResponseInput;
+import com.castlemock.core.mock.soap.service.project.input.IdentifySoapOperationInput;
+import com.castlemock.core.mock.soap.service.project.input.LoadSoapResourceInput;
+import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateCurrentMockResponseSequenceIndexInput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationInput;
 import com.castlemock.core.mock.soap.service.project.output.IdentifySoapOperationOutput;
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
@@ -59,7 +70,14 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
 
 /**
  * The AbstractSoapServiceController provides functionality that are shared for all the SOAP controllers
@@ -438,6 +456,8 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                         .name(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(new Date()))
                         .httpHeaders(response.getHttpHeaders())
                         .httpStatusCode(response.getHttpStatusCode())
+                        .usingExpressions(Boolean.FALSE)
+                        .operationId(soapOperation.getId())
                         .build();
 
                 serviceProcessor.processAsync(CreateSoapMockResponseInput.builder().projectId(soapProjectId)
