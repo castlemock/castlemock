@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -47,8 +48,8 @@ public class RestApplication {
         this.id = Objects.requireNonNull(builder.id);
         this.name = Objects.requireNonNull(builder.name);
         this.projectId = Objects.requireNonNull(builder.projectId);
-        this.resources = Objects.requireNonNull(builder.resources);
-        this.statusCount = Objects.requireNonNull(builder.statusCount);
+        this.resources = Optional.ofNullable(builder.resources).orElseGet(CopyOnWriteArrayList::new);
+        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(HashMap::new);
     }
 
     @XmlElement

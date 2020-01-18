@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -55,9 +56,9 @@ public class SoapProject extends Project {
         this.updated = Objects.requireNonNull(builder.updated);
         this.created = Objects.requireNonNull(builder.created);
         this.description = Objects.requireNonNull(builder.description);
-        this.ports = Objects.requireNonNull(builder.ports);
-        this.resources = Objects.requireNonNull(builder.resources);
-        this.statusCount = Objects.requireNonNull(builder.statusCount);
+        this.ports = Optional.ofNullable(builder.ports).orElseGet(CopyOnWriteArrayList::new);
+        this.resources = Optional.ofNullable(builder.resources).orElseGet(CopyOnWriteArrayList::new);
+        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(HashMap::new);
     }
 
     /**

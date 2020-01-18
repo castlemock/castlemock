@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -51,8 +52,8 @@ public class SoapPort {
         this.uri = Objects.requireNonNull(builder.uri);
         this.projectId = Objects.requireNonNull(builder.projectId);
         this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
-        this.operations = Objects.requireNonNull(builder.operations);
-        this.statusCount = Objects.requireNonNull(builder.statusCount);
+        this.operations = Optional.ofNullable(builder.operations).orElseGet(CopyOnWriteArrayList::new);
+        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(HashMap::new);
     }
 
     @XmlElement

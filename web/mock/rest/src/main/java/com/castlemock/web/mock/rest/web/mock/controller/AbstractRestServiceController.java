@@ -319,11 +319,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final RestResponse response = forwardRequest(restRequest, projectId, applicationId, resourceId,
                 restMethod, pathParameters, httpServletRequest);
         final RestMockResponse mockResponse = RestMockResponse.builder()
+                .name(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(new Date()))
                 .body(response.getBody())
+                .methodId(restMethod.getId())
                 .status(RestMockResponseStatus.ENABLED)
                 .httpHeaders(response.getHttpHeaders())
-                .name(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(new Date()))
                 .httpStatusCode(response.getHttpStatusCode())
+                .usingExpressions(Boolean.FALSE)
                 .build();
         serviceProcessor.processAsync(CreateRestMockResponseInput.builder()
                 .projectId(projectId)

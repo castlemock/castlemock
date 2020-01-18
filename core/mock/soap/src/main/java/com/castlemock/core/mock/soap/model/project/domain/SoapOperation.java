@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -83,9 +84,9 @@ public class SoapOperation {
         this.portId = Objects.requireNonNull(builder.portId);
         this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure);
         this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy);
-        this.mockResponses = Objects.requireNonNull(builder.mockResponses);
         this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
         this.defaultResponseName = builder.defaultResponseName;
+        this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(CopyOnWriteArrayList::new);
     }
 
     @XmlElement

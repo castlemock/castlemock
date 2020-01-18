@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -51,7 +52,7 @@ public class SoapMockResponse {
     }
 
     private SoapMockResponse(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
+        this.id = builder.id;
         this.name = Objects.requireNonNull(builder.name);
         this.body = Objects.requireNonNull(builder.body);
         this.operationId = Objects.requireNonNull(builder.operationId);
@@ -59,9 +60,9 @@ public class SoapMockResponse {
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
         this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
         this.xpathExpression = builder.xpathExpression;
-        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
-        this.contentEncodings = Objects.requireNonNull(builder.contentEncodings);
-        this.xpathExpressions = Objects.requireNonNull(builder.xpathExpressions);
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
 
     }
 
