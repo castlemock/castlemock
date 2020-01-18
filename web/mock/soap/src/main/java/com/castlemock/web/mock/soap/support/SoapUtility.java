@@ -70,15 +70,17 @@ public class SoapUtility {
             final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             final InputSource inputSource = new InputSource(new StringReader(body));
             final Document document = documentBuilder.parse(inputSource);
-            final String rootName = document.getDocumentElement().getNodeName();
-            final ElementName rootElementName = getElementName(rootName);
 
-            final String bodyNameElementName = rootElementName.getNamespace()
-                    .orElse(rootElementName.getLocalName()) + DIVIDER + BODY;
-
-             final Element bodyElement = DocumentUtility.getElement(document, bodyNameElementName)
-                     .orElseGet(() -> DocumentUtility.getElement(document, BODY)
-                             .orElseThrow(() -> new IllegalArgumentException("Unable to extract the SOAP body")));
+            final Element bodyElement = IntStream.range(0, document.getDocumentElement().getChildNodes().getLength())
+                    .mapToObj(index -> document.getDocumentElement().getChildNodes().item(index))
+                    .map(Node::getNodeName)
+                    .map(SoapUtility::getElementName)
+                    .filter(elementName -> elementName.getLocalName().equalsIgnoreCase(BODY))
+                    .findFirst()
+                    .flatMap(bodyElementName -> bodyElementName.getNamespace()
+                            .map(namespace -> DocumentUtility.getElement(document, namespace + DIVIDER + BODY))
+                            .orElseGet(() -> DocumentUtility.getElement(document, BODY)))
+                    .orElseThrow(() -> new IllegalArgumentException("Unable to extract the SOAP body"));
 
             final NodeList bodyChildren = bodyElement.getChildNodes();
 

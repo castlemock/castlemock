@@ -119,6 +119,24 @@ public class SoapUtilityTest {
     }
 
     @Test
+    public void testExtractSoapRequestNameWithBodyNamespace(){
+        final String requestBody =
+                "<?xml version=\"1.0\"?>\n" +
+                        "<soapenv:Envelope\n" +
+                        "xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+                        "<soap:Body xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+                        "  <GetPrice>\n" +
+                        "    <Item>Apples</Item>\n" +
+                        "  </GetPrice>\n" +
+                        "</soap:Body>\n" +
+                        "</soapenv:Envelope> ";
+
+        final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
+        Assert.assertEquals("GetPrice", operationIdentifier.getName());
+        Assert.assertNull(operationIdentifier.getNamespace());
+    }
+
+    @Test
     public void testExtractSoapRequestNameWithoutSoapNamespaces(){
         final String requestBody =
                 "<?xml version=\"1.0\"?>\n" +
