@@ -45,4 +45,20 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>../../../../</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE</include>
+                    <include>NOTICE</include>
+                    <include>AUTHORS</include>
+                    <include>LICENSE-3RD-PARTY</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
 </project>
