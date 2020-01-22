@@ -29,7 +29,7 @@
         </plugins>
         <resources>
             <resource>
-                <directory>../../../../</directory>
+                <directory>../../../</directory>
                 <targetPath>META-INF</targetPath>
                 <includes>
                     <include>LICENSE</include>
