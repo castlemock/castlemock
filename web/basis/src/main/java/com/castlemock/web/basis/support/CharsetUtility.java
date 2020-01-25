@@ -17,7 +17,8 @@
 package com.castlemock.web.basis.support;
 
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -34,7 +35,7 @@ public class CharsetUtility {
     private static final Pattern charsetPattern = Pattern.compile("(?i)\\bcharset=\\s*\"?([^\\s;\"]*)");
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String DEFAULT_CHARSET = "UTF-8";
-    private static final Logger LOGGER = Logger.getLogger(CharsetUtility.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CharsetUtility.class);
 
     /**
      * Extract the charset from a list of provided {@link HttpHeader}.

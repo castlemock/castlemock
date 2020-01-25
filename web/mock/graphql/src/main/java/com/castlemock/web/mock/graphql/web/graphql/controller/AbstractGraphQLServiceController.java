@@ -33,7 +33,8 @@ import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.graphql.converter.query.QueryGraphQLConverter;
 import com.castlemock.web.mock.graphql.model.GraphQLException;
 import com.google.common.base.Preconditions;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,12 +51,12 @@ import java.util.Map;
 public abstract class AbstractGraphQLServiceController extends AbstractController {
 
     private static final String GRAPHQL = "graphql";
-    private static final Logger LOGGER = Logger.getLogger(AbstractGraphQLServiceController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractGraphQLServiceController.class);
 
     private final QueryGraphQLConverter queryConverter = new QueryGraphQLConverter();
     private final GraphQLResponseGenerator generator = new GraphQLResponseGenerator();
     
-    protected ResponseEntity process(final String projectId,
+    protected ResponseEntity<?> process(final String projectId,
                                      final String applicationId,
                                      final HttpServletRequest httpServletRequest,
                                      final HttpServletResponse httpServletResponse){
@@ -111,7 +112,7 @@ public abstract class AbstractGraphQLServiceController extends AbstractControlle
      * @param httpServletResponse The outgoing HTTP servlet response
      * @return Returns the response as an String
      */
-    private ResponseEntity process(final String projectId,
+    private ResponseEntity<?> process(final String projectId,
                                      final GraphQLApplication application,
                                      final Map<GraphQLRequestQuery, GraphQLOperation> operations,
                                      final GraphQLRequest request,

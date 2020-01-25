@@ -22,7 +22,8 @@ import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.ExchangeImpl;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.message.MessageImpl;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -38,7 +39,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class MtomUtility {
 
-    private static final Logger LOGGER = Logger.getLogger(MtomUtility.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MtomUtility.class);
 
     /**
      * The method provides support to extract the main body from an incoming MTOM SOAP request.

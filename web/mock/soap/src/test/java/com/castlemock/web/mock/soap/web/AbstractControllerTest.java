@@ -27,8 +27,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import javax.servlet.ServletContext;
 import java.util.Locale;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 

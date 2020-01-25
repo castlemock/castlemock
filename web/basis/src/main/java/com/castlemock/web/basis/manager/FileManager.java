@@ -18,7 +18,8 @@ package com.castlemock.web.basis.manager;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,7 +47,7 @@ public class FileManager {
 
     @Value(value = "${temp.file.directory}")
     private String tempFilesFolder;
-    private static final Logger LOGGER = Logger.getLogger(FileManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileManager.class);
 
     /**
      * The method uploads a list of MultipartFiles to the server. The output file directory is configurable and can be

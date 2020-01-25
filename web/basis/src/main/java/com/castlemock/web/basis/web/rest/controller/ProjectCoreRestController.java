@@ -20,7 +20,8 @@ import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.service.project.ProjectServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
 import io.swagger.annotations.*;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,7 +52,7 @@ public class ProjectCoreRestController extends AbstractRestController {
     @Autowired
     private ProjectServiceFacade projectServiceFacade;
 
-    private static final Logger LOGGER = Logger.getLogger(ProjectCoreRestController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectCoreRestController.class);
 
 
     /**

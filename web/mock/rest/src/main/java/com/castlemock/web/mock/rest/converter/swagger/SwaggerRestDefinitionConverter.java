@@ -35,7 +35,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import io.swagger.models.*;
 import io.swagger.models.properties.*;
 import io.swagger.parser.SwaggerParser;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
@@ -58,7 +59,7 @@ import java.util.*;
  */
 public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
-    private static final Logger LOGGER = Logger.getLogger(SwaggerRestDefinitionConverter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerRestDefinitionConverter.class);
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String APPLICATION_XML = "application/xml";
     private static final String APPLICATION_JSON = "application/json";

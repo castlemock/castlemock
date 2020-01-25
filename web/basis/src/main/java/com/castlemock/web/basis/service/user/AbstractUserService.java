@@ -23,7 +23,8 @@ import com.castlemock.repository.token.SessionTokenRepository;
 import com.castlemock.repository.user.UserRepository;
 import com.castlemock.web.basis.service.AbstractService;
 import com.google.common.base.Preconditions;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,7 +43,7 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
     private SessionTokenRepository sessionTokenRepository;
 
     protected static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
-    private static final Logger LOGGER = Logger.getLogger(AbstractUserService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractUserService.class);
 
     /**
      * Get a list of users that has the same role as the provided role

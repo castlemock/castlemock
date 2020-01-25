@@ -19,7 +19,8 @@ package com.castlemock.core.basis.utility.parser.expression;
 
 import com.castlemock.core.basis.utility.JsonPathUtility;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public class BodyJsonPathExpression extends AbstractExpression {
     public static final String BODY_ARGUMENT = "BODY";
     public static final String MISSING_BODY = "";
 
-    private static final Logger LOGGER = Logger.getLogger(BodyJsonPathExpression.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BodyJsonPathExpression.class);
 
     /**
      * The transform method provides the functionality to transform a provided <code>input</code>.
@@ -48,8 +49,8 @@ public class BodyJsonPathExpression extends AbstractExpression {
      */
     @Override
     public String transform(final ExpressionInput input) {
-        final ExpressionArgument bodyArgument = input.getArgument(BODY_ARGUMENT);
-        final ExpressionArgument expressionArgument = input.getArgument(EXPRESSION_ARGUMENT);
+        final ExpressionArgument<?> bodyArgument = input.getArgument(BODY_ARGUMENT);
+        final ExpressionArgument<?> expressionArgument = input.getArgument(EXPRESSION_ARGUMENT);
 
         if(bodyArgument == null || expressionArgument == null){
             return MISSING_BODY;

@@ -51,12 +51,12 @@ public class RandomEmailExpression extends AbstractExpression {
     @Override
     public String transform(final ExpressionInput input) {
 
-        final ExpressionArgument domainArgument = input.getArgument(DOMAIN_ARGUMENT);
-        final ExpressionArgument topDomainArgument = input.getArgument(TOP_DOMAIN_ARGUMENT);
+        final ExpressionArgument<?> domainArgument = input.getArgument(DOMAIN_ARGUMENT);
+        final ExpressionArgument<?> topDomainArgument = input.getArgument(TOP_DOMAIN_ARGUMENT);
 
 
-        final ExpressionArgument minArgument = input.getArgument(MIN_ARGUMENT);
-        final ExpressionArgument maxArgument = input.getArgument(MAX_ARGUMENT);
+        final ExpressionArgument<?> minArgument = input.getArgument(MIN_ARGUMENT);
+        final ExpressionArgument<?> maxArgument = input.getArgument(MAX_ARGUMENT);
 
         String domain = null;
         String topDomain = null;

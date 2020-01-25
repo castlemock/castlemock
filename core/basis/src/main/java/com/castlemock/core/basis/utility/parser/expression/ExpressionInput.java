@@ -49,7 +49,7 @@ public class ExpressionInput {
      * @return An {@link ExpressionArgument} that matches the provided search criteria.
      * Null otherwise.
      */
-    public ExpressionArgument getArgument(final String name){
+    public ExpressionArgument<?> getArgument(final String name){
         return this.arguments.get(name);
     }
 
@@ -58,7 +58,7 @@ public class ExpressionInput {
      * @param name The name and identifier for the {@link ExpressionArgument}.
      * @param argument The {@link ExpressionArgument} that will be added.
      */
-    public void addArgument(final String name, final ExpressionArgument argument){
+    public void addArgument(final String name, final ExpressionArgument<?> argument){
         this.arguments.put(name, argument);
     }
 

@@ -23,7 +23,7 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapOperationTestBuild
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationInput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapOperationOutput;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

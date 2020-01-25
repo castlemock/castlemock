@@ -23,7 +23,8 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class ReadSoapOperationService extends AbstractSoapProjectService implements Service<ReadSoapOperationInput, ReadSoapOperationOutput> {
 
-    private static final Logger LOGGER = Logger.getLogger(ReadSoapOperationService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReadSoapOperationService.class);
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate

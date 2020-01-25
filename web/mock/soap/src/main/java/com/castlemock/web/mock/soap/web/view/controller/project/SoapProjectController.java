@@ -28,7 +28,8 @@ import com.castlemock.web.mock.soap.web.view.command.port.DeleteSoapPortsCommand
 import com.castlemock.web.mock.soap.web.view.command.port.SoapPortModifierCommand;
 import com.castlemock.web.mock.soap.web.view.command.port.UpdateSoapPortsEndpointCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -58,7 +59,7 @@ public class SoapProjectController extends AbstractSoapViewController {
     private static final String UPLOAD = "upload";
     private static final String UPLOAD_OUTCOME_SUCCESS = "success";
     private static final String UPLOAD_OUTCOME_ERROR = "error";
-    private static final Logger LOGGER = Logger.getLogger(SoapProjectController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SoapProjectController.class);
 
     /**
      * Retrieves a specific project with a project id

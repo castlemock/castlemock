@@ -28,7 +28,8 @@ import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.project.AbstractProjectFileRepository;
 import com.castlemock.repository.graphql.project.GraphQLProjectRepository;
 import com.google.common.base.Preconditions;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,7 +67,7 @@ public class GraphQLProjectRepositoryFile extends AbstractProjectFileRepository<
     private static final String ENUM_TYPE = "enum";
 
 
-    private static final Logger LOGGER = Logger.getLogger(GraphQLProjectRepositoryFile.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GraphQLProjectRepositoryFile.class);
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate

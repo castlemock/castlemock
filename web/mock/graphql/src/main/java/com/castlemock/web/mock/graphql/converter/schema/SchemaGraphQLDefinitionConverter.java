@@ -27,7 +27,8 @@ import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,7 +39,7 @@ import java.util.List;
 public class SchemaGraphQLDefinitionConverter extends AbstractGraphQLDefinitionConverter {
 
     private FileManager fileManager;
-    private static final Logger LOGGER = Logger.getLogger(SchemaGraphQLDefinitionConverter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SchemaGraphQLDefinitionConverter.class);
 
     public SchemaGraphQLDefinitionConverter(FileManager fileManager){
         this.fileManager = fileManager;

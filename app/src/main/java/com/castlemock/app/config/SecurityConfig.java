@@ -16,7 +16,8 @@
 
 package com.castlemock.app.config;
 
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -44,7 +45,7 @@ public class SecurityConfig {
     @Autowired
     @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
-    private static final Logger LOGGER = Logger.getLogger(SecurityConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
 
     /**
      * Configure which attributes will be used for when doing authentication

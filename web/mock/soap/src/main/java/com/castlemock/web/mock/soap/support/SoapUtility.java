@@ -18,7 +18,8 @@ package com.castlemock.web.mock.soap.support;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
 import com.castlemock.web.basis.support.DocumentUtility;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 
@@ -43,7 +44,7 @@ public class SoapUtility {
     private static final String XMLNS = "xmlns";
     private static final String ADDRESS_NAMESPACE = "address";
     private static final String LOCATION_NAMESPACE = "location";
-    private static final Logger LOGGER = Logger.getLogger(SoapUtility.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SoapUtility.class);
 
     /**
      * Extract the SOAP address from a port element

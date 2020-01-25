@@ -4,7 +4,8 @@ import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.repository.Repository;
 import com.google.common.base.Preconditions;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public abstract class MongoRepository<T extends Saveable<I>, D, I extends Serial
 
     private final Class<D> dtoClass;
 
-    private static final Logger LOGGER = Logger.getLogger(MongoRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MongoRepository.class);
 
     /**
      * The default constructor for the AbstractRepositoryImpl class. The constructor will extract class instances of the
@@ -129,7 +130,7 @@ public abstract class MongoRepository<T extends Saveable<I>, D, I extends Serial
      */
     @Override
     public Integer count() {
-        return (int) mongoOperations.getCollection(mongoOperations.getCollectionName(entityClass)).count();
+        return (int) mongoOperations.getCollection(mongoOperations.getCollectionName(entityClass)).countDocuments();
     }
 
     /**

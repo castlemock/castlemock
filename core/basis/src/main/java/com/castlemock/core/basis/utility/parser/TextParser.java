@@ -19,7 +19,8 @@ package com.castlemock.core.basis.utility.parser;
 import com.castlemock.core.basis.utility.parser.expression.*;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ import java.util.regex.Pattern;
 public class TextParser {
 
     private static final Map<String,Expression> EXPRESSIONS = new HashMap<>();
-    private static final Logger LOGGER = Logger.getLogger(TextParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TextParser.class);
 
 
     static {

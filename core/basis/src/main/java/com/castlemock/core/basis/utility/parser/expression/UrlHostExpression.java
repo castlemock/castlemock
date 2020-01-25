@@ -44,7 +44,7 @@ public class UrlHostExpression extends AbstractExpression {
      */
     @Override
     public String transform(final ExpressionInput input) {
-        final ExpressionArgument urlArgument = input.getArgument(URL_ARGUMENT);
+        final ExpressionArgument<?> urlArgument = input.getArgument(URL_ARGUMENT);
 
         if(!(urlArgument instanceof ExpressionArgumentString)){
             return MISSING_URL_ARGUMENT;

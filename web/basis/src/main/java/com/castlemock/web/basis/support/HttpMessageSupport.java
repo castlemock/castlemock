@@ -20,7 +20,8 @@ import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.http.domain.HttpParameter;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -41,7 +42,7 @@ public class HttpMessageSupport {
 
     private static final String TRANSFER_ENCODING = "Transfer-Encoding";
     private static final String CONTENT_LENGTH = "Content-Length";
-    private static final Logger LOGGER = Logger.getLogger(HttpMessageSupport.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpMessageSupport.class);
     private static final String EMPTY = "";
     private static final Integer OK_RESPONSE = 200;
     private static final String NEW_LINE = System.lineSeparator();

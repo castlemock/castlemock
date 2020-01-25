@@ -17,18 +17,13 @@
 package com.castlemock.web.mock.graphql.web.view.controller.objecttype;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.graphql.model.project.domain.GraphQLApplication;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLObjectType;
 import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLObjectTypeInput;
-import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLProjectInput;
-import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLApplicationOutput;
 import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLObjectTypeOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.graphql.config.TestApplication;
-import com.castlemock.web.mock.graphql.model.project.GraphQLApplicationGenerator;
 import com.castlemock.web.mock.graphql.model.project.GraphQLObjectTypeGenerator;
 import com.castlemock.web.mock.graphql.web.view.AbstractGraphQLViewControllerTest;
-import com.castlemock.web.mock.graphql.web.view.controller.application.GraphQLApplicationController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -40,7 +35,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 /**
