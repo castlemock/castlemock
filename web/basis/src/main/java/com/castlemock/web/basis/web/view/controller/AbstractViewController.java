@@ -19,7 +19,8 @@ package com.castlemock.web.basis.web.view.controller;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.basis.web.view.command.search.SearchCommand;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -42,7 +43,7 @@ import java.util.Date;
  */
 public abstract class AbstractViewController extends AbstractController {
 
-    private final Logger logger = Logger.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     protected MessageSource messageSource;

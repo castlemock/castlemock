@@ -16,7 +16,8 @@
 
 package com.castlemock.core.basis.utility.file;
 
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.*;
 
@@ -27,7 +28,7 @@ import java.io.*;
  */
 public class FileUtility {
 
-    private static final Logger LOGGER = Logger.getLogger(FileUtility.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtility.class);
 
     /**
      * Parse the incoming <code>file</code> into a String.

@@ -19,7 +19,8 @@ package com.castlemock.web.mock.graphql.web.view.controller.subscription;
 import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLSubscriptionInput;
 import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLSubscriptionOutput;
 import com.castlemock.web.mock.graphql.web.view.controller.AbstractGraphQLViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class GraphQLSubscriptionController extends AbstractGraphQLViewController {
 
     private static final String PAGE = "mock/graphql/subscription/graphQLSubscription";
-    private static final Logger LOGGER = Logger.getLogger(GraphQLSubscriptionController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GraphQLSubscriptionController.class);
     /**
      * Retrieves a specific project with a project id
      * @param projectId The id of the project that will be retrieved

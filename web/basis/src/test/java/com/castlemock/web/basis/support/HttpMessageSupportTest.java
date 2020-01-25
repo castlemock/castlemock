@@ -70,8 +70,6 @@ public class HttpMessageSupportTest {
 
     @Test
     public void testExtractHttpHeadersConnection(){
-        final List<String> headerNames = Arrays.asList("Content-Type", "Accept", "Content-Length");
-
         final Map<String, List<String>> headers = new HashMap<>();
         headers.put("Content-Type", Arrays.asList("application/xml", "application/json"));
         headers.put("Accept", Arrays.asList("application/json"));

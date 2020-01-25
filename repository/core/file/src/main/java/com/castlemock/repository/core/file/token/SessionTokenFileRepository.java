@@ -2,7 +2,8 @@ package com.castlemock.repository.core.file.token;
 
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.token.SessionTokenRepository;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -42,8 +43,8 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
     private String tokenDirectory;
     @Value(value = "${token.file.name}")
     private String tokenFileName;
-    private static final Logger LOGGER = Logger.getLogger(SessionTokenFileRepository.class);
-    private final Map<String, PersistentRememberMeToken> seriesTokens = new HashMap();
+    private static final Logger LOGGER = LoggerFactory.getLogger(SessionTokenFileRepository.class);
+    private final Map<String, PersistentRememberMeToken> seriesTokens = new HashMap<>();
 
     /**
      * The initialize method is responsible for initiating the token repository and load

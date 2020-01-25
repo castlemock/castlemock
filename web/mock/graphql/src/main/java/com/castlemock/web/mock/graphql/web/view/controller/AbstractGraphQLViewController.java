@@ -18,7 +18,8 @@ package com.castlemock.web.mock.graphql.web.view.controller;
 
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLOperationStatus;
 import com.castlemock.web.basis.web.view.controller.AbstractViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -46,7 +47,7 @@ public abstract class AbstractGraphQLViewController extends AbstractViewControll
     protected static final String GRAPHQL_OPERATION_STATUSES = "graphQLOperationStatus";
 
 
-    private static final Logger LOGGER = Logger.getLogger(AbstractGraphQLViewController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractGraphQLViewController.class);
 
 
     /**

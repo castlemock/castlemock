@@ -29,7 +29,8 @@ import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.web.mock.soap.web.view.command.mockresponse.DeleteSoapMockResponsesCommand;
 import com.castlemock.web.mock.soap.web.view.command.mockresponse.SoapMockResponseModifierCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -58,7 +59,7 @@ public class SoapOperationController extends AbstractSoapViewController {
     private static final String UPDATE_STATUS = "update";
     private static final String DELETE_MOCK_RESPONSES = "delete";
     private static final String DUPLICATE_MOCK_RESPONSE = "duplicate";
-    private static final Logger LOGGER = Logger.getLogger(SoapOperationController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SoapOperationController.class);
 
     /**
      * The method provides functionality to retrieve a specific operation

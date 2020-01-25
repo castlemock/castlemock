@@ -35,7 +35,7 @@ public class SoapConfig {
      */
     @Bean
     public FilterRegistrationBean soapRequestWrapperFilter() {
-        final FilterRegistrationBean registration = new FilterRegistrationBean();
+        final FilterRegistrationBean<HttpServletRequestWrapperFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new HttpServletRequestWrapperFilter());
         registration.addUrlPatterns("/mock/soap/project/*");
         registration.setName("soapRequestWrapperFilter");

@@ -21,7 +21,8 @@ import com.castlemock.core.mock.graphql.service.project.input.ReadGraphQLObjectT
 import com.castlemock.core.mock.graphql.service.project.input.UpdateGraphQLObjectTypeInput;
 import com.castlemock.core.mock.graphql.service.project.output.ReadGraphQLObjectTypeOutput;
 import com.castlemock.web.mock.graphql.web.view.controller.AbstractGraphQLViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,7 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UpdateGraphQLObjectTypeController extends AbstractGraphQLViewController {
 
     private static final String PAGE = "mock/graphql/objecttype/updateGraphQLObjectType";
-    private static final Logger LOGGER = Logger.getLogger(UpdateGraphQLObjectTypeController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UpdateGraphQLObjectTypeController.class);
     /**
      * Retrieves a specific project with a project id
      * @param projectId The id of the project that will be retrieved

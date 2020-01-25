@@ -28,7 +28,6 @@ import java.util.Random;
 public abstract class AbstractExpression implements Expression {
 
     protected static final Random RANDOM = new Random();
-    private static final RandomStringUtils RANDOM_STRING = new RandomStringUtils();
 
     /**
      * The method generates a {@link String} with a given length.
@@ -37,7 +36,7 @@ public abstract class AbstractExpression implements Expression {
      * @since 1.13
      */
     protected String randomString(final int length){
-        return RANDOM_STRING.randomAlphanumeric(length);
+        return RandomStringUtils.randomAlphanumeric(length);
     }
 
 

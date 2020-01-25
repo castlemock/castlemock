@@ -16,7 +16,8 @@
 
 package com.castlemock.web.basis.web.view.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
@@ -49,7 +50,7 @@ public class LoginController extends AbstractViewController {
     private static final String SPRING_SECURITY_LAST_EXCEPTION = "SPRING_SECURITY_LAST_EXCEPTION";
     private static final String MSG = "msg";
     private static final String ERROR = "error";
-    private static final Logger LOGGER = Logger.getLogger(LoginController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     /**
      * The login method examines the status of the current user and determines which action should be taken.

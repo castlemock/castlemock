@@ -26,7 +26,8 @@ import com.castlemock.core.mock.soap.service.project.input.ImportSoapProjectInpu
 import com.castlemock.core.mock.soap.service.project.output.ImportSoapProjectOutput;
 import com.castlemock.repository.soap.file.project.legacy.SoapProjectV1LegacyRepository;
 import com.google.common.base.Strings;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -39,7 +40,7 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
     @Autowired
     private SoapProjectV1LegacyRepository legacyRepository;
 
-    private static final Logger LOGGER = Logger.getLogger(ImportSoapProjectService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImportSoapProjectService.class);
 
 
     /**

@@ -22,7 +22,8 @@ import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.support.DocumentUtility;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -42,7 +43,7 @@ import java.util.*;
 public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
     private final FileManager fileManager;
-    private static final Logger LOGGER = Logger.getLogger(WADLRestDefinitionConverter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WADLRestDefinitionConverter.class);
 
 
     public WADLRestDefinitionConverter(final FileManager fileManager){

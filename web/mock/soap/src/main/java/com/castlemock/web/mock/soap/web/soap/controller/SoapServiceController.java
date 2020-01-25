@@ -56,19 +56,19 @@ public class SoapServiceController extends AbstractSoapServiceController {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/**")
-    public ResponseEntity postMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
+    public ResponseEntity<?> postMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
         return process(projectId, request, response);
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{projectId}", produces = {MediaType.TEXT_XML_VALUE})
-    public ResponseEntity getMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
+    public ResponseEntity<?> getMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
         return processGet(projectId, request, response);
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/**", produces = {MediaType.TEXT_XML_VALUE})
-    public ResponseEntity getWildcardMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
+    public ResponseEntity<?> getWildcardMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
         return processGet(projectId, request, response);
     }
 }

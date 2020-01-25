@@ -18,7 +18,8 @@ package com.castlemock.web.mock.soap.web.view.controller;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.castlemock.web.basis.web.view.controller.AbstractViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class AbstractSoapViewController extends AbstractViewController {
     protected static final String SOAP_MOCK_RESPONSE_STATUSES = "soapMockResponseStatuses";
     protected static final String SOAP_MOCK_RESPONSE_STRATEGIES = "soapMockResponseStrategies";
 
-    private static final Logger LOGGER = Logger.getLogger(AbstractSoapViewController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSoapViewController.class);
 
     /**
      * The method provides the functionality to create the address which is used to invoke a SOAP service

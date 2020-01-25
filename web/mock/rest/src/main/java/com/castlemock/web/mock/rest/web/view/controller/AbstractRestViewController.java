@@ -18,7 +18,8 @@ package com.castlemock.web.mock.rest.web.view.controller;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.web.basis.web.view.controller.AbstractViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +66,7 @@ public class AbstractRestViewController extends AbstractViewController {
 
     protected static final String REST_QUERY_PARAMETERS = "restQueryParameters";
 
-    private static final Logger LOGGER = Logger.getLogger(AbstractRestViewController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRestViewController.class);
 
     /**
      * The method provides the functionality to create the address which is used to invoke a REST service

@@ -20,7 +20,8 @@ import com.castlemock.core.basis.model.*;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.validation.validator.NotNullValidator;
 import com.castlemock.core.basis.model.validation.validator.Validator;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -45,7 +46,7 @@ public class ServiceProcessorImpl implements ServiceProcessor {
     @Autowired
     private ServiceRegistry serviceRegistry;
     private static final String UNKNOWN_USER = "Unknown";
-    private static final Logger LOGGER = Logger.getLogger(ServiceProcessorImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceProcessorImpl.class);
     private static final List<Validator> VALIDATORS = new ArrayList<Validator>();
 
     static {

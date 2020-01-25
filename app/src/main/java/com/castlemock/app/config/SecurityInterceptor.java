@@ -24,7 +24,8 @@ import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 import com.castlemock.web.basis.service.user.UserDetailSecurityService;
 import com.castlemock.web.basis.web.AbstractController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -56,7 +57,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     private ServiceProcessor serviceProcessor;
     @Autowired
     private UserDetailSecurityService userDetailSecurityService;
-    private static final Logger LOGGER = Logger.getLogger(SecurityInterceptor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityInterceptor.class);
     private static final String ANONYMOUS_USER = "anonymousUser";
 
     /**

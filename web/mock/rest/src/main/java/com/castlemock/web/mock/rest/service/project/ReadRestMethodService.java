@@ -23,7 +23,8 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.List;
 

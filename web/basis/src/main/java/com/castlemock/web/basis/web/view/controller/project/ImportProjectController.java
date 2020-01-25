@@ -20,7 +20,8 @@ import com.castlemock.core.basis.service.project.ProjectServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.web.view.command.ProjectFileUploadForm;
 import com.castlemock.web.basis.web.view.controller.AbstractViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Scope;
@@ -56,7 +57,7 @@ public class ImportProjectController extends AbstractViewController {
     @Autowired
     private FileManager fileManager;
     private static final String PAGE = "basis/project/importProject";
-    private static final Logger LOGGER = Logger.getLogger(ImportProjectController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImportProjectController.class);
 
     /**
      * Creates and return a view that provides the required functionality

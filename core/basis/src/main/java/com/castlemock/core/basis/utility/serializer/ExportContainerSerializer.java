@@ -17,7 +17,8 @@
 package com.castlemock.core.basis.utility.serializer;
 
 import com.castlemock.core.basis.model.ExportContainer;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -35,7 +36,7 @@ import java.io.StringWriter;
  */
 public final class ExportContainerSerializer {
 
-    private static final Logger LOGGER = Logger.getLogger(ExportContainerSerializer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExportContainerSerializer.class);
 
     private ExportContainerSerializer(){
 

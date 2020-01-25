@@ -23,7 +23,8 @@ import com.castlemock.core.mock.soap.service.project.output.ImportSoapResourceOu
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import io.swagger.annotations.*;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,7 +48,7 @@ public class SoapResourceRestController extends AbstractRestController {
     @Autowired
     private FileManager fileManager;
 
-    private static final Logger LOGGER = Logger.getLogger(SoapResourceRestController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SoapResourceRestController.class);
 
     @ApiOperation(value = "Import resource", notes = "The service will upload a SOAP resource. " +
             "Either the project id or the resource id is required. Required authorization: Modifier or Admin.",
