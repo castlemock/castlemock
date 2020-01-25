@@ -27,7 +27,8 @@ import com.castlemock.web.mock.rest.web.view.command.application.DeleteRestAppli
 import com.castlemock.web.mock.rest.web.view.command.application.RestApplicationModifierCommand;
 import com.castlemock.web.mock.rest.web.view.command.application.UpdateRestApplicationsEndpointCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -58,7 +59,7 @@ public class RestProjectController extends AbstractRestViewController {
     private static final String UPLOAD_OUTCOME_SUCCESS = "success";
     private static final String UPLOAD_OUTCOME_ERROR = "error";
 
-    private static final Logger LOGGER = Logger.getLogger(RestProjectController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestProjectController.class);
     /**
      * Retrieves a specific project with a project id
      * @param projectId The id of the project that will be retrieved

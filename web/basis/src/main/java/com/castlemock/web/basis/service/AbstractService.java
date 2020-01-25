@@ -104,7 +104,7 @@ public abstract class AbstractService<D, I extends Serializable, R extends Repos
     }
 
 
-    protected <O extends Output> ServiceResult<O> createServiceResult(O output){
-        return new ServiceResult(output);
+    protected <O extends Output> ServiceResult<O> createServiceResult(final O output){
+        return new ServiceResult<>(output);
     }
 }

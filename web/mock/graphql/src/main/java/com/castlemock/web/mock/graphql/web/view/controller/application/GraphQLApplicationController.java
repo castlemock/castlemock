@@ -23,7 +23,8 @@ import com.castlemock.web.mock.graphql.web.view.command.project.GraphQLMutationM
 import com.castlemock.web.mock.graphql.web.view.command.project.GraphQLQueryModifierCommand;
 import com.castlemock.web.mock.graphql.web.view.command.project.GraphQLSubscriptionModifierCommand;
 import com.castlemock.web.mock.graphql.web.view.controller.AbstractGraphQLViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,7 +53,7 @@ public class GraphQLApplicationController extends AbstractGraphQLViewController 
     private static final String UPLOAD_OUTCOME_SUCCESS = "success";
     private static final String UPLOAD_OUTCOME_ERROR = "error";
 
-    private static final Logger LOGGER = Logger.getLogger(GraphQLApplicationController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GraphQLApplicationController.class);
     /**
      * Retrieves a specific project with a project id
      * @param projectId The id of the project that will be retrieved

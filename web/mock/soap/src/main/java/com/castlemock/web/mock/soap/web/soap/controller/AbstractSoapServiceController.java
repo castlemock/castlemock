@@ -57,7 +57,8 @@ import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparat
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -94,7 +95,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
     private static final String SOAP = "soap";
     private static final int ERROR_CODE = 500;
     private static final String DEFAULT_CHAR_SET = "charset=\"utf-8\"";
-    private static final Logger LOGGER = Logger.getLogger(AbstractSoapServiceController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSoapServiceController.class);
 
     private static final SoapMockResponseNameComparator MOCK_RESPONSE_NAME_COMPARATOR =
             new SoapMockResponseNameComparator();
@@ -109,7 +110,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletResponse The outgoing response
      * @return Returns the response as an String
      */
-    protected ResponseEntity process(final String projectId,
+    protected ResponseEntity<?> process(final String projectId,
                                      final HttpServletRequest httpServletRequest,
                                      final HttpServletResponse httpServletResponse){
         try{
@@ -132,7 +133,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
     }
 
-    protected ResponseEntity processGet(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity<?> processGet(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
@@ -226,7 +227,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @param httpServletResponse The outgoing HTTP servlet response
      * @return Returns the response as an String
      */
-    protected ResponseEntity process(final String soapProjectId,
+    protected ResponseEntity<?> process(final String soapProjectId,
                                      final String soapPortId,
                                      final SoapOperation soapOperation,
                                      final SoapRequest request,
@@ -367,7 +368,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
         String body = mockResponse.getBody();
         if(mockResponse.isUsingExpressions()){
-            final ExpressionArgument urlArgument = new ExpressionArgumentString(httpServletRequest.getRequestURL().toString());
+            final ExpressionArgument<?> urlArgument = new ExpressionArgumentString(httpServletRequest.getRequestURL().toString());
             final Map<String, ExpressionArgument<?>> externalInput =
                     ImmutableMap.of(
                             UrlHostExpression.URL_ARGUMENT, urlArgument

@@ -42,7 +42,7 @@ public class MongoConfig {
 
         public MongoAutoConfiguration(MongoProperties properties,
                                       ObjectProvider<MongoClientOptions> options, Environment environment) {
-            super(properties, options, environment);
+            super();
         }
     }
 
@@ -54,7 +54,7 @@ public class MongoConfig {
             extends org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration {
 
         public MongoDataAutoConfiguration(MongoProperties properties) {
-            super(properties);
+            super();
         }
     }
 

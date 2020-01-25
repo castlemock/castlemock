@@ -32,7 +32,7 @@ public class GraphQLServiceController extends AbstractGraphQLServiceController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/application/{applicationId}/**")
-    public ResponseEntity postMethod(@PathVariable final String projectId,
+    public ResponseEntity<?> postMethod(@PathVariable final String projectId,
                                      @PathVariable final String applicationId,
                                      final HttpServletRequest httpServletRequest,
                                      final HttpServletResponse httpServletResponse) {

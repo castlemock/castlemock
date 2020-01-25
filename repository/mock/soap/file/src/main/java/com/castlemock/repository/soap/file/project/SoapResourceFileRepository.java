@@ -29,7 +29,8 @@ import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.soap.project.SoapResourceRepository;
 import com.google.common.base.Preconditions;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,7 +54,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
     @Value(value = "${soap.resource.file.extension}")
     private String fileExtension;
 
-    private static final Logger LOGGER = Logger.getLogger(SoapResourceFileRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SoapResourceFileRepository.class);
 
     @Autowired
     private FileRepositorySupport fileRepositorySupport;

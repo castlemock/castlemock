@@ -27,7 +27,8 @@ import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.web.mock.soap.web.view.command.operation.SoapOperationModifierCommand;
 import com.castlemock.web.mock.soap.web.view.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -54,7 +55,7 @@ public class SoapPortController extends AbstractSoapViewController {
     private static final String UPDATE_ENDPOINTS = "update-endpoint";
     private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_COMMAND = "command";
     private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_PAGE = "mock/soap/operation/updateSoapOperationsEndpoint";
-    private static final Logger LOGGER = Logger.getLogger(SoapPortController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SoapPortController.class);
 
     /**
      * Returns an port that matches the incoming parameters (soapProjectId and soapPortId)

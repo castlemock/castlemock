@@ -56,7 +56,8 @@ import com.castlemock.web.mock.rest.utility.compare.RestMockResponseNameComparat
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -94,7 +95,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
     private static final String FORWARDED_RESPONSE_NAME = "Forwarded response";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static final Random RANDOM = new Random();
-    private static final Logger LOGGER = Logger.getLogger(AbstractRestServiceController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRestServiceController.class);
 
     private static final RestMockResponseNameComparator MOCK_RESPONSE_NAME_COMPARATOR =
             new RestMockResponseNameComparator();
@@ -521,18 +522,18 @@ public abstract class AbstractRestServiceController extends AbstractController {
         if (mockResponse.isUsingExpressions()) {
             final ExpressionArgumentMap pathParametersArgument = new ExpressionArgumentMap();
             pathParameters.forEach((key, value) -> {
-                ExpressionArgument pathParameterArgument = new ExpressionArgumentString(value);
+                ExpressionArgument<?> pathParameterArgument = new ExpressionArgumentString(value);
                 pathParametersArgument.addArgument(key, pathParameterArgument);
             });
 
             final ExpressionArgumentMap queryStringArgument = new ExpressionArgumentMap();
             restRequest.getHttpParameters().forEach(parameter -> {
-                ExpressionArgument pathParameterArgument = new ExpressionArgumentString(parameter.getValue());
+                ExpressionArgument<?> pathParameterArgument = new ExpressionArgumentString(parameter.getValue());
                 queryStringArgument.addArgument(parameter.getName(), pathParameterArgument);
             });
 
-            final ExpressionArgument urlArgument = new ExpressionArgumentString(httpServletRequest.getRequestURL().toString());
-            final ExpressionArgument bodyArgument = new ExpressionArgumentString(restRequest.getBody());
+            final ExpressionArgument<?> urlArgument = new ExpressionArgumentString(httpServletRequest.getRequestURL().toString());
+            final ExpressionArgument<?> bodyArgument = new ExpressionArgumentString(restRequest.getBody());
 
             final Map<String, ExpressionArgument<?>> externalInput =
                     ImmutableMap.of(

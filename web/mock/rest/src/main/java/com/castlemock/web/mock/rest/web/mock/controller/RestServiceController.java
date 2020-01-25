@@ -57,7 +57,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/application/{applicationId}/**")
-    public ResponseEntity getMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+    public ResponseEntity<?> getMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, HttpMethod.GET, httpServletRequest, httpServletResponse);
     }
 
@@ -75,7 +75,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/application/{applicationId}/**")
-    public ResponseEntity postMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+    public ResponseEntity<?> postMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, HttpMethod.POST, httpServletRequest, httpServletResponse);
     }
 
@@ -93,7 +93,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT, value = "/{projectId}/application/{applicationId}/**")
-    public ResponseEntity putMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+    public ResponseEntity<?> putMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, HttpMethod.PUT, httpServletRequest, httpServletResponse);
     }
 
@@ -111,7 +111,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.DELETE, value = "/{projectId}/application/{applicationId}/**")
-    public ResponseEntity deleteMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+    public ResponseEntity<?> deleteMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, HttpMethod.DELETE, httpServletRequest, httpServletResponse);
     }
 
@@ -129,7 +129,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.HEAD, value = "/{projectId}/application/{applicationId}/**")
-    public ResponseEntity headMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+    public ResponseEntity<?> headMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, HttpMethod.HEAD, httpServletRequest, httpServletResponse);
     }
 
@@ -147,7 +147,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.OPTIONS, value = "/{projectId}/application/{applicationId}/**")
-    public ResponseEntity optionsMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+    public ResponseEntity<?> optionsMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, HttpMethod.OPTIONS, httpServletRequest, httpServletResponse);
     }
 
@@ -165,7 +165,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.TRACE, value = "/{projectId}/application/{applicationId}/**")
-    public ResponseEntity traceMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+    public ResponseEntity<?> traceMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, HttpMethod.TRACE, httpServletRequest, httpServletResponse);
     }
 
@@ -183,7 +183,7 @@ public class RestServiceController extends AbstractRestServiceController  {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH, value = "/{projectId}/application/{applicationId}/**")
-    public ResponseEntity patchMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+    public ResponseEntity<?> patchMethod(@PathVariable final String projectId, @PathVariable final String applicationId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
         return process(projectId, applicationId, HttpMethod.PATCH, httpServletRequest, httpServletResponse);
     }
 }

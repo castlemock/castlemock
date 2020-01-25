@@ -20,7 +20,8 @@ import com.castlemock.core.mock.soap.service.project.input.CreateSoapPortsInput;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.soap.web.view.command.project.WSDLFileUploadForm;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +47,7 @@ public class SoapAddWSDLController extends AbstractSoapViewController {
     private static final String PAGE = "mock/soap/project/soapAddWSDL";
     private static final String TYPE_LINK = "link";
     private static final String TYPE_FILE = "file";
-    private static final Logger LOGGER = Logger.getLogger(SoapAddWSDLController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SoapAddWSDLController.class);
 
     @Autowired
     private FileManager fileManager;

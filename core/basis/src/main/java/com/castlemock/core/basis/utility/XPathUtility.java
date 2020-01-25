@@ -16,7 +16,8 @@
 
 package com.castlemock.core.basis.utility;
 
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -34,7 +35,7 @@ import java.io.StringReader;
  */
 public final class XPathUtility {
 
-    private static final Logger LOGGER = Logger.getLogger(XPathUtility.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XPathUtility.class);
 
     private XPathUtility(){
 

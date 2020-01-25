@@ -20,7 +20,8 @@ import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.rest.service.project.input.ImportRestProjectInput;
 import com.castlemock.web.basis.manager.UrlManager;
 import com.google.common.base.Strings;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -38,7 +39,7 @@ public class RestDemoModeInitializer {
     @Autowired
     private ServiceProcessor serviceProcessor;
 
-    private static final Logger LOGGER = Logger.getLogger(RestDemoModeInitializer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestDemoModeInitializer.class);
 
     @PostConstruct
     private void setup(){

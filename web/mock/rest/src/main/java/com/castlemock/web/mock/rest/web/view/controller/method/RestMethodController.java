@@ -29,7 +29,8 @@ import com.castlemock.core.mock.rest.service.project.output.ReadRestResourceOutp
 import com.castlemock.web.mock.rest.web.view.command.mockresponse.DeleteRestMockResponsesCommand;
 import com.castlemock.web.mock.rest.web.view.command.mockresponse.RestMockResponseModifierCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,7 @@ import java.util.List;
 public class RestMethodController extends AbstractRestViewController {
 
     private static final String PAGE = "mock/rest/method/restMethod";
-    private static final Logger LOGGER = Logger.getLogger(RestMethodController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestMethodController.class);
     private static final String UPDATE_STATUS = "update";
     private static final String DELETE_MOCK_RESPONSES = "delete";
     private static final String DUPLICATE_MOCK_RESPONSE = "duplicate";

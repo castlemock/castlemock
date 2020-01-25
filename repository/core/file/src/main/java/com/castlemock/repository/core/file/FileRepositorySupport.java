@@ -17,7 +17,8 @@
 package com.castlemock.repository.core.file;
 
 import com.google.common.base.Preconditions;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
@@ -38,7 +39,7 @@ import java.util.Collection;
 @Component
 public class FileRepositorySupport {
 
-    private static final Logger LOGGER = Logger.getLogger(FileRepositorySupport.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileRepositorySupport.class);
 
     public String read(File file){
         Preconditions.checkNotNull(file, "The file cannot be null");

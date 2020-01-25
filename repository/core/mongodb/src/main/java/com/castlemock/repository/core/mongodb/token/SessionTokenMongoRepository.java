@@ -2,7 +2,8 @@ package com.castlemock.repository.core.mongodb.token;
 
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.token.SessionTokenRepository;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -31,7 +32,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 @Component("tokenRepository")
 public class SessionTokenMongoRepository implements SessionTokenRepository {
 
-    private static final Logger LOGGER = Logger.getLogger(SessionTokenMongoRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SessionTokenMongoRepository.class);
 
     @Autowired
     protected MongoOperations mongoOperations;

@@ -20,7 +20,8 @@ import com.castlemock.core.basis.model.Saveable;
 import com.castlemock.repository.Repository;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,13 @@ import java.io.File;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * The abstract repository provides functionality to interact with the file system in order to manage a specific type.
@@ -68,11 +70,11 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
 
     protected Map<I, T> collection = new ConcurrentHashMap<I, T>();
 
-    private Map<I, Semaphore> writeLocks = new ConcurrentHashMap();
+    private Map<I, Semaphore> writeLocks = new ConcurrentHashMap<>();
 
     private JAXBContext jaxbContext;
 
-    private static final Logger LOGGER = Logger.getLogger(FileRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileRepository.class);
 
     /**
      * The default constructor for the AbstractRepositoryImpl class. The constructor will extract class instances of the
@@ -386,16 +388,12 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * The method provides the functionality to convert a Collection of TYPE instances into a list of DTO instances
      * @param types The collection that will be converted into a list of DTO
      * @param clazz CLass of the DTO type (D)
-     * @param <T> The type that the operation is managing
-     * @param <D> The DTO (Data transfer object) version of the type (TYPE)
      * @return The provided collection but converted into the DTO class
      */
-    protected <T, D> List toDtoList(final Collection<T> types, Class<D> clazz) {
-        final List<D> dtos = new ArrayList<D>();
-        for (T type : types) {
-            dtos.add(mapper.map(type, clazz));
-        }
-        return dtos;
+    protected List<D> toDtoList(final Collection<T> types, final Class<D> clazz) {
+        return types.stream()
+                .map(type -> mapper.map(type, clazz))
+                .collect(toList());
     }
 
     /**

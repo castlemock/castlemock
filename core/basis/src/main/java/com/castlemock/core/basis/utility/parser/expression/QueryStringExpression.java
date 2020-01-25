@@ -41,8 +41,8 @@ public class QueryStringExpression extends AbstractExpression {
      */
     @Override
     public String transform(final ExpressionInput input) {
-        final ExpressionArgument querysArgument = input.getArgument(QUERY_STRINGS);
-        final ExpressionArgument queryIdentifierArgument = input.getArgument(QUERY_ARGUMENT);
+        final ExpressionArgument<?> querysArgument = input.getArgument(QUERY_STRINGS);
+        final ExpressionArgument<?> queryIdentifierArgument = input.getArgument(QUERY_ARGUMENT);
 
         if(querysArgument == null || queryIdentifierArgument == null ||
                 !(querysArgument instanceof ExpressionArgumentMap)){
@@ -51,7 +51,7 @@ public class QueryStringExpression extends AbstractExpression {
 
         final ExpressionArgumentMap querysMap = (ExpressionArgumentMap) querysArgument;
         final Object key = queryIdentifierArgument.getValue();
-        final ExpressionArgument result = querysMap.getArgument(key);
+        final ExpressionArgument<?> result = querysMap.getArgument(key);
 
         if(result == null){
             return MISSING_QUERY_STRING;

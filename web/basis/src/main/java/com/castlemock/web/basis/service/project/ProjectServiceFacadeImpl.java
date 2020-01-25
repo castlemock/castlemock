@@ -87,7 +87,7 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, String,
     @Override
     public List<SearchResult> search(SearchQuery searchQuery) {
         final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        for(ProjectServiceAdapter projectServiceAdapter : services.values()){
+        for(ProjectServiceAdapter<?> projectServiceAdapter : services.values()){
             List<SearchResult> projectServiceSearchResult = projectServiceAdapter.search(searchQuery);
             searchResults.addAll(projectServiceSearchResult);
         }

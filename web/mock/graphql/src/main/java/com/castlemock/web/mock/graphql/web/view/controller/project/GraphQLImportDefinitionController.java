@@ -21,7 +21,8 @@ import com.castlemock.core.mock.graphql.service.project.input.ImportGraphQLDefin
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.graphql.web.view.command.project.GraphQLDefinitionFileUploadForm;
 import com.castlemock.web.mock.graphql.web.view.controller.AbstractGraphQLViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,7 +48,7 @@ public class GraphQLImportDefinitionController extends AbstractGraphQLViewContro
     private static final String TYPE_FILE = "file";
     private static final String DEFINITION_TYPE = "definitionType";
     private static final String DEFINITION_DISPLAY_NAME = "definitionDisplayName";
-    private static final Logger LOGGER = Logger.getLogger(GraphQLImportDefinitionController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GraphQLImportDefinitionController.class);
 
     @Autowired
     private FileManager fileManager;

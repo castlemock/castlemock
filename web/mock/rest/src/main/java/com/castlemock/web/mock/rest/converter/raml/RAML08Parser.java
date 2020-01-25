@@ -25,7 +25,8 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.raml.v2.api.model.v08.bodies.BodyLike;
 import org.raml.v2.api.model.v08.bodies.Response;
 import org.raml.v2.api.model.v08.methods.Method;
@@ -42,7 +43,7 @@ import java.util.List;
  */
 class RAML08Parser extends AbstractRAMLParser{
 
-    private static final Logger LOGGER = Logger.getLogger(RAML08Parser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RAML08Parser.class);
 
     public void getResources(final List<Resource> resources, final List<RestResource> result,
                              final String path, boolean generateResponse) {

@@ -17,7 +17,8 @@
 package com.castlemock.app.config;
 
 import com.castlemock.web.basis.web.AbstractController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -35,7 +36,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoggingInterceptor extends HandlerInterceptorAdapter {
 
-    private static final Logger LOGGER = Logger.getLogger(LoggingInterceptor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingInterceptor.class);
 
     /**
      * The method handles incoming requests and logs them if debug mode is enabled. The method will log the following

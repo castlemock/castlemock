@@ -16,7 +16,8 @@
 
 package com.castlemock.web.basis.web.view.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,7 +36,7 @@ public class ViewControllerAdvice extends AbstractViewController {
 
     private static final String PAGE = "basis/error/error";
     private static final String MESSAGE = "message";
-    private static final Logger LOGGER = Logger.getLogger(ViewControllerAdvice.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ViewControllerAdvice.class);
 
     /**
      * Handles uncaught exceptions and creates an error view that will be displayed to the user.

@@ -21,7 +21,8 @@ import com.castlemock.core.mock.rest.service.project.input.ImportRestDefinitionI
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.rest.web.view.command.project.RestDefinitionFileUploadForm;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,7 +50,7 @@ public class RestImportDefinitionController extends AbstractRestViewController {
     private static final String TYPE_FILE = "file";
     private static final String DEFINITION_TYPE = "definitionType";
     private static final String DEFINITION_DISPLAY_NAME = "definitionDisplayName";
-    private static final Logger LOGGER = Logger.getLogger(RestImportDefinitionController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestImportDefinitionController.class);
 
     @Autowired
     private FileManager fileManager;

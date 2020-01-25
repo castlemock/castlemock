@@ -43,8 +43,8 @@ public class RandomIntegerExpression extends AbstractExpression {
         int minLength = -1000;
         int maxLength = 2000;
 
-        final ExpressionArgument minArgument = input.getArgument(MIN_ARGUMENT);
-        final ExpressionArgument maxArgument = input.getArgument(MAX_ARGUMENT);
+        final ExpressionArgument<?> minArgument = input.getArgument(MIN_ARGUMENT);
+        final ExpressionArgument<?> maxArgument = input.getArgument(MAX_ARGUMENT);
 
         if(minArgument != null && minArgument instanceof ExpressionArgumentNumber){
             minLength = ((ExpressionArgumentNumber) minArgument).getValue().intValue();

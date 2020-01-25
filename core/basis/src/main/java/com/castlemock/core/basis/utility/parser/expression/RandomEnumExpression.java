@@ -18,7 +18,8 @@ package com.castlemock.core.basis.utility.parser.expression;
 
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentArray;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  * {@link RandomEnumExpression} is an {@link Expression} and will
@@ -30,7 +31,7 @@ public class RandomEnumExpression extends AbstractExpression {
 
     public static final String IDENTIFIER = "RANDOM_ENUM";
     public static final String VALUES_PARAMETER = "values";
-    private static final Logger LOGGER = Logger.getLogger(RandomEnumExpression.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RandomEnumExpression.class);
 
     /**
      * The transform method provides the functionality to transform a provided <code>input</code>.
@@ -41,7 +42,7 @@ public class RandomEnumExpression extends AbstractExpression {
      */
     @Override
     public String transform(final ExpressionInput input) {
-        final ExpressionArgument expressionArgument = input.getArgument(VALUES_PARAMETER);
+        final ExpressionArgument<?> expressionArgument = input.getArgument(VALUES_PARAMETER);
         if(expressionArgument == null){
             throw new IllegalArgumentException("Unable to extract the enum values");
         } else if(!(expressionArgument instanceof ExpressionArgumentArray)){
@@ -52,7 +53,7 @@ public class RandomEnumExpression extends AbstractExpression {
         final int argumentSize = array.getArgumentSize();
         final int index = RANDOM.nextInt(argumentSize);
 
-        final ExpressionArgument argument = array.getArgument(index);
+        final ExpressionArgument<?> argument = array.getArgument(index);
 
         if(argument instanceof ExpressionArgumentArray){
             LOGGER.error("The enum argument can't be an array");

@@ -41,8 +41,8 @@ public class PathParameterExpression extends AbstractExpression {
      */
     @Override
     public String transform(final ExpressionInput input) {
-        final ExpressionArgument parametersArgument = input.getArgument(PATH_PARAMETERS);
-        final ExpressionArgument parameterIdentifierArgument = input.getArgument(PARAMETER_ARGUMENT);
+        final ExpressionArgument<?> parametersArgument = input.getArgument(PATH_PARAMETERS);
+        final ExpressionArgument<?> parameterIdentifierArgument = input.getArgument(PARAMETER_ARGUMENT);
 
         if(parametersArgument == null || parameterIdentifierArgument == null ||
                 !(parametersArgument instanceof ExpressionArgumentMap)){
@@ -51,7 +51,7 @@ public class PathParameterExpression extends AbstractExpression {
 
         final ExpressionArgumentMap parametersMap = (ExpressionArgumentMap) parametersArgument;
         final Object key = parameterIdentifierArgument.getValue();
-        final ExpressionArgument result = parametersMap.getArgument(key);
+        final ExpressionArgument<?> result = parametersMap.getArgument(key);
 
         if(result == null){
             return MISSING_PATH_PARAMETER;

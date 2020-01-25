@@ -80,7 +80,7 @@ public final class ExpressionInputParser {
         for(ExpressionParser.ArgumentContext argumentContext : expression.argument()){
             String argumentName = argumentContext.argumentName().getText();
             ExpressionParser.ArgumentValueContext argumentValueContext = argumentContext.argumentValue();
-            ExpressionArgument expressionArgument = parseArgument(argumentValueContext);
+            ExpressionArgument<?> expressionArgument = parseArgument(argumentValueContext);
             expressionInput.addArgument(argumentName, expressionArgument);
         }
 
@@ -137,7 +137,7 @@ public final class ExpressionInputParser {
         while(argumentIterator.hasNext()){
             Map.Entry<String, ExpressionArgument<?>> argumentEntry = argumentIterator.next();
             String argumentName = argumentEntry.getKey();
-            ExpressionArgument argument = argumentEntry.getValue();
+            ExpressionArgument<?> argument = argumentEntry.getValue();
 
             stringBuilder.append(argumentName);
             stringBuilder.append(ARGUMENT_EQUAL_CHARACTER);
@@ -160,7 +160,7 @@ public final class ExpressionInputParser {
      * @param stringBuilder The {@link StringBuilder} which the converted {@link ExpressionArgument}
      *                      will be added to.
      */
-    private static void convert(final ExpressionArgument argument, final StringBuilder stringBuilder){
+    private static void convert(final ExpressionArgument<?> argument, final StringBuilder stringBuilder){
         if(argument instanceof ExpressionArgumentString){
             // String
             final ExpressionArgumentString argumentString = (ExpressionArgumentString) argument;

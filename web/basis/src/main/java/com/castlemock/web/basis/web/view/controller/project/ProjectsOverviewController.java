@@ -23,7 +23,8 @@ import com.castlemock.web.basis.service.project.ProjectServiceFacadeImpl;
 import com.castlemock.web.basis.web.view.command.project.DeleteProjectsCommand;
 import com.castlemock.web.basis.web.view.command.project.ProjectModifierCommand;
 import com.castlemock.web.basis.web.view.controller.AbstractViewController;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -63,7 +64,7 @@ public class ProjectsOverviewController extends AbstractViewController {
     private static final String DELETE_PROJECTS = "delete";
     private static final String PROJECT_MODIFIER_COMMAND = "projectModifierCommand";
     private static final String DELETE_PROJECTS_COMMAND = "deleteProjectsCommand";
-    private static final Logger LOGGER = Logger.getLogger(ProjectsOverviewController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectsOverviewController.class);
 
     @Autowired
     private ProjectServiceFacadeImpl projectServiceFacade;
