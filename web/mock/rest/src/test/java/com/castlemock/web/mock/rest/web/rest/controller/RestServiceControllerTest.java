@@ -387,6 +387,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private HttpServletRequest getMockedHttpServletRequest(final String body) {
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         final HttpServletRequest httpServletRequestWrapper = new HttpServletRequestTest(httpServletRequest, body);

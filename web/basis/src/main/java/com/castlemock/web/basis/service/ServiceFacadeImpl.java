@@ -49,6 +49,7 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
      * @see TypeIdentifier
      * @see TypeIdentifiable
      */
+    @SuppressWarnings("unchecked")
     protected void initiate(final Class<?> clazz){
         final Map<String, Object> foundServices = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Service.class);
 

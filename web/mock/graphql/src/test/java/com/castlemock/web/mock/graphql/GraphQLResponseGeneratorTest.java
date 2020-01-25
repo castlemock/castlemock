@@ -61,10 +61,6 @@ public class GraphQLResponseGeneratorTest {
 
     @Test
     public void test(){
-        System.out.println(SCHEMA);
-
-        System.out.println(QUERY);
-
         final SchemaGraphQLDefinitionConverter schemaConverter = new SchemaGraphQLDefinitionConverter(null);
         final GraphQLDefinitionConverterResult result = schemaConverter.convertRaw(SCHEMA);
         final GraphQLApplication application = new GraphQLApplication();
@@ -78,9 +74,7 @@ public class GraphQLResponseGeneratorTest {
         final List<GraphQLRequestQuery> queries = queryConverter.parseQuery(QUERY);
 
         GraphQLResponseGenerator generator = new GraphQLResponseGenerator();
-        final String output = generator.getResponse(application, queries);
-
-        System.out.println(output);
+        generator.getResponse(application, queries);
     }
 
 }

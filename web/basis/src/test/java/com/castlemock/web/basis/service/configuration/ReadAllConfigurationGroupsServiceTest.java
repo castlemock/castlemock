@@ -23,12 +23,14 @@ import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
 import com.castlemock.core.basis.service.configuration.input.ReadAllConfigurationGroupsInput;
 import com.castlemock.core.basis.service.configuration.output.ReadAllConfigurationGroupsOutput;
-import com.castlemock.repository.Repository;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.repository.configuration.ConfigurationRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +41,8 @@ import java.util.List;
  */
 public class ReadAllConfigurationGroupsServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
-
     @Mock
-    private Repository repository;
+    private ConfigurationRepository repository;
 
     @InjectMocks
     private ReadAllConfigurationGroupsService service;
@@ -57,7 +56,7 @@ public class ReadAllConfigurationGroupsServiceTest {
     public void testProcess(){
         List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
         ConfigurationGroup configurationGroup = new ConfigurationGroup();
-        configurationGroup.setId(new String());
+        configurationGroup.setId("123");
         configurationGroup.setName("Configuration group");
         configurationGroup.setConfigurations(new ArrayList<Configuration>());
         Configuration configuration = new Configuration();

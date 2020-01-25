@@ -16,17 +16,19 @@
 
 package com.castlemock.web.basis.service.user;
 
-import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.DeleteUserInput;
-import com.castlemock.core.basis.service.user.output.DeleteUserOutput;
-import com.castlemock.repository.Repository;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.repository.token.SessionTokenRepository;
+import com.castlemock.repository.user.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +39,11 @@ import java.util.List;
  */
 public class DeleteUserServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
+    @Mock
+    private UserRepository repository;
 
     @Mock
-    private Repository repository;
+    private SessionTokenRepository sessionTokenRepository;
 
     @InjectMocks
     private DeleteUserService service;
@@ -63,17 +65,18 @@ public class DeleteUserServiceTest {
                 .build();
         final ServiceTask<DeleteUserInput> serviceTask = new ServiceTask<DeleteUserInput>();
         serviceTask.setInput(input);
-        final ServiceResult<DeleteUserOutput> serviceResult = service.process(serviceTask);
-        serviceResult.getOutput();
+        service.process(serviceTask);
         Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessDeleteLastAdmin(){
-        User user = new User();
-        user.setRole(Role.ADMIN);
+        final User user = UserTestBuilder
+                .builder()
+                .role(Role.ADMIN)
+                .build();
 
-        List<User> users = new ArrayList<>();
+        final List<User> users = new ArrayList<>();
         users.add(user);
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
@@ -84,8 +87,7 @@ public class DeleteUserServiceTest {
                 .build();
         final ServiceTask<DeleteUserInput> serviceTask = new ServiceTask<DeleteUserInput>();
         serviceTask.setInput(input);
-        final ServiceResult<DeleteUserOutput> serviceResult = service.process(serviceTask);
-        serviceResult.getOutput();
+        service.process(serviceTask);
         Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
     }
 

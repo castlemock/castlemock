@@ -63,6 +63,7 @@ public class ServiceRegistry<I extends Input, O extends Output> {
      * The initialize method will search for all the classes with the @service annotation and
      * store all the classes that are an instance of the Service class.
      */
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void initialize(){
         final Map<String, Object> components = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Service.class);
         for(Map.Entry<String, Object> entry : components.entrySet()){
@@ -70,8 +71,10 @@ public class ServiceRegistry<I extends Input, O extends Output> {
             if(value instanceof Service){
                 final Service service = (Service) value;
                 final Class<?>[] processorInputOutputClasses = GenericTypeResolver.resolveTypeArguments(service.getClass(), Service.class);
-                final Class<I> processorInputClass = (Class<I>) processorInputOutputClasses[0];
-                services.put(processorInputClass, service);
+                if(processorInputOutputClasses != null && processorInputOutputClasses.length > 0){
+                    final Class<I> processorInputClass = (Class<I>) processorInputOutputClasses[0];
+                    services.put(processorInputClass, service);
+                }
             }
         }
     }

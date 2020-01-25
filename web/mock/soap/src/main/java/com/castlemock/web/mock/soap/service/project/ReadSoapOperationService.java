@@ -46,6 +46,7 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
      * @see ServiceResult
      */
     @Override
+    @SuppressWarnings("deprecation")
     public ServiceResult<ReadSoapOperationOutput> process(final ServiceTask<ReadSoapOperationInput> serviceTask) {
         final ReadSoapOperationInput input = serviceTask.getInput();
         final SoapOperation soapOperation = this.operationRepository.findOne(input.getOperationId());

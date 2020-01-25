@@ -120,12 +120,12 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
      * @param username The token that matches this user name will be removed
      */
     @Override
-    public synchronized void removeUserTokens(String username) {
-        Iterator series = this.seriesTokens.keySet().iterator();
+    public synchronized void removeUserTokens(final String username) {
+        final Iterator<String> series = this.seriesTokens.keySet().iterator();
 
         while(series.hasNext()) {
-            String seriesId = (String)series.next();
-            PersistentRememberMeToken token = this.seriesTokens.get(seriesId);
+            final String seriesId = series.next();
+            final PersistentRememberMeToken token = this.seriesTokens.get(seriesId);
             if(username.equals(token.getUsername())) {
                 series.remove();
             }
@@ -282,6 +282,8 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
     @XmlRootElement(name = "tokens")
     @XmlSeeAlso({SessionToken.class})
     public static class SessionTokenList extends LinkedList<SessionToken> {
+
+        private static final long serialVersionUID = 1L;
 
         @XmlElement(name = "token")
         public List<SessionToken> getSessionTokens() {

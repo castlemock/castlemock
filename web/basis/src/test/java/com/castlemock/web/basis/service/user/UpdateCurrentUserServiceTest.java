@@ -23,13 +23,15 @@ import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.user.input.UpdateCurrentUserInput;
 import com.castlemock.core.basis.service.user.output.UpdateCurrentUserOutput;
-import com.castlemock.repository.Repository;
 import com.castlemock.repository.token.SessionTokenRepository;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.repository.user.UserRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -42,11 +44,8 @@ import java.util.List;
  */
 public class UpdateCurrentUserServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
-
     @Mock
-    private Repository repository;
+    private UserRepository repository;
 
     @Mock
     private SessionTokenRepository sessionTokenRepository;
@@ -65,7 +64,7 @@ public class UpdateCurrentUserServiceTest {
     public void testProcess(){
         List<User> users = new ArrayList<User>();
         User user = new User();
-        user.setId(new String());
+        user.setId("123");
         user.setPassword("Password");
         user.setUsername("Username");
         user.setStatus(Status.ACTIVE);
@@ -74,7 +73,7 @@ public class UpdateCurrentUserServiceTest {
         users.add(user);
 
         User updatedUser = new User();
-        updatedUser.setId(new String());
+        updatedUser.setId("123");
         updatedUser.setPassword("UpdatedPassword");
         updatedUser.setUsername("UpdatedUsername");
         updatedUser.setStatus(Status.ACTIVE);

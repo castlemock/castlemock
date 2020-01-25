@@ -22,8 +22,7 @@ import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEventTestBuilder;
 import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventOutput;
-import com.castlemock.repository.Repository;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.repository.soap.event.SoapEventRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +30,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 /**
  * @author Karl Dahlgren
@@ -39,12 +37,8 @@ import org.mockito.Spy;
  */
 public class ReadSoapEventServiceTest {
 
-
-    @Spy
-    private DozerBeanMapper mapper;
-
     @Mock
-    private Repository repository;
+    private SoapEventRepository repository;
 
     @InjectMocks
     private ReadSoapEventService service;

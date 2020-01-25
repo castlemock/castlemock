@@ -56,6 +56,7 @@ public final class ExportContainerSerializer {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static <T extends ExportContainer> T deserialize(final String raw,
                                                             final Class<? extends ExportContainer> clazz){
         try {

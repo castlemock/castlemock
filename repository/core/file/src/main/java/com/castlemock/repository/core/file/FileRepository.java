@@ -81,6 +81,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * generic types (TYPE and ID). These instances could later be used to identify the types for when interacting
      * with the file system.
      */
+    @SuppressWarnings("unchecked")
     public FileRepository() {
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
@@ -168,6 +169,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      *         there could be modifications of the object during the save process. For example, if the type does not
      *         have an identifier, then the method will generate a new identifier for the type.
      */
+    @SuppressWarnings("unchecked")
     protected D save(final T type){
         I id = type.getId();
 
@@ -283,6 +285,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * @param raw The entity as a String
      */
     @Override
+    @SuppressWarnings("unchecked")
     public D importOne(final String raw){
 
         try {

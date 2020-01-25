@@ -392,12 +392,12 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.13.0</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.13.0</version>
+            <version>${log4j.version}</version>
         </dependency>
 
         <!-- Third party test -->
@@ -434,11 +434,12 @@
                     <target>${java.version}</target>
                     <!--<release>${java.release}</release>-->
                     <showWarnings>true</showWarnings>
-                    <!--<failOnWarning>true</failOnWarning>-->
+                    <failOnWarning>true</failOnWarning>
                     <failOnError>true</failOnError>
                     <compilerArgs>
+                        <arg>-Xlint:-processing</arg>
                         <arg>-Xlint:all</arg>
-                        <!--<arg>-Werror</arg>-->
+                        <arg>-Werror</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>

@@ -23,12 +23,14 @@ import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.core.basis.model.configuration.domain.ConfigurationType;
 import com.castlemock.core.basis.service.configuration.input.UpdateAllConfigurationGroupsInput;
 import com.castlemock.core.basis.service.configuration.output.UpdateAllConfigurationGroupsOutput;
-import com.castlemock.repository.Repository;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.repository.configuration.ConfigurationRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +41,8 @@ import java.util.List;
  */
 public class UpdateAllConfigurationGroupsServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
-
     @Mock
-    private Repository repository;
+    private ConfigurationRepository repository;
 
     @InjectMocks
     private UpdateAllConfigurationGroupsService service;
@@ -57,7 +56,7 @@ public class UpdateAllConfigurationGroupsServiceTest {
     public void testProcess(){
         final List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
         final ConfigurationGroup configurationGroup = new ConfigurationGroup();
-        configurationGroup.setId(new String());
+        configurationGroup.setId("123");
         configurationGroup.setName("Configuration group");
         configurationGroup.setConfigurations(new ArrayList<Configuration>());
         final Configuration configuration = new Configuration();
@@ -69,7 +68,7 @@ public class UpdateAllConfigurationGroupsServiceTest {
 
         final List<ConfigurationGroup> sourceConfigurationGroups = new ArrayList<ConfigurationGroup>();
         final ConfigurationGroup sourceConfigurationGroup = new ConfigurationGroup();
-        sourceConfigurationGroup.setId(new String());
+        sourceConfigurationGroup.setId("123");
         sourceConfigurationGroup.setName("Configuration group");
         sourceConfigurationGroup.setConfigurations(new ArrayList<Configuration>());
         final Configuration sourceConfiguration = new Configuration();
@@ -80,7 +79,7 @@ public class UpdateAllConfigurationGroupsServiceTest {
         sourceConfigurationGroups.add(sourceConfigurationGroup);
 
         final ConfigurationGroup updatedConfigurationGroup = new ConfigurationGroup();
-        updatedConfigurationGroup.setId(new String());
+        updatedConfigurationGroup.setId("123");
         updatedConfigurationGroup.setName("Configuration group");
         updatedConfigurationGroup.setConfigurations(new ArrayList<Configuration>());
         final Configuration updatedConfiguration = new Configuration();

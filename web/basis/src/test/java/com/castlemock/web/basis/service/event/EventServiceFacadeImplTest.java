@@ -30,7 +30,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +39,7 @@ import java.util.Map;
  * @author Karl Dahlgren
  * @since 1.1
  */
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class EventServiceFacadeImplTest {
 
     private static final String TYPE = "Type";
@@ -95,9 +96,9 @@ public class EventServiceFacadeImplTest {
     @Test
     public void testFindAll(){
         final Event oldEvent = EventTestBuilder.builder().build();
-        oldEvent.setStartDate(new Date(2016, 1, 1));
+        oldEvent.setStartDate(new GregorianCalendar(2016, 1, 1).getTime());
         final Event newEvent = EventTestBuilder.builder().build();
-        newEvent.setStartDate(new Date(2016, 1, 2));
+        newEvent.setStartDate(new GregorianCalendar(2016, 1, 2).getTime());
         final List<Event> eventDtos = new ArrayList<Event>();
         eventDtos.add(oldEvent);
         eventDtos.add(newEvent);

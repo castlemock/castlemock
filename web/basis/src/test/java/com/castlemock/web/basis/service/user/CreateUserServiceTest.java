@@ -23,12 +23,14 @@ import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.user.input.CreateUserInput;
 import com.castlemock.core.basis.service.user.output.CreateUserOutput;
-import com.castlemock.repository.Repository;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.repository.user.UserRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 /**
  * @author Karl Dahlgren
@@ -36,11 +38,8 @@ import org.mockito.*;
  */
 public class CreateUserServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
-
     @Mock
-    private Repository repository;
+    private UserRepository repository;
 
     @InjectMocks
     private CreateUserService service;

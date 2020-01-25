@@ -53,6 +53,7 @@ public abstract class MongoRepository<T extends Saveable<I>, D, I extends Serial
      * generic types (TYPE and ID). These instances could later be used to identify the types for when interacting
      * with mongodb.
      */
+    @SuppressWarnings("unchecked")
     public MongoRepository() {
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];

@@ -18,9 +18,8 @@ package com.castlemock.web.basis.service.user;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.user.domain.Role;
-import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.ReadUserInput;
 import com.castlemock.core.basis.service.user.output.ReadUserOutput;
 import com.castlemock.repository.Repository;
@@ -28,7 +27,11 @@ import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 /**
  * @author Karl Dahlgren
@@ -40,7 +43,7 @@ public class ReadUserServiceTest {
     private DozerBeanMapper mapper;
 
     @Mock
-    private Repository repository;
+    private Repository<User, String> repository;
 
     @InjectMocks
     private ReadUserService service;
@@ -52,16 +55,9 @@ public class ReadUserServiceTest {
 
     @Test
     public void testProcess(){
-        User user = new User();
-        user.setId("UserId");
-        user.setUsername("Username");
-        user.setStatus(Status.ACTIVE);
-        user.setRole(Role.ADMIN);
-        user.setEmail("email@email.com");
-
-
+        final User user = UserTestBuilder.builder().build();
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
-        final ReadUserInput input = ReadUserInput.builder().userId("UserId").build();
+        final ReadUserInput input = ReadUserInput.builder().userId(user.getId()).build();
         final ServiceTask<ReadUserInput> serviceTask = new ServiceTask<ReadUserInput>();
         serviceTask.setInput(input);
         final ServiceResult<ReadUserOutput> serviceResult = service.process(serviceTask);

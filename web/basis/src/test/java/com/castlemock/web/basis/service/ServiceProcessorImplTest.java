@@ -29,6 +29,7 @@ import org.mockito.MockitoAnnotations;
  * @author Karl Dahlgren
  * @since 1.0
  */
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class ServiceProcessorImplTest {
 
     @Mock
@@ -43,11 +44,12 @@ public class ServiceProcessorImplTest {
     }
 
     @Test
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void testProcess(){
         Service service = Mockito.mock(Service.class);
         Input input = Mockito.mock(Input.class);
         Output output = Mockito.mock(Output.class);
-        ServiceResult serviceResult = new ServiceResult(output);
+        ServiceResult<Output> serviceResult = new ServiceResult<>(output);
         Mockito.when(serviceRegistry.getService(Mockito.any(Input.class))).thenReturn(service);
         Mockito.when(service.process(Mockito.any(ServiceTask.class))).thenReturn(serviceResult);
         Output serviceOutput = serviceProcessor.process(input);

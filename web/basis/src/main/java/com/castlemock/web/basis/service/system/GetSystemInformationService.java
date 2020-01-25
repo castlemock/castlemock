@@ -75,7 +75,13 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
         systemInformation.setMaxMemory(Runtime.getRuntime().maxMemory() / 1000000); // Megabytes
         systemInformation.setFreeMemory(Runtime.getRuntime().freeMemory() / 1000000); // Megabytes
         systemInformation.setCastleMockHomeDirectory(this.castleMockHomeDirectory);
-        if (springEnvironment.acceptsProfiles(Profiles.MONGODB)) {
+
+        final org.springframework.core.env.Profiles mongoProfiles =
+                org.springframework.core.env.Profiles.of(Profiles.MONGODB);
+        final org.springframework.core.env.Profiles fileProfiles =
+                org.springframework.core.env.Profiles.of(Profiles.FILE);
+
+        if (springEnvironment.acceptsProfiles(mongoProfiles)) {
             mongoPropertiesProvider.ifAvailable(props ->
                     systemInformation.setMongoProperties(
                             new com.castlemock.core.basis.model.system.service.dto.MongoProperties(
@@ -83,8 +89,8 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
                                     props.getMongoClientDatabase(), isMongoUsesUri(props)))
             );
         }
-        systemInformation.setShowCastleMockHomeDirectory(springEnvironment.acceptsProfiles(Profiles.FILE));
-        systemInformation.setShowMongoProperties(springEnvironment.acceptsProfiles(Profiles.MONGODB));
+        systemInformation.setShowCastleMockHomeDirectory(springEnvironment.acceptsProfiles(mongoProfiles));
+        systemInformation.setShowMongoProperties(springEnvironment.acceptsProfiles(fileProfiles));
         final GetSystemInformationOutput output = new GetSystemInformationOutput(systemInformation);
         return createServiceResult(output);
     }

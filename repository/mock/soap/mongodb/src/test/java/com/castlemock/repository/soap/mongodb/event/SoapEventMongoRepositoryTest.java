@@ -48,7 +48,7 @@ public class SoapEventMongoRepositoryTest {
         SoapEvent saved = soapEventMongoRepository.save(soapEvent);
 
         SoapEvent fromDb = soapEventMongoRepository.findOne(saved.getId());
-        assertThat(fromDb.getRequest()).isEqualToComparingFieldByFieldRecursively(soapRequest);
+        assertThat(fromDb.getRequest()).usingRecursiveComparison().isEqualTo(soapRequest);
     }
 
     @Test

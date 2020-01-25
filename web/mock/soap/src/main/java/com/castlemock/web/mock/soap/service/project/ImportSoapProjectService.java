@@ -21,13 +21,18 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.utility.serializer.ExportContainerSerializer;
 import com.castlemock.core.mock.soap.model.SoapExportContainer;
-import com.castlemock.core.mock.soap.model.project.domain.*;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifyStrategy;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
+import com.castlemock.core.mock.soap.model.project.domain.SoapXPathExpression;
 import com.castlemock.core.mock.soap.service.project.input.ImportSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.output.ImportSoapProjectOutput;
 import com.castlemock.repository.soap.file.project.legacy.SoapProjectV1LegacyRepository;
 import com.google.common.base.Strings;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -40,9 +45,6 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
     @Autowired
     private SoapProjectV1LegacyRepository legacyRepository;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ImportSoapProjectService.class);
-
-
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
      * a response based on the incoming serviceTask input
@@ -52,6 +54,7 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
      * @see ServiceResult
      */
     @Override
+    @SuppressWarnings("deprecation")
     public ServiceResult<ImportSoapProjectOutput> process(final ServiceTask<ImportSoapProjectInput> serviceTask) {
         final ImportSoapProjectInput input = serviceTask.getInput();
 

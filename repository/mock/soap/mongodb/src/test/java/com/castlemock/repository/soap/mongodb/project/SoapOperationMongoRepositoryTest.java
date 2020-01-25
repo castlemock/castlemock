@@ -55,7 +55,7 @@ public class SoapOperationMongoRepositoryTest {
         SoapOperation result = soapOperationMongoRepository.findWithMethodAndVersionAndIdentifier("port1", HttpMethod.POST,
                 SoapVersion.SOAP12, soapOperationIdentifier);
 
-        assertThat(result).isEqualToComparingFieldByFieldRecursively(shouldMatch);
+        assertThat(result).usingRecursiveComparison().isEqualTo(shouldMatch);
     }
 
     private SoapOperation createSoapOperation(String portId, String name) {

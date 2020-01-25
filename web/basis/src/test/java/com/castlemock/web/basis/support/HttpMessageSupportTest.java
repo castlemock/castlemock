@@ -101,6 +101,7 @@ public class HttpMessageSupportTest {
 
 
     @Test
+    @SuppressWarnings("varargs")
     public void testGetBody(){
         final String readerOutput = "This is the output from the reader";
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
@@ -112,7 +113,8 @@ public class HttpMessageSupportTest {
         }
 
         try {
-            Mockito.when(reader.readLine()).thenReturn(readerOutput, null);
+            final String noValue = null;
+            Mockito.when(reader.readLine()).thenReturn(readerOutput, noValue);
         } catch (IOException e) {
             Assert.fail("Unable to mock readLine method for BufferedReader");
         }

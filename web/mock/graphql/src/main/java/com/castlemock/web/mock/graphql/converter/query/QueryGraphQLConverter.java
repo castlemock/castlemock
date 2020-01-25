@@ -12,7 +12,7 @@ import java.util.List;
 
 public class QueryGraphQLConverter {
 
-
+    @SuppressWarnings("rawtypes")
     public List<GraphQLRequestQuery> parseQuery(final String body){
         Parser parser = new Parser();
         Document document;
@@ -40,7 +40,7 @@ public class QueryGraphQLConverter {
         return null;
     }
 
-
+    @SuppressWarnings("rawtypes")
     private List<GraphQLRequestQuery> getQuery(final OperationDefinition operationDefinition){
         final List<GraphQLRequestQuery> queries = new ArrayList<>();
         for(Selection selection : operationDefinition.getSelectionSet().getSelections()){
@@ -75,6 +75,7 @@ public class QueryGraphQLConverter {
         return queries;
     }
 
+    @SuppressWarnings("rawtypes")
     private GraphQLRequestField getField(Field field){
         final GraphQLRequestField requestField = new GraphQLRequestField();
         final List<GraphQLRequestField> fields = new ArrayList<>();

@@ -390,6 +390,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         return soapServiceController;
     }
 
+    @SuppressWarnings("unchecked")
     private HttpServletRequest getMockedHttpServletRequest(final String body){
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         final HttpServletRequest httpServletRequestWrapper = new HttpServletRequestTest(httpServletRequest, body);
@@ -410,6 +411,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
 
     }
 
+    @SuppressWarnings("unchecked")
     private MultipartHttpServletRequest getMockedMultipartHttpServletRequest(final String body) throws IOException {
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         final HttpServletRequest httpServletRequestWrapper = new HttpServletRequestTest(httpServletRequest, body);

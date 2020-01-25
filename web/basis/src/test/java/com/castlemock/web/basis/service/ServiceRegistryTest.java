@@ -37,6 +37,7 @@ import java.util.Map;
  * @author Karl Dahlgren
  * @since 1.1
  */
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class ServiceRegistryTest {
 
     @Mock

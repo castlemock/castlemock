@@ -43,6 +43,7 @@ public abstract class AbstractLegacyRepositoryImpl<T extends Saveable<I>, D, I e
      * generic types (TYPE and ID). These instances could later be used to identify the types for when interacting
      * with the file system.
      */
+    @SuppressWarnings("unchecked")
     public AbstractLegacyRepositoryImpl() {
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
@@ -53,6 +54,7 @@ public abstract class AbstractLegacyRepositoryImpl<T extends Saveable<I>, D, I e
      * @param raw The entity as a String
      */
     @Override
+    @SuppressWarnings("unchecked")
     public D importOne(final String raw){
 
         try {

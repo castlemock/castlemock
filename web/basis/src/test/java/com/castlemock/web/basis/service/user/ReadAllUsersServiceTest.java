@@ -18,19 +18,20 @@ package com.castlemock.web.basis.service.user;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.user.domain.Role;
-import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.ReadAllUsersInput;
 import com.castlemock.core.basis.service.user.output.ReadAllUsersOutput;
-import com.castlemock.repository.Repository;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.repository.user.UserRepository;
+import com.google.common.collect.ImmutableList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,11 +40,8 @@ import java.util.List;
  */
 public class ReadAllUsersServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
-
     @Mock
-    private Repository repository;
+    private UserRepository repository;
 
     @InjectMocks
     private ReadAllUsersService service;
@@ -55,14 +53,8 @@ public class ReadAllUsersServiceTest {
 
     @Test
     public void testProcess(){
-        List<User> users = new ArrayList<User>();
-        User user = new User();
-        user.setId(new String());
-        user.setUsername("Username");
-        user.setStatus(Status.ACTIVE);
-        user.setRole(Role.ADMIN);
-        user.setEmail("email@email.com");
-        users.add(user);
+        final User user = UserTestBuilder.builder().build();
+        final List<User> users = ImmutableList.of(user);
 
 
         Mockito.when(repository.findAll()).thenReturn(users);

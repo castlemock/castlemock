@@ -54,6 +54,7 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
      * @see ServiceResult
      */
     @Override
+    @SuppressWarnings("deprecation")
     public ServiceResult<ImportRestDefinitionOutput> process(final ServiceTask<ImportRestDefinitionInput> serviceTask) {
         final ImportRestDefinitionInput input = serviceTask.getInput();
         final String projectId = input.getRestProjectId();

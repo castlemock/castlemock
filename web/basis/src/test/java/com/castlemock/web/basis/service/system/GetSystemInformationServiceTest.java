@@ -28,13 +28,18 @@ public class GetSystemInformationServiceTest {
 
     @Before
     public void setup() {
+        final org.springframework.core.env.Profiles mongoProfiles =
+                org.springframework.core.env.Profiles.of(Profiles.MONGODB);
+        final org.springframework.core.env.Profiles fileProfiles =
+                org.springframework.core.env.Profiles.of(Profiles.FILE);
+
         MockitoAnnotations.initMocks(this);
 
         Mockito.when(environment.getServerBuilt()).thenReturn("");
         Mockito.when(environment.getServerInfo()).thenReturn("");
         Mockito.when(environment.getServerNumber()).thenReturn("");
-        Mockito.when(springEnvironment.acceptsProfiles(Profiles.MONGODB)).thenReturn(false);
-        Mockito.when(springEnvironment.acceptsProfiles(Profiles.FILE)).thenReturn(true);
+        Mockito.when(springEnvironment.acceptsProfiles(mongoProfiles)).thenReturn(false);
+        Mockito.when(springEnvironment.acceptsProfiles(fileProfiles)).thenReturn(true);
     }
 
     @Test

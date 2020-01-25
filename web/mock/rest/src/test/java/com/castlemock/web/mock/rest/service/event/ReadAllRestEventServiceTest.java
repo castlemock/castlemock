@@ -22,8 +22,7 @@ import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.model.event.domain.RestEventTestBuilder;
 import com.castlemock.core.mock.rest.service.event.input.ReadAllRestEventInput;
 import com.castlemock.core.mock.rest.service.event.output.ReadAllRestEventOutput;
-import com.castlemock.repository.Repository;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.repository.rest.event.RestEventRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +30,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +40,8 @@ import java.util.List;
  */
 public class ReadAllRestEventServiceTest {
 
-
-    @Spy
-    private DozerBeanMapper mapper;
-
     @Mock
-    private Repository repository;
+    private RestEventRepository repository;
 
     @InjectMocks
     private ReadAllRestEventService service;

@@ -45,6 +45,7 @@ import java.util.Map;
  * @author Mohammad Hewedy
  * @since 1.0
  */
+@SuppressWarnings("rawtypes")
 public abstract class Application extends SpringBootServletInitializer{
 
     @Value("${app.version}")
@@ -97,6 +98,7 @@ public abstract class Application extends SpringBootServletInitializer{
      * The method provides the functionality to retrieve all the repositories and initialize them
      * @see Repository
      */
+    @SuppressWarnings("rawtypes")
     protected void initializeLegacyRepository(){
         final Map<String, Object> repositories = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Repository.class);
         for(Map.Entry<String, Object> entry : repositories.entrySet()){
@@ -112,6 +114,7 @@ public abstract class Application extends SpringBootServletInitializer{
      * The method provides the functionality to retrieve all the repositories and initialize them
      * @see Repository
      */
+    @SuppressWarnings("rawtypes")
     protected void initializeRepository(){
         final Map<String, Object> repositories = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Repository.class);
         for(Map.Entry<String, Object> entry : repositories.entrySet()){
@@ -129,6 +132,7 @@ public abstract class Application extends SpringBootServletInitializer{
      * @see ServiceFacade
      * @see com.castlemock.core.basis.model.Service
      */
+    @SuppressWarnings("rawtypes")
     protected void initializeServiceFacade(){
         final Map<String, Object> components = applicationContext.getBeansWithAnnotation(Service.class);
         for(Map.Entry<String, Object> entry : components.entrySet()){

@@ -18,6 +18,8 @@ package com.castlemock.web.mock.graphql.model;
 
 public class GraphQLException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The default constructor for the SoapException class
      * @param message The exception message

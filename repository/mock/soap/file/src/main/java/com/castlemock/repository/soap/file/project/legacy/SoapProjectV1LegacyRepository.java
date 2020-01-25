@@ -133,7 +133,7 @@ public class SoapProjectV1LegacyRepository extends AbstractLegacyRepositoryImpl<
         return project;
     }
 
-
+    @SuppressWarnings("deprecation")
     private SoapProject convert(SoapProjectV1 projectV1){
         SoapProject project = new SoapProject();
         project.setCreated(projectV1.getCreated());

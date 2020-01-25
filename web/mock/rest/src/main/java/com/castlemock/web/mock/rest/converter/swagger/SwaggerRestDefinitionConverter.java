@@ -315,7 +315,9 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @return An XML response body.
      * @since 1.13
      */
+    @SuppressWarnings("deprecation")
     private String generateXmlBody(final Response response, final Map<String, Model> definitions){
+        // TODO Investigate deprecated schema
         final Property schema = response.getSchema();
         if(schema == null){
             return null;
@@ -453,8 +455,10 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @since 1.13
      * @see {@link #generateJsonBody(String, Property, Map, JsonGenerator)}
      */
+    @SuppressWarnings("deprecation")
     private String generateJsonBody(final Response response, final Map<String, Model> definitions){
         final StringWriter writer = new StringWriter();
+        // TODO Investigate the deprecated schema
         final Property schema = response.getSchema();
         if(schema == null){
             return writer.toString();

@@ -21,15 +21,18 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
 import com.castlemock.core.basis.service.user.input.UpdateUserInput;
 import com.castlemock.core.basis.service.user.output.UpdateUserOutput;
-import com.castlemock.repository.Repository;
 import com.castlemock.repository.token.SessionTokenRepository;
-import org.dozer.DozerBeanMapper;
+import com.castlemock.repository.user.UserRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 /**
  * @author Karl Dahlgren
@@ -37,11 +40,8 @@ import org.mockito.*;
  */
 public class UpdateUserServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
-
     @Mock
-    private Repository repository;
+    private UserRepository repository;
 
     @Mock
     private SessionTokenRepository sessionTokenRepository;
@@ -56,26 +56,20 @@ public class UpdateUserServiceTest {
 
     @Test
     public void testProcess(){
-        User user = new User();
-        user.setId(new String());
-        user.setPassword("Password");
-        user.setUsername("Username");
-        user.setStatus(Status.ACTIVE);
-        user.setRole(Role.ADMIN);
-        user.setEmail("email@email.com");
-
-        User updatedUser = new User();
-        updatedUser.setId(new String());
-        updatedUser.setPassword("UpdatedPassword");
-        updatedUser.setUsername("UpdatedUsername");
-        updatedUser.setStatus(Status.ACTIVE);
-        updatedUser.setRole(Role.ADMIN);
-        updatedUser.setEmail("email@email.com");
+        final User user = UserTestBuilder.builder().build();
+        final User updatedUser = UserTestBuilder.builder()
+                .id(user.getId())
+                .password("UpdatedPassword")
+                .username("UpdatedUsername")
+                .status(Status.ACTIVE)
+                .role(Role.ADMIN)
+                .email("email@email.com")
+                .build();
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
         final UpdateUserInput input = UpdateUserInput.builder()
-                .userId("")
+                .userId(user.getId())
                 .user(updatedUser)
                 .build();
         final ServiceTask<UpdateUserInput> serviceTask = new ServiceTask<UpdateUserInput>();

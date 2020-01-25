@@ -21,7 +21,6 @@ import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.TypeIdentifier;
 import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.service.project.ProjectServiceAdapter;
-import com.castlemock.web.basis.service.project.ProjectServiceFacadeImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +39,7 @@ import java.util.Map;
  * @author Karl Dahlgren
  * @since 1.1
  */
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class ProjectServiceFacadeImplTest {
 
     private static final String TYPE = "Type";

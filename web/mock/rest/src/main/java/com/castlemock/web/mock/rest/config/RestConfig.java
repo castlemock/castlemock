@@ -34,8 +34,8 @@ public class RestConfig {
      * @return
      */
     @Bean
-    public FilterRegistrationBean restRequestWrapperFilter() {
-        final FilterRegistrationBean registration = new FilterRegistrationBean();
+    public FilterRegistrationBean<HttpServletRequestWrapperFilter> restRequestWrapperFilter() {
+        final FilterRegistrationBean<HttpServletRequestWrapperFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new HttpServletRequestWrapperFilter());
         registration.addUrlPatterns("/mock/rest/project/*");
         registration.setName("restRequestWrapperFilter");

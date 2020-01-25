@@ -88,7 +88,7 @@ public class FileRepositorySupport {
         }
     }
 
-
+    @SuppressWarnings("unchecked")
     public <T> Collection<T> load(Class<T> entityClass, String directory, String postfix){
         final Collection<T> loadedTypes = new ArrayList<T>();
         final Path path = FileSystems.getDefault().getPath(directory);

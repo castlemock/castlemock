@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyListOf;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -106,14 +106,14 @@ public class SoapAddWSDLControllerTest extends AbstractSoapControllerTest {
         when(serviceProcessor.process(any(ReadSoapProjectInput.class))).thenReturn(ReadSoapProjectOutput.builder()
                 .project(soapProject)
                 .build());
-        when(fileManager.uploadFiles(anyListOf(MultipartFile.class))).thenReturn(files);
+        when(fileManager.uploadFiles(anyList())).thenReturn(files);
         final MockHttpServletRequestBuilder message = MockMvcRequestBuilders.post(SERVICE_URL + SLASH +
                 PROJECT + SLASH + soapProject.getId() + SLASH + ADD + SLASH + WSDL)
                 .param("type", "file").requestAttr("uploadForm", uploadForm);
         mockMvc.perform(message)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().size(1));
-        Mockito.verify(fileManager, times(1)).uploadFiles(anyListOf(MultipartFile.class));
+        Mockito.verify(fileManager, times(1)).uploadFiles(anyList());
     }
 
     @Test
