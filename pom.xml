@@ -434,12 +434,12 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <!--<release>${java.release}</release>-->
                     <showWarnings>true</showWarnings>
                     <failOnWarning>true</failOnWarning>
                     <failOnError>true</failOnError>
                     <compilerArgs>
                         <arg>-Xlint:-processing</arg>
+                        <arg>-Xlint:-options</arg>
                         <arg>-Xlint:all</arg>
                         <arg>-Werror</arg>
                     </compilerArgs>
@@ -451,7 +451,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Built-By></Built-By>
+                            <Built-By>Castle Mock</Built-By>
                         </manifestEntries>
                     </archive>
                 </configuration>

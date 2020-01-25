@@ -105,7 +105,7 @@ public class SoapProjectRepositoryTest {
     public void testCount(){
         final SoapProject soapProject = save();
         final Integer count = repository.count();
-        Assert.assertEquals(new Integer(1), count);
+        Assert.assertEquals(Integer.valueOf(1), count);
     }
 
     private SoapProject save(){
