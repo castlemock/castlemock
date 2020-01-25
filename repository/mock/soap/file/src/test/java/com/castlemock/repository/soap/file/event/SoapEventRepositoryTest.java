@@ -115,7 +115,7 @@ public class SoapEventRepositoryTest {
     public void testCount(){
         final SoapEvent soapEvent = save();
         final Integer count = repository.count();
-        Assert.assertEquals(new Integer(1), count);
+        Assert.assertEquals(Integer.valueOf(1), count);
     }
 
     private SoapEvent save(){

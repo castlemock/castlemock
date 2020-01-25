@@ -101,7 +101,7 @@ public class ConfigurationRepositoryTest {
     public void testCount(){
         final ConfigurationGroup configurationGroup = save();
         final Integer count = repository.count();
-        Assert.assertEquals(new Integer(1), count);
+        Assert.assertEquals(Integer.valueOf(1), count);
     }
 
     private ConfigurationGroup save(){

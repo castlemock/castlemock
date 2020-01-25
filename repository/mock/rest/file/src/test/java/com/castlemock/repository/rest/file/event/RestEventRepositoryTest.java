@@ -107,7 +107,7 @@ public class RestEventRepositoryTest {
     public void testCount(){
         final RestEvent restEvent = save();
         final Integer count = repository.count();
-        Assert.assertEquals(new Integer(1), count);
+        Assert.assertEquals(Integer.valueOf(1), count);
     }
 
     private RestEvent save(){
