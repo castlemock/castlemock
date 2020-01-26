@@ -16,10 +16,12 @@
 
 package com.castlemock.web.mock.soap.web.view.controller.event;
 
+import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventOutput;
 import com.castlemock.web.basis.web.view.controller.MenuItem;
 import com.castlemock.web.mock.soap.web.view.controller.AbstractSoapViewController;
+import com.google.common.collect.ImmutableList;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -51,8 +53,13 @@ public class SoapEventController extends AbstractSoapViewController {
         final ReadSoapEventOutput output = serviceProcessor.process(ReadSoapEventInput.builder()
                 .soapEventId(eventId)
                 .build());
+        final SoapEvent soapEvent = output.getSoapEvent();
+        if(demoMode){
+            soapEvent.getRequest().setHttpHeaders(ImmutableList.of());
+        }
+
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(EVENT, output.getSoapEvent());
+        model.addObject(EVENT, soapEvent);
         model.addObject(SELECTED_MENU, MenuItem.EVENT);
         return model;
     }

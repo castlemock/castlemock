@@ -16,10 +16,12 @@
 
 package com.castlemock.web.mock.rest.web.view.controller.event;
 
+import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.service.event.input.ReadRestEventInput;
 import com.castlemock.core.mock.rest.service.event.output.ReadRestEventOutput;
 import com.castlemock.web.basis.web.view.controller.MenuItem;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestViewController;
+import com.google.common.collect.ImmutableList;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -52,8 +54,13 @@ public class RestEventController extends AbstractRestViewController {
         final ReadRestEventOutput output = serviceProcessor.process(ReadRestEventInput.builder()
                 .restEventId(eventId)
                 .build());
+        final RestEvent restEvent = output.getRestEvent();
+        if(demoMode){
+            restEvent.getRequest().setHttpHeaders(ImmutableList.of());
+        }
+
         final ModelAndView model = createPartialModelAndView(PAGE);
-        model.addObject(EVENT, output.getRestEvent());
+        model.addObject(EVENT, restEvent);
         model.addObject(SELECTED_MENU, MenuItem.EVENT);
         return model;
     }
