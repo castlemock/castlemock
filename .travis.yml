@@ -10,7 +10,7 @@ deploy:
   provider: heroku
   api_key:
     secure: $HEROKU_KEY
-    app: castlemock
+  app: castlemock
   on:
     branch: master
     jdk: openjdk11
