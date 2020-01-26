@@ -13,7 +13,7 @@ deploy:
     app: castlemock
   on:
     branch: master
-    jdk: openjdk10
+    jdk: openjdk11
 
 notifications:
   slack: $SLACK_KEY

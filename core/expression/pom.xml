@@ -12,12 +12,6 @@
         <relativePath>../</relativePath>
     </parent>
 
-    <properties>
-        <antlr.version>4.7.2</antlr.version>
-        <maven.exec.version>1.2.1</maven.exec.version>
-        <maven.build.helper.version>1.7</maven.build.helper.version>
-    </properties>
-
     <dependencies>
         <!-- Third party -->
         <dependency>
@@ -77,7 +71,7 @@
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
-                <version>${antlr.version}</version>
+                <version>${antlr.maven.version}</version>
                 <configuration>
                     <visitor>true</visitor>
                     <outputDirectory>src/main/gen/com/castlemock/core/expression</outputDirectory>
