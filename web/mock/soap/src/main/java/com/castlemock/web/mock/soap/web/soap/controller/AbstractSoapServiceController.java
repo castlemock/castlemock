@@ -318,13 +318,14 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                                       final String soapPortId,
                                       final SoapOperation soapOperation,
                                       final HttpServletRequest httpServletRequest){
+    	
         final List<SoapMockResponse> mockResponses = new ArrayList<SoapMockResponse>();
         for(SoapMockResponse mockResponse : soapOperation.getMockResponses()){
             if(mockResponse.getStatus().equals(SoapMockResponseStatus.ENABLED)){
                 mockResponses.add(mockResponse);
             }
         }
-
+        
         mockResponses.sort(MOCK_RESPONSE_NAME_COMPARATOR);
 
         SoapMockResponse mockResponse = null;
@@ -347,18 +348,24 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                     .build());
         } else if (soapOperation.getResponseStrategy().equals(SoapResponseStrategy.XPATH_INPUT)) {
             for (SoapMockResponse testedMockResponse : mockResponses) {
+            	
+            	
+            	
                 for(SoapXPathExpression xPathExpression : testedMockResponse.getXpathExpressions()){
                     if (XPathUtility.isValidXPathExpr(request.getBody(), xPathExpression.getExpression())) {
                         mockResponse = testedMockResponse;
                         break;
-                    }
+                    }    
                 }
+                
+                
             }
 
-
             if(mockResponse == null){
-                LOGGER.info("Unable to match the input XPath to a response");
-                mockResponse = this.getDefaultMockResponse(soapOperation, mockResponses).orElse(null);
+                LOGGER.info("Unable to match the input XPath to a response. Request is forwarded.");
+               // mockResponse = this.getDefaultMockResponse(soapOperation, mockResponses).orElse(null);
+                return this.forwardRequest(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
+            
             }
         }
 
