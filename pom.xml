@@ -30,7 +30,6 @@
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <servlet.api.version>4.0.1</servlet.api.version>
         <servlet.jsp.version>2.2</servlet.jsp.version>
-        <jstl.version>1.2</jstl.version>
         <jackson.version>1.9.13</jackson.version>
         <springfox.version>2.9.2</springfox.version>
         <maven.jar.version>3.1.1</maven.jar.version>
@@ -39,6 +38,7 @@
         <antlr.maven.version>4.7.2</antlr.maven.version>
         <maven.exec.version>1.2.1</maven.exec.version>
         <maven.build.helper.version>1.7</maven.build.helper.version>
+        <taglibs.version>1.2.5</taglibs.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -321,11 +321,6 @@
                 <version>${servlet.jsp.version}</version>
             </dependency>
             <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>jstl</artifactId>
-                <version>${jstl.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
                 <artifactId>jaxb-runtime</artifactId>
                 <version>2.3.2</version>
@@ -360,6 +355,16 @@
                 <artifactId>de.flapdoodle.embed.mongo</artifactId>
                 <version>${flapdoodle.mongo.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.taglibs</groupId>
+                <artifactId>taglibs-standard-spec</artifactId>
+                <version>${taglibs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.taglibs</groupId>
+                <artifactId>taglibs-standard-impl</artifactId>
+                <version>${taglibs.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
