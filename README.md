@@ -3,12 +3,12 @@
 # Castle Mock: Mock RESTful APIs and SOAP web services
 
 [![][travis img]][travis]
+[![][snyk img]][snyk]
 [![][codecov img]][codecov]
 [![][release img]][release]
 [![][license img]][license]
 [![][docker stars img]][docker stars]
 [![][docker pulls img]][docker pulls]
-[![][snyk img]][snyk]
 
 ## About
 
