@@ -8,6 +8,7 @@
 [![][license img]][license]
 [![][docker stars img]][docker stars]
 [![][docker pulls img]][docker pulls]
+[![][snyk img]][snyk]
 
 ## About
 
@@ -101,3 +102,6 @@ Castle Mock is **licensed** under the **[Apache License](https://github.com/cast
 
 [docker pulls]:https://hub.docker.com/r/castlemock/castlemock/
 [docker pulls img]:https://img.shields.io/docker/pulls/castlemock/castlemock.svg
+
+[snyk]:https://snyk.io/test/github/castlemock/castlemock
+[snyk img]:https://snyk.io/test/github/castlemock/castlemock/badge.svg
