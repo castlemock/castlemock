@@ -13,10 +13,13 @@
     </parent>
 
     <dependencies>
+        <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.repository.core</groupId>
             <artifactId>model</artifactId>
         </dependency>
+
+        <!-- Third party dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -25,6 +28,8 @@
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
         </dependency>
+
+        <!-- Third party test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

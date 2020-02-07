@@ -13,6 +13,7 @@
     </parent>
 
     <dependencies>
+        <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.core.mock</groupId>
             <artifactId>rest</artifactId>
@@ -30,21 +31,22 @@
             <artifactId>model</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.raml</groupId>
-            <artifactId>raml-parser-2</artifactId>
-            <version>1.0.48</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-parser</artifactId>
-            <version>1.0.49</version>
-        </dependency>
+        <!-- Castle Mock test dependencies -->
         <dependency>
             <groupId>com.castlemock.core.mock</groupId>
             <artifactId>rest</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Third party dependencies -->
+        <dependency>
+            <groupId>org.raml</groupId>
+            <artifactId>raml-parser-2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-parser</artifactId>
         </dependency>
     </dependencies>
 

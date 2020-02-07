@@ -13,7 +13,7 @@
     </parent>
 
     <dependencies>
-        <!-- Third party -->
+        <!-- Third party dependencies -->
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4</artifactId>

@@ -13,14 +13,14 @@
     </parent>
 
     <dependencies>
-        <!-- Castle Mock -->
+        <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.core</groupId>
             <artifactId>expression</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-        <!-- Third party -->
+        <!-- Third party dependencies -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

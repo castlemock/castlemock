@@ -8,39 +8,57 @@
     <packaging>pom</packaging>
 
     <properties>
+        <!-- Project properties -->
         <project.version>1.42-SNAPSHOT</project.version>
-        <java.release>8</java.release>
-        <java.version>1.8</java.version>
-        <guava.version>28.2-jre</guava.version>
-        <log4j.version>2.13.0</log4j.version>
-        <slf4j.version>1.7.30</slf4j.version>
-        <mockito.version>1.10.19</mockito.version>
-        <antlr.version>4.7.2</antlr.version>
-        <commons.lang.version>3.9</commons.lang.version>
-        <jaxb.version>2.3.1</jaxb.version>
-        <sun.jaxb.version>2.3.0</sun.jaxb.version>
-        <json.path.version>2.4.0</json.path.version>
-        <dozer.version>5.5.1</dozer.version>
-        <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
-        <spring.security.version>5.2.1.RELEASE</spring.security.version>
-        <spring.framework.version>5.2.3.RELEASE</spring.framework.version>
-        <activation.version>1.1.1</activation.version>
-        <flapdoodle.mongo.version>2.2.0</flapdoodle.mongo.version>
-        <tomcat.embedd.version>9.0.30</tomcat.embedd.version>
-        <maven.compiler.version>3.8.1</maven.compiler.version>
-        <servlet.api.version>4.0.1</servlet.api.version>
-        <servlet.jsp.version>2.2</servlet.jsp.version>
-        <jackson.version>1.9.13</jackson.version>
-        <springfox.version>2.9.2</springfox.version>
-        <maven.jar.version>3.1.1</maven.jar.version>
-        <junit.jupiter.version>5.6.0</junit.jupiter.version>
-        <junit.version>4.12</junit.version>
-        <antlr.maven.version>4.7.2</antlr.maven.version>
-        <maven.exec.version>1.2.1</maven.exec.version>
-        <maven.build.helper.version>1.7</maven.build.helper.version>
-        <taglibs.version>1.2.5</taglibs.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Version properties -->
+        <java.release>8</java.release>
+        <java.version>1.8</java.version>
+        <jaxb.version>2.3.1</jaxb.version>
+        <junit.version>4.12</junit.version>
+        <dozer.version>5.5.1</dozer.version>
+        <antlr.version>4.7.2</antlr.version>
+        <log4j.version>2.13.0</log4j.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <cxf.rt.version>3.3.5</cxf.rt.version>
+        <wsdl4j.version>1.6.3</wsdl4j.version>
+        <guava.version>28.2-jre</guava.version>
+        <taglibs.version>1.2.5</taglibs.version>
+        <graphql.version>8.0</graphql.version>
+        <jackson.version>1.9.13</jackson.version>
+        <jaxb.api.version>2.3.1</jaxb.api.version>
+        <sun.jaxb.version>2.3.0</sun.jaxb.version>
+        <mockito.version>1.10.19</mockito.version>
+        <jaxb.impl.version>2.3.2</jaxb.impl.version>
+        <springfox.version>2.9.2</springfox.version>
+        <maven.jar.version>3.1.1</maven.jar.version>
+        <json.path.version>2.4.0</json.path.version>
+        <activation.version>1.1.1</activation.version>
+        <jaxb.core.version>2.3.0.1</jaxb.core.version>
+        <maven.exec.version>1.2.1</maven.exec.version>
+        <servlet.jsp.version>2.2</servlet.jsp.version>
+        <servlet.api.version>4.0.1</servlet.api.version>
+        <antlr.maven.version>4.7.2</antlr.maven.version>
+        <commons.lang.version>3.9</commons.lang.version>
+        <raml.parser.version>1.0.48</raml.parser.version>
+        <jaxb.runtime.version>2.3.2</jaxb.runtime.version>
+        <junit.jupiter.version>5.6.0</junit.jupiter.version>
+        <tomcat.embedd.version>9.0.30</tomcat.embedd.version>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
+        <swagger.parser.version>1.0.49</swagger.parser.version>
+        <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
+        <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
+        <common.beanutils.version>1.9.4</common.beanutils.version>
+        <flapdoodle.mongo.version>2.2.0</flapdoodle.mongo.version>
+        <jackson.databind.version>2.10.2</jackson.databind.version>
+        <maven.build.helper.version>1.7</maven.build.helper.version>
+        <common.collections.version>3.2.2</common.collections.version>
+        <javax.validation.version>2.0.1.Final</javax.validation.version>
+        <spring.security.version>5.2.1.RELEASE</spring.security.version>
+        <spring.framework.version>5.2.3.RELEASE</spring.framework.version>
+        <hibernate.validator.version>6.1.2.Final</hibernate.validator.version>
     </properties>
 
     <modules>
@@ -53,7 +71,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Castle Mock -->
+            <!-- Castle Mock dependencies -->
             <dependency>
                 <groupId>com.castlemock.core</groupId>
                 <artifactId>expression</artifactId>
@@ -180,6 +198,7 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <!-- Castle Mock test dependencies -->
             <dependency>
                 <groupId>com.castlemock.core</groupId>
                 <artifactId>basis</artifactId>
@@ -209,17 +228,7 @@
                 <scope>test</scope>
             </dependency>
 
-            <!-- Third party -->
-            <dependency>
-                <groupId>net.sf.dozer</groupId>
-                <artifactId>dozer</artifactId>
-                <version>${dozer.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.tomcat.embed</groupId>
-                <artifactId>tomcat-embed-jasper</artifactId>
-                <version>${tomcat.embedd.version}</version>
-            </dependency>
+            <!-- Third party dependencies -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -239,22 +248,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jetty</artifactId>
                 <version>${spring.boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring.boot.version}</version>
-                <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.apache.logging.log4j</groupId>
-                        <artifactId>log4j-to-slf4j</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>ch.qos.logback</groupId>
-                        <artifactId>logback-classic</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -291,6 +284,16 @@
                 <version>${spring.security.version}</version>
             </dependency>
             <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <version>${dozer.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-jasper</artifactId>
+                <version>${tomcat.embedd.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
                 <version>${springfox.version}</version>
@@ -323,22 +326,22 @@
             <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
                 <artifactId>jaxb-runtime</artifactId>
-                <version>2.3.2</version>
+                <version>${jaxb.runtime.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
-                <version>2.3.1</version>
+                <version>${jaxb.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sun.xml.bind</groupId>
                 <artifactId>jaxb-core</artifactId>
-                <version>2.3.0.1</version>
+                <version>${jaxb.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sun.xml.bind</groupId>
                 <artifactId>jaxb-impl</artifactId>
-                <version>2.3.2</version>
+                <version>${jaxb.impl.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.jayway.jsonpath</groupId>
@@ -349,12 +352,6 @@
                 <groupId>javax.activation</groupId>
                 <artifactId>activation</artifactId>
                 <version>${activation.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.flapdoodle.embed</groupId>
-                <artifactId>de.flapdoodle.embed.mongo</artifactId>
-                <version>${flapdoodle.mongo.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.taglibs</groupId>
@@ -382,40 +379,84 @@
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <version>${junit.jupiter.version}</version>
-                <scope>test</scope>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.10.2</version>
+                <version>${jackson.databind.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>6.1.2.Final</version>
-            </dependency>
-            <dependency>
-                <groupId>org.yaml</groupId>
-                <artifactId>snakeyaml</artifactId>
-                <version>1.25</version>
+                <version>${hibernate.validator.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
-                <version>3.2.2</version>
+                <version>${common.collections.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
-                <version>1.9.4</version>
+                <version>${common.beanutils.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-ext</artifactId>
-                <version>1.7.30</version>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.raml</groupId>
+                <artifactId>raml-parser-2</artifactId>
+                <version>${raml.parser.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-parser</artifactId>
+                <version>${swagger.parser.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.graphql-java</groupId>
+                <artifactId>graphql-java</artifactId>
+                <version>${graphql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                <version>${cxf.rt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>wsdl4j</groupId>
+                <artifactId>wsdl4j</artifactId>
+                <version>${wsdl4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.dozer</groupId>
@@ -432,11 +473,53 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <!-- Third party test dependencies -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>de.flapdoodle.embed</groupId>
+                <artifactId>de.flapdoodle.embed.mongo</artifactId>
+                <version>${flapdoodle.mongo.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.boot.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.logging.log4j</groupId>
+                        <artifactId>log4j-to-slf4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <!-- Third party -->
+        <!-- Third party dependencies -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -445,35 +528,29 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
         </dependency>
 
-        <!-- Third party test -->
+        <!-- Third party test dependencies -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

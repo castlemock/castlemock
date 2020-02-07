@@ -13,10 +13,13 @@
     </parent>
 
     <dependencies>
+        <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.core</groupId>
             <artifactId>basis</artifactId>
         </dependency>
+
+        <!-- Third party dependencies -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>

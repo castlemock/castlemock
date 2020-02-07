@@ -13,6 +13,7 @@
     </parent>
 
     <dependencies>
+        <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.core.mock</groupId>
             <artifactId>graphql</artifactId>
@@ -29,10 +30,11 @@
             <groupId>com.castlemock.repository.mock.graphql</groupId>
             <artifactId>model</artifactId>
         </dependency>
+
+        <!-- Third party dependencies -->
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java</artifactId>
-            <version>8.0</version>
         </dependency>
     </dependencies>
 

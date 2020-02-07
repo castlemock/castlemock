@@ -13,6 +13,7 @@
     </parent>
 
     <dependencies>
+        <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.deploy.tomcat</groupId>
             <artifactId>common</artifactId>
@@ -29,7 +30,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>${maven.war.plugin.version}</version>
                 <configuration>
                     <webResources>
                         <resource>

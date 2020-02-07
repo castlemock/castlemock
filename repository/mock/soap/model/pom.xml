@@ -13,6 +13,7 @@
     </parent>
 
     <dependencies>
+        <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.core</groupId>
             <artifactId>basis</artifactId>
