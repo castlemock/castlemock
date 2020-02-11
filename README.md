@@ -14,8 +14,6 @@
 
 **Castle Mock** is a web application that provides the functionality to mock out RESTful APIs and SOAP web services. This functionality allows client-side developers to completely mimic a server side behaviour and shape the responses themselves.
 
----
-
 Table Of Content
 ----
 
