@@ -19,7 +19,7 @@ Table Of Content
 
 - [About](#about)
 - [What to Use Castle Mock for and When to Use It](#what-to-use-castle-mock-for-and-when-to-use-it)
-- [Downloads](#downloads)
+- [Download](#download)
 - [Installation](#installation)
 - [Docker](#docker)
 - [Source](#source)
@@ -43,7 +43,7 @@ Use **Castle Mock** to mock out RESTful APIs and SOAP web services for testing p
 - Mock RESTful APIs and SOAP web services for system or integration tests.
 - Network analysis between systems. 
 
-## Downloads
+## Download
 
 Non-source downloads such as WAR files can be found on our website: [https://www.castlemock.com/](https://www.castlemock.com/). The WAR files can also be located and downloaded from [GitHub Releases](https://github.com/castlemock/castlemock/releases).
 
