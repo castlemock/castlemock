@@ -65,6 +65,24 @@ It is recommended that the administrator profile gets updated with a more secure
 
 Upon successful login, you will be able to create both SOAP and REST projects. SOAP and REST resources can either be created manually or created by importing resource descriptions, such as WSDL and WADL. All created resources can be mocked multiple times. Each resource can also be configured to have different response strategies, such as random and sequence
 
+## Docker
+
+> Docker is an open-source project that automates the deployment of applications inside software containers, by providing an additional layer of abstraction and automation of operating-system-level virtualization on Linux.
+
+Castle Mock absolutely loves Docker. Docker allows you to simply setup and deploy your own instance of Castle Mock, by just typing one line. Download and install Docker by visiting their web page: https://docker.com
+
+Use our official Docker image to setup and test Castle Mock:
+```
+docker run -d -p 8080:8080 castlemock/castlemock
+```
+
+Castle Mock can be accessed from the following address after the installation is finished:
+```
+http://{CONTAINER IP}:8080/castlemock
+```
+
+For more information and details: https://hub.docker.com/r/castlemock/castlemock
+
 ## Source
 
 Our latest and greatest source of **Castle Mock** can be found on [GitHub](https://github.com/castlemock/castlemock/).
