@@ -65,7 +65,7 @@
                     <div id="request" class="tab-pane fade in active">
                         <h3><span><spring:message code="rest.event.header.body"/></span></h3>
                         <div class="eventMessage">
-                            <pre><code id="requestBody" class="xml"><c:out value="${event.request.body}"/></code></pre>
+                            <pre><code id="requestBody" class="json"><c:out value="${event.request.body}"/></code></pre>
                         </div>
                         <c:choose>
                             <c:when test="${event.request.httpParameters.size() > 0}">
