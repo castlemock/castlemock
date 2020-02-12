@@ -26,6 +26,11 @@ $(document).ready(function() {
         $('.tooltip')
             .css({ top: mousey, left: mousex })
     });
+    
+    // Format JSON request/response body
+    $("code.json").each(function() {
+        $(this).html( JSON.stringify(JSON.parse($(this).html()), null ,2) );
+    });
 });
 
 var addEvent = function(object, type, callback) {
