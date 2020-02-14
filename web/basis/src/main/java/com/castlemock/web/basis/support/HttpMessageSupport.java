@@ -290,8 +290,8 @@ public class HttpMessageSupport {
                 final Reader decoder = new InputStreamReader(inflaterInputStream, characterEncoding);
                 bufferedReader = new BufferedReader(decoder);
             } else {
-                // No encoding was used. Simply parse the response.
-                final InputStreamReader inputStreamReader = new InputStreamReader(inputStream, characterEncoding);
+                // No contentencoding was used. Simply parse the response.
+                final InputStreamReader inputStreamReader = new InputStreamReader(inputStream, (characterEncoding!=null)?characterEncoding: java.nio.charset.StandardCharsets.UTF_8);
                 bufferedReader = new BufferedReader(inputStreamReader);
             }
 
