@@ -7,13 +7,14 @@ This page provides information about contributing code to the **Castle Mock** co
 1. Fork the repository on GitHub
 2. Clone the forked repository to your machine
 3. Install the development tools. In order to develop **Castle Mock**, you need the following tools:
-- Java Development Kit (JDK) 8 or higher.
-- Maven 3.5.4 or above
-- Any IDE which supports importing Maven projects.
+   * Java Development Kit (JDK) 8 or higher.
+   * Maven 3.5.4 or above
+   * Any IDE which supports importing Maven projects.
 
 ## Building
 The build flow for Castle Mock is built around Maven. To build and test Castle Mock you simply need to the run following Maven command:
-   mvn clean install
+
+    mvn clean install
 
 ## Proposing Changes
 The **Castle Mock** project source code repositories are hosted at GitHub. All proposed changes are submitted and code reviewed using the GitHub Pull Request process.
