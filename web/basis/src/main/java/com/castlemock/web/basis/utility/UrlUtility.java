@@ -103,6 +103,9 @@ public class UrlUtility {
     private static PathPattern.PathMatchInfo getMatchInfo(final String pattern, final String path){
         final String basePattern = getBaseUriPattern(pattern);
         final PathPatternParser parser = new PathPatternParser();
+
+        // No case-sensitive matching
+        parser.setCaseSensitive(false);
         final PathPattern pathPattern = parser.parse(basePattern);
         final PathContainer pathContainer = PathContainer.parsePath(path);
         return pathPattern.matchAndExtract(pathContainer);
