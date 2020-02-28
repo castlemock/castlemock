@@ -45,7 +45,7 @@
         <raml.parser.version>1.0.48</raml.parser.version>
         <jaxb.runtime.version>2.3.2</jaxb.runtime.version>
         <junit.jupiter.version>5.6.0</junit.jupiter.version>
-        <tomcat.embedd.version>9.0.30</tomcat.embedd.version>
+        <tomcat.embedd.version>9.0.31</tomcat.embedd.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <swagger.parser.version>1.0.49</swagger.parser.version>
         <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
@@ -291,6 +291,11 @@
             <dependency>
                 <groupId>org.apache.tomcat.embed</groupId>
                 <artifactId>tomcat-embed-jasper</artifactId>
+                <version>${tomcat.embedd.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
                 <version>${tomcat.embedd.version}</version>
             </dependency>
             <dependency>
