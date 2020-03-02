@@ -17,20 +17,34 @@
 package com.castlemock.repository.core.file;
 
 import com.google.common.base.Preconditions;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * @author Karl Dahlgren
@@ -88,28 +102,36 @@ public class FileRepositorySupport {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> Collection<T> load(Class<T> entityClass, String directory, String postfix){
-        final Collection<T> loadedTypes = new ArrayList<T>();
+    public <T> Collection<T> load(final Class<T> entityClass, final String directory, final String postfix){
         final Path path = FileSystems.getDefault().getPath(directory);
         this.createDirectory(path);
 
-        final File folder = new File(directory);
-        try {
-            LOGGER.debug("Start loading files for the following type: " + entityClass.getSimpleName());
-            for (final File file : folder.listFiles()) {
-                if (file.isFile() && file.getName().endsWith(postfix)) {
-                    JAXBContext jaxbContext = JAXBContext.newInstance(entityClass);
-                    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-                    T type = (T) jaxbUnmarshaller.unmarshal(file);
-                    loadedTypes.add(type);
-                    LOGGER.debug("\tLoaded " + file.getName());
-                }
+        LOGGER.debug("Start loading files for the following type: " + entityClass.getSimpleName());
+        return Optional.of(new File(directory))
+                .map(File::listFiles)
+                .map(Stream::of)
+                .map(files -> files
+                        .filter(File::isFile)
+                        .filter(file -> file.getName().endsWith(postfix))
+                        .map(file -> load(file, entityClass))
+                        .filter(Objects::nonNull)
+                        .collect(toList()))
+                .orElseGet(Collections::emptyList);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T load(final File file, final Class<T> entityClass){
+        try(final InputStream inputStream= new FileInputStream(file)) {
+            try(final Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)){
+                final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass);
+                final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+                LOGGER.debug("\tLoaded " + file.getName());
+                return (T) jaxbUnmarshaller.unmarshal(reader);
             }
-        } catch (JAXBException e) {
-            LOGGER.error("Unable to parse files for type " + entityClass.getSimpleName(), e);
+        } catch (JAXBException | IOException e) {
+            LOGGER.error("Unable to parse the following file: " + file.getAbsolutePath(), e);
         }
-        return loadedTypes;
+        return null;
     }
 
     public <T> void save(T type, String filename){
