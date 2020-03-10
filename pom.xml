@@ -47,7 +47,8 @@
         <junit.jupiter.version>5.6.0</junit.jupiter.version>
         <tomcat.embedd.version>9.0.31</tomcat.embedd.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
-        <swagger.parser.version>1.0.49</swagger.parser.version>
+        <swagger.parser.version>2.0.18</swagger.parser.version>
+        <swagger.core.version>1.6.0</swagger.core.version>
         <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
@@ -439,9 +440,19 @@
                 <version>${raml.parser.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.swagger</groupId>
+                <groupId>io.swagger.parser.v3</groupId>
                 <artifactId>swagger-parser</artifactId>
                 <version>${swagger.parser.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.graphql-java</groupId>

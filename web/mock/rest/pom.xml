@@ -45,7 +45,7 @@
             <artifactId>raml-parser-2</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.swagger</groupId>
+            <groupId>io.swagger.parser.v3</groupId>
             <artifactId>swagger-parser</artifactId>
         </dependency>
     </dependencies>
