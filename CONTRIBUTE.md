@@ -19,6 +19,9 @@ The build flow for Castle Mock is built around Maven. To build and test Castle M
 ## Proposing Changes
 The **Castle Mock** project source code repositories are hosted at GitHub. All proposed changes are submitted and code reviewed using the GitHub Pull Request process.
 
+## Design Document
+The Design Document for **Castle Mock** can be found on our wiki: [Design Document](https://github.com/castlemock/castlemock/wiki/Design-Document)
+
 ## Copyright and License
 
 **Castle Mock** is **licensed** under the **[Apache License](https://github.com/castlemock/castlemock/blob/master/LICENSE)**. 
