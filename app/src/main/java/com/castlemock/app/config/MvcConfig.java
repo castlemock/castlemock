@@ -180,6 +180,7 @@ public class MvcConfig implements WebMvcConfigurer {
      * @since 1.12
      */
     @Override
+    @SuppressWarnings("deprecation")
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer.favorPathExtension(false);
     }
