@@ -11,6 +11,7 @@ import java.util.List;
 public final class SoapRequestTestBuilder {
 
     private String body;
+    private String envelope;
     private String contentType;
     private String uri;
     private HttpMethod httpMethod;
@@ -20,7 +21,15 @@ public final class SoapRequestTestBuilder {
     private SoapOperationIdentifier operationIdentifier;
 
     private SoapRequestTestBuilder() {
-        this.body = "Soap request body";
+        this.body = "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:web=\"http://www.castlemock.com/\">\n" +
+                "   <soap:Header/>\n" +
+                "   <soap:Body>\n" +
+                "      <web:ServiceName>\n" +
+                "         <web:value>Input</web:value>\n" +
+                "      </web:ServiceName>\n" +
+                "   </soap:Body>\n" +
+                "</soap:Envelope>";
+        this.envelope = this.body;
         this.contentType = "application/json";
         this.operationName = "ServiceName";
         this.httpMethod = HttpMethod.POST;
@@ -39,6 +48,10 @@ public final class SoapRequestTestBuilder {
 
     public SoapRequestTestBuilder body(String body) {
         this.body = body;
+        return this;
+    }
+    public SoapRequestTestBuilder envelope(String envelope) {
+        this.envelope = envelope;
         return this;
     }
 
@@ -80,6 +93,7 @@ public final class SoapRequestTestBuilder {
     public SoapRequest build() {
         return SoapRequest.builder()
                 .body(body)
+                .envelope(envelope)
                 .contentType(contentType)
                 .httpHeaders(httpHeaders)
                 .httpMethod(httpMethod)

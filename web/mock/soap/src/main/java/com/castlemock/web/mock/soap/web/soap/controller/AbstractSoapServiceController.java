@@ -187,16 +187,18 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         final String body = HttpMessageSupport.getBody(httpServletRequest);
 
         final SoapOperationIdentifier identifier;
+        final String envelope;
         if(httpServletRequest instanceof MultipartHttpServletRequest){
             // Check if the request is a Multipart request. If so, interpret  the incoming request
             // as a MTOM request and extract the main body (Exclude the attachment).
             // MTOM request mixes both the attachments and the body in the HTTP request body.
-            String mainBody = MtomUtility.extractMtomBody(body, httpServletRequest.getContentType());
+            envelope = MtomUtility.extractMtomBody(body, httpServletRequest.getContentType());
 
             // Use the main body to identify
-            identifier = SoapUtility.extractSoapRequestName(mainBody);
+            identifier = SoapUtility.extractSoapRequestName(envelope);
         } else {
             // The incoming request is a regular SOAP request. Parse the body as it is.
+            envelope = body;
             identifier = SoapUtility.extractSoapRequestName(body);
         }
 
@@ -211,6 +213,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                 .uri(serviceUri)
                 .httpMethod(HttpMethod.valueOf(httpServletRequest.getMethod()))
                 .body(body)
+                .envelope(envelope)
                 .operationIdentifier(identifier)
                 .contentType(httpServletRequest.getContentType())
                 .build();
@@ -348,7 +351,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         } else if (soapOperation.getResponseStrategy().equals(SoapResponseStrategy.XPATH_INPUT)) {
             for (SoapMockResponse testedMockResponse : mockResponses) {
                 for(SoapXPathExpression xPathExpression : testedMockResponse.getXpathExpressions()){
-                    if (XPathUtility.isValidXPathExpr(request.getBody(), xPathExpression.getExpression())) {
+                    if (XPathUtility.isValidXPathExpr(request.getEnvelope(), xPathExpression.getExpression())) {
                         mockResponse = testedMockResponse;
                         break;
                     }

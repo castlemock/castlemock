@@ -249,6 +249,8 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
 
         @Mapping("body")
         private String body;
+        @Mapping("envelope")
+        private String envelope;
         @Mapping("contentType")
         private String contentType;
         @Mapping("uri")
@@ -271,6 +273,15 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
 
         public void setBody(String body) {
             this.body = body;
+        }
+
+        @XmlElement
+        public String getEnvelope() {
+            return envelope;
+        }
+
+        public void setEnvelope(String envelope) {
+            this.envelope = envelope;
         }
 
         @XmlElement

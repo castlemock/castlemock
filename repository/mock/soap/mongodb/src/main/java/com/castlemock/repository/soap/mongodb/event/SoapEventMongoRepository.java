@@ -189,6 +189,8 @@ public class SoapEventMongoRepository extends AbstractEventMongoRepository<SoapE
 
         @Mapping("body")
         private String body;
+        @Mapping("envelope")
+        private String envelope;
         @Mapping("contentType")
         private String contentType;
         @Mapping("uri")
@@ -210,6 +212,14 @@ public class SoapEventMongoRepository extends AbstractEventMongoRepository<SoapE
 
         public void setBody(String body) {
             this.body = body;
+        }
+
+        public String getEnvelope() {
+            return envelope;
+        }
+
+        public void setEnvelope(String envelope) {
+            this.envelope = envelope;
         }
 
         public String getContentType() {
