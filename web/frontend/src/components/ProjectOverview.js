@@ -81,7 +81,7 @@ class ProjectOverview extends PureComponent {
         }
 
         return (
-            <a href={"/web/" + row.typeIdentifier.typeUrl + "/project/" + row.id}>{cell}</a>
+            <a href={"/beta/web/" + row.typeIdentifier.typeUrl + "/project/" + row.id}>{cell}</a>
         )
     }
 
@@ -107,9 +107,9 @@ class ProjectOverview extends PureComponent {
                         <div className="title">
                             <h1>Overview</h1>
                         </div>
-                        <div className="menu" align="right">
-                            <a className="btn btn-success demo-button-disabled" href="/web/project/create"><i class="fas fa-plus-circle"/> <span>New project</span></a>
-                            <a className="btn btn-primary demo-button-disabled" href="/web/project/import"><i class="fas fa-cloud-upload-alt"/> <span>Import project</span></a>
+                        <div className="menu">
+                            <button className="btn btn-success demo-button-disabled menu-button"  data-toggle="modal" data-target="#newProjectModal"><i class="fas fa-plus-circle"/> <span>New project</span></button>
+                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#newProjectModal"><i class="fas fa-cloud-upload-alt"/> <span>Import project</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -133,13 +133,34 @@ class ProjectOverview extends PureComponent {
                                             </div>
                                     )}
                             </ToolkitProvider>
-                            <div class="panel-buttons">
-                                <button class="btn btn-primary" type="submit" name="action" value="export"><i class="fas fa-cloud-download-alt"/> <span>Export projects</span></button>
-                                <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fas fa-trash"/> <span>Delete projects</span></button>
+                        </div>
+                        <div className="table-responsive">
+                            <div className="panel-buttons">
+                                <button className="btn btn-primary panel-button" type="submit" name="action" value="export"><i
+                                    className="fas fa-cloud-download-alt"/> <span>Export projects</span></button>
+                                <button className="btn btn-danger demo-button-disabled panel-button" type="submit" name="action"
+                                        value="delete"><i className="fas fa-trash"/> <span>Delete projects</span>
+                                </button>
                             </div>
-                            </div>
+                        </div>
                     </div>
                  </section>
+
+                <div className="modal fade" id="newProjectModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="newProjectModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="privacyPolicyModalLabel">New project</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

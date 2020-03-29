@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+package com.castlemock.web.site;
 import org.springframework.stereotype.Controller;
 
 @Controller

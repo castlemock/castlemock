@@ -17,6 +17,10 @@
         <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.web</groupId>
+            <artifactId>site</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.web</groupId>
             <artifactId>basis</artifactId>
         </dependency>
         <dependency>

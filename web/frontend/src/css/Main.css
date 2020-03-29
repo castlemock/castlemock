@@ -1,10 +1,66 @@
 #main-body {
-    margin: 0;
+    margin: 20px auto;
     font-family: "Roboto Regular", sans-serif;
     color: #666666;
     min-height:100%;
-    min-width: 100%;
+    min-width: 85%;
+    width: 85%;
     top: 0;
     bottom: 0;
+}
 
+.panel-buttons {
+    margin-left: 10px;
+}
+
+.panel-button {
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+.menu-button {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.table-filter-field {
+    width: 250px !important;
+    max-width: 250px !important;
+    display: block !important;
+    float: right;
+    margin-right: 3px;
+    margin-bottom: 10px;
+}
+
+.content-top {
+    border-bottom: 1px solid #ddd !important;
+    height: 50px;
+}
+
+
+.content-top .menu {
+    padding: 0 0 10px 0;
+    float: right;
+    right: 0;
+}
+
+.content-top .title {
+    float: left;
+}
+
+.content-top .title h1 {
+    font-size: 26px;
+}
+
+
+.table-panel {
+    margin-top: 10px;
+}
+
+.table-panel-heading {
+
+}
+
+.panel-buttons {
+    margin-left: 10px;
 }

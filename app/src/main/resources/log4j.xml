@@ -50,7 +50,7 @@
 		<level value="warn" />
 	</logger>
 
-	<logger name="org.springframework.boot.context.web.ErrorPageFilter">
+	<logger name="org.springframework.boot.web.servlet.support.ErrorPageFilter">
 		 <level value="OFF"/>
 	</logger>
 
