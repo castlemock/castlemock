@@ -34,6 +34,7 @@ import java.util.Objects;
 public class SoapRequest {
 
     private String body;
+    private String envelope;
     private String contentType;
     private String uri;
     private HttpMethod httpMethod;
@@ -48,6 +49,7 @@ public class SoapRequest {
 
     private SoapRequest(final Builder builder){
         this.body = builder.body;
+        this.envelope = builder.envelope;
         this.contentType = builder.contentType;
         this.uri = Objects.requireNonNull(builder.uri);
         this.httpMethod = Objects.requireNonNull(builder.httpMethod);
@@ -65,6 +67,15 @@ public class SoapRequest {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    @XmlElement
+    public String getEnvelope() {
+        return envelope;
+    }
+
+    public void setEnvelope(String envelope) {
+        this.envelope = envelope;
     }
 
     @XmlElement
@@ -135,7 +146,9 @@ public class SoapRequest {
     }
 
     public static final class Builder {
+
         private String body;
+        private String envelope;
         private String contentType;
         private String uri;
         private HttpMethod httpMethod;
@@ -149,6 +162,11 @@ public class SoapRequest {
 
         public Builder body(final String body) {
             this.body = body;
+            return this;
+        }
+
+        public Builder envelope(final String envelope) {
+            this.envelope = envelope;
             return this;
         }
 
