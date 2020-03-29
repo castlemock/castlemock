@@ -15,23 +15,47 @@
  */
 
 import React, {PureComponent} from 'react'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import '../css/Main.css';
 import Footer from './Footer'
+import Header from './Header'
 import ProjectOverview from './ProjectOverview'
 import RestProject from './RestProject'
 
 class MainContainer extends PureComponent {
+
+    constructor(props) {
+        super(props);
+        this.isAuthenticated = this.isAuthenticated.bind(this);
+    }
+
+    isAuthenticated(){
+
+    }
+
     render() {
+
+        if(this.isAuthenticated()){
+
+        }
+
         return (
-            <div id="main-body">
-                <Router>
-                    <Switch>
-                        <Route path="/web/rest/project/*"  component={RestProject} />
-                        <Route path="/web"  component={ProjectOverview} />
-                        <Route path="/"  component={ProjectOverview} />
-                    </Switch>
-                </Router>
+            <div>
+                <Header/>
+                <div id="main-body">
+                    <Router>
+                        <Switch>
+                            <Route path="/beta/web/rest/project/:projectId"  component={RestProject} />
+                            <Route path="/beta/web"  component={ProjectOverview} />
+                            <Route path="/beta/*">
+                                <Redirect to="/beta/web" />
+                            </Route>
+                            <Route path="/beta" >
+                                <Redirect to="/beta/web" />
+                            </Route>
+                        </Switch>
+                    </Router>
+                </div>
                 <Footer/>
             </div>
     );
