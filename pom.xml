@@ -22,7 +22,7 @@
         <antlr.version>4.8-1</antlr.version>
         <log4j.version>2.13.1</log4j.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <cxf.rt.version>3.3.5</cxf.rt.version>
+        <cxf.rt.version>3.3.6</cxf.rt.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
         <guava.version>28.2-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
@@ -42,7 +42,7 @@
         <httpclient.version>4.5.12</httpclient.version>
         <servlet.api.version>4.0.1</servlet.api.version>
         <antlr.maven.version>4.7.2</antlr.maven.version>
-        <commons.lang.version>3.9</commons.lang.version>
+        <commons.lang.version>3.10</commons.lang.version>
         <raml.parser.version>1.0.48</raml.parser.version>
         <jaxb.runtime.version>2.3.2</jaxb.runtime.version>
         <swagger.core.version>1.6.0</swagger.core.version>
@@ -50,7 +50,7 @@
         <tomcat.embedd.version>9.0.33</tomcat.embedd.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <swagger.parser.version>2.0.18</swagger.parser.version>
-        <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
         <flapdoodle.mongo.version>2.2.0</flapdoodle.mongo.version>
@@ -59,7 +59,7 @@
         <common.collections.version>3.2.2</common.collections.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <spring.security.version>5.3.1.RELEASE</spring.security.version>
-        <spring.framework.version>5.2.4.RELEASE</spring.framework.version>
+        <spring.framework.version>5.2.5.RELEASE</spring.framework.version>
         <hibernate.validator.version>6.1.2.Final</hibernate.validator.version>
     </properties>
 
