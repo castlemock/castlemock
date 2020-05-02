@@ -49,7 +49,7 @@
         <junit.jupiter.version>5.6.0</junit.jupiter.version>
         <tomcat.embedd.version>9.0.33</tomcat.embedd.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
-        <swagger.parser.version>2.0.18</swagger.parser.version>
+        <swagger.parser.version>2.0.19</swagger.parser.version>
         <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
