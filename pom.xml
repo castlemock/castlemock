@@ -47,7 +47,7 @@
         <jaxb.runtime.version>2.3.2</jaxb.runtime.version>
         <swagger.core.version>1.6.0</swagger.core.version>
         <junit.jupiter.version>5.6.0</junit.jupiter.version>
-        <tomcat.embedd.version>9.0.33</tomcat.embedd.version>
+        <tomcat.embedd.version>9.0.34</tomcat.embedd.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <swagger.parser.version>2.0.18</swagger.parser.version>
         <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
