@@ -46,6 +46,7 @@
         <raml.parser.version>1.0.48</raml.parser.version>
         <jaxb.runtime.version>2.3.2</jaxb.runtime.version>
         <swagger.core.version>1.6.0</swagger.core.version>
+        <commons.codec.version>1.14</commons.codec.version>
         <junit.jupiter.version>5.6.0</junit.jupiter.version>
         <tomcat.embedd.version>9.0.34</tomcat.embedd.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
@@ -409,6 +410,11 @@
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
                 <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons.codec.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
