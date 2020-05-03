@@ -20,7 +20,7 @@
         <junit.version>4.12</junit.version>
         <dozer.version>5.5.1</dozer.version>
         <antlr.version>4.8-1</antlr.version>
-        <log4j.version>2.13.1</log4j.version>
+        <log4j.version>2.13.2</log4j.version>
         <slf4j.version>1.7.30</slf4j.version>
         <cxf.rt.version>3.3.6</cxf.rt.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
