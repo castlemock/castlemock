@@ -20,6 +20,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public final class WsdlMessageParser extends WsdlParser {
     private static final String WSDL_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/";
     private static final String NAME_NAMESPACE = "name";
     private static final String ELEMENT_NAMESPACE = "element";
+    private static final String TYPE_NAMESPACE = "type";
     private static final String PART_NAMESPACE = "part";
     private static final String MESSAGE_NAMESPACE = "message";
 
@@ -44,6 +46,7 @@ public final class WsdlMessageParser extends WsdlParser {
         final List<Element> partElements = DocumentUtility.getElements(messageElement, WSDL_NAMESPACE, PART_NAMESPACE);
         final Set<MessagePart> parts = partElements.stream()
                 .map(this::parseMessagePart)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
 
         return Message.builder()
@@ -53,10 +56,18 @@ public final class WsdlMessageParser extends WsdlParser {
     }
 
     private MessagePart parseMessagePart(final Element messageElement){
-        final String name = DocumentUtility.getAttribute(messageElement, NAME_NAMESPACE)
-                .orElseThrow(() -> new IllegalArgumentException("Unable to find message part name"));
+
+        final String name = DocumentUtility.getAttribute(messageElement, NAME_NAMESPACE).orElse(null);
+        /*
         final Attribute element = this.getAttribute(messageElement, ELEMENT_NAMESPACE)
-                .orElseThrow(() -> new IllegalArgumentException("Unable to find element attribute"));
+                .orElseGet(() -> this.getAttribute(messageElement, TYPE_NAMESPACE)
+                        .orElseThrow(() -> new IllegalArgumentException("Unable to find either element or type attribute")));
+        */
+        final Attribute element = this.getAttribute(messageElement, ELEMENT_NAMESPACE).orElse(null);
+
+        if(name == null || element == null){
+            return null;
+        }
 
         return MessagePart.builder()
                 .name(name)

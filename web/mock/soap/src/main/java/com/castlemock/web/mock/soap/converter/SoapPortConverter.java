@@ -17,11 +17,36 @@
 package com.castlemock.web.mock.soap.converter;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.soap.model.project.domain.*;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifyStrategy;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.support.DocumentUtility;
 import com.castlemock.web.basis.utility.UrlUtility;
-import com.castlemock.web.mock.soap.converter.types.*;
+import com.castlemock.web.mock.soap.converter.types.Attribute;
+import com.castlemock.web.mock.soap.converter.types.Binding;
+import com.castlemock.web.mock.soap.converter.types.BindingOperation;
+import com.castlemock.web.mock.soap.converter.types.BindingOperationInputBody;
+import com.castlemock.web.mock.soap.converter.types.BindingOperationOutputBody;
+import com.castlemock.web.mock.soap.converter.types.Message;
+import com.castlemock.web.mock.soap.converter.types.MessagePart;
+import com.castlemock.web.mock.soap.converter.types.Namespace;
+import com.castlemock.web.mock.soap.converter.types.PortType;
+import com.castlemock.web.mock.soap.converter.types.PortTypeOperation;
+import com.castlemock.web.mock.soap.converter.types.Service;
+import com.castlemock.web.mock.soap.converter.types.ServicePort;
+import com.castlemock.web.mock.soap.converter.types.ServicePortAddress;
+import com.castlemock.web.mock.soap.converter.types.WsdlBindingParser;
+import com.castlemock.web.mock.soap.converter.types.WsdlMessageParser;
+import com.castlemock.web.mock.soap.converter.types.WsdlNamespaceParser;
+import com.castlemock.web.mock.soap.converter.types.WsdlPortTypeParser;
+import com.castlemock.web.mock.soap.converter.types.WsdlServiceParser;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,9 +56,13 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -247,33 +276,30 @@ public class SoapPortConverter {
                 .findFirst()
                 .orElseThrow((() -> new IllegalArgumentException("Unable to find the input message")));
 
-        final MessagePart inputMessagePart = bindingOperation.getInput().getBody()
+        final SoapOperationIdentifier operationRequestIdentifier = bindingOperation.getInput().getBody()
                 .map(BindingOperationInputBody::getParts)
                 .map(optional -> optional.orElse(null))
-                .map(parts -> inputMessage.getParts().stream()
+                .map(parts -> inputMessage.getParts()
+                        .stream()
                         .filter(messagePart -> parts.equals(messagePart.getName()))
-                        .findFirst()
-                        .orElse(null))
-                .orElse(inputMessage.getParts().stream()
-                        .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("Unable to find any input message part")));
+                        .findFirst())
+                .orElseGet(() -> inputMessage.getParts()
+                        .stream()
+                        .findFirst())
+                .map(inputMessagePart -> createSoapOperationIdentifier(inputMessagePart, namespaces))
+                .orElseGet(() -> createSoapOperationIdentifier(bindingOperation, namespaces));
 
-        final MessagePart outputMessagePart = bindingOperation.getOutput().getBody()
+        final SoapOperationIdentifier operationResponseIdentifier = bindingOperation.getOutput().getBody()
                 .map(BindingOperationOutputBody::getParts)
                 .map(optional -> optional.orElse(null))
                 .map(parts -> outputMessage.getParts().stream()
                         .filter(messagePart -> parts.equals(messagePart.getName()))
-                        .findFirst()
-                        .orElse(null))
+                        .findFirst())
                 .orElse(outputMessage.getParts().stream()
-                        .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("Unable to find any output message part")));
+                        .findFirst())
+                .map(outputMessagePart -> createSoapOperationIdentifier(outputMessagePart, namespaces))
+                .orElseGet(() -> createSoapOperationIdentifier(bindingOperation, namespaces));
 
-        final SoapOperationIdentifier operationRequestIdentifier =
-                createSoapOperationIdentifier(inputMessagePart, namespaces);
-
-        final SoapOperationIdentifier operationResponseIdentifier =
-                createSoapOperationIdentifier(outputMessagePart, namespaces);
 
         final SoapOperation soapOperation = new SoapOperation();
 
@@ -285,7 +311,7 @@ public class SoapPortConverter {
         soapOperation.setForwardedEndpoint(address.getLocation());
         soapOperation.setOriginalEndpoint(address.getLocation());
         soapOperation.setSoapVersion(address.getVersion());
-        soapOperation.setMockResponses(new ArrayList<SoapMockResponse>());
+        soapOperation.setMockResponses(new ArrayList<>());
         soapOperation.setDefaultBody(generateDefaultBody(operationResponseIdentifier));
         soapOperation.setCurrentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX);
         soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
@@ -293,7 +319,13 @@ public class SoapPortConverter {
         return soapOperation;
     }
 
-
+    private static SoapOperationIdentifier createSoapOperationIdentifier(final BindingOperation bindingOperation,
+                                                                         final Set<Namespace> namespaces){
+        return SoapOperationIdentifier.builder()
+                .name(bindingOperation.getName())
+                .namespace(null)
+                .build();
+    }
 
     private static SoapOperationIdentifier createSoapOperationIdentifier(final MessagePart messagePart,
                                                                          final Set<Namespace> namespaces){
@@ -307,10 +339,10 @@ public class SoapPortConverter {
                         .map(Namespace::getValue).orElse(null))
                 .orElse(null);
 
-        final SoapOperationIdentifier operationIdentifier = new SoapOperationIdentifier();
-        operationIdentifier.setName(name);
-        operationIdentifier.setNamespace(namespace);
-        return operationIdentifier;
+        return SoapOperationIdentifier.builder()
+                .name(name)
+                .namespace(namespace)
+                .build();
     }
 
     private static SoapMockResponse createSoapMockResponse(final String defaultBody){

@@ -32,7 +32,7 @@ abstract class WsdlParser {
     protected Optional<Attribute> getAttribute(final Element element,
                                                       final String name){
         final String value = element.getAttribute(name);
-        if(value == null){
+        if(value == null || value.isEmpty()){
             return Optional.empty();
         }
 

@@ -1,0 +1,48 @@
+<wsdl:definitions targetNamespace="http://CastleMock/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:tns="http://CastleMock/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://CastleMock/">
+            <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <s:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <s:complexType name="GetPriceIn">
+                <s:sequence>
+                    <s:element form="unqualified" name="getprice_id" type="s:long"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="Response">
+                <s:sequence>
+                    <s:element form="unqualified" name="Error_Code" type="s:int"/>
+                    <s:element form="unqualified" minOccurs="0" name="Error_Description" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="GetPriceSoapIn">
+        <wsdl:part name="pIn" type="tns:GetPriceIn"/>
+    </wsdl:message>
+    <wsdl:message name="GetPriceSoapOut">
+        <wsdl:part name="GetPriceResult" type="tns:Response"/>
+    </wsdl:message>
+    <wsdl:portType name="CastleMockServiceSoapPort">
+        <wsdl:operation name="GetPrice">
+            <wsdl:input message="tns:GetPriceSoapIn"/>
+            <wsdl:output message="tns:GetPriceSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CastleMockServiceSoapBinding" type="tns:CastleMockServiceSoapPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetPrice">
+            <soap:operation soapAction="http://CastleMock/GetPrice" style="rpc"/>
+            <wsdl:input>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://CastleMock/" use="encoded"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://CastleMock/" use="encoded"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CastleMockService">
+        <wsdl:port binding="tns:CastleMockServiceSoapBinding" name="CastleMockServiceSoap">
+            <soap:address location="http://localhost:9090/CastleMock/CastleMockService.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -18,13 +18,21 @@ package com.castlemock.web.mock.soap.support;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
 import com.castlemock.web.basis.support.DocumentUtility;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import org.w3c.dom.*;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.TypeInfo;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,69 +70,86 @@ public class SoapUtility {
 
     /**
      * The method extract the operation name from the SOAP body
-     * @param body The body that contains the operation name
+     * @param request The body that contains the operation name
      * @return The extracted operation name
      */
-    public static SoapOperationIdentifier extractSoapRequestName(final String body){
+    public static SoapOperationIdentifier extractSoapRequestName(final String request){
         try {
-            final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            final InputSource inputSource = new InputSource(new StringReader(body));
-            final Document document = documentBuilder.parse(inputSource);
+            final Document document = getDocument(request);
+            final Element body = getBodyElement(document);
+            final Node message = getRequestNode(body);
 
-            final Element bodyElement = IntStream.range(0, document.getDocumentElement().getChildNodes().getLength())
-                    .mapToObj(index -> document.getDocumentElement().getChildNodes().item(index))
-                    .map(Node::getNodeName)
-                    .map(SoapUtility::getElementName)
-                    .filter(elementName -> elementName.getLocalName().equalsIgnoreCase(BODY))
-                    .findFirst()
-                    .flatMap(bodyElementName -> bodyElementName.getNamespace()
-                            .map(namespace -> DocumentUtility.getElement(document, namespace + DIVIDER + BODY))
-                            .orElseGet(() -> DocumentUtility.getElement(document, BODY)))
-                    .orElseThrow(() -> new IllegalArgumentException("Unable to extract the SOAP body"));
-
-            final NodeList bodyChildren = bodyElement.getChildNodes();
-
-            if (bodyChildren.getLength() == 0) {
-                throw new IllegalStateException("Invalid count of body children");
-            }
-
-            final Node bodyRequestNode = IntStream.range(0, bodyChildren.getLength())
-                    .mapToObj(bodyChildren::item)
-                    .filter(node -> !node.getNodeName().contains(VARIABLE))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalStateException("Unable to extract the service name"));
-
-            String serviceNameWithPrefix = bodyRequestNode.getNodeName();
-            Map<String, Node> attributes = new HashMap<>();
-
-            if(bodyRequestNode instanceof Element){
-                getAttributes((Element) bodyRequestNode, attributes);
-            }
-
+            final String serviceNameWithPrefix = message.getNodeName();
+            final Map<String, Node> attributes = getAttributes(message);
             final ElementName elementName = getElementName(serviceNameWithPrefix);
-            String namespace = null;
-            if(elementName.getNamespace().isPresent() &&
-                    attributes.containsKey(elementName.getNamespace().get())){
-                Node namespaceNode = attributes.get(elementName.getNamespace().get());
-                namespace = namespaceNode.getNodeValue();
-            } else if(attributes.containsKey(XMLNS)){
-                Node namespaceNode = attributes.get(XMLNS);
-                namespace = namespaceNode.getNodeValue();
-            }
+            final String namespace = getNamespace(elementName, attributes);
 
-            final SoapOperationIdentifier operationIdentifier = new SoapOperationIdentifier();
-            operationIdentifier.setNamespace(namespace);
-            operationIdentifier.setName(elementName.getLocalName());
-
-            return operationIdentifier;
+            return SoapOperationIdentifier.builder()
+                    .namespace(namespace)
+                    .name(elementName.getLocalName())
+                    .build();
         }catch(Exception exception){
             LOGGER.error("Unable to extract SOAP request name", exception);
             throw new IllegalStateException(exception.getMessage());
         }
     }
 
+    private static Document getDocument(final String body) throws IOException, SAXException, ParserConfigurationException {
+        final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        final InputSource inputSource = new InputSource(new StringReader(body));
+        return documentBuilder.parse(inputSource);
+    }
 
+    private static Element getBodyElement(final Document document){
+        return IntStream.range(0, document.getDocumentElement().getChildNodes().getLength())
+                .mapToObj(index -> document.getDocumentElement().getChildNodes().item(index))
+                .map(Node::getNodeName)
+                .map(SoapUtility::getElementName)
+                .filter(elementName -> elementName.getLocalName().equalsIgnoreCase(BODY))
+                .findFirst()
+                .flatMap(bodyElementName -> bodyElementName.getNamespace()
+                        .map(namespace -> DocumentUtility.getElement(document, namespace + DIVIDER + BODY))
+                        .orElseGet(() -> DocumentUtility.getElement(document, BODY)))
+                .orElseThrow(() -> new IllegalArgumentException("Unable to extract the SOAP body"));
+    }
+
+    private static Node getRequestNode(final Node bodyElement){
+        final NodeList bodyChildren = bodyElement.getChildNodes();
+
+        if (bodyChildren.getLength() == 0) {
+            throw new IllegalStateException("Invalid count of body children");
+        }
+
+        return IntStream.range(0, bodyChildren.getLength())
+                .mapToObj(bodyChildren::item)
+                .filter(node -> !node.getNodeName().contains(VARIABLE))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Unable to extract the service name"));
+    }
+
+    private static String getNamespace(final ElementName elementName, final Map<String, Node> attributes){
+        if(elementName.getNamespace().isPresent() &&
+                attributes.containsKey(elementName.getNamespace().get())){
+            Node namespaceNode = attributes.get(elementName.getNamespace().get());
+            return namespaceNode.getNodeValue();
+        } else if(attributes.containsKey(XMLNS)){
+            Node namespaceNode = attributes.get(XMLNS);
+            return namespaceNode.getNodeValue();
+        }
+
+        return null;
+    }
+
+    private static Map<String, Node> getAttributes(final Node bodyRequestNode){
+        final Map<String, Node> attributes = new HashMap<>();
+
+        if(bodyRequestNode instanceof Element){
+            getAttributes((Element) bodyRequestNode, attributes);
+        }
+
+        return attributes;
+    }
 
     private static void getAttributes(final Element element,
                                      final Map<String, Node> attributes){

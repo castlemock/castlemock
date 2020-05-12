@@ -77,10 +77,7 @@ public final class WsdlBindingParser extends WsdlParser {
     }
 
     private BindingOperationInput parseInput(final Element operationElement){
-        final Optional<Element> inputElement =
-                DocumentUtility.getElement(operationElement, WSDL_NAMESPACE, INPUT_NAMESPACE);
-
-        return inputElement
+        return DocumentUtility.getElement(operationElement, WSDL_NAMESPACE, INPUT_NAMESPACE)
                 .map(element -> BindingOperationInput.builder()
                         .body(parseInputBody(element).orElse(null))
                         .build())
@@ -88,57 +85,63 @@ public final class WsdlBindingParser extends WsdlParser {
     }
 
     private BindingOperationOutput parseOutput(final Element operationElement){
-        final Optional<Element> outputElement =
-                DocumentUtility.getElement(operationElement, WSDL_NAMESPACE, OUTPUT_NAMESPACE);
-
-        return outputElement
-                .map(element -> BindingOperationOutput.builder()
-                        .body(parseOutputBody(element).orElse(null))
+        return DocumentUtility.getElement(operationElement, WSDL_NAMESPACE, OUTPUT_NAMESPACE)
+                        .map(element -> BindingOperationOutput.builder()
+                        .body(parseOutputBody(element)
+                                .orElse(null))
                         .build())
                 .orElseThrow(() -> new IllegalArgumentException("Unable to find operation output"));
     }
 
     private Optional<BindingOperationInputBody> parseInputBody(final Element inputElement){
-        final Optional<BindingOperationInputBody> body = DocumentUtility.getElement(inputElement, SOAP_11_NAMESPACE, BODY_NAMESPACE)
-                        .map(element -> {
-                            final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
-                                    .orElse(null);
-                            return Optional.of(BindingOperationInputBody.builder()
-                                    .parts(parts)
-                                    .build());
-                        })
-                        .orElseGet(() -> {
-                            return DocumentUtility.getElement(inputElement, SOAP_12_NAMESPACE, BODY_NAMESPACE)
-                                    .map(element -> {
-                                        final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
-                                                .orElse(null);
-                                        return Optional.of(BindingOperationInputBody.builder()
-                                                .parts(parts)
-                                                .build());
-                                    }).orElse(Optional.empty());
-                        });
-
-        return body;
+        return DocumentUtility.getElement(inputElement, SOAP_11_NAMESPACE, BODY_NAMESPACE)
+                .map(this::parseSoap11InputBody)
+                .orElseGet(() -> this.parseSoap12InputBody(inputElement));
     }
 
     private Optional<BindingOperationOutputBody> parseOutputBody(final Element outputElement){
         return DocumentUtility.getElement(outputElement, SOAP_11_NAMESPACE, BODY_NAMESPACE)
-                        .map(element -> {
-                            final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
-                                    .orElse(null);
-                            return Optional.of(BindingOperationOutputBody.builder()
-                                    .parts(parts)
-                                    .build());
-                }).orElseGet(() -> {
-                    return DocumentUtility.getElement(outputElement, SOAP_12_NAMESPACE, BODY_NAMESPACE)
-                            .map(element -> {
-                                final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
-                                        .orElse(null);
-                                return Optional.of(BindingOperationOutputBody.builder()
-                                        .parts(parts)
-                                        .build());
-                            })
-                            .orElse(Optional.empty());
-        });
+                .map(this::parseSoap11OutputBody)
+                .orElseGet(() -> this.parseSoap12OutputBody(outputElement));
+    }
+
+    private Optional<BindingOperationInputBody> parseSoap11InputBody(final Element element){
+        final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
+                .orElse(null);
+        return Optional.of(BindingOperationInputBody.builder()
+                .parts(parts)
+                .build());
+    }
+
+    private Optional<BindingOperationInputBody> parseSoap12InputBody(final Element inputElement){
+        return DocumentUtility.getElement(inputElement, SOAP_12_NAMESPACE, BODY_NAMESPACE)
+                .map(element -> {
+                    final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
+                            .orElse(null);
+                    return Optional.of(BindingOperationInputBody.builder()
+                            .parts(parts)
+                            .build());
+                })
+                .orElse(Optional.empty());
+    }
+
+    private Optional<BindingOperationOutputBody> parseSoap11OutputBody(final Element element){
+        final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
+                .orElse(null);
+        return Optional.of(BindingOperationOutputBody.builder()
+                .parts(parts)
+                .build());
+    }
+
+    private Optional<BindingOperationOutputBody> parseSoap12OutputBody(final Element outputElement){
+        return DocumentUtility.getElement(outputElement, SOAP_12_NAMESPACE, BODY_NAMESPACE)
+                .map(element -> {
+                    final String parts = DocumentUtility.getAttribute(element, PARTS_NAMESPACE)
+                            .orElse(null);
+                    return Optional.of(BindingOperationOutputBody.builder()
+                            .parts(parts)
+                            .build());
+                })
+                .orElse(Optional.empty());
     }
 }

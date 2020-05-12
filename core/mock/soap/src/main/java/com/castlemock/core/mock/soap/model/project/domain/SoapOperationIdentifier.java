@@ -33,7 +33,7 @@ public class SoapOperationIdentifier {
 
     private SoapOperationIdentifier(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
-        this.namespace = Objects.requireNonNull(builder.namespace);
+        this.namespace =builder.namespace;
     }
 
 
