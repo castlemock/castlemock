@@ -23,6 +23,7 @@ import com.castlemock.core.basis.model.http.domain.HttpParameter;
 import com.castlemock.core.basis.utility.JsonPathUtility;
 import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.TextParser;
+import com.castlemock.core.basis.utility.parser.expression.BodyXPathExpression;
 import com.castlemock.core.basis.utility.parser.expression.UrlHostExpression;
 import com.castlemock.core.basis.utility.parser.expression.BodyJsonPathExpression;
 import com.castlemock.core.basis.utility.parser.expression.PathParameterExpression;
@@ -539,6 +540,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                     ImmutableMap.of(
                             PathParameterExpression.PATH_PARAMETERS, pathParametersArgument,
                             QueryStringExpression.QUERY_STRINGS, queryStringArgument,
+                            BodyXPathExpression.BODY_ARGUMENT, bodyArgument,
                             BodyJsonPathExpression.BODY_ARGUMENT, bodyArgument,
                             UrlHostExpression.URL_ARGUMENT, urlArgument
                     );

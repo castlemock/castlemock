@@ -21,6 +21,7 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.TextParser;
+import com.castlemock.core.basis.utility.parser.expression.BodyXPathExpression;
 import com.castlemock.core.basis.utility.parser.expression.UrlHostExpression;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentString;
@@ -371,9 +372,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
         String body = mockResponse.getBody();
         if(mockResponse.isUsingExpressions()){
+
+            final ExpressionArgument<?> bodyArgument = new ExpressionArgumentString(request.getBody());
             final ExpressionArgument<?> urlArgument = new ExpressionArgumentString(httpServletRequest.getRequestURL().toString());
             final Map<String, ExpressionArgument<?>> externalInput =
                     ImmutableMap.of(
+                            BodyXPathExpression.BODY_ARGUMENT, bodyArgument,
                             UrlHostExpression.URL_ARGUMENT, urlArgument
                     );
 

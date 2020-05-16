@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Karl Dahlgren
+ * Copyright 2020 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,29 +17,29 @@
 package com.castlemock.core.basis.utility.parser.expression;
 
 
-import com.castlemock.core.basis.utility.JsonPathUtility;
+import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
 /**
- * {@link QueryStringExpression} is an {@link Expression} and will
+ * {@link BodyXPathExpression} is an {@link Expression} and will
  * extract a value from the incoming request body by using an
- * JSON Path expression.
+ * XPath expression.
  *
  * @author Karl Dahlgren
- * @since 1.38
+ * @since 1.47
  */
-public class BodyJsonPathExpression extends AbstractExpression {
+public class BodyXPathExpression extends AbstractExpression {
 
-    public static final String IDENTIFIER = "BODY_JSON_PATH";
+    public static final String IDENTIFIER = "BODY_XPATH";
     public static final String EXPRESSION_ARGUMENT = "expression";
     public static final String BODY_ARGUMENT = "BODY";
     public static final String MISSING_BODY = "";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BodyJsonPathExpression.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BodyXPathExpression.class);
 
     /**
      * The transform method provides the functionality to transform a provided <code>input</code>.
@@ -71,7 +71,7 @@ public class BodyJsonPathExpression extends AbstractExpression {
         }
 
         try {
-            return JsonPathUtility.getValueWithJsonPathExpr(body, expression)
+            return XPathUtility.getXPathValue(body, expression)
                     .orElse(MISSING_BODY);
         } catch (Exception exception){
             LOGGER.warn("Unable to parse body with the following expression: " + expression);

@@ -19,6 +19,8 @@ package com.castlemock.core.basis.utility;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author Karl Dahlgren
  * @since 1.35
@@ -117,6 +119,35 @@ public class XPathUtilityTest {
 
         boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
         Assert.assertTrue(validXPathValue);
+    }
+
+    @Test
+    public void testGetXPathValue(){
+        final String body = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://www.webservicex.net\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "      <web:GetWhoIS>\n" +
+                "         <!--Optional:-->\n" +
+                "         <web:HostName>google.com</web:HostName>\n" +
+                "      </web:GetWhoIS>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
+        final String xpath = "//GetWhoIS/HostName/text()";
+
+        assertEquals("google.com", XPathUtility.getXPathValue(body, xpath).orElse(null));
+    }
+
+    @Test
+    public void testGetXPathValueAttr(){
+        final String body = "<entries>\n" +
+                "    <entry key=\"mykey1\" attr=\"attr1\"/>\n" +
+                "    <entry key=\"mykey2\" attr=\"attr2\"/>\n" +
+                "    <otherentry key=\"mykey1\" attr=\"attr3\"/>\n" +
+                "    <entry key=\"mykey4\"/>\n" +
+                "    <otherentry key=\"mykey4\"/>\n" +
+                "</entries>";
+        final String xpath = "//entry/@key";
+        assertEquals("mykey1", XPathUtility.getXPathValue(body, xpath).orElse(null));
     }
 
 }
