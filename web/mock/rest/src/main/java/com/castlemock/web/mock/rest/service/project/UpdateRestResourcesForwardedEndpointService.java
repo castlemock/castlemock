@@ -43,8 +43,8 @@ public class UpdateRestResourcesForwardedEndpointService extends AbstractRestPro
     @Override
     public ServiceResult<UpdateRestResourcesForwardedEndpointOutput> process(final ServiceTask<UpdateRestResourcesForwardedEndpointInput> serviceTask) {
         final UpdateRestResourcesForwardedEndpointInput input = serviceTask.getInput();
-        final List<RestResource> resources = this.resourceRepository.findWithApplicationId(input.getRestApplicationId());
-        resources.stream()
+        input.getRestResources()
+                .stream()
                 .map(RestResource::getId)
                 .map(this.methodRepository::findWithResourceId)
                 .flatMap(List::stream)
