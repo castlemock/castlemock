@@ -90,6 +90,7 @@ import java.util.stream.Stream;
 public abstract class AbstractRestServiceController extends AbstractController {
 
     private static final String REST = "rest";
+    private static final String BODY = "BODY";
     private static final String APPLICATION = "application";
     private static final String CONTENT_ENCODING = "Content-Encoding";
     private static final String RECORDED_RESPONSE_NAME = "Recorded response";
@@ -538,10 +539,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
             final Map<String, ExpressionArgument<?>> externalInput =
                     ImmutableMap.of(
+                            BODY, bodyArgument,
                             PathParameterExpression.PATH_PARAMETERS, pathParametersArgument,
                             QueryStringExpression.QUERY_STRINGS, queryStringArgument,
-                            BodyXPathExpression.BODY_ARGUMENT, bodyArgument,
-                            BodyJsonPathExpression.BODY_ARGUMENT, bodyArgument,
                             UrlHostExpression.URL_ARGUMENT, urlArgument
                     );
 
