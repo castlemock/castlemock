@@ -9,7 +9,7 @@
 
     <properties>
         <!-- Project properties -->
-        <project.version>1.47</project.version>
+        <project.version>1.48</project.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
