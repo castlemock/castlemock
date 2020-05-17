@@ -27,6 +27,7 @@ import java.util.Date;
  */
 public class RandomDateTimeExpression extends AbstractExpression {
 
+    private static final long RANGE = 1000000000000L;
     public static final String IDENTIFIER = "RANDOM_DATE_TIME";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
@@ -39,7 +40,11 @@ public class RandomDateTimeExpression extends AbstractExpression {
      */
     @Override
     public String transform(final ExpressionInput input) {
-        final Date date = new Date(Math.abs(System.currentTimeMillis()));
+        final long now = System.currentTimeMillis();
+        final long leftLimit = now - RANGE;
+        final long rightLimit = now + RANGE;
+        final long randomValue = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+        final Date date = new Date(Math.abs(randomValue));
         return DATE_FORMAT.format(date);
     }
 
