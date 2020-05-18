@@ -56,7 +56,7 @@
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
         <flapdoodle.mongo.version>2.2.0</flapdoodle.mongo.version>
-        <jackson.databind.version>2.10.3</jackson.databind.version>
+        <jackson.databind.version>2.11.0</jackson.databind.version>
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
