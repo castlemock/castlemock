@@ -82,6 +82,14 @@ public class JsonPathUtilityTest {
         assertEquals("value", value.orElse(null));
     }
 
+    @Test
+    public void testGetValueLength(){
+        final String body = getBody();
+        final String expression = "$.store.book.length()";
+        final Optional<String> value = JsonPathUtility.getValueWithJsonPathExpr(body, expression);
+        assertEquals("3", value.orElse(null));
+    }
+
     private String getBody() {
         return "{\n" +
                 "  \"store\": {\n" +

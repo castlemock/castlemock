@@ -50,15 +50,22 @@ public final class JsonPathUtility {
     public static Optional<String> getValueWithJsonPathExpr(final String body,
                                                             final String expression) {
         final Object document = Configuration.defaultConfiguration().jsonProvider().parse(body);
-        final JSONArray array = JsonPath.using(configuration()).parse(document).read(expression);
+        final Object result = JsonPath.using(configuration())
+                .parse(document)
+                .read(expression);
 
-        return array
-                .stream()
-                .findFirst()
+        if(result instanceof JSONArray){
+            final JSONArray jsonArray = (JSONArray) result;
+            return jsonArray.stream()
+                    .findFirst()
+                    .map(Object::toString);
+        }
+
+        return Optional.ofNullable(result)
                 .map(Object::toString);
     }
 
     private static Configuration configuration() {
-        return Configuration.builder().options(Option.ALWAYS_RETURN_LIST).build();
+        return Configuration.builder().options(Option.SUPPRESS_EXCEPTIONS).build();
     }
 }
