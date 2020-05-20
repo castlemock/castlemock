@@ -138,6 +138,22 @@ public class XPathUtilityTest {
     }
 
     @Test
+    public void testGetXPathValueSubstring(){
+        final String body = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://www.webservicex.net\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "      <web:GetWhoIS>\n" +
+                "         <!--Optional:-->\n" +
+                "         <web:HostName>google.com</web:HostName>\n" +
+                "      </web:GetWhoIS>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
+        final String xpath = "substring(//GetWhoIS/HostName/text(), 8, 3)";
+
+        assertEquals("com", XPathUtility.getXPathValue(body, xpath).orElse(null));
+    }
+
+    @Test
     public void testGetXPathValueAttr(){
         final String body = "<entries>\n" +
                 "    <entry key=\"mykey1\" attr=\"attr1\"/>\n" +

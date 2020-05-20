@@ -51,13 +51,13 @@ public final class XPathUtility {
         try {
             final Document document = createDocument(body);
             final XPath xPath = createXPath();
-            final NodeList evaluate = (NodeList) xPath.compile(xpathExpr).evaluate(document, XPathConstants.NODESET);
+            final String evaluate = (String) xPath.compile(xpathExpr).evaluate(document, XPathConstants.STRING);
 
-            if (evaluate.getLength() == 0){
+            if (evaluate == null) {
                 return Optional.empty();
             }
 
-            return Optional.ofNullable(evaluate.item(0).getNodeValue());
+            return Optional.ofNullable(evaluate);
         } catch (Exception exception) {
             LOGGER.error("Unable to evaluate xpath expression", exception);
             return Optional.empty();
