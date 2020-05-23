@@ -234,6 +234,10 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
     private Collection<RestMockResponse> generateResponse(final Map<String,Response> responses,
                                                           final Map<String, Model> definitions,
                                                           final List<String> produces){
+        if(produces == null){
+            return Collections.emptyList();
+        }
+
         final List<RestMockResponse> mockResponses = new ArrayList<>();
         for(Map.Entry<String, Response> responseEntry : responses.entrySet()){
             Map<String, String> bodies = new HashMap<String, String>();
