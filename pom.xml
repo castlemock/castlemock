@@ -14,6 +14,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Version properties -->
+        <asm.version>7.1</asm.version>
         <java.release>8</java.release>
         <java.version>1.8</java.version>
         <jaxb.version>2.3.1</jaxb.version>
@@ -22,11 +23,13 @@
         <antlr.version>4.8-1</antlr.version>
         <log4j.version>2.13.2</log4j.version>
         <slf4j.version>1.7.30</slf4j.version>
+        <graphql.version>8.0</graphql.version>
+        <jsr305.version>3.0.2</jsr305.version>
         <cxf.rt.version>3.3.6</cxf.rt.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
         <guava.version>28.2-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
-        <graphql.version>8.0</graphql.version>
+        <jakarta.version>2.3.3</jakarta.version>
         <jackson.version>1.9.13</jackson.version>
         <jaxb.api.version>2.3.1</jaxb.api.version>
         <sun.jaxb.version>2.3.0</sun.jaxb.version>
@@ -36,7 +39,9 @@
         <springfox.version>2.9.2</springfox.version>
         <maven.jar.version>3.1.1</maven.jar.version>
         <json.path.version>2.4.0</json.path.version>
+        <joda.time.version>2.10.6</joda.time.version>
         <activation.version>1.1.1</activation.version>
+        <bytebuddy.version>1.10.10</bytebuddy.version>
         <jaxb.core.version>2.3.0.1</jaxb.core.version>
         <maven.exec.version>1.2.1</maven.exec.version>
         <servlet.jsp.version>2.2</servlet.jsp.version>
@@ -50,15 +55,20 @@
         <commons.codec.version>1.14</commons.codec.version>
         <junit.jupiter.version>5.6.0</junit.jupiter.version>
         <tomcat.embedd.version>9.0.35</tomcat.embedd.version>
+        <json.schema.validator>2.2.13</json.schema.validator>
+        <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
+        <junit.platform.version>1.6.2</junit.platform.version>
         <swagger.parser.version>2.0.20</swagger.parser.version>
         <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
+        <apache.commons.io.version>2.6</apache.commons.io.version>
         <flapdoodle.mongo.version>2.2.0</flapdoodle.mongo.version>
         <jackson.databind.version>2.11.0</jackson.databind.version>
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
+        <jakarta.activation.version>1.2.2</jakarta.activation.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <spring.security.version>5.3.2.RELEASE</spring.security.version>
         <spring.framework.version>5.2.6.RELEASE</spring.framework.version>
@@ -303,6 +313,11 @@
                 <version>${dozer.version}</version>
             </dependency>
             <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>${bytebuddy.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.tomcat.embed</groupId>
                 <artifactId>tomcat-embed-jasper</artifactId>
                 <version>${tomcat.embedd.version}</version>
@@ -321,6 +336,20 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
                 <version>${springfox.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-aop</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-beans</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-context</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -331,6 +360,16 @@
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4</artifactId>
                 <version>${antlr.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-runtime</artifactId>
+                <version>${antlr.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.ws.xmlschema</groupId>
+                <artifactId>xmlschema-core</artifactId>
+                <version>${xmlschema.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -376,6 +415,16 @@
                 <groupId>javax.activation</groupId>
                 <artifactId>activation</artifactId>
                 <version>${activation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${apache.commons.io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>${asm.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.taglibs</groupId>
@@ -433,8 +482,38 @@
                 <version>${commons.codec.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.github.java-json-tools</groupId>
+                <artifactId>json-schema-validator</artifactId>
+                <version>${json.schema.validator}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
+                <version>${jackson.databind.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.databind.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.databind.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.databind.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-yaml</artifactId>
+                <version>${jackson.databind.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
                 <version>${jackson.databind.version}</version>
             </dependency>
             <dependency>
@@ -451,6 +530,26 @@
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>${common.beanutils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>${jsr305.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>${jakarta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.activation</groupId>
+                <artifactId>jakarta.activation-api</artifactId>
+                <version>${jakarta.activation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda.time.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -541,6 +640,12 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-commons</artifactId>
+                <version>${junit.platform.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
