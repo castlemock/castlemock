@@ -52,7 +52,7 @@
         <tomcat.embedd.version>9.0.35</tomcat.embedd.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <swagger.parser.version>2.0.19</swagger.parser.version>
-        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+        <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
         <flapdoodle.mongo.version>2.2.0</flapdoodle.mongo.version>
@@ -60,7 +60,7 @@
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <spring.security.version>5.3.1.RELEASE</spring.security.version>
+        <spring.security.version>5.3.2.RELEASE</spring.security.version>
         <spring.framework.version>5.2.6.RELEASE</spring.framework.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
     </properties>
