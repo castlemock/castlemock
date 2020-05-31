@@ -53,13 +53,15 @@
                     <li class="header-menu-full-row">
                         <div>
                             <a href="${context}/web/me">
-                                <div class="avatar-username">
-                                </div>
                                 <div class="avatar-circle">
                                     <div class="avatar-inner-circle">
                                         <i class="fas fa-user fa-2x"></i>
                                     </div>
                                 </div>
+                                <div class="avatar-username">
+                                    ${param.loggedInUser}
+                                </div>
+
                             </a>
                         </div>
                     </li>
