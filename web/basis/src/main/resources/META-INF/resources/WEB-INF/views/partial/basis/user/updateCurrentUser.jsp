@@ -35,6 +35,12 @@
                     <td class="column1"><label><spring:message code="general.updatecurrentuser.label.username"/></label></td>
                     <td class="column2"><form:input class="form-control" path="user.username" id="userUsernameInput"/>
                 </tr>
+
+                <tr>
+                    <td class="column1"><label><spring:message code="general.updatecurrentuser.label.fullName"/></label></td>
+                    <td class="column2"><form:input class="form-control" path="user.fullName" id="userFullNameInput"/>
+                </tr>
+
                 <tr>
                     <td class="column1"><label><spring:message code="general.updatecurrentuser.label.email"/></label></td>
                     <td class="column2"><form:input class="form-control" path="user.email"  />

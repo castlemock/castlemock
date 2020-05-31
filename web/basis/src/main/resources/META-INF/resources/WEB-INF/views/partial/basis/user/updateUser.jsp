@@ -36,6 +36,10 @@
                     <td class="column2"><form:input class="form-control" path="username" id="userUsernameInput" />
                 </tr>
                 <tr>
+                    <td class="column1"><form:label path="fullName"><spring:message code="general.updateuser.label.fullName"/></form:label></td>
+                    <td class="column2"><form:input class="form-control" path="fullName" id="useFullNameInput" />
+                </tr>
+                <tr>
                     <td class="column1"><form:label path="password"><spring:message code="general.updateuser.label.password"/></form:label></td>
                     <td class="column2"><form:password class="form-control" path="password" id="usePasswordInput" />
                 </tr>

@@ -33,6 +33,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String fullName;
     private Date updated;
     private Date created;
     private Status status;
@@ -47,6 +48,7 @@ public class User {
         this.username = Objects.requireNonNull(builder.username);
         this.password = Objects.requireNonNull(builder.password);
         this.email = builder.email;
+        this.fullName = builder.fullName;
         this.updated = Objects.requireNonNull(builder.updated);
         this.created = Objects.requireNonNull(builder.created);
         this.status = Objects.requireNonNull(builder.status);
@@ -138,6 +140,15 @@ public class User {
         this.updated = updated;
     }
 
+    @XmlElement
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     /**
      * Returns the timestamp of when the user was created
      * @return Created timestamp
@@ -211,6 +222,11 @@ public class User {
         if (email != null ? !email.equals(userDto.email) : userDto.email != null) {
             return false;
         }
+
+        if (fullName != null ? !fullName.equals(userDto.fullName) : userDto.fullName != null) {
+            return false;
+        }
+
         if (id != null ? !id.equals(userDto.id) : userDto.id != null) {
             return false;
         }
@@ -243,6 +259,7 @@ public class User {
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
         result = 31 * result + (updated != null ? updated.hashCode() : 0);
         result = 31 * result + (created != null ? created.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
@@ -259,6 +276,7 @@ public class User {
         private String username;
         private String password;
         private String email;
+        private String fullName;
         private Date updated;
         private Date created;
         private Status status;
@@ -286,6 +304,15 @@ public class User {
             this.email = email;
             return this;
         }
+
+        public String getFullName() {
+            return fullName;
+        }
+
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
+        }
+
 
         public Builder updated(final Date updated) {
             this.updated = updated;
