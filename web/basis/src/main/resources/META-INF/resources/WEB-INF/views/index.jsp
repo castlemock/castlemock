@@ -33,7 +33,9 @@
       <script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/demoMode.js"/>"></script>
   </head>
     <body>
-        <jsp:include page="header.jsp" />
+        <jsp:include page="header.jsp" >
+            <jsp:param name="loggedInUser" value="${loggedInUser}" />
+        </jsp:include>
         <jsp:include page="menu.jsp" />
         <jsp:include page="${partial}" />
         <jsp:include page="footer.jsp" />
