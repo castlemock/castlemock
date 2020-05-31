@@ -38,6 +38,12 @@
                             <td class="column1"><form:label path="username"><spring:message code="general.useroverview.label.username"/></form:label></td>
                             <td class="column2"><form:input class="form-control" path="username" id="userUsernameInput" />
                         </tr>
+
+                        <tr>
+                            <td class="column1"><form:label path="fullName"><spring:message code="general.useroverview.label.fullName"/></form:label></td>
+                            <td class="column2"><form:input class="form-control" path="fullName" id="userFullNameInput" />
+                        </tr>
+
                         <tr>
                             <td class="column1"><form:label path="password"><spring:message code="general.useroverview.label.password"/></form:label></td>
                             <td class="column2"><form:password class="form-control" path="password" id="userPasswordInput"/>

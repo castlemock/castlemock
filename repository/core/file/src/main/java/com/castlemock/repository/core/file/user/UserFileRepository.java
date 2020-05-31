@@ -72,6 +72,7 @@ public class UserFileRepository extends FileRepository<UserFileRepository.UserFi
             final User user = new User();
             user.setId(generateId());
             user.setUsername("admin");
+            user.setFullName("Admin Admin");
             user.setPassword(PASSWORD_ENCODER.encode("admin"));
             user.setStatus(Status.ACTIVE);
             user.setRole(Role.ADMIN);
@@ -144,6 +145,8 @@ public class UserFileRepository extends FileRepository<UserFileRepository.UserFi
         private String password;
         @Mapping("email")
         private String email;
+        @Mapping("fullName")
+        private String fullName;
         @Mapping("updated")
         private Date updated;
         @Mapping("created")
@@ -214,6 +217,15 @@ public class UserFileRepository extends FileRepository<UserFileRepository.UserFi
          */
         public void setEmail(String email) {
             this.email = email;
+        }
+
+        @XmlElement
+        public String getFullName() {
+            return fullName;
+        }
+
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
         }
 
         /**
