@@ -36,6 +36,12 @@
                 <td class="column1"><label path="username"><spring:message code="general.currentuser.label.username"/></label></td>
                 <td class="column2"><label path="username">${user.username}</label></td>
             </tr>
+
+            <tr>
+                <td class="column1"><label path="fullName"><spring:message code="general.currentuser.label.fullName"/></label></td>
+                <td class="column2"><label path="fullName">${user.fullName}</label></td>
+            </tr>
+
             <tr>
                 <td class="column1"><label path="email"><spring:message code="general.currentuser.label.email"/></label></td>
                 <td class="column2"><label path="email">${user.email}</label></td>
