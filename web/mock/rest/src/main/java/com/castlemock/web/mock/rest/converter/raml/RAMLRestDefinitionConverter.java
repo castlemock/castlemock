@@ -21,6 +21,8 @@ import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
 import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ import java.util.List;
  */
 public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
+    private static Logger LOGGER = LoggerFactory.getLogger(RAMLRestDefinitionConverter.class);
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
@@ -74,24 +77,30 @@ public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter
             throw new IllegalStateException("Unable to parse the RAML file");
         }
 
-        String title = null;
-        List<RestResource> restResources = new ArrayList<>();
-        if(ramlModelResult.getApiV08() != null){
-            org.raml.v2.api.model.v08.api.Api api = ramlModelResult.getApiV08();
-            title = api.title();
-            new RAML08Parser().getResources(api.resources(), restResources, "", generateResponse);
-        } else if(ramlModelResult.getApiV10() != null){
-            org.raml.v2.api.model.v10.api.Api api = ramlModelResult.getApiV10();
-            title = api.title().value();
-            new RAML10Parser().getResources(api.resources(), restResources, "", generateResponse);
+        try {
+
+            String title = null;
+            List<RestResource> restResources = new ArrayList<>();
+            if (ramlModelResult.getApiV08() != null) {
+                org.raml.v2.api.model.v08.api.Api api = ramlModelResult.getApiV08();
+                title = api.title();
+                new RAML08Parser().getResources(api.resources(), restResources, "", generateResponse);
+            } else if (ramlModelResult.getApiV10() != null) {
+                org.raml.v2.api.model.v10.api.Api api = ramlModelResult.getApiV10();
+                title = api.title().value();
+                new RAML10Parser().getResources(api.resources(), restResources, "", generateResponse);
+            }
+
+            RestApplication restApplication = new RestApplication();
+            restApplication.setName(title);
+            restApplication.setResources(restResources);
+
+
+            return Arrays.asList(restApplication);
+        } catch (final Exception exception) {
+            LOGGER.error("Unable to convert RAML into a REST application: " + exception.getMessage(), exception);
+            throw exception;
         }
-
-        RestApplication restApplication = new RestApplication();
-        restApplication.setName(title);
-        restApplication.setResources(restResources);
-
-
-        return Arrays.asList(restApplication);
     }
 
 }
