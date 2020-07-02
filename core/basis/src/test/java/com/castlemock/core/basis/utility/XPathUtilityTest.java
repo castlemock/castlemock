@@ -166,4 +166,20 @@ public class XPathUtilityTest {
         assertEquals("mykey1", XPathUtility.getXPathValue(body, xpath).orElse(null));
     }
 
+    @Test
+    public void testXPathWithQuotation(){
+        final String body = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://www.webservicex.net\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "      <web:GetWhoIS>\n" +
+                "         <!--Optional:-->\n" +
+                "         <web:HostName>Before-After</web:HostName>\n" +
+                "      </web:GetWhoIS>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
+        final String xpath = "substring-after(//GetWhoIS/HostName/text(), '-')";
+
+        assertEquals("After", XPathUtility.getXPathValue(body, xpath).orElse(null));
+    }
+
 }

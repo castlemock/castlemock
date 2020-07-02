@@ -48,6 +48,8 @@ import com.castlemock.web.mock.soap.converter.types.WsdlNamespaceParser;
 import com.castlemock.web.mock.soap.converter.types.WsdlPortTypeParser;
 import com.castlemock.web.mock.soap.converter.types.WsdlServiceParser;
 import com.google.common.collect.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -82,6 +84,8 @@ public class SoapPortConverter {
     private static final WsdlPortTypeParser PORT_TYPE_PARSER = new WsdlPortTypeParser();
     private static final WsdlNamespaceParser NAMESPACE_PARSER = new WsdlNamespaceParser();
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SoapPortConverter.class);
+
     @Autowired
     private FileManager fileManager;
 
@@ -112,22 +116,27 @@ public class SoapPortConverter {
 
     private Set<SoapPortConverterResult> getResults(final Map<String, WSDLDocument> documents,
                                                     final boolean generateResponse){
-        return documents.entrySet().stream()
-                .map(documentEntry -> {
-                    final String name = documentEntry.getKey();
-                    final WSDLDocument wsdlDocument = documentEntry.getValue();
-                    final Document document = wsdlDocument.getDocument();
-                    final Set<SoapPort> ports = parseDocument(document, generateResponse);
+        try {
+            return documents.entrySet().stream()
+                    .map(documentEntry -> {
+                        final String name = documentEntry.getKey();
+                        final WSDLDocument wsdlDocument = documentEntry.getValue();
+                        final Document document = wsdlDocument.getDocument();
+                        final Set<SoapPort> ports = parseDocument(document, generateResponse);
 
-                    final String content = DocumentUtility.toString(document);
-                    return SoapPortConverterResult.builder()
-                            .name(name)
-                            .ports(ports)
-                            .definition(content)
-                            .resourceType(wsdlDocument.getResourceType())
-                            .build();
-                })
-                .collect(Collectors.toSet());
+                        final String content = DocumentUtility.toString(document);
+                        return SoapPortConverterResult.builder()
+                                .name(name)
+                                .ports(ports)
+                                .definition(content)
+                                .resourceType(wsdlDocument.getResourceType())
+                                .build();
+                    })
+                    .collect(Collectors.toSet());
+        }catch (Exception exception) {
+            LOGGER.error("Unable to parse WSDL: " + exception.getMessage(), exception);
+            throw exception;
+        }
     }
 
     private Map<String, WSDLDocument> getDocuments(final List<File> files,

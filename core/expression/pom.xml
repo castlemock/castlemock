@@ -45,9 +45,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <mainClass>org.antlrfun.Hello</mainClass>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -77,7 +74,7 @@
                     <outputDirectory>src/main/gen/com/castlemock/core/expression</outputDirectory>
                     <arguments>
                         <argument>-package</argument>
-                        <argument>io.castlemock.core.expression</argument>
+                        <argument>com.castlemock.core.expression</argument>
                     </arguments>
                 </configuration>
                 <executions>

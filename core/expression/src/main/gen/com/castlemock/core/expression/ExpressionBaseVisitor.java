@@ -1,4 +1,4 @@
-// Generated from /Users/karldahlgren/Github/castlemock/castlemock/code/core/expression/src/main/antlr/com/castlemock/core/expression/Expression.g4 by ANTLR 4.7
+// Generated from Expression.g4 by ANTLR 4.7.2
 package com.castlemock.core.expression;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
