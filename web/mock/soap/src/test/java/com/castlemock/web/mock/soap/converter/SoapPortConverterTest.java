@@ -17,8 +17,11 @@
 package com.castlemock.web.mock.soap.converter;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
+import com.castlemock.core.basis.utility.file.FileUtility;
 import com.castlemock.core.mock.soap.model.project.domain.*;
 import com.castlemock.web.basis.manager.FileManager;
+import com.ibm.wsdl.PortTypeImpl;
+import com.ibm.wsdl.xml.WSDLReaderImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,12 +32,13 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.wsdl.Definition;
+import javax.wsdl.WSDLException;
+import javax.wsdl.xml.WSDLReader;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SoapPortConverterTest {

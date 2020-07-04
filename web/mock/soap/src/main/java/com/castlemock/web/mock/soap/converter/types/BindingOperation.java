@@ -17,6 +17,7 @@
 package com.castlemock.web.mock.soap.converter.types;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public final class BindingOperation {
 
@@ -26,20 +27,20 @@ public final class BindingOperation {
 
     private BindingOperation(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
-        this.input = Objects.requireNonNull(builder.input);
-        this.output = Objects.requireNonNull(builder.output);
+        this.input = builder.input;
+        this.output = builder.output;
     }
 
     public String getName() {
         return name;
     }
 
-    public BindingOperationInput getInput() {
-        return input;
+    public Optional<BindingOperationInput> getInput() {
+        return Optional.ofNullable(input);
     }
 
-    public BindingOperationOutput getOutput() {
-        return output;
+    public Optional<BindingOperationOutput> getOutput() {
+        return Optional.ofNullable(output);
     }
 
     public static Builder builder(){

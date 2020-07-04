@@ -16,6 +16,7 @@
 package com.castlemock.web.mock.soap.converter.types;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public final class PortTypeOperation {
 
@@ -25,20 +26,20 @@ public final class PortTypeOperation {
 
     private PortTypeOperation(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
-        this.input = Objects.requireNonNull(builder.input);
-        this.output = Objects.requireNonNull(builder.output);
+        this.input = builder.input;
+        this.output = builder.output;
     }
 
     public String getName() {
         return name;
     }
 
-    public PortTypeOperationInput getInput() {
-        return input;
+    public Optional<PortTypeOperationInput> getInput() {
+        return Optional.ofNullable(input);
     }
 
-    public PortTypeOperationOutput getOutput() {
-        return output;
+    public Optional<PortTypeOperationOutput> getOutput() {
+        return Optional.ofNullable(output);
     }
 
     public static Builder builder(){

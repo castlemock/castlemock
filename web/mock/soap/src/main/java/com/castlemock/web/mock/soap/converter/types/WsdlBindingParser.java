@@ -71,26 +71,24 @@ public final class WsdlBindingParser extends WsdlParser {
                 .orElseThrow(() -> new IllegalArgumentException("Unable to find operation name"));
         return BindingOperation.builder()
                 .name(name)
-                .input(parseInput(operationElement))
-                .output(parseOutput(operationElement))
+                .input(parseInput(operationElement).orElse(null))
+                .output(parseOutput(operationElement).orElse(null))
                 .build();
     }
 
-    private BindingOperationInput parseInput(final Element operationElement){
+    private Optional<BindingOperationInput> parseInput(final Element operationElement){
         return DocumentUtility.getElement(operationElement, WSDL_NAMESPACE, INPUT_NAMESPACE)
                 .map(element -> BindingOperationInput.builder()
                         .body(parseInputBody(element).orElse(null))
-                        .build())
-                .orElseThrow(() -> new IllegalArgumentException("Unable to find operation input"));
+                        .build());
     }
 
-    private BindingOperationOutput parseOutput(final Element operationElement){
+    private Optional<BindingOperationOutput> parseOutput(final Element operationElement){
         return DocumentUtility.getElement(operationElement, WSDL_NAMESPACE, OUTPUT_NAMESPACE)
                         .map(element -> BindingOperationOutput.builder()
                         .body(parseOutputBody(element)
                                 .orElse(null))
-                        .build())
-                .orElseThrow(() -> new IllegalArgumentException("Unable to find operation output"));
+                        .build());
     }
 
     private Optional<BindingOperationInputBody> parseInputBody(final Element inputElement){
