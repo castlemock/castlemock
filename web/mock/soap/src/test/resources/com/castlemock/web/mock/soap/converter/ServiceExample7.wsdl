@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Untitled" targetNamespace="http://Services/ServiceExample" xmlns:ns="http://Services/ServiceExample" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ServiceExample7="http://Services/ServiceExample/ServiceExample/1/Schema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:import namespace="http://Services/ServiceExample/ServiceExample/1/wsdl/0" location="./ServiceExample2.wsdl"/>
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://Services/ServiceExample/ServiceExample/1/Schema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:include schemaLocation="http://schema/ServiceExample.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="ServiceExample7">
+        <wsdl:port binding="ns:ServiceExample7.EndpointBinding" name="ServiceExample7.Endpoint">
+            <soap:address location="https://localhost:8443/ESB/Services/ServiceExample"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="ServiceExamplePortType">
+        <wsdl:operation name="ServiceExample7">
+            <wsdl:input message="ns:ServiceExampleRequest7"/>
+            <wsdl:output message="ns:ServiceExampleResponse7"/>
+            <wsdl:fault message="ns:ServiceExampleFault" name="fault7"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ServiceExample7.EndpointBinding" type="ns:ServiceExamplePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ServiceExample7">
+            <soap:operation soapAction="ServiceExample7" style="document"/>
+            <wsdl:input>
+                <soap:body parts="Request" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="Response" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault7">
+                <soap:fault name="fault7" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="ServiceExampleRequest7">
+        <wsdl:part name="Request"/>
+    </wsdl:message>
+    <wsdl:message name="ServiceExampleResponse7">
+        <wsdl:part name="Response"/>
+    </wsdl:message>
+    <wsdl:message name="ServiceExampleFault">
+        <wsdl:part name="Fault"/>
+    </wsdl:message>
+</wsdl:definitions>

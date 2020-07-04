@@ -16,6 +16,7 @@
 package com.castlemock.web.mock.soap.converter.types;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public final class MessagePart {
 
@@ -24,15 +25,15 @@ public final class MessagePart {
 
     private MessagePart(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
-        this.element = Objects.requireNonNull(builder.element);
+        this.element = builder.element;
     }
 
     public String getName() {
         return name;
     }
 
-    public Attribute getElement() {
-        return element;
+    public Optional<Attribute> getElement() {
+        return Optional.ofNullable(element);
     }
 
     public static Builder builder(){

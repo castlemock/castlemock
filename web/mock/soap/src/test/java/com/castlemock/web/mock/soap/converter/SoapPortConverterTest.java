@@ -265,6 +265,41 @@ public class SoapPortConverterTest {
             Assert.fail(e.getMessage());
         }
     }
+
+    @Test
+    public void testGetOperationIdentifier() throws URISyntaxException {
+        final List<File> files = this.loadFile("ServiceExample7.wsdl");
+        final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
+
+        Assert.assertEquals(1, results.size());
+
+        SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
+                .getName().equals("ServiceExample7.wsdl"))
+                .findFirst()
+                .get();
+
+        Assert.assertEquals(SoapResourceType.WSDL, result.getResourceType());
+        final Set<SoapPort> soapPorts = result.getPorts();
+        final SoapPort soapPort = soapPorts.stream().findFirst().get();
+
+        Assert.assertEquals("ServiceExample7.Endpoint", soapPort.getName());
+        Assert.assertEquals("ServiceExample7.Endpoint", soapPort.getUri());
+        Assert.assertEquals(1, soapPort.getOperations().size());
+
+        SoapOperation soapOperation = soapPort.getOperations().get(0);
+
+        Assert.assertEquals("ServiceExample7", soapOperation.getName());
+        Assert.assertEquals(SoapResponseStrategy.RANDOM, soapOperation.getResponseStrategy());
+        Assert.assertEquals(SoapOperationStatus.MOCKED, soapOperation.getStatus());
+        Assert.assertEquals(SoapVersion.SOAP11, soapOperation.getSoapVersion());
+        Assert.assertEquals(HttpMethod.POST, soapOperation.getHttpMethod());
+
+        SoapOperationIdentifier operationIdentifier = soapOperation.getOperationIdentifier();
+
+        Assert.assertNotNull(operationIdentifier);
+        Assert.assertEquals("Request", operationIdentifier.getName());
+        Assert.assertNull(operationIdentifier.getNamespace());
+    }
     
     private void verify(final SoapPort soapPort,
                         final String name,

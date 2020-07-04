@@ -21,6 +21,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,8 @@ public final class WsdlMessageParser extends WsdlParser {
         final List<Element> partElements = DocumentUtility.getElements(messageElement, WSDL_NAMESPACE, PART_NAMESPACE);
         final Set<MessagePart> parts = partElements.stream()
                 .map(this::parseMessagePart)
-                .filter(Objects::nonNull)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toSet());
 
         return Message.builder()
@@ -55,23 +57,17 @@ public final class WsdlMessageParser extends WsdlParser {
                 .build();
     }
 
-    private MessagePart parseMessagePart(final Element messageElement){
-
+    private Optional<MessagePart> parseMessagePart(final Element messageElement){
         final String name = DocumentUtility.getAttribute(messageElement, NAME_NAMESPACE).orElse(null);
-        /*
-        final Attribute element = this.getAttribute(messageElement, ELEMENT_NAMESPACE)
-                .orElseGet(() -> this.getAttribute(messageElement, TYPE_NAMESPACE)
-                        .orElseThrow(() -> new IllegalArgumentException("Unable to find either element or type attribute")));
-        */
         final Attribute element = this.getAttribute(messageElement, ELEMENT_NAMESPACE).orElse(null);
 
-        if(name == null || element == null){
-            return null;
+        if(name == null){
+            return Optional.empty();
         }
 
-        return MessagePart.builder()
+        return Optional.of(MessagePart.builder()
                 .name(name)
                 .element(element)
-                .build();
+                .build());
     }
 }

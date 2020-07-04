@@ -338,10 +338,18 @@ public class SoapPortConverter {
 
     private static SoapOperationIdentifier createSoapOperationIdentifier(final MessagePart messagePart,
                                                                          final Set<Namespace> namespaces){
-        final Attribute elementAttribute = messagePart.getElement();
+        return messagePart.getElement()
+                .map(attribute -> createSoapOperationIdentifier(attribute, namespaces))
+                .orElseGet(() -> SoapOperationIdentifier.builder()
+                        .name(messagePart.getName())
+                        .namespace(null)
+                        .build());
+    }
 
-        final String name = elementAttribute.getLocalName();
-        final String namespace = elementAttribute.getNamespace()
+    private static SoapOperationIdentifier createSoapOperationIdentifier(final Attribute attribute,
+                                                                         final Set<Namespace> namespaces){
+        final String name = attribute.getLocalName();
+        final String namespace = attribute.getNamespace()
                 .map(namespaceName -> namespaces.stream()
                         .filter(namespace1 -> namespace1.getLocalName().equals(namespaceName))
                         .findFirst()
