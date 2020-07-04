@@ -49,7 +49,7 @@
         <servlet.api.version>4.0.1</servlet.api.version>
         <antlr.maven.version>4.7.2</antlr.maven.version>
         <commons.lang.version>3.10</commons.lang.version>
-        <raml.parser.version>1.0.48</raml.parser.version>
+        <raml.parser.version>1.0.51</raml.parser.version>
         <jaxb.runtime.version>2.3.2</jaxb.runtime.version>
         <swagger.core.version>1.6.0</swagger.core.version>
         <commons.codec.version>1.14</commons.codec.version>
@@ -60,7 +60,7 @@
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <junit.platform.version>1.6.2</junit.platform.version>
         <swagger.parser.version>2.0.20</swagger.parser.version>
-        <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
+        <spring.boot.version>2.3.1.RELEASE</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
         <apache.commons.io.version>2.6</apache.commons.io.version>
@@ -71,7 +71,7 @@
         <jakarta.activation.version>1.2.2</jakarta.activation.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <spring.security.version>5.3.3.RELEASE</spring.security.version>
-        <spring.framework.version>5.2.6.RELEASE</spring.framework.version>
+        <spring.framework.version>5.2.7.RELEASE</spring.framework.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
     </properties>
 
