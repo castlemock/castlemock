@@ -17,10 +17,14 @@
 package com.castlemock.web.mock.rest.web.rest.controller;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.core.mock.rest.service.project.input.CreateRestApplicationInput;
+import com.castlemock.core.mock.rest.service.project.input.DeleteRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestApplicationInput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestApplicationOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +53,55 @@ public class RestApplicationRestController extends AbstractRestController {
                 .restApplicationId(applicationId)
                 .build());
         return output.getRestApplication();
+    }
+
+    @ApiOperation(value = "Delete Application")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully deleted REST Application")})
+    @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}/application/{applicationId}")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public void deleteApplication(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @ApiParam(name = "applicationId", value = "The id of the application")
+            @PathVariable(value = "applicationId") final String applicationId) {
+        super.serviceProcessor.process(DeleteRestApplicationInput.builder()
+                .restProjectId(projectId)
+                .restApplicationId(applicationId)
+                .build());
+    }
+
+    @ApiOperation(value = "Update Application")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully updated REST Application")})
+    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/{applicationId}")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public void updateApplication(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @ApiParam(name = "applicationId", value = "The id of the application")
+            @PathVariable(value = "applicationId") final String applicationId,
+            @RequestBody RestApplication application) {
+        super.serviceProcessor.process(UpdateRestApplicationInput.builder()
+                .restProjectId(projectId)
+                .restApplicationId(applicationId)
+                .restApplication(application)
+                .build());
+    }
+
+    @ApiOperation(value = "Create Application")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully created REST Application")})
+    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public void createApplication(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @RequestBody RestApplication application) {
+        super.serviceProcessor.process(CreateRestApplicationInput.builder()
+                .projectId(projectId)
+                .application(application)
+                .build());
     }
 
 }
