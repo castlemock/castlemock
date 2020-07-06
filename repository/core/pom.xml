@@ -17,6 +17,7 @@
         <module>file</module>
         <module>model</module>
         <module>mongodb</module>
+        <module>dynamodb</module>
     </modules>
 
 </project>

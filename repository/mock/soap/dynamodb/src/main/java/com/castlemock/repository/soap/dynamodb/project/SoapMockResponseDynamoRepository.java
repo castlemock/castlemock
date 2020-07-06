@@ -1,0 +1,205 @@
+/*
+ * Copyright 2018 Karl Dahlgren
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+package com.castlemock.repository.soap.dynamodb.project;
+
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.castlemock.core.basis.model.Saveable;
+import com.castlemock.core.basis.model.SearchQuery;
+import com.castlemock.core.basis.model.SearchResult;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
+import com.castlemock.repository.Profiles;
+import com.castlemock.repository.core.dynamodb.DynamoRepository;
+import com.castlemock.repository.soap.project.SoapMockResponseRepository;
+import lombok.Getter;
+import lombok.Setter;
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+/**
+ * @author Tiago Santos
+ * @since 1.51
+ */
+@Repository
+@Profile(Profiles.DYNAMODB)
+public class SoapMockResponseDynamoRepository extends DynamoRepository<SoapMockResponseDynamoRepository.SoapMockResponseDocument, SoapMockResponse, String> implements SoapMockResponseRepository {
+
+    @Autowired
+    public SoapMockResponseDynamoRepository(DozerBeanMapper mapper, AmazonDynamoDB amazonDynamoDB, DynamoDBMapperConfig dynamoDBMapperConfig) {
+        super(mapper, amazonDynamoDB, dynamoDBMapperConfig);
+    }
+
+    public SoapMockResponseDynamoRepository(DozerBeanMapper mapper, AmazonDynamoDB amazonDynamoDB) {
+        super(mapper, amazonDynamoDB);
+    }
+
+    @Override
+    protected SoapMockResponseDocument mapToEntity(SoapMockResponse dto) {
+        SoapMockResponseDocument entity = super.mapToEntity(dto);
+        entity.nameLower = Optional.ofNullable(entity.name).map(String::toLowerCase).orElse(null);
+        return entity;
+    }
+
+    /**
+     * The method is responsible for controller that the type that is about the be saved to dynamodb is valid.
+     * The method should check if the type contains all the necessary values and that the values are valid. This method
+     * will always be called before a type is about to be saved. The main reason for why this is vital and done before
+     * saving is to make sure that the type can be correctly saved to dynamodb, but also loaded from
+     * dynamodb upon application startup. The method will throw an exception in case of the type not being acceptable.
+     *
+     * @param type The instance of the type that will be checked and controlled before it is allowed to be saved on
+     *             dynamodb.
+     * @see #save
+     */
+    @Override
+    protected void checkType(SoapMockResponseDocument type) {
+
+    }
+
+    /**
+     * The method provides the functionality to search in the repository with a {@link SearchQuery}
+     *
+     * @param query The search query
+     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
+     */
+    @Override
+    public List<SoapMockResponse> search(SearchQuery query) {
+        List<SoapMockResponseDocument> responses =
+                dynamoDBMapper.scan(entityClass,
+                        getAttributeScan("nameLower", query.getQuery().toLowerCase(), ComparisonOperator.CONTAINS));
+        return toDtoList(responses);
+    }
+
+    @Override
+    public void deleteWithOperationId(String operationId) {
+        List<SoapMockResponseDocument> responses =
+                dynamoDBMapper.scan(entityClass,
+                        getAttributeScan("operationId", operationId, ComparisonOperator.EQ));
+        dynamoDBMapper.batchDelete(responses);
+    }
+
+    @Override
+    public List<SoapMockResponse> findWithOperationId(String operationId) {
+        List<SoapMockResponseDocument> responses =
+                dynamoDBMapper.scan(entityClass,
+                        getAttributeScan("operationId", operationId, ComparisonOperator.EQ));
+        return toDtoList(responses);
+    }
+
+    /**
+     * Retrieve the {@link SoapOperation} id
+     * for the {@link SoapMockResponse} with the provided id.
+     *
+     * @param mockResponseId The id of the {@link SoapMockResponse}.
+     * @return The id of the operation.
+     */
+    @Override
+    public String getOperationId(String mockResponseId) {
+        return Optional.ofNullable(dynamoDBMapper.load(entityClass, mockResponseId)).orElseThrow(
+                () -> new IllegalArgumentException("Unable to find a mock response with the following id: " + mockResponseId)
+        ).getOperationId();
+    }
+
+    //@Document(collection = "soapMockResponse")
+    @DynamoDBTable(tableName = "soapMockResponse")
+    @Getter
+    @Setter
+    public static class SoapMockResponseDocument implements Saveable<String> {
+
+        @DynamoDBHashKey(attributeName = "id")
+        @DynamoDBAutoGeneratedKey
+        @Mapping("id")
+        private String id;
+        @DynamoDBAttribute(attributeName = "name")
+        @Mapping("name")
+        private String name;
+        @DynamoDBAttribute(attributeName = "body")
+        @Mapping("body")
+        private String body;
+        @DynamoDBAttribute(attributeName = "operationId")
+        @Mapping("operationId")
+        private String operationId;
+        @DynamoDBAttribute(attributeName = "status")
+        @DynamoDBTypeConvertedEnum
+        @Mapping("status")
+        private SoapMockResponseStatus status;
+        @DynamoDBAttribute(attributeName = "httpStatusCode")
+        @Mapping("httpStatusCode")
+        private Integer httpStatusCode;
+        @DynamoDBAttribute(attributeName = "usingExpressions")
+        @Mapping("usingExpressions")
+        private boolean usingExpressions;
+        @DynamoDBAttribute(attributeName = "xpathExpression")
+        @Mapping("xpathExpression")
+        @Deprecated
+        private String xpathExpression;
+        @DynamoDBAttribute(attributeName = "httpHeaders")
+        @Mapping("httpHeaders")
+        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+        @DynamoDBAttribute(attributeName = "contentEncodings")
+        @Mapping("contentEncodings")
+        //FIXME list of enum
+        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+        @DynamoDBAttribute(attributeName = "xpathExpressions")
+        @Mapping("xpathExpressions")
+        private List<SoapXPathExpressionDocument> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpressionDocument>();
+
+        private String nameLower;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (!(o instanceof SoapMockResponseDocument))
+                return false;
+
+            SoapMockResponseDocument that = (SoapMockResponseDocument) o;
+
+            if (id != null ? !id.equals(that.id) : that.id != null)
+                return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return id != null ? id.hashCode() : 0;
+        }
+    }
+
+    //@Document(collection = "soapXPathExpression")
+    @DynamoDBDocument
+    @Getter
+    @Setter
+    public static class SoapXPathExpressionDocument {
+
+        private String expression;
+    }
+}

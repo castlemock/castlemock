@@ -73,6 +73,8 @@
         <spring.security.version>5.3.3.RELEASE</spring.security.version>
         <spring.framework.version>5.2.7.RELEASE</spring.framework.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
+        <amazon.awssdk.dynamodb.version>2.13.50</amazon.awssdk.dynamodb.version>
+        <testcontainers.version>1.14.3</testcontainers.version>
     </properties>
 
     <modules>
@@ -152,6 +154,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.castlemock.repository.mock.graphql</groupId>
+                <artifactId>dynamodb</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.castlemock.repository.mock.rest</groupId>
                 <artifactId>file</artifactId>
                 <version>${project.version}</version>
@@ -164,6 +171,11 @@
             <dependency>
                 <groupId>com.castlemock.repository.mock.rest</groupId>
                 <artifactId>mongodb</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.castlemock.repository.mock.rest</groupId>
+                <artifactId>dynamodb</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -182,6 +194,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.castlemock.repository.mock.soap</groupId>
+                <artifactId>dynamodb</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
                 <artifactId>model</artifactId>
                 <version>${project.version}</version>
@@ -194,6 +211,11 @@
             <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
                 <artifactId>mongodb</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.castlemock.repository.core</groupId>
+                <artifactId>dynamodb</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -306,6 +328,13 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-taglibs</artifactId>
                 <version>${spring.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>net.sf.dozer</groupId>
@@ -616,6 +645,11 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>dynamodb</artifactId>
+                <version>${amazon.awssdk.dynamodb.version}</version>
+            </dependency>
 
             <!-- Third party test dependencies -->
             <dependency>
@@ -663,6 +697,12 @@
                         <artifactId>logback-classic</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${testcontainers.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

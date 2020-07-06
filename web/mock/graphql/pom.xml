@@ -28,6 +28,10 @@
         </dependency>
         <dependency>
             <groupId>com.castlemock.repository.mock.graphql</groupId>
+            <artifactId>dynamodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.repository.mock.graphql</groupId>
             <artifactId>model</artifactId>
         </dependency>
 

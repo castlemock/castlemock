@@ -4,4 +4,5 @@ public interface Profiles {
 
     String FILE = "file";
     String MONGODB = "mongodb";
+    String DYNAMODB = "dynamodb";
 }

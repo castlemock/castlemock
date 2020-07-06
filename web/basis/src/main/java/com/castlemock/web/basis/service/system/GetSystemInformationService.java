@@ -89,8 +89,8 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
                                     props.getMongoClientDatabase(), isMongoUsesUri(props)))
             );
         }
-        systemInformation.setShowCastleMockHomeDirectory(springEnvironment.acceptsProfiles(mongoProfiles));
-        systemInformation.setShowMongoProperties(springEnvironment.acceptsProfiles(fileProfiles));
+        systemInformation.setShowCastleMockHomeDirectory(springEnvironment.acceptsProfiles(fileProfiles));
+        systemInformation.setShowMongoProperties(springEnvironment.acceptsProfiles(mongoProfiles));
         final GetSystemInformationOutput output = new GetSystemInformationOutput(systemInformation);
         return createServiceResult(output);
     }
