@@ -67,6 +67,7 @@ public class UserMongoRepository extends MongoRepository<UserMongoRepository.Use
         if (count() == 0) {
             final User user = new User();
             user.setUsername("admin");
+            user.setFullName("Admin Admin");
             user.setPassword(PASSWORD_ENCODER.encode("admin"));
             user.setStatus(Status.ACTIVE);
             user.setRole(Role.ADMIN);
@@ -120,6 +121,8 @@ public class UserMongoRepository extends MongoRepository<UserMongoRepository.Use
         private String password;
         @Mapping("email")
         private String email;
+        @Mapping("fullName")
+        private String fullName;
         @Mapping("updated")
         private Date updated;
         @Mapping("created")
@@ -193,6 +196,24 @@ public class UserMongoRepository extends MongoRepository<UserMongoRepository.Use
          */
         public void setEmail(String email) {
             this.email = email;
+        }
+
+        /**
+         * Get the user full name
+         *
+         * @return User full name
+         */
+        public String getFullName() {
+            return fullName;
+        }
+
+        /**
+         * Set a new value to the user full name
+         *
+         * @param fullName New full name value
+         */
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
         }
 
         /**

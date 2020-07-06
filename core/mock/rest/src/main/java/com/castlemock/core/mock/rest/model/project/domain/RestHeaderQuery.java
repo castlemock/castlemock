@@ -28,6 +28,7 @@ public class RestHeaderQuery {
     private boolean matchCase;
     private boolean matchAny;
     private boolean matchRegex;
+    private boolean required;
 
     public RestHeaderQuery(){
 
@@ -39,6 +40,7 @@ public class RestHeaderQuery {
         this.matchCase = Objects.requireNonNull(builder.matchCase);
         this.matchAny = Objects.requireNonNull(builder.matchAny);
         this.matchRegex = Objects.requireNonNull(builder.matchRegex);
+        this.required = Objects.requireNonNull(builder.required);
     }
 
     @XmlElement
@@ -86,6 +88,15 @@ public class RestHeaderQuery {
         this.matchRegex = matchRegex;
     }
 
+    @XmlElement
+    public boolean getRequired() {
+        return required;
+    }
+
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,13 +105,14 @@ public class RestHeaderQuery {
         return matchCase == that.matchCase &&
                 matchAny == that.matchAny &&
                 matchRegex == that.matchRegex &&
+                required == that.required &&
                 Objects.equals(header, that.header) &&
                 Objects.equals(query, that.query);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(header, query, matchCase, matchAny, matchRegex);
+        return Objects.hash(header, query, matchCase, matchAny, matchRegex, required);
     }
 
     @Override
@@ -111,6 +123,7 @@ public class RestHeaderQuery {
                 ", matchCase=" + matchCase +
                 ", matchAny=" + matchAny +
                 ", matchRegex=" + matchRegex +
+                ", required=" + required +
                 '}';
     }
 
@@ -124,6 +137,7 @@ public class RestHeaderQuery {
         private Boolean matchCase;
         private Boolean matchAny;
         private Boolean matchRegex;
+        private Boolean required;
 
         private Builder() {
         }
@@ -150,6 +164,11 @@ public class RestHeaderQuery {
 
         public Builder matchRegex(final Boolean matchRegex) {
             this.matchRegex = matchRegex;
+            return this;
+        }
+
+        public Builder required(final Boolean required) {
+            this.required = required;
             return this;
         }
 

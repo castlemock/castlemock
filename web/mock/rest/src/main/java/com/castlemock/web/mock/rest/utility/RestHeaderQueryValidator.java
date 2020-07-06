@@ -19,8 +19,7 @@ package com.castlemock.web.mock.rest.utility;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestHeaderQuery;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -32,8 +31,12 @@ public final class RestHeaderQueryValidator {
     }
 
     public static boolean validate(final List<RestHeaderQuery> headerQueries,
-                                   final List<HttpHeader> headers){
+                                   final List<HttpHeader> headers) {
+        return validateRequired(headerQueries, headers) &&
+                validateDefault(headerQueries, headers);
+    }
 
+    private static boolean validateDefault(List<RestHeaderQuery> headerQueries, List<HttpHeader> headers) {
         for(HttpHeader header : headers){
 
             final Set<RestHeaderQuery> matching = headerQueries.stream()
@@ -45,8 +48,25 @@ public final class RestHeaderQueryValidator {
                 return true;
             }
         }
-
         return false;
+    }
+
+    private static boolean validateRequired(List<RestHeaderQuery> headerQueries, List<HttpHeader> headers) {
+        List<RestHeaderQuery> requiredHeaderQueries =
+                headerQueries.stream().filter(RestHeaderQuery::getRequired).collect(Collectors.toList());
+
+        for (RestHeaderQuery restHeaderQuery : requiredHeaderQueries) {
+
+            Optional<HttpHeader> matchedHeader = headers.stream()
+                    .filter(header -> header.getName().equalsIgnoreCase(restHeaderQuery.getHeader()))
+                    .filter(header -> validate(header.getValue(), restHeaderQuery)).findAny();
+
+            if (!matchedHeader.isPresent()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static boolean validate(final String inputQuery,

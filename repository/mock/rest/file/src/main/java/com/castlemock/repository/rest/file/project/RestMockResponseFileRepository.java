@@ -428,6 +428,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         private boolean matchCase;
         private boolean matchAny;
         private boolean matchRegex;
+        private boolean required;
 
         @XmlElement
         public String getHeader() {
@@ -472,6 +473,15 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
 
         public void setMatchRegex(boolean matchRegex) {
             this.matchRegex = matchRegex;
+        }
+
+        @XmlElement
+        public boolean getRequired() {
+            return required;
+        }
+
+        public void setRequired(boolean required) {
+            this.required = required;
         }
     }
 

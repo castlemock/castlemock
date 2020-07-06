@@ -36,11 +36,13 @@ function alignHeaderQueryTableRowValues(){
         var matchAnyCell = row.cells[4];
         var matchCaseCell = row.cells[5];
         var matchRegexCell = row.cells[6];
+        var requiredCell = row.cells[7];
         var headerInputValue = headerCell.getElementsByTagName("input")[0];
         var queryInputValue = queryCell.getElementsByTagName("input")[0];
         var matchAnyInputValue = matchAnyCell.getElementsByTagName("input")[0];
         var matchCaseInputValue = matchCaseCell.getElementsByTagName("input")[0];
         var matchRegexInputValue = matchRegexCell.getElementsByTagName("input")[0];
+        var requiredInputValue = requiredCell.getElementsByTagName("input")[0];
 
         var rowIndex = index - 1;
         headerInputValue.id = "headerQueries[" + rowIndex + "].header";
@@ -57,6 +59,9 @@ function alignHeaderQueryTableRowValues(){
 
         matchRegexInputValue.id = "headerQueries[" + rowIndex + "].matchRegex";
         matchRegexInputValue.name = "headerQueries[" + rowIndex + "].matchRegex";
+
+        requiredInputValue.id = "headerQueries[" + rowIndex + "].required";
+        requiredInputValue.name = "headerQueries[" + rowIndex + "].required";
     }
 }
 
@@ -67,6 +72,7 @@ function addHeaderQuery() {
     var matchAnyInput = document.getElementById("headerMatchAnyInput").checked;
     var matchCaseInput = document.getElementById("headerMatchCaseInput").checked;
     var matchRegexInput = document.getElementById("headerRegexInput").checked;
+    var requiredInput = document.getElementById("headerRequiredInput").checked;
 
     var headerQueryId = Math.random().toString(36).substring(7);
     var insertIndex = queryTable.rows.length - 1;
@@ -78,6 +84,7 @@ function addHeaderQuery() {
     var matchAnyColumn = row.insertCell(4);
     var matchCaseColumn = row.insertCell(5);
     var matchRegexColumn = row.insertCell(6);
+    var requiredColumn = row.insertCell(7);
 
     queryIdColumn.hidden = true;
     queryIdColumn.innerHTML = headerQueryId;
@@ -87,6 +94,7 @@ function addHeaderQuery() {
     matchAnyColumn.innerHTML = "<input name=\"headerQueries[" + insertIndex + "].matchAny\" value=\"" + matchAnyInput + "\" type=\"hidden\" \> " + matchAnyInput;
     matchCaseColumn.innerHTML = "<input name=\"headerQueries[" + insertIndex + "].matchCase\" value=\"" + matchCaseInput + "\" type=\"hidden\" \> " + matchCaseInput;
     matchRegexColumn.innerHTML = "<input name=\"headerQueries[" + insertIndex + "].matchRegex\" value=\"" + matchRegexInput + "\" type=\"hidden\" \> " + matchRegexInput;
+    requiredColumn.innerHTML = "<input name=\"headerQueries[" + insertIndex + "].required\" value=\"" + requiredInput + "\" type=\"hidden\" \> " + requiredInput;
     alignHeaderQueryTableRowValues();
 }
 

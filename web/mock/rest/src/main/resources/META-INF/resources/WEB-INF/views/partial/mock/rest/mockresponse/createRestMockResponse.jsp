@@ -262,6 +262,10 @@
                                         <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.matchregex"/></form:label></td>
                                         <td class="column2"><span class="checkbox"><input type="checkbox" name="headerRegexInput" id="headerRegexInput" class="form-control"/></span></td>
                                     </tr>
+                                    <tr>
+                                        <td class="column1"><form:label path="name"><spring:message code="rest.createrestmockresponse.column.required"/></form:label></td>
+                                        <td class="column2"><span class="checkbox"><input type="checkbox" name="headerRequiredInput" id="headerRequiredInput" class="form-control"/></span></td>
+                                    </tr>
 
                                 </table>
                                 <button class="btn btn-success" onclick="addHeaderQuery()" type="button"><i class="fas fa-plus-circle"></i><span><spring:message code="rest.createrestmockresponse.button.addquery"/></span></button>
@@ -272,11 +276,12 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped table-hover sortable" id="headerQueryTable">
                                     <col width="5%">
-                                    <col width="32.5%">
-                                    <col width="32.5%">
-                                    <col width="10%">
-                                    <col width="10%">
-                                    <col width="10%">
+                                    <col width="31.5%">
+                                    <col width="31.5%">
+                                    <col width="8%">
+                                    <col width="8%">
+                                    <col width="8%">
+                                    <col width="8%">
                                     <tr>
                                         <th></th>
                                         <th><spring:message code="rest.restmockresponse.column.header"/></th>
@@ -284,6 +289,7 @@
                                         <th><spring:message code="rest.restmockresponse.column.matchany"/></th>
                                         <th><spring:message code="rest.restmockresponse.column.matchcase"/></th>
                                         <th><spring:message code="rest.restmockresponse.column.matchregex"/></th>
+                                        <th><spring:message code="rest.restmockresponse.column.required"/></th>
                                     </tr>
                                 </table>
                             </div>

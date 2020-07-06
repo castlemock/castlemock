@@ -7,6 +7,7 @@ public final class RestHeaderQueryTestBuilder {
     private Boolean matchCase;
     private Boolean matchAny;
     private Boolean matchRegex;
+    private Boolean required;
 
     private RestHeaderQueryTestBuilder() {
         this.header = "Content-Type";
@@ -14,6 +15,7 @@ public final class RestHeaderQueryTestBuilder {
         this.matchCase = Boolean.FALSE;
         this.matchAny = Boolean.FALSE;
         this.matchRegex = Boolean.FALSE;
+        this.required = Boolean.FALSE;
     }
 
     public RestHeaderQueryTestBuilder header(final String header) {
@@ -41,6 +43,11 @@ public final class RestHeaderQueryTestBuilder {
         return this;
     }
 
+    public RestHeaderQueryTestBuilder required(final Boolean required) {
+        this.required = required;
+        return this;
+    }
+
     public static RestHeaderQueryTestBuilder builder(){
         return new RestHeaderQueryTestBuilder();
     }
@@ -52,6 +59,7 @@ public final class RestHeaderQueryTestBuilder {
                 .matchCase(matchCase)
                 .matchAny(matchAny)
                 .matchRegex(matchRegex)
+                .required(required)
                 .build();
     }
 }
