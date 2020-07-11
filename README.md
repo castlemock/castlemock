@@ -1,4 +1,4 @@
-<p align="center"><img src="https://castlemock.com/images/fm-logo-small.png"></div></p>
+<p align="center"><img src="https://castlemock.github.io/assets/img/logo.png"></div></p>
 
 # Castle Mock: Mock RESTful APIs and SOAP web services
 
