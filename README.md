@@ -99,7 +99,7 @@ Full documentation can be found under our [GitHub Wiki](https://github.com/castl
 
 ## Bugs and Feedback
 
-For bugs, questions and discussions please use the [GitHub Issues](https://github.com/castlemock/castlemock/issues)
+For bugs, questions and discussions please use the **[GitHub Issues](https://github.com/castlemock/castlemock/issues)**. Please read our **[FAQ](https://github.com/castlemock/castlemock/wiki/FAQ)** and **[Code Of Conduct](https://github.com/castlemock/castlemock/blob/master/CODE_OF_CONDUCT.md)** before creating a new issue. 
 
 ## Continuous integration
 
