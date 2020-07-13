@@ -34,5 +34,7 @@ If applicable, add screenshots to help explain your problem.
  - Browser [e.g. stock browser, safari]
  - Version [e.g. 22]
 
-**Additional context**
+**Additional context:**
 Add any other context about the problem here.
+
+**WSDL files or other resource attachments:** Please read our FAQ before submitting or reference any WSDL files or other resources: [FAQ](https://github.com/castlemock/castlemock/wiki/FAQ)
