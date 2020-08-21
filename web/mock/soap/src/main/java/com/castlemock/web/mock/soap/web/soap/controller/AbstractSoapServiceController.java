@@ -55,6 +55,7 @@ import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.support.MtomUtility;
 import com.castlemock.web.mock.soap.support.SoapUtility;
 import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparator;
+import com.castlemock.web.mock.soap.utility.config.AddressLocationConfigurer;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -142,7 +143,9 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             while(parameterNames.hasMoreElements()){
                 String parameterName = parameterNames.nextElement();
                 if(parameterName.equalsIgnoreCase("wsdl")){
-                    final String wsdl = getWsdl(projectId);
+                    String wsdl = getWsdl(projectId);
+                    
+                    wsdl = new AddressLocationConfigurer().configureAddressLocation(wsdl, httpServletRequest.getRequestURL().toString());
 
                     final HttpHeaders responseHeaders = new HttpHeaders();
                     responseHeaders.put(CONTENT_TYPE, ImmutableList.of("text/xml; " + DEFAULT_CHAR_SET));
