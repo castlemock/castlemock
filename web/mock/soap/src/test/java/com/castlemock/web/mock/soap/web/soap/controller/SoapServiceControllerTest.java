@@ -386,6 +386,8 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
     public void testGetWsdl(){
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(Collections.singletonList("wsdl")));
+        when(httpServletRequest.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + SOAP +
+        		SLASH + PROJECT + SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID));
 
         final SoapProject soapProject = getSoapProject();
         final ReadSoapProjectOutput readSoapProjectOutput = ReadSoapProjectOutput.builder()
@@ -409,6 +411,8 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
     public void testGetWsdlWildcard() {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(Collections.singletonList("wsdl")));
+        when(httpServletRequest.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + SOAP +
+        		SLASH + PROJECT + SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID));
 
         final SoapProject soapProject = getSoapProject();
         final ReadSoapProjectOutput readSoapProjectOutput = ReadSoapProjectOutput.builder()
