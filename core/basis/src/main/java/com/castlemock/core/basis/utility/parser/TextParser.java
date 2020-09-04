@@ -61,6 +61,7 @@ public class TextParser {
         EXPRESSIONS.put(BodyJsonPathExpression.IDENTIFIER, new BodyJsonPathExpression());
         EXPRESSIONS.put(UrlHostExpression.IDENTIFIER, new UrlHostExpression());
         EXPRESSIONS.put(BodyXPathExpression.IDENTIFIER, new BodyXPathExpression());
+        EXPRESSIONS.put(FakerExpression.IDENTIFIER, new FakerExpression());
     }
 
     /**

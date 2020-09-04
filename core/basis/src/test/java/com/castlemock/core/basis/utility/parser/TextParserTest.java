@@ -64,5 +64,13 @@ public class TextParserTest {
         Assert.assertNotEquals(input, output);
         Assert.assertTrue(output.matches("Hello this is a (.*?)."));
     }
+    
+    @Test
+    public void testParseFaker(){
+        String input = "Hello this is a ${FAKER(api=\"name().fullName()\")}.";
+        String output = TextParser.parse(input);
+        Assert.assertNotEquals(input, output);
+        Assert.assertTrue(output.matches("Hello this is a (.*?)."));
+    }
 
 }

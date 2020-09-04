@@ -39,6 +39,7 @@
         <springfox.version>2.9.2</springfox.version>
         <maven.jar.version>3.1.1</maven.jar.version>
         <json.path.version>2.4.0</json.path.version>
+        <javafaker.version>1.0.2</javafaker.version>
         <joda.time.version>2.10.6</joda.time.version>
         <activation.version>1.1.1</activation.version>
         <bytebuddy.version>1.10.10</bytebuddy.version>
@@ -298,6 +299,11 @@
                 <version>${spring.framework.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring.framework.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring.boot.version}</version>
@@ -411,6 +417,11 @@
                 <artifactId>json-path</artifactId>
                 <version>${json.path.version}</version>
             </dependency>
+            <dependency>
+			    <groupId>com.github.javafaker</groupId>
+			    <artifactId>javafaker</artifactId>
+			    <version>${javafaker.version}</version>
+			</dependency>
             <dependency>
                 <groupId>javax.activation</groupId>
                 <artifactId>activation</artifactId>
