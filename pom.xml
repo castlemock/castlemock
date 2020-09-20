@@ -9,7 +9,7 @@
 
     <properties>
         <!-- Project properties -->
-        <project.version>1.50</project.version>
+        <project.version>1.51</project.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -39,6 +39,7 @@
         <springfox.version>2.9.2</springfox.version>
         <maven.jar.version>3.1.1</maven.jar.version>
         <json.path.version>2.4.0</json.path.version>
+        <javafaker.version>1.0.2</javafaker.version>
         <joda.time.version>2.10.6</joda.time.version>
         <activation.version>1.1.1</activation.version>
         <bytebuddy.version>1.10.10</bytebuddy.version>
@@ -60,18 +61,19 @@
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <junit.platform.version>1.6.2</junit.platform.version>
         <swagger.parser.version>2.0.21</swagger.parser.version>
-        <spring.boot.version>2.3.2.RELEASE</spring.boot.version>
+        <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
         <apache.commons.io.version>2.6</apache.commons.io.version>
         <flapdoodle.mongo.version>2.2.0</flapdoodle.mongo.version>
-        <jackson.databind.version>2.11.1</jackson.databind.version>
+        <jackson.databind.version>2.11.2</jackson.databind.version>
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
         <jakarta.activation.version>1.2.2</jakarta.activation.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <spring.security.version>5.3.3.RELEASE</spring.security.version>
         <spring.framework.version>5.2.8.RELEASE</spring.framework.version>
+        <spring.security.version>5.3.4.RELEASE</spring.security.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
     </properties>
 
@@ -298,6 +300,11 @@
                 <version>${spring.framework.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring.framework.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring.boot.version}</version>
@@ -411,6 +418,11 @@
                 <artifactId>json-path</artifactId>
                 <version>${json.path.version}</version>
             </dependency>
+            <dependency>
+			    <groupId>com.github.javafaker</groupId>
+			    <artifactId>javafaker</artifactId>
+			    <version>${javafaker.version}</version>
+			</dependency>
             <dependency>
                 <groupId>javax.activation</groupId>
                 <artifactId>activation</artifactId>
