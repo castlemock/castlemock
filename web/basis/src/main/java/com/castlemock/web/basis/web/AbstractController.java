@@ -18,17 +18,15 @@ package com.castlemock.web.basis.web;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.web.basis.utility.BaseUrlInfo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.ServletContext;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * The AbstractController provides functionality that are shared among all the controllers in Castle Mock
@@ -66,12 +64,9 @@ public abstract class AbstractController {
     protected static final String USERS = "users";
     protected static final String USER_STATUSES = "userStatuses";
     protected static final String FILE_UPLOAD_FORM = "uploadForm";
-    protected static final String HTTP = "http://";
-    protected static final String HTTPS = "https://";
 
     protected static final int DEFAULT_ECHO_RESPONSE_CODE = 200;
 
-    private static final String LOCAL_ADDRESS = "127.0.0.1";
     private static final String ANONYMOUS_USER = "Anonymous";
     /**
      * Returns the current application context for Castle Mock. For example the /castlemock in http://localhost:8080/castlemock
@@ -95,32 +90,12 @@ public abstract class AbstractController {
     }
 
     /**
-     * The method returns the local address (Not link local address, not loopback address) which the server is deployed on.
-     * If the method does not find any INet4Address that is neither link local address and loopback address, the method
-     * will return the the address 127.0.0.1
-     * @return Returns the local address or 127.0.0.1 if no address was found
-     * @throws SocketException Upon failing to extract network interfaces
+     * Return the BaseUrlInfo based on request and endpointAddress.
+     * @param request The HttpServletRequest instance.
+     * @return BaseUrlInfo
      */
-    public String getHostAddress() throws SocketException {
-        if(endpointAddress != null && !endpointAddress.isEmpty()){
-            return endpointAddress;
-        }
-
-        final Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-        while (networkInterfaces.hasMoreElements())
-        {
-            final NetworkInterface networkInterface = networkInterfaces.nextElement();
-            final Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
-            while (addresses.hasMoreElements())
-            {
-                final InetAddress address = addresses.nextElement();
-                if (!address.isLinkLocalAddress() && !address.isLoopbackAddress() && address instanceof Inet4Address){
-                    return address.getHostAddress();
-                }
-            }
-        }
-
-        return LOCAL_ADDRESS;
+    public BaseUrlInfo getBaseUrlInfo(final HttpServletRequest request) {
+    	return BaseUrlInfo.builder(request).preferedServerName(endpointAddress).build();
     }
 
 }

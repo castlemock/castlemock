@@ -74,6 +74,7 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
     private static final String DELETE_MOCK_RESPONSES_PAGE = "partial/mock/soap/mockresponse/deleteSoapMockResponses.jsp";
     private static final String SLASH = "/";
     private static final String HTTP = "http://";
+    private static final String LOCALHOST = "localhost";
     private static final String MOCK = "mock";
     private static final String COLON = ":";
     private static final String SOAP = "soap";
@@ -115,8 +116,7 @@ public class SoapOperationControllerTest extends AbstractSoapControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_PORT_ID, soapPort.getId()))
                 .andExpect(MockMvcResultMatchers.model().attribute(SOAP_OPERATION, soapOperation));
         SoapOperation SoapOperationResponse = (SoapOperation) result.andReturn().getModelAndView().getModel().get(SOAP_OPERATION);
-        String hostAddress = serviceController.getHostAddress();
-        Assert.assertEquals(HTTP + hostAddress + COLON + DEFAULT_PORT + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + soapPort.getUri(), soapOperation.getInvokeAddress());
+        Assert.assertEquals(HTTP + LOCALHOST + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + soapProject.getId() + SLASH + soapPort.getUri(), soapOperation.getInvokeAddress());
     }
 
 

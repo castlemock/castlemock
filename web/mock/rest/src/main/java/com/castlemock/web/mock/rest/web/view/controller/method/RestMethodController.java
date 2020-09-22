@@ -37,7 +37,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class RestMethodController extends AbstractRestViewController {
                                     @PathVariable final String restApplicationId,
                                     @PathVariable final String restResourceId,
                                     @PathVariable final String restMethodId,
-                                    final ServletRequest request) {
+                                    final HttpServletRequest request) {
         final ReadRestResourceOutput readRestResourceOutput = serviceProcessor.process(ReadRestResourceInput.builder()
                 .restProjectId(restProjectId)
                 .restApplicationId(restApplicationId)
@@ -97,8 +98,7 @@ public class RestMethodController extends AbstractRestViewController {
                 .restMethodId(restMethodId)
                 .build());
 
-        final String protocol = getProtocol(request);
-        final String invokeAddress = getRestInvokeAddress(protocol, request.getServerPort(), restProjectId, restApplicationId, restResource.getUri());
+        final String invokeAddress = getRestInvokeAddress(request, restProjectId, restApplicationId, restResource.getUri());
         restMethod.setInvokeAddress(invokeAddress);
 
         final ModelAndView model = createPartialModelAndView(PAGE);

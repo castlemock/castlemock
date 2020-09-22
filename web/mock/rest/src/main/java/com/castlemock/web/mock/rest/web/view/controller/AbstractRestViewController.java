@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * The class operates as a shared base for all the view related to the REST module
  * @author Karl Dahlgren
@@ -70,17 +72,15 @@ public class AbstractRestViewController extends AbstractViewController {
 
     /**
      * The method provides the functionality to create the address which is used to invoke a REST service
-     * @param protocol THe protocol
-     * @param serverPort The server port
+     * @param request The HttpServletRequest instance
      * @param projectId The id of the project
      * @param applicationId The id of the application
      * @param resourceUri The resource uri
      * @return A URL based on all the incoming parameters
      */
-    protected String getRestInvokeAddress(final String protocol, int serverPort, final String projectId, final String applicationId, final String resourceUri){
+    protected String getRestInvokeAddress(final HttpServletRequest request , final String projectId, final String applicationId, final String resourceUri){
         try {
-            final String hostAddress = getHostAddress();
-            return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + resourceUri;
+            return getBaseUrlInfo(request).getBaseUrl() + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId + resourceUri;
         } catch (Exception exception) {
             LOGGER.error("Unable to generate invoke URL", exception);
             throw new IllegalStateException("Unable to generate invoke URL for " + projectId);

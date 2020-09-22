@@ -33,6 +33,8 @@ import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.config.TestApplication;
 import com.castlemock.web.mock.rest.web.view.command.method.RestMethodModifierCommand;
 import com.castlemock.web.mock.rest.web.view.controller.AbstractRestControllerTest;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -62,6 +64,8 @@ import static org.mockito.Mockito.when;
 public class RestResourceControllerTest extends AbstractRestControllerTest {
 
     private static final String PAGE = "partial/mock/rest/resource/restResource.jsp";
+    private static final String HTTP = "http://";
+    private static final String LOCALHOST = "localhost";
     private static final String SLASH = "/";
     private static final String DELETE_REST_METHODS_PAGE = "partial/mock/rest/method/deleteRestMethods.jsp";
     private static final String DELETE_REST_METHODS_COMMAND = "command";
@@ -98,7 +102,9 @@ public class RestResourceControllerTest extends AbstractRestControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attribute(REST_APPLICATION_ID, restApplication.getId()))
                 .andExpect(MockMvcResultMatchers.model().attribute(REST_RESOURCE, restResource));
         RestResource restResourceResponse = (RestResource) result.andReturn().getModelAndView().getModel().get(REST_RESOURCE);
-        String hostAddress = restResourceController.getHostAddress();
+
+        Assert.assertEquals(HTTP + LOCALHOST + SLASH + MOCK + SLASH + REST + SLASH + PROJECT + SLASH + restProject.getId() 
+        	+ SLASH + APPLICATION + SLASH + restApplication.getId() + restResource.getUri(), restResourceResponse.getInvokeAddress());
     }
 
     @Test
