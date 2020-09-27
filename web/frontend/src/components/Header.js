@@ -18,8 +18,12 @@ import React, {Component} from 'react';
 import '../css/Header.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
+import {Link} from "react-router-dom";
+import {faSignOutAlt, faTachometerAlt, faChartBar, faUsersCog, faCogs} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Logo from '../images/logo-landscape-white.png'
-
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 class Header extends Component {
 
@@ -29,96 +33,45 @@ class Header extends Component {
                 <nav className="navbar navbar-default">
                     <div className="container-fluid">
                         <div className="navbar-header">
-                            <a className="navbar-brand header-logo" href="/web">Castle Mock <img
-                                src={Logo} className="header-logo-img" alt="logo"/></a>
+                            <div className="header-logo">
+                                <Link to="/beta/web">
+                                    Castle Mock
+                                    <img src={Logo} className="header-logo-img" alt="logo"/>
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="header-menu-links">
+                            <div className="header-menu-link">
+                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Projects</Tooltip>}>
+                                    <Link to={"/beta/web"}><FontAwesomeIcon icon={faTachometerAlt} className="header-menu-icon" /></Link>
+                                </OverlayTrigger>
+                            </div>
+                            <div className="header-menu-link">
+                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Logs</Tooltip>}>
+                                    <Link to={"/beta/web/event"}><FontAwesomeIcon icon={faChartBar} className="header-menu-icon" /></Link>
+                                </OverlayTrigger>
+                            </div>
+                            <div className="header-menu-link">
+                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Users</Tooltip>}>
+                                    <Link to={"/beta/web/user"}><FontAwesomeIcon icon={faUsersCog} className="header-menu-icon" /></Link>
+                                </OverlayTrigger>
+                            </div>
+                            <div className="header-menu-link">
+                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">System</Tooltip>}>
+                                    <Link to={"/beta/web/system"}><FontAwesomeIcon icon={faCogs} className="header-menu-icon" /></Link>
+                                </OverlayTrigger>
+                            </div>
+                            <div className="header-menu-link">
+                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Logout</Tooltip>}>
+                                    <Link to={"/beta/web/logout"}><FontAwesomeIcon icon={faSignOutAlt} className="header-menu-icon" /></Link>
+                                </OverlayTrigger>
+                            </div>
                         </div>
                     </div>
-
                 </nav>
             </div>
         );
     }
 }
-
-/*
-                      <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                          <ul className="links nav navbar-nav navbar-right">
-
-                              <li className="header-menu-full-row">
-                                  <div>
-                                      <a href="/web/me">
-                                          <div className="avatar-username">
-                                          </div>
-                                          <div className="avatar-circle">
-                                              <div className="avatar-inner-circle">
-                                                  <i className="fas fa-user fa-2x"/>
-                                              </div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </li>
-
-
-                              <div className="header-menu-collapse">
-                                  <li className="header-menu-collapse-row">
-                                      <a href="/web">
-                                          <div className="header-menu-icon">
-                                              <i className="fas fa-tachometer-alt fa-2x"/>
-                                          </div>
-                                          <div className="header-menu-title">
-                                              Projects
-                                          </div>
-                                      </a>
-                                  </li>
-                                  <li className="header-menu-collapse-row">
-                                      <a href="/web/event">
-                                          <div className="header-menu-icon">
-                                              <i className="fas fa-chart-bar fa-2x"/>
-                                          </div>
-                                          <div className="header-menu-title">
-                                              Logs
-                                          </div>
-                                      </a>
-                                  </li>
-
-                                  <li className="header-menu-collapse-row">
-                                      <a href="/web/user">
-                                          <div className="header-menu-icon">
-                                              <i className="fas fa-users-cog fa-2x"/>
-                                          </div>
-                                          <div className="header-menu-title">
-                                              Users
-                                          </div>
-                                      </a>
-                                  </li>
-
-                                  <li className="header-menu-collapse-row">
-                                      <a href="/web/system">
-                                          <div className="header-menu-icon">
-                                              <i className="fas fas fa-cogs fa-2x"/>
-                                          </div>
-                                          <div className="header-menu-title">
-                                              System
-                                          </div>
-                                      </a>
-                                  </li>
-
-                                  <li className="header-menu-collapse-row">
-                                      <a href="/web/logout">
-                                          <div className="header-menu-icon">
-                                              <i className="fas fas fa-sign-out-alt fa-2x"/>
-                                          </div>
-                                          <div className="header-menu-title">
-                                              Logout
-                                          </div>
-                                      </a>
-                                  </li>
-                              </div>
-
-                              <li className="header-menu-full-row"><a href="/web/logout"><i
-                                  className="fas fa-sign-out-alt fa-2x"/></a></li>
-                          </ul>
-                      </div>
-                      */
 
 export default Header;

@@ -17,29 +17,82 @@
 import React, {PureComponent} from 'react'
 import '../css/Login.css';
 import Logo from '../images/logo.png'
+import axios from "axios";
+import {Redirect} from "react-router-dom";
 
 class LoginContainer extends PureComponent {
+
+    constructor(props) {
+        super(props);
+        this.onButtonLoginClick = this.onButtonLoginClick.bind(this);
+        this.setUsername = this.setUsername.bind(this);
+        this.setPassword = this.setPassword.bind(this);
+
+        this.state = {
+            username: "",
+            password: "",
+            authenticated: false
+        };
+    }
+
+    setUsername(username) {
+        this.setState({ username: username });
+    }
+
+    setPassword(password) {
+        this.setState({ password: password });
+    }
+
+    onButtonLoginClick() {
+        axios
+            .post("/api/rest/core/login", {
+                username: this.state.username,
+                password: this.state.password
+            })
+            .then(response => {
+                this.setState({ authenticated: true })
+            })
+            .catch(error => {
+                console.log(error)
+
+            });
+    }
+
     render() {
+        if(this.state.authenticated) {
+            return <Redirect to = {{ pathname: "/beta/web" }} />;
+        }
+
         return (
             <div id="login-body">
                 <div className="login">
                     <div id="login-box">
 
-                        <img src={Logo} id="logo"  alt="Castle Mock Logo"/>
-                        <div id="logo-title">Castle Mock</div>
-                        <div id="logo-meta-text">Login with your Castle Mock ID</div>
+                        <div className="login-box-left">
+                            <div className="logoImage">
+                                <img src={Logo} id="logo"  alt="Castle Mock Logo"/>
+                            </div>
+                        </div>
 
-                        <form name='loginForm' action="/login" method='POST'>
-                            <input className="form-control login-credentials" type="text" name="username" id="username" placeholder="Username"/>
-                            <input className="form-control login-credentials" type="password" name="password" id="password" placeholder="Password"/>
-                            <div id="login-remember-me">
-                                <input className="form-check-input" id="rememberMeCheck" type="checkbox" name="remember-me" />
-                                <label className="form-check-label" for="rememberMeCheck">Keep me signed in</label>
+                        <div className="login-box-right">
+                            <div className="credentialsBox">
+                                <div className="login-title">Castle Mock</div>
+
+                                <div className="form-label-group">
+                                    <input type="text" id="inputUsername" className="form-control" placeholder="Username" onChange={event => this.setUsername(event.target.value)} required autoFocus/>
+                                </div>
+                                <div className="form-label-group">
+                                    <input type="password" id="inputPassword" className="form-control" placeholder="Password" onChange={event => this.setPassword(event.target.value)} required />
+                                </div>
+
+                                <div className="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" className="custom-control-input" id="customCheck1"/>
+                                    <label className="custom-control-label" htmlFor="customCheck1">Remember password</label>
+                                </div>
+                                <button className="btn btn-lg btn-success btn-block text-uppercase" onClick={this.onButtonLoginClick}>Sign in</button>
                             </div>
-                            <div id="login-button">
-                                <button className="btn btn-success" type="submit" name="submit">Login</button>
-                            </div>
-                        </form>
+                        </div>
+
                     </div>
                 </div>
 
@@ -58,3 +111,14 @@ class LoginContainer extends PureComponent {
 }
 
 export default LoginContainer
+
+/*
+
+
+                            <input className="form-control login-credentials" type="text" name="username" id="username" placeholder="Username" onChange={event => this.setUsername(event.target.value)}/>
+                            <input className="form-control login-credentials" type="password" name="password" id="password" placeholder="Password" onChange={event => this.setPassword(event.target.value)}/>
+
+                            <div id="login-button">
+                                <button className="btn btn-success" onClick={this.onButtonLoginClick}>Login</button>
+                            </div>
+ */

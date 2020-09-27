@@ -15,7 +15,12 @@
  */
 
 import React, {PureComponent} from 'react';
+import {Link} from "react-router-dom";
 import axios from "axios";
+import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
+import BootstrapTable from "react-bootstrap-table-next";
+import PaginationFactory from "react-bootstrap-table2-paginator";
+const { SearchBar } = Search;
 
 class RestProject extends PureComponent {
 
@@ -57,7 +62,7 @@ class RestProject extends PureComponent {
         }];
 
         this.state = {
-            projectId: 'wMn1lm',
+            projectId: this.props.match.params.projectId,
             project: {
                 applications: []
             }
@@ -82,7 +87,9 @@ class RestProject extends PureComponent {
         }
 
         return (
-            <a href={"/beta/web/rest/project/" + this.state.projectId + "/application/" + row.id}>{cell}</a>
+            <div className="table-link">
+                <Link to={"/beta/web/rest/project/" + this.state.projectId + "/application/" + row.id}>{cell}</Link>
+            </div>
         )
     }
 
@@ -95,6 +102,7 @@ class RestProject extends PureComponent {
                 });
             })
             .catch(error => {
+                this.props.validateErrorResponse(error);
             });
     }
 
@@ -103,6 +111,14 @@ class RestProject extends PureComponent {
         return (
             <div>
                 <section>
+                    <div className="navigation">
+                        <nav aria-label="breadcrumb">
+                            <ol className="breadcrumb breadcrumb-custom">
+                                <li className="breadcrumb-item"><Link to={"/beta/web"}>Home</Link></li>
+                                <li className="breadcrumb-item">{this.state.project.name}</li>
+                            </ol>
+                        </nav>
+                    </div>
                     <div className="content-top">
                         <div className="title">
                             <h1>Project: {this.state.project.name}</h1>
@@ -124,12 +140,31 @@ class RestProject extends PureComponent {
                         <div className="panel-heading table-panel-heading">
                             <h3 className="panel-title">Applications</h3>
                         </div>
-                        <div className="table-responsive">
+                        <div className="table-result">
+                            <ToolkitProvider bootstrap4
+                                             columns={ this.columns}
+                                             data={this.state.project.applications}
+                                             keyField="id"
+                                             search>
+                                {
+                                    (props) => (
+                                        <div>
+                                            <div>
+                                                <SearchBar {...props.searchProps} className={"table-filter-field"}/>
+                                            </div>
+                                            <BootstrapTable {...props.baseProps} bootstrap4
+                                                            data={this.state.project.applications} columns={this.columns}
+                                                            defaultSorted={this.defaultSort} keyField='id' hover
+                                                            selectRow={this.selectRow}
+                                                            pagination={ PaginationFactory(PaginationFactory()) }/>
+                                        </div>
+                                    )}
+                            </ToolkitProvider>
                             <div className="panel-buttons">
                                 <button className="btn btn-primary panel-button" type="submit" name="action" value="export"><i
                                     className="fas fa-cloud-download-alt"/> <span>Update</span></button>
-                                <button className="btn btn-danger demo-button-disabled panel-button" type="submit" name="action"
-                                        value="delete"><i className="fas fa-trash"/> <span>Update endpoint</span>
+                                <button className="btn btn-primary demo-button-disabled panel-button" type="submit" name="action"
+                                        value="update"><i className="fas fa-trash"/> <span>Update endpoint</span>
                                 </button>
                                 <button className="btn btn-danger demo-button-disabled panel-button" type="submit" name="action"
                                         value="delete"><i className="fas fa-trash"/> <span>Delete application</span>

@@ -38,7 +38,7 @@ public class ReadMockResponseRestController extends AbstractRestController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved mocked response")})
     @RequestMapping(method = RequestMethod.GET,
-            value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/response/{responseId}")
+            value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/mockresponse/{responseId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     RestMockResponse getResponse(
@@ -66,7 +66,7 @@ public class ReadMockResponseRestController extends AbstractRestController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted mocked response")})
     @RequestMapping(method = RequestMethod.DELETE,
-            value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/response/{responseId}")
+            value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/mockresponse/{responseId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public void deleteResponse(
             @ApiParam(name = "projectId", value = "The id of the project")
@@ -92,7 +92,7 @@ public class ReadMockResponseRestController extends AbstractRestController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated mocked response")})
     @RequestMapping(method = RequestMethod.PUT,
-            value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/response/{responseId}")
+            value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/mockresponse/{responseId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public void updateResponse(
             @ApiParam(name = "projectId", value = "The id of the project")

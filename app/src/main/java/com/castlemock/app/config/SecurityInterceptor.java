@@ -16,29 +16,38 @@
 
 package com.castlemock.app.config;
 
+import com.auth0.jwt.interfaces.Claim;
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.user.domain.Role;
 import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
-import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
+import com.castlemock.core.basis.service.user.input.ReadUserInput;
+import com.castlemock.core.basis.service.user.output.ReadUserOutput;
+import com.castlemock.web.basis.config.JWTEncoderDecoder;
 import com.castlemock.web.basis.service.user.UserDetailSecurityService;
 import com.castlemock.web.basis.web.AbstractController;
-import org.slf4j.LoggerFactory;
+import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.ServletException;
+import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * The Security Interceptor provides the functionality to check all the incoming request and verify that the logged
@@ -51,14 +60,32 @@ import java.io.IOException;
  *
  */
 @Component
-public class SecurityInterceptor extends HandlerInterceptorAdapter {
+public class SecurityInterceptor extends HandlerInterceptorAdapter implements Filter {
 
     @Autowired
     private ServiceProcessor serviceProcessor;
     @Autowired
     private UserDetailSecurityService userDetailSecurityService;
+    @Autowired
+    @Lazy
+    private JWTEncoderDecoder jwtEncoderDecoder;
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityInterceptor.class);
-    private static final String ANONYMOUS_USER = "anonymousUser";
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
+        process((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    @Override
+    public void destroy() {
+
+    }
 
     /**
      * The method will check if the logged in user is still valid.
@@ -71,41 +98,74 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws IOException, ServletException {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null || !authentication.isAuthenticated()){
+        return process(request, response);
+    }
+
+    private boolean process(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException{
+        final String userId = getTokenFromCookie(request)
+                .flatMap(this::getUserId)
+                .orElseGet(() -> getTokenFromBearerHeader(request)
+                        .flatMap(this::getUserId)
+                        .orElse(null));
+
+        if (userId == null) {
             return true;
         }
 
-        final String loggedInUsername = authentication.getName();
-        if(ANONYMOUS_USER.equals(loggedInUsername)) {
-            return true;
-        }
-
-        final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput(loggedInUsername);
-        final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(readUserByUsernameInput);
-        final User loggedInUser = readUserByUsernameOutput.getUser();
+        final ReadUserInput readUserInput = ReadUserInput.builder()
+                .userId(userId)
+                .build();
+        final ReadUserOutput readUserOutput = serviceProcessor.process(readUserInput);
+        final User loggedInUser = readUserOutput.getUser();
         if(loggedInUser == null){
-            LOGGER.info("The following logged in user is not valid anymore: " + loggedInUsername);
+            LOGGER.info("The following logged in user is not valid anymore: " + userId);
             request.logout();
             response.sendRedirect(request.getContextPath());
             return false;
         } else if(!Status.ACTIVE.equals(loggedInUser.getStatus())){
-            LOGGER.info("The following logged in user is not active anymore: " + loggedInUsername);
+            LOGGER.info("The following logged in user is not active anymore: " + userId);
             request.logout();
             response.sendRedirect(request.getContextPath());
             return false;
         } else {
-            for(GrantedAuthority grantedAuthority : authentication.getAuthorities()){
-                Role role = Role.valueOf(grantedAuthority.getAuthority());
-                if(!loggedInUser.getRole().equals(role)){
-                    LOGGER.info("The following logged in user's authorities has been updated: " + loggedInUsername);
-                    final UserDetails userDetails = userDetailSecurityService.loadUserByUsername(loggedInUsername);
-                    final Authentication newAuthentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-                }
-            }
+            final UserDetails userDetails = new org.springframework.security.core.userdetails.User(loggedInUser.getUsername(), loggedInUser.getPassword(), ImmutableList.of(new SimpleGrantedAuthority(loggedInUser.getRole().name())));
+            final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, loggedInUser.getPassword(), userDetails.getAuthorities());
+            usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             return true;
         }
+    }
+
+    private Optional<String> getTokenFromCookie(final HttpServletRequest request) {
+        return Optional.ofNullable(request.getCookies())
+                .map(Stream::of)
+                .flatMap(cookies -> cookies
+                        .filter(Objects::nonNull)
+                        .filter(cookie -> cookie.getName().equals("token"))
+                        .map(Cookie::getValue)
+                        .findFirst());
+
+    }
+
+    private Optional<String> getTokenFromBearerHeader(final HttpServletRequest request) {
+        final String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (authorizationHeader == null || authorizationHeader.length() != 2) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(authorizationHeader.split(" ")[1]);
+
+    }
+
+    private Optional<String> getUserId(final String token){
+        try {
+            final Map<String, Claim> claims = jwtEncoderDecoder.verify(token);
+            return Optional.ofNullable(claims.get("userId"))
+                    .map(Claim::asString);
+        } catch (final Exception exception) {
+            return Optional.empty();
+        }
+
     }
 
 }

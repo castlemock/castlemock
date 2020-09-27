@@ -19,6 +19,7 @@ package com.castlemock.web.basis.web.rest.controller;
 import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.service.project.ProjectServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
+import com.castlemock.web.basis.model.project.CreateProjectRequest;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import io.swagger.annotations.Api;
@@ -30,11 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -104,6 +102,28 @@ public class ProjectCoreRestController extends AbstractRestController {
             final HttpServletResponse httpServletResponse) {
         return  projectServiceFacade.findOne(type, projectId);
     }
+
+
+    /**
+     * The method creates a new project
+     * @return The retrieved project.
+     */
+    @ApiOperation(value = "Create project",response = Project.class,
+            notes = "Create project. Required authorization: Modifier or Admin.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully created project")
+    })
+    @RequestMapping(method = RequestMethod.POST, value = "/project")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody Project createProject(@RequestBody final CreateProjectRequest request) {
+        final Project project = new Project();
+        project.setDescription(request.getDescription());
+        project.setName(request.getName());
+        project.setUpdated(new Date());
+        project.setCreated(new Date());
+        return projectServiceFacade.save(request.getProjectType(), project);
+    }
+
 
     /**
      * The REST operation deletes a project with a particular ID.

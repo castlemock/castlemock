@@ -1,12 +1,12 @@
 .footer {
     position: fixed;
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     width: 100%;
     font-size: 12px;
     height: 30px;
     text-align: center;
-    background-color: #f5f5f5;
+    background-color: #000000;
 }
 .footer .push {
     height: 4em;
@@ -22,7 +22,7 @@
     padding-right:30px;
     padding-top: 8px;
     font-size: 11px;
-    color: #666666;
+    color: #FFFFFF;
 }
 .footer .rest-api {
     text-align: right;
@@ -61,10 +61,10 @@
 .login-footer-info a {
     text-decoration: underline;
     font-size: 11px;
-    color: #666666;
+    color: #FFFFFF;
 }
 .login-footer-info-api a {
     text-decoration: underline;
     font-size: 11px;
-    color: #666666;
+    color: #FFFFFF;
 }

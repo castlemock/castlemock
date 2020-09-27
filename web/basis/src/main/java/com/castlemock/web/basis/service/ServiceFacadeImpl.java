@@ -74,7 +74,10 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
     public D save(final String type, final D dto){
         final SA serviceAdapter = findByType(type);
         final D convertedDto = serviceAdapter.convertType(dto);
-        return serviceAdapter.create(convertedDto);
+        final D result = serviceAdapter.create(convertedDto);
+        final TypeIdentifier typeIdentifier = serviceAdapter.getTypeIdentifier();
+        result.setTypeIdentifier(typeIdentifier);
+        return result;
     }
 
     /**
@@ -88,7 +91,10 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
     @Override
     public D delete(final String typeUrl, final I id){
         final SA serviceAdapter = findByTypeUrl(typeUrl);
-        return serviceAdapter.delete(id);
+        final D result = serviceAdapter.delete(id);
+        final TypeIdentifier typeIdentifier = serviceAdapter.getTypeIdentifier();
+        result.setTypeIdentifier(typeIdentifier);
+        return result;
     }
 
     /**
@@ -106,7 +112,10 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
     public D update(final String typeUrl, final I id, final D dto){
         final SA serviceAdapter = findByTypeUrl(typeUrl);
         final D convertedDto = serviceAdapter.convertType(dto);
-        return serviceAdapter.update(id, convertedDto);
+        final D result = serviceAdapter.update(id, convertedDto);
+        final TypeIdentifier typeIdentifier = serviceAdapter.getTypeIdentifier();
+        result.setTypeIdentifier(typeIdentifier);
+        return result;
     }
 
     /**

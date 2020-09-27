@@ -1,5 +1,5 @@
 #main-body {
-    margin: 20px auto;
+    margin: 50px auto;
     font-family: "Roboto Regular", sans-serif;
     color: #666666;
     min-height:100%;
@@ -11,16 +11,15 @@
 
 .panel-buttons {
     margin-left: 10px;
+    margin-top: 10px;
 }
 
 .panel-button {
     margin-left: 10px;
-    font-size: 12px;
 }
 
 .menu-button {
     margin-left: 5px;
-    font-size: 12px;
 }
 
 .table-filter-field {
@@ -32,11 +31,44 @@
     margin-bottom: 10px;
 }
 
+.content-summary {
+    width: 100%;
+    padding-top: 20px;
+    border-bottom: 1px solid #ddd !important;
+}
+
+.content-summary-table {
+    margin: 10px 0 30px 0;
+    border-color: black;
+}
+
+.content-summary-table td {
+
+}
+
+.content-summary-table .column1 {
+    text-align: left;
+    font-family: "Roboto Regular", sans-serif;
+    padding: 10px;
+}
+
+.content-summary-table .column2 * {
+    width: 100%;
+    font-weight: normal;
+}
+
 .content-top {
     border-bottom: 1px solid #ddd !important;
     height: 50px;
 }
 
+.navigation {
+
+}
+
+.breadcrumb-custom {
+    background-color: white;
+}
 
 .content-top .menu {
     padding: 0 0 10px 0;
@@ -61,6 +93,12 @@
 
 }
 
-.panel-buttons {
-    margin-left: 10px;
+.project-type-badge-link {
+    color: #FFFFFF;
+    font-weight: bolder;
 }
+
+.table-link a:link { color: #212529; }
+.table-link a:visited { color: #212529; }
+.table-link a:hover { color: #212529; }
+.table-link a:active { color: #212529; }

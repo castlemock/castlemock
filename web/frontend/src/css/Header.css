@@ -1,11 +1,11 @@
 .main-header {
-    background: #1696cc;
+    background: #000000;
     color: #fff;
-    border: 0 solid #1696cc;
+    border: 0 solid #000000;
     top: 0;
     font-size: 13px;
     z-index: 1;
-    height: 50px;
+    height: 60px;
     min-width: 100%;
 }
 
@@ -17,54 +17,6 @@
 .main-header :hover {
      background: transparent !important;
  }
-.main-header .icon-bar {
-    width: 22px;
-    transition: all 0.2s;
-    background-color: #fff;
-}
-.main-header .top-bar {
-    transform: rotate(45deg);
-    transform-origin: 10% 10%;
-}
-.main-header .middle-bar {
-    opacity: 0;
-}
-.bottom-bar {
-    transform: rotate(-45deg);
-    transform-origin: 10% 90%;
-}
-.navbar-toggle.collapsed .top-bar {
-    transform: rotate(0);
-}
-.navbar-toggle.collapsed .middle-bar {
-    opacity: 1;
-}
-.navbar-toggle.collapsed .bottom-bar {
-    transform: rotate(0);
-}
-.navbar-default {
-    background-color: inherit;
-    border-color: inherit;
-    color: inherit;
-    margin-bottom: 0;
-}
-
-
-.navbar-default .navbar-form {
-    color: #000;
-}
-
-.navbar-default .container-fluid {
-
-}
-
-.navbar-default .navbar-collapse {
-    border: 0px solid #3E444D;
-}
-
-.navbar-default .navbar-header {
-    color: inherit;
-}
 
 .header-logo {
     float: left;
@@ -74,8 +26,8 @@
 }
 
 .header-logo a {
-    text-decoration: underline;
-    font-size: 11px;
+    text-decoration: none;
+    font-size: 26px;
     color: #ffffff;
 }
 .header-logo a:hover {
@@ -84,55 +36,25 @@
 }
 
 .header-logo-img {
+    margin-left: 10px;
     width: 30px;
     height: 30px;
 }
 
-.links {
+.header-menu-links {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    height: 30px;
     float: right;
 }
 
-.fa-2x {
-    font-size: 28px;
+.header-menu-link {
+    text-align: center;
+    float: left;
+    margin-left: 35px;
 }
 
-
-.avatar-username {
-    float:left;
-}
-
-
-.stylish-input-group {
-    width: 30%;
-    top: 10px;
-    margin: auto;
-    position: absolute;
-    left: 40%;
-    right: 50%;
-}
-
-.input-group-addon {
-    background: #3ca8d6 !important;
-    border-color: #3ca8d6 !important;
+.header-menu-icon {
+    font-size: 30px;
     color: #FFFFFF;
-    border-bottom-right-radius: 50px;
-    border-top-right-radius: 50px;
-    width: 50px;
-    height: 35px;
-    float: right;
-}
-
-button{
-    border:0;
-    background:transparent;
-    margin-top: 3px;
-}
-
-.search {
-    border-bottom-left-radius: 50px;
-    border-top-left-radius: 50px;
-    color: #FFFFFF;
-    background: #3ca8d6 !important;
-    border-color: #3ca8d6 !important;
-    height: 35px;
 }
