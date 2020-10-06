@@ -53,7 +53,7 @@ public class RandomIntegerExpression extends AbstractExpression {
             maxLength = ((ExpressionArgumentNumber) maxArgument).getValue().intValue();
         }
 
-        int randomValue = RANDOM.nextInt(maxLength) + minLength;
+        int randomValue = RANDOM.nextInt(maxLength - minLength + 1) + minLength;
         return Integer.toString(randomValue);
     }
 
