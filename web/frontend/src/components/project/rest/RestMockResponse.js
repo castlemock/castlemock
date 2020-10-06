@@ -72,10 +72,8 @@ class RestMockResponse extends PureComponent {
                             <h1>Mock response: {this.state.mockResponse.name}</h1>
                         </div>
                         <div className="menu" align="right">
-                            <a className="btn btn-success demo-button-disabled menu-button" href="/web/project/create"><i
-                                className="fas fa-plus-circle"/> <span>Update mock response</span></a>
-                            <a className="btn btn-primary demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Delete mock response</span></a>
+                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Update mock response</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Delete mock response</span></button>
                         </div>
                     </div>
                 </section>

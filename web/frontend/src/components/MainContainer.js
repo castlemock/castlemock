@@ -19,16 +19,19 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import '../css/Main.css';
 import Footer from './Footer'
 import Header from './Header'
-import ProjectOverview from './ProjectOverview'
-import RestProject from './rest/RestProject'
-import SoapProject from './soap/SoapProject'
-import SoapPort from './soap/SoapPort'
-import SoapOperation from './soap/SoapOperation'
-import SoapMockResponse from './soap/SoapMockResponse'
-import RestApplication from "./rest/RestApplication";
-import RestResource from "./rest/RestResource";
-import RestMethod from "./rest/RestMethod";
-import RestMockResponse from "./rest/RestMockResponse";
+import ProjectOverview from './project/ProjectOverview'
+import RestProject from './project/rest/RestProject'
+import SoapProject from './project/soap/SoapProject'
+import SoapPort from './project/soap/SoapPort'
+import SoapOperation from './project/soap/SoapOperation'
+import SoapMockResponse from './project/soap/SoapMockResponse'
+import RestApplication from "./project/rest/RestApplication";
+import RestResource from "./project/rest/RestResource";
+import RestMethod from "./project/rest/RestMethod";
+import RestMockResponse from "./project/rest/RestMockResponse";
+import UserOverview from "./user/UserOverview";
+import User from "./user/User";
+import System from "./system/System";
 
 class MainContainer extends PureComponent {
 
@@ -72,6 +75,9 @@ class MainContainer extends PureComponent {
                             <Route path="/beta/web/soap/project/:projectId/port/:portId" component={SoapPort} />
                             <Route path="/beta/web/rest/project/:projectId" component={RestProject} />
                             <Route path="/beta/web/soap/project/:projectId" component={SoapProject} />
+                            <Route path="/beta/web/user/:userId" component={User} />
+                            <Route path="/beta/web/user" component={UserOverview} />
+                            <Route path="/beta/web/system" component={System} />
                             <Route path="/beta/web" component={ProjectOverview} />
                             <Route path="/beta/*">
                                 <Redirect to="/beta/web" />

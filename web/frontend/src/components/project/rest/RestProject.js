@@ -22,7 +22,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
 const { SearchBar } = Search;
 
-class SoapProject extends PureComponent {
+class RestProject extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -30,9 +30,6 @@ class SoapProject extends PureComponent {
         this.onRowSelect = this.onRowSelect.bind(this);
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
-        this.onUpdateProjectClick = this.onUpdateProjectClick.bind(this);
-        this.setUpdateProjectName = this.setUpdateProjectName.bind(this);
-        this.setUpdateProjectDescription = this.setUpdateProjectDescription.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -43,6 +40,30 @@ class SoapProject extends PureComponent {
             text: 'Name',
             sort: true,
             formatter: this.nameFormat
+        }, {
+            dataField: 'statusCount.MOCKED',
+            text: 'Mocked',
+            sort: true
+        }, {
+            dataField: 'statusCount.DISABLED',
+            text: 'Disabled',
+            sort: true
+        }, {
+            dataField: 'statusCount.FORWARDED',
+            text: 'Forwarded',
+            sort: true
+        }, {
+            dataField: 'statusCount.RECORDING',
+            text: 'Recording',
+            sort: true
+        }, {
+            dataField: 'statusCount.RECORD_ONCE',
+            text: 'Record once',
+            sort: true
+        }, {
+            dataField: 'statusCount.ECHO',
+            text: 'Echo',
+            sort: true
         }];
 
         this.selectRow = {
@@ -59,10 +80,8 @@ class SoapProject extends PureComponent {
         this.state = {
             projectId: this.props.match.params.projectId,
             project: {
-                ports: []
-            },
-            updateProjectName: "",
-            updateProjectDescription: "",
+                applications: []
+            }
         };
 
         this.getProject(this.state.projectId);
@@ -85,14 +104,14 @@ class SoapProject extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/beta/web/soap/project/" + this.state.projectId + "/port/" + row.id}>{cell}</Link>
+                <Link to={"/beta/web/rest/project/" + this.state.projectId + "/application/" + row.id}>{cell}</Link>
             </div>
         )
     }
 
     getProject(projectId) {
         axios
-            .get("/api/rest/core/project/soap/" + projectId)
+            .get("/api/rest/rest/project/" + projectId)
             .then(response => {
                 this.setState({
                     project: response.data,
@@ -103,18 +122,6 @@ class SoapProject extends PureComponent {
             });
     }
 
-    setUpdateProjectName(updateProjectName) {
-        this.setState({ updateProjectName: updateProjectName });
-    }
-
-    setUpdateProjectDescription(updateProjectDescription) {
-        this.setState({ updateProjectDescription: updateProjectDescription });
-    }
-
-
-    onUpdateProjectClick() {
-
-    }
 
     render() {
         return (
@@ -132,39 +139,31 @@ class SoapProject extends PureComponent {
                         <div className="title">
                             <h1>Project: {this.state.project.name}</h1>
                         </div>
-                        <div className="menu" align="right">
+                        <div className="menu">
                             <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Update project</span></button>
+                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Create application</span></button>
                             <div className="btn-group demo-button-disabled menu-button" role="group">
                                 <button id="btnGroupDrop1" type="button" className="btn btn-primary dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Upload
                                 </button>
                                 <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadWSDLModal">WSDL</button>
+                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadRAMLModal">RAML</button>
+                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadSwaggerModal">Swagger</button>
+                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadWADLModal">WADL</button>
                                 </div>
-                            </div>
-                            <a className="btn btn-primary demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Export project</span></a>
-                            <a className="btn btn-danger demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Delete project</span></a>
+                            </div>                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Export project</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Delete project</span></button>
                         </div>
-                    </div>
-                    <div className="content-summary">
-                        <dl className="row">
-                            <dt className="col-sm-3">Description</dt>
-                            <dd className="col-sm-9">{this.state.project.description}</dd>
-                            <dt className="col-sm-3">Type</dt>
-                            <dd className="col-sm-9">SOAP</dd>
-                        </dl>
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="panel-heading table-panel-heading">
-                            <h3 className="panel-title">Ports</h3>
+                            <h3 className="panel-title">Applications</h3>
                         </div>
                         <div className="table-result">
                             <ToolkitProvider bootstrap4
                                              columns={ this.columns}
-                                             data={this.state.project.ports}
+                                             data={this.state.project.applications}
                                              keyField="id"
                                              search>
                                 {
@@ -174,23 +173,18 @@ class SoapProject extends PureComponent {
                                                 <SearchBar {...props.searchProps} className={"table-filter-field"}/>
                                             </div>
                                             <BootstrapTable {...props.baseProps} bootstrap4
-                                                            data={this.state.project.ports} columns={this.columns}
+                                                            data={this.state.project.applications} columns={this.columns}
                                                             defaultSorted={this.defaultSort} keyField='id' hover
                                                             selectRow={this.selectRow}
-                                                            noDataIndication="Upload a WSDL file to load ports"
+                                                            noDataIndication="Click on the 'Upload' to upload a REST API definition"
                                                             pagination={ PaginationFactory(PaginationFactory()) }/>
                                         </div>
                                     )}
                             </ToolkitProvider>
                             <div className="panel-buttons">
-                                <button className="btn btn-primary panel-button" type="submit" name="action" value="export"><i
-                                    className="fas fa-cloud-download-alt"/> <span>Update</span></button>
-                                <button className="btn btn-primary demo-button-disabled panel-button" type="submit" name="action"
-                                        value="update"><i className="fas fa-trash"/> <span>Update endpoint</span>
-                                </button>
-                                <button className="btn btn-danger demo-button-disabled panel-button" type="submit" name="action"
-                                        value="delete"><i className="fas fa-trash"/> <span>Delete port</span>
-                                </button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Update</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
+                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Delete applications</span></button>
                             </div>
                         </div>
                     </div>
@@ -201,7 +195,7 @@ class SoapProject extends PureComponent {
                     <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="newProjectModalLabel">Update project</h5>
+                                <h5 className="modal-title" id="updateProjectModalLabel">Update project</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -209,50 +203,29 @@ class SoapProject extends PureComponent {
                             <div className="modal-body">
                                 <form>
                                     <div className="form-group row">
-                                        <label htmlFor="updateProjectName" className="col-sm-2 col-form-label">Name</label>
+                                        <label htmlFor="newProjectName" className="col-sm-2 col-form-label">Name</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control" type="text" name="newProjectName" id="updateProjectName" onChange={event => this.setUpdateProjectName(event.target.value)}/>
+                                            <input className="form-control" type="text" name="updateProjectName" id="updateProjectName" onChange={event => this.setUpdateProjectName(event.target.value)}/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
-                                        <label htmlFor="updateProjectDescription" className="col-sm-2 col-form-label">Description</label>
+                                        <label htmlFor="newProjectDescription" className="col-sm-2 col-form-label">Description</label>
                                         <div className="col-sm-10">
-                                            <textarea className="form-control" name="updateProjectDescription" id="updateProjectDescription" onChange={event => this.setupdateProjectDescription(event.target.value)}/>
+                                            <textarea className="form-control" name="updateProjectDescription" id="updateProjectDescription" onChange={event => this.setUpdateProjectDescription(event.target.value)}/>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onupdateProjectClick}>Update</button>
+                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportProjectsClick}>Update</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div className="modal fade" id="uploadWSDLModal" tabIndex="-1" role="dialog"
-                     aria-labelledby="uploadWSDLModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="uploadWSDLModalLabel">Upload WSDL</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-
-                            </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateProjectClick}>Upload</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         )
     }
 
 }
 
-export default SoapProject
+export default RestProject

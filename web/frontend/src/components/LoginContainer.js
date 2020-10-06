@@ -67,32 +67,20 @@ class LoginContainer extends PureComponent {
             <div id="login-body">
                 <div className="login">
                     <div id="login-box">
-
-                        <div className="login-box-left">
-                            <div className="logoImage">
-                                <img src={Logo} id="logo"  alt="Castle Mock Logo"/>
-                            </div>
+                        <div className="logoImage">
+                            <img src={Logo} id="logo" alt="Castle Mock Logo"/>
                         </div>
+                        <div className="credentialsBox">
+                            <div className="login-title">Castle Mock</div>
 
-                        <div className="login-box-right">
-                            <div className="credentialsBox">
-                                <div className="login-title">Castle Mock</div>
-
-                                <div className="form-label-group">
-                                    <input type="text" id="inputUsername" className="form-control" placeholder="Username" onChange={event => this.setUsername(event.target.value)} required autoFocus/>
-                                </div>
-                                <div className="form-label-group">
-                                    <input type="password" id="inputPassword" className="form-control" placeholder="Password" onChange={event => this.setPassword(event.target.value)} required />
-                                </div>
-
-                                <div className="custom-control custom-checkbox mb-3">
-                                    <input type="checkbox" className="custom-control-input" id="customCheck1"/>
-                                    <label className="custom-control-label" htmlFor="customCheck1">Remember password</label>
-                                </div>
-                                <button className="btn btn-lg btn-success btn-block text-uppercase" onClick={this.onButtonLoginClick}>Sign in</button>
+                            <div className="form-label-group">
+                                <input type="text" id="inputUsername" className="form-control" placeholder="Username" onChange={event => this.setUsername(event.target.value)} required autoFocus/>
                             </div>
+                            <div className="form-label-group">
+                                <input type="password" id="inputPassword" className="form-control" placeholder="Password" onChange={event => this.setPassword(event.target.value)} required />
+                            </div>
+                            <button className="btn btn-lg btn-success btn-block text-uppercase" onClick={this.onButtonLoginClick}>Sign in</button>
                         </div>
-
                     </div>
                 </div>
 

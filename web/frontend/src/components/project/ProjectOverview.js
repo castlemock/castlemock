@@ -42,9 +42,6 @@ class ProjectOverview extends PureComponent {
         this.onImportProjectClick = this.onImportProjectClick.bind(this);
         this.onExportProjectsClick = this.onExportProjectsClick.bind(this);
         this.onDeleteProjectsClick = this.onDeleteProjectsClick.bind(this);
-        this.onRowSelect = this.onRowSelect.bind(this);
-        this.onRowSelectAll = this.onRowSelectAll.bind(this);
-
 
         this.columns = [{
             dataField: 'id',
@@ -62,6 +59,27 @@ class ProjectOverview extends PureComponent {
             text: 'Name',
             sort: true,
             formatter: this.nameFormat
+        }, {
+            dataField: 'description',
+            text: 'Description',
+            sort: true
+        }];
+
+        this.deleteColumns = [{
+            dataField: 'id',
+            text: 'id',
+            hidden: true
+        }, {
+            dataField: 'typeIdentifier.type',
+            width: 20,
+            maxWidth: 20,
+            text: 'Type',
+            sort: true,
+            formatter: this.typeFormat
+        }, {
+            dataField: 'name',
+            text: 'Name',
+            sort: true
         }, {
             dataField: 'description',
             text: 'Description',
@@ -167,7 +185,12 @@ class ProjectOverview extends PureComponent {
     onRowSelect(value, mode) {
         let projects = this.state.selectedProjects.slice();
         let project = {
-            id: value.id
+            id: value.id,
+            name: value.name,
+            description: value.description,
+            typeIdentifier: {
+                type: value.typeIdentifier.type
+            }
         };
         if(mode === SELECT){
             projects.push(project);
@@ -187,7 +210,12 @@ class ProjectOverview extends PureComponent {
             let projects = [];
             this.state.projects.forEach(value => {
                 let project = {
-                    id: value.id
+                    id: value.id,
+                    name: value.name,
+                    description: value.description,
+                    typeIdentifier: {
+                        type: value.typeIdentifier.type
+                    }
                 };
                 projects.push(project);
             });
@@ -223,11 +251,6 @@ class ProjectOverview extends PureComponent {
             <div>
                 <section>
                     <div className="navigation">
-                        <nav aria-label="breadcrumb">
-                            <ol className="breadcrumb breadcrumb-custom">
-                                <li className="breadcrumb-item"><Link to={"/beta/web"}>Home</Link></li>
-                            </ol>
-                        </nav>
                     </div>
                     <div className="content-top">
                         <div className="title">
@@ -285,7 +308,7 @@ class ProjectOverview extends PureComponent {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                   <form>
+                                <form>
                                     <div className="form-group row">
                                         <label htmlFor="newProjectName" className="col-sm-2 col-form-label">Name</label>
                                         <div className="col-sm-10">
@@ -347,7 +370,23 @@ class ProjectOverview extends PureComponent {
                                 </button>
                             </div>
                             <div className="modal-body">
-
+                                <p>Do you want delete the following projects?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.deleteColumns}
+                                                     data={ this.state.selectedProjects }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedProjects} columns={this.deleteColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
                             </div>
                             <div className="modal-footer">
                                 <button className="btn btn-danger"data-dismiss="modal" onClick={this.onDeleteProjectsClick}>Delete</button>
@@ -367,7 +406,23 @@ class ProjectOverview extends PureComponent {
                                 </button>
                             </div>
                             <div className="modal-body">
-
+                                <p>Do you want export the following projects?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.deleteColumns}
+                                                     data={ this.state.selectedProjects }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedProjects} columns={this.deleteColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
                             </div>
                             <div className="modal-footer">
                                 <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportProjectsClick}>Export</button>

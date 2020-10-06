@@ -22,7 +22,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
 const { SearchBar } = Search;
 
-class RestProject extends PureComponent {
+class SoapPort extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -41,12 +41,16 @@ class RestProject extends PureComponent {
             sort: true,
             formatter: this.nameFormat
         }, {
-            dataField: 'typeIdentifier.type',
-            text: 'Type',
+            dataField: 'httpMethod',
+            text: 'Method',
             sort: true
         }, {
-            dataField: 'description',
-            text: 'Description',
+            dataField: 'responseStrategy',
+            text: 'Response strategy',
+            sort: true
+        }, {
+            dataField: 'status',
+            text: 'Status',
             sort: true
         }];
 
@@ -63,12 +67,13 @@ class RestProject extends PureComponent {
 
         this.state = {
             projectId: this.props.match.params.projectId,
-            project: {
-                applications: []
+            portId: this.props.match.params.portId,
+            port: {
+                operations: []
             }
         };
 
-        this.getProject(this.state.projectId);
+        this.getPort(this.state.projectId, this.state.portId);
     }
 
 
@@ -88,17 +93,17 @@ class RestProject extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/beta/web/rest/project/" + this.state.projectId + "/application/" + row.id}>{cell}</Link>
+                <Link to={"/beta/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + row.id}>{cell}</Link>
             </div>
         )
     }
 
-    getProject(projectId) {
+    getPort(projectId, portId) {
         axios
-            .get("/api/rest/core/project/rest/" + projectId)
+            .get("/api/rest/soap/project/" + projectId + "/port/" + portId)
             .then(response => {
                 this.setState({
-                    project: response.data,
+                    port: response.data,
                 });
             })
             .catch(error => {
@@ -115,35 +120,38 @@ class RestProject extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/beta/web"}>Home</Link></li>
-                                <li className="breadcrumb-item">{this.state.project.name}</li>
+                                <li className="breadcrumb-item"><Link to={"/beta/web/soap/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item">{this.state.port.name}</li>
                             </ol>
                         </nav>
                     </div>
                     <div className="content-top">
                         <div className="title">
-                            <h1>Project: {this.state.project.name}</h1>
+                            <h1>Port: {this.state.port.name}</h1>
                         </div>
-                        <div className="menu" align="right">
-                            <a className="btn btn-success demo-button-disabled menu-button" href="/web/project/create"><i
-                                className="fas fa-plus-circle"/> <span>Update project</span></a>
-                            <a className="btn btn-primary demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Create application</span></a>
-                            <a className="btn btn-primary demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Upload</span></a>
-                            <a className="btn btn-primary demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Export project</span></a>
-                            <a className="btn btn-primary demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Delete project</span></a>
-                        </div>
+                    </div>
+                    <div className="content-summary">
+                        <dl className="row">
+                            <dt className="col-sm-3">URI</dt>
+                            <dd className="col-sm-9">{this.state.port.uri}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3">Address</dt>
+                            <dd className="col-sm-9">http://192.168.1.87:8080/castlemock/mock/soap/project/kfQYQH/{this.state.port.uri}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3">WSDL</dt>
+                            <dd className="col-sm-9">http://192.168.1.87:8080/castlemock/mock/soap/project/kfQYQH/{this.state.port.uri}?wsdl</dd>
+                        </dl>
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="panel-heading table-panel-heading">
-                            <h3 className="panel-title">Applications</h3>
+                            <h3 className="panel-title">Operations</h3>
                         </div>
                         <div className="table-result">
                             <ToolkitProvider bootstrap4
                                              columns={ this.columns}
-                                             data={this.state.project.applications}
+                                             data={this.state.port.operations}
                                              keyField="id"
                                              search>
                                 {
@@ -153,22 +161,17 @@ class RestProject extends PureComponent {
                                                 <SearchBar {...props.searchProps} className={"table-filter-field"}/>
                                             </div>
                                             <BootstrapTable {...props.baseProps} bootstrap4
-                                                            data={this.state.project.applications} columns={this.columns}
+                                                            data={this.state.port.operations} columns={this.columns}
                                                             defaultSorted={this.defaultSort} keyField='id' hover
                                                             selectRow={this.selectRow}
+                                                            striped
+                                                            noDataIndication="Table is Empty"
                                                             pagination={ PaginationFactory(PaginationFactory()) }/>
                                         </div>
                                     )}
                             </ToolkitProvider>
                             <div className="panel-buttons">
-                                <button className="btn btn-primary panel-button" type="submit" name="action" value="export"><i
-                                    className="fas fa-cloud-download-alt"/> <span>Update</span></button>
-                                <button className="btn btn-primary demo-button-disabled panel-button" type="submit" name="action"
-                                        value="update"><i className="fas fa-trash"/> <span>Update endpoint</span>
-                                </button>
-                                <button className="btn btn-danger demo-button-disabled panel-button" type="submit" name="action"
-                                        value="delete"><i className="fas fa-trash"/> <span>Delete application</span>
-                                </button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
                             </div>
                         </div>
                     </div>
@@ -179,4 +182,4 @@ class RestProject extends PureComponent {
 
 }
 
-export default RestProject
+export default SoapPort

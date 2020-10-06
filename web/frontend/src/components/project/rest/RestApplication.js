@@ -41,12 +41,28 @@ class RestApplication extends PureComponent {
             sort: true,
             formatter: this.nameFormat
         }, {
-            dataField: 'typeIdentifier.type',
-            text: 'Type',
+            dataField: 'statusCount.MOCKED',
+            text: 'Mocked',
             sort: true
         }, {
-            dataField: 'description',
-            text: 'Description',
+            dataField: 'statusCount.DISABLED',
+            text: 'Disabled',
+            sort: true
+        }, {
+            dataField: 'statusCount.FORWARDED',
+            text: 'Forwarded',
+            sort: true
+        }, {
+            dataField: 'statusCount.RECORDING',
+            text: 'Recording',
+            sort: true
+        }, {
+            dataField: 'statusCount.RECORD_ONCE',
+            text: 'Record once',
+            sort: true
+        }, {
+            dataField: 'statusCount.ECHO',
+            text: 'Echo',
             sort: true
         }];
 
@@ -126,10 +142,8 @@ class RestApplication extends PureComponent {
                             <h1>Application: {this.state.application.name}</h1>
                         </div>
                         <div className="menu" align="right">
-                            <a className="btn btn-success demo-button-disabled menu-button" href="/web/project/create"><i
-                                className="fas fa-plus-circle"/> <span>Update application</span></a>
-                            <a className="btn btn-primary demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Delete application</span></a>
+                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateApplicationModal"><i className="fas fa-plus-circle"/> <span>Update application</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateApplicationModal"><i className="fas fa-plus-circle"/> <span>Delete application</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -157,18 +171,46 @@ class RestApplication extends PureComponent {
                                     )}
                             </ToolkitProvider>
                             <div className="panel-buttons">
-                                <button className="btn btn-primary panel-button" type="submit" name="action" value="export"><i
-                                    className="fas fa-cloud-download-alt"/> <span>Update</span></button>
-                                <button className="btn btn-primary demo-button-disabled panel-button" type="submit" name="action"
-                                        value="update"><i className="fas fa-trash"/> <span>Update endpoint</span>
-                                </button>
-                                <button className="btn btn-danger demo-button-disabled panel-button" type="submit" name="action"
-                                        value="delete"><i className="fas fa-trash"/> <span>Delete resource</span>
-                                </button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateModal"><i className="fas fa-plus-circle"/> <span>Update application</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateEndpointModal"><i className="fas fa-plus-circle"/> <span>Update application</span></button>
+                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteResourceModal"><i className="fas fa-plus-circle"/> <span>Update application</span></button>
                             </div>
                         </div>
                     </div>
                 </section>
+
+                <div className="modal fade" id="updateApplicationModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateApplicationModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateApplicationModalLabel">Update application</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <form>
+                                    <div className="form-group row">
+                                        <label htmlFor="newApplicationName" className="col-sm-2 col-form-label">Name</label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" type="text" name="updateApplicationName" id="updateApplicationName" onChange={event => this.setUpdateApplicationName(event.target.value)}/>
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label htmlFor="newApplicationDescription" className="col-sm-2 col-form-label">Description</label>
+                                        <div className="col-sm-10">
+                                            <textarea className="form-control" name="updateApplicationDescription" id="updateApplicationDescription" onChange={event => this.setUpdateApplicationDescription(event.target.value)}/>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportApplicationsClick}>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

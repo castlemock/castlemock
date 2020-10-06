@@ -19,20 +19,28 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
-const { SearchBar } = Search;
 
 class SoapMockResponse extends PureComponent {
 
     constructor(props) {
         super(props);
 
-        this.columns = [{
+        this.headerColumns = [{
             dataField: 'name',
             text: 'Name',
-            sort: true,
-            formatter: this.nameFormat
+            sort: true
+        }, {
+            dataField: 'value',
+            text: 'Value',
+            sort: true
+        }];
+
+        this.xpathColumns = [{
+            dataField: 'xpath',
+            text: 'XPath',
+            sort: true
         }];
 
         this.selectRow = {
@@ -108,74 +116,82 @@ class SoapMockResponse extends PureComponent {
                         </div>
                     </div>
                     <div className="content-summary">
-                        <table className="content-summary-table">
-                            <tr>
-                                <td className="column1"><label>Name</label></td>
-                                <td className="column2"><input></input></td>
-                            </tr>
-                            <tr>
-                                <td className="column1"><label>HTTP Status code</label></td>
-                                <td className="column2"><input></input></td>
-                            </tr>
-                            <tr>
-                                <td className="column1"><label>Status</label></td>
-                                <td className="column2"><input></input></td>
-                            </tr>
-                            <tr>
-                                <td className="column1"><label>Use Expression</label></td>
-                                <td className="column2"><input></input></td>
-                            </tr>
-                        </table>
+                        <dl className="row">
+                            <dt className="col-sm-3">Name</dt>
+                            <dd className="col-sm-9"><input defaultValue={this.state.mockResponse.name}/></dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3">HTTP Status code</dt>
+                            <dd className="col-sm-9"><input defaultValue={this.state.mockResponse.httpStatusCode}/></dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3">Status</dt>
+                            <dd className="col-sm-9"><input defaultValue={this.state.mockResponse.status}/></dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3">Use Expression</dt>
+                            <dd className="col-sm-9"><input type="checkbox" defaultChecked={this.state.mockResponse.usingExpressions}/></dd>
+                        </dl>
                     </div>
                     <div>
                         <Tabs defaultActiveKey="body">
                             <Tab eventKey="body" title="Body">
-                                <textarea className="form-control" id="body" rows="3"/>
+                                <textarea className="form-control" id="body" rows="20"  value={this.state.mockResponse.body}/>
                             </Tab>
                             <Tab eventKey="headers" title="Headers">
-                                <div className="table-result">
-                                    <ToolkitProvider bootstrap4
-                                                     columns={ this.columns}
-                                                     data={this.state.mockResponse.httpHeaders}
-                                                     keyField="name"
-                                                     search>
-                                        {
-                                            (props) => (
-                                                <div>
+                                <div>
+                                    <h4>Add header</h4>
+
+                                    <div className="table-result">
+                                        <ToolkitProvider bootstrap4
+                                                         columns={ this.headerColumns}
+                                                         data={this.state.mockResponse.httpHeaders}
+                                                         keyField="name"
+                                                         search>
+                                            {
+                                                (props) => (
                                                     <div>
-                                                        <SearchBar {...props.searchProps} className={"table-filter-field"}/>
+                                                        <BootstrapTable {...props.baseProps} bootstrap4
+                                                                        data={this.state.mockResponse.httpHeaders} columns={this.headerColumns}
+                                                                        defaultSorted={this.defaultSort} keyField='name' hover
+                                                                        noDataIndication="No headers"
+                                                                        selectRow={this.selectRow}/>
                                                     </div>
-                                                    <BootstrapTable {...props.baseProps} bootstrap4
-                                                                    data={this.state.mockResponse.httpHeaders} columns={this.columns}
-                                                                    defaultSorted={this.defaultSort} keyField='name' hover
-                                                                    selectRow={this.selectRow}/>
-                                                </div>
-                                            )}
-                                    </ToolkitProvider>
+                                                )}
+                                        </ToolkitProvider>
+                                    </div>
                                 </div>
                             </Tab>
                             <Tab eventKey="xpath" title="XPath">
-                                <div className="table-result">
-                                    <ToolkitProvider bootstrap4
-                                                     data={this.state.mockResponse.httpHeaders}
-                                                     keyField="name"
-                                                     search>
-                                        {
-                                            (props) => (
-                                                <div>
+                                <div>
+                                    <h4>Add XPath</h4>
+
+                                    <div className="table-result">
+
+                                        <ToolkitProvider bootstrap4
+                                                         columns={ this.xpathColumns}
+                                                         data={this.state.mockResponse.httpHeaders}
+                                                         keyField="name"
+                                                         search>
+                                            {
+                                                (props) => (
                                                     <div>
-                                                        <SearchBar {...props.searchProps} className={"table-filter-field"}/>
+                                                        <BootstrapTable {...props.baseProps} bootstrap4
+                                                                        data={this.state.mockResponse.httpHeaders} columns={this.xpathColumns}
+                                                                        defaultSorted={this.defaultSort} keyField='name' hover
+                                                                        noDataIndication="No XPaths"
+                                                                        selectRow={this.selectRow}/>
                                                     </div>
-                                                    <BootstrapTable {...props.baseProps} bootstrap4
-                                                                    data={this.state.mockResponse.httpHeaders} columns={this.columns}
-                                                                    defaultSorted={this.defaultSort} keyField='name' hover
-                                                                    selectRow={this.selectRow}/>
-                                                </div>
-                                            )}
-                                    </ToolkitProvider>
+                                                )}
+                                        </ToolkitProvider>
+                                    </div>
                                 </div>
                             </Tab>
                         </Tabs>
+                    </div>
+                    <div className="panel-buttons">
+                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Update response</span></button>
+                        <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Discard changes</span></button>
                     </div>
                 </section>
             </div>

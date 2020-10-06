@@ -37,9 +37,17 @@ class SoapOperation extends PureComponent {
             hidden: true
         }, {
             dataField: 'name',
-            text: 'Name',
+            text: 'Response name',
             sort: true,
             formatter: this.nameFormat
+        }, {
+            dataField: 'status',
+            text: 'Status',
+            sort: true
+        }, {
+            dataField: 'httpStatusCode',
+            text: 'HTTP status code',
+            sort: true
         }];
 
         this.selectRow = {
@@ -121,34 +129,55 @@ class SoapOperation extends PureComponent {
                             <h1>Operation: {this.state.operation.name}</h1>
                         </div>
                         <div className="menu" align="right">
-                            <a className="btn btn-primary demo-button-disabled menu-button" href="/web/project/create"><i
-                                className="fas fa-plus-circle"/> <span>Update operation</span></a>
+                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Update operation</span></button>
                         </div>
                     </div>
                     <div className="content-summary">
                         <dl className="row">
                             <dt className="col-sm-3">Identifier</dt>
                             <dd className="col-sm-9">{this.state.operation.operationIdentifier.name}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">SOAP Version</dt>
                             <dd className="col-sm-9">{this.state.operation.soapVersion}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Status</dt>
                             <dd className="col-sm-9">{this.state.operation.status}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Identify strategy</dt>
                             <dd className="col-sm-9">{this.state.operation.identifyStrategy}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Response strategy</dt>
                             <dd className="col-sm-9">{this.state.operation.responseStrategy}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Address</dt>
                             <dd className="col-sm-9">Test</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Original endpoint</dt>
                             <dd className="col-sm-9">{this.state.operation.originalEndpoint}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Forwarded endpoint</dt>
                             <dd className="col-sm-9">{this.state.operation.forwardedEndpoint}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Simulate network delay</dt>
                             <dd className="col-sm-9">{this.state.operation.simulateNetworkDelay}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Network delay</dt>
                             <dd className="col-sm-9">{this.state.operation.networkDelay}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Default response</dt>
                             <dd className="col-sm-9">Test</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Mock on failure</dt>
                             <dd className="col-sm-9">{this.state.operation.mockOnFailure}</dd>
                         </dl>
@@ -178,18 +207,46 @@ class SoapOperation extends PureComponent {
                                     )}
                             </ToolkitProvider>
                             <div className="panel-buttons">
-                                <button className="btn btn-primary panel-button" name="action" value="export"><i
-                                    className="fas fa-cloud-download-alt"/> <span>Update</span></button>
-                                <button className="btn btn-primary demo-button-disabled panel-button" name="action"
-                                        value="update"><i className="fas fa-trash"/> <span>Update endpoint</span>
-                                </button>
-                                <button className="btn btn-danger demo-button-disabled panel-button" name="action"
-                                        value="delete"><i className="fas fa-trash"/> <span>Delete port</span>
-                                </button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Update</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
+                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Delete port</span></button>
                             </div>
                         </div>
                     </div>
                 </section>
+
+                <div className="modal fade" id="updateOperationModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateOperationModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateOperationModalLabel">Update operation</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <form>
+                                    <div className="form-group row">
+                                        <label htmlFor="newOperationName" className="col-sm-2 col-form-label">Name</label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" type="text" name="updateOperationName" id="updateOperationName" onChange={event => this.setUpdateOperationName(event.target.value)}/>
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label htmlFor="newOperationDescription" className="col-sm-2 col-form-label">Description</label>
+                                        <div className="col-sm-10">
+                                            <textarea className="form-control" name="updateOperationDescription" id="updateOperationDescription" onChange={event => this.setUpdateOperationDescription(event.target.value)}/>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportOperationsClick}>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

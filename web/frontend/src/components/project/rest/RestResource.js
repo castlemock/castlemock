@@ -41,12 +41,16 @@ class RestResource extends PureComponent {
             sort: true,
             formatter: this.nameFormat
         }, {
-            dataField: 'typeIdentifier.type',
-            text: 'Type',
+            dataField: 'httpMethod',
+            text: 'Method type',
             sort: true
         }, {
-            dataField: 'description',
-            text: 'Description',
+            dataField: 'status',
+            text: 'Method Status',
+            sort: true
+        }, {
+            dataField: 'forwardedEndpoint',
+            text: 'Forwarded endpoint',
             sort: true
         }];
 
@@ -128,10 +132,8 @@ class RestResource extends PureComponent {
                             <h1>Resource: {this.state.resource.name}</h1>
                         </div>
                         <div className="menu" align="right">
-                            <a className="btn btn-success demo-button-disabled menu-button" href="/web/project/create"><i
-                                className="fas fa-plus-circle"/> <span>Update resource</span></a>
-                            <a className="btn btn-primary demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Delete resource</span></a>
+                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateResourceModal"><i className="fas fa-plus-circle"/> <span>Update resource</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateResourceModal"><i className="fas fa-plus-circle"/> <span>Delete resource</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -171,6 +173,39 @@ class RestResource extends PureComponent {
                         </div>
                     </div>
                 </section>
+
+                <div className="modal fade" id="updateResourceModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateResourceModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateResourceModalLabel">Update resource</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <form>
+                                    <div className="form-group row">
+                                        <label htmlFor="newResourceName" className="col-sm-2 col-form-label">Name</label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" type="text" name="updateResourceName" id="updateResourceName" onChange={event => this.setUpdateResourceName(event.target.value)}/>
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label htmlFor="newResourceDescription" className="col-sm-2 col-form-label">Description</label>
+                                        <div className="col-sm-10">
+                                            <textarea className="form-control" name="updateResourceDescription" id="updateResourceDescription" onChange={event => this.setUpdateResourceDescription(event.target.value)}/>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportResourcesClick}>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

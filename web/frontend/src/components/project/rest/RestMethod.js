@@ -41,12 +41,12 @@ class RestMethod extends PureComponent {
             sort: true,
             formatter: this.nameFormat
         }, {
-            dataField: 'typeIdentifier.type',
-            text: 'Type',
+            dataField: 'status',
+            text: 'Status',
             sort: true
         }, {
-            dataField: 'description',
-            text: 'Description',
+            dataField: 'httpStatusCode',
+            text: 'HTTP status code',
             sort: true
         }];
 
@@ -130,10 +130,8 @@ class RestMethod extends PureComponent {
                             <h1>Method: {this.state.method.name}</h1>
                         </div>
                         <div className="menu" align="right">
-                            <a className="btn btn-success demo-button-disabled menu-button" href="/web/project/create"><i
-                                className="fas fa-plus-circle"/> <span>Update method</span></a>
-                            <a className="btn btn-primary demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Delete method</span></a>
+                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Update method</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Delete method</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -161,18 +159,47 @@ class RestMethod extends PureComponent {
                                     )}
                             </ToolkitProvider>
                             <div className="panel-buttons">
-                                <button className="btn btn-primary panel-button" type="submit" name="action" value="export"><i
-                                    className="fas fa-cloud-download-alt"/> <span>Update</span></button>
-                                <button className="btn btn-primary demo-button-disabled panel-button" type="submit" name="action"
-                                        value="update"><i className="fas fa-trash"/> <span>Update endpoint</span>
-                                </button>
-                                <button className="btn btn-danger demo-button-disabled panel-button" type="submit" name="action"
-                                        value="delete"><i className="fas fa-trash"/> <span>Delete mock response</span>
-                                </button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Update</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
+                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Delete mock response</span></button>
                             </div>
                         </div>
                     </div>
                 </section>
+
+                <div className="modal fade" id="updateMethodModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateMethodModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateMethodModalLabel">Update method</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <form>
+                                    <div className="form-group row">
+                                        <label htmlFor="newMethodName" className="col-sm-2 col-form-label">Name</label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" type="text" name="updateMethodName" id="updateMethodName" onChange={event => this.setUpdateMethodName(event.target.value)}/>
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label htmlFor="newMethodDescription" className="col-sm-2 col-form-label">Description</label>
+                                        <div className="col-sm-10">
+                                            <textarea className="form-control" name="updateMethodDescription" id="updateMethodDescription" onChange={event => this.setUpdateMethodDescription(event.target.value)}/>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportMethodsClick}>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         )
     }
