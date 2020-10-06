@@ -40,20 +40,21 @@ public class RandomIntegerExpression extends AbstractExpression {
      */
     @Override
     public String transform(final ExpressionInput input) {
-        int minLength = -1000;
-        int maxLength = 2000;
+        int minValue = -1000;
+        int maxValue = 2000;
 
         final ExpressionArgument<?> minArgument = input.getArgument(MIN_ARGUMENT);
         final ExpressionArgument<?> maxArgument = input.getArgument(MAX_ARGUMENT);
 
-        if(minArgument != null && minArgument instanceof ExpressionArgumentNumber){
-            minLength = ((ExpressionArgumentNumber) minArgument).getValue().intValue();
+        if(minArgument instanceof ExpressionArgumentNumber){
+            minValue = ((ExpressionArgumentNumber) minArgument).getValue().intValue();
         }
-        if(maxArgument != null && maxArgument instanceof ExpressionArgumentNumber){
-            maxLength = ((ExpressionArgumentNumber) maxArgument).getValue().intValue();
+        if(maxArgument instanceof ExpressionArgumentNumber){
+            maxValue = ((ExpressionArgumentNumber) maxArgument).getValue().intValue();
         }
 
-        int randomValue = RANDOM.nextInt(maxLength - minLength + 1) + minLength;
+        // +1 makes max value inclusive
+        int randomValue = RANDOM.nextInt(maxValue - minValue + 1) + minValue;
         return Integer.toString(randomValue);
     }
 
