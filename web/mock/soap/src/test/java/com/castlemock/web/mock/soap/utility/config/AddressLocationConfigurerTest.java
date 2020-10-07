@@ -1,7 +1,7 @@
 package com.castlemock.web.mock.soap.utility.config;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class AddressLocationConfigurerTest {
 	
@@ -31,13 +31,13 @@ public class AddressLocationConfigurerTest {
 	@Test
 	public void testWsdlWithAddressLocation() {
 		String wsdlModified = new AddressLocationConfigurer().configureAddressLocation(ORIGINAL_WSDL_WITH_ADDRESS_LOCATION, "http://localhost:8080/other-path");
-		Assert.assertEquals(MODIFIED_WSDL_WITH_ADDRESS_LOCATION, wsdlModified);
+		Assertions.assertEquals(MODIFIED_WSDL_WITH_ADDRESS_LOCATION, wsdlModified);
 	}
 	
 	@Test
 	public void testWsdlWithoutAddressLocation() {
 		String wsdlResult = new AddressLocationConfigurer().configureAddressLocation(WSDL_WITHOU_ADDRESS_LOCATION, "http://localhost:8080/other-path");
-		Assert.assertEquals(WSDL_WITHOU_ADDRESS_LOCATION, wsdlResult);
+		Assertions.assertEquals(WSDL_WITHOU_ADDRESS_LOCATION, wsdlResult);
 	}
 
 }
