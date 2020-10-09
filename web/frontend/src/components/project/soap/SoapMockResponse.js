@@ -26,6 +26,7 @@ class SoapMockResponse extends PureComponent {
 
     constructor(props) {
         super(props);
+        this.onDeleteMockResponseClick = this.onDeleteMockResponseClick.bind(this);
 
         this.headerColumns = [{
             dataField: 'name',
@@ -64,7 +65,7 @@ class SoapMockResponse extends PureComponent {
             }
         };
 
-        this.getMockResponse(this.state.projectId, this.state.portId, this.state.operationId, this.state.mockResponseId);
+        this.getMockResponse();
     }
 
 
@@ -77,13 +78,24 @@ class SoapMockResponse extends PureComponent {
 
     }
 
-    getMockResponse(projectId, portId, operationId, mockResponseId) {
+    getMockResponse() {
         axios
-            .get("/api/rest/soap/project/" + projectId + "/port/" + portId + "/operation/" + operationId + "/response/" + mockResponseId)
+            .get("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/response/" + this.state.mockResponseId)
             .then(response => {
                 this.setState({
                     mockResponse: response.data,
                 });
+            })
+            .catch(error => {
+                this.props.validateErrorResponse(error);
+            });
+    }
+
+    onDeleteMockResponseClick() {
+        axios
+            .delete("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/response/" + this.state.mockResponseId)
+            .then(response => {
+                this.props.history.push("/beta/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId);
             })
             .catch(error => {
                 this.props.validateErrorResponse(error);
@@ -111,8 +123,7 @@ class SoapMockResponse extends PureComponent {
                             <h1>Mock Response: {this.state.mockResponse.name}</h1>
                         </div>
                         <div className="menu" align="right">
-                            <a className="btn btn-danger demo-button-disabled menu-button" href="/web/project/import"><i
-                                className="fas fa-cloud-upload-alt"/> <span>Delete response</span></a>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMockResponseModal"><i className="fas fa-plus-circle"/> <span>Delete mock response</span></button>
                         </div>
                     </div>
                     <div className="content-summary">
@@ -194,6 +205,26 @@ class SoapMockResponse extends PureComponent {
                         <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Discard changes</span></button>
                     </div>
                 </section>
+
+                <div className="modal fade" id="deleteMockResponseModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteMockResponseModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteMockResponseModalLabel">Delete the mock response?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you wanna delete the mock response?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteMockResponseClick}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

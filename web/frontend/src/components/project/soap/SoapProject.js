@@ -20,6 +20,8 @@ import axios from "axios";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
+import Dropzone from 'react-dropzone'
+
 const { SearchBar } = Search;
 
 class SoapProject extends PureComponent {
@@ -31,6 +33,7 @@ class SoapProject extends PureComponent {
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
         this.onUpdateProjectClick = this.onUpdateProjectClick.bind(this);
+        this.onDeleteProjectClick = this.onDeleteProjectClick.bind(this);
         this.setUpdateProjectName = this.setUpdateProjectName.bind(this);
         this.setUpdateProjectDescription = this.setUpdateProjectDescription.bind(this);
 
@@ -98,7 +101,9 @@ class SoapProject extends PureComponent {
         this.getProject(this.state.projectId);
     }
 
+    onDrop(acceptedFiles){
 
+    }
 
     onRowSelect(value, mode) {
 
@@ -146,7 +151,20 @@ class SoapProject extends PureComponent {
 
     }
 
+    onDeleteProjectClick() {
+        axios
+            .delete("/api/rest/core/project/soap/" + this.state.projectId)
+            .then(response => {
+                this.props.history.push("/beta/web");
+            })
+            .catch(error => {
+                this.props.validateErrorResponse(error);
+            });
+    }
+
     render() {
+
+
         return (
             <div>
                 <section>
@@ -174,7 +192,7 @@ class SoapProject extends PureComponent {
                                 </div>
                             </div>
                             <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Export project</span></button>
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Delete project</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteProjectModal"><i className="fas fa-plus-circle"/> <span>Delete project</span></button>
                         </div>
                     </div>
                     <div className="content-summary">
@@ -208,7 +226,7 @@ class SoapProject extends PureComponent {
                                                             defaultSorted={this.defaultSort} keyField='id' hover
                                                             selectRow={this.selectRow}
                                                             noDataIndication="Upload a WSDL file to load ports"
-                                                            pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                            pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
                             </ToolkitProvider>
@@ -248,7 +266,7 @@ class SoapProject extends PureComponent {
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onupdateProjectClick}>Update</button>
+                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateProjectClick}>Update</button>
                             </div>
                         </div>
                     </div>
@@ -265,10 +283,37 @@ class SoapProject extends PureComponent {
                                 </button>
                             </div>
                             <div className="modal-body">
-
+                                <Dropzone>
+                                    {({getRootProps, getInputProps}) => (
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            <p>Drag 'n' drop some files here, or click to select files</p>
+                                        </div>
+                                    )}
+                                </Dropzone>
                             </div>
                             <div className="modal-footer">
                                 <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateProjectClick}>Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="deleteProjectModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteProjectModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteProjectModalLabel">Delete the project?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you wanna delete the project?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteProjectClick}>Delete</button>
                             </div>
                         </div>
                     </div>

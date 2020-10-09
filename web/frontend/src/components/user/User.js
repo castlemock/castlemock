@@ -129,16 +129,28 @@ class User extends PureComponent {
                         <dl className="row">
                             <dt className="col-sm-3">Username</dt>
                             <dd className="col-sm-9">{this.state.user.username}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Full name</dt>
                             <dd className="col-sm-9">{this.state.user.fullName}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Email</dt>
                             <dd className="col-sm-9">{this.state.user.email}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Status</dt>
                             <dd className="col-sm-9">{this.state.user.status}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Role</dt>
                             <dd className="col-sm-9">{this.state.user.role}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Created</dt>
                             <dd className="col-sm-9">{this.state.user.created}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Updated</dt>
                             <dd className="col-sm-9">{this.state.user.updated}</dd>
                         </dl>

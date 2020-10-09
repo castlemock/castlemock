@@ -202,7 +202,7 @@ class SoapOperation extends PureComponent {
                                                             data={this.state.operation.mockResponses} columns={this.columns}
                                                             defaultSorted={this.defaultSort} keyField='id' hover
                                                             selectRow={this.selectRow}
-                                                            pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                            pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
                             </ToolkitProvider>

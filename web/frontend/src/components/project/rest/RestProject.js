@@ -30,6 +30,7 @@ class RestProject extends PureComponent {
         this.onRowSelect = this.onRowSelect.bind(this);
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
+        this.onDeleteProjectClick = this.onDeleteProjectClick.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -84,7 +85,7 @@ class RestProject extends PureComponent {
             }
         };
 
-        this.getProject(this.state.projectId);
+        this.getProject();
     }
 
 
@@ -109,9 +110,9 @@ class RestProject extends PureComponent {
         )
     }
 
-    getProject(projectId) {
+    getProject() {
         axios
-            .get("/api/rest/rest/project/" + projectId)
+            .get("/api/rest/rest/project/" + this.state.projectId)
             .then(response => {
                 this.setState({
                     project: response.data,
@@ -122,6 +123,16 @@ class RestProject extends PureComponent {
             });
     }
 
+    onDeleteProjectClick() {
+        axios
+            .delete("/api/rest/core/project/rest/" + this.state.projectId)
+            .then(response => {
+                this.props.history.push("/beta/web");
+            })
+            .catch(error => {
+                this.props.validateErrorResponse(error);
+            });
+    }
 
     render() {
         return (
@@ -153,7 +164,7 @@ class RestProject extends PureComponent {
                                     <button className="dropdown-item" data-toggle="modal" data-target="#uploadWADLModal">WADL</button>
                                 </div>
                             </div>                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Export project</span></button>
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Delete project</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteProjectModal"><i className="fas fa-plus-circle"/> <span>Delete project</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -177,7 +188,7 @@ class RestProject extends PureComponent {
                                                             defaultSorted={this.defaultSort} keyField='id' hover
                                                             selectRow={this.selectRow}
                                                             noDataIndication="Click on the 'Upload' to upload a REST API definition"
-                                                            pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                            pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
                             </ToolkitProvider>
@@ -218,6 +229,26 @@ class RestProject extends PureComponent {
                             </div>
                             <div className="modal-footer">
                                 <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportProjectsClick}>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="deleteProjectModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteProjectModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteProjectModalLabel">Delete the project?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you wanna delete the project?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteProjectClick}>Delete</button>
                             </div>
                         </div>
                     </div>

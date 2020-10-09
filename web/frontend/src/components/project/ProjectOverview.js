@@ -163,7 +163,7 @@ class ProjectOverview extends PureComponent {
                 projectType: this.state.newProjectType
             })
             .then(response => {
-                this.props.history.push("/beta/web/" + response.data.typeIdentifier.typeUrl + "/project/" + response.data.id)
+                this.props.history.push("/beta/web/" + response.data.typeIdentifier.typeUrl + "/project/" + response.data.id);
             })
             .catch(error => {
                 this.props.validateErrorResponse(error);
@@ -280,7 +280,7 @@ class ProjectOverview extends PureComponent {
                                                                 selectRow={ this.selectRow }
                                                                 striped
                                                                 noDataIndication="Click on 'New project' button to create a new project"
-                                                                pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                                pagination={ PaginationFactory() }/>
                                             </div>
                                             </div>
                                     )}
@@ -382,7 +382,7 @@ class ProjectOverview extends PureComponent {
                                                     <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedProjects} columns={this.deleteColumns}
                                                                     defaultSorted={ this.defaultSort } keyField='id' hover
                                                                     striped
-                                                                    pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
                                                 </div>
                                             )}
                                     </ToolkitProvider>
@@ -418,7 +418,7 @@ class ProjectOverview extends PureComponent {
                                                     <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedProjects} columns={this.deleteColumns}
                                                                     defaultSorted={ this.defaultSort } keyField='id' hover
                                                                     striped
-                                                                    pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
                                                 </div>
                                             )}
                                     </ToolkitProvider>

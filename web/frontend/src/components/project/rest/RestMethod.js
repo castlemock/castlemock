@@ -71,7 +71,7 @@ class RestMethod extends PureComponent {
             }
         };
 
-        this.getMethod(this.state.projectId, this.state.applicationId, this.state.resourceId, this.state.methodId);
+        this.getMethod();
     }
 
 
@@ -96,9 +96,9 @@ class RestMethod extends PureComponent {
         )
     }
 
-    getMethod(projectId, applicationId, resourceId, methodId) {
+    getMethod() {
         axios
-            .get("/api/rest/rest/project/" + projectId + "/application/" + applicationId + "/resource/" + resourceId + "/method/" + methodId)
+            .get("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId)
             .then(response => {
                 this.setState({
                     method: response.data
@@ -109,6 +109,16 @@ class RestMethod extends PureComponent {
             });
     }
 
+    onDeleteMethodClick() {
+        axios
+            .delete("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId)
+            .then(response => {
+                this.props.history.push("/beta/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId);
+            })
+            .catch(error => {
+                this.props.validateErrorResponse(error);
+            });
+    }
 
     render() {
         return (
@@ -154,7 +164,7 @@ class RestMethod extends PureComponent {
                                                             data={this.state.method.mockResponses} columns={this.columns}
                                                             defaultSorted={this.defaultSort} keyField='id' hover
                                                             selectRow={this.selectRow}
-                                                            pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                            pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
                             </ToolkitProvider>
@@ -195,6 +205,26 @@ class RestMethod extends PureComponent {
                             </div>
                             <div className="modal-footer">
                                 <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportMethodsClick}>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="deleteMethodModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteMethodModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteMethodModalLabel">Delete the method?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you wanna delete the method?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteMethodClick}>Delete</button>
                             </div>
                         </div>
                     </div>

@@ -57,24 +57,44 @@ class System extends PureComponent {
                         <dl className="row">
                             <dt className="col-sm-3">OS</dt>
                             <dd className="col-sm-9">{this.state.system.operatingSystemName}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Java version</dt>
                             <dd className="col-sm-9">{this.state.system.javaVersion}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Java vendor</dt>
                             <dd className="col-sm-9">{this.state.system.javaVendor}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Server info</dt>
                             <dd className="col-sm-9">{this.state.system.tomcatInfo}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Server built</dt>
                             <dd className="col-sm-9">{this.state.system.tomcatBuilt}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Server version</dt>
                             <dd className="col-sm-9">{this.state.system.tomcatVersion}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Total memory</dt>
                             <dd className="col-sm-9">{this.state.system.totalMemory} MB</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Max memory</dt>
                             <dd className="col-sm-9">{this.state.system.maxMemory} MB</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Free memory</dt>
                             <dd className="col-sm-9">{this.state.system.freeMemory} MB</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Available processors</dt>
                             <dd className="col-sm-9">{this.state.system.availableProcessors}</dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3">Home directory</dt>
                             <dd className="col-sm-9">{this.state.system.castleMockHomeDirectory}</dd>
                         </dl>

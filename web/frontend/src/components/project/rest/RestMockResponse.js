@@ -22,6 +22,7 @@ class RestMockResponse extends PureComponent {
 
     constructor(props) {
         super(props);
+        this.onDeleteMockResponseClick = this.onDeleteMockResponseClick.bind(this);
 
         this.state = {
             projectId: this.props.match.params.projectId,
@@ -33,13 +34,13 @@ class RestMockResponse extends PureComponent {
             }
         };
 
-        this.getMockResponse(this.state.projectId, this.state.applicationId, this.state.resourceId, this.state.methodId, this.state.mockResponseId);
+        this.getMockResponse();
     }
 
-
-    getMockResponse(projectId, applicationId, resourceId, methodId, mockResponseId) {
+    getMockResponse() {
         axios
-            .get("/api/rest/rest/project/" + projectId + "/application/" + applicationId + "/resource/" + resourceId + "/method/" + methodId + "/mockresponse/" + mockResponseId)
+            .get("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" +
+                this.state.resourceId + "/method/" + this.state.methodId + "/mockresponse/" + this.state.mockResponseId)
             .then(response => {
                 this.setState({
                     mockResponse: response.data,
@@ -50,6 +51,16 @@ class RestMockResponse extends PureComponent {
             });
     }
 
+    onDeleteMockResponseClick() {
+        axios
+            .delete("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId + "/mockresponse/" + this.state.mockResponseId)
+            .then(response => {
+                this.props.history.push("/beta/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId);
+            })
+            .catch(error => {
+                this.props.validateErrorResponse(error);
+            });
+    }
 
     render() {
         return (
@@ -77,6 +88,26 @@ class RestMockResponse extends PureComponent {
                         </div>
                     </div>
                 </section>
+
+                <div className="modal fade" id="deleteMockResponseModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteMockResponseModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteMockResponseModalLabel">Delete the mock response?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you wanna delete the mock response?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteMockResponseClick}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

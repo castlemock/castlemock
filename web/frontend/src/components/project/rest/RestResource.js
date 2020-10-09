@@ -30,6 +30,7 @@ class RestResource extends PureComponent {
         this.onRowSelect = this.onRowSelect.bind(this);
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
+        this.onDeleteResourceClick = this.onDeleteResourceClick.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -74,7 +75,7 @@ class RestResource extends PureComponent {
             }
         };
 
-        this.getResource(this.state.projectId, this.state.applicationId, this.state.resourceId);
+        this.getResource();
     }
 
 
@@ -99,9 +100,9 @@ class RestResource extends PureComponent {
         )
     }
 
-    getResource(projectId, applicationId, resourceId) {
+    getResource() {
         axios
-            .get("/api/rest/rest/project/" + projectId + "/application/" + applicationId + "/resource/" + resourceId)
+            .get("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId)
             .then(response => {
                 this.setState({
                     resource: response.data,
@@ -112,6 +113,16 @@ class RestResource extends PureComponent {
             });
     }
 
+    onDeleteResourceClick() {
+        axios
+            .delete("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId)
+            .then(response => {
+                this.props.history.push("/beta/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId);
+            })
+            .catch(error => {
+                this.props.validateErrorResponse(error);
+            });
+    }
 
     render() {
         return (
@@ -133,7 +144,7 @@ class RestResource extends PureComponent {
                         </div>
                         <div className="menu" align="right">
                             <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateResourceModal"><i className="fas fa-plus-circle"/> <span>Update resource</span></button>
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateResourceModal"><i className="fas fa-plus-circle"/> <span>Delete resource</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteResourceModal"><i className="fas fa-plus-circle"/> <span>Delete resource</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -156,7 +167,7 @@ class RestResource extends PureComponent {
                                                             data={this.state.resource.methods} columns={this.columns}
                                                             defaultSorted={this.defaultSort} keyField='id' hover
                                                             selectRow={this.selectRow}
-                                                            pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                            pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
                             </ToolkitProvider>
@@ -202,6 +213,26 @@ class RestResource extends PureComponent {
                             </div>
                             <div className="modal-footer">
                                 <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportResourcesClick}>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="deleteResourceModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteResourceModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteResourceModalLabel">Delete the resource?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you wanna delete the resource?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteResourceClick}>Delete</button>
                             </div>
                         </div>
                     </div>

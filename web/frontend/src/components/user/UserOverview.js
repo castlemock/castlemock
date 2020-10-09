@@ -232,7 +232,7 @@ class UserOverview extends PureComponent {
                                                                 selectRow={ this.selectRow }
                                                                 striped
                                                                 noDataIndication="Click on 'New user' button to create a new user"
-                                                                pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                                pagination={ PaginationFactory() }/>
                                             </div>
                                         </div>
                                     )}

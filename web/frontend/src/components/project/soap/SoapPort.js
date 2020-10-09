@@ -166,7 +166,7 @@ class SoapPort extends PureComponent {
                                                             selectRow={this.selectRow}
                                                             striped
                                                             noDataIndication="Table is Empty"
-                                                            pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                            pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
                             </ToolkitProvider>

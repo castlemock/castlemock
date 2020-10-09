@@ -30,6 +30,7 @@ class RestApplication extends PureComponent {
         this.onRowSelect = this.onRowSelect.bind(this);
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
+        this.onDeleteApplicationClick = this.onDeleteApplicationClick.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -85,7 +86,7 @@ class RestApplication extends PureComponent {
             }
         };
 
-        this.getApplication(this.state.projectId, this.state.applicationId);
+        this.getApplication();
     }
 
 
@@ -110,13 +111,24 @@ class RestApplication extends PureComponent {
         )
     }
 
-    getApplication(projectId, applicationId) {
+    getApplication() {
         axios
-            .get("/api/rest/rest/project/" + projectId + "/application/" + applicationId)
+            .get("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId)
             .then(response => {
                 this.setState({
                     application: response.data,
                 });
+            })
+            .catch(error => {
+                this.props.validateErrorResponse(error);
+            });
+    }
+
+    onDeleteApplicationClick() {
+        axios
+            .delete("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId)
+            .then(response => {
+                this.props.history.push("/beta/web/rest/project/" + this.state.projectId);
             })
             .catch(error => {
                 this.props.validateErrorResponse(error);
@@ -143,7 +155,7 @@ class RestApplication extends PureComponent {
                         </div>
                         <div className="menu" align="right">
                             <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateApplicationModal"><i className="fas fa-plus-circle"/> <span>Update application</span></button>
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateApplicationModal"><i className="fas fa-plus-circle"/> <span>Delete application</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteApplicationModal"><i className="fas fa-plus-circle"/> <span>Delete application</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -166,7 +178,7 @@ class RestApplication extends PureComponent {
                                                             data={this.state.application.resources} columns={this.columns}
                                                             defaultSorted={this.defaultSort} keyField='id' hover
                                                             selectRow={this.selectRow}
-                                                            pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                            pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
                             </ToolkitProvider>
@@ -207,6 +219,26 @@ class RestApplication extends PureComponent {
                             </div>
                             <div className="modal-footer">
                                 <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportApplicationsClick}>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="deleteApplicationModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteApplicationModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteApplicationModalLabel">Delete the application?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you wanna delete the application?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteApplicationClick}>Delete</button>
                             </div>
                         </div>
                     </div>

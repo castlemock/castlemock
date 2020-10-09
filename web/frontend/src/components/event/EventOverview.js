@@ -105,7 +105,7 @@ class EventOverview extends PureComponent {
                                                                 selectRow={ this.selectRow }
                                                                 striped
                                                                 noDataIndication="No events has so far been recorded"
-                                                                pagination={ PaginationFactory(PaginationFactory()) }/>
+                                                                pagination={ PaginationFactory() }/>
                                             </div>
                                         </div>
                                     )}
