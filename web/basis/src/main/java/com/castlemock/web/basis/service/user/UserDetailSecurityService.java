@@ -22,7 +22,6 @@ import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
-import com.castlemock.web.basis.web.view.controller.user.UpdateCurrentUserController;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -104,7 +103,6 @@ public class UserDetailSecurityService implements UserDetailsService {
      * user.
      * @param username The new name of the user that will be logged in
      * @see org.springframework.security.core.userdetails.User
-     * @see UpdateCurrentUserController
      */
     public void updateCurrentLoggedInUser(final String username){
         final UserDetails userDetails = loadUserByUsername(username);

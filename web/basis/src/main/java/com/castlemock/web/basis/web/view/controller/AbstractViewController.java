@@ -18,7 +18,6 @@ package com.castlemock.web.basis.web.view.controller;
 
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.web.basis.web.AbstractController;
-import com.castlemock.web.basis.web.view.command.search.SearchCommand;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +28,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.ServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
