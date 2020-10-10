@@ -20,6 +20,9 @@ import axios from "axios";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
+import {connect} from "react-redux";
+import {setAuthenticationState} from "../../../redux/Actions";
+import validateErrorResponse from "../../../utility/HttpResponseValidator";
 const { SearchBar } = Search;
 
 class SoapPort extends PureComponent {
@@ -30,6 +33,10 @@ class SoapPort extends PureComponent {
         this.onRowSelect = this.onRowSelect.bind(this);
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
+        this.methodHeaderStyle = this.methodHeaderStyle.bind(this);
+        this.responseStrategyHeaderStyle = this.responseStrategyHeaderStyle.bind(this);
+        this.statusHeaderStyle = this.statusHeaderStyle.bind(this);
+
 
         this.columns = [{
             dataField: 'id',
@@ -43,15 +50,18 @@ class SoapPort extends PureComponent {
         }, {
             dataField: 'httpMethod',
             text: 'Method',
-            sort: true
+            sort: true,
+            headerStyle: this.methodHeaderStyle
         }, {
             dataField: 'responseStrategy',
             text: 'Response strategy',
-            sort: true
+            sort: true,
+            headerStyle: this.responseStrategyHeaderStyle
         }, {
             dataField: 'status',
             text: 'Status',
-            sort: true
+            sort: true,
+            headerStyle: this.statusHeaderStyle
         }];
 
         this.selectRow = {
@@ -73,10 +83,20 @@ class SoapPort extends PureComponent {
             }
         };
 
-        this.getPort(this.state.projectId, this.state.portId);
+        this.getPort();
     }
 
+    methodHeaderStyle() {
+        return { 'whiteSpace': 'nowrap', width: '150px' };
+    }
 
+    responseStrategyHeaderStyle() {
+        return { 'whiteSpace': 'nowrap', width: '200px' };
+    }
+
+    statusHeaderStyle() {
+        return { 'whiteSpace': 'nowrap', width: '150px' };
+    }
 
     onRowSelect(value, mode) {
 
@@ -93,21 +113,21 @@ class SoapPort extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/beta/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + row.id}>{cell}</Link>
+                <Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + row.id}>{cell}</Link>
             </div>
         )
     }
 
-    getPort(projectId, portId) {
+    getPort() {
         axios
-            .get("/api/rest/soap/project/" + projectId + "/port/" + portId)
+            .get("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId)
             .then(response => {
                 this.setState({
                     port: response.data,
                 });
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
@@ -119,8 +139,8 @@ class SoapPort extends PureComponent {
                     <div className="navigation">
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
-                                <li className="breadcrumb-item"><Link to={"/beta/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/beta/web/soap/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId}>Project</Link></li>
                                 <li className="breadcrumb-item">{this.state.port.name}</li>
                             </ol>
                         </nav>
@@ -132,16 +152,16 @@ class SoapPort extends PureComponent {
                     </div>
                     <div className="content-summary">
                         <dl className="row">
-                            <dt className="col-sm-3">URI</dt>
+                            <dt className="col-sm-2 content-title">URI</dt>
                             <dd className="col-sm-9">{this.state.port.uri}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Address</dt>
-                            <dd className="col-sm-9">http://192.168.1.87:8080/castlemock/mock/soap/project/kfQYQH/{this.state.port.uri}</dd>
+                            <dt className="col-sm-2 content-title">Address</dt>
+                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">WSDL</dt>
-                            <dd className="col-sm-9">http://192.168.1.87:8080/castlemock/mock/soap/project/kfQYQH/{this.state.port.uri}?wsdl</dd>
+                            <dt className="col-sm-2 content-title">WSDL</dt>
+                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri + "?wsdl"}</dd>
                         </dl>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -182,4 +202,7 @@ class SoapPort extends PureComponent {
 
 }
 
-export default SoapPort
+export default connect(
+    null,
+    { setAuthenticationState }
+)(SoapPort);

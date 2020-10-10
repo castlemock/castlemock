@@ -26,6 +26,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.js';
 import LoginContainer from './LoginContainer'
+import LogoutContainer from './LogoutContainer'
 import MainContainer from './MainContainer'
 
 class App extends Component {
@@ -35,10 +36,11 @@ class App extends Component {
             <div className = "site-wrapper">
                 <Router>
                     <Switch>
-                        <Route path="/beta/web/login"  component={LoginContainer} />
-                        <Route path="/beta/web/*"  component={MainContainer} />
-                        <Route path="/beta/*"  component={MainContainer} />
-                        <Route path="/beta"  component={MainContainer} />
+                        <Route path="/web/login"  component={LoginContainer} />
+                        <Route path="/web/logout"  component={LogoutContainer} />
+                        <Route path="/web/*"  component={MainContainer} />
+                        <Route path="/*"  component={MainContainer} />
+                        <Route path=""  component={MainContainer} />
                     </Switch>
                 </Router>
             </div>

@@ -123,7 +123,7 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
         user.setRole(updatedUser.getRole());
         user.setUpdated(updatedTimestamp);
 
-        if(!updatedUser.getPassword().isEmpty()){
+        if(updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()){
             user.setPassword(PASSWORD_ENCODER.encode(updatedUser.getPassword()));
         }
         User savedUser = super.save(user);

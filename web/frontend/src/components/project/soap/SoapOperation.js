@@ -20,6 +20,9 @@ import axios from "axios";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
+import {connect} from "react-redux";
+import {setAuthenticationState} from "../../../redux/Actions";
+import validateErrorResponse from "../../../utility/HttpResponseValidator";
 const { SearchBar } = Search;
 
 class SoapOperation extends PureComponent {
@@ -71,7 +74,7 @@ class SoapOperation extends PureComponent {
             }
         };
 
-        this.getOperation(this.state.projectId, this.state.portId, this.state.operationId);
+        this.getOperation();
     }
 
 
@@ -91,21 +94,21 @@ class SoapOperation extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/beta/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + row.id }>{cell}</Link>
+                <Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + row.id }>{cell}</Link>
             </div>
         )
     }
 
-    getOperation(projectId, portId, operationId) {
+    getOperation() {
         axios
-            .get("/api/rest/soap/project/" + projectId + "/port/" + portId + "/operation/" + operationId)
+            .get("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId)
             .then(response => {
                 this.setState({
                     operation: response.data,
                 });
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
@@ -117,9 +120,9 @@ class SoapOperation extends PureComponent {
                     <div className="navigation">
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
-                                <li className="breadcrumb-item"><Link to={"/beta/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/beta/web/soap/project/" + this.state.projectId}>Project</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/beta/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId}>Port</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId}>Port</Link></li>
                                 <li className="breadcrumb-item">{this.state.operation.name}</li>
                             </ol>
                         </nav>
@@ -129,56 +132,57 @@ class SoapOperation extends PureComponent {
                             <h1>Operation: {this.state.operation.name}</h1>
                         </div>
                         <div className="menu" align="right">
-                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Update operation</span></button>
+                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Update operation</span></button>
+                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Create response</span></button>
                         </div>
                     </div>
                     <div className="content-summary">
                         <dl className="row">
-                            <dt className="col-sm-3">Identifier</dt>
+                            <dt className="col-sm-3 content-title">Identifier</dt>
                             <dd className="col-sm-9">{this.state.operation.operationIdentifier.name}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">SOAP Version</dt>
+                            <dt className="col-sm-3 content-title">SOAP Version</dt>
                             <dd className="col-sm-9">{this.state.operation.soapVersion}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Status</dt>
-                            <dd className="col-sm-9">{this.state.operation.status}</dd>
-                        </dl>
-                        <dl className="row">
-                            <dt className="col-sm-3">Identify strategy</dt>
+                            <dt className="col-sm-3 content-title">Identify strategy</dt>
                             <dd className="col-sm-9">{this.state.operation.identifyStrategy}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Response strategy</dt>
+                            <dt className="col-sm-3 content-title">Status</dt>
+                            <dd className="col-sm-9">{this.state.operation.status}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Response strategy</dt>
                             <dd className="col-sm-9">{this.state.operation.responseStrategy}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Address</dt>
+                            <dt className="col-sm-3 content-title">Address</dt>
                             <dd className="col-sm-9">Test</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Original endpoint</dt>
+                            <dt className="col-sm-3 content-title">Original endpoint</dt>
                             <dd className="col-sm-9">{this.state.operation.originalEndpoint}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Forwarded endpoint</dt>
+                            <dt className="col-sm-3 content-title">Forwarded endpoint</dt>
                             <dd className="col-sm-9">{this.state.operation.forwardedEndpoint}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Simulate network delay</dt>
+                            <dt className="col-sm-3 content-title">Simulate network delay</dt>
                             <dd className="col-sm-9">{this.state.operation.simulateNetworkDelay}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Network delay</dt>
+                            <dt className="col-sm-3 content-title">Network delay</dt>
                             <dd className="col-sm-9">{this.state.operation.networkDelay}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Default response</dt>
-                            <dd className="col-sm-9">Test</dd>
+                            <dt className="col-sm-3 content-title">Default response</dt>
+                            <dd className="col-sm-9">{this.state.operation.defaultResponseName}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Mock on failure</dt>
+                            <dt className="col-sm-3 content-title">Mock on failure</dt>
                             <dd className="col-sm-9">{this.state.operation.mockOnFailure}</dd>
                         </dl>
                     </div>
@@ -228,15 +232,58 @@ class SoapOperation extends PureComponent {
                             <div className="modal-body">
                                 <form>
                                     <div className="form-group row">
-                                        <label htmlFor="newOperationName" className="col-sm-2 col-form-label">Name</label>
-                                        <div className="col-sm-10">
-                                            <input className="form-control" type="text" name="updateOperationName" id="updateOperationName" onChange={event => this.setUpdateOperationName(event.target.value)}/>
+                                        <label htmlFor="newOperationStatus" className="col-sm-3 col-form-label">Status</label>
+                                        <div className="col-sm-9">
+                                            <select id="inputStatus" className="form-control" defaultValue={this.state.operation.status}>
+                                                <option>MOCKED</option>
+                                                <option>DISABLED</option>
+                                                <option>FORWARDED</option>
+                                                <option>RECORDING</option>
+                                                <option>RECORD_ONCE</option>
+                                                <option>ECHO</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="form-group row">
-                                        <label htmlFor="newOperationDescription" className="col-sm-2 col-form-label">Description</label>
-                                        <div className="col-sm-10">
-                                            <textarea className="form-control" name="updateOperationDescription" id="updateOperationDescription" onChange={event => this.setUpdateOperationDescription(event.target.value)}/>
+                                        <label htmlFor="newOperationResponseStrategy" className="col-sm-3 col-form-label">Response strategy</label>
+                                        <div className="col-sm-9">
+                                            <select id="inputStatus" className="form-control" defaultValue={this.state.operation.responseStrategy}>
+                                                <option>RANDOM</option>
+                                                <option>SEQUENCE</option>
+                                                <option>XPATH_INPUT</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Response strategy</label>
+                                        <div className="col-sm-9">
+                                            <input className="form-control" type="text" />
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Simulate network delay</label>
+                                        <div className="col-sm-9">
+                                            <input type="checkbox" />
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Network delay</label>
+                                        <div className="col-sm-9">
+                                            <input className="form-control" type="text" />
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label htmlFor="newOperationResponseStrategy" className="col-sm-3 col-form-label">Default response</label>
+                                        <div className="col-sm-9">
+                                            <select id="inputStatus" className="form-control" >
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Mock on failure</label>
+                                        <div className="col-sm-9">
+                                            <input type="checkbox" />
                                         </div>
                                     </div>
                                 </form>
@@ -253,4 +300,7 @@ class SoapOperation extends PureComponent {
 
 }
 
-export default SoapOperation
+export default connect(
+    null,
+    { setAuthenticationState }
+)(SoapOperation);

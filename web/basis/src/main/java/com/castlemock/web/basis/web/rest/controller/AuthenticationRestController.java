@@ -87,4 +87,24 @@ public class AuthenticationRestController extends AbstractRestController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
+    /**
+     * Logout user
+     * @return Token upon successfully logout the user.
+     */
+    @ApiOperation(value = "Logout",notes = "Logout user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully logged out")
+    })
+    @RequestMapping(method = RequestMethod.GET, value = "/logout")
+    public @ResponseBody ResponseEntity<Void> logout(final HttpServletResponse httpServletResponse) {
+        final Cookie cookie = new Cookie("token",null);
+        cookie.setMaxAge(0);
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+
+        httpServletResponse.addCookie(cookie);
+
+        return ResponseEntity.ok().build();
+    }
 }

@@ -21,6 +21,9 @@ import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
+import {connect} from "react-redux";
+import {setAuthenticationState} from "../../../redux/Actions";
+import validateErrorResponse from "../../../utility/HttpResponseValidator";
 
 class SoapMockResponse extends PureComponent {
 
@@ -87,7 +90,7 @@ class SoapMockResponse extends PureComponent {
                 });
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
@@ -95,13 +98,12 @@ class SoapMockResponse extends PureComponent {
         axios
             .delete("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/response/" + this.state.mockResponseId)
             .then(response => {
-                this.props.history.push("/beta/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId);
+                this.props.history.push("/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId);
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
-
 
     render() {
         return (
@@ -110,10 +112,10 @@ class SoapMockResponse extends PureComponent {
                     <div className="navigation">
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
-                                <li className="breadcrumb-item"><Link to={"/beta/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/beta/web/soap/project/" + this.state.projectId}>Project</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/beta/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId}>Port</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/beta/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId}>Operation</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId}>Port</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId}>Operation</Link></li>
                                 <li className="breadcrumb-item">{this.state.mockResponse.name}</li>
                             </ol>
                         </nav>
@@ -128,19 +130,24 @@ class SoapMockResponse extends PureComponent {
                     </div>
                     <div className="content-summary">
                         <dl className="row">
-                            <dt className="col-sm-3">Name</dt>
+                            <dt className="col-sm-2 content-title">Name</dt>
                             <dd className="col-sm-9"><input defaultValue={this.state.mockResponse.name}/></dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">HTTP Status code</dt>
+                            <dt className="col-sm-2 content-title">HTTP Status code</dt>
                             <dd className="col-sm-9"><input defaultValue={this.state.mockResponse.httpStatusCode}/></dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Status</dt>
-                            <dd className="col-sm-9"><input defaultValue={this.state.mockResponse.status}/></dd>
+                            <dt className="col-sm-2 content-title">Status</dt>
+                            <dd className="col-sm-2">
+                                <select id="inputState" className="form-control" defaultValue={this.state.mockResponse.status}>
+                                    <option>ENABLED</option>
+                                    <option>DISABLED</option>
+                                </select>
+                            </dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Use Expression</dt>
+                            <dt className="col-sm-2 content-title">Use Expression</dt>
                             <dd className="col-sm-9"><input type="checkbox" defaultChecked={this.state.mockResponse.usingExpressions}/></dd>
                         </dl>
                     </div>
@@ -231,4 +238,7 @@ class SoapMockResponse extends PureComponent {
 
 }
 
-export default SoapMockResponse
+export default connect(
+    null,
+    { setAuthenticationState }
+)(SoapMockResponse);

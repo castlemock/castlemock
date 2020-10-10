@@ -81,8 +81,6 @@ public class ProjectCoreRestController extends AbstractRestController {
      * The method retrieves a project with a particular ID.
      * @param type The type of the project.
      * @param projectId The project id.
-     * @param httpServletRequest The incoming HTTP servlet request.
-     * @param httpServletResponse The outgoing HTTP servlet response.
      * @return The retrieved project.
      */
     @ApiOperation(value = "Get project",response = Project.class,
@@ -97,10 +95,8 @@ public class ProjectCoreRestController extends AbstractRestController {
             @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
             @PathVariable("type") final String type,
             @ApiParam(name = "projectId", value = "The id of the project")
-            @PathVariable("projectId") final String projectId,
-            final HttpServletRequest httpServletRequest,
-            final HttpServletResponse httpServletResponse) {
-        return  projectServiceFacade.findOne(type, projectId);
+            @PathVariable("projectId") final String projectId) {
+        return projectServiceFacade.findOne(type, projectId);
     }
 
 
@@ -124,13 +120,29 @@ public class ProjectCoreRestController extends AbstractRestController {
         return projectServiceFacade.save(request.getProjectType(), project);
     }
 
+    /**
+     * The method updates an existing project
+     * @return The updated project.
+     */
+    @ApiOperation(value = "Update project",response = Project.class,
+            notes = "Update project. Required authorization: Modifier or Admin.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully created project")
+    })
+    @RequestMapping(method = RequestMethod.PUT, value = "/project/{type}/{projectId}")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody Project updateProject( @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
+                                                    @PathVariable("type") final String type,
+                                                @ApiParam(name = "projectId", value = "The id of the project")
+                                                    @PathVariable("projectId") final String projectId,
+                                                @RequestBody final Project project) {
+        return projectServiceFacade.update(type, projectId, project);
+    }
 
     /**
      * The REST operation deletes a project with a particular ID.
      * @param type The type of the project.
      * @param projectId The project id.
-     * @param httpServletRequest The incoming HTTP servlet request.
-     * @param httpServletResponse The outgoing HTTP servlet response.
      * @return The deleted project
      */
     @ApiOperation(value = "Delete project",response = Project.class,
@@ -145,9 +157,7 @@ public class ProjectCoreRestController extends AbstractRestController {
             @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
             @PathVariable("type") final String type,
             @ApiParam(name = "projectId", value = "The id of the project")
-            @PathVariable("projectId") final String projectId,
-            final HttpServletRequest httpServletRequest,
-            final HttpServletResponse httpServletResponse) {
+            @PathVariable("projectId") final String projectId) {
         return  projectServiceFacade.delete(type, projectId);
     }
 
@@ -155,8 +165,6 @@ public class ProjectCoreRestController extends AbstractRestController {
      * The REST operations imports a project.
      * @param type The type of the project.
      * @param multipartFile The project file which will be imported.
-     * @param httpServletRequest The incoming HTTP servlet request.
-     * @param httpServletResponse The outgoing HTTP servlet response.
      * @return A HTTP response.
      */
     @ApiOperation(value = "Import project",response = Project.class,
@@ -171,9 +179,7 @@ public class ProjectCoreRestController extends AbstractRestController {
             @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
             @PathVariable("type") final String type,
             @ApiParam(name = "file", value = "The project file which will be imported.")
-            @RequestParam("file") final MultipartFile multipartFile,
-                                        final HttpServletRequest httpServletRequest,
-                                        final HttpServletResponse httpServletResponse) {
+            @RequestParam("file") final MultipartFile multipartFile) {
         File file = null;
         try {
             file = fileManager.uploadFile(multipartFile);

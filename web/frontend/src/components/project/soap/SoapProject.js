@@ -21,6 +21,9 @@ import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import Dropzone from 'react-dropzone'
+import {connect} from "react-redux";
+import {setAuthenticationState} from "../../../redux/Actions";
+import validateErrorResponse from "../../../utility/HttpResponseValidator";
 
 const { SearchBar } = Search;
 
@@ -36,6 +39,7 @@ class SoapProject extends PureComponent {
         this.onDeleteProjectClick = this.onDeleteProjectClick.bind(this);
         this.setUpdateProjectName = this.setUpdateProjectName.bind(this);
         this.setUpdateProjectDescription = this.setUpdateProjectDescription.bind(this);
+        this.statusHeaderStyle = this.statusHeaderStyle.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -50,32 +54,44 @@ class SoapProject extends PureComponent {
             dataField: 'statusCount.MOCKED',
             text: 'Mocked',
             width: 20,
-            sort: true
+            sort: true,
+            align: "center",
+            headerStyle: this.statusHeaderStyle
         }, {
             dataField: 'statusCount.DISABLED',
             text: 'Disabled',
             width: 20,
-            sort: true
+            sort: true,
+            align: "center",
+            headerStyle: this.statusHeaderStyle
         }, {
             dataField: 'statusCount.FORWARDED',
             text: 'Forwarded',
             width: 20,
-            sort: true
+            sort: true,
+            align: "center",
+            headerStyle: this.statusHeaderStyle
         }, {
             dataField: 'statusCount.RECORDING',
             text: 'Recording',
             width: 20,
-            sort: true
+            sort: true,
+            align: "center",
+            headerStyle: this.statusHeaderStyle
         }, {
             dataField: 'statusCount.RECORD_ONCE',
             text: 'Record once',
             width: 20,
-            sort: true
+            sort: true,
+            align: "center",
+            headerStyle: this.statusHeaderStyle
         }, {
             dataField: 'statusCount.ECHO',
             text: 'Echo',
             width: 20,
-            sort: true
+            sort: true,
+            align: "center",
+            headerStyle: this.statusHeaderStyle
         }];
 
         this.selectRow = {
@@ -94,11 +110,17 @@ class SoapProject extends PureComponent {
             project: {
                 ports: []
             },
-            updateProjectName: "",
-            updateProjectDescription: "",
+            updateProject: {
+                name: "",
+                description: ""
+            }
         };
 
-        this.getProject(this.state.projectId);
+        this.getProject();
+    }
+
+    statusHeaderStyle() {
+        return { 'whiteSpace': 'nowrap', width: '140px' };
     }
 
     onDrop(acceptedFiles){
@@ -120,58 +142,74 @@ class SoapProject extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/beta/web/soap/project/" + this.state.projectId + "/port/" + row.id}>{cell}</Link>
+                <Link to={"/web/soap/project/" + this.state.projectId + "/port/" + row.id}>{cell}</Link>
             </div>
         )
     }
 
-    getProject(projectId) {
+    getProject() {
         axios
-            .get("/api/rest/soap/project/" + projectId)
+            .get("/api/rest/soap/project/" + this.state.projectId)
             .then(response => {
                 this.setState({
                     project: response.data,
+                    updateProject: {
+                        name: response.data.name,
+                        description: response.data.description
+                    }
                 });
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
-    setUpdateProjectName(updateProjectName) {
-        this.setState({ updateProjectName: updateProjectName });
+    setUpdateProjectName(name) {
+        this.setState({ updateProject: {
+                ...this.state.updateProject,
+                name: name
+            }
+        });
     }
 
-    setUpdateProjectDescription(updateProjectDescription) {
-        this.setState({ updateProjectDescription: updateProjectDescription });
+    setUpdateProjectDescription(description) {
+        this.setState({ updateProject: {
+                ...this.state.updateProject,
+                description: description
+            }
+        });
     }
-
 
     onUpdateProjectClick() {
-
+        axios
+            .put("/api/rest/core/project/soap/" + this.state.projectId, this.state.updateProject)
+            .then(response => {
+                this.getProject();
+            })
+            .catch(error => {
+                validateErrorResponse(error, this.props.setAuthenticationState)
+            });
     }
 
     onDeleteProjectClick() {
         axios
             .delete("/api/rest/core/project/soap/" + this.state.projectId)
             .then(response => {
-                this.props.history.push("/beta/web");
+                this.props.history.push("/web");
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
     render() {
-
-
         return (
             <div>
                 <section>
                     <div className="navigation">
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
-                                <li className="breadcrumb-item"><Link to={"/beta/web"}>Home</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
                                 <li className="breadcrumb-item">{this.state.project.name}</li>
                             </ol>
                         </nav>
@@ -197,11 +235,11 @@ class SoapProject extends PureComponent {
                     </div>
                     <div className="content-summary">
                         <dl className="row">
-                            <dt className="col-sm-3">Description</dt>
+                            <dt className="col-sm-2 content-title content-title">Description</dt>
                             <dd className="col-sm-9">{this.state.project.description}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Type</dt>
+                            <dt className="col-sm-2 content-title">Type</dt>
                             <dd className="col-sm-9">SOAP</dd>
                         </dl>
                     </div>
@@ -254,13 +292,13 @@ class SoapProject extends PureComponent {
                                     <div className="form-group row">
                                         <label htmlFor="updateProjectName" className="col-sm-2 col-form-label">Name</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control" type="text" name="newProjectName" id="updateProjectName" onChange={event => this.setUpdateProjectName(event.target.value)}/>
+                                            <input className="form-control" type="text" name="newProjectName" id="updateProjectName" value={this.state.updateProject.name} onChange={event => this.setUpdateProjectName(event.target.value)} required/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
                                         <label htmlFor="updateProjectDescription" className="col-sm-2 col-form-label">Description</label>
                                         <div className="col-sm-10">
-                                            <textarea className="form-control" name="updateProjectDescription" id="updateProjectDescription" onChange={event => this.setupdateProjectDescription(event.target.value)}/>
+                                            <textarea className="form-control" name="updateProjectDescription" id="updateProjectDescription" value={this.state.updateProject.description} onChange={event => this.setUpdateProjectDescription(event.target.value)}/>
                                         </div>
                                     </div>
                                 </form>
@@ -324,4 +362,7 @@ class SoapProject extends PureComponent {
 
 }
 
-export default SoapProject
+export default connect(
+    null,
+    { setAuthenticationState }
+)(SoapProject);

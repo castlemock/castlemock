@@ -21,6 +21,9 @@ import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import Badge from 'react-bootstrap/Badge'
+import {connect} from "react-redux";
+import {setAuthenticationState} from "../../redux/Actions";
+import validateErrorResponse from "../../utility/HttpResponseValidator"
 
 const { SearchBar } = Search;
 
@@ -42,6 +45,7 @@ class ProjectOverview extends PureComponent {
         this.onImportProjectClick = this.onImportProjectClick.bind(this);
         this.onExportProjectsClick = this.onExportProjectsClick.bind(this);
         this.onDeleteProjectsClick = this.onDeleteProjectsClick.bind(this);
+        this.typeHeaderStyle = this.typeHeaderStyle.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -49,11 +53,13 @@ class ProjectOverview extends PureComponent {
             hidden: true
         }, {
             dataField: 'typeIdentifier.type',
-            width: 20,
+            width: "20",
             maxWidth: 20,
             text: 'Type',
             sort: true,
-            formatter: this.typeFormat
+            align: "center",
+            formatter: this.typeFormat,
+            headerStyle: this.typeHeaderStyle
         }, {
             dataField: 'name',
             text: 'Name',
@@ -75,7 +81,8 @@ class ProjectOverview extends PureComponent {
             maxWidth: 20,
             text: 'Type',
             sort: true,
-            formatter: this.typeFormat
+            formatter: this.typeFormat,
+            headerStyle: this.typeHeaderStyle
         }, {
             dataField: 'name',
             text: 'Name',
@@ -100,10 +107,12 @@ class ProjectOverview extends PureComponent {
         this.state = {
             projects: [],
             selectedProjects: [],
+            newProject: {
+                name: "",
+                description: "",
+                projectType: "REST"
+            },
             unauthorized: false,
-            newProjectName: "",
-            newProjectDescription: "",
-            newProjectType: "REST",
             deleteProjectsDisabled: true,
             exportProjectsDisabled: true
         };
@@ -111,16 +120,28 @@ class ProjectOverview extends PureComponent {
         this.getProjects()
     }
 
-    setNewProjectName(newProjectName) {
-        this.setState({ newProjectName: newProjectName });
+    setNewProjectName(name) {
+        this.setState({ newProject: {
+                ...this.state.newProject,
+                name: name,
+            }
+        });
     }
 
-    setNewProjectDescription(newProjectDescription) {
-        this.setState({ newProjectDescription: newProjectDescription });
+    setNewProjectDescription(description) {
+        this.setState({ newProject: {
+                ...this.state.newProject,
+                description: description
+            }
+        });
     }
 
-    setNewProjectType(newProjectType) {
-        this.setState({ newProjectType: newProjectType });
+    setNewProjectType(projectType) {
+        this.setState({ newProject: {
+                ...this.state.newProject,
+                projectType: projectType
+            }
+        });
     }
 
     nameFormat(cell, row) {
@@ -130,12 +151,12 @@ class ProjectOverview extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/beta/web/" + row.typeIdentifier.typeUrl + "/project/" + row.id}>{cell}</Link>
+                <Link to={"/web/" + row.typeIdentifier.typeUrl + "/project/" + row.id}>{cell}</Link>
             </div>
         )
     }
 
-    typeFormat(cell, row) {
+    typeFormat(cell) {
         if(cell == null){
             return;
         }
@@ -143,43 +164,20 @@ class ProjectOverview extends PureComponent {
         if(cell === "SOAP") {
             return (
                 <div>
-                    <Badge variant="primary"><Link className="project-type-badge-link" to={"/beta/web/" + row.typeIdentifier.typeUrl + "/project/" + row.id}>{cell}</Link></Badge>
+                    <Badge variant="primary">{cell}</Badge>
                 </div>
             )
         } else if(cell === "REST") {
             return (
                 <div>
-                    <Badge variant="success"><Link className="project-type-badge-link" to={"/beta/web/" + row.typeIdentifier.typeUrl + "/project/" + row.id}>{cell}</Link></Badge>
+                    <Badge variant="success">{cell}</Badge>
                 </div>
             )
         }
     }
 
-    onCreateProjectClick() {
-        axios
-            .post("/api/rest/core/project", {
-                name: this.state.newProjectName,
-                description: this.state.newProjectName,
-                projectType: this.state.newProjectType
-            })
-            .then(response => {
-                this.props.history.push("/beta/web/" + response.data.typeIdentifier.typeUrl + "/project/" + response.data.id);
-            })
-            .catch(error => {
-                this.props.validateErrorResponse(error);
-            });
-    }
-
-    onImportProjectClick() {
-
-    }
-
-    onExportProjectsClick() {
-
-    }
-
-    onDeleteProjectsClick() {
-
+    typeHeaderStyle() {
+        return { 'whiteSpace': 'nowrap', width: '150px' };
     }
 
     onRowSelect(value, mode) {
@@ -233,6 +231,27 @@ class ProjectOverview extends PureComponent {
         }
     }
 
+    onCreateProjectClick(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        axios
+            .post("/api/rest/core/project", this.state.newProject)
+            .then(response => {
+                this.props.history.push("/web/" + response.data.typeIdentifier.typeUrl + "/project/" + response.data.id);
+            })
+            .catch(error => {
+                validateErrorResponse(error, this.props.setAuthenticationState)
+            });
+    }
+
+    onImportProjectClick() {
+
+    }
+
+    onExportProjectsClick() {
+
+    }
+
     getProjects() {
         axios
             .get("/api/rest/core/project")
@@ -242,8 +261,21 @@ class ProjectOverview extends PureComponent {
                 });
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
+    }
+
+    onDeleteProjectsClick() {
+        Array.from(this.state.selectedProjects).forEach(project => {
+            axios
+                .delete("/api/rest/core/project/" + project.typeIdentifier.type + "/" + project.id)
+                .then(response => {
+                    this.getProjects();
+                })
+                .catch(error => {
+                    validateErrorResponse(error, this.props.setAuthenticationState)
+                });
+        });
     }
 
     render() {
@@ -297,8 +329,7 @@ class ProjectOverview extends PureComponent {
                     </div>
                  </section>
 
-                <div className="modal fade" id="newProjectModal" tabIndex="-1" role="dialog"
-                     aria-labelledby="newProjectModalLabel" aria-hidden="true">
+                <div className="modal fade" id="newProjectModal" tabIndex="-1" role="dialog" aria-labelledby="newProjectModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -307,12 +338,12 @@ class ProjectOverview extends PureComponent {
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div className="modal-body">
-                                <form>
+                            <form>
+                                <div className="modal-body">
                                     <div className="form-group row">
                                         <label htmlFor="newProjectName" className="col-sm-2 col-form-label">Name</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control" type="text" name="newProjectName" id="newProjectName" onChange={event => this.setNewProjectName(event.target.value)}/>
+                                            <input className="form-control validate" type="text" name="newProjectName" id="newProjectName" onChange={event => this.setNewProjectName(event.target.value)} required/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
@@ -330,11 +361,11 @@ class ProjectOverview extends PureComponent {
                                             </select>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateProjectClick}>Create</button>
-                            </div>
+                                </div>
+                                <div className="modal-footer">
+                                    <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateProjectClick}>Create</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -436,4 +467,7 @@ class ProjectOverview extends PureComponent {
 
 }
 
-export default ProjectOverview
+export default connect(
+    null,
+    { setAuthenticationState }
+)(ProjectOverview);

@@ -19,7 +19,7 @@ import '../css/Header.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import {Link} from "react-router-dom";
-import {faSignOutAlt, faHome, faChartBar, faUsersCog, faCogs} from '@fortawesome/free-solid-svg-icons'
+import {faSignOutAlt, faHome, faChartBar, faUser, faUsersCog, faCogs} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Logo from '../images/logo-landscape-white.png'
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
@@ -34,7 +34,7 @@ class Header extends Component {
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <div className="header-logo">
-                                <Link to="/beta/web">
+                                <Link to="/web">
                                     Castle Mock
                                     <img src={Logo} className="header-logo-img" alt="logo"/>
                                 </Link>
@@ -43,27 +43,32 @@ class Header extends Component {
                         <div className="header-menu-links">
                             <div className="header-menu-link">
                                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Projects</Tooltip>}>
-                                    <Link to={"/beta/web"}><FontAwesomeIcon icon={faHome} className="header-menu-icon" /></Link>
+                                    <Link to={"/web"}><FontAwesomeIcon icon={faHome} className="header-menu-icon" /></Link>
+                                </OverlayTrigger>
+                            </div>
+                            <div className="header-menu-link">
+                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Profile</Tooltip>}>
+                                    <Link to={"/web/profile"}><FontAwesomeIcon icon={faUser} className="header-menu-icon" /></Link>
                                 </OverlayTrigger>
                             </div>
                             <div className="header-menu-link">
                                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Logs</Tooltip>}>
-                                    <Link to={"/beta/web/event"}><FontAwesomeIcon icon={faChartBar} className="header-menu-icon" /></Link>
+                                    <Link to={"/web/event"}><FontAwesomeIcon icon={faChartBar} className="header-menu-icon" /></Link>
                                 </OverlayTrigger>
                             </div>
                             <div className="header-menu-link">
                                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Users</Tooltip>}>
-                                    <Link to={"/beta/web/user"}><FontAwesomeIcon icon={faUsersCog} className="header-menu-icon" /></Link>
+                                    <Link to={"/web/user"}><FontAwesomeIcon icon={faUsersCog} className="header-menu-icon" /></Link>
                                 </OverlayTrigger>
                             </div>
                             <div className="header-menu-link">
                                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">System</Tooltip>}>
-                                    <Link to={"/beta/web/system"}><FontAwesomeIcon icon={faCogs} className="header-menu-icon" /></Link>
+                                    <Link to={"/web/system"}><FontAwesomeIcon icon={faCogs} className="header-menu-icon" /></Link>
                                 </OverlayTrigger>
                             </div>
                             <div className="header-menu-link">
                                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Logout</Tooltip>}>
-                                    <Link to={"/beta/web/logout"}><FontAwesomeIcon icon={faSignOutAlt} className="header-menu-icon" /></Link>
+                                    <a href={"/web/logout"}><FontAwesomeIcon icon={faSignOutAlt} className="header-menu-icon" /></a>
                                 </OverlayTrigger>
                             </div>
                         </div>

@@ -25,6 +25,7 @@ import com.castlemock.core.basis.service.user.input.UpdateUserInput;
 import com.castlemock.core.basis.service.user.output.CreateUserOutput;
 import com.castlemock.core.basis.service.user.output.ReadAllUsersOutput;
 import com.castlemock.core.basis.service.user.output.ReadUserOutput;
+import com.castlemock.core.basis.service.user.output.UpdateUserOutput;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -68,15 +69,16 @@ public class UserCoreRestController extends AbstractRestController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated user")
     })
-    @RequestMapping(method = RequestMethod.PUT, value = "/user")
+    @RequestMapping(method = RequestMethod.PUT, value = "/user/{userId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
-    User updateUser(@RequestBody final User user) {
-        final CreateUserOutput output = serviceProcessor.process(UpdateUserInput.builder()
+    User updateUser(@PathVariable("userId") final String userId,
+                    @RequestBody final User user) {
+        final UpdateUserOutput output = serviceProcessor.process(UpdateUserInput.builder()
                 .user(user)
-                .userId(user.getId())
+                .userId(userId)
                 .build());
-        final User updatedUser = output.getSavedUser();
+        final User updatedUser = output.getUpdatedUser();
         updatedUser.setPassword(EMPTY);
         return updatedUser;
     }

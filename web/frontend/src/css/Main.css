@@ -102,3 +102,8 @@
 .table-link a:visited { color: #212529; }
 .table-link a:hover { color: #212529; }
 .table-link a:active { color: #212529; }
+
+.content-title {
+    font-weight: bold;
+    font-family: "Roboto Bold", sans-serif;
+}

@@ -18,7 +18,15 @@ import React, {PureComponent} from 'react'
 import '../css/Login.css';
 import Logo from '../images/logo.png'
 import axios from "axios";
+import { setAuthenticationState } from "../redux/Actions";
 import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
+import { getAuthenticationState } from "../redux/Selectors";
+
+const mapStateToProps = state => {
+    const authenticationState = getAuthenticationState(state);
+    return { authenticationState };
+};
 
 class LoginContainer extends PureComponent {
 
@@ -27,11 +35,13 @@ class LoginContainer extends PureComponent {
         this.onButtonLoginClick = this.onButtonLoginClick.bind(this);
         this.setUsername = this.setUsername.bind(this);
         this.setPassword = this.setPassword.bind(this);
+        this.isAuthenticated = this.isAuthenticated.bind(this);
+        this.onEnterClick = this.onEnterClick.bind(this);
 
         this.state = {
             username: "",
             password: "",
-            authenticated: false
+            loginFailed: false
         };
     }
 
@@ -50,17 +60,29 @@ class LoginContainer extends PureComponent {
                 password: this.state.password
             })
             .then(response => {
-                this.setState({ authenticated: true })
+                this.props.setAuthenticationState(true);
             })
             .catch(error => {
-                console.log(error)
-
+                this.props.setAuthenticationState(false);
+                this.setState({
+                    loginFailed: true
+                })
             });
     }
 
+    onEnterClick(event) {
+        if (event.key === 'Enter') {
+            this.onButtonLoginClick();
+        }
+    }
+
+    isAuthenticated(){
+        return this.props.authenticationState;
+    }
+
     render() {
-        if(this.state.authenticated) {
-            return <Redirect to = {{ pathname: "/beta/web" }} />;
+        if(this.isAuthenticated()) {
+            return <Redirect to = {{ pathname: "/web" }} />;
         }
 
         return (
@@ -73,11 +95,15 @@ class LoginContainer extends PureComponent {
                         <div className="credentialsBox">
                             <div className="login-title">Castle Mock</div>
 
+                            <div className="alert alert-danger" role="alert" hidden={this.state.loginFailed ? '' : 'hidden'}>
+                                Unable to login.
+                            </div>
+
                             <div className="form-label-group">
-                                <input type="text" id="inputUsername" className="form-control" placeholder="Username" onChange={event => this.setUsername(event.target.value)} required autoFocus/>
+                                <input type="text" id="inputUsername" className="form-control" placeholder="Username" onChange={event => this.setUsername(event.target.value)} onKeyDown={event => this.onEnterClick(event)} required autoFocus/>
                             </div>
                             <div className="form-label-group">
-                                <input type="password" id="inputPassword" className="form-control" placeholder="Password" onChange={event => this.setPassword(event.target.value)} required />
+                                <input type="password" id="inputPassword" className="form-control" placeholder="Password" onChange={event => this.setPassword(event.target.value)} onKeyDown={event => this.onEnterClick(event)} required />
                             </div>
                             <button className="btn btn-lg btn-success btn-block text-uppercase" onClick={this.onButtonLoginClick}>Sign in</button>
                         </div>
@@ -98,15 +124,7 @@ class LoginContainer extends PureComponent {
     }
 }
 
-export default LoginContainer
-
-/*
-
-
-                            <input className="form-control login-credentials" type="text" name="username" id="username" placeholder="Username" onChange={event => this.setUsername(event.target.value)}/>
-                            <input className="form-control login-credentials" type="password" name="password" id="password" placeholder="Password" onChange={event => this.setPassword(event.target.value)}/>
-
-                            <div id="login-button">
-                                <button className="btn btn-success" onClick={this.onButtonLoginClick}>Login</button>
-                            </div>
- */
+export default connect(
+    mapStateToProps,
+    { setAuthenticationState }
+)(LoginContainer);

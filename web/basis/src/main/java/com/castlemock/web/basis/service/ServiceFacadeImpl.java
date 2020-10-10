@@ -174,14 +174,14 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
     protected SA findByTypeUrl(final String typeUrl){
         SA serviceAdapter = null;
         for(SA tmpService : services.values()){
-            if(tmpService.getTypeIdentifier().getTypeUrl().equals(typeUrl)){
+            if(tmpService.getTypeIdentifier().getTypeUrl().equalsIgnoreCase(typeUrl)){
                 serviceAdapter = tmpService;
                 break;
             }
         }
 
         if(serviceAdapter == null){
-            throw new IllegalArgumentException("Invalid type");
+            throw new IllegalArgumentException("Invalid type: " + typeUrl);
         }
 
         return serviceAdapter;

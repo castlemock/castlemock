@@ -16,6 +16,7 @@
 
 import React, {PureComponent} from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import '../css/Main.css';
 import Footer from './Footer'
 import Header from './Header'
@@ -32,32 +33,28 @@ import RestMockResponse from "./project/rest/RestMockResponse";
 import UserOverview from "./user/UserOverview";
 import User from "./user/User";
 import System from "./system/System";
+import EventOverview from "./event/EventOverview"
+import { getAuthenticationState } from "../redux/Selectors";
+
+const mapStateToProps = state => {
+    const authenticationState = getAuthenticationState(state);
+    return { authenticationState };
+};
 
 class MainContainer extends PureComponent {
 
     constructor(props) {
         super(props);
         this.isAuthenticated = this.isAuthenticated.bind(this);
-        this.validateErrorResponse = this.validateErrorResponse.bind(this);
-
-        this.state = {
-            authenticated: true
-        };
-    }
-
-    validateErrorResponse(error){
-        if (error.response.status === 401 || error.response.status === 403) {
-            this.setState({ authenticated: false });
-        }
     }
 
     isAuthenticated(){
-        return this.state.authenticated;
+        return this.props.authenticationState;
     }
 
     render() {
         if(!this.isAuthenticated()){
-            return <Redirect to = {{ pathname: "/beta/web/login" }} />;
+            return <Redirect to = {{ pathname: "/web/login" }} />;
         }
 
         return (
@@ -66,24 +63,25 @@ class MainContainer extends PureComponent {
                 <Header/>
                     <div id="main-body">
                         <Switch>
-                            <Route path="/beta/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId/mockresponse/:mockResponseId" component={RestMockResponse} /> } />
-                            <Route path="/beta/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId" component={RestMethod} />
-                            <Route path="/beta/web/rest/project/:projectId/application/:applicationId/resource/:resourceId" component={RestResource} />
-                            <Route path="/beta/web/rest/project/:projectId/application/:applicationId" component={RestApplication} />
-                            <Route path="/beta/web/soap/project/:projectId/port/:portId/operation/:operationId/mockresponse/:mockResponseId" component={SoapMockResponse} />
-                            <Route path="/beta/web/soap/project/:projectId/port/:portId/operation/:operationId" component={SoapOperation} />
-                            <Route path="/beta/web/soap/project/:projectId/port/:portId" component={SoapPort} />
-                            <Route path="/beta/web/rest/project/:projectId" component={RestProject} />
-                            <Route path="/beta/web/soap/project/:projectId" component={SoapProject} />
-                            <Route path="/beta/web/user/:userId" component={User} />
-                            <Route path="/beta/web/user" component={UserOverview} />
-                            <Route path="/beta/web/system" component={System} />
-                            <Route path="/beta/web" component={ProjectOverview} />
-                            <Route path="/beta/*">
-                                <Redirect to="/beta/web" />
+                            <Route path="/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId/mockresponse/:mockResponseId" component={RestMockResponse} /> } />
+                            <Route path="/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId" component={RestMethod} />
+                            <Route path="/web/rest/project/:projectId/application/:applicationId/resource/:resourceId" component={RestResource} />
+                            <Route path="/web/rest/project/:projectId/application/:applicationId" component={RestApplication} />
+                            <Route path="/web/soap/project/:projectId/port/:portId/operation/:operationId/mockresponse/:mockResponseId" component={SoapMockResponse} />
+                            <Route path="/web/soap/project/:projectId/port/:portId/operation/:operationId" component={SoapOperation} />
+                            <Route path="/web/soap/project/:projectId/port/:portId" component={SoapPort} />
+                            <Route path="/web/rest/project/:projectId" component={RestProject} />
+                            <Route path="/web/soap/project/:projectId" component={SoapProject} />
+                            <Route path="/web/user/:userId" component={User} />
+                            <Route path="/web/user" component={UserOverview} />
+                            <Route path="/web/system" component={System} />
+                            <Route path="/web/event" component={EventOverview} />
+                            <Route path="/web" component={ProjectOverview} />
+                            <Route path="/*">
+                                <Redirect to="/web" />
                             </Route>
-                            <Route path="/beta" >
-                                <Redirect to="/beta/web" />
+                            <Route path="" >
+                                <Redirect to="/web" />
                             </Route>
                         </Switch>
                     </div>
@@ -94,4 +92,4 @@ class MainContainer extends PureComponent {
     }
 }
 
-export default MainContainer
+export default connect(mapStateToProps)(MainContainer);

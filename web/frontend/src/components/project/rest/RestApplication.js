@@ -20,6 +20,9 @@ import axios from "axios";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
+import {connect} from "react-redux";
+import {setAuthenticationState} from "../../../redux/Actions";
+import validateErrorResponse from "../../../utility/HttpResponseValidator";
 const { SearchBar } = Search;
 
 class RestApplication extends PureComponent {
@@ -106,7 +109,7 @@ class RestApplication extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/beta/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + row.id}>{cell}</Link>
+                <Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + row.id}>{cell}</Link>
             </div>
         )
     }
@@ -120,7 +123,7 @@ class RestApplication extends PureComponent {
                 });
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
@@ -128,13 +131,12 @@ class RestApplication extends PureComponent {
         axios
             .delete("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId)
             .then(response => {
-                this.props.history.push("/beta/web/rest/project/" + this.state.projectId);
+                this.props.history.push("/web/rest/project/" + this.state.projectId);
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
-
 
     render() {
         return (
@@ -143,8 +145,8 @@ class RestApplication extends PureComponent {
                     <div className="navigation">
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
-                                <li className="breadcrumb-item"><Link to={"/beta/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/beta/web/rest/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId}>Project</Link></li>
                                 <li className="breadcrumb-item">{this.state.application.name}</li>
                             </ol>
                         </nav>
@@ -249,4 +251,7 @@ class RestApplication extends PureComponent {
 
 }
 
-export default RestApplication
+export default connect(
+    null,
+    { setAuthenticationState }
+)(RestApplication);

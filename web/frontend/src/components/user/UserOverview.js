@@ -20,6 +20,9 @@ import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {setAuthenticationState} from "../../redux/Actions";
+import validateErrorResponse from "../../utility/HttpResponseValidator";
 
 const { SearchBar } = Search;
 
@@ -34,12 +37,13 @@ class UserOverview extends PureComponent {
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.onCreateUserClick = this.onCreateUserClick.bind(this);
         this.onDeleteUsersClick = this.onDeleteUsersClick.bind(this);
-        this.setNewUserUserName = this.setNewUserUserName.bind(this);
-        this.setNewUserEmail = this.setNewUserEmail.bind(this);
-        this.setNewUserRole = this.setNewUserRole.bind(this);
-        this.setNewUserStatus = this.setNewUserStatus.bind(this);
+        this.setNewUserName = this.setNewUserName.bind(this);
+        this.setNewEmail = this.setNewEmail.bind(this);
+        this.setNewRole = this.setNewRole.bind(this);
+        this.setNewStatus = this.setNewStatus.bind(this);
+        this.setNewPassword = this.setNewPassword.bind(this);
         this.userNameFormat = this.userNameFormat.bind(this);
-
+        this.userDateFormat = this.userDateFormat.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -67,11 +71,26 @@ class UserOverview extends PureComponent {
         },{
             dataField: 'created',
             text: 'Created',
-            sort: true
+            sort: true,
+            formatter: this.userDateFormat
         },{
             dataField: 'updated',
             text: 'Updated',
-            sort: true
+            sort: true,
+            formatter: this.userDateFormat
+        }];
+
+        this.deleteColumns = [{
+            dataField: 'id',
+            text: 'id',
+            hidden: true
+        }, {
+            dataField: 'username',
+            width: 20,
+            maxWidth: 20,
+            text: 'Username',
+            sort: true,
+            formatter: this.userNameFormat
         }];
 
         this.selectRow = {
@@ -89,29 +108,60 @@ class UserOverview extends PureComponent {
             users: [],
             selectedUsers: [],
             deleteUsersDisabled: true,
-            newUserUserName: "",
-            newUserEmail: "",
-            newUserRole: "READER",
-            newUserStatus: "ACTIVE"
+            newUser: {
+                username: "",
+                email: "",
+                password: "",
+                role: "READER",
+                status: "ACTIVE"
+            }
         };
 
         this.getUsers()
     }
 
-    setNewUserUserName(newUserUserName) {
-        this.setState({ newUserUserName: newUserUserName });
+    setNewUserName(username) {
+        this.setState({
+            newUser: {
+                ...this.state.newUser,
+                username: username
+            } });
     }
 
-    setNewUserEmail(newUserEmail) {
-        this.setState({ newUserEmail: newUserEmail });
+    setNewEmail(email) {
+        this.setState({
+            newUser: {
+                ...this.state.newUser,
+                email: email
+            }
+        });
     }
 
-    setNewUserRole(newUserRole) {
-        this.setState({ newUserRole: newUserRole });
+    setNewPassword(password) {
+        this.setState({
+            newUser: {
+                ...this.state.newUser,
+                password: password
+            }
+        });
     }
 
-    setNewUserStatus(newUserStatus) {
-        this.setState({ newUserStatus: newUserStatus });
+    setNewRole(role) {
+        this.setState({
+            newUser: {
+                ...this.state.newUser,
+                role: role
+            }
+        });
+    }
+
+    setNewStatus(status) {
+        this.setState({
+            newUser: {
+                ...this.state.newUser,
+                status: status
+            }
+        });
     }
 
     userNameFormat(cell, row) {
@@ -121,34 +171,51 @@ class UserOverview extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/beta/web/user/" + row.id}>{cell}</Link>
+                <Link to={"/web/user/" + row.id}>{cell}</Link>
             </div>
+        )
+    }
+
+    userDateFormat(cell) {
+        if(cell == null){
+            return;
+        }
+
+        let date = new Date(cell).toLocaleString();
+        return (
+            <div>{date}</div>
         )
     }
     
     onCreateUserClick() {
         axios
-            .post("/api/rest/core/user", {
-                name: this.state.newUserUserName,
-                description: this.state.newUserUserName,
-                userType: this.state.newUserType
-            })
+            .post("/api/rest/core/user", this.state.newUser)
             .then(response => {
-                this.props.history.push("/beta/web/" + response.data.typeIdentifier.typeUrl + "/user/" + response.data.id)
+                this.props.history.push("/web/user/" + response.data.id)
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
     
     onDeleteUsersClick() {
-
+        Array.from(this.state.selectedUsers).forEach(user => {
+            axios
+                .delete("/api/rest/core/user/" + user.id)
+                .then(response => {
+                    this.getUsers();
+                })
+                .catch(error => {
+                    validateErrorResponse(error, this.props.setAuthenticationState)
+                });
+        });
     }
 
     onRowSelect(value, mode) {
         let users = this.state.selectedUsers.slice();
         let user = {
-            id: value.id
+            id: value.id,
+            username: value.username
         };
         if(mode === SELECT){
             users.push(user);
@@ -168,7 +235,8 @@ class UserOverview extends PureComponent {
             let users = [];
             this.state.users.forEach(value => {
                 let user = {
-                    id: value.id
+                    id: value.id,
+                    username: value.username
                 };
                 users.push(user);
             });
@@ -195,7 +263,7 @@ class UserOverview extends PureComponent {
                 });
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
@@ -262,19 +330,25 @@ class UserOverview extends PureComponent {
                                     <div className="form-group row">
                                         <label htmlFor="newUserUserName" className="col-sm-2 col-form-label">Name</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control" type="text" name="newUserUserName" id="newUserUserName" onChange={event => this.setNewUserUserName(event.target.value)}/>
+                                            <input className="form-control" type="text" name="newUserUserName" id="newUserUserName" onChange={event => this.setNewUserName(event.target.value)}/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
                                         <label htmlFor="newUserEmail" className="col-sm-2 col-form-label">Email</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control" type="text" name="newUserEmail" id="newUserEmail" onChange={event => this.setNewUserEmail(event.target.value)}/>
+                                            <input className="form-control" type="text" name="newUserEmail" id="newUserEmail" onChange={event => this.setNewEmail(event.target.value)}/>
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label htmlFor="newUserPassword" className="col-sm-2 col-form-label">Password</label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" type="text" name="newUserPassword" id="newUserPassword" onChange={event => this.setNewPassword(event.target.value)}/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
                                         <label htmlFor="inputState" className="col-sm-2 col-form-label">Role</label>
                                         <div className="col-sm-10">
-                                            <select id="inputState" className="form-control" onChange={event => this.setNewUserRole(event.target.value)} defaultValue={"READER"}>
+                                            <select id="inputState" className="form-control" onChange={event => this.setNewRole(event.target.value)} defaultValue={"READER"}>
                                                 <option>READER</option>
                                                 <option>MODIFIER</option>
                                                 <option>ADMIN</option>
@@ -282,9 +356,9 @@ class UserOverview extends PureComponent {
                                         </div>
                                     </div>
                                     <div className="form-group row">
-                                        <label htmlFor="inputState" className="col-sm-2 col-form-label">Role</label>
+                                        <label htmlFor="inputState" className="col-sm-2 col-form-label">Status</label>
                                         <div className="col-sm-10">
-                                            <select id="inputState" className="form-control" onChange={event => this.setNewUserStatus(event.target.value)} defaultValue={"ACTIVE"}>
+                                            <select id="inputState" className="form-control" onChange={event => this.setNewStatus(event.target.value)} defaultValue={"ACTIVE"}>
                                                 <option>ACTIVE</option>
                                                 <option>INACTIVE</option>
                                             </select>
@@ -310,7 +384,22 @@ class UserOverview extends PureComponent {
                                 </button>
                             </div>
                             <div className="modal-body">
-
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.deleteColumns}
+                                                     data={ this.state.selectedUsers }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedUsers} columns={this.deleteColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
                             </div>
                             <div className="modal-footer">
                                 <button className="btn btn-danger"data-dismiss="modal" onClick={this.onDeleteUsersClick}>Delete</button>
@@ -326,4 +415,7 @@ class UserOverview extends PureComponent {
 
 }
 
-export default UserOverview
+export default connect(
+    null,
+    { setAuthenticationState }
+)(UserOverview);

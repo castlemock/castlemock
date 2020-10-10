@@ -20,6 +20,9 @@ import axios from "axios";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
+import {connect} from "react-redux";
+import {setAuthenticationState} from "../../../redux/Actions";
+import validateErrorResponse from "../../../utility/HttpResponseValidator";
 const { SearchBar } = Search;
 
 class RestProject extends PureComponent {
@@ -31,6 +34,9 @@ class RestProject extends PureComponent {
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
         this.onDeleteProjectClick = this.onDeleteProjectClick.bind(this);
+        this.onUpdateProjectClick = this.onUpdateProjectClick.bind(this);
+        this.setUpdateProjectName = this.setUpdateProjectName.bind(this);
+        this.setUpdateProjectDescription = this.setUpdateProjectDescription.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -82,6 +88,10 @@ class RestProject extends PureComponent {
             projectId: this.props.match.params.projectId,
             project: {
                 applications: []
+            },
+            updateProject: {
+                name: "",
+                description: ""
             }
         };
 
@@ -105,9 +115,26 @@ class RestProject extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/beta/web/rest/project/" + this.state.projectId + "/application/" + row.id}>{cell}</Link>
+                <Link to={"/web/rest/project/" + this.state.projectId + "/application/" + row.id}>{cell}</Link>
             </div>
         )
+    }
+
+
+    setUpdateProjectName(name) {
+        this.setState({ updateProject: {
+                ...this.state.updateProject,
+                name: name
+            }
+        });
+    }
+
+    setUpdateProjectDescription(description) {
+        this.setState({ updateProject: {
+                ...this.state.updateProject,
+                description: description
+            }
+        });
     }
 
     getProject() {
@@ -116,10 +143,25 @@ class RestProject extends PureComponent {
             .then(response => {
                 this.setState({
                     project: response.data,
+                    updateProject: {
+                        name: response.data.name,
+                        description: response.data.description
+                    }
                 });
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
+            });
+    }
+
+    onUpdateProjectClick() {
+        axios
+            .put("/api/rest/core/project/rest/" + this.state.projectId, this.state.updateProject)
+            .then(response => {
+                this.getProject();
+            })
+            .catch(error => {
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
@@ -127,10 +169,10 @@ class RestProject extends PureComponent {
         axios
             .delete("/api/rest/core/project/rest/" + this.state.projectId)
             .then(response => {
-                this.props.history.push("/beta/web");
+                this.props.history.push("/web");
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
@@ -141,7 +183,7 @@ class RestProject extends PureComponent {
                     <div className="navigation">
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
-                                <li className="breadcrumb-item"><Link to={"/beta/web"}>Home</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
                                 <li className="breadcrumb-item">{this.state.project.name}</li>
                             </ol>
                         </nav>
@@ -166,6 +208,16 @@ class RestProject extends PureComponent {
                             </div>                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Export project</span></button>
                             <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteProjectModal"><i className="fas fa-plus-circle"/> <span>Delete project</span></button>
                         </div>
+                    </div>
+                    <div className="content-summary">
+                        <dl className="row">
+                            <dt className="col-sm-2 content-title content-title">Description</dt>
+                            <dd className="col-sm-9">{this.state.project.description}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-2 content-title">Type</dt>
+                            <dd className="col-sm-9">REST</dd>
+                        </dl>
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="panel-heading table-panel-heading">
@@ -216,19 +268,19 @@ class RestProject extends PureComponent {
                                     <div className="form-group row">
                                         <label htmlFor="newProjectName" className="col-sm-2 col-form-label">Name</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control" type="text" name="updateProjectName" id="updateProjectName" onChange={event => this.setUpdateProjectName(event.target.value)}/>
+                                            <input className="form-control" type="text" name="updateProjectName" id="updateProjectName" value={this.state.updateProject.name} onChange={event => this.setUpdateProjectName(event.target.value)}/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
                                         <label htmlFor="newProjectDescription" className="col-sm-2 col-form-label">Description</label>
                                         <div className="col-sm-10">
-                                            <textarea className="form-control" name="updateProjectDescription" id="updateProjectDescription" onChange={event => this.setUpdateProjectDescription(event.target.value)}/>
+                                            <textarea className="form-control" name="updateProjectDescription" id="updateProjectDescription" value={this.state.updateProject.description} onChange={event => this.setUpdateProjectDescription(event.target.value)}/>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportProjectsClick}>Update</button>
+                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateProjectClick}>Update</button>
                             </div>
                         </div>
                     </div>
@@ -259,4 +311,7 @@ class RestProject extends PureComponent {
 
 }
 
-export default RestProject
+export default connect(
+    null,
+    { setAuthenticationState }
+)(RestProject);

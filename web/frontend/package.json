@@ -23,7 +23,9 @@
     "react-dom": "16.8.0",
     "react-dropzone": "^11.2.0",
     "react-google-recaptcha": "^1.0.5",
-    "react-router-dom": "^5.0.1"
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",

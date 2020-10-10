@@ -16,6 +16,9 @@
 
 import React, {PureComponent} from 'react';
 import axios from "axios";
+import {connect} from "react-redux";
+import {setAuthenticationState} from "../../redux/Actions";
+import validateErrorResponse from "../../utility/HttpResponseValidator";
 
 class System extends PureComponent {
 
@@ -38,7 +41,7 @@ class System extends PureComponent {
                 });
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
@@ -55,47 +58,47 @@ class System extends PureComponent {
                     </div>
                     <div className="content-summary">
                         <dl className="row">
-                            <dt className="col-sm-3">OS</dt>
+                            <dt className="col-sm-2 content-title">OS</dt>
                             <dd className="col-sm-9">{this.state.system.operatingSystemName}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Java version</dt>
+                            <dt className="col-sm-2 content-title">Java version</dt>
                             <dd className="col-sm-9">{this.state.system.javaVersion}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Java vendor</dt>
+                            <dt className="col-sm-2 content-title">Java vendor</dt>
                             <dd className="col-sm-9">{this.state.system.javaVendor}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Server info</dt>
+                            <dt className="col-sm-2 content-title">Server info</dt>
                             <dd className="col-sm-9">{this.state.system.tomcatInfo}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Server built</dt>
+                            <dt className="col-sm-2 content-title">Server built</dt>
                             <dd className="col-sm-9">{this.state.system.tomcatBuilt}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Server version</dt>
+                            <dt className="col-sm-2 content-title">Server version</dt>
                             <dd className="col-sm-9">{this.state.system.tomcatVersion}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Total memory</dt>
+                            <dt className="col-sm-2 content-title">Total memory</dt>
                             <dd className="col-sm-9">{this.state.system.totalMemory} MB</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Max memory</dt>
+                            <dt className="col-sm-2 content-title">Max memory</dt>
                             <dd className="col-sm-9">{this.state.system.maxMemory} MB</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Free memory</dt>
+                            <dt className="col-sm-2 content-title">Free memory</dt>
                             <dd className="col-sm-9">{this.state.system.freeMemory} MB</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Available processors</dt>
+                            <dt className="col-sm-2 content-title">Available processors</dt>
                             <dd className="col-sm-9">{this.state.system.availableProcessors}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-3">Home directory</dt>
+                            <dt className="col-sm-2 content-title">Home directory</dt>
                             <dd className="col-sm-9">{this.state.system.castleMockHomeDirectory}</dd>
                         </dl>
                     </div>
@@ -105,4 +108,8 @@ class System extends PureComponent {
     }
 }
 
-export default System
+
+export default connect(
+    null,
+    { setAuthenticationState }
+)(System);

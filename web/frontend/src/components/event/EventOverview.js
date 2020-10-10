@@ -19,6 +19,9 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
+import {connect} from "react-redux";
+import {setAuthenticationState} from "../../redux/Actions";
+import validateErrorResponse from "../../utility/HttpResponseValidator";
 
 const { SearchBar } = Search;
 
@@ -26,6 +29,8 @@ class EventOverview extends PureComponent {
 
     constructor(props) {
         super(props);
+        this.onDeleteAllEventsClick = this.onDeleteAllEventsClick.bind(this);
+        this.userDateFormat = this.userDateFormat.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -42,11 +47,13 @@ class EventOverview extends PureComponent {
         }, {
             dataField: 'startDate',
             text: 'Start date',
-            sort: true
+            sort: true,
+            formatter: this.userDateFormat
         }, {
             dataField: 'endDate',
             text: 'End date',
-            sort: true
+            sort: true,
+            formatter: this.userDateFormat
         }];
 
         this.defaultSort = [{
@@ -61,16 +68,38 @@ class EventOverview extends PureComponent {
         this.getEvents()
     }
 
+    userDateFormat(cell) {
+        if(cell == null){
+            return;
+        }
+
+        let date = new Date(cell).toLocaleString();
+        return (
+            <div>{date}</div>
+        )
+    }
+
     getEvents() {
         axios
-            .get("/api/rest/core/events")
+            .get("/api/rest/core/event")
             .then(response => {
                 this.setState({
                     Events: response.data,
                 });
             })
             .catch(error => {
-                this.props.validateErrorResponse(error);
+                validateErrorResponse(error, this.props.setAuthenticationState)
+            });
+    }
+
+    onDeleteAllEventsClick() {
+        axios
+            .delete("/api/rest/core/event")
+            .then(response => {
+                this.getEvents();
+            })
+            .catch(error => {
+                validateErrorResponse(error, this.props.setAuthenticationState)
             });
     }
 
@@ -83,7 +112,7 @@ class EventOverview extends PureComponent {
                             <h1>Events</h1>
                         </div>
                         <div className="menu">
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#importLogModal"><i className="fas fa-cloud-upload-alt"/> <span>Clear events</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteAllEventsModal"><i className="fas fa-cloud-upload-alt"/> <span>Clear events</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -113,9 +142,32 @@ class EventOverview extends PureComponent {
                         </div>
                     </div>
                 </section>
+
+                <div className="modal fade" id="deleteAllEventsModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteAllEventsModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteAllEventsModalLabel">Delete all events?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you wanna delete all the events?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteAllEventsClick}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
 }
 
-export default EventOverview
+export default connect(
+    null,
+    { setAuthenticationState }
+)(EventOverview);
