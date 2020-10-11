@@ -145,13 +145,4 @@ public abstract class AbstractViewController extends AbstractController {
         return !(auth instanceof AnonymousAuthenticationToken);
     }
 
-    /**
-     * The method indicates which protocol is used for the incoming request: HTTP or HTTPS
-     * @param request The request is used to determine the protocol
-     * @return HTTP is returned if the request is not secured. HTTPS is returned if the request is secured.
-     */
-    protected String getProtocol(final ServletRequest request){
-        return request.isSecure() ? HTTPS : HTTP;
-    }
-
 }

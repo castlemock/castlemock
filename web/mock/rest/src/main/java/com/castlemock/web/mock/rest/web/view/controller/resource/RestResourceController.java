@@ -36,7 +36,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class RestResourceController extends AbstractRestViewController {
     public ModelAndView defaultPage(@PathVariable final String restProjectId,
                                     @PathVariable final String restApplicationId,
                                     @PathVariable final String restResourceId,
-                                    final ServletRequest request) {
+                                    final HttpServletRequest request) {
         final ReadRestResourceOutput output = serviceProcessor.process(ReadRestResourceInput.builder()
                 .restProjectId(restProjectId)
                 .restApplicationId(restApplicationId)
@@ -81,8 +82,7 @@ public class RestResourceController extends AbstractRestViewController {
                 .build());
         final RestResource restResource = output.getRestResource();
 
-        final String protocol = getProtocol(request);
-        final String invokeAddress = getRestInvokeAddress(protocol, request.getServerPort(),
+        final String invokeAddress = getRestInvokeAddress(request,
                 restProjectId, restApplicationId, restResource.getUri());
         restResource.setInvokeAddress(invokeAddress);
         final ModelAndView model = createPartialModelAndView(PAGE);

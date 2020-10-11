@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * The class operates as a shared base for all the view related to the Graph QL module
  * @author Karl Dahlgren
@@ -71,16 +73,14 @@ public abstract class AbstractGraphQLViewController extends AbstractViewControll
 
     /**
      * The method provides the functionality to create the address which is used to invoke a GraphQL service
-     * @param protocol THe protocol
-     * @param serverPort The server port
+     * @param request The HttpServletRequest instance
      * @param projectId The id of the project
      * @param applicationId The id of the application
      * @return A URL based on all the incoming parameters
      */
-    protected String getGraphQLInvokeAddress(final String protocol, int serverPort, final String projectId, final String applicationId){
+    protected String getGraphQLInvokeAddress(final HttpServletRequest request, final String projectId, final String applicationId){
         try {
-            final String hostAddress = getHostAddress();
-            return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + GRAPHQL + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId;
+            return getBaseUrlInfo(request).getBaseUrl() + SLASH + MOCK + SLASH + GRAPHQL + SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId;
         } catch (Exception exception) {
             LOGGER.error("Unable to generate invoke URL", exception);
             throw new IllegalStateException("Unable to generate invoke URL for " + projectId);

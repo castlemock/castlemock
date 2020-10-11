@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -64,7 +64,7 @@ public class GraphQLApplicationController extends AbstractGraphQLViewController 
     public ModelAndView getApplication(@PathVariable final String projectId,
                                        @PathVariable final String applicationId,
                                         @RequestParam(value = UPLOAD, required = false) final String upload,
-                                       final ServletRequest request) {
+                                       final HttpServletRequest request) {
         final ReadGraphQLApplicationOutput output =  serviceProcessor.process(new ReadGraphQLApplicationInput(projectId, applicationId));
         final GraphQLApplication application = output.getGraphQLApplication();
 
@@ -77,9 +77,7 @@ public class GraphQLApplicationController extends AbstractGraphQLViewController 
         model.addObject(GraphQL_SUBSCRIPTION_MODIFIER_COMMAND, new GraphQLSubscriptionModifierCommand());
 
 
-        final String protocol = getProtocol(request);
-        final int port = request.getServerPort();
-        final String invokeAddress = getGraphQLInvokeAddress(protocol, port, projectId, applicationId);
+        final String invokeAddress = getGraphQLInvokeAddress(request, projectId, applicationId);
 
         application.setInvokeAddress(invokeAddress);
 

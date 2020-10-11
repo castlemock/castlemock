@@ -38,7 +38,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class SoapOperationController extends AbstractSoapViewController {
     public ModelAndView defaultPage(@PathVariable final String soapProjectId,
                                     @PathVariable final String soapPortId,
                                     @PathVariable final String soapOperationId,
-                                    final ServletRequest request) {
+                                    final HttpServletRequest request) {
         final ReadSoapPortOutput readSoapPortOutput = serviceProcessor.process(ReadSoapPortInput.builder()
                 .projectId(soapProjectId)
                 .portId(soapPortId)
@@ -91,8 +92,7 @@ public class SoapOperationController extends AbstractSoapViewController {
                 .operationId(soapOperationId)
                 .build());
 
-        final String protocol = getProtocol(request);
-        final String invokeAddress = getSoapInvokeAddress(protocol, request.getServerPort(), soapProjectId, soapPort.getUri());
+        final String invokeAddress = getSoapInvokeAddress(request, soapProjectId, soapPort.getUri());
         soapOperation.setInvokeAddress(invokeAddress);
 
         final ModelAndView model = createPartialModelAndView(PAGE);

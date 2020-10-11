@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * The class operates as a shared base for all the view related to the SOAP module
  * @author Karl Dahlgren
@@ -55,16 +57,14 @@ public class AbstractSoapViewController extends AbstractViewController {
 
     /**
      * The method provides the functionality to create the address which is used to invoke a SOAP service
-     * @param protocol THe protocol
-     * @param serverPort The server port
+     * @param request The HttpServletRequest instance
      * @param projectId The id of the project
      * @param urlPath The URL path (The end of the URL, which is used to identify the SOAP service)
      * @return A URL based on all the incoming parameters
      */
-    protected String getSoapInvokeAddress(final String protocol, int serverPort, final String projectId, final String urlPath){
+    protected String getSoapInvokeAddress(final HttpServletRequest request, final String projectId, final String urlPath){
         try {
-            final String hostAddress = getHostAddress();
-            return protocol + hostAddress + ":" + serverPort + getContext() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH + urlPath;
+        	return getBaseUrlInfo(request).getBaseUrl() + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH + urlPath;
         } catch (Exception exception) {
             LOGGER.error("Unable to generate invoke URL", exception);
             throw new IllegalStateException("Unable to generate invoke URL for " + projectId);
