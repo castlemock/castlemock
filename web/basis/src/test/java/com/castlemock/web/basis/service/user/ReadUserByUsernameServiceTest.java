@@ -65,7 +65,9 @@ public class ReadUserByUsernameServiceTest {
 
 
         Mockito.when(repository.findAll()).thenReturn(users);
-        final ReadUserByUsernameInput input = new ReadUserByUsernameInput("Username");
+        final ReadUserByUsernameInput input = ReadUserByUsernameInput.builder()
+                .username("Username")
+                .build();
         final ServiceTask<ReadUserByUsernameInput> serviceTask = new ServiceTask<ReadUserByUsernameInput>();
         serviceTask.setInput(input);
         final ServiceResult<ReadUserByUsernameOutput> serviceResult = service.process(serviceTask);

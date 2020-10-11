@@ -17,6 +17,9 @@
 package com.castlemock.core.mock.rest.service.project.output;
 
 import com.castlemock.core.basis.model.Output;
+import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -24,8 +27,14 @@ import com.castlemock.core.basis.model.Output;
  */
 public final class DeleteRestMethodOutput implements Output {
 
-    private DeleteRestMethodOutput(){
+    private final RestMethod method;
 
+    private DeleteRestMethodOutput(final Builder builder){
+        this.method = Objects.requireNonNull(builder.method);
+    }
+
+    public RestMethod getMethod() {
+        return method;
     }
 
     public static Builder builder(){
@@ -34,8 +43,15 @@ public final class DeleteRestMethodOutput implements Output {
 
     public static final class Builder {
 
+        private RestMethod method;
+
+        public Builder method(final RestMethod method){
+            this.method = method;
+            return this;
+        }
+
         public DeleteRestMethodOutput build(){
-            return new DeleteRestMethodOutput();
+            return new DeleteRestMethodOutput(this);
         }
 
     }

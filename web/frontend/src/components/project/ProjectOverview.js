@@ -112,9 +112,7 @@ class ProjectOverview extends PureComponent {
                 description: "",
                 projectType: "REST"
             },
-            unauthorized: false,
-            deleteProjectsDisabled: true,
-            exportProjectsDisabled: true
+            unauthorized: false
         };
 
         this.getProjects()
@@ -197,9 +195,7 @@ class ProjectOverview extends PureComponent {
             projects.splice(index, 1);
         }
         this.setState({
-            selectedProjects: projects,
-            exportProjectsDisabled: projects.length === 0,
-            deleteProjectsDisabled: projects.length === 0
+            selectedProjects: projects
         });
     }
 
@@ -218,15 +214,11 @@ class ProjectOverview extends PureComponent {
                 projects.push(project);
             });
             this.setState({
-                selectedProjects: projects,
-                deleteProjectsDisabled: false,
-                exportProjectsDisabled: false
+                selectedProjects: projects
             });
         } else if(mode === DESELECT){
             this.setState({
-                selectedProjects: [],
-                deleteProjectsDisabled: true,
-                exportProjectsDisabled: true
+                selectedProjects: []
             });
         }
     }
@@ -320,9 +312,9 @@ class ProjectOverview extends PureComponent {
                         </div>
                         <div className="table-result">
                             <div className="panel-buttons">
-                                <button className="btn btn-primary panel-button demo-button-disabled panel-button"  disabled={this.state.exportProjectsDisabled}
+                                <button className="btn btn-primary panel-button demo-button-disabled panel-button" disabled={this.state.selectedProjects.length === 0}
                                         data-toggle="modal" data-target="#exportProjectsModal"><i className="fas fa-cloud-download-alt"/> <span>Export projects</span></button>
-                                <button className="btn btn-danger demo-button-disabled panel-button" disabled={this.state.deleteProjectsDisabled}
+                                <button className="btn btn-danger demo-button-disabled panel-button" disabled={this.state.selectedProjects.length === 0}
                                         data-toggle="modal" data-target="#deleteProjectsModal"><i className="fas fa-trash"/> <span>Delete projects</span></button>
                             </div>
                         </div>

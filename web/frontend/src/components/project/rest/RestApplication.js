@@ -25,6 +25,9 @@ import {setAuthenticationState} from "../../../redux/Actions";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 const { SearchBar } = Search;
 
+const SELECT = true;
+const DESELECT = false;
+
 class RestApplication extends PureComponent {
 
     constructor(props) {
@@ -34,6 +37,7 @@ class RestApplication extends PureComponent {
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
         this.onDeleteApplicationClick = this.onDeleteApplicationClick.bind(this);
+        this.onDeleteResourcesClick = this.onDeleteResourcesClick.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -70,6 +74,16 @@ class RestApplication extends PureComponent {
             sort: true
         }];
 
+        this.updateColumns = [{
+            dataField: 'id',
+            text: 'id',
+            hidden: true
+        }, {
+            dataField: 'name',
+            text: 'Name',
+            sort: true
+        }];
+
         this.selectRow = {
             mode: 'checkbox',
             onSelect: this.onRowSelect,
@@ -86,21 +100,50 @@ class RestApplication extends PureComponent {
             applicationId: this.props.match.params.applicationId,
             application: {
                 resources: []
-            }
+            },
+            selectedResources: []
         };
 
         this.getApplication();
     }
 
-
-
     onRowSelect(value, mode) {
-
+        let resources = this.state.selectedResources.slice();
+        let resource = {
+            id: value.id,
+            name: value.name
+        };
+        if(mode === SELECT){
+            resources.push(resource);
+        } else if(mode === DESELECT){
+            let index = resources.indexOf(resource);
+            resources.splice(index, 1);
+        }
+        this.setState({
+            selectedResources: resources
+        });
     }
 
     onRowSelectAll(mode) {
-
+        if(mode === SELECT){
+            let resources = [];
+            this.state.application.resources.forEach(value => {
+                let resource = {
+                    id: value.id,
+                    name: value.name
+                };
+                resources.push(resource);
+            });
+            this.setState({
+                selectedResources: resources
+            });
+        } else if(mode === DESELECT){
+            this.setState({
+                selectedResources: []
+            });
+        }
     }
+
 
     nameFormat(cell, row) {
         if(cell == null){
@@ -138,6 +181,19 @@ class RestApplication extends PureComponent {
             });
     }
 
+    onDeleteResourcesClick() {
+        Array.from(this.state.selectedResources).forEach(resource => {
+            axios
+                .delete("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + resource.id)
+                .then(response => {
+                    this.getApplication();
+                })
+                .catch(error => {
+                    validateErrorResponse(error, this.props.setAuthenticationState)
+                });
+        });
+    }
+
     render() {
         return (
             <div>
@@ -157,6 +213,7 @@ class RestApplication extends PureComponent {
                         </div>
                         <div className="menu" align="right">
                             <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateApplicationModal"><i className="fas fa-plus-circle"/> <span>Update application</span></button>
+                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateApplicationModal"><i className="fas fa-plus-circle"/> <span>Create resource</span></button>
                             <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteApplicationModal"><i className="fas fa-plus-circle"/> <span>Delete application</span></button>
                         </div>
                     </div>
@@ -185,9 +242,15 @@ class RestApplication extends PureComponent {
                                     )}
                             </ToolkitProvider>
                             <div className="panel-buttons">
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateModal"><i className="fas fa-plus-circle"/> <span>Update application</span></button>
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateEndpointModal"><i className="fas fa-plus-circle"/> <span>Update application</span></button>
-                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteResourceModal"><i className="fas fa-plus-circle"/> <span>Update application</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedResources.length === 0}
+                                        data-target="#updateStatusModal"><i className="fas fa-plus-circle"/> <span>Update status</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedResources.length === 0}
+                                        data-target="#updateEndpointModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
+                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedResources.length === 0}
+                                        data-target="#deleteResourcesModal"><i className="fas fa-plus-circle"/> <span>Delete resource</span></button>
                             </div>
                         </div>
                     </div>
@@ -245,6 +308,134 @@ class RestApplication extends PureComponent {
                         </div>
                     </div>
                 </div>
+
+                <div className="modal fade" id="updateStatusModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateStatusModalLabel">Update status?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want update the status for the following resources?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedResources }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedResources} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Status</label>
+                                    <div className="col-sm-10">
+                                        <select id="inputStatus" className="form-control" defaultValue="MOCKED">
+                                            <option>MOCKED</option>
+                                            <option>DISABLED</option>
+                                            <option>FORWARDED</option>
+                                            <option>RECORDING</option>
+                                            <option>RECORD_ONCE</option>
+                                            <option>ECHO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary" data-dismiss="modal">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="updateEndpointModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateEndpointModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateEndpointModalLabel">Update endpoint?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want update the endpoint for the following resources?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedResources }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedResources} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Endpoint</label>
+                                    <div className="col-sm-10">
+                                        <input className="form-control" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary" data-dismiss="modal">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="deleteResourcesModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteResourcesModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteResourcesModalLabel">Delete resources?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want delete the following resources?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedResources }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedResources} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteResourcesClick}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         )
     }

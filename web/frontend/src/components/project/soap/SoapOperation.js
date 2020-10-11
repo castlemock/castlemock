@@ -25,6 +25,9 @@ import {setAuthenticationState} from "../../../redux/Actions";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 const { SearchBar } = Search;
 
+const SELECT = true;
+const DESELECT = false;
+
 class SoapOperation extends PureComponent {
 
     constructor(props) {
@@ -33,6 +36,10 @@ class SoapOperation extends PureComponent {
         this.onRowSelect = this.onRowSelect.bind(this);
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
+        this.setNewMockResponseName = this.setNewMockResponseName.bind(this);
+        this.setNewMockResponseStatus = this.setNewMockResponseStatus.bind(this);
+        this.onCreateMockResponseClick = this.onCreateMockResponseClick.bind(this);
+        this.onDeleteMockResponsesClick = this.onDeleteMockResponsesClick.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -50,6 +57,16 @@ class SoapOperation extends PureComponent {
         }, {
             dataField: 'httpStatusCode',
             text: 'HTTP status code',
+            sort: true
+        }];
+
+        this.updateColumns = [{
+            dataField: 'id',
+            text: 'id',
+            hidden: true
+        }, {
+            dataField: 'name',
+            text: 'Name',
             sort: true
         }];
 
@@ -71,20 +88,68 @@ class SoapOperation extends PureComponent {
             operation: {
                 operationIdentifier: {},
                 mockResponses: []
+            },
+            selectedMockResponses: [],
+            newMockResponse: {
+                name: "",
+                status: "ENABLED"
             }
         };
 
         this.getOperation();
     }
 
+    setNewMockResponseName(name) {
+        this.setState({ newMockResponse: {
+                ...this.state.newMockResponse,
+                name: name
+            }
+        });
+    }
 
+    setNewMockResponseStatus(status) {
+        this.setState({ newMockResponse: {
+                ...this.state.newMockResponse,
+                status: status
+            }
+        });
+    }
 
     onRowSelect(value, mode) {
-
+        let mockResponses = this.state.selectedMockResponses.slice();
+        let mockResponse = {
+            id: value.id,
+            name: value.name
+        };
+        if(mode === SELECT){
+            mockResponses.push(mockResponse);
+        } else if(mode === DESELECT){
+            let index = mockResponses.indexOf(mockResponse);
+            mockResponses.splice(index, 1);
+        }
+        this.setState({
+            selectedMockResponses: mockResponses
+        });
     }
 
     onRowSelectAll(mode) {
-
+        if(mode === SELECT){
+            let mockResponses = [];
+            this.state.operation.mockResponses.forEach(value => {
+                let mockResponse = {
+                    id: value.id,
+                    name: value.name
+                };
+                mockResponses.push(mockResponse);
+            });
+            this.setState({
+                selectedMockResponses: mockResponses
+            });
+        } else if(mode === DESELECT){
+            this.setState({
+                selectedMockResponses: []
+            });
+        }
     }
 
     nameFormat(cell, row) {
@@ -112,6 +177,33 @@ class SoapOperation extends PureComponent {
             });
     }
 
+    onCreateMockResponseClick() {
+        axios
+            .post("/api/rest/soap/project/" + this.state.projectId + "/port/" +
+                this.state.portId + "/operation/" + this.state.operationId + "/response",
+                this.state.newMockResponse)
+            .then(response => {
+                this.props.history.push("/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/response");
+            })
+            .catch(error => {
+                validateErrorResponse(error, this.props.setAuthenticationState)
+            });
+    }
+
+    onDeleteMockResponsesClick() {
+        this.state.selectedMockResponses.forEach(mockResponse => {
+            axios
+                .delete("/api/rest/soap/project/" + this.state.projectId + "/port/" +
+                    this.state.portId + "/operation/" + this.state.operationId + "/response/" + mockResponse.id)
+                .then(response => {
+                    this.getOperation();
+                })
+                .catch(error => {
+                    validateErrorResponse(error, this.props.setAuthenticationState)
+                });
+        })
+
+    }
 
     render() {
         return (
@@ -133,7 +225,7 @@ class SoapOperation extends PureComponent {
                         </div>
                         <div className="menu" align="right">
                             <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Update operation</span></button>
-                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Create response</span></button>
+                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createMockResponseModal"><i className="fas fa-plus-circle"/> <span>Create response</span></button>
                         </div>
                     </div>
                     <div className="content-summary">
@@ -211,9 +303,15 @@ class SoapOperation extends PureComponent {
                                     )}
                             </ToolkitProvider>
                             <div className="panel-buttons">
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Update</span></button>
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
-                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Delete port</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedMockResponses.length === 0}
+                                        data-target="#updateStatusModal"><i className="fas fa-plus-circle"/> <span>Update status</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedMockResponses.length === 0}
+                                        data-target="#updateOperationModal"><i className="fas fa-plus-circle"/> <span>Duplicate</span></button>
+                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedMockResponses.length === 0}
+                                        data-target="#deleteMockResponsesModal"><i className="fas fa-plus-circle"/> <span>Delete responses</span></button>
                             </div>
                         </div>
                     </div>
@@ -294,10 +392,170 @@ class SoapOperation extends PureComponent {
                         </div>
                     </div>
                 </div>
+
+                <div className="modal fade" id="createMockResponseModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="createMockResponseModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="createMockResponseModalLabel">Create response?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Name</label>
+                                    <div className="col-sm-10">
+                                        <input className="form-control" type="text" onChange={event => this.setNewMockResponseName(event.target.value)} />
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Status</label>
+                                    <div className="col-sm-10">
+                                        <select id="inputStatus" className="form-control" defaultValue="MOCKED" onChange={event => this.setNewMockResponseStatus(event.target.value)}>
+                                            <option>ENABLED</option>
+                                            <option>DISABLED</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary" data-dismiss="modal" onClick={this.onCreateMockResponseClick}>Create</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div className="modal fade" id="updateStatusModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateStatusModalLabel">Update status?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want update the status for the following mock responses?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedMockResponses }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedMockResponses} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Status</label>
+                                    <div className="col-sm-10">
+                                        <select id="inputStatus" className="form-control" defaultValue="MOCKED">
+                                            <option>MOCKED</option>
+                                            <option>DISABLED</option>
+                                            <option>FORWARDED</option>
+                                            <option>RECORDING</option>
+                                            <option>RECORD_ONCE</option>
+                                            <option>ECHO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary" data-dismiss="modal">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="updateEndpointModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateEndpointModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateEndpointModalLabel">Update endpoint?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want update the endpoint for the following mockResponses?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedMockResponses }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedMockResponses} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Endpoint</label>
+                                    <div className="col-sm-10">
+                                        <input className="form-control" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary" data-dismiss="modal">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="deleteMockResponsesModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteMockResponsesModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteMockResponsesModalLabel">Delete mockResponses?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want delete the following mockResponses?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedMockResponses }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedMockResponses} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteMockResponsesClick}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
-
 }
 
 export default connect(

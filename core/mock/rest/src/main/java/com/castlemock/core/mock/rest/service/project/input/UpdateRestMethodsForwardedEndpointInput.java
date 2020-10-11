@@ -18,10 +18,9 @@ package com.castlemock.core.mock.rest.service.project.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren
@@ -30,38 +29,38 @@ import java.util.Objects;
 public final class UpdateRestMethodsForwardedEndpointInput implements Input {
 
     @NotNull
-    private final String restProjectId;
+    private final String projectId;
     @NotNull
-    private final String restApplicationId;
+    private final String applicationId;
     @NotNull
-    private final String restResourceId;
+    private final String resourceId;
     @NotNull
-    private final List<RestMethod> restMethods;
+    private final Set<String> methodIds;
     @NotNull
     private final String forwardedEndpoint;
 
     private UpdateRestMethodsForwardedEndpointInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
-        this.restMethods = Objects.requireNonNull(builder.restMethods);
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.applicationId = Objects.requireNonNull(builder.applicationId);
+        this.resourceId = Objects.requireNonNull(builder.resourceId);
+        this.methodIds = Objects.requireNonNull(builder.methodIds);
         this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public String getRestResourceId() {
-        return restResourceId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public List<RestMethod> getRestMethods() {
-        return restMethods;
+    public Set<String> getMethodIds() {
+        return methodIds;
     }
 
     public String getForwardedEndpoint() {
@@ -74,29 +73,29 @@ public final class UpdateRestMethodsForwardedEndpointInput implements Input {
 
     public static final class Builder {
 
-        private String restProjectId;
-        private String restApplicationId;
-        private String restResourceId;
-        private List<RestMethod> restMethods;
+        private String projectId;
+        private String applicationId;
+        private String resourceId;
+        private Set<String> methodIds;
         private String forwardedEndpoint;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        public Builder projectId(final String restProjectId){
+            this.projectId = restProjectId;
             return this;
         }
 
-        public Builder restApplicationId(final String restApplicationId){
-            this.restApplicationId = restApplicationId;
+        public Builder applicationId(final String restApplicationId){
+            this.applicationId = restApplicationId;
             return this;
         }
 
-        public Builder restResourceId(final String restResourceId){
-            this.restResourceId = restResourceId;
+        public Builder resourceId(final String restResourceId){
+            this.resourceId = restResourceId;
             return this;
         }
 
-        public Builder restMethods(final List<RestMethod> restMethods){
-            this.restMethods = restMethods;
+        public Builder methodIds(final Set<String> methodIds){
+            this.methodIds = methodIds;
             return this;
         }
 

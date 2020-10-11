@@ -121,6 +121,7 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
         user.setEmail(updatedUser.getEmail());
         user.setStatus(updatedUser.getStatus());
         user.setRole(updatedUser.getRole());
+        user.setFullName(updatedUser.getFullName());
         user.setUpdated(updatedTimestamp);
 
         if(updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()){

@@ -25,6 +25,9 @@ import {setAuthenticationState} from "../../../redux/Actions";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 const { SearchBar } = Search;
 
+const SELECT = true;
+const DESELECT = false;
+
 class SoapPort extends PureComponent {
 
     constructor(props) {
@@ -36,7 +39,7 @@ class SoapPort extends PureComponent {
         this.methodHeaderStyle = this.methodHeaderStyle.bind(this);
         this.responseStrategyHeaderStyle = this.responseStrategyHeaderStyle.bind(this);
         this.statusHeaderStyle = this.statusHeaderStyle.bind(this);
-
+        this.onDeletePortClick = this.onDeletePortClick.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -64,6 +67,16 @@ class SoapPort extends PureComponent {
             headerStyle: this.statusHeaderStyle
         }];
 
+        this.updateColumns = [{
+            dataField: 'id',
+            text: 'id',
+            hidden: true
+        }, {
+            dataField: 'name',
+            text: 'Name',
+            sort: true
+        }];
+
         this.selectRow = {
             mode: 'checkbox',
             onSelect: this.onRowSelect,
@@ -80,7 +93,8 @@ class SoapPort extends PureComponent {
             portId: this.props.match.params.portId,
             port: {
                 operations: []
-            }
+            },
+            selectedOperations: []
         };
 
         this.getPort();
@@ -97,13 +111,42 @@ class SoapPort extends PureComponent {
     statusHeaderStyle() {
         return { 'whiteSpace': 'nowrap', width: '150px' };
     }
-
+    
     onRowSelect(value, mode) {
-
+        let operations = this.state.selectedOperations.slice();
+        let operation = {
+            id: value.id,
+            name: value.name
+        };
+        if(mode === SELECT){
+            operations.push(operation);
+        } else if(mode === DESELECT){
+            let index = operations.indexOf(operation);
+            operations.splice(index, 1);
+        }
+        this.setState({
+            selectedOperations: operations
+        });
     }
 
     onRowSelectAll(mode) {
-
+        if(mode === SELECT){
+            let operations = [];
+            this.state.port.operations.forEach(value => {
+                let operation = {
+                    id: value.id,
+                    name: value.name
+                };
+                operations.push(operation);
+            });
+            this.setState({
+                selectedOperations: operations
+            });
+        } else if(mode === DESELECT){
+            this.setState({
+                selectedOperations: []
+            });
+        }
     }
 
     nameFormat(cell, row) {
@@ -131,6 +174,16 @@ class SoapPort extends PureComponent {
             });
     }
 
+    onDeletePortClick() {
+        axios
+            .delete("/api/rest/core/project/soap/" + this.state.projectId + "/port/" + this.state.portId)
+            .then(response => {
+                this.props.history.push("/web/rest/core/project/soap/" + this.state.projectId);
+            })
+            .catch(error => {
+                validateErrorResponse(error, this.props.setAuthenticationState)
+            });
+    }
 
     render() {
         return (
@@ -148,6 +201,9 @@ class SoapPort extends PureComponent {
                     <div className="content-top">
                         <div className="title">
                             <h1>Port: {this.state.port.name}</h1>
+                        </div>
+                        <div className="menu" align="right">
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deletePortModal"><i className="fas fa-plus-circle"/> <span>Delete port</span></button>
                         </div>
                     </div>
                     <div className="content-summary">
@@ -191,15 +247,130 @@ class SoapPort extends PureComponent {
                                     )}
                             </ToolkitProvider>
                             <div className="panel-buttons">
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedOperations.length === 0}
+                                        data-target="#updateStatusModal"><i className="fas fa-plus-circle"/> <span>Update status</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedOperations.length === 0}
+                                        data-target="#updateEndpointModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
                             </div>
                         </div>
                     </div>
                 </section>
+
+                <div className="modal fade" id="updateStatusModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateStatusModalLabel">Update status?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want update the status for the following operations?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedOperations }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedOperations} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Status</label>
+                                    <div className="col-sm-10">
+                                        <select id="inputStatus" className="form-control" defaultValue="MOCKED">
+                                            <option>MOCKED</option>
+                                            <option>DISABLED</option>
+                                            <option>FORWARDED</option>
+                                            <option>RECORDING</option>
+                                            <option>RECORD_ONCE</option>
+                                            <option>ECHO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary" data-dismiss="modal">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div className="modal fade" id="deletePortModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deletePortModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deletePortModalLabel">Delete the port?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you wanna delete the port?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeletePortClick}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="updateEndpointModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateEndpointModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateEndpointModalLabel">Update endpoint?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want update the endpoint for the following operations?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedOperations }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedOperations} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Endpoint</label>
+                                    <div className="col-sm-10">
+                                        <input className="form-control" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary" data-dismiss="modal">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
-
 }
 
 export default connect(

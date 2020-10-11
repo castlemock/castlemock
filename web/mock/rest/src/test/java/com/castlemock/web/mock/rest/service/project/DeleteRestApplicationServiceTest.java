@@ -18,12 +18,7 @@ package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseTestBuilder;
-import com.castlemock.core.mock.rest.model.project.domain.RestResource;
-import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.core.mock.rest.service.project.input.DeleteRestApplicationInput;
 import com.castlemock.core.mock.rest.service.project.output.DeleteRestApplicationOutput;
 import com.castlemock.repository.rest.project.RestApplicationRepository;
@@ -69,10 +64,12 @@ public class DeleteRestApplicationServiceTest {
     public void testProcess(){
         final String projectId = "ProjectId";
         final String applicationId = "ApplicationId";
+        final RestApplication application = RestApplicationTestBuilder.builder().build();
         final RestResource resource = RestResourceTestBuilder.builder().build();
         final RestMethod method = RestMethodTestBuilder.builder().build();
         final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
 
+        Mockito.when(applicationRepository.delete(Mockito.any())).thenReturn(application);
         Mockito.when(resourceRepository.findWithApplicationId(applicationId)).thenReturn(Arrays.asList(resource));
         Mockito.when(methodRepository.findWithResourceId(resource.getId())).thenReturn(Arrays.asList(method));
         Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(Arrays.asList(mockResponse));

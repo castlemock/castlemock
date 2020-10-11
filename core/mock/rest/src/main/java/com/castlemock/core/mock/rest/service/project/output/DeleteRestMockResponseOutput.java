@@ -17,6 +17,9 @@
 package com.castlemock.core.mock.rest.service.project.output;
 
 import com.castlemock.core.basis.model.Output;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -24,8 +27,14 @@ import com.castlemock.core.basis.model.Output;
  */
 public final class DeleteRestMockResponseOutput implements Output {
 
-    private DeleteRestMockResponseOutput(){
+    private final RestMockResponse mockResponse;
 
+    private DeleteRestMockResponseOutput(final Builder builder){
+        this.mockResponse = Objects.requireNonNull(builder.mockResponse);
+    }
+
+    public RestMockResponse getMockResponse() {
+        return mockResponse;
     }
 
     public static Builder builder(){
@@ -34,8 +43,15 @@ public final class DeleteRestMockResponseOutput implements Output {
 
     public static final class Builder {
 
+        private RestMockResponse mockResponse;
+
+        public Builder mockResponse(final RestMockResponse mockResponse){
+            this.mockResponse = mockResponse;
+            return this;
+        }
+
         public DeleteRestMockResponseOutput build(){
-            return new DeleteRestMockResponseOutput();
+            return new DeleteRestMockResponseOutput(this);
         }
 
     }

@@ -21,9 +21,13 @@ import com.castlemock.core.mock.rest.service.project.input.CreateRestMockRespons
 import com.castlemock.core.mock.rest.service.project.input.DeleteRestMockResponseInput;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMockResponseInput;
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestMockResponseInput;
+import com.castlemock.core.mock.rest.service.project.output.CreateRestMockResponseOutput;
+import com.castlemock.core.mock.rest.service.project.output.DeleteRestMockResponseOutput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMockResponseOutput;
+import com.castlemock.core.mock.rest.service.project.output.UpdateRestMockResponseOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import io.swagger.annotations.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +45,7 @@ public class ReadMockResponseRestController extends AbstractRestController {
             value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/mockresponse/{responseId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    RestMockResponse getResponse(
+    ResponseEntity<RestMockResponse> getResponse(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
@@ -59,16 +63,16 @@ public class ReadMockResponseRestController extends AbstractRestController {
                 .restMethodId(methodId)
                 .restMockResponse(responseId)
                 .build());
-        return output.getRestMockResponse();
+        return ResponseEntity.ok(output.getRestMockResponse());
     }
 
-    @ApiOperation(value = "Delete mocked response")
+    @ApiOperation(value = "Delete mocked response", response = RestMockResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted mocked response")})
     @RequestMapping(method = RequestMethod.DELETE,
             value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/mockresponse/{responseId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public void deleteResponse(
+    public ResponseEntity<RestMockResponse> deleteResponse(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
@@ -79,22 +83,23 @@ public class ReadMockResponseRestController extends AbstractRestController {
             @PathVariable(value = "methodId") final String methodId,
             @ApiParam(name = "responseId", value = "The id of the response")
             @PathVariable(value = "responseId") final String responseId) {
-        super.serviceProcessor.process(DeleteRestMockResponseInput.builder()
+        final DeleteRestMockResponseOutput output = super.serviceProcessor.process(DeleteRestMockResponseInput.builder()
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
                 .restResourceId(resourceId)
                 .restMethodId(methodId)
                 .restMockResponseId(responseId)
                 .build());
+        return ResponseEntity.ok(output.getMockResponse());
     }
 
-    @ApiOperation(value = "Update mocked response")
+    @ApiOperation(value = "Update mocked response", response = RestMockResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated mocked response")})
     @RequestMapping(method = RequestMethod.PUT,
             value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/mockresponse/{responseId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public void updateResponse(
+    public ResponseEntity<RestMockResponse> updateResponse(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
@@ -106,7 +111,7 @@ public class ReadMockResponseRestController extends AbstractRestController {
             @ApiParam(name = "responseId", value = "The id of the response")
             @PathVariable(value = "responseId") final String responseId,
             @RequestBody RestMockResponse mockResponse) {
-        super.serviceProcessor.process(UpdateRestMockResponseInput.builder()
+        final UpdateRestMockResponseOutput output = super.serviceProcessor.process(UpdateRestMockResponseInput.builder()
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
                 .restResourceId(resourceId)
@@ -114,15 +119,16 @@ public class ReadMockResponseRestController extends AbstractRestController {
                 .restMockResponseId(responseId)
                 .restMockResponse(mockResponse)
                 .build());
+        return ResponseEntity.ok(output.getUpdatedRestMockResponse());
     }
 
-    @ApiOperation(value = "Create mocked response")
+    @ApiOperation(value = "Create mocked response", response = RestMockResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully created mocked response")})
     @RequestMapping(method = RequestMethod.POST,
             value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public void createResponse(
+    public ResponseEntity<RestMockResponse> createResponse(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
@@ -132,13 +138,14 @@ public class ReadMockResponseRestController extends AbstractRestController {
             @ApiParam(name = "methodId", value = "The id of the method")
             @PathVariable(value = "methodId") final String methodId,
             @RequestBody RestMockResponse mockResponse) {
-        super.serviceProcessor.process(CreateRestMockResponseInput.builder()
+        final CreateRestMockResponseOutput output = super.serviceProcessor.process(CreateRestMockResponseInput.builder()
                 .projectId(projectId)
                 .applicationId(applicationId)
                 .resourceId(resourceId)
                 .methodId(methodId)
                 .mockResponse(mockResponse)
                 .build());
+        return ResponseEntity.ok(output.getRestMockResponse());
     }
 
 }

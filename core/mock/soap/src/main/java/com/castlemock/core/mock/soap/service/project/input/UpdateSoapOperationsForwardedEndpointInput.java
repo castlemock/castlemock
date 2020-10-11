@@ -18,10 +18,9 @@ package com.castlemock.core.mock.soap.service.project.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren
@@ -34,14 +33,14 @@ public final class UpdateSoapOperationsForwardedEndpointInput implements Input {
     @NotNull
     private final String portId;
     @NotNull
-    private final List<SoapOperation> operations;
+    private final Set<String> operationIds;
     @NotNull
     private final String forwardedEndpoint;
 
     public UpdateSoapOperationsForwardedEndpointInput(final Builder builder) {
         this.projectId = Objects.requireNonNull(builder.projectId);
         this.portId = Objects.requireNonNull(builder.portId);
-        this.operations = Objects.requireNonNull(builder.operations);
+        this.operationIds = Objects.requireNonNull(builder.operationIds);
         this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
     }
 
@@ -53,14 +52,13 @@ public final class UpdateSoapOperationsForwardedEndpointInput implements Input {
         return portId;
     }
 
-    public List<SoapOperation> getOperations() {
-        return operations;
+    public Set<String> getOperationIds() {
+        return operationIds;
     }
 
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
-
 
     public static Builder builder(){
         return new Builder();
@@ -69,7 +67,7 @@ public final class UpdateSoapOperationsForwardedEndpointInput implements Input {
     public static class Builder {
         private String projectId;
         private String portId;
-        private List<SoapOperation> operations;
+        private Set<String> operationIds;
         private String forwardedEndpoint;
 
         private Builder(){
@@ -86,8 +84,8 @@ public final class UpdateSoapOperationsForwardedEndpointInput implements Input {
             return this;
         }
 
-        public Builder operations(final List<SoapOperation> operations){
-            this.operations = operations;
+        public Builder operationIds(final Set<String> operationIds){
+            this.operationIds = operationIds;
             return this;
         }
 

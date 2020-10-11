@@ -21,6 +21,7 @@ import com.castlemock.core.mock.soap.service.project.input.ReadSoapOperationInpu
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import io.swagger.annotations.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,8 @@ public class SoapOperationRestController extends AbstractRestController {
             @ApiResponse(code = 200, message = "Successfully retrieved operation")})
     @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}/port/{portId}/operation/{operationId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public @ResponseBody SoapOperation getPort(
+    public @ResponseBody
+    ResponseEntity<SoapOperation> getPort(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "portId", value = "The id of the port")
@@ -50,7 +52,7 @@ public class SoapOperationRestController extends AbstractRestController {
                 .portId(portId)
                 .operationId(operationId)
                 .build());
-        return output.getOperation();
+        return ResponseEntity.ok(output.getOperation());
     }
 
 }

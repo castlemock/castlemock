@@ -83,7 +83,7 @@ class SoapMockResponse extends PureComponent {
 
     getMockResponse() {
         axios
-            .get("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/response/" + this.state.mockResponseId)
+            .get("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + this.state.mockResponseId)
             .then(response => {
                 this.setState({
                     mockResponse: response.data,
@@ -96,7 +96,7 @@ class SoapMockResponse extends PureComponent {
 
     onDeleteMockResponseClick() {
         axios
-            .delete("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/response/" + this.state.mockResponseId)
+            .delete("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + this.state.mockResponseId)
             .then(response => {
                 this.props.history.push("/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId);
             })
@@ -159,7 +159,23 @@ class SoapMockResponse extends PureComponent {
                             <Tab eventKey="headers" title="Headers">
                                 <div>
                                     <h4>Add header</h4>
-
+                                    <div>
+                                        <div className="form-group row">
+                                            <label className="col-sm-2 col-form-label">Name</label>
+                                            <div className="col-sm-10">
+                                                <input className="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div className="form-group row">
+                                            <label className="col-sm-2 col-form-label">Value</label>
+                                            <div className="col-sm-10">
+                                                <input className="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div className="form-group row">
+                                            <button className="btn btn-success demo-button-disabled menu-button" ><i className="fas fa-plus-circle"/> <span>Add header</span></button>
+                                        </div>
+                                    </div>
                                     <div className="table-result">
                                         <ToolkitProvider bootstrap4
                                                          columns={ this.headerColumns}

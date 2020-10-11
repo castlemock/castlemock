@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 
+import java.util.Objects;
+
 /**
  * Read a user with a specific username
  * @author Karl Dahlgren
@@ -31,12 +33,31 @@ public final class ReadUserByUsernameInput implements Input {
     @NotNull
     private final String username;
 
-    public ReadUserByUsernameInput(final String username) {
-        this.username = username;
+    private ReadUserByUsernameInput(final Builder builder) {
+        this.username = Objects.requireNonNull(builder.username);
     }
 
     public String getUsername() {
         return username;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String username;
+
+        private Builder() {
+        }
+
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public ReadUserByUsernameInput build() {
+            return new ReadUserByUsernameInput(this);
+        }
+    }
 }

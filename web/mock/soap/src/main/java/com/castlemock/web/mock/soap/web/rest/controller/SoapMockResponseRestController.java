@@ -24,8 +24,10 @@ import com.castlemock.core.mock.soap.service.project.input.UpdateSoapMockRespons
 import com.castlemock.core.mock.soap.service.project.output.CreateSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.service.project.output.DeleteSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
+import com.castlemock.core.mock.soap.service.project.output.UpdateSoapMockResponseOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import io.swagger.annotations.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -40,10 +42,10 @@ public class SoapMockResponseRestController extends AbstractRestController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved mocked response")})
     @RequestMapping(method = RequestMethod.GET,
-            value = "/project/{projectId}/port/{portId}/operation/{operationId}/response/{responseId}")
+            value = "/project/{projectId}/port/{portId}/operation/{operationId}/mockresponse/{responseId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    SoapMockResponse getMockResponse(
+    ResponseEntity<SoapMockResponse> getMockResponse(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "portId", value = "The id of the port")
@@ -58,16 +60,16 @@ public class SoapMockResponseRestController extends AbstractRestController {
                 .operationId(operationId)
                 .mockResponseId(responseId)
                 .build());
-        return output.getMockResponse();
+        return ResponseEntity.ok(output.getMockResponse());
     }
 
     @ApiOperation(value = "Create mocked response")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully created mocked response")})
     @RequestMapping(method = RequestMethod.POST,
-            value = "/project/{projectId}/port/{portId}/operation/{operationId}")
+            value = "/project/{projectId}/port/{portId}/operation/{operationId}/mockresponse")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public void createMockResponse(
+    public ResponseEntity<SoapMockResponse> createMockResponse(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "portId", value = "The id of the port")
@@ -75,21 +77,22 @@ public class SoapMockResponseRestController extends AbstractRestController {
             @ApiParam(name = "operationId", value = "The id of the operation")
             @PathVariable(value = "operationId") final String operationId,
             @RequestBody SoapMockResponse response) {
-        super.serviceProcessor.process(CreateSoapMockResponseInput.builder()
+        final CreateSoapMockResponseOutput output = super.serviceProcessor.process(CreateSoapMockResponseInput.builder()
                 .projectId(projectId)
                 .portId(portId)
                 .operationId(operationId)
                 .mockResponse(response)
                 .build());
+        return ResponseEntity.ok(output.getMockResponse());
     }
 
     @ApiOperation(value = "Update mocked response")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated mocked response")})
     @RequestMapping(method = RequestMethod.POST,
-            value = "/project/{projectId}/port/{portId}/operation/{operationId}/response/{responseId}")
+            value = "/project/{projectId}/port/{portId}/operation/{operationId}/mockresponse/{responseId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public void updateMockResponse(
+    public ResponseEntity<SoapMockResponse> updateMockResponse(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "portId", value = "The id of the port")
@@ -99,13 +102,14 @@ public class SoapMockResponseRestController extends AbstractRestController {
             @ApiParam(name = "responseId", value = "The id of the response")
             @PathVariable(value = "responseId") final String responseId,
             @RequestBody SoapMockResponse response) {
-        super.serviceProcessor.process(UpdateSoapMockResponseInput.builder()
+        final UpdateSoapMockResponseOutput output = super.serviceProcessor.process(UpdateSoapMockResponseInput.builder()
                 .projectId(projectId)
                 .portId(portId)
                 .operationId(operationId)
                 .mockResponseId(responseId)
                 .mockResponse(response)
                 .build());
+        return ResponseEntity.ok(output.getMockResponse());
     }
 
 
@@ -113,9 +117,9 @@ public class SoapMockResponseRestController extends AbstractRestController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully delete mocked response")})
     @RequestMapping(method = RequestMethod.DELETE,
-            value = "/project/{projectId}/port/{portId}/operation/{operationId}/response/{responseId}")
+            value = "/project/{projectId}/port/{portId}/operation/{operationId}/mockresponse/{responseId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public void deleteMockResponse(
+    public ResponseEntity<SoapMockResponse> deleteMockResponse(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "portId", value = "The id of the port")
@@ -124,12 +128,13 @@ public class SoapMockResponseRestController extends AbstractRestController {
             @PathVariable(value = "operationId") final String operationId,
             @ApiParam(name = "responseId", value = "The id of the response")
             @PathVariable(value = "responseId") final String responseId) {
-        super.serviceProcessor.process(DeleteSoapMockResponseInput.builder()
+        final DeleteSoapMockResponseOutput output = super.serviceProcessor.process(DeleteSoapMockResponseInput.builder()
                 .projectId(projectId)
                 .portId(portId)
                 .operationId(operationId)
                 .mockResponseId(responseId)
                 .build());
+        return ResponseEntity.ok(output.getMockResponse());
     }
 
 }

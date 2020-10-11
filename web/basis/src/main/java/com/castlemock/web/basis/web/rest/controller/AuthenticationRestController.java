@@ -67,7 +67,9 @@ public class AuthenticationRestController extends AbstractRestController {
     public @ResponseBody ResponseEntity<AuthenticationResponse> login(@RequestBody final AuthenticationRequest request, final HttpServletResponse httpServletResponse) {
         final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         if(authentication.isAuthenticated()){
-            final ReadUserByUsernameOutput output = serviceProcessor.process(new ReadUserByUsernameInput(request.getUsername()));
+            final ReadUserByUsernameOutput output = serviceProcessor.process(ReadUserByUsernameInput.builder()
+                    .username(request.getUsername())
+                    .build());
             final Map<String, String> claims = new HashMap<>();
             claims.put("userId", output.getUser().getId());
             final String token = jwtEncoderDecoder.createToken(claims);

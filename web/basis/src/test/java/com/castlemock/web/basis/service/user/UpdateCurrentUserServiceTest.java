@@ -83,7 +83,12 @@ public class UpdateCurrentUserServiceTest {
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         Mockito.when(repository.findAll()).thenReturn(users);
         Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
-        final UpdateCurrentUserInput input = new UpdateCurrentUserInput(updatedUser);
+        final UpdateCurrentUserInput input = UpdateCurrentUserInput.builder()
+                .fullName(updatedUser.getFullName())
+                .password(updatedUser.getPassword())
+                .email(updatedUser.getEmail())
+                .username(updatedUser.getUsername())
+                .build();
         final ServiceTask<UpdateCurrentUserInput> serviceTask = new ServiceTask<UpdateCurrentUserInput>();
         serviceTask.setServiceConsumer("Username");
         serviceTask.setInput(input);

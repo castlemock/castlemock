@@ -18,15 +18,17 @@ package com.castlemock.web.mock.rest.web.rest.controller;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestProjectInput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationsForwardedEndpointInput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationsStatusInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestProjectOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestApplicationForwardedEndpointsRequest;
+import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestApplicationStatusesRequest;
 import io.swagger.annotations.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("api/rest/rest")
@@ -39,14 +41,52 @@ public class RestProjectRestController extends AbstractRestController {
             @ApiResponse(code = 200, message = "Successfully retrieved REST Project")})
     @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public @ResponseBody RestProject getRestProject(
+    public @ResponseBody
+    ResponseEntity<RestProject> getRestProject(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId) {
         final ReadRestProjectOutput output = super.serviceProcessor.process(ReadRestProjectInput.builder()
                 .restProjectId(projectId)
                 .build());
 
-        return output.getRestProject();
+        return ResponseEntity.ok(output.getRestProject());
+    }
+
+    @ApiOperation(value = "Update Application statuses")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully updated REST application statuses")})
+    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/status")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<Void> updateApplicationStatuses(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @RequestBody UpdateRestApplicationStatusesRequest request){
+        request.getApplicationIds()
+                .forEach(applicationId -> super.serviceProcessor.process(UpdateRestApplicationsStatusInput.builder()
+                        .projectId(projectId)
+                        .applicationId(applicationId)
+                        .methodStatus(request.getStatus())
+                        .build()));
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "Update Application forwarded endpoints")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully updated REST application forwarded endpoints")})
+    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/endpoint/forwarded")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<Void> updateApplicationForwardedEndpoints(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @RequestBody UpdateRestApplicationForwardedEndpointsRequest request){
+        super.serviceProcessor.process(UpdateRestApplicationsForwardedEndpointInput.builder()
+                .projectId(projectId)
+                .applicationIds(request.getApplicationIds())
+                .forwardedEndpoint(request.getForwardedEndpoint())
+                .build());
+        return ResponseEntity.ok().build();
     }
 
 }

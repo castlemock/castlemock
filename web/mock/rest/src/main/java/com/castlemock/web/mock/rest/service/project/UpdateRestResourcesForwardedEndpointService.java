@@ -19,7 +19,6 @@ package com.castlemock.web.mock.rest.service.project;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestResourcesForwardedEndpointInput;
 import com.castlemock.core.mock.rest.service.project.output.UpdateRestResourcesForwardedEndpointOutput;
 
@@ -43,9 +42,8 @@ public class UpdateRestResourcesForwardedEndpointService extends AbstractRestPro
     @Override
     public ServiceResult<UpdateRestResourcesForwardedEndpointOutput> process(final ServiceTask<UpdateRestResourcesForwardedEndpointInput> serviceTask) {
         final UpdateRestResourcesForwardedEndpointInput input = serviceTask.getInput();
-        input.getRestResources()
+        input.getResourceIds()
                 .stream()
-                .map(RestResource::getId)
                 .map(this.methodRepository::findWithResourceId)
                 .flatMap(List::stream)
                 .forEach(restMethod -> {

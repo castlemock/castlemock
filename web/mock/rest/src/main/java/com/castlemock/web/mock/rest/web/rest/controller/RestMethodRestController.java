@@ -21,9 +21,13 @@ import com.castlemock.core.mock.rest.service.project.input.CreateRestMethodInput
 import com.castlemock.core.mock.rest.service.project.input.DeleteRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestMethodInput;
+import com.castlemock.core.mock.rest.service.project.output.CreateRestMethodOutput;
+import com.castlemock.core.mock.rest.service.project.output.DeleteRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
+import com.castlemock.core.mock.rest.service.project.output.UpdateRestMethodOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import io.swagger.annotations.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +44,7 @@ public class RestMethodRestController extends AbstractRestController {
             value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    RestMethod getMethod(
+    ResponseEntity<RestMethod> getMethod(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
@@ -55,16 +59,16 @@ public class RestMethodRestController extends AbstractRestController {
                 .restResourceId(resourceId)
                 .restMethodId(methodId)
                 .build());
-        return output.getRestMethod();
+        return ResponseEntity.ok(output.getRestMethod());
     }
 
-    @ApiOperation(value = "Delete Method")
+    @ApiOperation(value = "Delete Method", response = RestMethod.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted method")})
     @RequestMapping(method = RequestMethod.DELETE,
             value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public void deleteMethod(
+    public ResponseEntity<RestMethod> deleteMethod(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
@@ -73,21 +77,22 @@ public class RestMethodRestController extends AbstractRestController {
             @PathVariable(value = "resourceId") final String resourceId,
             @ApiParam(name = "methodId", value = "The id of the method")
             @PathVariable(value = "methodId") final String methodId) {
-        super.serviceProcessor.process(DeleteRestMethodInput.builder()
+        final DeleteRestMethodOutput output = super.serviceProcessor.process(DeleteRestMethodInput.builder()
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
                 .restResourceId(resourceId)
                 .restMethodId(methodId)
                 .build());
+        return ResponseEntity.ok(output.getMethod());
     }
 
-    @ApiOperation(value = "Update Method")
+    @ApiOperation(value = "Update Method", response = RestMethod.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated method")})
     @RequestMapping(method = RequestMethod.PUT,
             value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public void updateMethod(
+    public ResponseEntity<RestMethod> updateMethod(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
@@ -97,23 +102,24 @@ public class RestMethodRestController extends AbstractRestController {
             @ApiParam(name = "methodId", value = "The id of the method")
             @PathVariable(value = "methodId") final String methodId,
             @RequestBody RestMethod restMethod) {
-        super.serviceProcessor.process(UpdateRestMethodInput.builder()
+        final UpdateRestMethodOutput output = super.serviceProcessor.process(UpdateRestMethodInput.builder()
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
                 .restResourceId(resourceId)
                 .restMethodId(methodId)
                 .restMethod(restMethod)
                 .build());
+        return ResponseEntity.ok(output.getRestMethod());
     }
 
 
-    @ApiOperation(value = "Create Method")
+    @ApiOperation(value = "Create Method", response = RestMethod.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully created method")})
     @RequestMapping(method = RequestMethod.POST,
-            value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}")
+            value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public void createMethod(
+    public ResponseEntity<RestMethod> createMethod(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
@@ -121,12 +127,13 @@ public class RestMethodRestController extends AbstractRestController {
             @ApiParam(name = "resourceId", value = "The id of the resource")
             @PathVariable(value = "resourceId") final String resourceId,
             @RequestBody RestMethod restMethod) {
-       super.serviceProcessor.process(CreateRestMethodInput.builder()
+       final CreateRestMethodOutput output = super.serviceProcessor.process(CreateRestMethodInput.builder()
                 .projectId(projectId)
                 .applicationId(applicationId)
                 .resourceId(resourceId)
                 .method(restMethod)
                 .build());
+       return ResponseEntity.ok(output.getCreatedRestMethod());
     }
 
 }

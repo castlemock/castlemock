@@ -17,11 +17,7 @@
 package com.castlemock.web.basis.web.rest.controller;
 
 import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.input.CreateUserInput;
-import com.castlemock.core.basis.service.user.input.DeleteUserInput;
-import com.castlemock.core.basis.service.user.input.ReadAllUsersInput;
-import com.castlemock.core.basis.service.user.input.ReadUserInput;
-import com.castlemock.core.basis.service.user.input.UpdateUserInput;
+import com.castlemock.core.basis.service.user.input.*;
 import com.castlemock.core.basis.service.user.output.CreateUserOutput;
 import com.castlemock.core.basis.service.user.output.ReadAllUsersOutput;
 import com.castlemock.core.basis.service.user.output.ReadUserOutput;
@@ -31,13 +27,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,13 +48,13 @@ public class UserCoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.POST, value = "/user")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
-    User createUser(@RequestBody final User user) {
+    ResponseEntity<User> createUser(@RequestBody final User user) {
         final CreateUserOutput output = serviceProcessor.process(CreateUserInput.builder()
                 .user(user)
                 .build());
         final User createdUser = output.getSavedUser();
         createdUser.setPassword(EMPTY);
-        return createdUser;
+        return ResponseEntity.ok(createdUser);
     }
 
     @ApiOperation(value = "Update user",response = User.class,
@@ -72,7 +65,7 @@ public class UserCoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.PUT, value = "/user/{userId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
-    User updateUser(@PathVariable("userId") final String userId,
+    ResponseEntity<User> updateUser(@PathVariable("userId") final String userId,
                     @RequestBody final User user) {
         final UpdateUserOutput output = serviceProcessor.process(UpdateUserInput.builder()
                 .user(user)
@@ -80,7 +73,7 @@ public class UserCoreRestController extends AbstractRestController {
                 .build());
         final User updatedUser = output.getUpdatedUser();
         updatedUser.setPassword(EMPTY);
-        return updatedUser;
+        return ResponseEntity.ok(updatedUser);
     }
 
     @ApiOperation(value = "Get all users",response = User.class,
@@ -91,11 +84,11 @@ public class UserCoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/user")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
-    List<User> getUsers() {
+    ResponseEntity<List<User>> getUsers() {
         final ReadAllUsersOutput output = serviceProcessor.process(new ReadAllUsersInput());
         final List<User> users = output.getUsers();
         users.forEach(user -> user.setPassword(EMPTY));
-        return users;
+        return ResponseEntity.ok(users);
     }
 
     @ApiOperation(value = "Get user",response = User.class,
@@ -106,13 +99,13 @@ public class UserCoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
-    User getUser(@PathVariable("userId") final String userId) {
+    ResponseEntity<User> getUser(@PathVariable("userId") final String userId) {
         final ReadUserOutput output = serviceProcessor.process(ReadUserInput.builder()
                 .userId(userId)
                 .build());
         final User user = output.getUser();
         user.setPassword(EMPTY);
-        return user;
+        return ResponseEntity.ok(user);
     }
 
     @ApiOperation(value = "Delete user", notes = "Delete user. Required authorization: Admin.")

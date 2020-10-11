@@ -25,6 +25,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,9 +45,10 @@ public class SystemCoreRestController extends AbstractRestController {
     })
     @RequestMapping(method = RequestMethod.GET, value = "/system")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public @ResponseBody SystemInformation getSystemInformation() {
+    public @ResponseBody
+    ResponseEntity<SystemInformation> getSystemInformation() {
         final GetSystemInformationOutput output = serviceProcessor.process(new GetSystemInformationInput());
-        return output.getSystemInformation();
+        return ResponseEntity.ok(output.getSystemInformation());
     }
 
 }

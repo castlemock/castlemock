@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,7 @@ public class SoapResourceRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/resource/{resourceId}/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    SoapResource importResource(
+    ResponseEntity<SoapResource> importResource(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "resourceId", value = "The id of the resource")
@@ -93,7 +94,7 @@ public class SoapResourceRestController extends AbstractRestController {
                     .raw(raw)
                     .build();
             ImportSoapResourceOutput output = this.serviceProcessor.process(input);
-            return output.getResource();
+            return ResponseEntity.ok(output.getResource());
         } catch (IOException e) {
             LOGGER.error("Unable to import resource", e);
             throw new RuntimeException(e);

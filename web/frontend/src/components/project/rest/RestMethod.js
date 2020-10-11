@@ -25,6 +25,9 @@ import {setAuthenticationState} from "../../../redux/Actions";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 const { SearchBar } = Search;
 
+const SELECT = true;
+const DESELECT = false;
+
 class RestMethod extends PureComponent {
 
     constructor(props) {
@@ -33,6 +36,7 @@ class RestMethod extends PureComponent {
         this.onRowSelect = this.onRowSelect.bind(this);
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
+        this.onDeleteMockResponsesClick = this.onDeleteMockResponsesClick.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -50,6 +54,16 @@ class RestMethod extends PureComponent {
         }, {
             dataField: 'httpStatusCode',
             text: 'HTTP status code',
+            sort: true
+        }];
+
+        this.updateColumns = [{
+            dataField: 'id',
+            text: 'id',
+            hidden: true
+        }, {
+            dataField: 'name',
+            text: 'Name',
             sort: true
         }];
 
@@ -71,20 +85,48 @@ class RestMethod extends PureComponent {
             methodId: this.props.match.params.methodId,
             method: {
                 mockResponses: []
-            }
+            },
+            selectedMockResponses: []
         };
 
         this.getMethod();
     }
-
-
-
+    
     onRowSelect(value, mode) {
-
+        let mockResponses = this.state.selectedMockResponses.slice();
+        let mockResponse = {
+            id: value.id,
+            name: value.name
+        };
+        if(mode === SELECT){
+            mockResponses.push(mockResponse);
+        } else if(mode === DESELECT){
+            let index = mockResponses.indexOf(mockResponse);
+            mockResponses.splice(index, 1);
+        }
+        this.setState({
+            selectedMockResponses: mockResponses
+        });
     }
 
     onRowSelectAll(mode) {
-
+        if(mode === SELECT){
+            let mockResponses = [];
+            this.state.method.mockResponses.forEach(value => {
+                let mockResponse = {
+                    id: value.id,
+                    name: value.name
+                };
+                mockResponses.push(mockResponse);
+            });
+            this.setState({
+                selectedMockResponses: mockResponses
+            });
+        } else if(mode === DESELECT){
+            this.setState({
+                selectedMockResponses: []
+            });
+        }
     }
 
     nameFormat(cell, row) {
@@ -123,6 +165,20 @@ class RestMethod extends PureComponent {
             });
     }
 
+    onDeleteMockResponsesClick() {
+        Array.from(this.state.selectedMockResponses).forEach(mockResponse => {
+            axios
+                .delete("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId +
+                    "/resource/" + this.state.methodId + "/method/" + this.state.methodId + "/mockresponse/" + mockResponse.id)
+                .then(response => {
+                    this.getMethod();
+                })
+                .catch(error => {
+                    validateErrorResponse(error, this.props.setAuthenticationState)
+                });
+        });
+    }
+
     render() {
         return (
             <div>
@@ -144,8 +200,43 @@ class RestMethod extends PureComponent {
                         </div>
                         <div className="menu" align="right">
                             <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Update method</span></button>
+                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Create response</span></button>
                             <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Delete method</span></button>
                         </div>
+                    </div>
+                    <div className="content-summary">
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Type</dt>
+                            <dd className="col-sm-9">{this.state.method.httpMethod}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Status</dt>
+                            <dd className="col-sm-9">{this.state.method.status}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Response strategy</dt>
+                            <dd className="col-sm-9">{this.state.method.responseStrategy}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Address</dt>
+                            <dd className="col-sm-9">Test</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Forwarded endpoint</dt>
+                            <dd className="col-sm-9">{this.state.method.forwardedEndpoint}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Simulate network delay</dt>
+                            <dd className="col-sm-9">{this.state.method.simulateNetworkDelay}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Network delay</dt>
+                            <dd className="col-sm-9">{this.state.method.networkDelay}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Default response</dt>
+                            <dd className="col-sm-9">{this.state.method.defaultResponseName}</dd>
+                        </dl>
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="panel-heading table-panel-heading">
@@ -172,9 +263,15 @@ class RestMethod extends PureComponent {
                                     )}
                             </ToolkitProvider>
                             <div className="panel-buttons">
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Update</span></button>
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
-                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Delete mock response</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedMockResponses.length === 0}
+                                        data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Update status</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedMockResponses.length === 0}
+                                        data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
+                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedMockResponses.length === 0}
+                                        data-target="#updateMethodModal"><i className="fas fa-plus-circle"/> <span>Delete mock response</span></button>
                             </div>
                         </div>
                     </div>
@@ -232,7 +329,41 @@ class RestMethod extends PureComponent {
                         </div>
                     </div>
                 </div>
-                
+                <div className="modal fade" id="deleteMockResponsesModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteMockResponsesModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteMockResponsesModalLabel">Delete responses?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want delete the following responses?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedMockResponses }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedMockResponses} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteMockResponsesClick}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

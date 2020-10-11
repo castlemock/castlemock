@@ -25,6 +25,9 @@ import {setAuthenticationState} from "../../../redux/Actions";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 const { SearchBar } = Search;
 
+const SELECT = true;
+const DESELECT = false;
+
 class RestResource extends PureComponent {
 
     constructor(props) {
@@ -34,6 +37,7 @@ class RestResource extends PureComponent {
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
         this.onDeleteResourceClick = this.onDeleteResourceClick.bind(this);
+        this.onDeleteMethodsClick = this.onDeleteMethodsClick.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -58,6 +62,16 @@ class RestResource extends PureComponent {
             sort: true
         }];
 
+        this.updateColumns = [{
+            dataField: 'id',
+            text: 'id',
+            hidden: true
+        }, {
+            dataField: 'name',
+            text: 'Name',
+            sort: true
+        }];
+
         this.selectRow = {
             mode: 'checkbox',
             onSelect: this.onRowSelect,
@@ -75,20 +89,48 @@ class RestResource extends PureComponent {
             resourceId: this.props.match.params.resourceId,
             resource: {
                 methods: []
-            }
+            },
+            selectedMethods: []
         };
 
         this.getResource();
     }
 
-
-
     onRowSelect(value, mode) {
-
+        let methods = this.state.selectedMethods.slice();
+        let method = {
+            id: value.id,
+            name: value.name
+        };
+        if(mode === SELECT){
+            methods.push(method);
+        } else if(mode === DESELECT){
+            let index = methods.indexOf(method);
+            methods.splice(index, 1);
+        }
+        this.setState({
+            selectedMethods: methods
+        });
     }
 
     onRowSelectAll(mode) {
-
+        if(mode === SELECT){
+            let methods = [];
+            this.state.resource.methods.forEach(value => {
+                let method = {
+                    id: value.id,
+                    name: value.name
+                };
+                methods.push(method);
+            });
+            this.setState({
+                selectedMethods: methods
+            });
+        } else if(mode === DESELECT){
+            this.setState({
+                selectedMethods: []
+            });
+        }
     }
 
     nameFormat(cell, row) {
@@ -127,6 +169,20 @@ class RestResource extends PureComponent {
             });
     }
 
+    onDeleteMethodsClick() {
+        Array.from(this.state.selectedMethods).forEach(method => {
+            axios
+                .delete("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId +
+                    "/resource/" + this.state.methodId + "/method/" + method.id)
+                .then(response => {
+                    this.getResource();
+                })
+                .catch(error => {
+                    validateErrorResponse(error, this.props.setAuthenticationState)
+                });
+        });
+    }
+
     render() {
         return (
             <div>
@@ -147,8 +203,19 @@ class RestResource extends PureComponent {
                         </div>
                         <div className="menu" align="right">
                             <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateResourceModal"><i className="fas fa-plus-circle"/> <span>Update resource</span></button>
+                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateResourceModal"><i className="fas fa-plus-circle"/> <span>Create method</span></button>
                             <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteResourceModal"><i className="fas fa-plus-circle"/> <span>Delete resource</span></button>
                         </div>
+                    </div>
+                    <div className="content-summary">
+                        <dl className="row">
+                            <dt className="col-sm-2 content-title">URI</dt>
+                            <dd className="col-sm-9">{this.state.resource.uri}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-2 content-title">Address</dt>
+                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + this.state.resource.uri}</dd>
+                        </dl>
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="panel-heading table-panel-heading">
@@ -175,14 +242,15 @@ class RestResource extends PureComponent {
                                     )}
                             </ToolkitProvider>
                             <div className="panel-buttons">
-                                <button className="btn btn-primary panel-button" type="submit" name="action" value="export"><i
-                                    className="fas fa-cloud-download-alt"/> <span>Update</span></button>
-                                <button className="btn btn-primary demo-button-disabled panel-button" type="submit" name="action"
-                                        value="update"><i className="fas fa-trash"/> <span>Update endpoint</span>
-                                </button>
-                                <button className="btn btn-danger demo-button-disabled panel-button" type="submit" name="action"
-                                        value="delete"><i className="fas fa-trash"/> <span>Delete method</span>
-                                </button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedMethods.length === 0}
+                                        data-target="#updateStatusModal"><i className="fas fa-plus-circle"/> <span>Update status</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedMethods.length === 0}
+                                        data-target="#updateEndpointModal"><i className="fas fa-plus-circle"/> <span>Update endpoint</span></button>
+                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
+                                        disabled={this.state.selectedMethods.length === 0}
+                                        data-target="#deleteMethodsModal"><i className="fas fa-plus-circle"/> <span>Delete method</span></button>
                             </div>
                         </div>
                     </div>
@@ -240,6 +308,134 @@ class RestResource extends PureComponent {
                         </div>
                     </div>
                 </div>
+
+                <div className="modal fade" id="updateStatusModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateStatusModalLabel">Update status?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want update the status for the following methods?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedMethods }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedMethods} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Status</label>
+                                    <div className="col-sm-10">
+                                        <select id="inputStatus" className="form-control" defaultValue="MOCKED">
+                                            <option>MOCKED</option>
+                                            <option>DISABLED</option>
+                                            <option>FORWARDED</option>
+                                            <option>RECORDING</option>
+                                            <option>RECORD_ONCE</option>
+                                            <option>ECHO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary" data-dismiss="modal">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="updateEndpointModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="updateEndpointModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="updateEndpointModalLabel">Update endpoint?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want update the endpoint for the following methods?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedMethods }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedMethods} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Endpoint</label>
+                                    <div className="col-sm-10">
+                                        <input className="form-control" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary" data-dismiss="modal">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal fade" id="deleteMethodsModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="deleteMethodsModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="deleteMethodsModalLabel">Delete methods?</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Do you want delete the following methods?</p>
+                                <div className="table-result">
+                                    <ToolkitProvider bootstrap4
+                                                     columns={ this.updateColumns}
+                                                     data={ this.state.selectedMethods }
+                                                     keyField="id">
+                                        {
+                                            (props) => (
+                                                <div>
+                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedMethods} columns={this.updateColumns}
+                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
+                                                                    striped
+                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
+                                                </div>
+                                            )}
+                                    </ToolkitProvider>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteMethodsClick}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         )
     }

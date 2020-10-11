@@ -21,6 +21,7 @@ import com.castlemock.core.basis.service.event.EventServiceFacade;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,8 +58,8 @@ public class EventCoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/event")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    List<Event> getEvents() {
-        return  eventServiceFacade.findAll();
+    ResponseEntity<List<Event>> getEvents() {
+        return ResponseEntity.ok(eventServiceFacade.findAll());
     }
 
     /**
@@ -75,12 +76,12 @@ public class EventCoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/event/{type}/{eventId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    Event getEvent(
+    ResponseEntity<Event> getEvent(
             @ApiParam(name = "type", value = "The type of the event", allowableValues = "rest,soap")
             @PathVariable("type") final String type,
             @ApiParam(name = "eventId", value = "The id of the event")
             @PathVariable("eventId") final String eventId) {
-        return  eventServiceFacade.findOne(type, eventId);
+        return ResponseEntity.ok(eventServiceFacade.findOne(type, eventId));
     }
 
     @ApiOperation(value = "Delete all event",response = Event.class,
@@ -91,10 +92,11 @@ public class EventCoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/event")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    void deleteAllEvents() {
+    ResponseEntity<Void> deleteAllEvents() {
         eventServiceFacade
                 .findAll()
                 .forEach(event -> eventServiceFacade.delete(event.getTypeIdentifier().getType(), event.getId()));
+        return ResponseEntity.ok().build();
     }
 
 }

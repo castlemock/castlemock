@@ -18,15 +18,17 @@ package com.castlemock.web.mock.soap.web.rest.controller;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsForwardedEndpointInput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsStatusInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.mock.soap.web.rest.controller.model.UpdateSoapPortForwardedEndpointsRequest;
+import com.castlemock.web.mock.soap.web.rest.controller.model.UpdateSoapPortStatusesRequest;
 import io.swagger.annotations.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("api/rest/soap")
@@ -39,14 +41,50 @@ public class SoapProjectRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    SoapProject getProject(
+    ResponseEntity<SoapProject> getProject(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId){
         final ReadSoapProjectOutput output = super.serviceProcessor.process(ReadSoapProjectInput.builder()
                 .projectId(projectId)
-                .projectId(projectId)
                 .build());
-        return output.getProject();
+        return ResponseEntity.ok(output.getProject());
+    }
+
+    @ApiOperation(value = "Update Port statuses")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully updated SOAP port statuses")})
+    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/status")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<Void> updatePortStatuses(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @RequestBody UpdateSoapPortStatusesRequest request){
+        request.getPortIds()
+                .forEach(portId -> super.serviceProcessor.process(UpdateSoapPortsStatusInput.builder()
+                        .projectId(projectId)
+                        .portId(portId)
+                        .operationStatus(request.getStatus())
+                        .build()));
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "Update Port forwarded endpoints")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully updated SOAP port forwarded endpoints")})
+    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/endpoint/forwarded")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<Void> updatePortForwardedEndpoints(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @RequestBody UpdateSoapPortForwardedEndpointsRequest request){
+        super.serviceProcessor.process(UpdateSoapPortsForwardedEndpointInput.builder()
+                .projectId(projectId)
+                .portIds(request.getPortIds())
+                .forwardedEndpoint(request.getForwardedEndpoint())
+                .build());
+        return ResponseEntity.ok().build();
     }
 
 }

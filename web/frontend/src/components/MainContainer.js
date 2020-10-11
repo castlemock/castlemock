@@ -32,6 +32,7 @@ import RestMethod from "./project/rest/RestMethod";
 import RestMockResponse from "./project/rest/RestMockResponse";
 import UserOverview from "./user/UserOverview";
 import User from "./user/User";
+import Profile from "./user/Profile";
 import System from "./system/System";
 import EventOverview from "./event/EventOverview"
 import { getAuthenticationState } from "../redux/Selectors";
@@ -74,6 +75,7 @@ class MainContainer extends PureComponent {
                             <Route path="/web/soap/project/:projectId" component={SoapProject} />
                             <Route path="/web/user/:userId" component={User} />
                             <Route path="/web/user" component={UserOverview} />
+                            <Route path="/web/profile" component={Profile} />
                             <Route path="/web/system" component={System} />
                             <Route path="/web/event" component={EventOverview} />
                             <Route path="/web" component={ProjectOverview} />

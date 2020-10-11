@@ -22,6 +22,13 @@
     margin-left: 5px;
 }
 
+.menu-dropdown {
+    width: 150px;
+    margin-left: 5px;
+    margin-right: 10px;
+    float: left;
+}
+
 .table-filter-field {
     width: 250px !important;
     max-width: 250px !important;
@@ -106,4 +113,25 @@
 .content-title {
     font-weight: bold;
     font-family: "Roboto Bold", sans-serif;
+}
+
+.dropzone-content {
+    background-color: white;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 4px dashed #000000;
+}
+
+.dropzone-icon-content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    margin-bottom: 20px;
+}
+.dropzone-icon {
+    font-size: 60px;
+    color: #000000;
 }

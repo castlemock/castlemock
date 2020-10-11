@@ -43,7 +43,9 @@ public class CreateSoapMockResponseService extends AbstractSoapProjectService im
         final CreateSoapMockResponseInput input = serviceTask.getInput();
         final SoapMockResponse mockResponse = input.getMockResponse();
         mockResponse.setOperationId(input.getOperationId());
-        this.mockResponseRepository.save(mockResponse);
-        return createServiceResult(CreateSoapMockResponseOutput.builder().build());
+        final SoapMockResponse createdSoapMockResponse = this.mockResponseRepository.save(mockResponse);
+        return createServiceResult(CreateSoapMockResponseOutput.builder()
+                .mockResponse(createdSoapMockResponse)
+                .build());
     }
 }
