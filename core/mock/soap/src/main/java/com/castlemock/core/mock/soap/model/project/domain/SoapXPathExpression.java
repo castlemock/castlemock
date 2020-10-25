@@ -42,6 +42,11 @@ public class SoapXPathExpression {
         this.expression = expression;
     }
 
+    public Builder toBuilder(){
+        return builder()
+                .expression(expression);
+    }
+
     public static Builder builder() {
         return new Builder();
     }

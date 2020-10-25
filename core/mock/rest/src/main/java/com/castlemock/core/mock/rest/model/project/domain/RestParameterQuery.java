@@ -98,6 +98,15 @@ public class RestParameterQuery {
                 '}';
     }
 
+    public Builder toBuilder() {
+        return builder()
+                .parameter(parameter)
+                .query(query)
+                .matchCase(matchCase)
+                .matchAny(matchAny)
+                .matchRegex(matchRegex);
+    }
+
     public static Builder builder() {
         return new Builder();
     }

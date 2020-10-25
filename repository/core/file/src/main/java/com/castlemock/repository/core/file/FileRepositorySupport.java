@@ -25,15 +25,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -123,7 +115,7 @@ public class FileRepositorySupport {
     private <T> T load(final File file, final Class<T> entityClass){
         try(final InputStream inputStream= new FileInputStream(file)) {
             try(final Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)){
-                final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass);
+                final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass, FileRepository.HttpHeaderFile.class, FileRepository.HttpParameterFile.class);
                 final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
                 LOGGER.debug("\tLoaded " + file.getName());
                 return (T) jaxbUnmarshaller.unmarshal(reader);
@@ -137,8 +129,8 @@ public class FileRepositorySupport {
     public <T> void save(T type, String filename){
         Writer writer = null;
         try {
-            JAXBContext context = JAXBContext.newInstance(type.getClass());
-            Marshaller marshaller = context.createMarshaller();
+            final JAXBContext context = JAXBContext.newInstance(type.getClass());
+            final Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             writer = new FileWriter(filename);
             marshaller.marshal(type, writer);

@@ -18,15 +18,9 @@ import React, {PureComponent} from 'react'
 import '../css/Login.css';
 import Logo from '../images/logo.png'
 import axios from "axios";
-import { setAuthenticationState } from "../redux/Actions";
 import {Redirect} from "react-router-dom";
-import {connect} from "react-redux";
-import { getAuthenticationState } from "../redux/Selectors";
-
-const mapStateToProps = state => {
-    const authenticationState = getAuthenticationState(state);
-    return { authenticationState };
-};
+import AuthenticationContext from "../context/AuthenticationContext";
+import VersionContext from "../context/VersionContext";
 
 class LoginContainer extends PureComponent {
 
@@ -41,7 +35,8 @@ class LoginContainer extends PureComponent {
         this.state = {
             username: "",
             password: "",
-            loginFailed: false
+            authenticated: false,
+            authentication: {}
         };
     }
 
@@ -53,78 +48,86 @@ class LoginContainer extends PureComponent {
         this.setState({ password: password });
     }
 
-    onButtonLoginClick() {
+    onButtonLoginClick(context) {
         axios
             .post("/api/rest/core/login", {
                 username: this.state.username,
                 password: this.state.password
             })
             .then(response => {
-                this.props.setAuthenticationState(true);
+                context.updateAuthentication({
+                    token: response.data.token,
+                    username: response.data.username,
+                    role: response.data.role
+                });
+                this.setState({
+                    authenticated: true
+                })
             })
             .catch(error => {
-                this.props.setAuthenticationState(false);
-                this.setState({
-                    loginFailed: true
-                })
             });
     }
 
-    onEnterClick(event) {
+    onEnterClick(event, context) {
         if (event.key === 'Enter') {
-            this.onButtonLoginClick();
+            this.onButtonLoginClick(context);
         }
     }
 
     isAuthenticated(){
-        return this.props.authenticationState;
+        return this.state.authenticated;
     }
 
     render() {
-        if(this.isAuthenticated()) {
-            return <Redirect to = {{ pathname: "/web" }} />;
+        if(this.isAuthenticated()){
+            return <Redirect to = {{ pathname: "/web" }} />
         }
 
         return (
-            <div id="login-body">
-                <div className="login">
-                    <div id="login-box">
-                        <div className="logoImage">
-                            <img src={Logo} id="logo" alt="Castle Mock Logo"/>
+            <AuthenticationContext.Consumer>
+                {context => (
+                    <div id="login-body">
+                        <div className="login">
+                            <div id="login-box">
+                                <div className="logoImage">
+                                    <img src={Logo} id="logo" alt="Castle Mock Logo"/>
+                                </div>
+                                <div className="credentialsBox">
+                                    <div className="login-title">Castle Mock</div>
+
+                                    <div className="alert alert-danger" role="alert" hidden={this.state.loginFailed ? '' : 'hidden'}>
+                                        Unable to login.
+                                    </div>
+
+                                    <div className="form-label-group">
+                                        <input type="text" id="inputUsername" className="form-control" placeholder="Username" onChange={event => this.setUsername(event.target.value)} onKeyDown={event => this.onEnterClick(event, context)} required autoFocus/>
+                                    </div>
+                                    <div className="form-label-group">
+                                        <input type="password" id="inputPassword" className="form-control" placeholder="Password" onChange={event => this.setPassword(event.target.value)} onKeyDown={event => this.onEnterClick(event, context)} required />
+                                    </div>
+                                    <button className="btn btn-lg btn-success btn-block text-uppercase" onClick={event => this.onButtonLoginClick(context)}>Sign in</button>
+                                </div>
+                            </div>
                         </div>
-                        <div className="credentialsBox">
-                            <div className="login-title">Castle Mock</div>
 
-                            <div className="alert alert-danger" role="alert" hidden={this.state.loginFailed ? '' : 'hidden'}>
-                                Unable to login.
-                            </div>
+                        <VersionContext.Consumer>
+                            {version => (
+                                <div id="login-footer">
+                                    <div id="login-footer-info">
+                                        <a href="https://www.castlemock.com" target="_blank" rel="noopener noreferrer">Castle Mock version. {version}</a>
+                                    </div>
 
-                            <div className="form-label-group">
-                                <input type="text" id="inputUsername" className="form-control" placeholder="Username" onChange={event => this.setUsername(event.target.value)} onKeyDown={event => this.onEnterClick(event)} required autoFocus/>
-                            </div>
-                            <div className="form-label-group">
-                                <input type="password" id="inputPassword" className="form-control" placeholder="Password" onChange={event => this.setPassword(event.target.value)} onKeyDown={event => this.onEnterClick(event)} required />
-                            </div>
-                            <button className="btn btn-lg btn-success btn-block text-uppercase" onClick={this.onButtonLoginClick}>Sign in</button>
-                        </div>
+                                    <div id="login-footer-info-api">
+                                        <a href="/doc/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
+                                    </div>
+                                </div>
+                            )}
+                        </VersionContext.Consumer>
                     </div>
-                </div>
-
-                <div id="login-footer">
-                    <div id="login-footer-info">
-                        <a href="https://www.castlemock.com" target="_blank" rel="noopener noreferrer">Castle Mock version. 1.41</a>
-                    </div>
-
-                    <div id="login-footer-info-api">
-                        <a href="/doc/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
-                    </div>
-                </div>
-            </div>
+                )}
+            </AuthenticationContext.Consumer>
     );
     }
 }
 
-export default connect(
-    mapStateToProps,
-    { setAuthenticationState }
-)(LoginContainer);
+export default LoginContainer;

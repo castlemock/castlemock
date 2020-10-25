@@ -22,10 +22,12 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -236,6 +238,45 @@ public class RestMockResponse {
                 ", headerQueries=" + headerQueries +
                 '}';
     }
+
+
+
+    public Builder toBuilder() {
+        return builder()
+                .id(id)
+                .name(name)
+                .body(body)
+                .methodId(methodId)
+                .status(status)
+                .httpStatusCode(httpStatusCode)
+                .usingExpressions(usingExpressions)
+                .httpHeaders(httpHeaders.stream()
+                        .map(HttpHeader::toBuilder)
+                        .map(HttpHeader.Builder::build)
+                        .collect(Collectors.toList()))
+                .contentEncodings(new ArrayList<>(contentEncodings))
+                .parameterQueries(parameterQueries
+                        .stream()
+                        .map(RestParameterQuery::toBuilder)
+                        .map(RestParameterQuery.Builder::build)
+                        .collect(Collectors.toList()))
+                .xpathExpressions(xpathExpressions
+                        .stream()
+                        .map(RestXPathExpression::toBuilder)
+                        .map(RestXPathExpression.Builder::build)
+                        .collect(Collectors.toList()))
+                .jsonPathExpressions(jsonPathExpressions
+                        .stream()
+                        .map(RestJsonPathExpression::toBuilder)
+                        .map(RestJsonPathExpression.Builder::build)
+                        .collect(Collectors.toList()))
+                .headerQueries(headerQueries
+                        .stream()
+                        .map(RestHeaderQuery::toBuilder)
+                        .map(RestHeaderQuery.Builder::build)
+                        .collect(Collectors.toList()));
+    }
+
 
     public static Builder builder() {
         return new Builder();

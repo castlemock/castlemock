@@ -16,8 +16,6 @@
 
 import React, {PureComponent} from 'react';
 import axios from "axios";
-import {connect} from "react-redux";
-import {setAuthenticationState} from "../../redux/Actions";
 import validateErrorResponse from "../../utility/HttpResponseValidator";
 
 class System extends PureComponent {
@@ -41,7 +39,7 @@ class System extends PureComponent {
                 });
             })
             .catch(error => {
-                validateErrorResponse(error, this.props.setAuthenticationState)
+                validateErrorResponse(error)
             });
     }
 
@@ -109,7 +107,4 @@ class System extends PureComponent {
 }
 
 
-export default connect(
-    null,
-    { setAuthenticationState }
-)(System);
+export default System;

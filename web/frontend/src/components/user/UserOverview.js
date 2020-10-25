@@ -20,9 +20,9 @@ import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import {Link} from "react-router-dom";
-import {connect} from "react-redux";
-import {setAuthenticationState} from "../../redux/Actions";
 import validateErrorResponse from "../../utility/HttpResponseValidator";
+import DeleteUsersModal from "./modal/DeleteUsersModal";
+import NewUserModal from "./modal/NewUserModal";
 
 const { SearchBar } = Search;
 
@@ -35,15 +35,9 @@ class UserOverview extends PureComponent {
         super(props);
         this.onRowSelect = this.onRowSelect.bind(this);
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
-        this.onCreateUserClick = this.onCreateUserClick.bind(this);
-        this.onDeleteUsersClick = this.onDeleteUsersClick.bind(this);
-        this.setNewUserName = this.setNewUserName.bind(this);
-        this.setNewEmail = this.setNewEmail.bind(this);
-        this.setNewRole = this.setNewRole.bind(this);
-        this.setNewStatus = this.setNewStatus.bind(this);
-        this.setNewPassword = this.setNewPassword.bind(this);
         this.userNameFormat = this.userNameFormat.bind(this);
         this.userDateFormat = this.userDateFormat.bind(this);
+        this.getUsers = this.getUsers.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -107,62 +101,12 @@ class UserOverview extends PureComponent {
         this.state = {
             users: [],
             selectedUsers: [],
-            deleteUsersDisabled: true,
-            newUser: {
-                username: "",
-                email: "",
-                password: "",
-                role: "READER",
-                status: "ACTIVE"
-            }
+            deleteUsersDisabled: true
         };
 
         this.getUsers()
     }
 
-    setNewUserName(username) {
-        this.setState({
-            newUser: {
-                ...this.state.newUser,
-                username: username
-            } });
-    }
-
-    setNewEmail(email) {
-        this.setState({
-            newUser: {
-                ...this.state.newUser,
-                email: email
-            }
-        });
-    }
-
-    setNewPassword(password) {
-        this.setState({
-            newUser: {
-                ...this.state.newUser,
-                password: password
-            }
-        });
-    }
-
-    setNewRole(role) {
-        this.setState({
-            newUser: {
-                ...this.state.newUser,
-                role: role
-            }
-        });
-    }
-
-    setNewStatus(status) {
-        this.setState({
-            newUser: {
-                ...this.state.newUser,
-                status: status
-            }
-        });
-    }
 
     userNameFormat(cell, row) {
         if(cell == null){
@@ -186,30 +130,6 @@ class UserOverview extends PureComponent {
             <div>{date}</div>
         )
     }
-    
-    onCreateUserClick() {
-        axios
-            .post("/api/rest/core/user", this.state.newUser)
-            .then(response => {
-                this.props.history.push("/web/user/" + response.data.id)
-            })
-            .catch(error => {
-                validateErrorResponse(error, this.props.setAuthenticationState)
-            });
-    }
-    
-    onDeleteUsersClick() {
-        Array.from(this.state.selectedUsers).forEach(user => {
-            axios
-                .delete("/api/rest/core/user/" + user.id)
-                .then(response => {
-                    this.getUsers();
-                })
-                .catch(error => {
-                    validateErrorResponse(error, this.props.setAuthenticationState)
-                });
-        });
-    }
 
     onRowSelect(value, mode) {
         let users = this.state.selectedUsers.slice();
@@ -224,9 +144,7 @@ class UserOverview extends PureComponent {
             users.splice(index, 1);
         }
         this.setState({
-            selectedUsers: users,
-            exportUsersDisabled: users.length === 0,
-            deleteUsersDisabled: users.length === 0
+            selectedUsers: users
         });
     }
 
@@ -241,15 +159,11 @@ class UserOverview extends PureComponent {
                 users.push(user);
             });
             this.setState({
-                selectedUsers: users,
-                deleteUsersDisabled: false,
-                exportUsersDisabled: false
+                selectedUsers: users
             });
         } else if(mode === DESELECT){
             this.setState({
-                selectedUsers: [],
-                deleteUsersDisabled: true,
-                exportUsersDisabled: true
+                selectedUsers: []
             });
         }
     }
@@ -263,7 +177,7 @@ class UserOverview extends PureComponent {
                 });
             })
             .catch(error => {
-                validateErrorResponse(error, this.props.setAuthenticationState)
+                validateErrorResponse(error)
             });
     }
 
@@ -278,7 +192,7 @@ class UserOverview extends PureComponent {
                             <h1>Users</h1>
                         </div>
                         <div className="menu">
-                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#newUserModal"><i className="fas fa-plus-circle"/> <span>New user</span></button>
+                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#newUserModal"><span>New user</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -308,106 +222,15 @@ class UserOverview extends PureComponent {
                         </div>
                         <div className="table-result">
                             <div className="panel-buttons">
-                                <button className="btn btn-danger demo-button-disabled panel-button" disabled={this.state.deleteUsersDisabled}
+                                <button className="btn btn-danger demo-button-disabled panel-button" disabled={this.state.selectedUsers.length === 0}
                                         data-toggle="modal" data-target="#deleteUsersModal"><i className="fas fa-trash"/> <span>Delete users</span></button>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <div className="modal fade" id="newUserModal" tabIndex="-1" role="dialog"
-                     aria-labelledby="newUserModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="newUserModalLabel">New user</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <form>
-                                    <div className="form-group row">
-                                        <label htmlFor="newUserUserName" className="col-sm-2 col-form-label">Name</label>
-                                        <div className="col-sm-10">
-                                            <input className="form-control" type="text" name="newUserUserName" id="newUserUserName" onChange={event => this.setNewUserName(event.target.value)}/>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row">
-                                        <label htmlFor="newUserEmail" className="col-sm-2 col-form-label">Email</label>
-                                        <div className="col-sm-10">
-                                            <input className="form-control" type="text" name="newUserEmail" id="newUserEmail" onChange={event => this.setNewEmail(event.target.value)}/>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row">
-                                        <label htmlFor="newUserPassword" className="col-sm-2 col-form-label">Password</label>
-                                        <div className="col-sm-10">
-                                            <input className="form-control" type="text" name="newUserPassword" id="newUserPassword" onChange={event => this.setNewPassword(event.target.value)}/>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row">
-                                        <label htmlFor="inputState" className="col-sm-2 col-form-label">Role</label>
-                                        <div className="col-sm-10">
-                                            <select id="inputState" className="form-control" onChange={event => this.setNewRole(event.target.value)} defaultValue={"READER"}>
-                                                <option>READER</option>
-                                                <option>MODIFIER</option>
-                                                <option>ADMIN</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row">
-                                        <label htmlFor="inputState" className="col-sm-2 col-form-label">Status</label>
-                                        <div className="col-sm-10">
-                                            <select id="inputState" className="form-control" onChange={event => this.setNewStatus(event.target.value)} defaultValue={"ACTIVE"}>
-                                                <option>ACTIVE</option>
-                                                <option>INACTIVE</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateUserClick}>Create</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="modal fade" id="deleteUsersModal" tabIndex="-1" role="dialog"
-                     aria-labelledby="deleteUsersModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="deleteUsersModalLabel">Delete users</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <div className="table-result">
-                                    <ToolkitProvider bootstrap4
-                                                     columns={ this.deleteColumns}
-                                                     data={ this.state.selectedUsers }
-                                                     keyField="id">
-                                        {
-                                            (props) => (
-                                                <div>
-                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedUsers} columns={this.deleteColumns}
-                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
-                                                                    striped
-                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
-                                                </div>
-                                            )}
-                                    </ToolkitProvider>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-danger"data-dismiss="modal" onClick={this.onDeleteUsersClick}>Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <NewUserModal/>
+                <DeleteUsersModal selectedUsers={this.state.selectedUsers} getUsers={this.getUsers}/>
 
             </div>
         )
@@ -415,7 +238,4 @@ class UserOverview extends PureComponent {
 
 }
 
-export default connect(
-    null,
-    { setAuthenticationState }
-)(UserOverview);
+export default UserOverview;

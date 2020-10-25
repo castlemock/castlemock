@@ -114,6 +114,15 @@ public class RestHeaderQuery {
                 '}';
     }
 
+    public Builder toBuilder() {
+        return builder()
+                .header(header)
+                .query(query)
+                .matchCase(matchCase)
+                .matchAny(matchAny)
+                .matchRegex(matchRegex);
+    }
+
     public static Builder builder() {
         return new Builder();
     }

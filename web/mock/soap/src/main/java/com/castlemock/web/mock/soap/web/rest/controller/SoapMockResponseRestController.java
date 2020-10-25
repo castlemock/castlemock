@@ -17,15 +17,10 @@
 package com.castlemock.web.mock.soap.web.rest.controller;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.service.project.input.CreateSoapMockResponseInput;
-import com.castlemock.core.mock.soap.service.project.input.DeleteSoapMockResponseInput;
-import com.castlemock.core.mock.soap.service.project.input.ReadSoapMockResponseInput;
-import com.castlemock.core.mock.soap.service.project.input.UpdateSoapMockResponseInput;
-import com.castlemock.core.mock.soap.service.project.output.CreateSoapMockResponseOutput;
-import com.castlemock.core.mock.soap.service.project.output.DeleteSoapMockResponseOutput;
-import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
-import com.castlemock.core.mock.soap.service.project.output.UpdateSoapMockResponseOutput;
+import com.castlemock.core.mock.soap.service.project.input.*;
+import com.castlemock.core.mock.soap.service.project.output.*;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.mock.soap.web.rest.controller.model.DuplicateSoapMockOperationsRequest;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -89,7 +84,7 @@ public class SoapMockResponseRestController extends AbstractRestController {
     @ApiOperation(value = "Update mocked response")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated mocked response")})
-    @RequestMapping(method = RequestMethod.POST,
+    @RequestMapping(method = RequestMethod.PUT,
             value = "/project/{projectId}/port/{portId}/operation/{operationId}/mockresponse/{responseId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public ResponseEntity<SoapMockResponse> updateMockResponse(
@@ -111,7 +106,6 @@ public class SoapMockResponseRestController extends AbstractRestController {
                 .build());
         return ResponseEntity.ok(output.getMockResponse());
     }
-
 
     @ApiOperation(value = "Delete mocked response")
     @ApiResponses(value = {
@@ -135,6 +129,29 @@ public class SoapMockResponseRestController extends AbstractRestController {
                 .mockResponseId(responseId)
                 .build());
         return ResponseEntity.ok(output.getMockResponse());
+    }
+
+    @ApiOperation(value = "Duplicate mocked response")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully duplicate mocked responses")})
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/project/{projectId}/port/{portId}/operation/{operationId}/mockresponse/duplicate")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public ResponseEntity<SoapMockResponse> duplicateMockResponse(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @ApiParam(name = "portId", value = "The id of the port")
+            @PathVariable(value = "portId") final String portId,
+            @ApiParam(name = "operationId", value = "The id of the operation")
+            @PathVariable(value = "operationId") final String operationId,
+            @RequestBody DuplicateSoapMockOperationsRequest request) {
+        super.serviceProcessor.process(DuplicateSoapMockResponsesInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .operationId(operationId)
+                .mockResponseIds(request.getMockResponseIds())
+                .build());
+        return ResponseEntity.ok().build();
     }
 
 }

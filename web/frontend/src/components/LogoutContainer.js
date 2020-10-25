@@ -17,8 +17,8 @@
 import React, {PureComponent} from 'react'
 import axios from "axios";
 import {Redirect} from "react-router-dom";
-import {connect} from "react-redux";
-import {setAuthenticationState} from "../redux/Actions";
+import AuthenticationContext from "../context/AuthenticationContext";
+import MainContainer from "./MainContainer";
 
 class LogoutContainer extends PureComponent {
 
@@ -26,6 +26,9 @@ class LogoutContainer extends PureComponent {
         super(props);
         this.logout = this.logout.bind(this);
 
+    }
+
+    componentDidMount() {
         this.logout();
     }
 
@@ -33,7 +36,6 @@ class LogoutContainer extends PureComponent {
         axios
             .get("/api/rest/core/logout/")
             .then(response => {
-                this.props.setAuthenticationState(false);
             })
             .catch(error => {
             });
@@ -44,7 +46,5 @@ class LogoutContainer extends PureComponent {
     }
 }
 
-export default connect(
-    null,
-    { setAuthenticationState }
-)(LogoutContainer);
+MainContainer.contextType = AuthenticationContext;
+export default LogoutContainer;

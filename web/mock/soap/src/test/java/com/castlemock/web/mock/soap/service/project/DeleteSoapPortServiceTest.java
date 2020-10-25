@@ -42,6 +42,9 @@ import org.mockito.Spy;
 
 import java.util.Arrays;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -77,6 +80,7 @@ public class DeleteSoapPortServiceTest {
 
         Mockito.when(operationRepository.findWithPortId(soapPort.getId())).thenReturn(Arrays.asList(soapOperation));
         Mockito.when(mockResponseRepository.findWithOperationId(soapOperation.getId())).thenReturn(Arrays.asList(soapMockResponse));
+        Mockito.when(portRepository.delete(soapPort.getId())).thenReturn(soapPort);
 
         final DeleteSoapPortInput input = DeleteSoapPortInput.builder()
                 .projectId(soapProject.getId())
@@ -84,6 +88,10 @@ public class DeleteSoapPortServiceTest {
                 .build();
         final ServiceTask<DeleteSoapPortInput> serviceTask = new ServiceTask<DeleteSoapPortInput>(input);
         final ServiceResult<DeleteSoapPortOutput> serviceResult = service.process(serviceTask);
+
+        assertNotNull(serviceResult);
+        assertNotNull(serviceResult.getOutput());
+        assertEquals(soapPort, serviceResult.getOutput().getPort());
 
         Mockito.verify(portRepository, Mockito.times(1)).delete(soapPort.getId());
         Mockito.verify(operationRepository, Mockito.times(1)).delete(soapOperation.getId());

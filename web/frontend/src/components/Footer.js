@@ -16,6 +16,7 @@
 
 import React, {PureComponent} from 'react'
 import '../css/Footer.css';
+import VersionContext from "../context/VersionContext";
 
 class Footer extends PureComponent {
 
@@ -25,17 +26,21 @@ class Footer extends PureComponent {
                 <div className="languages">
                 </div>
 
-                <div className="login-footer-info">
-                    <a href="https://www.castlemock.com" target="_blank" rel="noopener noreferrer">Castle Mock version. 1.45-SNAPSHOT</a>
-                </div>
+                <VersionContext.Consumer>
+                    {context => (
+                        <div className="login-footer-info">
+                            <a href="https://www.castlemock.com" target="_blank" rel="noopener noreferrer">Castle Mock version. {context}</a>
+                        </div>
+                    )}
+                </VersionContext.Consumer>
 
                 <div className="login-footer-info-api">
                     <a href="/doc/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
+                </div>
+                <div className="page-created">
+                    Page created: {new Date().toISOString()}
+                </div>
             </div>
-        <div className="page-created">
-            Page created: {new Date().toISOString()}
-        </div>
-    </div>
     );
     }
 }

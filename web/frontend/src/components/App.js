@@ -28,22 +28,56 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.j
 import LoginContainer from './LoginContainer'
 import LogoutContainer from './LogoutContainer'
 import MainContainer from './MainContainer'
+import AuthenticationContext from "../context/AuthenticationContext";
+import VersionContext from "../context/VersionContext";
+import axios from "axios";
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+        this.getVersion = this.getVersion.bind(this);
+
+        this.updateAuthentication = (authentication) => {
+            this.setState({
+                authentication: authentication
+            });
+        }
+
+        this.state = {
+            authentication: {},
+            updateAuthentication: this.updateAuthentication,
+            version: "1.0"
+        };
+
+        this.getVersion();
+    }
+
+    getVersion() {
+        axios
+            .get("/api/rest/core/version")
+            .then(response => {
+                this.setState({version: response.data.version})
+            });
+    }
+
     render() {
         return (
-            <div className = "site-wrapper">
-                <Router>
-                    <Switch>
-                        <Route path="/web/login"  component={LoginContainer} />
-                        <Route path="/web/logout"  component={LogoutContainer} />
-                        <Route path="/web/*"  component={MainContainer} />
-                        <Route path="/*"  component={MainContainer} />
-                        <Route path=""  component={MainContainer} />
-                    </Switch>
-                </Router>
-            </div>
+            <VersionContext.Provider value={this.state.version}>
+                <AuthenticationContext.Provider value={this.state}>
+                    <div className = "site-wrapper">
+                        <Router>
+                            <Switch>
+                                <Route path="/web/login"  component={LoginContainer} />
+                                <Route path="/web/logout"  component={LogoutContainer} />
+                                <Route path="/web/*"  component={MainContainer} />
+                                <Route path="/*"  component={MainContainer} />
+                                <Route path=""  component={MainContainer} />
+                            </Switch>
+                        </Router>
+                    </div>
+                </AuthenticationContext.Provider>
+            </VersionContext.Provider>
         );
     }
 }

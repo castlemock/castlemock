@@ -93,11 +93,11 @@
 
 
 .table-panel {
-    margin-top: 10px;
+    margin-top: 50px;
 }
 
 .table-panel-heading {
-
+    margin-bottom: 20px;
 }
 
 .project-type-badge-link {
@@ -109,6 +109,11 @@
 .table-link a:visited { color: #212529; }
 .table-link a:hover { color: #212529; }
 .table-link a:active { color: #212529; }
+
+.table-delete-column {
+    text-align: center;
+    cursor: pointer;
+}
 
 .content-title {
     font-weight: bold;
@@ -134,4 +139,8 @@
 .dropzone-icon {
     font-size: 60px;
     color: #000000;
+}
+
+.response-section {
+    margin-top: 30px;
 }

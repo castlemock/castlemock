@@ -35,6 +35,7 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -264,7 +265,7 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
         @Mapping("soapVersion")
         private SoapVersion soapVersion;
         @Mapping("httpHeaders")
-        private List<FileRepository.HttpHeaderFile> httpHeaders;
+        private List<HttpHeaderFile> httpHeaders;
 
         @XmlElement
         public String getBody() {
@@ -340,17 +341,18 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
 
         @XmlElementWrapper(name = "httpHeaders")
         @XmlElement(name = "httpHeader")
-        public List<FileRepository.HttpHeaderFile> getHttpHeaders() {
+        public List<HttpHeaderFile> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<FileRepository.HttpHeaderFile> httpHeaders) {
+        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
     }
 
 
     @XmlRootElement(name = "soapResponse")
+    @XmlSeeAlso(HttpHeaderFile.class)
     protected static class SoapResponseFile {
 
         @Mapping("body")
@@ -362,7 +364,7 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
         @Mapping("contentType")
         private String contentType;
         @Mapping("httpHeaders")
-        private List<FileRepository.HttpHeaderFile> httpHeaders;
+        private List<HttpHeaderFile> httpHeaders;
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings;
 
@@ -404,11 +406,11 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
 
         @XmlElementWrapper(name = "httpHeaders")
         @XmlElement(name = "httpHeader")
-        public List<FileRepository.HttpHeaderFile> getHttpHeaders() {
+        public List<HttpHeaderFile> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<FileRepository.HttpHeaderFile> httpHeaders) {
+        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 

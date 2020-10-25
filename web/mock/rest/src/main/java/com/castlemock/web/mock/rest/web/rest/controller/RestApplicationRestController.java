@@ -26,14 +26,10 @@ import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestResourceForwardedEndpointsRequest;
 import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestResourceStatusesRequest;
 import io.swagger.annotations.*;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("api/rest/rest")
@@ -121,7 +117,7 @@ public class RestApplicationRestController extends AbstractRestController {
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId,
-            @org.springframework.web.bind.annotation.RequestBody UpdateRestResourceStatusesRequest request){
+            @RequestBody UpdateRestResourceStatusesRequest request){
         request.getResourceIds()
                 .forEach(resourceId -> super.serviceProcessor.process(UpdateRestResourcesStatusInput.builder()
                         .projectId(projectId)

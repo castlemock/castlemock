@@ -17,6 +17,7 @@
 package com.castlemock.web.basis.web.rest.controller;
 
 
+import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 import com.castlemock.web.basis.config.JWTEncoderDecoder;
@@ -70,8 +71,9 @@ public class AuthenticationRestController extends AbstractRestController {
             final ReadUserByUsernameOutput output = serviceProcessor.process(ReadUserByUsernameInput.builder()
                     .username(request.getUsername())
                     .build());
+            final User user = output.getUser();
             final Map<String, String> claims = new HashMap<>();
-            claims.put("userId", output.getUser().getId());
+            claims.put("userId", user.getId());
             final String token = jwtEncoderDecoder.createToken(claims);
             final Cookie cookie = new Cookie("token",token);
 
@@ -82,8 +84,11 @@ public class AuthenticationRestController extends AbstractRestController {
 
             httpServletResponse.addCookie(cookie);
 
-            return ResponseEntity.ok(AuthenticationResponse.of(token));
-
+            return ResponseEntity.ok(AuthenticationResponse.builder()
+                    .token(token)
+                    .username(user.getUsername())
+                    .role(user.getRole())
+                    .build());
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

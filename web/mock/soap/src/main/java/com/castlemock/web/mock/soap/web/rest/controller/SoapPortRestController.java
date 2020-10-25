@@ -17,9 +17,11 @@
 package com.castlemock.web.mock.soap.web.rest.controller;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.core.mock.soap.service.project.input.DeleteSoapPortInput;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapPortInput;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsForwardedEndpointInput;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsStatusInput;
+import com.castlemock.core.mock.soap.service.project.output.DeleteSoapPortOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import com.castlemock.web.mock.soap.web.rest.controller.model.UpdateSoapOperationForwardedEndpointsRequest;
@@ -46,6 +48,23 @@ public class SoapPortRestController extends AbstractRestController {
             @ApiParam(name = "portId", value = "The id of the port")
             @PathVariable(value = "portId") final String portId) {
         final ReadSoapPortOutput output = super.serviceProcessor.process(ReadSoapPortInput.builder()
+                .projectId(projectId)
+                .portId(portId)
+                .build());
+        return ResponseEntity.ok(output.getPort());
+    }
+
+    @ApiOperation(value = "Delete Port", response = SoapPort.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully deleted SOAP port")})
+    @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}/port/{portId}")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody ResponseEntity<SoapPort> deletePort(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @ApiParam(name = "portId", value = "The id of the port")
+            @PathVariable(value = "portId") final String portId) {
+        final DeleteSoapPortOutput output = super.serviceProcessor.process(DeleteSoapPortInput.builder()
                 .projectId(projectId)
                 .portId(portId)
                 .build());

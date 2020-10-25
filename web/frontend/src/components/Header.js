@@ -24,57 +24,67 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Logo from '../images/logo-landscape-white.png'
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import AuthenticationContext from "../context/AuthenticationContext";
+import {canModify, isAdministrator} from "../utility/AuthorizeUtility";
 
 class Header extends Component {
 
     render() {
         return (
-            <div className="main-header">
-                <nav className="navbar navbar-default">
-                    <div className="container-fluid">
-                        <div className="navbar-header">
-                            <div className="header-logo">
-                                <Link to="/web">
-                                    Castle Mock
-                                    <img src={Logo} className="header-logo-img" alt="logo"/>
-                                </Link>
+            <AuthenticationContext.Consumer>
+                {context => (
+                    <div className="main-header">
+                        <nav className="navbar navbar-default">
+                            <div className="container-fluid">
+                                <div className="navbar-header">
+                                    <div className="header-logo">
+                                        <Link to="/web">
+                                            Castle Mock
+                                            <img src={Logo} className="header-logo-img" alt="logo"/>
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="header-menu-links">
+                                    <div className="header-menu-link">
+                                        <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Projects</Tooltip>}>
+                                            <Link to={"/web"}><FontAwesomeIcon icon={faHome} className="header-menu-icon" /></Link>
+                                        </OverlayTrigger>
+                                    </div>
+                                    <div className="header-menu-link">
+                                        <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">{context.authentication.username}</Tooltip>}>
+                                            <Link to={"/web/profile"}><FontAwesomeIcon icon={faUser} className="header-menu-icon" /></Link>
+                                        </OverlayTrigger>
+                                    </div>
+                                    <div className="header-menu-link">
+                                        <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Logs</Tooltip>}>
+                                            <Link to={"/web/event"}><FontAwesomeIcon icon={faChartBar} className="header-menu-icon" /></Link>
+                                        </OverlayTrigger>
+                                    </div>
+                                    { canModify(context.authentication.role) &&
+                                        <div className="header-menu-link">
+                                            <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Users</Tooltip>}>
+                                                <Link to={"/web/user"}><FontAwesomeIcon icon={faUsersCog} className="header-menu-icon"/></Link>
+                                            </OverlayTrigger>
+                                        </div>
+                                    }
+                                    { isAdministrator(context.authentication.role) &&
+                                        <div className="header-menu-link">
+                                            <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">System</Tooltip>}>
+                                                <Link to={"/web/system"}><FontAwesomeIcon icon={faCogs} className="header-menu-icon" /></Link>
+                                            </OverlayTrigger>
+                                        </div>
+                                    }
+                                    <div className="header-menu-link">
+                                        <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Logout</Tooltip>}>
+                                            <a href={"/web/logout"}><FontAwesomeIcon icon={faSignOutAlt} className="header-menu-icon" /></a>
+                                        </OverlayTrigger>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div className="header-menu-links">
-                            <div className="header-menu-link">
-                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Projects</Tooltip>}>
-                                    <Link to={"/web"}><FontAwesomeIcon icon={faHome} className="header-menu-icon" /></Link>
-                                </OverlayTrigger>
-                            </div>
-                            <div className="header-menu-link">
-                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Profile</Tooltip>}>
-                                    <Link to={"/web/profile"}><FontAwesomeIcon icon={faUser} className="header-menu-icon" /></Link>
-                                </OverlayTrigger>
-                            </div>
-                            <div className="header-menu-link">
-                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Logs</Tooltip>}>
-                                    <Link to={"/web/event"}><FontAwesomeIcon icon={faChartBar} className="header-menu-icon" /></Link>
-                                </OverlayTrigger>
-                            </div>
-                            <div className="header-menu-link">
-                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Users</Tooltip>}>
-                                    <Link to={"/web/user"}><FontAwesomeIcon icon={faUsersCog} className="header-menu-icon" /></Link>
-                                </OverlayTrigger>
-                            </div>
-                            <div className="header-menu-link">
-                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">System</Tooltip>}>
-                                    <Link to={"/web/system"}><FontAwesomeIcon icon={faCogs} className="header-menu-icon" /></Link>
-                                </OverlayTrigger>
-                            </div>
-                            <div className="header-menu-link">
-                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Logout</Tooltip>}>
-                                    <a href={"/web/logout"}><FontAwesomeIcon icon={faSignOutAlt} className="header-menu-icon" /></a>
-                                </OverlayTrigger>
-                            </div>
-                        </div>
+                        </nav>
                     </div>
-                </nav>
-            </div>
+                )}
+            </AuthenticationContext.Consumer>
         );
     }
 }

@@ -62,6 +62,11 @@ public class RestXPathExpression {
                 '}';
     }
 
+    public Builder toBuilder(){
+        return builder()
+                .expression(expression);
+    }
+
     public static Builder builder() {
         return new Builder();
     }

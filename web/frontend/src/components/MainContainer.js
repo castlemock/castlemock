@@ -16,48 +16,55 @@
 
 import React, {PureComponent} from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 import '../css/Main.css';
 import Footer from './Footer'
 import Header from './Header'
-import ProjectOverview from './project/ProjectOverview'
-import RestProject from './project/rest/RestProject'
-import SoapProject from './project/soap/SoapProject'
-import SoapPort from './project/soap/SoapPort'
-import SoapOperation from './project/soap/SoapOperation'
-import SoapMockResponse from './project/soap/SoapMockResponse'
-import RestApplication from "./project/rest/RestApplication";
-import RestResource from "./project/rest/RestResource";
-import RestMethod from "./project/rest/RestMethod";
-import RestMockResponse from "./project/rest/RestMockResponse";
+import ProjectOverview from './project/overview/ProjectOverview'
+import RestProject from './project/rest/project/RestProject'
+import SoapProject from './project/soap/project/SoapProject'
+import SoapPort from './project/soap/port/SoapPort'
+import SoapResource from "./project/soap/resource/SoapResource";
+import SoapOperation from './project/soap/operation/SoapOperation'
+import SoapMockResponse from './project/soap/mockresponse/SoapMockResponse'
+import RestApplication from "./project/rest/application/RestApplication";
+import RestResource from "./project/rest/resource/RestResource";
+import RestMethod from "./project/rest/method/RestMethod";
+import RestMockResponse from "./project/rest/mockresponse/RestMockResponse";
 import UserOverview from "./user/UserOverview";
 import User from "./user/User";
-import Profile from "./user/Profile";
+import Profile from "./profile/Profile";
 import System from "./system/System";
 import EventOverview from "./event/EventOverview"
-import { getAuthenticationState } from "../redux/Selectors";
-
-const mapStateToProps = state => {
-    const authenticationState = getAuthenticationState(state);
-    return { authenticationState };
-};
+import axios from "axios";
+import AuthenticationContext from "../context/AuthenticationContext"
 
 class MainContainer extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.isAuthenticated = this.isAuthenticated.bind(this);
+        this.getUser = this.getUser.bind(this);
     }
 
-    isAuthenticated(){
-        return this.props.authenticationState;
+    componentDidMount() {
+        this.getUser(this.context);
+    }
+
+    getUser(context) {
+        axios
+            .get("/api/rest/core/profile")
+            .then(response => {
+                context.updateAuthentication({
+                    username: response.data.username,
+                    role: response.data.role
+                });
+            })
+            .catch(error => {
+                context.updateAuthentication({})
+                this.props.history.push("/web/login");
+            });
     }
 
     render() {
-        if(!this.isAuthenticated()){
-            return <Redirect to = {{ pathname: "/web/login" }} />;
-        }
-
         return (
             <div>
                 <Router>
@@ -71,6 +78,7 @@ class MainContainer extends PureComponent {
                             <Route path="/web/soap/project/:projectId/port/:portId/operation/:operationId/mockresponse/:mockResponseId" component={SoapMockResponse} />
                             <Route path="/web/soap/project/:projectId/port/:portId/operation/:operationId" component={SoapOperation} />
                             <Route path="/web/soap/project/:projectId/port/:portId" component={SoapPort} />
+                            <Route path="/web/soap/project/:projectId/resource/:resourceId" component={SoapResource} />
                             <Route path="/web/rest/project/:projectId" component={RestProject} />
                             <Route path="/web/soap/project/:projectId" component={SoapProject} />
                             <Route path="/web/user/:userId" component={User} />
@@ -94,4 +102,5 @@ class MainContainer extends PureComponent {
     }
 }
 
-export default connect(mapStateToProps)(MainContainer);
+MainContainer.contextType = AuthenticationContext;
+export default MainContainer;

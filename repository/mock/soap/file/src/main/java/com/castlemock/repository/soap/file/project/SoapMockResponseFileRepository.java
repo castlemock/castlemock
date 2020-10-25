@@ -22,7 +22,6 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
@@ -38,6 +37,7 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -106,7 +106,7 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
     @Override
     protected void postInitiate() {
         for(SoapMockResponseFile soapMockResponse : collection.values()) {
-            List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+            List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<HttpHeaderFile>();
             if (soapMockResponse.getHttpHeaders() != null) {
                 httpHeaders.addAll(soapMockResponse.getHttpHeaders());
             }
@@ -191,7 +191,8 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
     }
 
     @XmlRootElement(name = "soapMockResponse")
-    protected static class SoapMockResponseFile implements Saveable<String> {
+    @XmlSeeAlso({HttpHeaderFile.class, SoapXPathExpressionFile.class})
+    public static class SoapMockResponseFile implements Saveable<String> {
 
         @Mapping("id")
         private String id;
@@ -211,7 +212,7 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         @Deprecated
         private String xpathExpression;
         @Mapping("httpHeaders")
-        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+        private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<HttpHeaderFile>();
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
         @Mapping("xpathExpressions")
@@ -284,11 +285,11 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
 
         @XmlElementWrapper(name = "httpHeaders")
         @XmlElement(name = "httpHeader")
-        public List<HttpHeader> getHttpHeaders() {
+        public List<HttpHeaderFile> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 
@@ -344,7 +345,7 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
     }
 
     @XmlRootElement(name = "soapXPathExpression")
-    protected static class SoapXPathExpressionFile {
+    public static class SoapXPathExpressionFile {
 
         private String expression;
 

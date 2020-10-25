@@ -16,26 +16,36 @@
 
 package com.castlemock.web.basis.model.authentication;
 
+import com.castlemock.core.basis.model.user.domain.Role;
+
 import java.util.Objects;
 
 public class AuthenticationResponse {
 
     private String token;
+    private String username;
+    private Role role;
 
     private AuthenticationResponse(){
 
     }
 
-    private AuthenticationResponse(final String token) {
-        this.token = Objects.requireNonNull(token);
-    }
-
-    public static AuthenticationResponse of(final String token){
-        return new AuthenticationResponse(token);
+    private AuthenticationResponse(final Builder builder) {
+        this.token = Objects.requireNonNull(builder.token);
+        this.username = Objects.requireNonNull(builder.username);
+        this.role = Objects.requireNonNull(builder.role);
     }
 
     public String getToken() {
         return token;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     @Override
@@ -56,5 +66,38 @@ public class AuthenticationResponse {
         return "AuthenticationResponse{" +
                 "token='" + token + '\'' +
                 '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String token;
+        private String username;
+        private Role role;
+
+        private Builder() {
+        }
+
+
+        public Builder token(String token) {
+            this.token = token;
+            return this;
+        }
+
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder role(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public AuthenticationResponse build() {
+            return new AuthenticationResponse(this);
+        }
     }
 }

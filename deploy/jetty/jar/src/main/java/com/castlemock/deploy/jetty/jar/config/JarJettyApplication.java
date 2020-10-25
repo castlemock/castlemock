@@ -18,6 +18,8 @@ package com.castlemock.deploy.jetty.jar.config;
 
 import com.castlemock.app.config.*;
 import com.castlemock.deploy.jetty.common.JettyConfig;
+import org.apache.tomcat.JarScanner;
+import org.apache.tomcat.util.scan.StandardJarScanner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +27,8 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfigurat
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.WebApplicationInitializer;
 
@@ -55,5 +59,15 @@ public class JarJettyApplication extends Application implements WebApplicationIn
         return application.sources(JarJettyApplication.class, MvcConfig.class, SecurityConfig.class,
                 WebSecurityConfig.class, RestSecurityConfig.class, MockSecurityConfig.class,
                 PropertyConfig.class, JettyConfig.class);
+    }
+
+    @Bean
+    public ServletContextInitializer servletContextInitializer() {
+        return context -> context.setAttribute(
+                JarScanner.class.getName(),
+                new StandardJarScanner() {{
+                    setScanManifest(false);
+                }}
+        );
     }
 }

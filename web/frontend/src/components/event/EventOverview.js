@@ -19,8 +19,6 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
-import {connect} from "react-redux";
-import {setAuthenticationState} from "../../redux/Actions";
 import validateErrorResponse from "../../utility/HttpResponseValidator";
 
 const { SearchBar } = Search;
@@ -88,7 +86,7 @@ class EventOverview extends PureComponent {
                 });
             })
             .catch(error => {
-                validateErrorResponse(error, this.props.setAuthenticationState)
+                validateErrorResponse(error)
             });
     }
 
@@ -99,7 +97,7 @@ class EventOverview extends PureComponent {
                 this.getEvents();
             })
             .catch(error => {
-                validateErrorResponse(error, this.props.setAuthenticationState)
+                validateErrorResponse(error)
             });
     }
 
@@ -167,7 +165,4 @@ class EventOverview extends PureComponent {
     }
 }
 
-export default connect(
-    null,
-    { setAuthenticationState }
-)(EventOverview);
+export default EventOverview;

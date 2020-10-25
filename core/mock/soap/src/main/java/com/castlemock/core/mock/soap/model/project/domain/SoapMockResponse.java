@@ -22,10 +22,12 @@ import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -168,6 +170,28 @@ public class SoapMockResponse {
 
     public void setXpathExpressions(List<SoapXPathExpression> xpathExpressions) {
         this.xpathExpressions = xpathExpressions;
+    }
+
+    public Builder toBuilder() {
+        return builder()
+                .id(id)
+                .name(name)
+                .body(body)
+                .operationId(operationId)
+                .status(status)
+                .httpStatusCode(httpStatusCode)
+                .usingExpressions(usingExpressions)
+                .xpathExpression(xpathExpression)
+                .httpHeaders(httpHeaders.stream()
+                        .map(HttpHeader::toBuilder)
+                        .map(HttpHeader.Builder::build)
+                        .collect(Collectors.toList()))
+                .contentEncodings(new ArrayList<>(contentEncodings))
+                .xpathExpressions(xpathExpressions
+                        .stream()
+                        .map(SoapXPathExpression::toBuilder)
+                        .map(SoapXPathExpression.Builder::build)
+                        .collect(Collectors.toList()));
     }
 
     public static Builder builder() {

@@ -17,6 +17,9 @@
 package com.castlemock.core.mock.soap.service.project.output;
 
 import com.castlemock.core.basis.model.Output;
+import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -24,8 +27,14 @@ import com.castlemock.core.basis.model.Output;
  */
 public final class DeleteSoapPortOutput implements Output {
 
-    private DeleteSoapPortOutput(final Builder builder){
+    private final SoapPort port;
 
+    private DeleteSoapPortOutput(final Builder builder){
+        this.port = Objects.requireNonNull(builder.port);
+    }
+
+    public SoapPort getPort() {
+        return port;
     }
 
     public static Builder builder(){
@@ -34,8 +43,15 @@ public final class DeleteSoapPortOutput implements Output {
 
     public static class Builder {
 
+        private SoapPort port;
+
         private Builder(){
 
+        }
+
+        public Builder port(final SoapPort port){
+            this.port = port;
+            return this;
         }
 
         public DeleteSoapPortOutput build(){

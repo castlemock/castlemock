@@ -21,12 +21,12 @@ import com.castlemock.core.basis.model.SearchQuery;
 import com.castlemock.core.basis.model.SearchResult;
 import com.castlemock.core.basis.model.SearchValidator;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
+
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +36,7 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -190,6 +191,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
 
 
     @XmlRootElement(name = "restMockResponse")
+    @XmlSeeAlso(HttpHeaderFile.class)
     protected static class RestMockResponseFile implements Saveable<String> {
 
         @Mapping("id")
@@ -207,7 +209,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         @Mapping("usingExpressions")
         private boolean usingExpressions;
         @Mapping("httpHeaders")
-        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
+        private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<HttpHeaderFile>();
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
         @Mapping("parameterQueries")
@@ -286,11 +288,11 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
 
         @XmlElementWrapper(name = "httpHeaders")
         @XmlElement(name = "httpHeader")
-        public List<HttpHeader> getHttpHeaders() {
+        public List<HttpHeaderFile> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 

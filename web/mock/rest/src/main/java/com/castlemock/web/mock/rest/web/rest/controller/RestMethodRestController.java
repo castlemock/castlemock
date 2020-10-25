@@ -17,15 +17,13 @@
 package com.castlemock.web.mock.rest.web.rest.controller;
 
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
-import com.castlemock.core.mock.rest.service.project.input.CreateRestMethodInput;
-import com.castlemock.core.mock.rest.service.project.input.DeleteRestMethodInput;
-import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
-import com.castlemock.core.mock.rest.service.project.input.UpdateRestMethodInput;
+import com.castlemock.core.mock.rest.service.project.input.*;
 import com.castlemock.core.mock.rest.service.project.output.CreateRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.DeleteRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.UpdateRestMethodOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestMockResponseStatusesRequest;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -134,6 +132,35 @@ public class RestMethodRestController extends AbstractRestController {
                 .method(restMethod)
                 .build());
        return ResponseEntity.ok(output.getCreatedRestMethod());
+    }
+
+    @ApiOperation(value = "Update mock response statuses")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully updated SOAP operation statuses")})
+    @RequestMapping(method = RequestMethod.PUT,
+            value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/{methodId}/mockresponse/status")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<Void> updateMockResponseStatuses(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @ApiParam(name = "applicationId", value = "The id of the application")
+            @PathVariable(value = "applicationId") final String applicationId,
+            @ApiParam(name = "resourceId", value = "The id of the resource")
+            @PathVariable(value = "resourceId") final String resourceId,
+            @ApiParam(name = "methodId", value = "The id of the method")
+            @PathVariable(value = "methodId") final String methodId,
+            @RequestBody UpdateRestMockResponseStatusesRequest request){
+        request.getMockResponseIds()
+                .forEach(mockResponseId -> super.serviceProcessor.process(UpdateRestMockResponseStatusInput.builder()
+                        .projectId(projectId)
+                        .applicationId(applicationId)
+                        .resourceId(resourceId)
+                        .methodId(methodId)
+                        .mockResponseId(mockResponseId)
+                        .status(request.getStatus())
+                        .build()));
+        return ResponseEntity.ok().build();
     }
 
 }
