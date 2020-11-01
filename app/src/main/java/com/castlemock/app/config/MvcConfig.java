@@ -17,7 +17,6 @@
 package com.castlemock.app.config;
 
 import org.dozer.DozerBeanMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -26,8 +25,6 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.servlet.ServletContext;
 
 /**
  * The MvcConfig class is responsible for configuring the MVC related configurations
@@ -38,16 +35,12 @@ import javax.servlet.ServletContext;
 @ComponentScan(basePackages = { "com.castlemock" })
 public class MvcConfig implements WebMvcConfigurer {
 
-    @Autowired
-    private ServletContext servletContext;
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        final String contextPath = servletContext.getContextPath();
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/public/")
                 .resourceChain(false)
-                .addResolver(new PushStateResourceResolver(contextPath));
+                .addResolver(new PushStateResourceResolver());
     }
 
     @Override

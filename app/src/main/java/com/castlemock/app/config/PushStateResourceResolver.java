@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class PushStateResourceResolver implements ResourceResolver {
 
@@ -34,23 +33,15 @@ public class PushStateResourceResolver implements ResourceResolver {
     private static final List<String> HANDLED_EXTENSIONS = Arrays.asList("html", "js", "json", "csv", "css", "png", "svg", "eot", "ttf", "woff", "appcache", "jpg", "jpeg", "gif", "ico");
     private static final List<String> IGNORED_PATHS = List.of("api");
 
-    private final String contextPath;
-
-    public PushStateResourceResolver(final String contextPath) {
-        this.contextPath = Objects.requireNonNull(contextPath);
-    }
-
     @Override
     public Resource resolveResource(final HttpServletRequest request, final String requestPath, List<? extends Resource> locations,
                                     final ResourceResolverChain chain) {
-        System.out.println(request);
         return resolve(requestPath, locations);
     }
 
     @Override
     public String resolveUrlPath(final String resourcePath, List<? extends Resource> locations,
                                  final ResourceResolverChain chain) {
-        System.out.println(resourcePath);
         final Resource resolvedResource = resolve(resourcePath, locations);
         if (resolvedResource == null) {
             return null;
@@ -63,8 +54,6 @@ public class PushStateResourceResolver implements ResourceResolver {
     }
 
     private Resource resolve(String requestPath, List<? extends Resource> locations) {
-        System.out.println(requestPath);
-
         if(requestPath.startsWith("web/")){
             requestPath = requestPath.replace("web/", "");
         }
