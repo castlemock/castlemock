@@ -26,6 +26,7 @@ import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import DeletePortModal from "./modal/DeletePortModal"
 import UpdateEndpointModal from "./modal/UpdateEndpointModal";
 import UpdateStatusModal from "./modal/UpdateStatusModal";
+import {operationStatusFormatter, operationResponseStrategy} from "../utility/SoapFormatter"
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -43,6 +44,8 @@ class SoapPort extends PureComponent {
         this.methodHeaderStyle = this.methodHeaderStyle.bind(this);
         this.responseStrategyHeaderStyle = this.responseStrategyHeaderStyle.bind(this);
         this.statusHeaderStyle = this.statusHeaderStyle.bind(this);
+        this.responseStrategyFormat = this.responseStrategyFormat.bind(this);
+        this.statusFormat = this.statusFormat.bind(this);
 
         this.getPort = this.getPort.bind(this);
 
@@ -64,12 +67,14 @@ class SoapPort extends PureComponent {
             dataField: 'responseStrategy',
             text: 'Response strategy',
             sort: true,
-            headerStyle: this.responseStrategyHeaderStyle
+            headerStyle: this.responseStrategyHeaderStyle,
+            formatter: this.responseStrategyFormat
         }, {
             dataField: 'status',
             text: 'Status',
             sort: true,
-            headerStyle: this.statusHeaderStyle
+            headerStyle: this.statusHeaderStyle,
+            formatter: this.statusFormat
         }];
 
         this.selectRow = {
@@ -154,6 +159,22 @@ class SoapPort extends PureComponent {
                 <Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + row.id}>{cell}</Link>
             </div>
         )
+    }
+
+    responseStrategyFormat(cell) {
+        if(cell == null){
+            return;
+        }
+
+        return operationResponseStrategy(cell);
+    }
+
+    statusFormat(cell) {
+        if(cell == null){
+            return;
+        }
+
+        return operationStatusFormatter(cell);
     }
 
     getPort() {

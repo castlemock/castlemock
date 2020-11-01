@@ -284,7 +284,7 @@ class ProjectOverview extends PureComponent {
                             {context => (
                                 <div className="menu">
                                     <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#newProjectModal" disabled={isOnlyReader(context.authentication.role)}><span>New project</span></button>
-                                    <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#importProjectModal" disabled={isOnlyReader(context.authentication.role)}><i className="fas fa-cloud-upload-alt"/> <span>Import project</span></button>
+                                    <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#importProjectModal" disabled={isOnlyReader(context.authentication.role)}><span>Import project</span></button>
                                 </div>
                             )}
                         </AuthenticationContext.Consumer>

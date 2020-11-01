@@ -28,6 +28,7 @@ import UpdateEndpointModal from "./modal/UpdateEndpointModal";
 import DeleteProjectModal from "./modal/DeleteProjectModal";
 import DeleteApplicationsModal from "./modal/DeleteApplicationsModal";
 import CreateApplicationModal from "./modal/CreateApplicationModal";
+import UploadDefinitionModal from "./modal/UploadDefinitionModal"
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -208,9 +209,9 @@ class RestProject extends PureComponent {
                                     Upload
                                 </button>
                                 <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadRAMLModal">RAML</button>
-                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadSwaggerModal">Swagger</button>
-                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadWADLModal">WADL</button>
+                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadRAMLDefinitionModal">RAML</button>
+                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadSWAGGERDefinitionModal">Swagger</button>
+                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadWADLDefinitionModal">WADL</button>
                                 </div>
                             </div>                            <button className="btn btn-primary demo-button-disabled menu-button" onClick={this.onExportProjectClick}><span>Export project</span></button>
                             <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteProjectModal"><span>Delete project</span></button>
@@ -272,6 +273,9 @@ class RestProject extends PureComponent {
                 <UpdateEndpointModal projectId={this.state.projectId} getProject={this.getProject} selectedApplications={this.state.selectedApplications}/>
                 <UpdateProjectModal projectId={this.state.projectId} getProject={this.getProject} project={this.state.project}/>
                 <UpdateStatusModal projectId={this.state.projectId} getProject={this.getProject} selectedApplications={this.state.selectedApplications}/>
+                <UploadDefinitionModal projectId={this.state.projectId} getProject={this.getProject} definitionType={"SWAGGER"} />
+                <UploadDefinitionModal projectId={this.state.projectId} getProject={this.getProject} definitionType={"RAML"} />
+                <UploadDefinitionModal projectId={this.state.projectId} getProject={this.getProject} definitionType={"WADL"} />
             </div>
         )
     }

@@ -161,10 +161,10 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
     }
 
     @Override
-    public List<SoapMockResponse> findWithOperationId(String operationId) {
+    public List<SoapMockResponse> findWithOperationId(final String operationId) {
         final List<SoapMockResponse> mockResponses = new ArrayList<>();
         for(SoapMockResponseFile mockResponse : this.collection.values()){
-            if(mockResponse.getOperationId().equals(operationId)){
+            if(operationId.equals(mockResponse.getOperationId())){
                 SoapMockResponse operation = this.mapper.map(mockResponse, SoapMockResponse.class);
                 mockResponses.add(operation);
             }

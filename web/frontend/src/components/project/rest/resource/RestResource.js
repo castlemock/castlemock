@@ -27,6 +27,7 @@ import UpdateEndpointModal from "./modal/UpdateEndpointModal";
 import UpdateResourceModal from "./modal/UpdateResourceModal";
 import UpdateStatusModal from "./modal/UpdateStatusModal";
 import CreateMethodModal from "./modal/CreateMethodModal"
+import {methodStatusFormatter} from "../utility/RestFormatter";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -41,6 +42,7 @@ class RestResource extends PureComponent {
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
         this.getResource = this.getResource.bind(this);
+        this.responseStrategyFormat = this.responseStrategyFormat.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -58,7 +60,8 @@ class RestResource extends PureComponent {
         }, {
             dataField: 'status',
             text: 'Method Status',
-            sort: true
+            sort: true,
+            formatter: this.responseStrategyFormat
         }, {
             dataField: 'forwardedEndpoint',
             text: 'Forwarded endpoint',
@@ -136,6 +139,14 @@ class RestResource extends PureComponent {
                 <Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + row.id}>{cell}</Link>
             </div>
         )
+    }
+
+    responseStrategyFormat(cell) {
+        if(cell == null){
+            return;
+        }
+
+        return methodStatusFormatter(cell);
     }
 
     getResource() {

@@ -26,7 +26,6 @@ class UpdateProjectModal extends PureComponent {
         this.setUpdateProjectName = this.setUpdateProjectName.bind(this);
         this.setUpdateProjectDescription = this.setUpdateProjectDescription.bind(this);
         this.onUpdateProjectClick = this.onUpdateProjectClick.bind(this);
-        this.getProject = props.getProject.bind(this);
 
         this.state = {
             updateProject: {
@@ -36,18 +35,18 @@ class UpdateProjectModal extends PureComponent {
         };
     }
 
-    setUpdateProjectName(name) {
+    setUpdateProjectName(event) {
         this.setState({ updateProject: {
                 ...this.state.updateProject,
-                name: name
+                name: event.target.value
             }
         });
     }
 
-    setUpdateProjectDescription(description) {
+    setUpdateProjectDescription(event) {
         this.setState({ updateProject: {
                 ...this.state.updateProject,
-                description: description
+                description: event.target.value
             }
         });
     }
@@ -62,7 +61,6 @@ class UpdateProjectModal extends PureComponent {
                 validateErrorResponse(error)
             });
     }
-
 
     render() {
         return (
@@ -81,13 +79,13 @@ class UpdateProjectModal extends PureComponent {
                                 <div className="form-group row">
                                     <label htmlFor="updateProjectName" className="col-sm-2 col-form-label">Name</label>
                                     <div className="col-sm-10">
-                                        <input className="form-control" type="text" name="newProjectName" id="updateProjectName" defaultValue={this.props.project.name} onChange={event => this.setUpdateProjectName(event.target.value)} required/>
+                                        <input className="form-control" type="text" defaultValue={this.props.project.name} onChange={this.setUpdateProjectName} required/>
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="updateProjectDescription" className="col-sm-2 col-form-label">Description</label>
                                     <div className="col-sm-10">
-                                        <textarea className="form-control" name="updateProjectDescription" id="updateProjectDescription" defaultValue={this.props.project.description} onChange={event => this.setUpdateProjectDescription(event.target.value)}/>
+                                        <textarea className="form-control" defaultValue={this.props.project.description} onChange={this.setUpdateProjectDescription}/>
                                     </div>
                                 </div>
                             </form>

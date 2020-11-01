@@ -93,9 +93,7 @@ public class EventCoreRestController extends AbstractRestController {
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> deleteAllEvents() {
-        eventServiceFacade
-                .findAll()
-                .forEach(event -> eventServiceFacade.delete(event.getTypeIdentifier().getType(), event.getId()));
+        eventServiceFacade.clearAll();
         return ResponseEntity.ok().build();
     }
 

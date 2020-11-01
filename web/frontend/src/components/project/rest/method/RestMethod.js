@@ -27,6 +27,7 @@ import UpdateMethodModal from "./modal/UpdateMethodModal";
 import CreateMockResponseModal from "./modal/CreateMockResponseModal";
 import DuplicateMockResponsesModal from "./modal/DuplicateMockResponsesModal";
 import UpdateStatusModal from "./modal/UpdateStatusModal"
+import {mockResponseStatusFormatter, methodResponseStrategyFormatter, methodStatusFormatter} from "../utility/RestFormatter";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -41,6 +42,7 @@ class RestMethod extends PureComponent {
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
         this.getMethod = this.getMethod.bind(this);
+        this.statusFormat = this.statusFormat.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -54,7 +56,8 @@ class RestMethod extends PureComponent {
         }, {
             dataField: 'status',
             text: 'Status',
-            sort: true
+            sort: true,
+            formatter: this.statusFormat
         }, {
             dataField: 'httpStatusCode',
             text: 'HTTP status code',
@@ -135,6 +138,14 @@ class RestMethod extends PureComponent {
         )
     }
 
+    statusFormat(cell) {
+        if(cell == null){
+            return;
+        }
+
+        return mockResponseStatusFormatter(cell);
+    }
+
     getMethod() {
         axios
             .get("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId)
@@ -180,11 +191,11 @@ class RestMethod extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Status</dt>
-                            <dd className="col-sm-9">{this.state.method.status}</dd>
+                            <dd className="col-sm-9">{methodStatusFormatter(this.state.method.status)}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Response strategy</dt>
-                            <dd className="col-sm-9">{this.state.method.responseStrategy}</dd>
+                            <dd className="col-sm-9">{methodResponseStrategyFormatter(this.state.method.responseStrategy)}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Address</dt>
@@ -196,11 +207,11 @@ class RestMethod extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Simulate network delay</dt>
-                            <dd className="col-sm-9">{this.state.method.simulateNetworkDelay}</dd>
+                            <dd className="col-sm-9"><input type="checkbox" value={this.state.method.simulateNetworkDelay} disabled={true}/></dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Network delay</dt>
-                            <dd className="col-sm-9">{this.state.method.networkDelay}</dd>
+                            <dd className="col-sm-9">{this.state.method.networkDelay} ms</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Default response</dt>
@@ -227,6 +238,7 @@ class RestMethod extends PureComponent {
                                                             data={this.state.method.mockResponses} columns={this.columns}
                                                             defaultSorted={this.defaultSort} keyField='id' hover
                                                             selectRow={this.selectRow}
+                                                            noDataIndication="No mocked responses"
                                                             pagination={ PaginationFactory() }/>
                                         </div>
                                     )}

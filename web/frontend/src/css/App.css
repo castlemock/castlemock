@@ -46,3 +46,35 @@ body {
   height: 100%;
   min-height: 100%;
 }
+
+.separator {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 20px;
+}
+.separator::before, .separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #666666;
+}
+.separator::before {
+  margin-right: .25em;
+}
+.separator::after {
+  margin-left: .25em;
+}
+
+.upload-modal-title {
+  font-size: 20px;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.upload-modal-button {
+  align-items: center;
+  text-align: center;
+}

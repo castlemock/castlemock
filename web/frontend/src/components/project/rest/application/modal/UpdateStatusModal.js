@@ -20,6 +20,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
+import {methodStatusFormatter} from "../../utility/RestFormatter";
 
 
 class UpdateStatusModal extends PureComponent {
@@ -104,12 +105,12 @@ class UpdateStatusModal extends PureComponent {
                                 <label className="col-sm-2 col-form-label">Status</label>
                                 <div className="col-sm-10">
                                     <select id="inputStatus" className="form-control" defaultValue="MOCKED" onChange={this.setStatus}>
-                                        <option>MOCKED</option>
-                                        <option>DISABLED</option>
-                                        <option>FORWARDED</option>
-                                        <option>RECORDING</option>
-                                        <option>RECORD_ONCE</option>
-                                        <option>ECHO</option>
+                                        <option value={"MOCKED"}>{methodStatusFormatter("MOCKED")}</option>
+                                        <option value={"DISABLED"}>{methodStatusFormatter("DISABLED")}</option>
+                                        <option value={"FORWARDED"}>{methodStatusFormatter("FORWARDED")}</option>
+                                        <option value={"RECORDING"}>{methodStatusFormatter("RECORDING")}</option>
+                                        <option value={"RECORD_ONCE"}>{methodStatusFormatter("RECORD_ONCE")}</option>
+                                        <option value={"ECHO"}>{methodStatusFormatter("ECHO")}</option>
                                     </select>
                                 </div>
                             </div>

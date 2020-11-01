@@ -18,6 +18,7 @@ import React, {PureComponent} from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
+import {mockResponseStatusFormatter} from "../../utility/RestFormatter";
 
 class CreateMockResponseModal extends PureComponent {
 
@@ -96,8 +97,8 @@ class CreateMockResponseModal extends PureComponent {
                                 <label className="col-sm-2 col-form-label">Status</label>
                                 <div className="col-sm-10">
                                     <select id="inputStatus" className="form-control" defaultValue="MOCKED" onChange={this.setNewMockResponseStatus}>
-                                        <option>ENABLED</option>
-                                        <option>DISABLED</option>
+                                        <option value={"ENABLED"}>{mockResponseStatusFormatter("ENABLED")}</option>
+                                        <option value={"DISABLED"}>{mockResponseStatusFormatter("DISABLED")}</option>
                                     </select>
                                 </div>
                             </div>

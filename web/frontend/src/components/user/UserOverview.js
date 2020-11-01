@@ -23,6 +23,7 @@ import {Link} from "react-router-dom";
 import validateErrorResponse from "../../utility/HttpResponseValidator";
 import DeleteUsersModal from "./modal/DeleteUsersModal";
 import NewUserModal from "./modal/NewUserModal";
+import {userStatusFormatter, userRoleFormatter} from "../user/utility/UserFormatter";
 
 const { SearchBar } = Search;
 
@@ -38,6 +39,8 @@ class UserOverview extends PureComponent {
         this.userNameFormat = this.userNameFormat.bind(this);
         this.userDateFormat = this.userDateFormat.bind(this);
         this.getUsers = this.getUsers.bind(this);
+        this.userStatusFormat = this.userStatusFormat.bind(this);
+        this.userRoleFormat = this.userRoleFormat.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -57,11 +60,13 @@ class UserOverview extends PureComponent {
         }, {
             dataField: 'role',
             text: 'Role',
-            sort: true
+            sort: true,
+            formatter: this.userRoleFormat
         }, {
             dataField: 'status',
             text: 'Status',
-            sort: true
+            sort: true,
+            formatter: this.userStatusFormat
         },{
             dataField: 'created',
             text: 'Created',
@@ -118,6 +123,22 @@ class UserOverview extends PureComponent {
                 <Link to={"/web/user/" + row.id}>{cell}</Link>
             </div>
         )
+    }
+
+    userStatusFormat(cell) {
+        if(cell == null){
+            return;
+        }
+
+        return userStatusFormatter(cell);
+    }
+
+    userRoleFormat(cell) {
+        if(cell == null){
+            return;
+        }
+
+        return userRoleFormatter(cell);
     }
 
     userDateFormat(cell) {

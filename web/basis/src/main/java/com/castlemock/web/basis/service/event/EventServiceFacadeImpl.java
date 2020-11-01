@@ -66,6 +66,7 @@ public class EventServiceFacadeImpl extends ServiceFacadeImpl<Event, String, Eve
         return events;
     }
 
+    @Override
     public void clearAll(){
         for(Map.Entry<String, EventServiceAdapter<Event>> entry : services.entrySet()){
             EventServiceAdapter<Event> eventDtoEventServiceAdapter = entry.getValue();

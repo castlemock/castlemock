@@ -26,7 +26,6 @@ class DeletePortsModal extends PureComponent {
     constructor(props) {
         super(props);
         this.onDeletePortClick = this.onDeletePortClick.bind(this);
-        this.getProject = props.getProject.bind(this);
 
         this.columns = [{
             dataField: 'id',
@@ -50,14 +49,13 @@ class DeletePortsModal extends PureComponent {
             axios
                 .delete("/api/rest/soap/project/" + this.props.projectId + "/port/" + port.id)
                 .then(response => {
-                    this.getProject();
+                    this.props.getProject();
                 })
                 .catch(error => {
                     validateErrorResponse(error)
                 });
         });
     }
-
 
     render() {
         return (
@@ -91,7 +89,7 @@ class DeletePortsModal extends PureComponent {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-danger" data-dismiss="modal" onChange={this.onDeletePortClick}>Delete</button>
+                            <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeletePortClick}>Delete</button>
                         </div>
                     </div>
                 </div>

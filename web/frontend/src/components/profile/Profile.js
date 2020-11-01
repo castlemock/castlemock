@@ -17,6 +17,7 @@
 import React, {PureComponent} from 'react';
 import axios from "axios";
 import validateErrorResponse from "../../utility/HttpResponseValidator";
+import {userStatusFormatter, userRoleFormatter} from "../user/utility/UserFormatter";
 
 class Profile extends PureComponent {
 
@@ -135,11 +136,11 @@ class Profile extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-2 content-title">Status</dt>
-                            <dd className="col-sm-9">{this.state.user.status}</dd>
+                            <dd className="col-sm-9">{userStatusFormatter(this.state.user.status)}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-2 content-title">Role</dt>
-                            <dd className="col-sm-9">{this.state.user.role}</dd>
+                            <dd className="col-sm-9">{userRoleFormatter(this.state.user.role)}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-2 content-title">Created</dt>

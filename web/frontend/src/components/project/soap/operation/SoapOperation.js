@@ -28,6 +28,8 @@ import UpdateOperationModal from "./modal/UpdateOperationModal";
 import DeleteMockResponsesModal from "./modal/DeleteMockResponsesModal";
 import CreateMockResponseModal from "./modal/CreateMockResponseModal";
 import DuplicateMockResponseModal from "./modal/DuplicateMockResponseModal"
+import {operationStatusFormatter, operationSoapVersionFormatter,
+    operationIdentifyStrategy, operationResponseStrategy, mockResponseStatusFormatter} from "../utility/SoapFormatter"
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -42,8 +44,9 @@ class SoapOperation extends PureComponent {
         this.onRowSelect = this.onRowSelect.bind(this);
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
-
+        this.statusFormat = this.statusFormat.bind(this);
         this.getOperation = this.getOperation.bind(this);
+        this.getPort = this.getPort.bind(this);
 
         // On click
         this.onDuplicateClick = this.onDuplicateClick.bind(this);
@@ -60,20 +63,11 @@ class SoapOperation extends PureComponent {
         }, {
             dataField: 'status',
             text: 'Status',
-            sort: true
+            sort: true,
+            formatter: this.statusFormat
         }, {
             dataField: 'httpStatusCode',
             text: 'HTTP status code',
-            sort: true
-        }];
-
-        this.updateColumns = [{
-            dataField: 'id',
-            text: 'id',
-            hidden: true
-        }, {
-            dataField: 'name',
-            text: 'Name',
             sort: true
         }];
 
@@ -96,10 +90,14 @@ class SoapOperation extends PureComponent {
                 operationIdentifier: {},
                 mockResponses: []
             },
+            port: {
+                uri: ""
+            },
             selectedMockResponses: []
         };
 
         this.getOperation();
+        this.getPort();
     }
 
     onRowSelect(value, mode) {
@@ -151,12 +149,35 @@ class SoapOperation extends PureComponent {
         )
     }
 
+    statusFormat(cell) {
+        if(cell == null){
+            return;
+        }
+
+        return mockResponseStatusFormatter(cell);
+    }
+
     getOperation() {
         axios
             .get("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId)
             .then(response => {
                 this.setState({
                     operation: response.data});
+            })
+            .catch(error => {
+                validateErrorResponse(error)
+            });
+    }
+
+    getPort() {
+        axios
+            .get("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId)
+            .then(response => {
+                this.setState({
+                    port: {
+                        uri: response.data.uri
+                    }
+                });
             })
             .catch(error => {
                 validateErrorResponse(error)
@@ -218,23 +239,23 @@ class SoapOperation extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">SOAP Version</dt>
-                            <dd className="col-sm-9">{this.state.operation.soapVersion}</dd>
+                            <dd className="col-sm-9">{operationSoapVersionFormatter(this.state.operation.soapVersion)}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Identify strategy</dt>
-                            <dd className="col-sm-9">{this.state.operation.identifyStrategy}</dd>
+                            <dd className="col-sm-9">{operationIdentifyStrategy(this.state.operation.identifyStrategy)}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Status</dt>
-                            <dd className="col-sm-9">{this.state.operation.status}</dd>
+                            <dd className="col-sm-9">{operationStatusFormatter(this.state.operation.status)}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Response strategy</dt>
-                            <dd className="col-sm-9">{this.state.operation.responseStrategy}</dd>
+                            <dd className="col-sm-9">{operationResponseStrategy(this.state.operation.responseStrategy)}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Address</dt>
-                            <dd className="col-sm-9">Test</dd>
+                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Original endpoint</dt>
@@ -246,7 +267,7 @@ class SoapOperation extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Simulate network delay</dt>
-                            <dd className="col-sm-9">{this.state.operation.simulateNetworkDelay}</dd>
+                            <dd className="col-sm-9"><input type="checkbox" value={this.state.operation.simulateNetworkDelay} disabled={true}/></dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Network delay</dt>
@@ -258,7 +279,7 @@ class SoapOperation extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Mock on failure</dt>
-                            <dd className="col-sm-9">{this.state.operation.mockOnFailure}</dd>
+                            <dd className="col-sm-9"><input type="checkbox" value={this.state.operation.mockOnFailure} disabled={true}/></dd>
                         </dl>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -281,6 +302,7 @@ class SoapOperation extends PureComponent {
                                                             data={this.state.operation.mockResponses} columns={this.columns}
                                                             defaultSorted={this.defaultSort} keyField='id' hover
                                                             selectRow={this.selectRow}
+                                                            noDataIndication="No mocked responses"
                                                             pagination={ PaginationFactory() }/>
                                         </div>
                                     )}

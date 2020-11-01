@@ -382,7 +382,7 @@ class SoapProject extends PureComponent {
                 <UpdateEndpointModal projectId={this.state.projectId} selectedPorts={this.state.selectedPorts} getProject={this.getProject}/>
                 <UpdateProjectModal projectId={this.state.projectId} project={this.state.project} getProject={this.getProject}/>
                 <UpdateStatusModal projectId={this.state.projectId} selectedPorts={this.state.selectedPorts} getProject={this.getProject}/>
-                <UploadWSDLModal/>
+                <UploadWSDLModal  projectId={this.state.projectId} getProject={this.getProject}/>
             </div>
         )
     }

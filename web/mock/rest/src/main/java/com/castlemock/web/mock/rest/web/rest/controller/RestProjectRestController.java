@@ -16,25 +16,38 @@
 
 package com.castlemock.web.mock.rest.web.rest.controller;
 
+import com.castlemock.core.mock.rest.model.RestDefinitionType;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.core.mock.rest.service.project.input.ImportRestDefinitionInput;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestProjectInput;
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationsForwardedEndpointInput;
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationsStatusInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestProjectOutput;
+import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.mock.rest.web.rest.controller.model.LinkDefinitionRequest;
 import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestApplicationForwardedEndpointsRequest;
 import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestApplicationStatusesRequest;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("api/rest/rest")
 @Api(value="REST - Application", description="REST Operations for Castle Mock REST Application",
         tags = {"REST - Application"})
 public class RestProjectRestController extends AbstractRestController {
+
+    @Autowired
+    private FileManager fileManager;
 
     @ApiOperation(value = "Get REST Project", response = RestProject.class)
     @ApiResponses(value = {
@@ -87,6 +100,59 @@ public class RestProjectRestController extends AbstractRestController {
                 .forwardedEndpoint(request.getForwardedEndpoint())
                 .build());
         return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "Upload definition")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully uploaded definition")})
+    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/definition/file")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<Void> uploadDefinition(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @RequestParam("file") final MultipartFile multipartFile,
+            @RequestParam("generateResponse") final boolean generateResponse,
+            @RequestParam("definitionType") final RestDefinitionType definitionType){
+
+        try {
+            final File file = fileManager.uploadFile(multipartFile);
+            super.serviceProcessor.process(ImportRestDefinitionInput.builder()
+                    .restProjectId(projectId)
+                    .files(List.of(file))
+                    .generateResponse(generateResponse)
+                    .definitionType(definitionType)
+                    .build());
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @ApiOperation(value = "Link definition")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully linked definition")})
+    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/definition/link")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<Void> linkDefinition(
+            @ApiParam(name = "projectId", value = "The id of the project")
+            @PathVariable(value = "projectId") final String projectId,
+            @RequestBody final LinkDefinitionRequest request){
+
+        try {
+            final List<File> files = fileManager.uploadFiles(request.getUrl());
+            super.serviceProcessor.process(ImportRestDefinitionInput.builder()
+                    .restProjectId(projectId)
+                    .files(files)
+                    .generateResponse(request.getGenerateResponse())
+                    .location(request.getUrl())
+                    .definitionType(request.getDefinitionType())
+                    .build());
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

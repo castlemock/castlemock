@@ -17,6 +17,7 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
+import {operationStatusFormatter, operationResponseStrategy} from "../../utility/SoapFormatter"
 
 class UpdateOperationModal extends PureComponent {
 
@@ -121,12 +122,12 @@ class UpdateOperationModal extends PureComponent {
                                     <div className="col-sm-9">
                                         <select id="inputStatus" className="form-control" defaultValue={this.state.updateOperation.status}
                                                 onChange={event => this.onStatusChange(event.target.value)}>
-                                            <option>MOCKED</option>
-                                            <option>DISABLED</option>
-                                            <option>FORWARDED</option>
-                                            <option>RECORDING</option>
-                                            <option>RECORD_ONCE</option>
-                                            <option>ECHO</option>
+                                            <option value={"MOCKED"}>{operationStatusFormatter("MOCKED")}</option>
+                                            <option value={"DISABLED"}>{operationStatusFormatter("DISABLED")}</option>
+                                            <option value={"FORWARDED"}>{operationStatusFormatter("FORWARDED")}</option>
+                                            <option value={"RECORDING"}>{operationStatusFormatter("RECORDING")}</option>
+                                            <option value={"RECORD_ONCE"}>{operationStatusFormatter("RECORD_ONCE")}</option>
+                                            <option value={"ECHO"}>{operationStatusFormatter("ECHO")}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -136,9 +137,9 @@ class UpdateOperationModal extends PureComponent {
                                         <select id="inputStatus" className="form-control"
                                                 defaultValue={this.state.updateOperation.responseStrategy}
                                                 onChange={event => this.onResponseStrategyChange(event.target.value)}>
-                                            <option>RANDOM</option>
-                                            <option>SEQUENCE</option>
-                                            <option>XPATH_INPUT</option>
+                                            <option value={"RANDOM"}>{operationResponseStrategy("RANDOM")}</option>
+                                            <option value={"SEQUENCE"}>{operationResponseStrategy("SEQUENCE")}</option>
+                                            <option value={"XPATH_INPUT"}>{operationResponseStrategy("XPATH_INPUT")}</option>
                                         </select>
                                     </div>
                                 </div>

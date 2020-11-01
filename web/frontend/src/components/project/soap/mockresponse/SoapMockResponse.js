@@ -24,6 +24,7 @@ import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import DeleteMockResponseModal from "./modal/DeleteMockResponseModal";
 import HeaderComponent from "../../utility/HeaderComponent";
 import XPathComponent from "../../utility/XPathComponent";
+import {mockResponseStatusFormatter} from "../utility/SoapFormatter";
 
 class SoapMockResponse extends PureComponent {
 
@@ -217,8 +218,8 @@ class SoapMockResponse extends PureComponent {
                             <dt className="col-sm-3 content-title">Status</dt>
                             <dd className="col-sm-2">
                                 <select id="inputState" className="form-control" defaultValue={this.state.mockResponse.status} onChange={this.setStatus}>
-                                    <option>ENABLED</option>
-                                    <option>DISABLED</option>
+                                    <option value={"ENABLED"}>{mockResponseStatusFormatter("ENABLED")}</option>
+                                    <option value={"DISABLED"}>{mockResponseStatusFormatter("DISABLED")}</option>
                                 </select>
                             </dd>
                         </dl>

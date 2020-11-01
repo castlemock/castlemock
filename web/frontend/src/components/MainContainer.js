@@ -34,7 +34,9 @@ import UserOverview from "./user/UserOverview";
 import User from "./user/User";
 import Profile from "./profile/Profile";
 import System from "./system/System";
-import EventOverview from "./event/EventOverview"
+import EventOverview from "./event/overview/EventOverview"
+import RestEvent from "./event/rest/RestEvent"
+import SoapEvent from "./event/soap/SoapEvent"
 import axios from "axios";
 import AuthenticationContext from "../context/AuthenticationContext"
 
@@ -85,6 +87,8 @@ class MainContainer extends PureComponent {
                             <Route path="/web/user" component={UserOverview} />
                             <Route path="/web/profile" component={Profile} />
                             <Route path="/web/system" component={System} />
+                            <Route path="/web/rest/event/:eventId" component={RestEvent} />
+                            <Route path="/web/soap/event/:eventId" component={SoapEvent} />
                             <Route path="/web/event" component={EventOverview} />
                             <Route path="/web" component={ProjectOverview} />
                             <Route path="/*">

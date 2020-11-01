@@ -20,7 +20,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
-
+import {mockResponseStatusFormatter} from "../../utility/RestFormatter";
 
 class UpdateStatusModal extends PureComponent {
 
@@ -45,7 +45,7 @@ class UpdateStatusModal extends PureComponent {
         }];
 
         this.state = {
-            updateStatus: "MOCKED"
+            updateStatus: "ENABLED"
         };
     }
 
@@ -62,7 +62,7 @@ class UpdateStatusModal extends PureComponent {
                 projectId: this.props.projectId,
                 applicationId: this.props.applicationId,
                 resourceId: this.props.resourceId,
-                method: this.props.methodId,
+                methodId: this.props.methodId,
                 mockResponseIds: mockResponseIds,
                 status: this.state.updateStatus
             })
@@ -108,8 +108,8 @@ class UpdateStatusModal extends PureComponent {
                                 <label className="col-sm-2 col-form-label">Status</label>
                                 <div className="col-sm-10">
                                     <select id="inputStatus" className="form-control" defaultValue="MOCKED" onChange={this.setStatus}>
-                                        <option>ENABLED</option>
-                                        <option>DISABLED</option>
+                                        <option value={"ENABLED"}>{mockResponseStatusFormatter("ENABLED")}</option>
+                                        <option value={"DISABLED"}>{mockResponseStatusFormatter("DISABLED")}</option>
                                     </select>
                                 </div>
                             </div>

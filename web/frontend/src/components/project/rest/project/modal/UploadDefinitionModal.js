@@ -17,33 +17,31 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
+import {definitionTypeFormatter} from "../../utility/RestFormatter"
 
-
-class UploadWSDLModal extends PureComponent {
+class UploadDefinitionModal extends PureComponent {
 
     constructor(props){
         super(props);
         this.setFile = this.setFile.bind(this);
-        this.uploadWsdl = this.uploadWsdl.bind(this);
-        this.linkWsdl = this.linkWsdl.bind(this);
-        this.setLinkWsdlUrl = this.setLinkWsdlUrl.bind(this);
+        this.uploadDefinition = this.uploadDefinition.bind(this);
+        this.linkDefinition = this.linkDefinition.bind(this);
+        this.setLinkDefinitionUrl = this.setLinkDefinitionUrl.bind(this);
         this.setGenerateResponseLink = this.setGenerateResponseLink.bind(this);
         this.setGenerateResponseUpload = this.setGenerateResponseUpload.bind(this);
-        this.setIncludeImports = this.setIncludeImports.bind(this);
 
         this.state = {
             selectedFile: null,
             selectedFileName: "",
             generateResponseLink: "true",
             generateResponseUpload: "true",
-            includeImports: "false",
-            linkWsdlUrl: ""
+            linkDefinitionUrl: ""
         }
     }
 
-    setLinkWsdlUrl(event) {
+    setLinkDefinitionUrl(event) {
         this.setState({
-            linkWsdlUrl: event.target.value
+            linkDefinitionUrl: event.target.value
         });
     }
 
@@ -59,12 +57,6 @@ class UploadWSDLModal extends PureComponent {
         });
     }
 
-    setIncludeImports(event) {
-        this.setState({
-            includeImports: event.target.checked
-        });
-    }
-
     setFile(event) {
         let selectedFile = event.target.files[0];
         this.setState({
@@ -74,12 +66,14 @@ class UploadWSDLModal extends PureComponent {
     }
 
 
-    uploadWsdl(){
+    uploadDefinition(){
         let data = new FormData();
         data.append('file', this.state.selectedFile);
         data.append('generateResponse', this.state.generateResponseUpload);
+        data.append('definitionType', this.props.definitionType)
+
         axios
-            .post("/api/rest/soap/project/" + this.props.projectId + "/wsdl/file", data, {})
+            .post("/api/rest/rest/project/" + this.props.projectId + "/definition/file", data, {})
             .then(response => {
                 this.props.getProject();
             })
@@ -88,12 +82,12 @@ class UploadWSDLModal extends PureComponent {
             });
     }
 
-    linkWsdl(){
+    linkDefinition(){
         axios
-            .post("/api/rest/soap/project/" + this.props.projectId + "/wsdl/link", {
-                url: this.state.linkWsdlUrl,
+            .post("/api/rest/rest/project/" + this.props.projectId + "/definition/link", {
+                url: this.state.linkDefinitionUrl,
                 generateResponse: this.state.generateResponseLink,
-                includeImports: this.state.includeImports
+                definitionType: this.props.definitionType
             }, {})
             .then(response => {
                 this.props.getProject();
@@ -105,12 +99,12 @@ class UploadWSDLModal extends PureComponent {
 
     render() {
         return (
-            <div className="modal fade" id="uploadWSDLModal" tabIndex="-1" role="dialog"
-                 aria-labelledby="uploadWSDLModalLabel" aria-hidden="true">
+            <div className="modal fade" id={"upload" + this.props.definitionType + "DefinitionModal"} tabIndex="-1" role="dialog"
+                 aria-labelledby="uploadDefinitionModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="uploadWSDLModalLabel">Upload WSDL</h5>
+                            <h5 className="modal-title" id="uploadDefinitionModalLabel">Upload {definitionTypeFormatter(this.props.definitionType)}</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -121,13 +115,7 @@ class UploadWSDLModal extends PureComponent {
                                 <div className="form-group row">
                                     <label htmlFor="updateProjectName" className="col-sm-2 col-form-label">URL</label>
                                     <div className="col-sm-10">
-                                        <input className="form-control" type="text" onChange={this.setLinkWsdlUrl}/>
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label className="col-sm-5 col-form-label">Import linked WSDLs</label>
-                                    <div className="col-sm-5">
-                                        <input type="checkbox" onChange={this.setIncludeImports}/>
+                                        <input className="form-control" type="text" onChange={this.setLinkDefinitionUrl}/>
                                     </div>
                                 </div>
                                 <div className="form-group row">
@@ -138,8 +126,8 @@ class UploadWSDLModal extends PureComponent {
                                 </div>
                                 <div className="upload-modal-button">
                                     <button className="btn btn-success" data-dismiss="modal"
-                                            disabled={this.state.linkWsdlUrl === ""}
-                                            onClick={this.linkWsdl}>Link</button>
+                                            disabled={this.state.linkDefinitionUrl === ""}
+                                            onClick={this.linkDefinition}>Link</button>
                                 </div>
                             </div>
 
@@ -164,7 +152,7 @@ class UploadWSDLModal extends PureComponent {
                                 <div className="upload-modal-button">
                                     <button className="btn btn-success" data-dismiss="modal"
                                             disabled={this.state.selectedFile === null}
-                                            onClick={this.uploadWsdl}>Upload</button>
+                                            onClick={this.uploadDefinition}>Upload</button>
                                 </div>
                             </div>
                         </div>
@@ -175,4 +163,4 @@ class UploadWSDLModal extends PureComponent {
     }
 }
 
-export default UploadWSDLModal;
+export default UploadDefinitionModal;
