@@ -87,7 +87,7 @@ class UpdateUserModal extends PureComponent {
 
     onUpdateUserClick() {
         axios
-            .put("/api/rest/core/user/" + this.props.userId, this.state.updateUser)
+            .put("/castlemock/api/rest/core/user/" + this.props.userId, this.state.updateUser)
             .then(response => {
                 this.props.getUser();
             })

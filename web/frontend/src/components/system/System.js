@@ -32,7 +32,7 @@ class System extends PureComponent {
 
     getSystem() {
         axios
-            .get("/api/rest/core/system")
+            .get("/castlemock/api/rest/core/system")
             .then(response => {
                 this.setState({
                     system: response.data

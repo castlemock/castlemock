@@ -47,7 +47,7 @@ class DeletePortsModal extends PureComponent {
     onDeletePortClick() {
         this.props.selectedPorts.forEach(port => {
             axios
-                .delete("/api/rest/soap/project/" + this.props.projectId + "/port/" + port.id)
+                .delete("/castlemock/api/rest/soap/project/" + this.props.projectId + "/port/" + port.id)
                 .then(response => {
                     this.props.getProject();
                 })

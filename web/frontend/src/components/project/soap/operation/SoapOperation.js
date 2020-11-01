@@ -144,7 +144,7 @@ class SoapOperation extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + row.id }>{cell}</Link>
+                <Link to={"/castlemock/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + row.id }>{cell}</Link>
             </div>
         )
     }
@@ -159,7 +159,7 @@ class SoapOperation extends PureComponent {
 
     getOperation() {
         axios
-            .get("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId)
+            .get("/castlemock/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId)
             .then(response => {
                 this.setState({
                     operation: response.data});
@@ -171,7 +171,7 @@ class SoapOperation extends PureComponent {
 
     getPort() {
         axios
-            .get("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId)
+            .get("/castlemock/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId)
             .then(response => {
                 this.setState({
                     port: {
@@ -187,7 +187,7 @@ class SoapOperation extends PureComponent {
     onDuplicateClick(){
         let mockResponseIds = this.state.selectedMockResponses.map(mockResponse => mockResponse.id);
         axios
-            .post("/api/rest/soap/project/" + this.state.projectId + "/port/" +
+            .post("/castlemock/api/rest/soap/project/" + this.state.projectId + "/port/" +
                 this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/duplicate", {
                 mockResponseIds: mockResponseIds
             })
@@ -207,8 +207,8 @@ class SoapOperation extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId}>Project</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId}>Port</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/soap/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId}>Port</Link></li>
                                 <li className="breadcrumb-item">{this.state.operation.name}</li>
                             </ol>
                         </nav>

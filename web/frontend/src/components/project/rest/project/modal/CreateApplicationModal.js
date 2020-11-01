@@ -43,9 +43,9 @@ class CreateApplicationModal extends PureComponent {
 
     onCreateApplicationClick() {
         axios
-            .post("/api/rest/rest/project/" + this.props.projectId + "/application", this.state.newApplication)
+            .post("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application", this.state.newApplication)
             .then(response => {
-                this.props.history.push("/web/rest/project/" + this.props.projectId + "/application/" + response.data.id);
+                this.props.history.push("/castlemock/web/rest/project/" + this.props.projectId + "/application/" + response.data.id);
             })
             .catch(error => {
                 validateErrorResponse(error)

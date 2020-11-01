@@ -82,7 +82,7 @@ class Profile extends PureComponent {
 
     onUpdateUserClick() {
         axios
-            .put("/api/rest/core/profile", this.state.updateUser)
+            .put("/castlemock/api/rest/core/profile", this.state.updateUser)
             .then(response => {
                 this.getUser();
             })
@@ -93,7 +93,7 @@ class Profile extends PureComponent {
 
     getUser() {
         axios
-            .get("/api/rest/core/profile")
+            .get("/castlemock/api/rest/core/profile")
             .then(response => {
                 this.setState({
                     user: response.data,

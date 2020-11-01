@@ -47,7 +47,7 @@ class DeleteResourcesModal extends PureComponent {
     onDeleteResourcesClick() {
         Array.from(this.state.selectedResources).forEach(resource => {
             axios
-                .delete("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + resource.id)
+                .delete("/castlemock/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + resource.id)
                 .then(response => {
                     this.getApplication();
                 })

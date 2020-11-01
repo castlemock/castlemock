@@ -55,9 +55,9 @@ class CreateResourceModal extends PureComponent {
 
     onCreateResourceClick() {
         axios
-            .post("/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource", this.state.newResource)
+            .post("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource", this.state.newResource)
             .then(response => {
-                this.props.history.push("/web/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + response.data.id);
+                this.props.history.push("/castlemock/web/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + response.data.id);
             })
             .catch(error => {
                 validateErrorResponse(error)

@@ -133,7 +133,7 @@ class RestMethod extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId + "/mockresponse/" + row.id}>{cell}</Link>
+                <Link to={"/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId + "/mockresponse/" + row.id}>{cell}</Link>
             </div>
         )
     }
@@ -148,7 +148,7 @@ class RestMethod extends PureComponent {
 
     getMethod() {
         axios
-            .get("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId)
+            .get("/castlemock/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId)
             .then(response => {
                 this.setState({
                     method: response.data
@@ -167,9 +167,9 @@ class RestMethod extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId}>Project</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId}>Application</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId}>Resource</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId}>Application</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId}>Resource</Link></li>
                                 <li className="breadcrumb-item">{this.state.method.name}</li>
                             </ol>
                         </nav>

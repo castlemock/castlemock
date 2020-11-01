@@ -76,7 +76,7 @@ class EventOverview extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/web/" + row.typeIdentifier.typeUrl + "/event/" + row.id}>{cell}</Link>
+                <Link to={"/castlemock/web/" + row.typeIdentifier.typeUrl + "/event/" + row.id}>{cell}</Link>
             </div>
         )
     }
@@ -94,7 +94,7 @@ class EventOverview extends PureComponent {
 
     getEvents() {
         axios
-            .get("/api/rest/core/event")
+            .get("/castlemock/api/rest/core/event")
             .then(response => {
                 this.setState({
                     events: response.data,
@@ -107,7 +107,7 @@ class EventOverview extends PureComponent {
 
     onDeleteAllEventsClick() {
         axios
-            .delete("/api/rest/core/event")
+            .delete("/castlemock/api/rest/core/event")
             .then(response => {
                 this.getEvents();
             })

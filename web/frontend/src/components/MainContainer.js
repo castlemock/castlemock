@@ -53,7 +53,7 @@ class MainContainer extends PureComponent {
 
     getUser(context) {
         axios
-            .get("/api/rest/core/profile")
+            .get("/castlemock/api/rest/core/profile")
             .then(response => {
                 context.updateAuthentication({
                     username: response.data.username,
@@ -62,7 +62,7 @@ class MainContainer extends PureComponent {
             })
             .catch(error => {
                 context.updateAuthentication({})
-                this.props.history.push("/web/login");
+                this.props.history.push("/castlemock/web/login");
             });
     }
 
@@ -73,29 +73,29 @@ class MainContainer extends PureComponent {
                 <Header/>
                     <div id="main-body">
                         <Switch>
-                            <Route path="/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId/mockresponse/:mockResponseId" component={RestMockResponse} /> } />
-                            <Route path="/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId" component={RestMethod} />
-                            <Route path="/web/rest/project/:projectId/application/:applicationId/resource/:resourceId" component={RestResource} />
-                            <Route path="/web/rest/project/:projectId/application/:applicationId" component={RestApplication} />
-                            <Route path="/web/soap/project/:projectId/port/:portId/operation/:operationId/mockresponse/:mockResponseId" component={SoapMockResponse} />
-                            <Route path="/web/soap/project/:projectId/port/:portId/operation/:operationId" component={SoapOperation} />
-                            <Route path="/web/soap/project/:projectId/port/:portId" component={SoapPort} />
-                            <Route path="/web/soap/project/:projectId/resource/:resourceId" component={SoapResource} />
-                            <Route path="/web/rest/project/:projectId" component={RestProject} />
-                            <Route path="/web/soap/project/:projectId" component={SoapProject} />
-                            <Route path="/web/user/:userId" component={User} />
-                            <Route path="/web/user" component={UserOverview} />
-                            <Route path="/web/profile" component={Profile} />
-                            <Route path="/web/system" component={System} />
-                            <Route path="/web/rest/event/:eventId" component={RestEvent} />
-                            <Route path="/web/soap/event/:eventId" component={SoapEvent} />
-                            <Route path="/web/event" component={EventOverview} />
-                            <Route path="/web" component={ProjectOverview} />
+                            <Route path="/castlemock/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId/mockresponse/:mockResponseId" component={RestMockResponse} /> } />
+                            <Route path="/castlemock/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId" component={RestMethod} />
+                            <Route path="/castlemock/web/rest/project/:projectId/application/:applicationId/resource/:resourceId" component={RestResource} />
+                            <Route path="/castlemock/web/rest/project/:projectId/application/:applicationId" component={RestApplication} />
+                            <Route path="/castlemock/web/soap/project/:projectId/port/:portId/operation/:operationId/mockresponse/:mockResponseId" component={SoapMockResponse} />
+                            <Route path="/castlemock/web/soap/project/:projectId/port/:portId/operation/:operationId" component={SoapOperation} />
+                            <Route path="/castlemock/web/soap/project/:projectId/port/:portId" component={SoapPort} />
+                            <Route path="/castlemock/web/soap/project/:projectId/resource/:resourceId" component={SoapResource} />
+                            <Route path="/castlemock/web/rest/project/:projectId" component={RestProject} />
+                            <Route path="/castlemock/web/soap/project/:projectId" component={SoapProject} />
+                            <Route path="/castlemock/web/user/:userId" component={User} />
+                            <Route path="/castlemock/web/user" component={UserOverview} />
+                            <Route path="/castlemock/web/profile" component={Profile} />
+                            <Route path="/castlemock/web/system" component={System} />
+                            <Route path="/castlemock/web/rest/event/:eventId" component={RestEvent} />
+                            <Route path="/castlemock/web/soap/event/:eventId" component={SoapEvent} />
+                            <Route path="/castlemock/web/event" component={EventOverview} />
+                            <Route path="/castlemock/web" component={ProjectOverview} />
                             <Route path="/*">
-                                <Redirect to="/web" />
+                                <Redirect to="/castlemock/web" />
                             </Route>
                             <Route path="" >
-                                <Redirect to="/web" />
+                                <Redirect to="/castlemock/web" />
                             </Route>
                         </Switch>
                     </div>

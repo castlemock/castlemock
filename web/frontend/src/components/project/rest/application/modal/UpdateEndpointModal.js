@@ -56,7 +56,7 @@ class UpdateEndpointModal extends PureComponent {
     onUpdateEndpointClick() {
         let resourceIds = this.props.selectedResources.map(resource => resource.id);
         axios
-            .put("/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/endpoint/forwarded", {
+            .put("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/endpoint/forwarded", {
                 projectId: this.props.projectId,
                 applicationId: this.props.applicationId,
                 resourceIds: resourceIds,

@@ -55,7 +55,7 @@ class App extends Component {
 
     getVersion() {
         axios
-            .get("/api/rest/core/version")
+            .get("/castlemock/api/rest/core/version")
             .then(response => {
                 this.setState({version: response.data.version})
             });
@@ -68,9 +68,9 @@ class App extends Component {
                     <div className = "site-wrapper">
                         <Router>
                             <Switch>
-                                <Route path="/web/login"  component={LoginContainer} />
-                                <Route path="/web/logout"  component={LogoutContainer} />
-                                <Route path="/web/*"  component={MainContainer} />
+                                <Route path="/castlemock/web/login"  component={LoginContainer} />
+                                <Route path="/castlemock/web/logout"  component={LogoutContainer} />
+                                <Route path="/castlemock/web/*"  component={MainContainer} />
                                 <Route path="/*"  component={MainContainer} />
                                 <Route path=""  component={MainContainer} />
                             </Switch>

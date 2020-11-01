@@ -48,7 +48,7 @@ class DuplicateMockResponseModal extends PureComponent {
     onDuplicateClick(){
         let mockResponseIds = this.props.selectedMockResponses.map(mockResponse => mockResponse.id);
         axios
-            .post("/api/rest/soap/project/" + this.props.projectId + "/port/" +
+            .post("/castlemock/api/rest/soap/project/" + this.props.projectId + "/port/" +
                 this.props.portId + "/operation/" + this.props.operationId + "/mockresponse/duplicate", {
                 mockResponseIds: mockResponseIds
             })

@@ -48,7 +48,7 @@ class DeleteApplicationsModal extends PureComponent {
     onDeleteApplicationsClick() {
         Array.from(this.props.selectedApplications).forEach(application => {
             axios
-                .delete("/api/rest/rest/project/" + this.props.projectId + "/application/" + application.id)
+                .delete("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + application.id)
                 .then(response => {
                     this.props.getProject();
                 })

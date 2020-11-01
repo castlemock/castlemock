@@ -58,7 +58,7 @@ class UpdateStatusModal extends PureComponent {
     onUpdateStatusClick() {
         let portIds = this.props.selectedPorts.map(port => port.id);
         axios
-            .put("/api/rest/soap/project/" + this.props.projectId + "/port/status", {
+            .put("/castlemock/api/rest/soap/project/" + this.props.projectId + "/port/status", {
                 projectId: this.props.projectId,
                 portIds: portIds,
                 status: this.state.updateStatus

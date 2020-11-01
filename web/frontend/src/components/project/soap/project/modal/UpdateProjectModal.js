@@ -53,7 +53,7 @@ class UpdateProjectModal extends PureComponent {
 
     onUpdateProjectClick() {
         axios
-            .put("/api/rest/core/project/soap/" + this.props.projectId, this.state.updateProject)
+            .put("/castlemock/api/rest/core/project/soap/" + this.props.projectId, this.state.updateProject)
             .then(response => {
                 this.props.getProject();
             })

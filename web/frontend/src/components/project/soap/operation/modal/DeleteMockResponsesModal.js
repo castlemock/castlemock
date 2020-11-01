@@ -48,7 +48,7 @@ class DeleteMockResponsesModal extends PureComponent {
     onDeleteMockResponsesClick() {
         this.props.selectedMockResponses.forEach(mockResponse => {
             axios
-                .delete("/api/rest/soap/project/" + this.props.projectId + "/port/" +
+                .delete("/castlemock/api/rest/soap/project/" + this.props.projectId + "/port/" +
                     this.props.portId + "/operation/" + this.props.operationId + "/mockresponse/" + mockResponse.id)
                 .then(response => {
                     this.props.getOperation();

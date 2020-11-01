@@ -37,7 +37,7 @@ class SoapResource extends PureComponent {
 
     getResource() {
         axios
-            .get("/api/rest/soap/project/" + this.state.projectId + "/resource/" + this.state.resourceId)
+            .get("/castlemock/api/rest/soap/project/" + this.state.projectId + "/resource/" + this.state.resourceId)
             .then(response => {
                 this.setState({
                     resource: response.data,
@@ -50,7 +50,7 @@ class SoapResource extends PureComponent {
 
     getResourceContent() {
         axios
-            .get("/api/rest/soap/project/" + this.state.projectId + "/resource/" + this.state.resourceId + "/content")
+            .get("/castlemock/api/rest/soap/project/" + this.state.projectId + "/resource/" + this.state.resourceId + "/content")
             .then(response => {
                 this.setState({
                     resourceContent: response.data,
@@ -69,7 +69,7 @@ class SoapResource extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/soap/project/" + this.state.projectId}>Project</Link></li>
                                 <li className="breadcrumb-item">{this.state.resource.name}</li>
                             </ol>
                         </nav>

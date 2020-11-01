@@ -38,7 +38,7 @@ class User extends PureComponent {
 
     getUser() {
         axios
-            .get("/api/rest/core/user/" + this.state.userId)
+            .get("/castlemock/api/rest/core/user/" + this.state.userId)
             .then(response => {
                 this.setState({
                     user: response.data,

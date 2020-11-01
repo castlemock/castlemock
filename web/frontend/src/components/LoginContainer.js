@@ -50,7 +50,7 @@ class LoginContainer extends PureComponent {
 
     onButtonLoginClick(context) {
         axios
-            .post("/api/rest/core/login", {
+            .post("/castlemock/api/rest/core/login", {
                 username: this.state.username,
                 password: this.state.password
             })
@@ -80,7 +80,7 @@ class LoginContainer extends PureComponent {
 
     render() {
         if(this.isAuthenticated()){
-            return <Redirect to = {{ pathname: "/web" }} />
+            return <Redirect to = {{ pathname: "/castlemock/web" }} />
         }
 
         return (
@@ -118,7 +118,7 @@ class LoginContainer extends PureComponent {
                                     </div>
 
                                     <div id="login-footer-info-api">
-                                        <a href="/doc/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
+                                        <a href="/doc/castlemock/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
                                     </div>
                                 </div>
                             )}

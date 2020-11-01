@@ -156,7 +156,7 @@ class SoapPort extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + row.id}>{cell}</Link>
+                <Link to={"/castlemock/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + row.id}>{cell}</Link>
             </div>
         )
     }
@@ -179,7 +179,7 @@ class SoapPort extends PureComponent {
 
     getPort() {
         axios
-            .get("/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId)
+            .get("/castlemock/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId)
             .then(response => {
                 this.setState({
                     port: response.data
@@ -198,7 +198,7 @@ class SoapPort extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/soap/project/" + this.state.projectId}>Project</Link></li>
                                 <li className="breadcrumb-item">{this.state.port.name}</li>
                             </ol>
                         </nav>

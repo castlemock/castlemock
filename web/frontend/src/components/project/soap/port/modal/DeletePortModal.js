@@ -43,9 +43,9 @@ class DeletePortModal extends PureComponent {
 
     onDeletePortClick() {
         axios
-            .delete("/api/rest/soap/project/" + this.props.projectId + "/port/" + this.props.portId)
+            .delete("/castlemock/api/rest/soap/project/" + this.props.projectId + "/port/" + this.props.portId)
             .then(response => {
-                this.props.history.push("/web/soap/project/" + this.props.projectId);
+                this.props.history.push("/castlemock/web/soap/project/" + this.props.projectId);
             })
             .catch(error => {
                 validateErrorResponse(error)

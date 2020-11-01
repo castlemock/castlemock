@@ -2,6 +2,7 @@
   "name": "castle-mock-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/castlemock",
   "dependencies": {
     "@popperjs/core": "^2.5.2",
     "axios": "^0.18.0",

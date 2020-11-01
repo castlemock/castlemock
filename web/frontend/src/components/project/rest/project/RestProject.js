@@ -146,14 +146,14 @@ class RestProject extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/web/rest/project/" + this.state.projectId + "/application/" + row.id}>{cell}</Link>
+                <Link to={"/castlemock/web/rest/project/" + this.state.projectId + "/application/" + row.id}>{cell}</Link>
             </div>
         )
     }
 
     getProject() {
         axios
-            .get("/api/rest/rest/project/" + this.state.projectId)
+            .get("/castlemock/api/rest/rest/project/" + this.state.projectId)
             .then(response => {
                 this.setState({
                     project: response.data
@@ -166,7 +166,7 @@ class RestProject extends PureComponent {
 
     onExportProjectClick() {
         axios({
-            url:  "/api/rest/core/project/rest/" + this.state.projectId + "/export",
+            url:  "/castlemock/api/rest/core/project/rest/" + this.state.projectId + "/export",
             method: 'GET',
             responseType: 'blob'
         }).then((response) => {

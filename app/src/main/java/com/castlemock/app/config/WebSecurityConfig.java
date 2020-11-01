@@ -49,25 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .authorizeRequests()
-                    .antMatchers("/web/**")
-                    .authenticated()
-                    .and()
-                .httpBasic()
-                    .and()
-                .formLogin()
-                    .loginPage("/login").failureUrl("/login?error")
-                    .usernameParameter("username")
-                    .passwordParameter("password")
-                    .and()
-                .logout()
-                    .logoutSuccessUrl("/login?logout")
-                    .and()
-                .csrf().and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(tokenValiditySeconds)
-                .and().exceptionHandling().accessDeniedPage("/web/forbidden");
 
-        httpSecurity.headers().cacheControl().disable();
     }
 
 }

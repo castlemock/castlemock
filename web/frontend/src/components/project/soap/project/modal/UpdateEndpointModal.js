@@ -57,7 +57,7 @@ class UpdateEndpointModal extends PureComponent {
     onUpdateEndpointClick() {
         let portIds = this.props.selectedPorts.map(port => port.id);
         axios
-            .put("/api/rest/soap/project/" + this.props.projectId + "/port/endpoint/forwarded", {
+            .put("/castlemock/api/rest/soap/project/" + this.props.projectId + "/port/endpoint/forwarded", {
                 projectId: this.props.projectId,
                 portIds: portIds,
                 forwardedEndpoint: this.state.forwardedEndpoint

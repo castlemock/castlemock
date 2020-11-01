@@ -149,7 +149,7 @@ class ProjectOverview extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/web/" + row.typeIdentifier.typeUrl + "/project/" + row.id}>{cell}</Link>
+                <Link to={"/castlemock/web/" + row.typeIdentifier.typeUrl + "/project/" + row.id}>{cell}</Link>
             </div>
         )
     }
@@ -227,9 +227,9 @@ class ProjectOverview extends PureComponent {
         event.preventDefault();
         event.stopPropagation();
         axios
-            .post("/api/rest/core/project", this.state.newProject)
+            .post("/castlemock/api/rest/core/project", this.state.newProject)
             .then(response => {
-                this.props.history.push("/web/" + response.data.typeIdentifier.typeUrl + "/project/" + response.data.id);
+                this.props.history.push("/castlemock/web/" + response.data.typeIdentifier.typeUrl + "/project/" + response.data.id);
             })
             .catch(error => {
                 validateErrorResponse(error)
@@ -246,7 +246,7 @@ class ProjectOverview extends PureComponent {
 
     getProjects() {
         axios
-            .get("/api/rest/core/project")
+            .get("/castlemock/api/rest/core/project")
             .then(response => {
                 this.setState({
                     projects: response.data,
@@ -260,7 +260,7 @@ class ProjectOverview extends PureComponent {
     onDeleteProjectsClick() {
         Array.from(this.state.selectedProjects).forEach(project => {
             axios
-                .delete("/api/rest/core/project/" + project.typeIdentifier.type + "/" + project.id)
+                .delete("/castlemock/api/rest/core/project/" + project.typeIdentifier.type + "/" + project.id)
                 .then(response => {
                     this.getProjects();
                 })

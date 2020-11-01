@@ -55,7 +55,7 @@ class UpdateResourceModal extends PureComponent {
 
     onUpdateResourceClick() {
         axios
-            .put("/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId, this.state.updateResource)
+            .put("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId, this.state.updateResource)
             .then(response => {
                 this.props.getResource();
             })

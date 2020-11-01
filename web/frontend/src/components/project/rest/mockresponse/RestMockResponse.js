@@ -154,15 +154,15 @@ class RestMockResponse extends PureComponent {
     }
 
     onDiscardChangesClick(){
-        this.props.history.push("/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId +
+        this.props.history.push("/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId +
             "/resource/" + this.state.resourceId + "/method/" + this.state.methodId);
     }
 
     onUpdateMockResponseClick() {
         axios
-            .put("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId + "/mockresponse/" + this.state.mockResponseId, this.state.updateMockResponse)
+            .put("/castlemock/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId + "/mockresponse/" + this.state.mockResponseId, this.state.updateMockResponse)
             .then(__ => {
-                this.props.history.push("/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId);
+                this.props.history.push("/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId);
             })
             .catch(error => {
                 validateErrorResponse(error)
@@ -171,7 +171,7 @@ class RestMockResponse extends PureComponent {
 
     getMockResponse() {
         axios
-            .get("/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" +
+            .get("/castlemock/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" +
                 this.state.resourceId + "/method/" + this.state.methodId + "/mockresponse/" + this.state.mockResponseId)
             .then(response => {
                 this.setState({
@@ -192,10 +192,10 @@ class RestMockResponse extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId}>Project</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId}>Application</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId}>Resource</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId}>Method</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId}>Application</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId}>Resource</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + this.state.methodId}>Method</Link></li>
                                 <li className="breadcrumb-item">{this.state.mockResponse.name}</li>
                             </ol>
                         </nav>
