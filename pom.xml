@@ -26,7 +26,7 @@
         <jsr305.version>3.0.2</jsr305.version>
         <cxf.rt.version>3.4.0</cxf.rt.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
-        <guava.version>30.0-android</guava.version>
+        <guava.version>28.2-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
         <jakarta.version>2.3.3</jakarta.version>
         <jackson.version>1.9.13</jackson.version>
@@ -35,7 +35,7 @@
         <mockito.version>1.10.19</mockito.version>
         <snakeyaml.version>1.26</snakeyaml.version>
         <jaxb.impl.version>2.3.2</jaxb.impl.version>
-        <springfox.version>2.10.0</springfox.version>
+        <springfox.version>2.9.2</springfox.version>
         <maven.jar.version>3.1.1</maven.jar.version>
         <json.path.version>2.4.0</json.path.version>
         <javafaker.version>1.0.2</javafaker.version>
