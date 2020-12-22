@@ -28,6 +28,8 @@ import UpdateResourceModal from "./modal/UpdateResourceModal";
 import UpdateStatusModal from "./modal/UpdateStatusModal";
 import CreateMethodModal from "./modal/CreateMethodModal"
 import {methodStatusFormatter} from "../utility/RestFormatter";
+import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
+import AuthenticationContext from "../../../../context/AuthenticationContext";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -180,11 +182,15 @@ class RestResource extends PureComponent {
                         <div className="title">
                             <h1>Resource: {this.state.resource.name}</h1>
                         </div>
-                        <div className="menu" align="right">
-                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateResourceModal"><span>Update resource</span></button>
-                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createMethodModal"><span>Create method</span></button>
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteResourceModal"><span>Delete resource</span></button>
-                        </div>
+                        <AuthenticationContext.Consumer>
+                            {context => (
+                                <div className="menu" align="right">
+                                    <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateResourceModal" disabled={isOnlyReader(context.authentication.role)}><span>Update resource</span></button>
+                                    <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createMethodModal" disabled={isOnlyReader(context.authentication.role)}><span>Create method</span></button>
+                                    <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteResourceModal" disabled={isOnlyReader(context.authentication.role)}><span>Delete resource</span></button>
+                                </div>
+                            )}
+                        </AuthenticationContext.Consumer>
                     </div>
                     <div className="content-summary">
                         <dl className="row">
@@ -220,18 +226,23 @@ class RestResource extends PureComponent {
                                         </div>
                                     )}
                             </ToolkitProvider>
-                            <div className="panel-buttons">
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedMethods.length === 0}
-                                        data-target="#updateStatusModal"><span>Update status</span></button>
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedMethods.length === 0}
-                                        data-target="#updateEndpointModal"><span>Update endpoint</span></button>
-                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedMethods.length === 0}
-                                        data-target="#deleteMethodsModal"><span>Delete method</span></button>
-                            </div>
+                            <AuthenticationContext.Consumer>
+                                {context => (
+                                    <div className="panel-buttons">
+                                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedMethods.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#updateStatusModal"><span>Update status</span></button>
+                                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedMethods.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#updateEndpointModal"><span>Update endpoint</span></button>
+                                        <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedMethods.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#deleteMethodsModal"><span>Delete method</span></button>
+                                    </div>
+                                )}
+                            </AuthenticationContext.Consumer>
                         </div>
+
                     </div>
                 </section>
 

@@ -29,6 +29,8 @@ import DeleteProjectModal from "./modal/DeleteProjectModal";
 import DeleteApplicationsModal from "./modal/DeleteApplicationsModal";
 import CreateApplicationModal from "./modal/CreateApplicationModal";
 import UploadDefinitionModal from "./modal/UploadDefinitionModal"
+import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
+import AuthenticationContext from "../../../../context/AuthenticationContext";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -200,22 +202,26 @@ class RestProject extends PureComponent {
                         <div className="title">
                             <h1>Project: {this.state.project.name}</h1>
                         </div>
-                        <div className="menu">
-                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal"><span>Update project</span></button>
-                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createApplicationModal"><span>Create application</span></button>
-                            <div className="btn-group demo-button-disabled menu-button" role="group">
-                                <button id="btnGroupDrop1" type="button" className="btn btn-primary dropdown-toggle"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Upload
-                                </button>
-                                <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadRAMLDefinitionModal">RAML</button>
-                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadSWAGGERDefinitionModal">Swagger</button>
-                                    <button className="dropdown-item" data-toggle="modal" data-target="#uploadWADLDefinitionModal">WADL</button>
+                        <AuthenticationContext.Consumer>
+                            {context => (
+                                <div className="menu">
+                                    <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" disabled={isOnlyReader(context.authentication.role)}><span>Update project</span></button>
+                                    <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createApplicationModal" disabled={isOnlyReader(context.authentication.role)}><span>Create application</span></button>
+                                    <div className="btn-group demo-button-disabled menu-button" role="group" >
+                                        <button id="btnGroupDrop1" type="button" className="btn btn-primary dropdown-toggle"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled={isOnlyReader(context.authentication.role)}>
+                                            Upload
+                                        </button>
+                                        <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <button className="dropdown-item" data-toggle="modal" data-target="#uploadRAMLDefinitionModal">RAML</button>
+                                            <button className="dropdown-item" data-toggle="modal" data-target="#uploadSWAGGERDefinitionModal">Swagger</button>
+                                            <button className="dropdown-item" data-toggle="modal" data-target="#uploadWADLDefinitionModal">WADL</button>
+                                        </div>
+                                    </div>
+                                    <button className="btn btn-primary demo-button-disabled menu-button" onClick={this.onExportProjectClick}><span>Export project</span></button>
+                                    <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteProjectModal" disabled={isOnlyReader(context.authentication.role)}><span>Delete project</span></button>
                                 </div>
-                            </div>                            <button className="btn btn-primary demo-button-disabled menu-button" onClick={this.onExportProjectClick}><span>Export project</span></button>
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteProjectModal"><span>Delete project</span></button>
-                        </div>
+                            )}</AuthenticationContext.Consumer>
                     </div>
                     <div className="content-summary">
                         <dl className="row">
@@ -252,17 +258,21 @@ class RestProject extends PureComponent {
                                         </div>
                                     )}
                             </ToolkitProvider>
-                            <div className="panel-buttons">
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedApplications.length === 0}
-                                        data-target="#updateStatusModal"><span>Update status</span></button>
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedApplications.length === 0}
-                                        data-target="#updateEndpointModal"><span>Update endpoint</span></button>
-                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedApplications.length === 0}
-                                        data-target="#deleteApplicationsModal"><span>Delete application</span></button>
-                            </div>
+                            <AuthenticationContext.Consumer>
+                                {context => (
+                                    <div className="panel-buttons">
+                                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedApplications.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#updateStatusModal"><span>Update status</span></button>
+                                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedApplications.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#updateEndpointModal"><span>Update endpoint</span></button>
+                                        <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedApplications.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#deleteApplicationsModal"><span>Delete application</span></button>
+                                    </div>
+                                )}
+                            </AuthenticationContext.Consumer>
                         </div>
                     </div>
                 </section>

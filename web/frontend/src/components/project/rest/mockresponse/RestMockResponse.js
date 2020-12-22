@@ -24,6 +24,8 @@ import Tab from "react-bootstrap/Tab";
 import HeaderComponent from "../../utility/HeaderComponent";
 import XPathComponent from "../../utility/XPathComponent";
 import {mockResponseStatusFormatter} from "../utility/RestFormatter";
+import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
+import AuthenticationContext from "../../../../context/AuthenticationContext";
 
 class RestMockResponse extends PureComponent {
 
@@ -204,9 +206,13 @@ class RestMockResponse extends PureComponent {
                         <div className="title">
                             <h1>Mock Response: {this.state.mockResponse.name}</h1>
                         </div>
-                        <div className="menu" align="right">
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMockResponseModal"><span>Delete mock response</span></button>
-                        </div>
+                        <AuthenticationContext.Consumer>
+                            {context => (
+                                <div className="menu" align="right">
+                                    <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMockResponseModal" disabled={isOnlyReader(context.authentication.role)}><span>Delete mock response</span></button>
+                                </div>
+                            )}
+                        </AuthenticationContext.Consumer>
                     </div>
                     <div className="content-summary">
                         <dl className="row">
@@ -250,10 +256,14 @@ class RestMockResponse extends PureComponent {
                             </Tab>
                         </Tabs>
                     </div>
-                    <div className="panel-buttons">
-                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onUpdateMockResponseClick}><span>Update response</span></button>
-                        <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onDiscardChangesClick}><span>Discard changes</span></button>
-                    </div>
+                    <AuthenticationContext.Consumer>
+                        {context => (
+                            <div className="panel-buttons">
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onUpdateMockResponseClick} disabled={isOnlyReader(context.authentication.role)}><span>Update response</span></button>
+                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onDiscardChangesClick}><span>Discard changes</span></button>
+                            </div>
+                        )}
+                    </AuthenticationContext.Consumer>
                 </section>
 
                 <DeleteMockResponseModal projectId={this.state.projectId} portId={this.state.portId} operationId={this.state.operationId} mockResponseId={this.state.mockResponseId}/>

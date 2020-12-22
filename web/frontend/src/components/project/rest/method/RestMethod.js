@@ -28,6 +28,8 @@ import CreateMockResponseModal from "./modal/CreateMockResponseModal";
 import DuplicateMockResponsesModal from "./modal/DuplicateMockResponsesModal";
 import UpdateStatusModal from "./modal/UpdateStatusModal"
 import {mockResponseStatusFormatter, methodResponseStrategyFormatter, methodStatusFormatter} from "../utility/RestFormatter";
+import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
+import AuthenticationContext from "../../../../context/AuthenticationContext";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -178,11 +180,15 @@ class RestMethod extends PureComponent {
                         <div className="title">
                             <h1>Method: {this.state.method.name}</h1>
                         </div>
-                        <div className="menu" align="right">
-                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal"><span>Update method</span></button>
-                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createMockResponseModal"><span>Create response</span></button>
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMethodModal"><span>Delete method</span></button>
-                        </div>
+                        <AuthenticationContext.Consumer>
+                            {context => (
+                                <div className="menu" align="right">
+                                    <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateMethodModal" disabled={isOnlyReader(context.authentication.role)}><span>Update method</span></button>
+                                    <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createMockResponseModal" disabled={isOnlyReader(context.authentication.role)}><span>Create response</span></button>
+                                    <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMethodModal" disabled={isOnlyReader(context.authentication.role)}><span>Delete method</span></button>
+                                </div>
+                            )}
+                        </AuthenticationContext.Consumer>
                     </div>
                     <div className="content-summary">
                         <dl className="row">
@@ -243,17 +249,21 @@ class RestMethod extends PureComponent {
                                         </div>
                                     )}
                             </ToolkitProvider>
-                            <div className="panel-buttons">
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedMockResponses.length === 0}
-                                        data-target="#updateStatusModal"><span>Update status</span></button>
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedMockResponses.length === 0}
-                                        data-target="#duplicateMockResponsesModal"><span>Duplicate</span></button>
-                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedMockResponses.length === 0}
-                                        data-target="#deleteMockResponsesModal"><span>Delete mock response</span></button>
-                            </div>
+                            <AuthenticationContext.Consumer>
+                                {context => (
+                                    <div className="panel-buttons">
+                                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedMockResponses.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#updateStatusModal"><span>Update status</span></button>
+                                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedMockResponses.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#duplicateMockResponsesModal"><span>Duplicate</span></button>
+                                        <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedMockResponses.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#deleteMockResponsesModal"><span>Delete mock response</span></button>
+                                    </div>
+                                )}
+                            </AuthenticationContext.Consumer>
                         </div>
                     </div>
                 </section>

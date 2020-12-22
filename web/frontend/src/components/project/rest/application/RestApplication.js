@@ -27,6 +27,8 @@ import UpdateApplicationModal from "./modal/UpdateApplicationModal";
 import UpdateEndpointModal from "./modal/UpdateEndpointModal";
 import UpdateStatusModal from "./modal/UpdateStatusModal";
 import CreateResourceModal from "./modal/CreateResourceModal"
+import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
+import AuthenticationContext from "../../../../context/AuthenticationContext";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -191,11 +193,15 @@ class RestApplication extends PureComponent {
                         <div className="title">
                             <h1>Application: {this.state.application.name}</h1>
                         </div>
-                        <div className="menu" align="right">
-                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateApplicationModal"><span>Update application</span></button>
-                            <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createResourceModal"><span>Create resource</span></button>
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteApplicationModal"><span>Delete application</span></button>
-                        </div>
+                        <AuthenticationContext.Consumer>
+                            {context => (
+                                <div className="menu" align="right">
+                                    <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateApplicationModal" disabled={isOnlyReader(context.authentication.role)}><span>Update application</span></button>
+                                    <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createResourceModal" disabled={isOnlyReader(context.authentication.role)}><span>Create resource</span></button>
+                                    <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteApplicationModal" disabled={isOnlyReader(context.authentication.role)}><span>Delete application</span></button>
+                                </div>
+                                )}
+                        </AuthenticationContext.Consumer>
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="panel-heading table-panel-heading">
@@ -221,17 +227,21 @@ class RestApplication extends PureComponent {
                                         </div>
                                     )}
                             </ToolkitProvider>
-                            <div className="panel-buttons">
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedResources.length === 0}
-                                        data-target="#updateStatusModal"><span>Update status</span></button>
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedResources.length === 0}
-                                        data-target="#updateEndpointModal"><span>Update endpoint</span></button>
-                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
-                                        disabled={this.state.selectedResources.length === 0}
-                                        data-target="#deleteResourcesModal"><span>Delete resource</span></button>
-                            </div>
+                            <AuthenticationContext.Consumer>
+                                {context => (
+                                    <div className="panel-buttons">
+                                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedResources.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#updateStatusModal"><span>Update status</span></button>
+                                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedResources.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#updateEndpointModal"><span>Update endpoint</span></button>
+                                        <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
+                                                disabled={this.state.selectedResources.length === 0 || isOnlyReader(context.authentication.role)}
+                                                data-target="#deleteResourcesModal"><span>Delete resource</span></button>
+                                    </div>
+                                )}
+                            </AuthenticationContext.Consumer>
                         </div>
                     </div>
                 </section>
