@@ -17,7 +17,8 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
-import {operationStatusFormatter, operationResponseStrategy} from "../../utility/SoapFormatter"
+import {operationStatusFormatter, operationResponseStrategy, operationIdentifyStrategy} from "../../utility/SoapFormatter"
+import preventEnterEvent from "../../../../../utility/KeyboardUtility";
 
 class UpdateOperationModal extends PureComponent {
 
@@ -30,17 +31,33 @@ class UpdateOperationModal extends PureComponent {
         this.onSimulateNetworkDelayChange = this.onSimulateNetworkDelayChange.bind(this);
         this.onNetworkDelayChange = this.onNetworkDelayChange.bind(this);
         this.onMockOnFailureChange = this.onMockOnFailureChange.bind(this);
-
+        this.onOperationIdentifyStrategy = this.onOperationIdentifyStrategy.bind(this);
+        this.getOperation = this.getOperation.bind(this);
         this.state = {
-            updateOperation: {
-                status: this.props.operation.status,
-                responseStrategy: this.props.operation.responseStrategy,
-                forwardedEndpoint: this.props.operation.forwardedEndpoint,
-                simulateNetworkDelay: this.props.operation.simulateNetworkDelay,
-                networkDelay: this.props.operation.simulateNetworkDelay,
-                mockOnFailure: this.props.operation.mockOnFailure
-            }
+            updateOperation: {}
         };
+
+        this.getOperation(props.projectId, props.portId, props.operationId)
+    }
+
+    getOperation(projectId, portId, operationId) {
+        axios
+            .get("/castlemock/api/rest/soap/project/" + projectId + "/port/" + portId + "/operation/" + operationId)
+            .then(response => {
+                this.setState({
+                    updateOperation: {
+                        status: response.data.status,
+                        responseStrategy: response.data.responseStrategy,
+                        forwardedEndpoint: response.data.forwardedEndpoint,
+                        simulateNetworkDelay: response.data.simulateNetworkDelay,
+                        networkDelay: response.data.networkDelay,
+                        mockOnFailure: response.data.mockOnFailure,
+                        identifyStrategy: response.data.identifyStrategy
+                    }});
+            })
+            .catch(error => {
+                validateErrorResponse(error)
+            });
     }
 
     onStatusChange(status){
@@ -91,6 +108,14 @@ class UpdateOperationModal extends PureComponent {
         });
     }
 
+    onOperationIdentifyStrategy(identifyStrategy){
+        this.setState({ updateOperation: {
+                ...this.state.updateOperation,
+                identifyStrategy: identifyStrategy
+            }
+        });
+    }
+
     onUpdateOperationClick(){
         axios
             .put("/castlemock/api/rest/soap/project/" + this.props.projectId + "/port/" +
@@ -116,71 +141,80 @@ class UpdateOperationModal extends PureComponent {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form>
-                                <div className="form-group row">
-                                    <label htmlFor="newOperationStatus" className="col-sm-3 col-form-label">Status</label>
-                                    <div className="col-sm-9">
-                                        <select id="inputStatus" className="form-control" defaultValue={this.state.updateOperation.status}
-                                                onChange={event => this.onStatusChange(event.target.value)}>
-                                            <option value={"MOCKED"}>{operationStatusFormatter("MOCKED")}</option>
-                                            <option value={"DISABLED"}>{operationStatusFormatter("DISABLED")}</option>
-                                            <option value={"FORWARDED"}>{operationStatusFormatter("FORWARDED")}</option>
-                                            <option value={"RECORDING"}>{operationStatusFormatter("RECORDING")}</option>
-                                            <option value={"RECORD_ONCE"}>{operationStatusFormatter("RECORD_ONCE")}</option>
-                                            <option value={"ECHO"}>{operationStatusFormatter("ECHO")}</option>
-                                        </select>
-                                    </div>
+                            <div className="form-group row">
+                                <label htmlFor="newOperationStatus" className="col-sm-3 col-form-label">Status</label>
+                                <div className="col-sm-9">
+                                    <select id="inputStatus" className="form-control" value={this.state.updateOperation.status}
+                                            onChange={event => this.onStatusChange(event.target.value)}>
+                                        <option value={"MOCKED"}>{operationStatusFormatter("MOCKED")}</option>
+                                        <option value={"DISABLED"}>{operationStatusFormatter("DISABLED")}</option>
+                                        <option value={"FORWARDED"}>{operationStatusFormatter("FORWARDED")}</option>
+                                        <option value={"RECORDING"}>{operationStatusFormatter("RECORDING")}</option>
+                                        <option value={"RECORD_ONCE"}>{operationStatusFormatter("RECORD_ONCE")}</option>
+                                        <option value={"ECHO"}>{operationStatusFormatter("ECHO")}</option>
+                                    </select>
                                 </div>
-                                <div className="form-group row">
-                                    <label htmlFor="newOperationResponseStrategy" className="col-sm-3 col-form-label">Response strategy</label>
-                                    <div className="col-sm-9">
-                                        <select id="inputStatus" className="form-control"
-                                                defaultValue={this.state.updateOperation.responseStrategy}
-                                                onChange={event => this.onResponseStrategyChange(event.target.value)}>
-                                            <option value={"RANDOM"}>{operationResponseStrategy("RANDOM")}</option>
-                                            <option value={"SEQUENCE"}>{operationResponseStrategy("SEQUENCE")}</option>
-                                            <option value={"XPATH_INPUT"}>{operationResponseStrategy("XPATH_INPUT")}</option>
-                                        </select>
-                                    </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="newOperationResponseStrategy" className="col-sm-3 col-form-label">Response strategy</label>
+                                <div className="col-sm-9">
+                                    <select id="inputStatus" className="form-control"
+                                            value={this.state.updateOperation.responseStrategy}
+                                            onChange={event => this.onResponseStrategyChange(event.target.value)}>
+                                        <option value={"RANDOM"}>{operationResponseStrategy("RANDOM")}</option>
+                                        <option value={"SEQUENCE"}>{operationResponseStrategy("SEQUENCE")}</option>
+                                        <option value={"XPATH_INPUT"}>{operationResponseStrategy("XPATH_INPUT")}</option>
+                                    </select>
                                 </div>
-                                <div className="form-group row">
-                                    <label className="col-sm-3 col-form-label">Forwarded endpoint</label>
-                                    <div className="col-sm-9">
-                                        <input className="form-control" type="text"
-                                               defaultValue={this.state.updateOperation.forwardedEndpoint}
-                                               onChange={event => this.onForwardedEndpointChange(event.target.value)} />
-                                    </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Identify strategy</label>
+                                <div className="col-sm-9">
+                                    <select id="inputStatus" className="form-control"
+                                            value={this.state.updateOperation.identifyStrategy}
+                                            onChange={event => this.onOperationIdentifyStrategy(event.target.value)}>
+                                        <option value={"ELEMENT"}>{operationIdentifyStrategy("ELEMENT")}</option>
+                                        <option value={"ELEMENT_NAMESPACE"}>{operationIdentifyStrategy("ELEMENT_NAMESPACE")}</option>
+                                    </select>
                                 </div>
-                                <div className="form-group row">
-                                    <label className="col-sm-3 col-form-label">Simulate network delay</label>
-                                    <div className="col-sm-9">
-                                        <input type="checkbox" defaultValue={this.state.updateOperation.simulateNetworkDelay}
-                                               onChange={event => this.onSimulateNetworkDelayChange(event.target.value)}/>
-                                    </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Forwarded endpoint</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control" type="text"
+                                           defaultValue={this.state.updateOperation.forwardedEndpoint}
+                                           onChange={event => this.onForwardedEndpointChange(event.target.value)} onKeyDown={preventEnterEvent}/>
                                 </div>
-                                <div className="form-group row">
-                                    <label className="col-sm-3 col-form-label">Network delay</label>
-                                    <div className="col-sm-9">
-                                        <input className="form-control" type="text" defaultValue={this.state.updateOperation.networkDelay}
-                                               onChange={event => this.onNetworkDelayChange(event.target.value)}/>
-                                    </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Simulate network delay</label>
+                                <div className="col-sm-9">
+                                    <input type="checkbox" checked={this.state.updateOperation.simulateNetworkDelay}
+                                           onChange={event => this.onSimulateNetworkDelayChange(event.target.checked)}/>
                                 </div>
-                                <div className="form-group row">
-                                    <label htmlFor="newOperationResponseStrategy" className="col-sm-3 col-form-label">Default response</label>
-                                    <div className="col-sm-9">
-                                        <select id="inputStatus" className="form-control" >
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Network delay</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control" type="text" value={this.state.updateOperation.networkDelay}
+                                           onChange={event => this.onNetworkDelayChange(event.target.value)} onKeyDown={preventEnterEvent}/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="newOperationResponseStrategy" className="col-sm-3 col-form-label">Default response</label>
+                                <div className="col-sm-9">
+                                    <select id="inputStatus" className="form-control" >
 
-                                        </select>
-                                    </div>
+                                    </select>
                                 </div>
-                                <div className="form-group row">
-                                    <label className="col-sm-3 col-form-label">Mock on failure</label>
-                                    <div className="col-sm-9">
-                                        <input type="checkbox" defaultValue={this.state.updateOperation.mockOnFailure}
-                                               onChange={event => this.onMockOnFailureChange(event.target.value)}/>
-                                    </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Mock on failure</label>
+                                <div className="col-sm-9">
+                                    <input type="checkbox" checked={this.state.updateOperation.mockOnFailure}
+                                           onChange={event => this.onMockOnFailureChange(event.target.checked)}/>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div className="modal-footer">
                             <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateOperationClick}>Update</button>

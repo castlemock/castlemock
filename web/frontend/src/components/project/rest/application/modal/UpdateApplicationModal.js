@@ -24,12 +24,28 @@ class UpdateApplicationModal extends PureComponent {
         super(props);
         this.setName = this.setName.bind(this);
         this.onUpdateClick = this.onUpdateClick.bind(this);
+        this.getApplication = this.getApplication.bind(this);
 
         this.state = {
-            updateApplication: {
-                name: this.props.application.name
-            }
+            updateApplication: {}
         };
+
+        this.getApplication();
+    }
+
+    getApplication() {
+        axios
+            .get("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId)
+            .then(response => {
+                this.setState({
+                    updateApplication: {
+                        name: response.data.name
+                    }
+                });
+            })
+            .catch(error => {
+                validateErrorResponse(error)
+            });
     }
 
     setName(source) {
@@ -67,7 +83,7 @@ class UpdateApplicationModal extends PureComponent {
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Name</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" type="text" defaultValue={this.props.application.name} onChange={this.setName}/>
+                                    <input className="form-control" type="text" defaultValue={this.state.updateApplication.name} onChange={this.setName}/>
                                 </div>
                             </div>
                         </div>

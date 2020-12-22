@@ -20,6 +20,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
+import preventEnterEvent from "../../../../../utility/KeyboardUtility";
 
 
 class UpdateEndpointModal extends PureComponent {
@@ -104,7 +105,7 @@ class UpdateEndpointModal extends PureComponent {
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Endpoint</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" type="text" onChange={this.setForwardedEndpoint}/>
+                                    <input className="form-control" type="text" onChange={this.setForwardedEndpoint} onKeyDown={preventEnterEvent}/>
                                 </div>
                             </div>
                         </div>

@@ -15,25 +15,121 @@
  */
 
 import React, {PureComponent} from "react";
+import axios from "axios";
+import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
+import preventEnterEvent from "../../../../../utility/KeyboardUtility";
+import {
+    methodResponseStrategyFormatter,
+    methodStatusFormatter
+} from "../../utility/RestFormatter";
 
 class UpdateMethodModal extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.setUpdateMethodName = this.setUpdateMethodName.bind(this);
-        this.setUpdateMethodDescription = this.setUpdateMethodDescription.bind(this);
+        this.onNameChange = this.onNameChange.bind(this);
+        this.onTypeChange = this.onTypeChange.bind(this);
+        this.onStatusChange = this.onStatusChange.bind(this);
+        this.onResponseStrategyChange = this.onResponseStrategyChange.bind(this);
+        this.onForwardedEndpointChange = this.onForwardedEndpointChange.bind(this);
+        this.onSimulateNetworkDelayChange = this.onSimulateNetworkDelayChange.bind(this);
+        this.onNetworkDelayChange = this.onNetworkDelayChange.bind(this);
+        this.onUpdateMethodClick = this.onUpdateMethodClick.bind(this);
+        this.getMethod = this.getMethod.bind(this);
 
         this.state = {
-
+            updateMethod: {}
         };
+
+        this.getMethod();
     }
 
-    setUpdateMethodName() {
-
+    onNameChange(name){
+        this.setState({ updateMethod: {
+                ...this.state.updateMethod,
+                name: name
+            }
+        });
     }
 
-    setUpdateMethodDescription() {
+    onTypeChange(httpMethod){
+        this.setState({ updateMethod: {
+                ...this.state.updateMethod,
+                httpMethod: httpMethod
+            }
+        });
+    }
 
+    onStatusChange(status){
+        this.setState({ updateMethod: {
+                ...this.state.updateMethod,
+                status: status
+            }
+        });
+    }
+
+    onResponseStrategyChange(responseStrategy){
+        this.setState({ updateMethod: {
+                ...this.state.updateMethod,
+                responseStrategy: responseStrategy
+            }
+        });
+    }
+
+    onForwardedEndpointChange(forwardedEndpoint){
+        this.setState({ updateMethod: {
+                ...this.state.updateMethod,
+                forwardedEndpoint: forwardedEndpoint
+            }
+        });
+    }
+
+    onSimulateNetworkDelayChange(simulateNetworkDelay){
+        this.setState({ updateMethod: {
+                ...this.state.updateMethod,
+                simulateNetworkDelay: simulateNetworkDelay
+            }
+        });
+    }
+
+    onNetworkDelayChange(networkDelay){
+        this.setState({ updateMethod: {
+                ...this.state.updateMethod,
+                networkDelay: networkDelay
+            }
+        });
+    }
+
+    getMethod() {
+        axios
+            .get("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + this.props.methodId)
+            .then(response => {
+                this.setState({
+                    updateMethod: {
+                        name: response.data.name,
+                        httpMethod: response.httpMethod,
+                        status: response.data.status,
+                        responseStrategy: response.data.responseStrategy,
+                        forwardedEndpoint: response.data.forwardedEndpoint,
+                        simulateNetworkDelay: response.data.simulateNetworkDelay,
+                        networkDelay: response.data.networkDelay
+                    }});
+            })
+            .catch(error => {
+                validateErrorResponse(error)
+            });
+    }
+
+    onUpdateMethodClick(){
+        axios
+            .put("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" +
+                this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + this.props.methodId, this.state.updateMethod)
+            .then(response => {
+                this.props.getMethod();
+            })
+            .catch(error => {
+                validateErrorResponse(error)
+            });
     }
 
     render() {
@@ -50,23 +146,89 @@ class UpdateMethodModal extends PureComponent {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form>
-                                <div className="form-group row">
-                                    <label htmlFor="newMethodName" className="col-sm-2 col-form-label">Name</label>
-                                    <div className="col-sm-10">
-                                        <input className="form-control" type="text" name="updateMethodName" id="updateMethodName" onChange={event => this.setUpdateMethodName(event.target.value)}/>
-                                    </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Name</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control" type="text" value={this.state.updateMethod.name}
+                                           onChange={event => this.onNameChange(event.target.value)} onKeyDown={preventEnterEvent}/>
                                 </div>
-                                <div className="form-group row">
-                                    <label htmlFor="newMethodDescription" className="col-sm-2 col-form-label">Description</label>
-                                    <div className="col-sm-10">
-                                        <textarea className="form-control" name="updateMethodDescription" id="updateMethodDescription" onChange={event => this.setUpdateMethodDescription(event.target.value)}/>
-                                    </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Type</label>
+                                <div className="col-sm-9">
+                                    <select id="inputStatus" className="form-control" value={this.state.updateMethod.httpMethod}
+                                            onChange={event => this.onTypeChange(event.target.value)}>
+                                        <option value={"GET"}>GET</option>
+                                        <option value={"POST"}>POST</option>
+                                        <option value={"PUT"}>PUT</option>
+                                        <option value={"HEAD"}>HEAD</option>
+                                        <option value={"DELETE"}>DELETE</option>
+                                        <option value={"OPTIONS"}>OPTIONS</option>
+                                        <option value={"TRACE"}>TRACE</option>
+                                        <option value={"PATCH"}>PATCH</option>
+
+                                    </select>
                                 </div>
-                            </form>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Status</label>
+                                <div className="col-sm-9">
+                                    <select id="inputStatus" className="form-control" value={this.state.updateMethod.status}
+                                            onChange={event => this.onStatusChange(event.target.value)}>
+                                        <option value={"MOCKED"}>{methodStatusFormatter("MOCKED")}</option>
+                                        <option value={"DISABLED"}>{methodStatusFormatter("DISABLED")}</option>
+                                        <option value={"FORWARDED"}>{methodStatusFormatter("FORWARDED")}</option>
+                                        <option value={"RECORDING"}>{methodStatusFormatter("RECORDING")}</option>
+                                        <option value={"RECORD_ONCE"}>{methodStatusFormatter("RECORD_ONCE")}</option>
+                                        <option value={"ECHO"}>{methodStatusFormatter("ECHO")}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Response strategy</label>
+                                <div className="col-sm-9">
+                                    <select id="inputStatus" className="form-control"
+                                            value={this.state.updateMethod.responseStrategy}
+                                            onChange={event => this.onResponseStrategyChange(event.target.value)}>
+                                        <option value={"RANDOM"}>{methodResponseStrategyFormatter("RANDOM")}</option>
+                                        <option value={"SEQUENCE"}>{methodResponseStrategyFormatter("SEQUENCE")}</option>
+                                        <option value={"XPATH_INPUT"}>{methodResponseStrategyFormatter("XPATH_INPUT")}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Forwarded endpoint</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control" type="text"
+                                           defaultValue={this.state.updateMethod.forwardedEndpoint}
+                                           onChange={event => this.onForwardedEndpointChange(event.target.value)} onKeyDown={preventEnterEvent}/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Simulate network delay</label>
+                                <div className="col-sm-9">
+                                    <input type="checkbox" checked={this.state.updateMethod.simulateNetworkDelay}
+                                           onChange={event => this.onSimulateNetworkDelayChange(event.target.checked)}/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Network delay</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control" type="text" value={this.state.updateMethod.networkDelay}
+                                           onChange={event => this.onNetworkDelayChange(event.target.value)} onKeyDown={preventEnterEvent}/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Default response</label>
+                                <div className="col-sm-9">
+                                    <select id="inputStatus" className="form-control" >
+
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-success" data-dismiss="modal">Update</button>
+                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateMethodClick}>Update</button>
                         </div>
                     </div>
                 </div>

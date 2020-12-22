@@ -233,11 +233,7 @@ class SoapProject extends PureComponent {
             .get("/castlemock/api/rest/soap/project/" + this.state.projectId)
             .then(response => {
                 this.setState({
-                    project: response.data,
-                    updateProject: {
-                        name: response.data.name,
-                        description: response.data.description
-                    }
+                    project: response.data
                 });
             })
             .catch(error => {

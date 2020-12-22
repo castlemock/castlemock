@@ -18,6 +18,7 @@ import React, {PureComponent} from 'react';
 import axios from "axios";
 import validateErrorResponse from "../../utility/HttpResponseValidator";
 import {userStatusFormatter, userRoleFormatter} from "../user/utility/UserFormatter";
+import preventEnterEvent from "../../utility/KeyboardUtility";
 
 class Profile extends PureComponent {
 
@@ -168,25 +169,25 @@ class Profile extends PureComponent {
                                     <div className="form-group row">
                                         <label htmlFor="updateUserUserName" className="col-sm-2 col-form-label">Username</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control" type="text" defaultValue={this.state.user.username} onChange={event => this.setUpdateUserUserName(event.target.value)}/>
+                                            <input className="form-control" type="text" defaultValue={this.state.user.username} onChange={event => this.setUpdateUserUserName(event.target.value)} onKeyDown={preventEnterEvent}/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
                                         <label htmlFor="updateUserEmail" className="col-sm-2 col-form-label">Full name</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control" type="text" defaultValue={this.state.user.fullName} onChange={event => this.setUpdateUserFullName(event.target.value)}/>
+                                            <input className="form-control" type="text" defaultValue={this.state.user.fullName} onChange={event => this.setUpdateUserFullName(event.target.value)} onKeyDown={preventEnterEvent}/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
                                         <label htmlFor="updateUserEmail" className="col-sm-2 col-form-label">Email</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control" type="text" defaultValue={this.state.user.email} onChange={event => this.setUpdateUserEmail(event.target.value)}/>
+                                            <input className="form-control" type="text" defaultValue={this.state.user.email} onChange={event => this.setUpdateUserEmail(event.target.value)} onKeyDown={preventEnterEvent}/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
                                         <label htmlFor="newUserPassword" className="col-sm-2 col-form-label">Password</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control" type="password" defaultValue={this.state.user.password} onChange={event => this.setUpdateUserPassword(event.target.value)}/>
+                                            <input className="form-control" type="password" defaultValue={this.state.user.password} onChange={event => this.setUpdateUserPassword(event.target.value)} onKeyDown={preventEnterEvent}/>
                                         </div>
                                     </div>
                                 </form>

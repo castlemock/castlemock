@@ -17,6 +17,7 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
+import preventEnterEvent from "../../../utility/KeyboardUtility";
 
 class UpdateUserModal extends PureComponent {
 
@@ -28,16 +29,30 @@ class UpdateUserModal extends PureComponent {
         this.setUpdateUserRole = this.setUpdateUserRole.bind(this);
         this.setUpdateUserStatus = this.setUpdateUserStatus.bind(this);
         this.onUpdateUserClick = this.onUpdateUserClick.bind(this);
+        this.getUser = this.getUser.bind(this);
 
         this.state = {
             updateUser: {
-                username: "",
-                email: "",
-                password: "",
-                role: "READER",
-                status: "ACTIVE"
             }
         };
+    }
+
+    getUser() {
+        axios
+            .get("/castlemock/api/rest/core/user/" + this.props.userId)
+            .then(response => {
+                this.setState({
+                    updateUser: {
+                        username: response.data.username,
+                        email: response.data.email,
+                        role: response.data.role,
+                        status: response.data.status
+                    },
+                });
+            })
+            .catch(error => {
+                validateErrorResponse(error)
+            });
     }
 
     setUpdateUserUserName(username) {
@@ -114,25 +129,25 @@ class UpdateUserModal extends PureComponent {
                                 <div className="form-group row">
                                     <label htmlFor="updateUserUserName" className="col-sm-2 col-form-label">Name</label>
                                     <div className="col-sm-10">
-                                        <input className="form-control" type="text" name="updateUserUserName" id="updateUserUserName" defaultValue={this.props.user.username} onChange={event => this.setUpdateUserUserName(event.target.value)}/>
+                                        <input className="form-control" type="text" name="updateUserUserName" id="updateUserUserName" defaultValue={this.props.user.username} onChange={event => this.setUpdateUserUserName(event.target.value)} onKeyDown={preventEnterEvent}/>
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="updateUserEmail" className="col-sm-2 col-form-label">Email</label>
                                     <div className="col-sm-10">
-                                        <input className="form-control" type="text" name="updateUserEmail" id="updateUserEmail" onChange={event => this.setUpdateUserEmail(event.target.value)}/>
+                                        <input className="form-control" type="text" name="updateUserEmail" id="updateUserEmail" onChange={event => this.setUpdateUserEmail(event.target.value)} onKeyDown={preventEnterEvent}/>
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="newUserPassword" className="col-sm-2 col-form-label">Password</label>
                                     <div className="col-sm-10">
-                                        <input className="form-control" type="text" name="updateUserPassword" id="updateUserPassword"  defaultValue={this.props.user.password} onChange={event => this.setUpdateUserPassword(event.target.value)}/>
+                                        <input className="form-control" type="text" name="updateUserPassword" id="updateUserPassword"  defaultValue={this.props.user.password} onChange={event => this.setUpdateUserPassword(event.target.value)} onKeyDown={preventEnterEvent}/>
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="inputState" className="col-sm-2 col-form-label">Role</label>
                                     <div className="col-sm-10">
-                                        <select id="inputState" className="form-control" defaultValue={this.props.user.role} onChange={event => this.setUpdateUserRole(event.target.value)}>
+                                        <select id="inputState" className="form-control" value={this.state.updateUser.role} onChange={event => this.setUpdateUserRole(event.target.value)}>
                                             <option>READER</option>
                                             <option>MODIFIER</option>
                                             <option>ADMIN</option>
@@ -142,7 +157,7 @@ class UpdateUserModal extends PureComponent {
                                 <div className="form-group row">
                                     <label htmlFor="inputState" className="col-sm-2 col-form-label">Status</label>
                                     <div className="col-sm-10">
-                                        <select id="inputState" className="form-control" value={this.props.user.status} onChange={event => this.setUpdateUserStatus(event.target.value)} defaultValue={"ACTIVE"}>
+                                        <select id="inputState" className="form-control" value={this.state.updateUser.status} onChange={event => this.setUpdateUserStatus(event.target.value)}>
                                             <option>ACTIVE</option>
                                             <option>INACTIVE</option>
                                         </select>

@@ -26,13 +26,14 @@ class UpdateResourceModal extends PureComponent {
         this.onUpdateResourceClick = this.onUpdateResourceClick.bind(this);
         this.setName = this.setName.bind(this);
         this.setUri = this.setUri.bind(this);
+        this.getResource = this.getResource.bind(this);
 
         this.state = {
             updateResource: {
-                name: this.props.resource.name,
-                uri: this.props.resource.uri
             }
         };
+
+        this.getResource();
     }
 
     setName(source) {
@@ -64,6 +65,22 @@ class UpdateResourceModal extends PureComponent {
             });
     }
 
+    getResource() {
+        axios
+            .get("/castlemock/api/rest/rest/project/" + this.props.projectId  + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId)
+            .then(response => {
+                this.setState({
+                    updateResource: {
+                        name: response.data.name,
+                        uri: response.data.uri
+                    }
+                });
+            })
+            .catch(error => {
+                validateErrorResponse(error)
+            });
+    }
+
     render() {
         return (
             <div className="modal fade" id="updateResourceModal" tabIndex="-1" role="dialog"
@@ -80,13 +97,13 @@ class UpdateResourceModal extends PureComponent {
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Name</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" type="text" defaultValue={this.props.resource.name} onChange={this.setName}/>
+                                    <input className="form-control" type="text" defaultValue={this.state.updateResource.name} onChange={this.setName}/>
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Uri</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" type="text" defaultValue={this.props.resource.uri} onChange={this.setUri}/>
+                                    <input className="form-control" type="text" defaultValue={this.state.updateResource.uri} onChange={this.setUri}/>
                                 </div>
                             </div>
                         </div>

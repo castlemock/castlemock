@@ -18,6 +18,7 @@ import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 import { withRouter } from "react-router";
+import preventEnterEvent from "../../../utility/KeyboardUtility";
 
 class NewUserModal extends PureComponent {
 
@@ -114,19 +115,19 @@ class NewUserModal extends PureComponent {
                                 <div className="form-group row">
                                     <label htmlFor="newUserUserName" className="col-sm-2 col-form-label">Name</label>
                                     <div className="col-sm-10">
-                                        <input className="form-control" type="text" name="newUserUserName" id="newUserUserName" onChange={event => this.setNewUserName(event.target.value)}/>
+                                        <input className="form-control" type="text" name="newUserUserName" id="newUserUserName" onChange={event => this.setNewUserName(event.target.value)} onKeyDown={preventEnterEvent}/>
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="newUserEmail" className="col-sm-2 col-form-label">Email</label>
                                     <div className="col-sm-10">
-                                        <input className="form-control" type="text" name="newUserEmail" id="newUserEmail" onChange={event => this.setNewEmail(event.target.value)}/>
+                                        <input className="form-control" type="text" name="newUserEmail" id="newUserEmail" onChange={event => this.setNewEmail(event.target.value)} onKeyDown={preventEnterEvent}/>
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="newUserPassword" className="col-sm-2 col-form-label">Password</label>
                                     <div className="col-sm-10">
-                                        <input className="form-control" type="text" name="newUserPassword" id="newUserPassword" onChange={event => this.setNewPassword(event.target.value)}/>
+                                        <input className="form-control" type="text" name="newUserPassword" id="newUserPassword" onChange={event => this.setNewPassword(event.target.value)} onKeyDown={preventEnterEvent}/>
                                     </div>
                                 </div>
                                 <div className="form-group row">

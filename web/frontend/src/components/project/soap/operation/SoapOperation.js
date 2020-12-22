@@ -267,7 +267,7 @@ class SoapOperation extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Simulate network delay</dt>
-                            <dd className="col-sm-9"><input type="checkbox" value={this.state.operation.simulateNetworkDelay} disabled={true}/></dd>
+                            <dd className="col-sm-9"><input type="checkbox" checked={this.state.operation.simulateNetworkDelay} disabled={true}/></dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Network delay</dt>
@@ -279,7 +279,7 @@ class SoapOperation extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Mock on failure</dt>
-                            <dd className="col-sm-9"><input type="checkbox" value={this.state.operation.mockOnFailure} disabled={true}/></dd>
+                            <dd className="col-sm-9"><input type="checkbox" checked={this.state.operation.mockOnFailure} disabled={true}/></dd>
                         </dl>
                     </div>
                     <div className="panel panel-primary table-panel">

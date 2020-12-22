@@ -207,7 +207,7 @@ class RestMethod extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Simulate network delay</dt>
-                            <dd className="col-sm-9"><input type="checkbox" value={this.state.method.simulateNetworkDelay} disabled={true}/></dd>
+                            <dd className="col-sm-9"><input type="checkbox" checked={this.state.method.simulateNetworkDelay} disabled={true}/></dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Network delay</dt>

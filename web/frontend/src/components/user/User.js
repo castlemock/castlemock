@@ -41,13 +41,7 @@ class User extends PureComponent {
             .get("/castlemock/api/rest/core/user/" + this.state.userId)
             .then(response => {
                 this.setState({
-                    user: response.data,
-                    updateUser: {
-                        username: response.data.username,
-                        email: response.data.email,
-                        role: response.data.role,
-                        status: response.data.status
-                    },
+                    user: response.data
                 });
             })
             .catch(error => {
@@ -103,7 +97,7 @@ class User extends PureComponent {
                 </section>
 
                 <DeleteUserModal userId={this.state.userId} user={this.state.user}/>
-                <UpdateUserModal userId={this.state.userId} user={this.state.user}/>
+                <UpdateUserModal userId={this.state.userId} user={this.state.user} getUser={this.getUser}/>
             </div>
         )
     }

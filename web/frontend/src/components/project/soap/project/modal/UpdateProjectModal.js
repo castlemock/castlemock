@@ -17,6 +17,7 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
+import preventEnterEvent from "../../../../../utility/KeyboardUtility";
 
 
 class UpdateProjectModal extends PureComponent {
@@ -26,14 +27,31 @@ class UpdateProjectModal extends PureComponent {
         this.setUpdateProjectName = this.setUpdateProjectName.bind(this);
         this.setUpdateProjectDescription = this.setUpdateProjectDescription.bind(this);
         this.onUpdateProjectClick = this.onUpdateProjectClick.bind(this);
+        this.getProject = this.getProject.bind(this);
 
         this.state = {
-            updateProject: {
-                name: this.props.project.name,
-                description: this.props.project.description
-            }
+            updateProject: {}
         };
+
+        this.getProject()
     }
+
+    getProject(projectId) {
+        axios
+            .get("/castlemock/api/rest/soap/project/" + this.props.projectId)
+            .then(response => {
+                this.setState({
+                    updateProject: {
+                        name: response.data.name,
+                        description: response.data.description
+                    }
+                });
+            })
+            .catch(error => {
+                validateErrorResponse(error)
+            });
+    }
+
 
     setUpdateProjectName(event) {
         this.setState({ updateProject: {
@@ -79,13 +97,13 @@ class UpdateProjectModal extends PureComponent {
                                 <div className="form-group row">
                                     <label htmlFor="updateProjectName" className="col-sm-2 col-form-label">Name</label>
                                     <div className="col-sm-10">
-                                        <input className="form-control" type="text" defaultValue={this.props.project.name} onChange={this.setUpdateProjectName} required/>
+                                        <input className="form-control" type="text" defaultValue={this.props.project.name} onChange={this.setUpdateProjectName} onKeyDown={preventEnterEvent} required/>
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="updateProjectDescription" className="col-sm-2 col-form-label">Description</label>
                                     <div className="col-sm-10">
-                                        <textarea className="form-control" defaultValue={this.props.project.description} onChange={this.setUpdateProjectDescription}/>
+                                        <textarea className="form-control" value={this.state.updateProject.description} onChange={this.setUpdateProjectDescription}/>
                                     </div>
                                 </div>
                             </form>

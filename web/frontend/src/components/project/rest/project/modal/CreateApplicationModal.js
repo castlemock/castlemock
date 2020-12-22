@@ -17,6 +17,7 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
+import preventEnterEvent from "../../../../../utility/KeyboardUtility"
 import { withRouter } from "react-router";
 
 class CreateApplicationModal extends PureComponent {
@@ -52,7 +53,6 @@ class CreateApplicationModal extends PureComponent {
             });
     }
 
-
     render() {
         return (
             <div className="modal fade" id="createApplicationModal" tabIndex="-1" role="dialog"
@@ -70,13 +70,13 @@ class CreateApplicationModal extends PureComponent {
                                 <div className="form-group row">
                                     <label className="col-sm-2 col-form-label">Name</label>
                                     <div className="col-sm-10">
-                                        <input className="form-control" type="text" value={this.state.newApplication.name} onChange={event => this.setNewApplicationName(event.target.value)}/>
+                                        <input className="form-control" type="text" value={this.state.newApplication.name} onChange={event => this.setNewApplicationName(event.target.value)} onKeyDown={preventEnterEvent}/>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateApplicationClick}>Create</button>
+                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateApplicationClick} onKeyDown={this.onCreateApplication}>Create</button>
                         </div>
                     </div>
                 </div>

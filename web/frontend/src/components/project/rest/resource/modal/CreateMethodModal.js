@@ -18,6 +18,7 @@ import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import { withRouter } from "react-router";
+import preventEnterEvent from "../../../../../utility/KeyboardUtility";
 
 class CreateMethodModal extends PureComponent {
 
@@ -80,7 +81,7 @@ class CreateMethodModal extends PureComponent {
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Name</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" type="text" value={this.state.newMethod.name} onChange={this.setName}/>
+                                    <input className="form-control" type="text" value={this.state.newMethod.name} onChange={this.setName} onKeyDown={preventEnterEvent}/>
                                 </div>
                             </div>
                             <div className="form-group row">

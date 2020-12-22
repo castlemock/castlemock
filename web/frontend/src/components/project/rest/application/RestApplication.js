@@ -239,7 +239,7 @@ class RestApplication extends PureComponent {
                 <CreateResourceModal projectId={this.state.projectId} applicationId={this.state.applicationId}/>
                 <DeleteApplicationModal projectId={this.state.projectId} applicationId={this.state.applicationId}/>
                 <DeleteResourcesModal projectId={this.state.projectId} applicationId={this.state.applicationId} selectedResources={this.state.selectedResources}/>
-                <UpdateApplicationModal projectId={this.state.projectId} application={this.state.application} getApplication={this.getApplication}/>
+                <UpdateApplicationModal projectId={this.state.projectId} applicationId={this.state.applicationId} getApplication={this.getApplication}/>
                 <UpdateEndpointModal projectId={this.state.projectId} applicationId={this.state.applicationId} selectedResources={this.state.selectedResources} getApplication={this.getApplication}/>
                 <UpdateStatusModal projectId={this.state.projectId} applicationId={this.state.applicationId} selectedResources={this.state.selectedResources} getApplication={this.getApplication}/>
             </div>

@@ -19,6 +19,7 @@ import axios from "axios";
 import { withRouter } from "react-router";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import {mockResponseStatusFormatter} from "../../utility/RestFormatter";
+import preventEnterEvent from "../../../../../utility/KeyboardUtility";
 
 class CreateMockResponseModal extends PureComponent {
 
@@ -90,7 +91,7 @@ class CreateMockResponseModal extends PureComponent {
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Name</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" type="text" onChange={this.setNewMockResponseName} />
+                                    <input className="form-control" type="text" onChange={this.setNewMockResponseName} onKeyDown={preventEnterEvent}/>
                                 </div>
                             </div>
                             <div className="form-group row">
