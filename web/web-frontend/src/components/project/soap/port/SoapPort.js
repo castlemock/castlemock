@@ -224,11 +224,11 @@ class SoapPort extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-2 content-title">Address</dt>
-                            <dd className="col-sm-9">{window.location.origin + "/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
+                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-2 content-title">WSDL</dt>
-                            <dd className="col-sm-9">{window.location.origin + "/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri + "?wsdl"}</dd>
+                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri + "?wsdl"}</dd>
                         </dl>
                     </div>
                     <div className="panel panel-primary table-panel">

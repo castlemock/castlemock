@@ -199,7 +199,7 @@ class RestResource extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-2 content-title">Address</dt>
-                            <dd className="col-sm-9">{window.location.origin + process.env.PUBLIC_URL + "/mock/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + this.state.resource.uri}</dd>
+                            <dd className="col-sm-9">{window.location.origin + "castlemock/mock/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + this.state.resource.uri}</dd>
                         </dl>
                     </div>
                     <div className="panel panel-primary table-panel">
