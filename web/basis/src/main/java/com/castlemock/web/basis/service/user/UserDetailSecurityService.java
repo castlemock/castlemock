@@ -22,7 +22,6 @@ import com.castlemock.core.basis.model.user.domain.Status;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
-import com.castlemock.web.basis.web.view.controller.user.UpdateCurrentUserController;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -62,7 +61,9 @@ public class UserDetailSecurityService implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) {
         Preconditions.checkNotNull(username, "Username cannot be null");
         Preconditions.checkArgument(!username.isEmpty(), "Username cannot be empty");
-        final ReadUserByUsernameInput readUserByUsernameInput = new ReadUserByUsernameInput(username);
+        final ReadUserByUsernameInput readUserByUsernameInput = ReadUserByUsernameInput.builder()
+                .username(username)
+                .build();
         final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(readUserByUsernameInput);
         final User user = readUserByUsernameOutput.getUser();
         Preconditions.checkNotNull(user, "Unable to find user");
@@ -104,7 +105,6 @@ public class UserDetailSecurityService implements UserDetailsService {
      * user.
      * @param username The new name of the user that will be logged in
      * @see org.springframework.security.core.userdetails.User
-     * @see UpdateCurrentUserController
      */
     public void updateCurrentLoggedInUser(final String username){
         final UserDetails userDetails = loadUserByUsername(username);

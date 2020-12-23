@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<soapMockResponse>
+    <body>
+&lt;?xml version="1.0"?&gt;
+
+&lt;soap:Envelope
+xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding"&gt;
+
+&lt;soap:Body&gt;
+  &lt;m:GetPrice xmlns:m="https://www.w3schools.com/prices"&gt;
+    &lt;m:Item&gt;Apples&lt;/m:Item&gt;
+  &lt;/m:GetPrice&gt;
+&lt;/soap:Body&gt;
+
+&lt;/soap:Envelope&gt; </body>
+    <contentEncodings/>
+    <httpHeaders>
+        <httpHeader>
+            <name>Name</name>
+            <value>Value</value>
+        </httpHeader>
+    </httpHeaders>
+    <id>Id</id>
+    <name>Name</name>
+    <usingExpressions>false</usingExpressions>
+    <xpathExpressions>
+        <xpathExpression>
+            <expression>Expression</expression>
+        </xpathExpression>
+    </xpathExpressions>
+</soapMockResponse>

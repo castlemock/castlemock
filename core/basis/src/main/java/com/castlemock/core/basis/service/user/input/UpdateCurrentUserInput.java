@@ -17,9 +17,9 @@
 package com.castlemock.core.basis.service.user.input;
 
 import com.castlemock.core.basis.model.Input;
-import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.basis.service.user.output.UpdateCurrentUserOutput;
+
+import java.util.Objects;
 
 /**
  * Update the current logged in user
@@ -29,15 +29,74 @@ import com.castlemock.core.basis.service.user.output.UpdateCurrentUserOutput;
  */
 public final class UpdateCurrentUserInput implements Input {
 
-    @NotNull
-    private final User user;
+    private String username;
+    private String password;
+    private String email;
+    private String fullName;
 
-    public UpdateCurrentUserInput(User user) {
-        this.user = user;
+    private UpdateCurrentUserInput() {
+
     }
 
-    public User getUser() {
-        return user;
+    private UpdateCurrentUserInput(final Builder builder){
+        this.username = Objects.requireNonNull(builder.username);
+        this.password = builder.password;
+        this.email = builder.email;
+        this.fullName = builder.fullName;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private String username;
+        private String password;
+        private String email;
+        private String fullName;
+
+        private Builder() {
+        }
+
+        public Builder username(final String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder password(final String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder email(final String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder fullName(final String fullName) {
+            this.fullName = fullName;
+            return this;
+        }
+
+        public UpdateCurrentUserInput build() {
+            return new UpdateCurrentUserInput(this);
+        }
+    }
 }

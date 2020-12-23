@@ -70,17 +70,19 @@ public class EventServiceFacadeImplTest {
         serviceFacade.initiate();
     }
 
-
     @Test
     public void testSave(){
         final Event eventDto = new Event();
         Mockito.when(eventServiceAdapter.convertType(Mockito.any(Event.class))).thenReturn(eventDto);
+        Mockito.when(eventServiceAdapter.create(Mockito.any(Event.class))).thenReturn(eventDto);
         serviceFacade.save(TYPE, eventDto);
         Mockito.verify(eventServiceAdapter, Mockito.times(1)).create(Mockito.any(Event.class));
     }
 
     @Test
     public void testDelete(){
+        final Event eventDto = new Event();
+        Mockito.when(eventServiceAdapter.delete(Mockito.any())).thenReturn(eventDto);
         serviceFacade.delete(TYPE_URL, "Delete event");
         Mockito.verify(eventServiceAdapter, Mockito.times(1)).delete(Mockito.anyString());
     }
@@ -89,6 +91,7 @@ public class EventServiceFacadeImplTest {
     public void testUpdate(){
         final Event eventDto = new Event();
         Mockito.when(eventServiceAdapter.convertType(Mockito.any(Event.class))).thenReturn(eventDto);
+        Mockito.when(eventServiceAdapter.update(Mockito.any(), Mockito.any(Event.class))).thenReturn(eventDto);
         serviceFacade.update(TYPE_URL, "Id", eventDto);
         Mockito.verify(eventServiceAdapter, Mockito.times(1)).update(Mockito.anyString(), Mockito.any(Event.class));
     }

@@ -33,7 +33,6 @@ import java.util.Objects;
 @XmlRootElement
 public class Project implements TypeIdentifiable {
 
-
     protected String id;
     protected String name;
     protected Date updated;

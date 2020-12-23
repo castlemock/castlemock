@@ -409,7 +409,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
     }
 
     @XmlRootElement(name = "httpHeader")
-    protected static class HttpHeaderFile {
+    public static class HttpHeaderFile {
 
         @Mapping("name")
         private String name;
@@ -436,7 +436,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
     }
 
     @XmlRootElement(name = "httpParameter")
-    protected static class HttpParameterFile {
+    public static class HttpParameterFile {
 
         @Mapping("name")
         private String name;

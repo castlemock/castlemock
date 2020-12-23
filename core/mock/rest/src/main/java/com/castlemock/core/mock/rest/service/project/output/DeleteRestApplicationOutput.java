@@ -17,6 +17,10 @@
 package com.castlemock.core.mock.rest.service.project.output;
 
 import com.castlemock.core.basis.model.Output;
+import com.castlemock.core.basis.model.validation.NotNull;
+import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -24,8 +28,15 @@ import com.castlemock.core.basis.model.Output;
  */
 public final class DeleteRestApplicationOutput implements Output {
 
-    private DeleteRestApplicationOutput(){
+    @NotNull
+    private final RestApplication application;
 
+    private DeleteRestApplicationOutput(final Builder builder){
+        this.application = Objects.requireNonNull(builder.application);
+    }
+
+    public RestApplication getApplication() {
+        return application;
     }
 
     public static Builder builder(){
@@ -34,8 +45,15 @@ public final class DeleteRestApplicationOutput implements Output {
 
     public static final class Builder {
 
+        private RestApplication application;
+
+        public Builder application(final RestApplication application){
+            this.application = application;
+            return this;
+        }
+
         public DeleteRestApplicationOutput build(){
-            return new DeleteRestApplicationOutput();
+            return new DeleteRestApplicationOutput(this);
         }
 
     }

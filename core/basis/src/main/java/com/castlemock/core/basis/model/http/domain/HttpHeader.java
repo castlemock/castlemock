@@ -57,6 +57,12 @@ public class HttpHeader {
         this.value = value;
     }
 
+    public Builder toBuilder() {
+        return builder()
+                .name(name)
+                .value(value);
+    }
+
     public static Builder builder() {
         return new Builder();
     }

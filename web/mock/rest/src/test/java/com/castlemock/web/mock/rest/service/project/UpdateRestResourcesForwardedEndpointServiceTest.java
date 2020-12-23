@@ -13,6 +13,7 @@ import com.castlemock.core.mock.rest.service.project.output.UpdateRestResourcesF
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -58,11 +59,9 @@ public class UpdateRestResourcesForwardedEndpointServiceTest {
         Mockito.when(methodRepository.findWithResourceId(resource1.getId())).thenReturn(ImmutableList.of(method1, method2));
 
         final UpdateRestResourcesForwardedEndpointInput input = UpdateRestResourcesForwardedEndpointInput.builder()
-                .restProjectId("project")
-                .restApplicationId(application.getId())
-                .restResources(ImmutableList.of(RestResourceTestBuilder.builder()
-                        .id(resource1.getId())
-                        .build()))
+                .projectId("project")
+                .applicationId(application.getId())
+                .resourceIds(ImmutableSet.of(resource1.getId()))
                 .forwardedEndpoint("new-endpoint")
                 .build();
         final ServiceTask<UpdateRestResourcesForwardedEndpointInput> serviceTask = new ServiceTask<>(input);

@@ -18,10 +18,9 @@ package com.castlemock.core.mock.rest.service.project.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren
@@ -30,24 +29,24 @@ import java.util.Objects;
 public final class UpdateRestApplicationsForwardedEndpointInput implements Input {
 
     @NotNull
-    private final String restProjectId;
+    private final String projectId;
     @NotNull
-    private final List<RestApplication> restApplications;
+    private final Set<String> applicationIds;
     @NotNull
     private final String forwardedEndpoint;
 
     private UpdateRestApplicationsForwardedEndpointInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplications = Objects.requireNonNull(builder.restApplications);
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.applicationIds = Objects.requireNonNull(builder.applicationIds);
         this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public List<RestApplication> getRestApplications() {
-        return restApplications;
+    public Set<String> getApplicationIds() {
+        return applicationIds;
     }
 
     public String getForwardedEndpoint() {
@@ -60,12 +59,12 @@ public final class UpdateRestApplicationsForwardedEndpointInput implements Input
 
     public static final class Builder {
 
-        private String restProjectId;
+        private String projectId;
         private String forwardedEndpoint;
-        private List<RestApplication> restApplications;
+        private Set<String> applicationIds;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 
@@ -74,8 +73,8 @@ public final class UpdateRestApplicationsForwardedEndpointInput implements Input
             return this;
         }
 
-        public Builder restApplications(final List<RestApplication> restApplications){
-            this.restApplications = restApplications;
+        public Builder applicationIds(final Set<String> applicationIds){
+            this.applicationIds = applicationIds;
             return this;
         }
 

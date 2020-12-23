@@ -18,6 +18,8 @@ package com.castlemock.web.mock.rest.service.project;
 
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.DeleteRestMockResponseInput;
 import com.castlemock.core.mock.rest.service.project.output.DeleteRestMockResponseOutput;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
@@ -52,7 +54,9 @@ public class DeleteRestMockResponseServiceTest {
         final String resourceId = "ResourceId";
         final String methodId = "MethodId";
         final String mockResponseId = "MockResponseId";
+        final RestMockResponse restMockResponse = RestMockResponseTestBuilder.builder().build();
 
+        Mockito.when(mockResponseRepository.delete(Mockito.any())).thenReturn(restMockResponse);
 
         final DeleteRestMockResponseInput input =
                 DeleteRestMockResponseInput.builder()

@@ -29,35 +29,35 @@ import java.util.Objects;
 public final class UpdateRestResourcesStatusInput implements Input {
 
     @NotNull
-    private final String restProjectId;
+    private final String projectId;
     @NotNull
-    private final String restApplicationId;
+    private final String applicationId;
     @NotNull
-    private final String restResourceId;
+    private final String resourceId;
     @NotNull
-    private final RestMethodStatus restMethodStatus;
+    private final RestMethodStatus methodStatus;
 
     private UpdateRestResourcesStatusInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
-        this.restMethodStatus = Objects.requireNonNull(builder.restMethodStatus);
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.applicationId = Objects.requireNonNull(builder.applicationId);
+        this.resourceId = Objects.requireNonNull(builder.resourceId);
+        this.methodStatus = Objects.requireNonNull(builder.methodStatus);
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public String getRestResourceId() {
-        return restResourceId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public RestMethodStatus getRestMethodStatus() {
-        return restMethodStatus;
+    public RestMethodStatus getMethodStatus() {
+        return methodStatus;
     }
 
     public static Builder builder(){
@@ -66,28 +66,28 @@ public final class UpdateRestResourcesStatusInput implements Input {
 
     public static final class Builder {
 
-        private String restProjectId;
-        private String restApplicationId;
-        private String restResourceId;
-        private RestMethodStatus restMethodStatus;
+        private String projectId;
+        private String applicationId;
+        private String resourceId;
+        private RestMethodStatus methodStatus;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 
-        public Builder restApplicationId(final String restApplicationId){
-            this.restApplicationId = restApplicationId;
+        public Builder applicationId(final String applicationId){
+            this.applicationId = applicationId;
             return this;
         }
 
-        public Builder restResourceId(final String restResourceId){
-            this.restResourceId = restResourceId;
+        public Builder resourceId(final String resourceId){
+            this.resourceId = resourceId;
             return this;
         }
 
-        public Builder restMethodStatus(final RestMethodStatus restMethodStatus){
-            this.restMethodStatus = restMethodStatus;
+        public Builder methodStatus(final RestMethodStatus methodStatus){
+            this.methodStatus = methodStatus;
             return this;
         }
 

@@ -1,0 +1,61 @@
+.main-header {
+    background: #000000;
+    color: #fff;
+    border: 0 solid #000000;
+    top: 0;
+    font-size: 13px;
+    z-index: 1;
+    height: 60px;
+    min-width: 100%;
+}
+
+.main-header .navbar-toggle {
+    border: none;
+    background: transparent !important;
+    margin-top: 11px;
+}
+.main-header :hover {
+     background: transparent !important;
+ }
+
+.header-logo {
+    float: left;
+    font-size: 26px;
+    height: 30px;
+    color: #ffffff;
+}
+
+.header-logo a {
+    text-decoration: none;
+    font-size: 26px;
+    color: #ffffff;
+}
+.header-logo a:hover {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.header-logo-img {
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    margin-top: -10px;
+}
+
+.header-menu-links {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    height: 30px;
+    float: right;
+}
+
+.header-menu-link {
+    text-align: center;
+    float: left;
+    margin-left: 35px;
+}
+
+.header-menu-icon {
+    font-size: 30px;
+    color: #FFFFFF;
+}

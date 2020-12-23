@@ -260,7 +260,7 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
         @Mapping("httpParameters")
         private List<FileRepository.HttpParameterFile> httpParameters;
         @Mapping("httpHeaders")
-        private List<FileRepository.HttpHeaderFile> httpHeaders;
+        private List<HttpHeaderFile> httpHeaders;
 
         @XmlElement
         public String getBody() {
@@ -300,11 +300,11 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
 
         @XmlElementWrapper(name = "httpHeaders")
         @XmlElement(name = "httpHeader")
-        public List<FileRepository.HttpHeaderFile> getHttpHeaders() {
+        public List<HttpHeaderFile> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<FileRepository.HttpHeaderFile> httpHeaders) {
+        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 
@@ -331,7 +331,7 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
         @Mapping("contentType")
         private String contentType;
         @Mapping("httpHeaders")
-        private List<FileRepository.HttpHeaderFile> httpHeaders;
+        private List<HttpHeaderFile> httpHeaders;
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings;
 
@@ -373,11 +373,11 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
 
         @XmlElementWrapper(name = "httpHeaders")
         @XmlElement(name = "httpHeader")
-        public List<FileRepository.HttpHeaderFile> getHttpHeaders() {
+        public List<HttpHeaderFile> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<FileRepository.HttpHeaderFile> httpHeaders) {
+        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 

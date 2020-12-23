@@ -18,10 +18,9 @@ package com.castlemock.core.mock.soap.service.project.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren
@@ -32,13 +31,13 @@ public final class UpdateSoapPortsForwardedEndpointInput implements Input {
     @NotNull
     private final String projectId;
     @NotNull
-    private final List<SoapPort> ports;
+    private final Set<String> portIds;
     @NotNull
     private final String forwardedEndpoint;
 
     public UpdateSoapPortsForwardedEndpointInput(final Builder builder) {
         this.projectId = Objects.requireNonNull(builder.projectId);
-        this.ports = Objects.requireNonNull(builder.ports);
+        this.portIds = Objects.requireNonNull(builder.portIds);
         this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
     }
 
@@ -46,8 +45,8 @@ public final class UpdateSoapPortsForwardedEndpointInput implements Input {
         return projectId;
     }
 
-    public List<SoapPort> getPorts() {
-        return ports;
+    public Set<String> getPortIds() {
+        return portIds;
     }
 
     public String getForwardedEndpoint() {
@@ -60,7 +59,7 @@ public final class UpdateSoapPortsForwardedEndpointInput implements Input {
 
     public static class Builder {
         private String projectId;
-        private List<SoapPort> ports;
+        private Set<String> portIds;
         private String forwardedEndpoint;
 
         private Builder(){
@@ -72,8 +71,8 @@ public final class UpdateSoapPortsForwardedEndpointInput implements Input {
             return this;
         }
 
-        public Builder ports(final List<SoapPort> ports){
-            this.ports = ports;
+        public Builder portIds(final Set<String> ports){
+            this.portIds = ports;
             return this;
         }
 

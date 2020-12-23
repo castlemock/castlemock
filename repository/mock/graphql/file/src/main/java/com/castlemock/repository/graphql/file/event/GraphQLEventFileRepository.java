@@ -22,7 +22,6 @@ import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.graphql.model.event.domain.GraphQLEvent;
 import com.castlemock.core.mock.graphql.model.project.domain.GraphQLRequestQuery;
 import com.castlemock.repository.Profiles;
-import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.event.AbstractEventFileRepository;
 import com.castlemock.repository.graphql.event.GraphQLEventRepository;
 import com.google.common.base.Preconditions;
@@ -206,7 +205,7 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
         @Mapping("queries")
         private List<GraphQLRequestQuery> queries;
         @Mapping("httpHeaders")
-        private List<FileRepository.HttpHeaderFile> httpHeaders;
+        private List<HttpHeaderFile> httpHeaders;
 
         @XmlElement
         public String getBody() {
@@ -257,11 +256,11 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
 
         @XmlElementWrapper(name = "httpHeaders")
         @XmlElement(name = "httpHeader")
-        public List<FileRepository.HttpHeaderFile> getHttpHeaders() {
+        public List<HttpHeaderFile> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<FileRepository.HttpHeaderFile> httpHeaders) {
+        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 
@@ -277,7 +276,7 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
         @Mapping("contentType")
         private String contentType;
         @Mapping("httpHeaders")
-        private List<FileRepository.HttpHeaderFile> httpHeaders;
+        private List<HttpHeaderFile> httpHeaders;
         @Mapping("contentEncodings")
         private List<ContentEncoding> contentEncodings;
 
@@ -310,11 +309,11 @@ public class GraphQLEventFileRepository extends AbstractEventFileRepository<Grap
 
         @XmlElementWrapper(name = "httpHeaders")
         @XmlElement(name = "httpHeader")
-        public List<FileRepository.HttpHeaderFile> getHttpHeaders() {
+        public List<HttpHeaderFile> getHttpHeaders() {
             return httpHeaders;
         }
 
-        public void setHttpHeaders(List<FileRepository.HttpHeaderFile> httpHeaders) {
+        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
         }
 

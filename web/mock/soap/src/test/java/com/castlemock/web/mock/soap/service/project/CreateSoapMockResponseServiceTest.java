@@ -65,6 +65,7 @@ public class CreateSoapMockResponseServiceTest {
         final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
         final SoapMockResponse soapMockResponse = SoapMockResponseTestBuilder.builder().build();
 
+        Mockito.when(repository.save(Mockito.any())).thenReturn(soapMockResponse);
 
         final CreateSoapMockResponseInput input = CreateSoapMockResponseInput.builder()
                 .projectId(soapProject.getId())

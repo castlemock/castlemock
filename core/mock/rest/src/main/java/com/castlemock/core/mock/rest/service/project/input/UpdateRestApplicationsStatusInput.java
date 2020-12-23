@@ -29,28 +29,28 @@ import java.util.Objects;
 public final class UpdateRestApplicationsStatusInput implements Input {
 
     @NotNull
-    private final String restProjectId;
+    private final String projectId;
     @NotNull
-    private final String restApplicationId;
+    private final String applicationId;
     @NotNull
-    private final RestMethodStatus restMethodStatus;
+    private final RestMethodStatus methodStatus;
 
     private UpdateRestApplicationsStatusInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restMethodStatus = Objects.requireNonNull(builder.restMethodStatus);
+        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.applicationId = Objects.requireNonNull(builder.applicationId);
+        this.methodStatus = Objects.requireNonNull(builder.methodStatus);
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public RestMethodStatus getRestMethodStatus() {
-        return restMethodStatus;
+    public RestMethodStatus getMethodStatus() {
+        return methodStatus;
     }
 
     public static Builder builder(){
@@ -59,22 +59,22 @@ public final class UpdateRestApplicationsStatusInput implements Input {
 
     public static final class Builder {
 
-        private String restProjectId;
-        private String restApplicationId;
-        private RestMethodStatus restMethodStatus;
+        private String projectId;
+        private String applicationId;
+        private RestMethodStatus methodStatus;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 
-        public Builder restApplicationId(final String restApplicationId){
-            this.restApplicationId = restApplicationId;
+        public Builder applicationId(final String applicationId){
+            this.applicationId = applicationId;
             return this;
         }
 
-        public Builder restMethodStatus(final RestMethodStatus restMethodStatus){
-            this.restMethodStatus = restMethodStatus;
+        public Builder methodStatus(final RestMethodStatus methodStatus){
+            this.methodStatus = methodStatus;
             return this;
         }
 

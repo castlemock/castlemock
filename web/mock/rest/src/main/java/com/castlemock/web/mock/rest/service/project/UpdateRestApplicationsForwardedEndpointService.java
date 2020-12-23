@@ -45,8 +45,8 @@ public class UpdateRestApplicationsForwardedEndpointService extends AbstractRest
     @Override
     public ServiceResult<UpdateRestApplicationsForwardedEndpointOutput> process(final ServiceTask<UpdateRestApplicationsForwardedEndpointInput> serviceTask) {
         final UpdateRestApplicationsForwardedEndpointInput input = serviceTask.getInput();
-        for(RestApplication restApplication : input.getRestApplications()){
-            List<RestResource> resources = this.resourceRepository.findWithApplicationId(restApplication.getId());
+        for(String applicationIds : input.getApplicationIds()){
+            List<RestResource> resources = this.resourceRepository.findWithApplicationId(applicationIds);
             for(RestResource restResource : resources){
                 List<RestMethod> methods = this.methodRepository.findWithResourceId(restResource.getId());
                 for(RestMethod restMethod : methods){

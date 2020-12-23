@@ -1,0 +1,145 @@
+:root {
+    --input-padding-x: 1.5rem;
+    --input-padding-y: .75rem;
+}
+
+#login-body {
+    display: table;
+    background-color: #1696cc;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    font-family: "Roboto Regular", sans-serif;
+}
+
+#login-box {
+    width: 800px;
+    margin: 10% auto;
+}
+
+.login-title {
+    font-family: "Roboto Regular", sans-serif;
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #FFFFFF;
+}
+
+.credentialsBox {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: auto;
+}
+
+#login-box input[type=text],
+#login-box input[type=password] {
+    padding: 15px;
+    margin: 3px 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    font-family: "Roboto Regular", sans-serif;
+}
+
+.logoImage {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: auto;
+}
+
+#logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    text-align: center;
+}
+
+#logo-meta-text {
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-family: "Roboto Thin", sans-serif;
+}
+
+#login-remember-me {
+    margin-left: 20px;
+    margin-top: 16px;
+    float: left;
+}
+
+#login-button {
+    margin-top: 10px;
+    float: right;
+}
+
+#not-found-button {
+    margin-top: 30px;
+}
+
+#login-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 26px;
+    background-color: #1696cc;
+}
+
+.custom-control-label {
+    color: #000000;
+}
+
+#login-footer a:link {
+    text-decoration: underline;
+    font-family: "Roboto Regular", sans-serif;
+    font-size: 11px;
+    color: #FFFFFF;
+}
+#login-footer a:visited,
+#login-footer a:hover,
+#login-footer a:active {
+    color: #FFFFFF;
+}
+
+#login-footer-info {
+    float: right;
+    text-align: right;
+    padding-right:20px;
+}
+
+#login-footer-info-api {
+    float: right;
+    width: 100px;
+    text-align: right;
+    padding-right:20px;
+}
+
+.login .btn {
+    font-size: 80%;
+    border-radius: 8rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+    transition: all 0.2s;
+}
+
+.form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.form-label-group input {
+    height: auto;
+    border-radius: 2rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+    padding: var(--input-padding-y) var(--input-padding-x);
+}

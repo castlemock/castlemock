@@ -16,14 +16,21 @@
 
 package com.castlemock.app.config;
 
+import com.castlemock.web.basis.config.JWTEncoderDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * The class {@link RestSecurityConfig} provides the configuration for the REST interfaces.
@@ -40,6 +47,12 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SecurityInterceptor securityInterceptor;
+
     /**
      * The method configure is responsible for the security configuration.
      *
@@ -49,16 +62,41 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .authorizeRequests()
+                    .antMatchers("/api/rest/core/login", "/api/rest/core/version")
+                    .permitAll()
+                .and()
                 .antMatcher("/api/rest/**")
                     .authorizeRequests()
                     .anyRequest()
                     .authenticated()
                 .and()
-                    .httpBasic()
-                .and()
-                    .csrf().disable();
+                    .csrf().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.headers().cacheControl().disable();
+
+        httpSecurity.addFilterBefore(securityInterceptor, UsernamePasswordAuthenticationFilter.class);
+
+    }
+
+    @Bean
+    public AuthenticationManager customAuthenticationManager() throws Exception {
+        return authenticationManager();
+    }
+
+    @Bean
+    public JWTEncoderDecoder jwtEncoderDecoder() {
+        return new JWTEncoderDecoder();
+    }
+
+    @Autowired
+    @Override
+    public void configure(final AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
     }
 
 }

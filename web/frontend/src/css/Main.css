@@ -1,0 +1,146 @@
+#main-body {
+    margin: 50px auto;
+    font-family: "Roboto Regular", sans-serif;
+    color: #666666;
+    min-height:100%;
+    min-width: 85%;
+    width: 85%;
+    top: 0;
+    bottom: 0;
+}
+
+.panel-buttons {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.panel-button {
+    margin-left: 10px;
+}
+
+.menu-button {
+    margin-left: 5px;
+}
+
+.menu-dropdown {
+    width: 150px;
+    margin-left: 5px;
+    margin-right: 10px;
+    float: left;
+}
+
+.table-filter-field {
+    width: 250px !important;
+    max-width: 250px !important;
+    display: block !important;
+    float: right;
+    margin-right: 3px;
+    margin-bottom: 10px;
+}
+
+.content-summary {
+    width: 100%;
+    padding-top: 20px;
+    border-bottom: 1px solid #ddd !important;
+}
+
+.content-summary-table {
+    margin: 10px 0 30px 0;
+    border-color: black;
+}
+
+.content-summary-table td {
+
+}
+
+.content-summary-table .column1 {
+    text-align: left;
+    font-family: "Roboto Regular", sans-serif;
+    padding: 10px;
+}
+
+.content-summary-table .column2 * {
+    width: 100%;
+    font-weight: normal;
+}
+
+.content-top {
+    border-bottom: 1px solid #ddd !important;
+    height: 50px;
+}
+
+.navigation {
+
+}
+
+.breadcrumb-custom {
+    background-color: white;
+}
+
+.content-top .menu {
+    padding: 0 0 10px 0;
+    float: right;
+    right: 0;
+}
+
+.content-top .title {
+    float: left;
+}
+
+.content-top .title h1 {
+    font-size: 26px;
+}
+
+
+.table-panel {
+    margin-top: 50px;
+}
+
+.table-panel-heading {
+    margin-bottom: 20px;
+}
+
+.project-type-badge-link {
+    color: #FFFFFF;
+    font-weight: bolder;
+}
+
+.table-link a:link { color: #212529; }
+.table-link a:visited { color: #212529; }
+.table-link a:hover { color: #212529; }
+.table-link a:active { color: #212529; }
+
+.table-delete-column {
+    text-align: center;
+    cursor: pointer;
+}
+
+.content-title {
+    font-weight: bold;
+    font-family: "Roboto Bold", sans-serif;
+}
+
+.dropzone-content {
+    background-color: white;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 4px dashed #000000;
+}
+
+.dropzone-icon-content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    margin-bottom: 20px;
+}
+.dropzone-icon {
+    font-size: 60px;
+    color: #000000;
+}
+
+.response-section {
+    margin-top: 30px;
+}

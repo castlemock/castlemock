@@ -19,6 +19,7 @@ package com.castlemock.web.mock.soap.service.project;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
+import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.service.project.input.DeleteSoapMockResponseInput;
 import com.castlemock.core.mock.soap.service.project.output.DeleteSoapMockResponseOutput;
 
@@ -40,7 +41,9 @@ public class DeleteSoapMockResponseService extends AbstractSoapProjectService im
     @Override
     public ServiceResult<DeleteSoapMockResponseOutput> process(final ServiceTask<DeleteSoapMockResponseInput> serviceTask) {
         final DeleteSoapMockResponseInput input = serviceTask.getInput();
-        this.deleteMockResponse(input.getMockResponseId());
-        return createServiceResult(DeleteSoapMockResponseOutput.builder().build());
+        final SoapMockResponse deletedMockResponse = this.deleteMockResponse(input.getMockResponseId());
+        return createServiceResult(DeleteSoapMockResponseOutput.builder()
+                .mockResponse(deletedMockResponse)
+                .build());
     }
 }

@@ -28,4 +28,7 @@ import com.castlemock.core.basis.model.event.domain.Event;
  * @see Event
  */
 public interface EventServiceFacade extends ServiceFacade<Event, String> {
+
+    void clearAll();
+
 }

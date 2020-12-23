@@ -2,11 +2,10 @@ package com.castlemock.repository.core.file.token;
 
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.token.SessionTokenRepository;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +23,12 @@ import java.io.Writer;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The session token repository is responsible for managing all the ongoing sessions and their corresponding
@@ -62,7 +66,7 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
     public synchronized void createNewToken(PersistentRememberMeToken token) {
         PersistentRememberMeToken current = this.seriesTokens.get(token.getSeries());
         if(current != null) {
-            throw new DataIntegrityViolationException("Series Id \'" + token.getSeries() + "\' already exists!");
+            throw new IllegalArgumentException("Series Id \'" + token.getSeries() + "\' already exists!");
         } else {
             this.seriesTokens.put(token.getSeries(), token);
             saveTokens();

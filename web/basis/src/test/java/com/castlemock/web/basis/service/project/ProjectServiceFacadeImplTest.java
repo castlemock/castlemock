@@ -122,12 +122,15 @@ public class ProjectServiceFacadeImplTest {
     public void testSave(){
         final Project projectDto = new Project();
         Mockito.when(projectServiceAdapter.convertType(Mockito.any(Project.class))).thenReturn(projectDto);
+        Mockito.when(projectServiceAdapter.create(Mockito.any(Project.class))).thenReturn(projectDto);
         serviceFacade.save(TYPE, projectDto);
         Mockito.verify(projectServiceAdapter, Mockito.times(1)).create(Mockito.any(Project.class));
     }
 
     @Test
     public void testDelete(){
+        final Project projectDto = new Project();
+        Mockito.when(projectServiceAdapter.delete(Mockito.any())).thenReturn(projectDto);
         serviceFacade.delete(TYPE_URL, "Delete project");
         Mockito.verify(projectServiceAdapter, Mockito.times(1)).delete(Mockito.anyString());
     }
@@ -136,6 +139,7 @@ public class ProjectServiceFacadeImplTest {
     public void testUpdate(){
         final Project projectDto = new Project();
         Mockito.when(projectServiceAdapter.convertType(Mockito.any(Project.class))).thenReturn(projectDto);
+        Mockito.when(projectServiceAdapter.update(Mockito.any(), Mockito.any(Project.class))).thenReturn(projectDto);
         serviceFacade.update(TYPE_URL, "Id", projectDto);
         Mockito.verify(projectServiceAdapter, Mockito.times(1)).update(Mockito.anyString(), Mockito.any(Project.class));
     }

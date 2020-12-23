@@ -44,19 +44,19 @@ public class UpdateCurrentUserService extends AbstractUserService implements Ser
     @Override
     public ServiceResult<UpdateCurrentUserOutput> process(final ServiceTask<UpdateCurrentUserInput> serviceTask) {
         final UpdateCurrentUserInput input = serviceTask.getInput();
-        final User user = input.getUser();
         final String loggedInUsername = serviceTask.getServiceConsumer();
 
-        if(!user.getUsername().equalsIgnoreCase(loggedInUsername)){
-            final User existingUser = findByUsername(user.getUsername());
+        if(!input.getUsername().equalsIgnoreCase(loggedInUsername)){
+            final User existingUser = findByUsername(input.getUsername());
             Preconditions.checkArgument(existingUser == null, "Invalid username. Username is already used");
         }
 
 
         final User loggedInUser = findByUsername(loggedInUsername);
-        loggedInUser.setUsername(user.getUsername());
-        loggedInUser.setEmail(user.getEmail());
-        loggedInUser.setPassword(user.getPassword());
+        loggedInUser.setUsername(input.getUsername());
+        loggedInUser.setEmail(input.getEmail());
+        loggedInUser.setPassword(input.getPassword());
+        loggedInUser.setFullName(input.getFullName());
         loggedInUser.setUpdated(new Date());
 
 

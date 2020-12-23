@@ -17,6 +17,10 @@
         <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.web</groupId>
+            <artifactId>site</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.web</groupId>
             <artifactId>basis</artifactId>
         </dependency>
         <dependency>
@@ -48,6 +52,10 @@
         <dependency>
             <groupId>org.apache.taglibs</groupId>
             <artifactId>taglibs-standard-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
         </dependency>
     </dependencies>
 

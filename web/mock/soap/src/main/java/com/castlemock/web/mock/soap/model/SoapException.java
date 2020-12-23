@@ -17,23 +17,13 @@
 package com.castlemock.web.mock.soap.model;
 
 
-import com.castlemock.web.basis.web.view.controller.ViewControllerAdvice;
-import com.castlemock.web.mock.soap.web.soap.controller.SoapControllerAdvice;
 import com.castlemock.web.mock.soap.web.soap.controller.SoapServiceController;
 
 /**
  * The SoapException is the main exception for the all SOAP related issues. All SOAP related exceptions
- * should inherit from the class. It is important that all SOAP exceptions are inheriting
- * from this class because the {@link SoapControllerAdvice} will
- * only handle exceptions that is either an instance of the SoapException class or an instance from a class that
- * is inherit from the SoapException class. The {@link SoapControllerAdvice}
- * will transform the exception message into a SOAP response message. If an exception is thrown from the
- * {@link SoapServiceController}, the {@link ViewControllerAdvice}
- * will process the exception instead and a view will be sent as a response instead.
+ * should inherit from the class.
  * @author Karl Dahlgren
  * @since 1.0
- * @see SoapControllerAdvice
- * @see ViewControllerAdvice
  * @see SoapServiceController
  */
 

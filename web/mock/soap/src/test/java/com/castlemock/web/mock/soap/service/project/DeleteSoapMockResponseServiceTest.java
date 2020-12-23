@@ -69,6 +69,8 @@ public class DeleteSoapMockResponseServiceTest {
         soapPort.getOperations().add(soapOperation);
         soapOperation.getMockResponses().add(soapMockResponse);
 
+        Mockito.when(mockResponseRepository.delete(Mockito.any())).thenReturn(soapMockResponse);
+
         final DeleteSoapMockResponseInput input = DeleteSoapMockResponseInput.builder()
                 .projectId(soapProject.getId())
                 .portId(soapPort.getId())
