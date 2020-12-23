@@ -1,6 +1,6 @@
 <p align="center"><img src="https://castlemock.github.io/assets/img/logo.png"></div></p>
 
-# Castle Mock: Mock RESTful APIs and SOAP web services
+<h1 align="center"> Castle Mock: Mock RESTful APIs and SOAP web services</h1>
 
 <p align="center">
     <a href="https://travis-ci.org/castlemock/castlemock"><img src="https://travis-ci.org/castlemock/castlemock.svg?branch=master"></a>
@@ -50,7 +50,7 @@ Non-source downloads such as WAR files can be found on our website: [https://www
 
 ## Installation
 
-**Castle Mock** can be downloaded as Java Web Archive (.war) file and be deployed on a Apache Tomcat server (Apache Tomcat 7.0 or higher). **Castle Mock** can also be deployed by using Docker. For more information go to the offical **Castle Mock** Docker page: [https://hub.docker.com/r/castlemock/castlemock/](https://hub.docker.com/r/castlemock/castlemock/).
+**Castle Mock** can be downloaded as Java Web Archive (.war) file and be deployed on a Apache Tomcat server (Apache Tomcat 8.0 or higher). **Castle Mock** can also be deployed by using Docker. For more information go to the offical **Castle Mock** Docker page: [https://hub.docker.com/r/castlemock/castlemock/](https://hub.docker.com/r/castlemock/castlemock/).
 
 Upon successful installation and deployment, **Castle Mock** can be accessed from the web browser:
 
