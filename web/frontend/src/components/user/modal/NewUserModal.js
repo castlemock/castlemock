@@ -89,9 +89,9 @@ class NewUserModal extends PureComponent {
 
     onCreateUserClick() {
         axios
-            .post("/castlemock/api/rest/core/user", this.state.newUser)
+            .post(process.env.PUBLIC_URL + "/api/rest/core/user", this.state.newUser)
             .then(response => {
-                this.props.history.push("/castlemock/web/user/" + response.data.id)
+                this.props.history.push("/web/user/" + response.data.id)
             })
             .catch(error => {
                 validateErrorResponse(error)

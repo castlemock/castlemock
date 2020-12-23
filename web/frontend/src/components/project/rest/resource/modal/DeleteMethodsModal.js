@@ -47,7 +47,7 @@ class DeleteMethodsModal extends PureComponent {
     onDeleteMethodsClick() {
         Array.from(this.props.selectedMethods).forEach(method => {
             axios
-                .delete("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId +
+                .delete(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId +
                     "/resource/" + this.props.methodId + "/method/" + method.id)
                 .then(response => {
                     this.props.getResource();

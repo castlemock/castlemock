@@ -211,7 +211,7 @@ class SoapProject extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/castlemock/web/soap/project/" + this.state.projectId + "/port/" + row.id}>{cell}</Link>
+                <Link to={"/web/soap/project/" + this.state.projectId + "/port/" + row.id}>{cell}</Link>
             </div>
         )
     }
@@ -223,14 +223,14 @@ class SoapProject extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/castlemock/web/soap/project/" + this.state.projectId + "/resource/" + row.id}>{cell}</Link>
+                <Link to={"/web/soap/project/" + this.state.projectId + "/resource/" + row.id}>{cell}</Link>
             </div>
         )
     }
 
     getProject() {
         axios
-            .get("/castlemock/api/rest/soap/project/" + this.state.projectId)
+            .get(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.state.projectId)
             .then(response => {
                 this.setState({
                     project: response.data
@@ -243,7 +243,7 @@ class SoapProject extends PureComponent {
 
     onExportProjectClick() {
         axios({
-            url:  "/castlemock/api/rest/core/project/soap/" + this.state.projectId + "/export",
+            url:  process.env.PUBLIC_URL + "/api/rest/core/project/soap/" + this.state.projectId + "/export",
             method: 'GET',
             responseType: 'blob'
         }).then((response) => {

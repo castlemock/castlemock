@@ -144,7 +144,7 @@ class SoapOperation extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/castlemock/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + row.id }>{cell}</Link>
+                <Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + row.id }>{cell}</Link>
             </div>
         )
     }
@@ -159,7 +159,7 @@ class SoapOperation extends PureComponent {
 
     getOperation() {
         axios
-            .get("/castlemock/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId)
+            .get(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId)
             .then(response => {
                 this.setState({
                     operation: response.data});
@@ -171,7 +171,7 @@ class SoapOperation extends PureComponent {
 
     getPort() {
         axios
-            .get("/castlemock/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId)
+            .get(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId)
             .then(response => {
                 this.setState({
                     port: {
@@ -187,7 +187,7 @@ class SoapOperation extends PureComponent {
     onDuplicateClick(){
         let mockResponseIds = this.state.selectedMockResponses.map(mockResponse => mockResponse.id);
         axios
-            .post("/castlemock/api/rest/soap/project/" + this.state.projectId + "/port/" +
+            .post(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.state.projectId + "/port/" +
                 this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/duplicate", {
                 mockResponseIds: mockResponseIds
             })
@@ -207,8 +207,8 @@ class SoapOperation extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/soap/project/" + this.state.projectId}>Project</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId}>Port</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId}>Port</Link></li>
                                 <li className="breadcrumb-item">{this.state.operation.name}</li>
                             </ol>
                         </nav>
@@ -255,7 +255,7 @@ class SoapOperation extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Address</dt>
-                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
+                            <dd className="col-sm-9">{window.location.origin + "/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Original endpoint</dt>

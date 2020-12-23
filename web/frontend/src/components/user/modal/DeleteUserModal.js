@@ -30,9 +30,9 @@ class DeleteUserModal extends PureComponent {
 
     onDeleteUserClick() {
         axios
-            .delete("/castlemock/api/rest/core/user/" + this.props.userId)
+            .delete(process.env.PUBLIC_URL + "/api/rest/core/user/" + this.props.userId)
             .then(response => {
-                this.props.history.push("/castlemock/web/user/");
+                this.props.history.push("/web/user/");
             })
             .catch(error => {
                 validateErrorResponse(error)

@@ -79,7 +79,7 @@ class UploadWSDLModal extends PureComponent {
         data.append('file', this.state.selectedFile);
         data.append('generateResponse', this.state.generateResponseUpload);
         axios
-            .post("/castlemock/api/rest/soap/project/" + this.props.projectId + "/wsdl/file", data, {})
+            .post(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.props.projectId + "/wsdl/file", data, {})
             .then(response => {
                 this.props.getProject();
             })
@@ -90,7 +90,7 @@ class UploadWSDLModal extends PureComponent {
 
     linkWsdl(){
         axios
-            .post("/castlemock/api/rest/soap/project/" + this.props.projectId + "/wsdl/link", {
+            .post(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.props.projectId + "/wsdl/link", {
                 url: this.state.linkWsdlUrl,
                 generateResponse: this.state.generateResponseLink,
                 includeImports: this.state.includeImports

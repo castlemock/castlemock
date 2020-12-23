@@ -153,13 +153,13 @@ class SoapMockResponse extends PureComponent {
     }
 
     onDiscardChangesClick(){
-        this.props.history.push("/castlemock/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId +
+        this.props.history.push("/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId +
             "/operation/" + this.state.operationId);
     }
 
     getMockResponse() {
         axios
-            .get("/castlemock/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + this.state.mockResponseId)
+            .get(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + this.state.mockResponseId)
             .then(response => {
                 this.setState({
                     mockResponse: response.data,
@@ -173,9 +173,9 @@ class SoapMockResponse extends PureComponent {
 
     onUpdateMockResponseClick() {
         axios
-            .put("/castlemock/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + this.state.mockResponseId, this.state.updateMockResponse)
+            .put(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId + "/mockresponse/" + this.state.mockResponseId, this.state.updateMockResponse)
             .then(__ => {
-                this.props.history.push("/castlemock/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId);
+                this.props.history.push("/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId);
             })
             .catch(error => {
                 validateErrorResponse(error)
@@ -190,9 +190,9 @@ class SoapMockResponse extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/soap/project/" + this.state.projectId}>Project</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId}>Port</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId}>Operation</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId}>Port</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + this.state.operationId}>Operation</Link></li>
                                 <li className="breadcrumb-item">{this.state.mockResponse.name}</li>
                             </ol>
                         </nav>

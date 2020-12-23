@@ -28,7 +28,7 @@ class DeleteProjectModal extends PureComponent {
 
     onDeleteProjectClick() {
         axios
-            .delete("/castlemock/api/rest/core/project/rest/" + this.props.projectId)
+            .delete(process.env.PUBLIC_URL + "/api/rest/core/project/rest/" + this.props.projectId)
             .then(response => {
                 this.props.history.push("/web");
             })

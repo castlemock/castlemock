@@ -157,14 +157,14 @@ class RestApplication extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + row.id}>{cell}</Link>
+                <Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + row.id}>{cell}</Link>
             </div>
         )
     }
 
     getApplication() {
         axios
-            .get("/castlemock/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId)
+            .get(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId)
             .then(response => {
                 this.setState({
                     application: response.data,
@@ -184,7 +184,7 @@ class RestApplication extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId}>Project</Link></li>
                                 <li className="breadcrumb-item">{this.state.application.name}</li>
                             </ol>
                         </nav>

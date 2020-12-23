@@ -138,7 +138,7 @@ class RestResource extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + row.id}>{cell}</Link>
+                <Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId + "/method/" + row.id}>{cell}</Link>
             </div>
         )
     }
@@ -153,7 +153,7 @@ class RestResource extends PureComponent {
 
     getResource() {
         axios
-            .get("/castlemock/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId)
+            .get(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + "/resource/" + this.state.resourceId)
             .then(response => {
                 this.setState({
                     resource: response.data,
@@ -172,8 +172,8 @@ class RestResource extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/project/" + this.state.projectId}>Project</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId}>Application</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId}>Application</Link></li>
                                 <li className="breadcrumb-item">{this.state.resource.name}</li>
                             </ol>
                         </nav>
@@ -199,7 +199,7 @@ class RestResource extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-2 content-title">Address</dt>
-                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + this.state.resource.uri}</dd>
+                            <dd className="col-sm-9">{window.location.origin + process.env.PUBLIC_URL + "/mock/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + this.state.resource.uri}</dd>
                         </dl>
                     </div>
                     <div className="panel panel-primary table-panel">

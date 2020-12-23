@@ -39,7 +39,7 @@ class UpdateUserModal extends PureComponent {
 
     getUser() {
         axios
-            .get("/castlemock/api/rest/core/user/" + this.props.userId)
+            .get(process.env.PUBLIC_URL + "/api/rest/core/user/" + this.props.userId)
             .then(response => {
                 this.setState({
                     updateUser: {
@@ -102,7 +102,7 @@ class UpdateUserModal extends PureComponent {
 
     onUpdateUserClick() {
         axios
-            .put("/castlemock/api/rest/core/user/" + this.props.userId, this.state.updateUser)
+            .put(process.env.PUBLIC_URL + "/api/rest/core/user/" + this.props.userId, this.state.updateUser)
             .then(response => {
                 this.props.getUser();
             })

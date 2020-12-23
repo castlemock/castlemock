@@ -34,7 +34,7 @@ class LogoutContainer extends PureComponent {
 
     logout() {
         axios
-            .get("/castlemock/api/rest/core/logout/")
+            .get(process.env.PUBLIC_URL + "/api/rest/core/logout/")
             .then(response => {
             })
             .catch(error => {
@@ -42,7 +42,7 @@ class LogoutContainer extends PureComponent {
     }
 
     render() {
-        return <Redirect to = {{ pathname: "/castlemock/web/login" }} />
+        return <Redirect to = {{ pathname: "/web/login" }} />
     }
 }
 

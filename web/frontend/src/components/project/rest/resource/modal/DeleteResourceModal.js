@@ -29,9 +29,9 @@ class DeleteResourceModal extends PureComponent {
 
     onDeleteResourceClick() {
         axios
-            .delete("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId)
+            .delete(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId)
             .then(response => {
-                this.props.history.push("/castlemock/web/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId);
+                this.props.history.push("/web/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId);
             })
             .catch(error => {
                 validateErrorResponse(error)

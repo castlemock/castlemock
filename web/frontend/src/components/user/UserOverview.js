@@ -120,7 +120,7 @@ class UserOverview extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/castlemock/web/user/" + row.id}>{cell}</Link>
+                <Link to={"/web/user/" + row.id}>{cell}</Link>
             </div>
         )
     }
@@ -191,7 +191,7 @@ class UserOverview extends PureComponent {
 
     getUsers() {
         axios
-            .get("/castlemock/api/rest/core/user")
+            .get(process.env.PUBLIC_URL + "/api/rest/core/user")
             .then(response => {
                 this.setState({
                     users: response.data,

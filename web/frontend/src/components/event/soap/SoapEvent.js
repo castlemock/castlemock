@@ -65,7 +65,7 @@ class SoapEvent extends PureComponent {
 
     getEvent() {
         axios
-            .get("/castlemock/api/rest/soap/event/" + this.state.eventId)
+            .get(process.env.PUBLIC_URL + "/api/rest/soap/event/" + this.state.eventId)
             .then(response => {
                 this.setState({
                     event: response.data
@@ -84,8 +84,8 @@ class SoapEvent extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/event"}>Log</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/rest/event/" + this.state.eventId}>{this.state.eventId}</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/event"}>Log</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/rest/event/" + this.state.eventId}>{this.state.eventId}</Link></li>
                             </ol>
                         </nav>
                     </div>

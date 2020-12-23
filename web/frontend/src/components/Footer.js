@@ -35,7 +35,7 @@ class Footer extends PureComponent {
                 </VersionContext.Consumer>
 
                 <div className="login-footer-info-api">
-                    <a href="/doc/castlemock/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
+                    <a href="/doc/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
                 </div>
                 <div className="page-created">
                     Page created: {new Date().toISOString()}

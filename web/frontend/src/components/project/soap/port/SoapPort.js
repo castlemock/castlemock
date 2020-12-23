@@ -156,7 +156,7 @@ class SoapPort extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/castlemock/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + row.id}>{cell}</Link>
+                <Link to={"/web/soap/project/" + this.state.projectId + "/port/" + this.state.portId + "/operation/" + row.id}>{cell}</Link>
             </div>
         )
     }
@@ -179,7 +179,7 @@ class SoapPort extends PureComponent {
 
     getPort() {
         axios
-            .get("/castlemock/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId)
+            .get(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.state.projectId + "/port/" + this.state.portId)
             .then(response => {
                 this.setState({
                     port: response.data
@@ -198,7 +198,7 @@ class SoapPort extends PureComponent {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb breadcrumb-custom">
                                 <li className="breadcrumb-item"><Link to={"/web"}>Home</Link></li>
-                                <li className="breadcrumb-item"><Link to={"/castlemock/web/soap/project/" + this.state.projectId}>Project</Link></li>
+                                <li className="breadcrumb-item"><Link to={"/web/soap/project/" + this.state.projectId}>Project</Link></li>
                                 <li className="breadcrumb-item">{this.state.port.name}</li>
                             </ol>
                         </nav>
@@ -224,11 +224,11 @@ class SoapPort extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-2 content-title">Address</dt>
-                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
+                            <dd className="col-sm-9">{window.location.origin + "/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-2 content-title">WSDL</dt>
-                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri + "?wsdl"}</dd>
+                            <dd className="col-sm-9">{window.location.origin + "/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri + "?wsdl"}</dd>
                         </dl>
                     </div>
                     <div className="panel panel-primary table-panel">

@@ -49,7 +49,7 @@ class DeleteUsersModal extends PureComponent {
     onDeleteUsersClick() {
         Array.from(this.props.selectedUsers).forEach(user => {
             axios
-                .delete("/castlemock/api/rest/core/user/" + user.id)
+                .delete(process.env.PUBLIC_URL + "/api/rest/core/user/" + user.id)
                 .then(response => {
                     this.props.getUsers();
                 })

@@ -28,9 +28,9 @@ class DeleteApplicationModal extends PureComponent {
 
     onDeleteApplicationClick() {
         axios
-            .delete("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId)
+            .delete(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId)
             .then(response => {
-                this.props.history.push("/castlemock/web/rest/project/" + this.props.projectId);
+                this.props.history.push("/web/rest/project/" + this.props.projectId);
             })
             .catch(error => {
                 validateErrorResponse(error)

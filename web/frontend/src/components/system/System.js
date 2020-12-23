@@ -32,7 +32,7 @@ class System extends PureComponent {
 
     getSystem() {
         axios
-            .get("/castlemock/api/rest/core/system")
+            .get(process.env.PUBLIC_URL + "/api/rest/core/system")
             .then(response => {
                 this.setState({
                     system: response.data

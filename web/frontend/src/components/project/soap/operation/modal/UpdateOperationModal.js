@@ -42,7 +42,7 @@ class UpdateOperationModal extends PureComponent {
 
     getOperation(projectId, portId, operationId) {
         axios
-            .get("/castlemock/api/rest/soap/project/" + projectId + "/port/" + portId + "/operation/" + operationId)
+            .get(process.env.PUBLIC_URL + "/api/rest/soap/project/" + projectId + "/port/" + portId + "/operation/" + operationId)
             .then(response => {
                 this.setState({
                     updateOperation: {
@@ -118,7 +118,7 @@ class UpdateOperationModal extends PureComponent {
 
     onUpdateOperationClick(){
         axios
-            .put("/castlemock/api/rest/soap/project/" + this.props.projectId + "/port/" +
+            .put(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.props.projectId + "/port/" +
                 this.props.portId + "/operation/" + this.props.operationId, this.state.updateOperation)
             .then(response => {
                 this.props.getOperation();

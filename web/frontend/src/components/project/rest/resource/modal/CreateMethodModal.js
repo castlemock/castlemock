@@ -56,9 +56,9 @@ class CreateMethodModal extends PureComponent {
 
     onCreateMethodClick() {
         axios
-            .post("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method", this.state.newMethod)
+            .post(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method", this.state.newMethod)
             .then(response => {
-                this.props.history.push("/castlemock/web/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + response.data.id);
+                this.props.history.push("/web/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + response.data.id);
             })
             .catch(error => {
                 validateErrorResponse(error)

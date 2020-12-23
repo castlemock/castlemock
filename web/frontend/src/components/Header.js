@@ -52,31 +52,31 @@ class Header extends Component {
                                     </div>
                                     <div className="header-menu-link">
                                         <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">{context.authentication.username}</Tooltip>}>
-                                            <Link to={"/castlemock/web/profile"}><FontAwesomeIcon icon={faUser} className="header-menu-icon" /></Link>
+                                            <Link to={"/web/profile"}><FontAwesomeIcon icon={faUser} className="header-menu-icon" /></Link>
                                         </OverlayTrigger>
                                     </div>
                                     <div className="header-menu-link">
                                         <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Logs</Tooltip>}>
-                                            <Link to={"/castlemock/web/event"}><FontAwesomeIcon icon={faChartBar} className="header-menu-icon" /></Link>
+                                            <Link to={"/web/event"}><FontAwesomeIcon icon={faChartBar} className="header-menu-icon" /></Link>
                                         </OverlayTrigger>
                                     </div>
                                     { canModify(context.authentication.role) &&
                                         <div className="header-menu-link">
                                             <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Users</Tooltip>}>
-                                                <Link to={"/castlemock/web/user"}><FontAwesomeIcon icon={faUsersCog} className="header-menu-icon"/></Link>
+                                                <Link to={"/web/user"}><FontAwesomeIcon icon={faUsersCog} className="header-menu-icon"/></Link>
                                             </OverlayTrigger>
                                         </div>
                                     }
                                     { isAdministrator(context.authentication.role) &&
                                         <div className="header-menu-link">
                                             <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">System</Tooltip>}>
-                                                <Link to={"/castlemock/web/system"}><FontAwesomeIcon icon={faCogs} className="header-menu-icon" /></Link>
+                                                <Link to={"/web/system"}><FontAwesomeIcon icon={faCogs} className="header-menu-icon" /></Link>
                                             </OverlayTrigger>
                                         </div>
                                     }
                                     <div className="header-menu-link">
                                         <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Logout</Tooltip>}>
-                                            <a href={"/castlemock/web/logout"}><FontAwesomeIcon icon={faSignOutAlt} className="header-menu-icon" /></a>
+                                            <Link to={"/web/logout"}><FontAwesomeIcon icon={faSignOutAlt} className="header-menu-icon" /></Link>
                                         </OverlayTrigger>
                                     </div>
                                 </div>

@@ -73,7 +73,7 @@ class UploadDefinitionModal extends PureComponent {
         data.append('definitionType', this.props.definitionType)
 
         axios
-            .post("/castlemock/api/rest/rest/project/" + this.props.projectId + "/definition/file", data, {})
+            .post(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/definition/file", data, {})
             .then(response => {
                 this.props.getProject();
             })
@@ -84,7 +84,7 @@ class UploadDefinitionModal extends PureComponent {
 
     linkDefinition(){
         axios
-            .post("/castlemock/api/rest/rest/project/" + this.props.projectId + "/definition/link", {
+            .post(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/definition/link", {
                 url: this.state.linkDefinitionUrl,
                 generateResponse: this.state.generateResponseLink,
                 definitionType: this.props.definitionType

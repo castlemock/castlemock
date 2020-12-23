@@ -35,7 +35,7 @@ class UpdateApplicationModal extends PureComponent {
 
     getApplication() {
         axios
-            .get("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId)
+            .get(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId)
             .then(response => {
                 this.setState({
                     updateApplication: {
@@ -58,7 +58,7 @@ class UpdateApplicationModal extends PureComponent {
 
     onUpdateClick() {
         axios
-            .put("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.application.id, this.state.updateApplication)
+            .put(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.application.id, this.state.updateApplication)
             .then(response => {
                 this.props.getApplication();
             })

@@ -102,7 +102,7 @@ class UpdateMethodModal extends PureComponent {
 
     getMethod() {
         axios
-            .get("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + this.props.methodId)
+            .get(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + this.props.methodId)
             .then(response => {
                 this.setState({
                     updateMethod: {
@@ -122,7 +122,7 @@ class UpdateMethodModal extends PureComponent {
 
     onUpdateMethodClick(){
         axios
-            .put("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" +
+            .put(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" +
                 this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + this.props.methodId, this.state.updateMethod)
             .then(response => {
                 this.props.getMethod();

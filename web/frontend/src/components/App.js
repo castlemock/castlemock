@@ -15,7 +15,8 @@
  */
 
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { createBrowserHistory } from 'history';
 import '../css/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
@@ -31,6 +32,10 @@ import MainContainer from './MainContainer'
 import AuthenticationContext from "../context/AuthenticationContext";
 import VersionContext from "../context/VersionContext";
 import axios from "axios";
+
+export const history = createBrowserHistory({
+    basename: process.env.PUBLIC_URL
+});
 
 class App extends Component {
 
@@ -55,7 +60,7 @@ class App extends Component {
 
     getVersion() {
         axios
-            .get("/castlemock/api/rest/core/version")
+            .get(process.env.PUBLIC_URL + "/api/rest/core/version")
             .then(response => {
                 this.setState({version: response.data.version})
             });
@@ -68,9 +73,9 @@ class App extends Component {
                     <div className = "site-wrapper">
                         <Router>
                             <Switch>
-                                <Route path="/castlemock/web/login"  component={LoginContainer} />
-                                <Route path="/castlemock/web/logout"  component={LogoutContainer} />
-                                <Route path="/castlemock/web/*"  component={MainContainer} />
+                                <Route path="/web/login"  component={LoginContainer} />
+                                <Route path="/web/logout"  component={LogoutContainer} />
+                                <Route path="/web/*"  component={MainContainer} />
                                 <Route path="/*"  component={MainContainer} />
                                 <Route path=""  component={MainContainer} />
                             </Switch>

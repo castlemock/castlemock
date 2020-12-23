@@ -29,9 +29,9 @@ class DeleteMockResponseModal extends PureComponent {
 
     onDeleteMockResponseClick() {
         axios
-            .delete("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + this.props.methodId + "/mockresponse/" + this.props.mockResponseId)
+            .delete(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + this.props.methodId + "/mockresponse/" + this.props.mockResponseId)
             .then(response => {
-                this.props.history.push("/castlemock/web/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + this.props.methodId);
+                this.props.history.push("/web/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + this.props.methodId);
             })
             .catch(error => {
                 validateErrorResponse(error)

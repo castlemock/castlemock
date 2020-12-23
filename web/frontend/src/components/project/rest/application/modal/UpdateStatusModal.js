@@ -57,7 +57,7 @@ class UpdateStatusModal extends PureComponent {
     onUpdateStatusClick() {
         let resourceIds = this.props.selectedResources.map(resource => resource.id);
         axios
-            .put("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/status", {
+            .put(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/status", {
                 projectId: this.props.projectId,
                 applicationId: this.props.applicationId,
                 resourceIds: resourceIds,

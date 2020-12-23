@@ -61,11 +61,11 @@ class CreateMockResponseModal extends PureComponent {
 
     onCreateMockResponseClick() {
         axios
-            .post("/castlemock/api/rest/rest/project/" + this.props.projectId + "/application/" +
+            .post(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" +
                 this.props.applicationId + "/resource/" + this.props.resourceId + "/method/" + this.props.methodId + "/mockresponse",
                 this.state.newMockResponse)
             .then(response => {
-                this.props.history.push("/castlemock/web/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId +
+                this.props.history.push("/web/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId +
                     "/resource/" + this.props.resourceId + "/method/" + this.props.methodId + "/mockresponse/" + response.data.id);
             })
             .catch(error => {
