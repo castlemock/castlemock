@@ -16,18 +16,11 @@
 
 package com.castlemock.web.basis.model.authentication;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class AuthenticationRequest {
-
-    @NotNull
-    @NotEmpty
+    
     private String username;
-
-    @NotNull
-    @NotEmpty
     private String password;
 
     private AuthenticationRequest(){

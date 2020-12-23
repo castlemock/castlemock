@@ -28,7 +28,7 @@
         <guava.version>28.2-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
         <graphql.version>8.0</graphql.version>
-        <jackson.version>1.9.13</jackson.version>
+        <jackson.version>2.12.0</jackson.version>
         <jaxb.api.version>2.3.1</jaxb.api.version>
         <sun.jaxb.version>2.3.0</sun.jaxb.version>
         <mockito.version>1.10.19</mockito.version>
@@ -52,17 +52,12 @@
         <swagger.core.version>1.6.0</swagger.core.version>
         <commons.codec.version>1.14</commons.codec.version>
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
-        <tomcat.embedd.version>9.0.37</tomcat.embedd.version>
+        <tomcat.embedd.version>9.0.38</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <swagger.parser.version>2.0.21</swagger.parser.version>
-        <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
-        <junit.jupiter.version>5.6.0</junit.jupiter.version>
-        <tomcat.embedd.version>9.0.31</tomcat.embedd.version>
-        <maven.compiler.version>3.8.1</maven.compiler.version>
-        <swagger.parser.version>2.0.18</swagger.parser.version>
-        <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
+        <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
         <flapdoodle.mongo.version>2.2.0</flapdoodle.mongo.version>
@@ -70,7 +65,7 @@
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <spring.security.version>5.3.4.RELEASE</spring.security.version>
+        <spring.security.version>5.3.5.RELEASE</spring.security.version>
         <spring.framework.version>5.2.8.RELEASE</spring.framework.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
     </properties>
@@ -470,7 +465,17 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson.databind.version}</version>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
@@ -671,6 +676,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
