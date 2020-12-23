@@ -107,7 +107,7 @@ class UpdateMethodModal extends PureComponent {
                 this.setState({
                     updateMethod: {
                         name: response.data.name,
-                        httpMethod: response.httpMethod,
+                        httpMethod: response.data.httpMethod,
                         status: response.data.status,
                         responseStrategy: response.data.responseStrategy,
                         forwardedEndpoint: response.data.forwardedEndpoint,

@@ -75,14 +75,12 @@ public class AuthenticationRestController extends AbstractRestController {
             final Map<String, String> claims = new HashMap<>();
             claims.put("userId", user.getId());
             final String token = jwtEncoderDecoder.createToken(claims);
-            final Cookie cookie = new Cookie("token",token);
 
-            cookie.setMaxAge(7 * 24 * 60 * 60);
-            cookie.setSecure(true);
-            cookie.setHttpOnly(true);
-            cookie.setPath("/");
-
-            httpServletResponse.addCookie(cookie);
+            final Cookie tokenCookie = new Cookie("token",token);
+            tokenCookie.setMaxAge(7 * 24 * 60 * 60);
+            tokenCookie.setHttpOnly(true);
+            tokenCookie.setPath("/");
+            httpServletResponse.addCookie(tokenCookie);
 
             return ResponseEntity.ok(AuthenticationResponse.builder()
                     .token(token)
@@ -104,13 +102,17 @@ public class AuthenticationRestController extends AbstractRestController {
     })
     @RequestMapping(method = RequestMethod.GET, value = "/logout")
     public @ResponseBody ResponseEntity<Void> logout(final HttpServletResponse httpServletResponse) {
-        final Cookie cookie = new Cookie("token",null);
-        cookie.setMaxAge(0);
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
+        final Cookie tokenCookie = new Cookie("token",null);
+        tokenCookie.setMaxAge(0);
+        tokenCookie.setHttpOnly(true);
+        tokenCookie.setPath("/");
+        httpServletResponse.addCookie(tokenCookie);
 
-        httpServletResponse.addCookie(cookie);
+        final Cookie sessionCookie = new Cookie("JSESSIONID",null);
+        sessionCookie.setMaxAge(0);
+        sessionCookie.setHttpOnly(true);
+        sessionCookie.setPath("/");
+        httpServletResponse.addCookie(sessionCookie);
 
         return ResponseEntity.ok().build();
     }
