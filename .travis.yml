@@ -1,8 +1,5 @@
 language: java
 jdk:
-  - openjdk8
-  - openjdk9
-  - openjdk10
   - openjdk11
 notifications:
   slack: $SLACK_KEY
