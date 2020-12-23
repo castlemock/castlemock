@@ -59,8 +59,8 @@ import com.castlemock.web.mock.soap.utility.config.AddressLocationConfigurer;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -92,6 +92,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
     private static final String RECORDED_RESPONSE_NAME = "Recorded response";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private static final String CONTENT_ENCODING = "Content-Encoding";
     private static final String FORWARDED_RESPONSE_NAME = "Forwarded response";
     private static final Random RANDOM = new Random();
     private static final String SOAP = "soap";
@@ -266,6 +267,13 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             for(HttpHeader httpHeader : response.getHttpHeaders()){
                 responseHeaders.put(httpHeader.getName(), ImmutableList.of(httpHeader.getValue()));
             }
+
+            response.getHttpHeaders()
+                    .stream()
+                    .filter(httpHeader -> !httpHeader.getName().equalsIgnoreCase(CONTENT_ENCODING))
+                    .forEach(httpHeader -> {
+                        responseHeaders.put(httpHeader.getName(), List.of(httpHeader.getValue()));
+                    });
 
             if(soapOperation.getSimulateNetworkDelay() &&
                     soapOperation.getNetworkDelay() >= 0){
