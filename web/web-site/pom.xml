@@ -46,7 +46,7 @@
                             <outputDirectory>${basedir}/target/classes/public</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.parent.basedir}/frontend/build</directory>
+                                    <directory>${project.parent.basedir}/web-frontend/build</directory>
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>

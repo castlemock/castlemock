@@ -54,6 +54,13 @@ class UserOverview extends PureComponent {
             sort: true,
             formatter: this.userNameFormat
         }, {
+            dataField: 'fullName',
+            width: 20,
+            maxWidth: 20,
+            text: 'Name',
+            sort: true,
+            formatter: this.userNameFormat
+        }, {
             dataField: 'email',
             text: 'Email',
             sort: true

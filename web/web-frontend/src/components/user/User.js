@@ -70,7 +70,7 @@ class User extends PureComponent {
                             <dd className="col-sm-9">{this.state.user.username}</dd>
                         </dl>
                         <dl className="row">
-                            <dt className="col-sm-2 content-title">Full name</dt>
+                            <dt className="col-sm-2 content-title">Name</dt>
                             <dd className="col-sm-9">{this.state.user.fullName}</dd>
                         </dl>
                         <dl className="row">
