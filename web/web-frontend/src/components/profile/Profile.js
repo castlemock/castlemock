@@ -173,7 +173,7 @@ class Profile extends PureComponent {
                                         </div>
                                     </div>
                                     <div className="form-group row">
-                                        <label htmlFor="updateUserEmail" className="col-sm-2 col-form-label">Full name</label>
+                                        <label htmlFor="updateUserEmail" className="col-sm-2 col-form-label">Name</label>
                                         <div className="col-sm-10">
                                             <input className="form-control" type="text" defaultValue={this.state.user.fullName} onChange={event => this.setUpdateUserFullName(event.target.value)} onKeyDown={preventEnterEvent}/>
                                         </div>

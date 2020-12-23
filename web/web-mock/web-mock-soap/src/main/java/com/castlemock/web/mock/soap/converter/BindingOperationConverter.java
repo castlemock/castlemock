@@ -56,18 +56,28 @@ public final class BindingOperationConverter {
         return body.getParts()
                 .map(parts -> findMessage(message, parts))
                 .orElseGet(() -> Optional.ofNullable(message)
-                        .flatMap(parts -> parts.getParts()
-                                .stream()
-                                .findFirst()));
+                        .flatMap(parts -> {
+                            if(parts.getParts().size() != 1){
+                                return Optional.empty();
+                            }
+                            return parts.getParts()
+                                    .stream()
+                                    .findFirst();
+                        }));
     }
 
     private static Optional<MessagePart> findOutputMessage(final BindingOperationOutputBody body, final Message message){
         return body.getParts()
                 .map(parts -> findMessage(message, parts))
                 .orElseGet(() -> Optional.ofNullable(message)
-                        .flatMap(parts -> parts.getParts()
-                                .stream()
-                                .findFirst()));
+                        .flatMap(parts -> {
+                            if(parts.getParts().size() != 1){
+                                return Optional.empty();
+                            }
+                            return parts.getParts()
+                                    .stream()
+                                    .findFirst();
+                        }));
     }
 
     private static Optional<MessagePart> findMessage(final Message message, final String parts){

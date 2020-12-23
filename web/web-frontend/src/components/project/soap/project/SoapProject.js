@@ -363,7 +363,6 @@ class SoapProject extends PureComponent {
                                             <BootstrapTable {...props.baseProps} bootstrap4
                                                             data={this.state.project.resources} columns={this.resourceColumns}
                                                             defaultSorted={this.defaultSort} keyField='id' hover
-                                                            selectRow={this.selectRow}
                                                             noDataIndication="Upload a WSDL file to load ports"
                                                             pagination={ PaginationFactory() }/>
                                         </div>
