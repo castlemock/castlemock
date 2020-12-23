@@ -17,23 +17,23 @@
         <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.web</groupId>
-            <artifactId>site</artifactId>
+            <artifactId>web-site</artifactId>
         </dependency>
         <dependency>
             <groupId>com.castlemock.web</groupId>
-            <artifactId>basis</artifactId>
+            <artifactId>web-basis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.castlemock.web.mock</groupId>
-            <artifactId>soap</artifactId>
+            <artifactId>web-mock-soap</artifactId>
         </dependency>
         <dependency>
             <groupId>com.castlemock.web.mock</groupId>
-            <artifactId>rest</artifactId>
+            <artifactId>web-mock-rest</artifactId>
         </dependency>
         <dependency>
             <groupId>com.castlemock.web.mock</groupId>
-            <artifactId>graphql</artifactId>
+            <artifactId>web-mock-graphql</artifactId>
         </dependency>
 
         <!-- Third party dependencies -->

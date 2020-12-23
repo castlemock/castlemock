@@ -84,112 +84,112 @@
             <!-- Castle Mock dependencies -->
             <dependency>
                 <groupId>com.castlemock.core</groupId>
-                <artifactId>expression</artifactId>
+                <artifactId>core-expression</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.core</groupId>
-                <artifactId>basis</artifactId>
+                <artifactId>core-basis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>rest</artifactId>
+                <artifactId>core-mock-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>soap</artifactId>
+                <artifactId>core-mock-soap</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>graphql</artifactId>
+                <artifactId>core-mock-graphql</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web.mock</groupId>
-                <artifactId>graphql</artifactId>
+                <artifactId>web-mock-graphql</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web.mock</groupId>
-                <artifactId>rest</artifactId>
+                <artifactId>web-mock-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web.mock</groupId>
-                <artifactId>soap</artifactId>
+                <artifactId>web-mock-soap</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web</groupId>
-                <artifactId>basis</artifactId>
+                <artifactId>web-basis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository</groupId>
-                <artifactId>core</artifactId>
+                <artifactId>repository-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.graphql</groupId>
-                <artifactId>file</artifactId>
+                <artifactId>repository-mock-graphql-file</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.graphql</groupId>
-                <artifactId>model</artifactId>
+                <artifactId>repository-mock-graphql-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.graphql</groupId>
-                <artifactId>mongodb</artifactId>
+                <artifactId>repository-mock-graphql-mongodb</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.rest</groupId>
-                <artifactId>file</artifactId>
+                <artifactId>repository-mock-rest-file</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.rest</groupId>
-                <artifactId>model</artifactId>
+                <artifactId>repository-mock-rest-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.rest</groupId>
-                <artifactId>mongodb</artifactId>
+                <artifactId>repository-mock-rest-mongodb</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.soap</groupId>
-                <artifactId>file</artifactId>
+                <artifactId>repository-mock-soap-file</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.soap</groupId>
-                <artifactId>model</artifactId>
+                <artifactId>repository-mock-soap-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.soap</groupId>
-                <artifactId>mongodb</artifactId>
+                <artifactId>repository-mock-soap-mongodb</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
-                <artifactId>model</artifactId>
+                <artifactId>repository-core-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
-                <artifactId>file</artifactId>
+                <artifactId>repository-core-file</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
-                <artifactId>mongodb</artifactId>
+                <artifactId>repository-core-mongodb</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -199,50 +199,50 @@
             </dependency>
             <dependency>
                 <groupId>com.castlemock.deploy.tomcat</groupId>
-                <artifactId>common</artifactId>
+                <artifactId>deploy-tomcat-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.deploy.jetty</groupId>
-                <artifactId>common</artifactId>
+                <artifactId>deploy-jetty-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web</groupId>
-                <artifactId>site</artifactId>
+                <artifactId>web-site</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web</groupId>
-                <artifactId>frontend</artifactId>
+                <artifactId>web-frontend</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <!-- Castle Mock test dependencies -->
             <dependency>
                 <groupId>com.castlemock.core</groupId>
-                <artifactId>basis</artifactId>
+                <artifactId>core-basis</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>rest</artifactId>
+                <artifactId>core-mock-rest</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>soap</artifactId>
+                <artifactId>core-mock-soap</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>graphql</artifactId>
+                <artifactId>core-mock-graphql</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
                 <scope>test</scope>

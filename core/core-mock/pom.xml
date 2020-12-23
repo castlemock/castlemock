@@ -2,30 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.castlemock.web</groupId>
-    <artifactId>web</artifactId>
+    <groupId>com.castlemock.core.mock</groupId>
+    <artifactId>core-mock</artifactId>
     <packaging>pom</packaging>
 
     <parent>
-        <groupId>com.castlemock</groupId>
-        <artifactId>castlemock</artifactId>
+        <groupId>com.castlemock.core</groupId>
+        <artifactId>core</artifactId>
         <version>${project.version}</version>
         <relativePath>../</relativePath>
     </parent>
 
-    <modules>
-        <module>web-basis</module>
-        <module>web-mock</module>
-        <module>web-frontend</module>
-        <module>web-site</module>
-    </modules>
-
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>com.castlemock.core</groupId>
+            <artifactId>core-basis</artifactId>
         </dependency>
     </dependencies>
+
+    <modules>
+        <module>core-mock-graphql</module>
+        <module>core-mock-rest</module>
+        <module>core-mock-soap</module>
+    </modules>
 
 </project>

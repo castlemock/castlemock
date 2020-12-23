@@ -14,8 +14,8 @@
     </parent>
 
     <modules>
-        <module>jetty</module>
-        <module>tomcat</module>
+        <module>deploy-jetty</module>
+        <module>deploy-tomcat</module>
     </modules>
 
 </project>

@@ -14,8 +14,8 @@
     </parent>
 
     <modules>
-        <module>core</module>
-        <module>mock</module>
+        <module>repository-core</module>
+        <module>repository-mock</module>
     </modules>
 
 </project>
