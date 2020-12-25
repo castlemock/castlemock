@@ -23,8 +23,7 @@ Table Of Content
 - [Download](#download)
 - [Installation](#installation)
 - [Docker](#docker)
-- [Source](#source)
-- [Full Documentation](#source)
+- [Documentation](#documentation)
 - [Communication](#communication)
 - [Bugs and Feedback](#bugs-and-feedback)
 - [Continuous integration](#continuous-integration)
@@ -83,19 +82,15 @@ http://{CONTAINER IP}:8080/castlemock
 
 For more information and details: https://hub.docker.com/r/castlemock/castlemock
 
-## Source
+## Documentation
 
-Our latest and greatest source of **Castle Mock** can be found on [GitHub](https://github.com/castlemock/castlemock/).
-
-## Full Documentation
-
-Full documentation can be found under our [GitHub Wiki](https://github.com/castlemock/castlemock/wiki). 
+Documentation can be found under our [GitHub Wiki](https://github.com/castlemock/castlemock/wiki). 
 
 ## Communication
 - Website: [https://www.castlemock.com/](https://www.castlemock.com/)
 - Twitter: [@CastleMock](http://twitter.com/CastleMock)
 - [GitHub Issues](https://github.com/castlemock/castlemock/issues)
-- [Docker](https://hub.docker.com/r/castlemock/castlemock/)
+- [Docker Hub](https://hub.docker.com/r/castlemock/castlemock/)
 
 ## Bugs and Feedback
 
