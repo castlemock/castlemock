@@ -31,9 +31,7 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.domain.SoapXPathExpression;
 import com.castlemock.core.mock.soap.service.project.input.ImportSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.output.ImportSoapProjectOutput;
-import com.castlemock.repository.soap.file.project.legacy.SoapProjectV1LegacyRepository;
 import com.google.common.base.Strings;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Karl Dahlgren
@@ -41,9 +39,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @org.springframework.stereotype.Service
 public class ImportSoapProjectService extends AbstractSoapProjectService implements Service<ImportSoapProjectInput, ImportSoapProjectOutput> {
-
-    @Autowired
-    private SoapProjectV1LegacyRepository legacyRepository;
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -58,78 +53,71 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
     public ServiceResult<ImportSoapProjectOutput> process(final ServiceTask<ImportSoapProjectInput> serviceTask) {
         final ImportSoapProjectInput input = serviceTask.getInput();
 
-        // Try to import the project as a legacy project first.
-        SoapProject project = this.legacyRepository.importOne(input.getProjectRaw());
+        final SoapExportContainer exportContainer = ExportContainerSerializer.deserialize(input.getProjectRaw(), SoapExportContainer.class);
+        final SoapProject project = exportContainer.getProject();
 
-        if(project == null){
-            // Unable to load the project as a legacy project.
-            SoapExportContainer exportContainer = ExportContainerSerializer.deserialize(input.getProjectRaw(), SoapExportContainer.class);
+        if(this.repository.exists(project.getId())){
+            throw new IllegalArgumentException("A project with the following key already exists: " + project.getId());
+        }
 
-            project = exportContainer.getProject();
+        this.repository.save(project);
 
-            if(this.repository.exists(project.getId())){
-                throw new IllegalArgumentException("A project with the following key already exists: " + project.getId());
+        for(SoapPort port : exportContainer.getPorts()){
+            if(this.portRepository.exists(port.getId())){
+                throw new IllegalArgumentException("A port with the following key already exists: " + port.getId());
             }
 
-            this.repository.save(project);
+            this.portRepository.save(port);
+        }
 
-            for(SoapPort port : exportContainer.getPorts()){
-                if(this.portRepository.exists(port.getId())){
-                    throw new IllegalArgumentException("A port with the following key already exists: " + port.getId());
-                }
-
-                this.portRepository.save(port);
+        for(SoapResource resource : exportContainer.getResources()){
+            if(this.resourceRepository.exists(resource.getId())){
+                throw new IllegalArgumentException("A resource with the following key already exists: " + resource.getId());
             }
 
-            for(SoapResource resource : exportContainer.getResources()){
-                if(this.resourceRepository.exists(resource.getId())){
-                    throw new IllegalArgumentException("A resource with the following key already exists: " + resource.getId());
-                }
+            this.resourceRepository.saveSoapResource(resource, resource.getContent());
+        }
 
-                this.resourceRepository.saveSoapResource(resource, resource.getContent());
+        for(SoapOperation operation : exportContainer.getOperations()){
+            if(this.operationRepository.exists(operation.getId())){
+                throw new IllegalArgumentException("An operation with the following key already exists: " + operation.getId());
             }
 
-            for(SoapOperation operation : exportContainer.getOperations()){
-                if(this.operationRepository.exists(operation.getId())){
-                    throw new IllegalArgumentException("An operation with the following key already exists: " + operation.getId());
-                }
-
-                if(operation.getOperationIdentifier() == null){
-                    SoapOperationIdentifier operationIdentifier =
-                            new SoapOperationIdentifier();
-                    operationIdentifier.setName(operation.getIdentifier());
-                    operation.setOperationIdentifier(operationIdentifier);
-                    operation.setIdentifier(null);
-                }
-                if(operation.getIdentifyStrategy() == null){
-                    operation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
-                }
-                if(operation.getCurrentResponseSequenceIndex() == null){
-                    operation.setCurrentResponseSequenceIndex(0);
-                }
-                if(!Strings.isNullOrEmpty(operation.getDefaultXPathMockResponseId())){
-                    operation.setDefaultMockResponseId(operation.getDefaultXPathMockResponseId());
-                    operation.setDefaultXPathMockResponseId(null);
-                }
-                
+            if(operation.getOperationIdentifier() == null){
+                SoapOperationIdentifier operationIdentifier =
+                        new SoapOperationIdentifier();
+                operationIdentifier.setName(operation.getIdentifier());
+                operation.setOperationIdentifier(operationIdentifier);
+                operation.setIdentifier(null);
+            }
+            if(operation.getIdentifyStrategy() == null){
+                operation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
+            }
+            if(operation.getCurrentResponseSequenceIndex() == null){
                 operation.setCurrentResponseSequenceIndex(0);
-                this.operationRepository.save(operation);
+            }
+            if(!Strings.isNullOrEmpty(operation.getDefaultXPathMockResponseId())){
+                operation.setDefaultMockResponseId(operation.getDefaultXPathMockResponseId());
+                operation.setDefaultXPathMockResponseId(null);
             }
 
-            for(SoapMockResponse mockResponse : exportContainer.getMockResponses()){
-                if(this.mockResponseRepository.exists(mockResponse.getId())){
-                    throw new IllegalArgumentException("A mocked response with the following key already exists: " + mockResponse.getId());
-                }
+            operation.setCurrentResponseSequenceIndex(0);
+            this.operationRepository.save(operation);
+        }
 
-                if(!Strings.isNullOrEmpty(mockResponse.getXpathExpression())){
-                    final SoapXPathExpression xPathExpression = new SoapXPathExpression();
-                    xPathExpression.setExpression(mockResponse.getXpathExpression());
-                    mockResponse.getXpathExpressions().add(xPathExpression);
-                    mockResponse.setXpathExpression(null);
-                }
-
-                this.mockResponseRepository.save(mockResponse);
+        for(SoapMockResponse mockResponse : exportContainer.getMockResponses()){
+            if(this.mockResponseRepository.exists(mockResponse.getId())){
+                throw new IllegalArgumentException("A mocked response with the following key already exists: " + mockResponse.getId());
             }
+
+            if(!Strings.isNullOrEmpty(mockResponse.getXpathExpression())){
+                final SoapXPathExpression xPathExpression = new SoapXPathExpression();
+                xPathExpression.setExpression(mockResponse.getXpathExpression());
+                mockResponse.getXpathExpressions().add(xPathExpression);
+                mockResponse.setXpathExpression(null);
+            }
+
+            this.mockResponseRepository.save(mockResponse);
         }
 
         return createServiceResult(ImportSoapProjectOutput.builder()
