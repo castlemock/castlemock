@@ -17,6 +17,7 @@
 package com.castlemock.web.mock.soap.support;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
+import com.castlemock.web.mock.soap.utility.SoapUtility;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -27,6 +27,7 @@ import com.castlemock.core.mock.soap.service.project.output.IdentifySoapOperatio
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.web.AbstractController;
+import com.castlemock.web.mock.soap.controller.mock.SoapServiceController;
 import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.web.AbstractControllerTest;
 import org.junit.Assert;

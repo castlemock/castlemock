@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.model;
 
 
-import com.castlemock.web.mock.soap.web.soap.controller.SoapServiceController;
+import com.castlemock.web.mock.soap.controller.mock.SoapServiceController;
 
 /**
  * The SoapException is the main exception for the all SOAP related issues. All SOAP related exceptions

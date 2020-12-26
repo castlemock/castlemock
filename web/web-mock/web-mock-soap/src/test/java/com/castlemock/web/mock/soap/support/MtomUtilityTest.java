@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.support;
 
+import com.castlemock.web.mock.soap.utility.MtomUtility;
 import org.junit.Assert;
 import org.junit.Test;
 

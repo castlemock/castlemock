@@ -34,7 +34,7 @@ import com.castlemock.core.mock.rest.service.project.input.IdentifyRestMethodInp
 import com.castlemock.core.mock.rest.service.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.basis.web.AbstractController;
 import com.castlemock.web.mock.rest.web.AbstractControllerTest;
-import com.castlemock.web.mock.rest.web.mock.controller.RestServiceController;
+import com.castlemock.web.mock.rest.controller.mock.RestServiceController;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Assert;
 import org.junit.Test;
