@@ -7,14 +7,20 @@ This page provides information about contributing code to the **Castle Mock** co
 1. Fork the repository on GitHub
 2. Clone the forked repository to your machine
 3. Install the development tools. In order to develop **Castle Mock**, you need the following tools:
-   * Java Development Kit (JDK) 8 or higher.
+   * Java Development Kit (JDK) 11 or higher.
    * Maven 3.5.4 or above
+    * NPM and Yarn for frontend
    * Any IDE which supports importing Maven projects.
 
 ## Building
 The build flow for Castle Mock is built around Maven. To build and test Castle Mock you simply need to the run following Maven command:
 
     mvn clean install
+    
+Castle Mock can be executed in multiple ways. You can run Castle Mock by simply running any of the JAR applications (JarTomcatApplication or JarJettyApplication), or by deploying the application on an Apache Tomcat server. The recommended approach for deployment is to run Castle Mock by either running JarTomcatApplication or JarJettyApplication. Once either of them are up and running, you can easily start the frontend development server by running the following Yarn command:
+
+    cd web/web-frontend
+    yarn start
 
 ## Proposing Changes
 The **Castle Mock** project source code repositories are hosted at GitHub. All proposed changes are submitted and code reviewed using the GitHub Pull Request process.
