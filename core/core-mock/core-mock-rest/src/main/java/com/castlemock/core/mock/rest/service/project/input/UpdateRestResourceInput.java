@@ -18,7 +18,6 @@ package com.castlemock.core.mock.rest.service.project.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 
 import java.util.Objects;
 
@@ -35,13 +34,16 @@ public final class UpdateRestResourceInput implements Input {
     @NotNull
     private final String restResourceId;
     @NotNull
-    private final RestResource restResource;
+    private final String name;
+    @NotNull
+    private final String uri;
 
     private UpdateRestResourceInput(final Builder builder) {
         this.restProjectId = Objects.requireNonNull(builder.restProjectId);
         this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
         this.restResourceId = Objects.requireNonNull(builder.restResourceId);
-        this.restResource = Objects.requireNonNull(builder.restResource);
+        this.name = Objects.requireNonNull(builder.name);
+        this.uri = Objects.requireNonNull(builder.uri);
     }
 
     public String getRestProjectId() {
@@ -56,8 +58,12 @@ public final class UpdateRestResourceInput implements Input {
         return restResourceId;
     }
 
-    public RestResource getRestResource() {
-        return restResource;
+    public String getName() {
+        return name;
+    }
+
+    public String getUri() {
+        return uri;
     }
 
     public static Builder builder(){
@@ -69,7 +75,8 @@ public final class UpdateRestResourceInput implements Input {
         private String restProjectId;
         private String restApplicationId;
         private String restResourceId;
-        private RestResource restResource;
+        private String name;
+        private String uri;
 
         public Builder restProjectId(final String restProjectId){
             this.restProjectId = restProjectId;
@@ -86,8 +93,13 @@ public final class UpdateRestResourceInput implements Input {
             return this;
         }
 
-        public Builder restResource(final RestResource restResource){
-            this.restResource = restResource;
+        public Builder name(final String name){
+            this.name = name;
+            return this;
+        }
+
+        public Builder uri(final String uri){
+            this.uri = uri;
             return this;
         }
 

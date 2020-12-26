@@ -41,17 +41,16 @@ public class UpdateSoapOperationService extends AbstractSoapProjectService imple
     @Override
     public ServiceResult<UpdateSoapOperationOutput> process(final ServiceTask<UpdateSoapOperationInput> serviceTask) {
         final UpdateSoapOperationInput input = serviceTask.getInput();
-        final SoapOperation updated = input.getOperation();
         final SoapOperation soapOperation = this.operationRepository.findOne(input.getOperationId());
 
-        soapOperation.setStatus(updated.getStatus());
-        soapOperation.setForwardedEndpoint(updated.getForwardedEndpoint());
-        soapOperation.setResponseStrategy(updated.getResponseStrategy());
-        soapOperation.setSimulateNetworkDelay(updated.getSimulateNetworkDelay());
-        soapOperation.setNetworkDelay(updated.getNetworkDelay());
-        soapOperation.setDefaultMockResponseId(updated.getDefaultMockResponseId());
-        soapOperation.setMockOnFailure(updated.getMockOnFailure());
-        soapOperation.setIdentifyStrategy(updated.getIdentifyStrategy());
+        soapOperation.setStatus(input.getStatus());
+        soapOperation.setForwardedEndpoint(input.getForwardedEndpoint());
+        soapOperation.setResponseStrategy(input.getResponseStrategy());
+        soapOperation.setSimulateNetworkDelay(input.getSimulateNetworkDelay());
+        soapOperation.setNetworkDelay(input.getNetworkDelay());
+        soapOperation.setDefaultMockResponseId(input.getDefaultMockResponseId());
+        soapOperation.setMockOnFailure(input.getMockOnFailure());
+        soapOperation.setIdentifyStrategy(input.getIdentifyStrategy());
 
         final SoapOperation updatedSoapOperation = this.operationRepository.update(input.getOperationId(), soapOperation);
         return createServiceResult(UpdateSoapOperationOutput.builder()

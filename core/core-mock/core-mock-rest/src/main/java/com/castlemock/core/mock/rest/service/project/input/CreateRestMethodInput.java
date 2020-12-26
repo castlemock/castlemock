@@ -17,8 +17,8 @@
 package com.castlemock.core.mock.rest.service.project.input;
 
 import com.castlemock.core.basis.model.Input;
+import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 
 import java.util.Objects;
 
@@ -35,13 +35,16 @@ public final class CreateRestMethodInput implements Input {
     @NotNull
     private final String resourceId;
     @NotNull
-    private final RestMethod method;
+    private final String name;
+    @NotNull
+    private final HttpMethod httpMethod;
 
     private CreateRestMethodInput(final Builder builder) {
         this.projectId = Objects.requireNonNull(builder.projectId);
         this.applicationId = Objects.requireNonNull(builder.applicationId);
         this.resourceId = Objects.requireNonNull(builder.resourceId);
-        this.method = Objects.requireNonNull(builder.method);
+        this.name = Objects.requireNonNull(builder.name);
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
     }
 
     public String getProjectId() {
@@ -56,8 +59,12 @@ public final class CreateRestMethodInput implements Input {
         return resourceId;
     }
 
-    public RestMethod getMethod() {
-        return method;
+    public String getName() {
+        return name;
+    }
+
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
     public static Builder builder(){
@@ -68,8 +75,8 @@ public final class CreateRestMethodInput implements Input {
         private String projectId;
         private String applicationId;
         private String resourceId;
-        private RestMethod method;
-
+        private String name;
+        private HttpMethod httpMethod;
 
         public Builder projectId(final String restProjectId){
             this.projectId = restProjectId;
@@ -85,8 +92,14 @@ public final class CreateRestMethodInput implements Input {
             this.resourceId = resourceId;
             return this;
         }
-        public Builder method(final RestMethod method){
-            this.method = method;
+
+        public Builder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder httpMethod(final HttpMethod httpMethod) {
+            this.httpMethod = httpMethod;
             return this;
         }
 

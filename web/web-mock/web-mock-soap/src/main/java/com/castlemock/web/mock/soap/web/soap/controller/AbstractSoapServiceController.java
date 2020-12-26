@@ -44,7 +44,7 @@ import com.castlemock.core.mock.soap.service.project.input.IdentifySoapOperation
 import com.castlemock.core.mock.soap.service.project.input.LoadSoapResourceInput;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
 import com.castlemock.core.mock.soap.service.project.input.UpdateCurrentMockResponseSequenceIndexInput;
-import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationInput;
+import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsStatusInput;
 import com.castlemock.core.mock.soap.service.project.output.IdentifySoapOperationOutput;
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
@@ -469,31 +469,28 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
             if(SoapOperationStatus.RECORDING.equals(soapOperation.getStatus()) ||
                     SoapOperationStatus.RECORD_ONCE.equals(soapOperation.getStatus())){
-                final SoapMockResponse mockResponse = SoapMockResponse.builder()
+
+                serviceProcessor.processAsync(CreateSoapMockResponseInput.builder()
+                        .projectId(soapProjectId)
+                        .portId(soapPortId)
+                        .operationId(soapOperation.getId())
                         .body(response.getBody())
                         .status(SoapMockResponseStatus.ENABLED)
                         .name(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(new Date()))
                         .httpHeaders(response.getHttpHeaders())
                         .httpStatusCode(response.getHttpStatusCode())
                         .usingExpressions(Boolean.FALSE)
-                        .operationId(soapOperation.getId())
-                        .build();
-
-                serviceProcessor.processAsync(CreateSoapMockResponseInput.builder().projectId(soapProjectId)
-                        .portId(soapPortId)
-                        .operationId(soapOperation.getId())
-                        .mockResponse(mockResponse)
                         .build());
 
 
                 if(SoapOperationStatus.RECORD_ONCE.equals(soapOperation.getStatus())){
                     // Change the operation status to mocked if the
                     // operation has been configured to only record once.
-                    soapOperation.setStatus(SoapOperationStatus.MOCKED);
-                    serviceProcessor.process(UpdateSoapOperationInput.builder().projectId(soapProjectId)
+                    serviceProcessor.process(UpdateSoapOperationsStatusInput.builder()
+                            .projectId(soapProjectId)
                             .portId(soapPortId)
                             .operationId(soapOperation.getId())
-                            .operation(soapOperation)
+                            .operationStatus(SoapOperationStatus.MOCKED)
                             .build());
                 }
             }

@@ -58,7 +58,7 @@ class UpdateApplicationModal extends PureComponent {
 
     onUpdateClick() {
         axios
-            .put(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.application.id, this.state.updateApplication)
+            .put(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId, this.state.updateApplication)
             .then(response => {
                 this.props.getApplication();
             })

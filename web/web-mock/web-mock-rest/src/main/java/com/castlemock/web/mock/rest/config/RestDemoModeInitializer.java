@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.mode;
+package com.castlemock.web.mock.rest.config;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.service.project.input.ImportSoapProjectInput;
+import com.castlemock.core.mock.rest.service.project.input.ImportRestProjectInput;
 import com.castlemock.web.basis.manager.UrlManager;
 import com.google.common.base.Strings;
 import org.slf4j.LoggerFactory;
@@ -30,17 +30,16 @@ import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 @Component
-public class SoapDemoModeInitializer {
+public class RestDemoModeInitializer {
 
-    @Value("${server.mode.demo.project.soap.url:}")
+    @Value("${server.mode.demo.project.rest.url:}")
     protected String projectUrl;
     @Autowired
     protected UrlManager urlManager;
     @Autowired
     private ServiceProcessor serviceProcessor;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SoapDemoModeInitializer.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestDemoModeInitializer.class);
 
     @PostConstruct
     private void setup(){
@@ -48,12 +47,13 @@ public class SoapDemoModeInitializer {
             try {
                 final Optional<String> project = this.urlManager.readFromUrl(projectUrl);
 
-                project.ifPresent(raw -> serviceProcessor.process(ImportSoapProjectInput.builder()
+                project.ifPresent(raw -> serviceProcessor.process(ImportRestProjectInput.builder()
                         .projectRaw(raw)
                         .build()));
             } catch (Exception e){
                 LOGGER.warn("Unable to load the demo project", e);
             }
+
         }
     }
 

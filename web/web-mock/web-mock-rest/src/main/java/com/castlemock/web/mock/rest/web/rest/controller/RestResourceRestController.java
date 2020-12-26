@@ -23,8 +23,10 @@ import com.castlemock.core.mock.rest.service.project.output.DeleteRestResourceOu
 import com.castlemock.core.mock.rest.service.project.output.ReadRestResourceOutput;
 import com.castlemock.core.mock.rest.service.project.output.UpdateRestResourceOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.mock.rest.web.rest.controller.model.CreateRestResourceRequest;
 import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestMethodForwardedEndpointsRequest;
 import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestMethodStatusesRequest;
+import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestResourceRequest;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -92,12 +94,13 @@ public class RestResourceRestController extends AbstractRestController {
             @PathVariable(value = "applicationId") final String applicationId,
             @ApiParam(name = "resourceId", value = "The id of the resource")
             @PathVariable(value = "resourceId") final String resourceId,
-            @RequestBody RestResource resource) {
+            @RequestBody UpdateRestResourceRequest request) {
         final UpdateRestResourceOutput output = super.serviceProcessor.process(UpdateRestResourceInput.builder()
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
                 .restResourceId(resourceId)
-                .restResource(resource)
+                .name(request.getName())
+                .uri(request.getUri())
                 .build());
         return ResponseEntity.ok(output.getUpdatedRestResource());
     }
@@ -113,11 +116,12 @@ public class RestResourceRestController extends AbstractRestController {
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId,
-            @RequestBody RestResource resource) {
+            @RequestBody CreateRestResourceRequest request) {
         final CreateRestResourceOutput output = super.serviceProcessor.process(CreateRestResourceInput.builder()
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
-                .restResource(resource)
+                .name(request.getName())
+                .uri(request.getUri())
                 .build());
         return ResponseEntity.ok(output.getCreatedRestResource());
     }

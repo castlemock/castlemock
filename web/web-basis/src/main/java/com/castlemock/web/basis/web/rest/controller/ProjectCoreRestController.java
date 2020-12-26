@@ -20,7 +20,12 @@ import com.castlemock.core.basis.model.project.domain.Project;
 import com.castlemock.core.basis.service.project.ProjectServiceFacade;
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.basis.model.project.CreateProjectRequest;
-import io.swagger.annotations.*;
+import com.castlemock.web.basis.model.project.UpdateProjectRequest;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +33,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -130,7 +140,10 @@ public class ProjectCoreRestController extends AbstractRestController {
                                                     @PathVariable("type") final String type,
                                                 @ApiParam(name = "projectId", value = "The id of the project")
                                                     @PathVariable("projectId") final String projectId,
-                                                @RequestBody final Project project) {
+                                                @RequestBody final UpdateProjectRequest request) {
+        final Project project = projectServiceFacade.findOne(type, projectId);
+        project.setName(request.getName());
+        project.setDescription(request.getDescription());
         return ResponseEntity.ok(projectServiceFacade.update(type, projectId, project));
     }
 

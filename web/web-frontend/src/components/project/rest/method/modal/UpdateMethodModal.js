@@ -35,10 +35,13 @@ class UpdateMethodModal extends PureComponent {
         this.onSimulateNetworkDelayChange = this.onSimulateNetworkDelayChange.bind(this);
         this.onNetworkDelayChange = this.onNetworkDelayChange.bind(this);
         this.onUpdateMethodClick = this.onUpdateMethodClick.bind(this);
+        this.onDefaultMockResponseIdChange = this.onDefaultMockResponseIdChange.bind(this);
+
         this.getMethod = this.getMethod.bind(this);
 
         this.state = {
-            updateMethod: {}
+            updateMethod: {},
+            mockResponses: []
         };
 
         this.getMethod();
@@ -112,12 +115,23 @@ class UpdateMethodModal extends PureComponent {
                         responseStrategy: response.data.responseStrategy,
                         forwardedEndpoint: response.data.forwardedEndpoint,
                         simulateNetworkDelay: response.data.simulateNetworkDelay,
-                        networkDelay: response.data.networkDelay
-                    }});
+                        networkDelay: response.data.networkDelay,
+                        defaultMockResponseId: response.data.defaultMockResponseId
+                    },
+                    mockResponses: response.data.mockResponses
+                });
             })
             .catch(error => {
                 validateErrorResponse(error)
             });
+    }
+
+    onDefaultMockResponseIdChange(defaultMockResponseId){
+        this.setState({ updateMethod: {
+                ...this.state.updateMethod,
+                defaultMockResponseId: defaultMockResponseId
+            }
+        });
     }
 
     onUpdateMethodClick(){
@@ -221,8 +235,12 @@ class UpdateMethodModal extends PureComponent {
                             <div className="form-group row">
                                 <label className="col-sm-3 col-form-label">Default response</label>
                                 <div className="col-sm-9">
-                                    <select id="inputStatus" className="form-control" >
-
+                                    <select id="inputStatus" className="form-control"
+                                            onChange={event => this.onDefaultMockResponseIdChange(event.target.value)}>
+                                        <option value={null}> -- select an option -- </option>
+                                        {this.state.mockResponses.map(mockResponse =>
+                                            <option key={mockResponse.id} value={mockResponse.id} selected={mockResponse.id === this.state.updateMethod.defaultMockResponseId}>{mockResponse.name}</option>
+                                        )};
                                     </select>
                                 </div>
                             </div>

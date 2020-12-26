@@ -43,22 +43,21 @@ public class UpdateRestMockResponseService extends AbstractRestProjectService im
     public ServiceResult<UpdateRestMockResponseOutput> process(final ServiceTask<UpdateRestMockResponseInput> serviceTask) {
         final UpdateRestMockResponseInput input = serviceTask.getInput();
         final RestMockResponse existing = this.mockResponseRepository.findOne(input.getRestMockResponseId());
-        final RestMockResponse updatedRestMockResponse = input.getRestMockResponse();
 
-        existing.setName(updatedRestMockResponse.getName());
-        existing.setBody(updatedRestMockResponse.getBody());
-        existing.setHttpStatusCode(updatedRestMockResponse.getHttpStatusCode());
-        existing.setHttpHeaders(updatedRestMockResponse.getHttpHeaders());
-        existing.setStatus(updatedRestMockResponse.getStatus());
-        existing.setUsingExpressions(updatedRestMockResponse.isUsingExpressions());
-        existing.setParameterQueries(updatedRestMockResponse.getParameterQueries());
-        existing.setXpathExpressions(updatedRestMockResponse.getXpathExpressions());
-        existing.setJsonPathExpressions(updatedRestMockResponse.getJsonPathExpressions());
-        existing.setHeaderQueries(updatedRestMockResponse.getHeaderQueries());
+        existing.setName(input.getName());
+        existing.setBody(input.getBody());
+        existing.setHttpStatusCode(input.getHttpStatusCode());
+        existing.setHttpHeaders(input.getHttpHeaders());
+        existing.setStatus(input.getStatus());
+        existing.setUsingExpressions(input.isUsingExpressions());
+        existing.setParameterQueries(input.getParameterQueries());
+        existing.setXpathExpressions(input.getXpathExpressions());
+        existing.setJsonPathExpressions(input.getJsonPathExpressions());
+        existing.setHeaderQueries(input.getHeaderQueries());
 
-        this.mockResponseRepository.update(input.getRestMockResponseId(), existing);
+        final RestMockResponse updated = this.mockResponseRepository.update(input.getRestMockResponseId(), existing);
         return createServiceResult(UpdateRestMockResponseOutput.builder()
-                .updatedRestMockResponse(updatedRestMockResponse)
+                .updatedRestMockResponse(updated)
                 .build());
     }
 }

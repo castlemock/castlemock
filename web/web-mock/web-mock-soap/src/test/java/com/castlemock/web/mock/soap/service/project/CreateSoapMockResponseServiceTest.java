@@ -71,7 +71,8 @@ public class CreateSoapMockResponseServiceTest {
                 .projectId(soapProject.getId())
                 .portId(soapPort.getId())
                 .operationId(soapOperation.getId())
-                .mockResponse(soapMockResponse)
+                .name(soapMockResponse.getName())
+                .status(soapMockResponse.getStatus())
                 .build();
         final ServiceTask<CreateSoapMockResponseInput> serviceTask = new ServiceTask<>(input);
         final ServiceResult<CreateSoapMockResponseOutput> serviceResult = service.process(serviceTask);

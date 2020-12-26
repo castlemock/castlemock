@@ -31,6 +31,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.ArgumentMatchers.any;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -53,19 +55,20 @@ public class CreateRestResourceServiceTest {
         final String projectId = "ProjectId";
         final String applicationId = "ApplicationId";
         final RestResource resource = RestResourceTestBuilder.builder().build();
-        Mockito.when(resourceRepository.save(Mockito.any(RestResource.class))).thenReturn(resource);
+        Mockito.when(resourceRepository.save(any(RestResource.class))).thenReturn(resource);
 
         final CreateRestResourceInput input = CreateRestResourceInput.builder()
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
-                .restResource(resource)
+                .name(resource.getName())
+                .uri(resource.getUri())
                 .build();
         final ServiceTask<CreateRestResourceInput> serviceTask = new ServiceTask<CreateRestResourceInput>(input);
         final ServiceResult<CreateRestResourceOutput> serviceResult = service.process(serviceTask);
 
         Assert.assertNotNull(serviceResult.getOutput());
         Assert.assertEquals(resource, serviceResult.getOutput().getCreatedRestResource());
-        Mockito.verify(resourceRepository, Mockito.times(1)).save(resource);
+        Mockito.verify(resourceRepository, Mockito.times(1)).save(any());
     }
 
 }

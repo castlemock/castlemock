@@ -17,10 +17,18 @@
 package com.castlemock.core.mock.rest.service.project.input;
 
 import com.castlemock.core.basis.model.Input;
+import com.castlemock.core.basis.model.http.domain.ContentEncoding;
+import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestHeaderQuery;
+import com.castlemock.core.mock.rest.model.project.domain.RestJsonPathExpression;
+import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestParameterQuery;
+import com.castlemock.core.mock.rest.model.project.domain.RestXPathExpression;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -37,14 +45,34 @@ public final class CreateRestMockResponseInput implements Input {
     @NotNull
     private final String methodId;
     @NotNull
-    private final RestMockResponse mockResponse;
+    private final String name;
+    private final String body;
+    private final Integer httpStatusCode;
+    private final RestMockResponseStatus status;
+    private final Boolean usingExpressions;
+    private final List<HttpHeader> httpHeaders;
+    private final List<ContentEncoding> contentEncodings;
+    private final List<RestParameterQuery> parameterQueries;
+    private final List<RestXPathExpression> xpathExpressions;
+    private final List<RestJsonPathExpression> jsonPathExpressions;
+    private final List<RestHeaderQuery> headerQueries;
 
     private CreateRestMockResponseInput(final Builder builder) {
         this.projectId = Objects.requireNonNull(builder.projectId);
         this.applicationId = Objects.requireNonNull(builder.applicationId);
         this.resourceId = Objects.requireNonNull(builder.resourceId);
         this.methodId = Objects.requireNonNull(builder.methodId);
-        this.mockResponse = Objects.requireNonNull(builder.mockResponse);
+        this.name = Objects.requireNonNull(builder.name);
+        this.body = builder.body;
+        this.httpStatusCode = builder.httpStatusCode;
+        this.status = builder.status;
+        this.usingExpressions = builder.usingExpressions;
+        this.httpHeaders = builder.httpHeaders;
+        this.contentEncodings = builder.contentEncodings;
+        this.parameterQueries = builder.parameterQueries;
+        this.xpathExpressions = builder.xpathExpressions;
+        this.jsonPathExpressions = builder.jsonPathExpressions;
+        this.headerQueries = builder.headerQueries;
     }
 
     public String getProjectId() {
@@ -63,8 +91,48 @@ public final class CreateRestMockResponseInput implements Input {
         return methodId;
     }
 
-    public RestMockResponse getMockResponse() {
-        return mockResponse;
+    public String getName() {
+        return name;
+    }
+
+    public Optional<String> getBody() {
+        return Optional.ofNullable(body);
+    }
+
+    public Optional<Integer> getHttpStatusCode() {
+        return Optional.ofNullable(httpStatusCode);
+    }
+
+    public Optional<RestMockResponseStatus> getStatus() {
+        return Optional.ofNullable(status);
+    }
+
+    public Optional<Boolean> getUsingExpressions() {
+        return Optional.ofNullable(usingExpressions);
+    }
+
+    public Optional<List<HttpHeader>> getHttpHeaders() {
+        return Optional.ofNullable(httpHeaders);
+    }
+
+    public Optional<List<ContentEncoding>> getContentEncodings() {
+        return Optional.ofNullable(contentEncodings);
+    }
+
+    public Optional<List<RestParameterQuery>> getParameterQueries() {
+        return Optional.ofNullable(parameterQueries);
+    }
+
+    public Optional<List<RestXPathExpression>> getXpathExpressions() {
+        return Optional.ofNullable(xpathExpressions);
+    }
+
+    public Optional<List<RestJsonPathExpression>> getJsonPathExpressions() {
+        return Optional.ofNullable(jsonPathExpressions);
+    }
+
+    public Optional<List<RestHeaderQuery>> getHeaderQueries() {
+        return Optional.ofNullable(headerQueries);
     }
 
     public static Builder builder(){
@@ -76,8 +144,17 @@ public final class CreateRestMockResponseInput implements Input {
         private String applicationId;
         private String resourceId;
         private String methodId;
-        private RestMockResponse mockResponse;
-
+        private String name;
+        private String body;
+        private Integer httpStatusCode;
+        private RestMockResponseStatus status;
+        private Boolean usingExpressions;
+        private List<HttpHeader> httpHeaders;
+        private List<ContentEncoding> contentEncodings;
+        private List<RestParameterQuery> parameterQueries;
+        private List<RestXPathExpression> xpathExpressions;
+        private List<RestJsonPathExpression> jsonPathExpressions;
+        private List<RestHeaderQuery> headerQueries;
 
         public Builder projectId(final String restProjectId){
             this.projectId = restProjectId;
@@ -99,10 +176,61 @@ public final class CreateRestMockResponseInput implements Input {
             return this;
         }
 
-        public Builder mockResponse(final RestMockResponse mockResponse){
-            this.mockResponse = mockResponse;
+        public Builder name(final String name) {
+            this.name = name;
             return this;
         }
+
+        public Builder body(final String body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder httpStatusCode(final Integer httpStatusCode) {
+            this.httpStatusCode = httpStatusCode;
+            return this;
+        }
+
+        public Builder status(final RestMockResponseStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder usingExpressions(final Boolean usingExpressions) {
+            this.usingExpressions = usingExpressions;
+            return this;
+        }
+
+        public Builder httpHeaders(final List<HttpHeader> httpHeaders) {
+            this.httpHeaders = httpHeaders;
+            return this;
+        }
+
+        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+            this.contentEncodings = contentEncodings;
+            return this;
+        }
+
+        public Builder parameterQueries(final List<RestParameterQuery> parameterQueries) {
+            this.parameterQueries = parameterQueries;
+            return this;
+        }
+
+        public Builder xpathExpressions(final List<RestXPathExpression> xpathExpressions) {
+            this.xpathExpressions = xpathExpressions;
+            return this;
+        }
+
+        public Builder jsonPathExpressions(final List<RestJsonPathExpression> jsonPathExpressions) {
+            this.jsonPathExpressions = jsonPathExpressions;
+            return this;
+        }
+
+        public Builder headerQueries(final List<RestHeaderQuery> headerQueries) {
+            this.headerQueries = headerQueries;
+            return this;
+        }
+
 
         public CreateRestMockResponseInput build(){
             return new CreateRestMockResponseInput(this);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Karl Dahlgren
+ * Copyright 2020 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.soap.service.project.input;
+package com.castlemock.web.mock.soap.web.rest.controller.model;
 
-import com.castlemock.core.basis.model.Input;
-import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifyStrategy;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
@@ -26,36 +24,24 @@ import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
- * @since 1.0
+ * @since 1.52
  */
-public final class UpdateSoapOperationInput implements Input {
+public class UpdateSoapOperationRequest {
 
-    @NotNull
-    private final String projectId;
-    @NotNull
-    private final String portId;
-    @NotNull
-    private final String operationId;
-    @NotNull
     private SoapResponseStrategy responseStrategy;
-    @NotNull
     private SoapOperationStatus status;
-    @NotNull
     private String forwardedEndpoint;
-    @NotNull
     private Boolean simulateNetworkDelay;
-    @NotNull
     private Long networkDelay;
     private String defaultMockResponseId;
-    @NotNull
     private Boolean mockOnFailure;
-    @NotNull
     private SoapOperationIdentifyStrategy identifyStrategy;
 
-    public UpdateSoapOperationInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
+    public UpdateSoapOperationRequest(){
+
+    }
+
+    private UpdateSoapOperationRequest(final Builder builder){
         this.responseStrategy = Objects.requireNonNull(builder.responseStrategy);
         this.status = Objects.requireNonNull(builder.status);
         this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
@@ -66,58 +52,76 @@ public final class UpdateSoapOperationInput implements Input {
         this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy);
     }
 
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public String getPortId() {
-        return portId;
-    }
-
-    public String getOperationId() {
-        return operationId;
-    }
-
     public SoapResponseStrategy getResponseStrategy() {
         return responseStrategy;
+    }
+
+    public void setResponseStrategy(SoapResponseStrategy responseStrategy) {
+        this.responseStrategy = responseStrategy;
     }
 
     public SoapOperationStatus getStatus() {
         return status;
     }
 
+    public void setStatus(SoapOperationStatus status) {
+        this.status = status;
+    }
+
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
+    }
+
+    public void setForwardedEndpoint(String forwardedEndpoint) {
+        this.forwardedEndpoint = forwardedEndpoint;
     }
 
     public Boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
     }
 
+    public void setSimulateNetworkDelay(Boolean simulateNetworkDelay) {
+        this.simulateNetworkDelay = simulateNetworkDelay;
+    }
+
     public Long getNetworkDelay() {
         return networkDelay;
     }
 
-    public String getDefaultMockResponseId() {
-        return defaultMockResponseId;
+    public void setNetworkDelay(Long networkDelay) {
+        this.networkDelay = networkDelay;
     }
 
     public Boolean getMockOnFailure() {
         return mockOnFailure;
     }
 
+    public void setMockOnFailure(Boolean mockOnFailure) {
+        this.mockOnFailure = mockOnFailure;
+    }
+
     public SoapOperationIdentifyStrategy getIdentifyStrategy() {
         return identifyStrategy;
     }
 
-    public static Builder builder(){
+    public void setIdentifyStrategy(SoapOperationIdentifyStrategy identifyStrategy) {
+        this.identifyStrategy = identifyStrategy;
+    }
+
+    public String getDefaultMockResponseId() {
+        return defaultMockResponseId;
+    }
+
+    public void setDefaultMockResponseId(String defaultMockResponseId) {
+        this.defaultMockResponseId = defaultMockResponseId;
+    }
+
+    public static Builder builder() {
         return new Builder();
     }
 
-    public static class Builder {
-        private String projectId;
-        private String portId;
-        private String operationId;
+    public static final class Builder {
+
         private SoapResponseStrategy responseStrategy;
         private SoapOperationStatus status;
         private String forwardedEndpoint;
@@ -127,23 +131,7 @@ public final class UpdateSoapOperationInput implements Input {
         private Boolean mockOnFailure;
         private SoapOperationIdentifyStrategy identifyStrategy;
 
-        private Builder(){
-
-        }
-
-        public Builder projectId(final String projectId){
-            this.projectId = projectId;
-            return this;
-        }
-
-        public Builder portId(final String portId){
-            this.portId = portId;
-            return this;
-        }
-
-        public Builder operationId(final String operationId){
-            this.operationId = operationId;
-            return this;
+        private Builder() {
         }
 
 
@@ -186,8 +174,9 @@ public final class UpdateSoapOperationInput implements Input {
             this.identifyStrategy = identifyStrategy;
             return this;
         }
-        public UpdateSoapOperationInput build(){
-            return new UpdateSoapOperationInput(this);
+
+        public UpdateSoapOperationRequest build() {
+            return new UpdateSoapOperationRequest(this);
         }
     }
 }

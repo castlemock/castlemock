@@ -41,7 +41,9 @@ public class CreateRestResourceService extends AbstractRestProjectService implem
     @Override
     public ServiceResult<CreateRestResourceOutput> process(final ServiceTask<CreateRestResourceInput> serviceTask) {
         final CreateRestResourceInput input = serviceTask.getInput();
-        final RestResource resource = input.getRestResource();
+        final RestResource resource = new RestResource();
+        resource.setName(input.getName());
+        resource.setUri(input.getUri());
         resource.setApplicationId(input.getRestApplicationId());
         final RestResource createdRestResource = this.resourceRepository.save(resource);
         return createServiceResult(CreateRestResourceOutput.builder()

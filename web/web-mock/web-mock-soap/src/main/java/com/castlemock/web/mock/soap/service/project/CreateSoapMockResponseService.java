@@ -23,6 +23,8 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.service.project.input.CreateSoapMockResponseInput;
 import com.castlemock.core.mock.soap.service.project.output.CreateSoapMockResponseOutput;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,8 +43,17 @@ public class CreateSoapMockResponseService extends AbstractSoapProjectService im
     @Override
     public ServiceResult<CreateSoapMockResponseOutput> process(final ServiceTask<CreateSoapMockResponseInput> serviceTask) {
         final CreateSoapMockResponseInput input = serviceTask.getInput();
-        final SoapMockResponse mockResponse = input.getMockResponse();
-        mockResponse.setOperationId(input.getOperationId());
+        final SoapMockResponse mockResponse = SoapMockResponse.builder()
+                .name(input.getName())
+                .body(input.getBody().orElse(""))
+                .httpStatusCode(input.getHttpStatusCode().orElse(200))
+                .usingExpressions(input.getUsingExpressions().orElse(false))
+                .status(input.getStatus())
+                .operationId(input.getOperationId())
+                .httpHeaders(input.getHttpHeaders().orElseGet(CopyOnWriteArrayList::new))
+                .contentEncodings(new CopyOnWriteArrayList<>())
+                .xpathExpressions(input.getXpathExpressions().orElseGet(CopyOnWriteArrayList::new))
+                .build();
         final SoapMockResponse createdSoapMockResponse = this.mockResponseRepository.save(mockResponse);
         return createServiceResult(CreateSoapMockResponseOutput.builder()
                 .mockResponse(createdSoapMockResponse)

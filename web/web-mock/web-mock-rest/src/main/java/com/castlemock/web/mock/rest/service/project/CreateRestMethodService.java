@@ -43,7 +43,9 @@ public class CreateRestMethodService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<CreateRestMethodOutput> process(final ServiceTask<CreateRestMethodInput> serviceTask) {
         final CreateRestMethodInput input = serviceTask.getInput();
-        final RestMethod restMethod = input.getMethod();
+        final RestMethod restMethod = new RestMethod();
+        restMethod.setName(input.getName());
+        restMethod.setHttpMethod(input.getHttpMethod());
         restMethod.setResourceId(input.getResourceId());
         if(restMethod.getStatus() == null){
             restMethod.setStatus(RestMethodStatus.MOCKED);

@@ -24,6 +24,7 @@ import Badge from 'react-bootstrap/Badge'
 import validateErrorResponse from "../../../utility/HttpResponseValidator"
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import {isOnlyReader} from "../../../utility/AuthorizeUtility";
+import preventEnterEvent from "../../../utility/KeyboardUtility";
 
 const { SearchBar } = Search;
 
@@ -343,7 +344,7 @@ class ProjectOverview extends PureComponent {
                                     <div className="form-group row">
                                         <label htmlFor="newProjectName" className="col-sm-2 col-form-label">Name</label>
                                         <div className="col-sm-10">
-                                            <input className="form-control validate" type="text" name="newProjectName" id="newProjectName" onChange={event => this.setNewProjectName(event.target.value)} required/>
+                                            <input className="form-control validate" type="text" name="newProjectName" id="newProjectName" onChange={event => this.setNewProjectName(event.target.value)} onKeyDown={preventEnterEvent} required/>
                                         </div>
                                     </div>
                                     <div className="form-group row">

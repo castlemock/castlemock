@@ -31,6 +31,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.ArgumentMatchers.any;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -55,21 +57,31 @@ public class CreateRestMockResponseServiceTest {
         final String resourceId = "ResourceId";
         final String methodId = "MethodId";
         final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
-        Mockito.when(mockResponseRepository.save(Mockito.any(RestMockResponse.class))).thenReturn(mockResponse);
+        Mockito.when(mockResponseRepository.save(any(RestMockResponse.class))).thenReturn(mockResponse);
 
         final CreateRestMockResponseInput input = CreateRestMockResponseInput.builder()
                 .projectId(projectId)
                 .applicationId(applicationId)
                 .resourceId(resourceId)
                 .methodId(methodId)
-                .mockResponse(mockResponse)
+                .name(mockResponse.getName())
+                .body(mockResponse.getBody())
+                .status(mockResponse.getStatus())
+                .contentEncodings(mockResponse.getContentEncodings())
+                .headerQueries(mockResponse.getHeaderQueries())
+                .httpHeaders(mockResponse.getHttpHeaders())
+                .httpStatusCode(mockResponse.getHttpStatusCode())
+                .jsonPathExpressions(mockResponse.getJsonPathExpressions())
+                .parameterQueries(mockResponse.getParameterQueries())
+                .usingExpressions(mockResponse.isUsingExpressions())
+                .xpathExpressions(mockResponse.getXpathExpressions())
                 .build();
         final ServiceTask<CreateRestMockResponseInput> serviceTask = new ServiceTask<CreateRestMockResponseInput>(input);
         final ServiceResult<CreateRestMockResponseOutput> serviceResult = service.process(serviceTask);
 
         Assert.assertNotNull(serviceResult.getOutput());
         Assert.assertEquals(mockResponse, serviceResult.getOutput().getRestMockResponse());
-        Mockito.verify(mockResponseRepository, Mockito.times(1)).save(mockResponse);
+        Mockito.verify(mockResponseRepository, Mockito.times(1)).save(any());
     }
 
 }

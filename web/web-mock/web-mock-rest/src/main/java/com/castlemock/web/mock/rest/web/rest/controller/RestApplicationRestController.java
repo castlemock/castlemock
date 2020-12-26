@@ -23,6 +23,8 @@ import com.castlemock.core.mock.rest.service.project.output.DeleteRestApplicatio
 import com.castlemock.core.mock.rest.service.project.output.ReadRestApplicationOutput;
 import com.castlemock.core.mock.rest.service.project.output.UpdateRestApplicationOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.mock.rest.web.rest.controller.model.CreateRestApplicationRequest;
+import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestApplicationRequest;
 import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestResourceForwardedEndpointsRequest;
 import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestResourceStatusesRequest;
 import io.swagger.annotations.*;
@@ -81,11 +83,11 @@ public class RestApplicationRestController extends AbstractRestController {
             @PathVariable(value = "projectId") final String projectId,
             @ApiParam(name = "applicationId", value = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId,
-            @RequestBody RestApplication application) {
+            @RequestBody final UpdateRestApplicationRequest request) {
         final UpdateRestApplicationOutput output = super.serviceProcessor.process(UpdateRestApplicationInput.builder()
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
-                .restApplication(application)
+                .name(request.getName())
                 .build());
         return ResponseEntity.ok(output.getUpdatedRestApplication());
     }
@@ -98,10 +100,10 @@ public class RestApplicationRestController extends AbstractRestController {
     public ResponseEntity<RestApplication> createApplication(
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @RequestBody RestApplication application) {
+            @RequestBody CreateRestApplicationRequest request) {
         final CreateRestApplicationOutput output = super.serviceProcessor.process(CreateRestApplicationInput.builder()
                 .projectId(projectId)
-                .application(application)
+                .name(request.getName())
                 .build());
         return ResponseEntity.ok(output.getSavedRestApplication());
     }

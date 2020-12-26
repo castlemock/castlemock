@@ -18,7 +18,6 @@ package com.castlemock.core.mock.rest.service.project.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
 
 import java.util.Objects;
 
@@ -33,12 +32,12 @@ public final class UpdateRestApplicationInput implements Input {
     @NotNull
     private final String restApplicationId;
     @NotNull
-    private final RestApplication restApplication;
+    private final String name;
 
     private UpdateRestApplicationInput(final Builder builder) {
         this.restProjectId = Objects.requireNonNull(builder.restProjectId);
         this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restApplication = Objects.requireNonNull(builder.restApplication);
+        this.name = Objects.requireNonNull(builder.name);
     }
 
     public String getRestProjectId() {
@@ -49,8 +48,8 @@ public final class UpdateRestApplicationInput implements Input {
         return restApplicationId;
     }
 
-    public RestApplication getRestApplication() {
-        return restApplication;
+    public String getName() {
+        return name;
     }
 
     public static Builder builder(){
@@ -61,7 +60,7 @@ public final class UpdateRestApplicationInput implements Input {
 
         private String restProjectId;
         private String restApplicationId;
-        private RestApplication restApplication;
+        private String name;
 
         public Builder restProjectId(final String restProjectId){
             this.restProjectId = restProjectId;
@@ -73,8 +72,8 @@ public final class UpdateRestApplicationInput implements Input {
             return this;
         }
 
-        public Builder restApplication(final RestApplication restApplication){
-            this.restApplication = restApplication;
+        public Builder name(final String name){
+            this.name = name;
             return this;
         }
 

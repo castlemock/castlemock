@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Karl Dahlgren
+ * Copyright 2015 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.soap.service.project.input;
+package com.castlemock.web.mock.soap.web.rest.controller.model;
 
-import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapXPathExpression;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,36 +32,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Karl Dahlgren
  * @since 1.52
  */
-public final class UpdateSoapMockResponseInput implements Input {
+@XmlRootElement
+public class UpdateSoapMockResponseRequest {
 
-    @NotNull
-    private final String projectId;
-    @NotNull
-    private final String portId;
-    @NotNull
-    private final String operationId;
-    @NotNull
-    private final String mockResponseId;
-    @NotNull
-    private final String name;
-    @NotNull
-    private final String body;
-    @NotNull
-    private final SoapMockResponseStatus status;
-    @NotNull
-    private final Integer httpStatusCode;
-    @NotNull
-    private final boolean usingExpressions;
-    @NotNull
-    private final List<HttpHeader> httpHeaders;
-    @NotNull
-    private final List<SoapXPathExpression> xpathExpressions;
+    private String name;
+    private String body;
+    private SoapMockResponseStatus status;
+    private Integer httpStatusCode;
+    private Boolean usingExpressions;
+    private List<HttpHeader> httpHeaders;
+    private List<SoapXPathExpression> xpathExpressions;
 
-    public UpdateSoapMockResponseInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-        this.mockResponseId = Objects.requireNonNull(builder.mockResponseId);
+    public UpdateSoapMockResponseRequest(){
+
+    }
+
+    private UpdateSoapMockResponseRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
         this.body = Objects.requireNonNull(builder.body);
         this.status = Objects.requireNonNull(builder.status);
@@ -70,59 +57,77 @@ public final class UpdateSoapMockResponseInput implements Input {
         this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
     }
 
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public String getPortId() {
-        return portId;
-    }
-
-    public String getOperationId() {
-        return operationId;
-    }
-
-    public String getMockResponseId() {
-        return mockResponseId;
-    }
-
+    @XmlElement
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlElement
     public String getBody() {
         return body;
     }
 
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    @XmlElement
     public SoapMockResponseStatus getStatus() {
         return status;
     }
 
+    public void setStatus(SoapMockResponseStatus status) {
+        this.status = status;
+    }
+
+    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
+    public void setHttpStatusCode(Integer httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
+    }
+
+    @XmlElement
     public boolean isUsingExpressions() {
         return usingExpressions;
     }
 
+    public void setUsingExpressions(boolean usingExpressions) {
+        this.usingExpressions = usingExpressions;
+    }
+
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
 
+    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+        this.httpHeaders = httpHeaders;
+    }
+
+    @XmlElementWrapper(name = "xpathExpressions")
+    @XmlElement(name = "xpathExpression")
     public List<SoapXPathExpression> getXpathExpressions() {
         return xpathExpressions;
     }
 
-    public static Builder builder(){
+    public void setXpathExpressions(List<SoapXPathExpression> xpathExpressions) {
+        this.xpathExpressions = xpathExpressions;
+    }
+
+    public static Builder builder() {
         return new Builder();
     }
 
-    public static class Builder {
-        private String projectId;
-        private String portId;
-        private String operationId;
-        private String mockResponseId;
+    public static final class Builder {
+
         private String name;
         private String body;
         private SoapMockResponseStatus status;
@@ -131,28 +136,7 @@ public final class UpdateSoapMockResponseInput implements Input {
         private List<HttpHeader> httpHeaders;
         private List<SoapXPathExpression> xpathExpressions;
 
-        private Builder(){
-
-        }
-
-        public Builder projectId(final String projectId){
-            this.projectId = projectId;
-            return this;
-        }
-
-        public Builder portId(final String portId){
-            this.portId = portId;
-            return this;
-        }
-
-        public Builder operationId(final String operationId){
-            this.operationId = operationId;
-            return this;
-        }
-
-        public Builder mockResponseId(final String mockResponseId){
-            this.mockResponseId = mockResponseId;
-            return this;
+        private Builder() {
         }
 
         public Builder name(final String name) {
@@ -190,8 +174,8 @@ public final class UpdateSoapMockResponseInput implements Input {
             return this;
         }
 
-        public UpdateSoapMockResponseInput build(){
-            return new UpdateSoapMockResponseInput(this);
+        public UpdateSoapMockResponseRequest build() {
+            return new UpdateSoapMockResponseRequest(this);
         }
     }
 }

@@ -31,10 +31,13 @@ class UpdateOperationModal extends PureComponent {
         this.onSimulateNetworkDelayChange = this.onSimulateNetworkDelayChange.bind(this);
         this.onNetworkDelayChange = this.onNetworkDelayChange.bind(this);
         this.onMockOnFailureChange = this.onMockOnFailureChange.bind(this);
-        this.onOperationIdentifyStrategy = this.onOperationIdentifyStrategy.bind(this);
+        this.onOperationIdentifyStrategyChange = this.onOperationIdentifyStrategyChange.bind(this);
+        this.onDefaultMockResponseIdChange = this.onDefaultMockResponseIdChange.bind(this);
+
         this.getOperation = this.getOperation.bind(this);
         this.state = {
-            updateOperation: {}
+            updateOperation: {},
+            mockResponses: []
         };
 
         this.getOperation(props.projectId, props.portId, props.operationId)
@@ -52,8 +55,11 @@ class UpdateOperationModal extends PureComponent {
                         simulateNetworkDelay: response.data.simulateNetworkDelay,
                         networkDelay: response.data.networkDelay,
                         mockOnFailure: response.data.mockOnFailure,
-                        identifyStrategy: response.data.identifyStrategy
-                    }});
+                        identifyStrategy: response.data.identifyStrategy,
+                        defaultMockResponseId: response.data.defaultMockResponseId
+                    },
+                    mockResponses: response.data.mockResponses
+                });
             })
             .catch(error => {
                 validateErrorResponse(error)
@@ -108,10 +114,18 @@ class UpdateOperationModal extends PureComponent {
         });
     }
 
-    onOperationIdentifyStrategy(identifyStrategy){
+    onOperationIdentifyStrategyChange(identifyStrategy){
         this.setState({ updateOperation: {
                 ...this.state.updateOperation,
                 identifyStrategy: identifyStrategy
+            }
+        });
+    }
+
+    onDefaultMockResponseIdChange(defaultMockResponseId){
+        this.setState({ updateOperation: {
+                ...this.state.updateOperation,
+                defaultMockResponseId: defaultMockResponseId
             }
         });
     }
@@ -172,7 +186,7 @@ class UpdateOperationModal extends PureComponent {
                                 <div className="col-sm-9">
                                     <select id="inputStatus" className="form-control"
                                             value={this.state.updateOperation.identifyStrategy}
-                                            onChange={event => this.onOperationIdentifyStrategy(event.target.value)}>
+                                            onChange={event => this.onOperationIdentifyStrategyChange(event.target.value)}>
                                         <option value={"ELEMENT"}>{operationIdentifyStrategy("ELEMENT")}</option>
                                         <option value={"ELEMENT_NAMESPACE"}>{operationIdentifyStrategy("ELEMENT_NAMESPACE")}</option>
                                     </select>
@@ -201,10 +215,14 @@ class UpdateOperationModal extends PureComponent {
                                 </div>
                             </div>
                             <div className="form-group row">
-                                <label htmlFor="newOperationResponseStrategy" className="col-sm-3 col-form-label">Default response</label>
+                                <label className="col-sm-3 col-form-label">Default response</label>
                                 <div className="col-sm-9">
-                                    <select id="inputStatus" className="form-control" >
-
+                                    <select id="inputStatus" className="form-control"
+                                            onChange={event => this.onDefaultMockResponseIdChange(event.target.value)}>
+                                        <option value={null}> -- select an option -- </option>
+                                        {this.state.mockResponses.map(mockResponse =>
+                                            <option key={mockResponse.id} value={mockResponse.id} selected={mockResponse.id === this.state.updateOperation.defaultMockResponseId}>{mockResponse.name}</option>
+                                        )};
                                     </select>
                                 </div>
                             </div>

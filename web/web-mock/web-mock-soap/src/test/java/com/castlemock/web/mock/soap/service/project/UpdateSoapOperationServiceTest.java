@@ -58,7 +58,14 @@ public class UpdateSoapOperationServiceTest {
                 .projectId(projectId)
                 .portId(portId)
                 .operationId(operation.getId())
-                .operation(operation)
+                .status(operation.getStatus())
+                .responseStrategy(operation.getResponseStrategy())
+                .simulateNetworkDelay(operation.getSimulateNetworkDelay())
+                .networkDelay(operation.getNetworkDelay())
+                .mockOnFailure(operation.getMockOnFailure())
+                .identifyStrategy(operation.getIdentifyStrategy())
+                .forwardedEndpoint(operation.getForwardedEndpoint())
+                .defaultMockResponseId(operation.getDefaultMockResponseId())
                 .build();
         final ServiceTask<UpdateSoapOperationInput> serviceTask = new ServiceTask<UpdateSoapOperationInput>(input);
 

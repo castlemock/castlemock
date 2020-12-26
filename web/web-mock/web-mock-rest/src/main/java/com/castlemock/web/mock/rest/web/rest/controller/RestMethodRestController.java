@@ -23,6 +23,8 @@ import com.castlemock.core.mock.rest.service.project.output.DeleteRestMethodOutp
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.UpdateRestMethodOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.mock.rest.web.rest.controller.model.CreateRestMethodRequest;
+import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestMethodRequest;
 import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestMockResponseStatusesRequest;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -99,13 +101,20 @@ public class RestMethodRestController extends AbstractRestController {
             @PathVariable(value = "resourceId") final String resourceId,
             @ApiParam(name = "methodId", value = "The id of the method")
             @PathVariable(value = "methodId") final String methodId,
-            @RequestBody RestMethod restMethod) {
+            @RequestBody UpdateRestMethodRequest request) {
         final UpdateRestMethodOutput output = super.serviceProcessor.process(UpdateRestMethodInput.builder()
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
                 .restResourceId(resourceId)
                 .restMethodId(methodId)
-                .restMethod(restMethod)
+                .name(request.getName())
+                .defaultMockResponseId(request.getDefaultMockResponseId())
+                .forwardedEndpoint(request.getForwardedEndpoint())
+                .httpMethod(request.getHttpMethod())
+                .networkDelay(request.getNetworkDelay())
+                .responseStrategy(request.getResponseStrategy())
+                .simulateNetworkDelay(request.getSimulateNetworkDelay())
+                .status(request.getStatus())
                 .build());
         return ResponseEntity.ok(output.getRestMethod());
     }
@@ -124,12 +133,13 @@ public class RestMethodRestController extends AbstractRestController {
             @PathVariable(value = "applicationId") final String applicationId,
             @ApiParam(name = "resourceId", value = "The id of the resource")
             @PathVariable(value = "resourceId") final String resourceId,
-            @RequestBody RestMethod restMethod) {
+            @RequestBody CreateRestMethodRequest request) {
        final CreateRestMethodOutput output = super.serviceProcessor.process(CreateRestMethodInput.builder()
                 .projectId(projectId)
                 .applicationId(applicationId)
                 .resourceId(resourceId)
-                .method(restMethod)
+                .name(request.getName())
+                .httpMethod(request.getHttpMethod())
                 .build());
        return ResponseEntity.ok(output.getCreatedRestMethod());
     }

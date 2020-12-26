@@ -60,7 +60,13 @@ public class UpdateSoapMockResponseServiceTest {
                 .portId(portId)
                 .operationId(operation)
                 .mockResponseId(mockResponse.getId())
-                .mockResponse(mockResponse)
+                .body(mockResponse.getBody())
+                .httpHeaders(mockResponse.getHttpHeaders())
+                .httpStatusCode(mockResponse.getHttpStatusCode())
+                .name(mockResponse.getName())
+                .status(mockResponse.getStatus())
+                .usingExpressions(mockResponse.isUsingExpressions())
+                .xpathExpressions(mockResponse.getXpathExpressions())
                 .build();
         final ServiceTask<UpdateSoapMockResponseInput> serviceTask = new ServiceTask<UpdateSoapMockResponseInput>(input);
 

@@ -41,8 +41,9 @@ public class CreateRestApplicationService extends AbstractRestProjectService imp
     @Override
     public ServiceResult<CreateRestApplicationOutput> process(final ServiceTask<CreateRestApplicationInput> serviceTask) {
         final CreateRestApplicationInput input = serviceTask.getInput();
-        final RestApplication application = input.getApplication();
+        final RestApplication application = new RestApplication();
         application.setProjectId(input.getProjectId());
+        application.setName(input.getName());
         final RestApplication createdRestApplication = this.applicationRepository.save(application);
         return createServiceResult(CreateRestApplicationOutput.builder()
                 .savedRestApplication(createdRestApplication)

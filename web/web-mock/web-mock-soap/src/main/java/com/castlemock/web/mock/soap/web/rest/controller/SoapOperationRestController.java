@@ -24,11 +24,20 @@ import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOut
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapOperationOutput;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
 import com.castlemock.web.mock.soap.web.rest.controller.model.UpdateSoapMockResponseStatusesRequest;
-import io.swagger.annotations.*;
+import com.castlemock.web.mock.soap.web.rest.controller.model.UpdateSoapOperationRequest;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("api/rest/soap")
@@ -69,12 +78,19 @@ public class SoapOperationRestController extends AbstractRestController {
             @PathVariable(value = "portId") final String portId,
             @ApiParam(name = "operationId", value = "The id of the operation")
             @PathVariable(value = "operationId") final String operationId,
-            @RequestBody SoapOperation operation) {
+            @RequestBody final UpdateSoapOperationRequest request) {
         final UpdateSoapOperationOutput output = super.serviceProcessor.process(UpdateSoapOperationInput.builder()
                 .projectId(projectId)
                 .portId(portId)
                 .operationId(operationId)
-                .operation(operation)
+                .defaultMockResponseId(request.getDefaultMockResponseId())
+                .forwardedEndpoint(request.getForwardedEndpoint())
+                .identifyStrategy(request.getIdentifyStrategy())
+                .mockOnFailure(request.getMockOnFailure())
+                .networkDelay(request.getNetworkDelay())
+                .responseStrategy(request.getResponseStrategy())
+                .simulateNetworkDelay(request.getSimulateNetworkDelay())
+                .status(request.getStatus())
                 .build());
         return ResponseEntity.ok(output.getOperation());
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Karl Dahlgren
+ * Copyright 2020 Karl Dahlgren
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,119 +14,151 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.rest.service.project.input;
+package com.castlemock.web.mock.rest.web.rest.controller.model;
 
-import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
 import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
- * @since 1.0
+ * @since 1.52
  */
-public final class UpdateRestMethodInput implements Input {
+@XmlRootElement
+public class UpdateRestMethodRequest {
 
-    @NotNull
-    private final String restProjectId;
-    @NotNull
-    private final String restApplicationId;
-    @NotNull
-    private final String restResourceId;
-    @NotNull
-    private final String restMethodId;
-    @NotNull
     private String name;
-    @NotNull
     private HttpMethod httpMethod;
     private String forwardedEndpoint;
-    @NotNull
     private RestMethodStatus status;
-    @NotNull
     private RestResponseStrategy responseStrategy;
-    @NotNull
     private boolean simulateNetworkDelay;
-    @NotNull
     private long networkDelay;
     private String defaultMockResponseId;
 
-    private UpdateRestMethodInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
-        this.restMethodId = Objects.requireNonNull(builder.restMethodId);
+    public UpdateRestMethodRequest(){
+
+    }
+
+    private UpdateRestMethodRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
         this.httpMethod = Objects.requireNonNull(builder.httpMethod);
-        this.forwardedEndpoint = builder.forwardedEndpoint;
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
         this.status = Objects.requireNonNull(builder.status);
         this.responseStrategy = Objects.requireNonNull(builder.responseStrategy);
         this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
         this.networkDelay = Objects.requireNonNull(builder.networkDelay);
-        this.defaultMockResponseId = builder.defaultMockResponseId;
+        this.defaultMockResponseId = Objects.requireNonNull(builder.defaultMockResponseId);
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
-    }
-
-    public String getRestApplicationId() {
-        return restApplicationId;
-    }
-
-    public String getRestResourceId() {
-        return restResourceId;
-    }
-
-    public String getRestMethodId() {
-        return restMethodId;
-    }
-
+    @XmlElement
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    public Optional<String> getForwardedEndpoint() {
-        return Optional.ofNullable(forwardedEndpoint);
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
+    @XmlElement
+    public String getForwardedEndpoint() {
+        return forwardedEndpoint;
+    }
+
+    public void setForwardedEndpoint(String forwardedEndpoint) {
+        this.forwardedEndpoint = forwardedEndpoint;
+    }
+
+    @XmlElement
     public RestMethodStatus getStatus() {
         return status;
     }
 
+    public void setStatus(RestMethodStatus status) {
+        this.status = status;
+    }
+
+    @XmlElement
     public RestResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
 
+    public void setResponseStrategy(RestResponseStrategy responseStrategy) {
+        this.responseStrategy = responseStrategy;
+    }
+
+    @XmlElement
     public boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
     }
 
+    public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
+        this.simulateNetworkDelay = simulateNetworkDelay;
+    }
+
+    @XmlElement
     public long getNetworkDelay() {
         return networkDelay;
     }
 
-    public Optional<String> getDefaultMockResponseId() {
-        return Optional.ofNullable(defaultMockResponseId);
+    public void setNetworkDelay(long networkDelay) {
+        this.networkDelay = networkDelay;
     }
 
-    public static Builder builder(){
+    @XmlElement
+    public String getDefaultMockResponseId() {
+        return defaultMockResponseId;
+    }
+
+    public void setDefaultMockResponseId(String defaultMockResponseId) {
+        this.defaultMockResponseId = defaultMockResponseId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UpdateRestMethodRequest that = (UpdateRestMethodRequest) o;
+        return simulateNetworkDelay == that.simulateNetworkDelay && networkDelay == that.networkDelay && Objects.equals(name, that.name) && httpMethod == that.httpMethod && Objects.equals(forwardedEndpoint, that.forwardedEndpoint) && status == that.status && responseStrategy == that.responseStrategy && Objects.equals(defaultMockResponseId, that.defaultMockResponseId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, httpMethod, forwardedEndpoint, status, responseStrategy, simulateNetworkDelay, networkDelay, defaultMockResponseId);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestMethodRequest{" +
+                "name='" + name + '\'' +
+                ", httpMethod=" + httpMethod +
+                ", forwardedEndpoint='" + forwardedEndpoint + '\'' +
+                ", status=" + status +
+                ", responseStrategy=" + responseStrategy +
+                ", simulateNetworkDelay=" + simulateNetworkDelay +
+                ", networkDelay=" + networkDelay +
+                ", defaultMockResponseId='" + defaultMockResponseId + '\'' +
+                '}';
+    }
+
+    public static Builder builder() {
         return new Builder();
     }
 
     public static final class Builder {
-
-        private String restProjectId;
-        private String restApplicationId;
-        private String restResourceId;
-        private String restMethodId;
         private String name;
         private HttpMethod httpMethod;
         private String forwardedEndpoint;
@@ -136,24 +168,7 @@ public final class UpdateRestMethodInput implements Input {
         private Long networkDelay;
         private String defaultMockResponseId;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
-            return this;
-        }
-
-        public Builder restApplicationId(final String restApplicationId){
-            this.restApplicationId = restApplicationId;
-            return this;
-        }
-
-        public Builder restResourceId(final String restResourceId){
-            this.restResourceId = restResourceId;
-            return this;
-        }
-
-        public Builder restMethodId(final String restMethodId){
-            this.restMethodId = restMethodId;
-            return this;
+        private Builder() {
         }
 
         public Builder name(final String name) {
@@ -196,12 +211,8 @@ public final class UpdateRestMethodInput implements Input {
             return this;
         }
 
-
-        public UpdateRestMethodInput build(){
-            return new UpdateRestMethodInput(this);
+        public UpdateRestMethodRequest build() {
+            return new UpdateRestMethodRequest(this);
         }
-
     }
-
-
 }

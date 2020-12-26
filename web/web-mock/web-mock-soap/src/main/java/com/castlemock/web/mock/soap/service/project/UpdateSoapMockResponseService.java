@@ -44,16 +44,15 @@ public class UpdateSoapMockResponseService extends AbstractSoapProjectService im
     @Override
     public ServiceResult<UpdateSoapMockResponseOutput> process(final ServiceTask<UpdateSoapMockResponseInput> serviceTask) {
         final UpdateSoapMockResponseInput input = serviceTask.getInput();
-        final SoapMockResponse updated = input.getMockResponse();
         final SoapMockResponse mockResponse = this.mockResponseRepository.findOne(input.getMockResponseId());
 
-        mockResponse.setName(updated.getName());
-        mockResponse.setBody(updated.getBody());
-        mockResponse.setHttpStatusCode(updated.getHttpStatusCode());
-        mockResponse.setStatus(updated.getStatus());
-        mockResponse.setHttpHeaders(updated.getHttpHeaders());
-        mockResponse.setUsingExpressions(updated.isUsingExpressions());
-        mockResponse.setXpathExpressions(updated.getXpathExpressions());
+        mockResponse.setName(input.getName());
+        mockResponse.setBody(input.getBody());
+        mockResponse.setHttpStatusCode(input.getHttpStatusCode());
+        mockResponse.setStatus(input.getStatus());
+        mockResponse.setHttpHeaders(input.getHttpHeaders());
+        mockResponse.setUsingExpressions(input.isUsingExpressions());
+        mockResponse.setXpathExpressions(input.getXpathExpressions());
 
         final SoapMockResponse updatedSoapMockResponse = mockResponseRepository.update(input.getMockResponseId(), mockResponse);
         return createServiceResult(UpdateSoapMockResponseOutput.builder()

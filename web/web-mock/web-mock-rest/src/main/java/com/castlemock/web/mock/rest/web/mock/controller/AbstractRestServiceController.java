@@ -23,11 +23,9 @@ import com.castlemock.core.basis.model.http.domain.HttpParameter;
 import com.castlemock.core.basis.utility.JsonPathUtility;
 import com.castlemock.core.basis.utility.XPathUtility;
 import com.castlemock.core.basis.utility.parser.TextParser;
-import com.castlemock.core.basis.utility.parser.expression.BodyXPathExpression;
-import com.castlemock.core.basis.utility.parser.expression.UrlHostExpression;
-import com.castlemock.core.basis.utility.parser.expression.BodyJsonPathExpression;
 import com.castlemock.core.basis.utility.parser.expression.PathParameterExpression;
 import com.castlemock.core.basis.utility.parser.expression.QueryStringExpression;
+import com.castlemock.core.basis.utility.parser.expression.UrlHostExpression;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentMap;
 import com.castlemock.core.basis.utility.parser.expression.argument.ExpressionArgumentString;
@@ -45,7 +43,7 @@ import com.castlemock.core.mock.rest.service.event.input.CreateRestEventInput;
 import com.castlemock.core.mock.rest.service.project.input.CreateRestMockResponseInput;
 import com.castlemock.core.mock.rest.service.project.input.IdentifyRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.input.UpdateCurrentRestMockResponseSequenceIndexInput;
-import com.castlemock.core.mock.rest.service.project.input.UpdateRestMethodInput;
+import com.castlemock.core.mock.rest.service.project.input.UpdateRestMethodsStatusInput;
 import com.castlemock.core.mock.rest.service.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
@@ -57,8 +55,8 @@ import com.castlemock.web.mock.rest.utility.compare.RestMockResponseNameComparat
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -321,7 +319,11 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                                          final HttpServletRequest httpServletRequest) {
         final RestResponse response = forwardRequest(restRequest, projectId, applicationId, resourceId,
                 restMethod, pathParameters, httpServletRequest);
-        final RestMockResponse mockResponse = RestMockResponse.builder()
+        serviceProcessor.processAsync(CreateRestMockResponseInput.builder()
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
+                .methodId(restMethod.getId())
                 .name(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(new Date()))
                 .body(response.getBody())
                 .methodId(restMethod.getId())
@@ -329,13 +331,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 .httpHeaders(response.getHttpHeaders())
                 .httpStatusCode(response.getHttpStatusCode())
                 .usingExpressions(Boolean.FALSE)
-                .build();
-        serviceProcessor.processAsync(CreateRestMockResponseInput.builder()
-                .projectId(projectId)
-                .applicationId(applicationId)
-                .resourceId(resourceId)
-                .methodId(restMethod.getId())
-                .mockResponse(mockResponse)
                 .build());
         return response;
     }
@@ -362,13 +357,12 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final RestResponse response =
                 forwardRequestAndRecordResponse(restRequest, projectId,
                         applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
-        restMethod.setStatus(RestMethodStatus.MOCKED);
-        serviceProcessor.process(UpdateRestMethodInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resourceId)
-                .restMethodId(restMethod.getId())
-                .restMethod(restMethod)
+        serviceProcessor.process(UpdateRestMethodsStatusInput.builder()
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
+                .methodId(restMethod.getId())
+                .methodStatus(RestMethodStatus.MOCKED)
                 .build());
         return response;
     }

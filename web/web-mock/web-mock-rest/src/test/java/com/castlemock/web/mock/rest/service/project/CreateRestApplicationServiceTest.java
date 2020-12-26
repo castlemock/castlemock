@@ -31,6 +31,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.ArgumentMatchers.any;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -52,18 +54,18 @@ public class CreateRestApplicationServiceTest {
     public void testProcess(){
         final String projectId = "ProjectId";
         final RestApplication application = RestApplicationTestBuilder.builder().build();
-        Mockito.when(applicationRepository.save(Mockito.any(RestApplication.class))).thenReturn(application);
+        Mockito.when(applicationRepository.save(any(RestApplication.class))).thenReturn(application);
 
         final CreateRestApplicationInput input = CreateRestApplicationInput.builder()
                 .projectId(projectId)
-                .application(application)
+                .name(application.getName())
                 .build();
         final ServiceTask<CreateRestApplicationInput> serviceTask = new ServiceTask<CreateRestApplicationInput>(input);
         final ServiceResult<CreateRestApplicationOutput> serviceResult = service.process(serviceTask);
 
         Assert.assertNotNull(serviceResult.getOutput());
         Assert.assertEquals(application, serviceResult.getOutput().getSavedRestApplication());
-        Mockito.verify(applicationRepository, Mockito.times(1)).save(application);
+        Mockito.verify(applicationRepository, Mockito.times(1)).save(any());
     }
 
 }

@@ -14,102 +14,105 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.soap.service.project.input;
+package com.castlemock.web.mock.soap.web.rest.controller.model;
 
-import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
 import com.castlemock.core.mock.soap.model.project.domain.SoapXPathExpression;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
- * @since 1.0
+ * @since 1.52
  */
-public final class CreateSoapMockResponseInput implements Input {
+public class CreateSoapMockResponseRequest {
 
-    @NotNull
-    private final String projectId;
-    @NotNull
-    private final String portId;
-    @NotNull
-    private final String operationId;
-    @NotNull
-    private final String name;
-    @NotNull
-    private final SoapMockResponseStatus status;
-    private final String body;
-    private final Integer httpStatusCode;
-    private final Boolean usingExpressions;
-    private final List<HttpHeader> httpHeaders;
-    private final List<SoapXPathExpression> xpathExpressions;
+    private String name;
+    private String body;
+    private SoapMockResponseStatus status;
+    private Integer httpStatusCode;
+    private Boolean usingExpressions;
+    private List<HttpHeader> httpHeaders;
+    private List<SoapXPathExpression> xpathExpressions;
 
+    public CreateSoapMockResponseRequest(){
 
-    private CreateSoapMockResponseInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
+    }
+
+    private CreateSoapMockResponseRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
-        this.body = builder.body;
         this.status = Objects.requireNonNull(builder.status);
+        this.body = builder.body;
         this.httpStatusCode = builder.httpStatusCode;
         this.usingExpressions = builder.usingExpressions;
         this.httpHeaders = builder.httpHeaders;
         this.xpathExpressions = builder.xpathExpressions;
     }
 
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public String getPortId() {
-        return portId;
-    }
-
-    public String getOperationId() {
-        return operationId;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public SoapMockResponseStatus getStatus() {
         return status;
     }
 
-    public Optional<String> getBody() {
-        return Optional.ofNullable(body);
+    public void setStatus(SoapMockResponseStatus status) {
+        this.status = status;
     }
 
-    public Optional<Integer> getHttpStatusCode() {
-        return Optional.ofNullable(httpStatusCode);
+    public String getBody() {
+        return body;
     }
 
-    public Optional<Boolean> getUsingExpressions() {
-        return Optional.ofNullable(usingExpressions);
+    public void setBody(String body) {
+        this.body = body;
     }
 
-    public Optional<List<HttpHeader>> getHttpHeaders() {
-        return Optional.ofNullable(httpHeaders);
+    public Integer getHttpStatusCode() {
+        return httpStatusCode;
     }
 
-    public Optional<List<SoapXPathExpression>> getXpathExpressions() {
-        return Optional.ofNullable(xpathExpressions);
+    public void setHttpStatusCode(Integer httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
     }
 
-    public static Builder builder(){
+    public Boolean getUsingExpressions() {
+        return usingExpressions;
+    }
+
+    public void setUsingExpressions(Boolean usingExpressions) {
+        this.usingExpressions = usingExpressions;
+    }
+
+    public List<HttpHeader> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
+        this.httpHeaders = httpHeaders;
+    }
+
+    public List<SoapXPathExpression> getXpathExpressions() {
+        return xpathExpressions;
+    }
+
+    public void setXpathExpressions(List<SoapXPathExpression> xpathExpressions) {
+        this.xpathExpressions = xpathExpressions;
+    }
+
+    public static Builder builder() {
         return new Builder();
     }
 
-    public static class Builder {
-        private String projectId;
-        private String portId;
-        private String operationId;
+    public static final class Builder {
+
         private String name;
         private String body;
         private SoapMockResponseStatus status;
@@ -118,23 +121,7 @@ public final class CreateSoapMockResponseInput implements Input {
         private List<HttpHeader> httpHeaders;
         private List<SoapXPathExpression> xpathExpressions;
 
-        private Builder(){
-
-        }
-
-        public Builder projectId(final String projectId){
-            this.projectId = projectId;
-            return this;
-        }
-
-        public Builder portId(final String portId){
-            this.portId = portId;
-            return this;
-        }
-
-        public Builder operationId(final String operationId){
-            this.operationId = operationId;
-            return this;
+        private Builder() {
         }
 
         public Builder name(final String name) {
@@ -172,9 +159,8 @@ public final class CreateSoapMockResponseInput implements Input {
             return this;
         }
 
-        public CreateSoapMockResponseInput build(){
-            return new CreateSoapMockResponseInput(this);
+        public CreateSoapMockResponseRequest build() {
+            return new CreateSoapMockResponseRequest(this);
         }
     }
-
 }

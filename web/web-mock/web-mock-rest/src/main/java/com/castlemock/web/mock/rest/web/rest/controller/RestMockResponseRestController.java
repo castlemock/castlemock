@@ -20,7 +20,9 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.service.project.input.*;
 import com.castlemock.core.mock.rest.service.project.output.*;
 import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.mock.rest.web.rest.controller.model.CreateRestMockResponseRequest;
 import com.castlemock.web.mock.rest.web.rest.controller.model.DuplicateRestMockOperationsRequest;
+import com.castlemock.web.mock.rest.web.rest.controller.model.UpdateRestMockResponseRequest;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -105,14 +107,24 @@ public class RestMockResponseRestController extends AbstractRestController {
             @PathVariable(value = "methodId") final String methodId,
             @ApiParam(name = "responseId", value = "The id of the response")
             @PathVariable(value = "responseId") final String responseId,
-            @RequestBody RestMockResponse mockResponse) {
+            @RequestBody UpdateRestMockResponseRequest request) {
         final UpdateRestMockResponseOutput output = super.serviceProcessor.process(UpdateRestMockResponseInput.builder()
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
                 .restResourceId(resourceId)
                 .restMethodId(methodId)
                 .restMockResponseId(responseId)
-                .restMockResponse(mockResponse)
+                .body(request.getBody())
+                .contentEncodings(request.getContentEncodings())
+                .headerQueries(request.getHeaderQueries())
+                .httpHeaders(request.getHttpHeaders())
+                .httpStatusCode(request.getHttpStatusCode())
+                .jsonPathExpressions(request.getJsonPathExpressions())
+                .name(request.getName())
+                .parameterQueries(request.getParameterQueries())
+                .status(request.getStatus())
+                .usingExpressions(request.isUsingExpressions())
+                .xpathExpressions(request.getXpathExpressions())
                 .build());
         return ResponseEntity.ok(output.getUpdatedRestMockResponse());
     }
@@ -132,13 +144,23 @@ public class RestMockResponseRestController extends AbstractRestController {
             @PathVariable(value = "resourceId") final String resourceId,
             @ApiParam(name = "methodId", value = "The id of the method")
             @PathVariable(value = "methodId") final String methodId,
-            @RequestBody RestMockResponse mockResponse) {
+            @RequestBody CreateRestMockResponseRequest request) {
         final CreateRestMockResponseOutput output = super.serviceProcessor.process(CreateRestMockResponseInput.builder()
                 .projectId(projectId)
                 .applicationId(applicationId)
                 .resourceId(resourceId)
                 .methodId(methodId)
-                .mockResponse(mockResponse)
+                .body(request.getBody())
+                .contentEncodings(request.getContentEncodings())
+                .headerQueries(request.getHeaderQueries())
+                .httpHeaders(request.getHttpHeaders())
+                .httpStatusCode(request.getHttpStatusCode())
+                .jsonPathExpressions(request.getJsonPathExpressions())
+                .name(request.getName())
+                .parameterQueries(request.getParameterQueries())
+                .status(request.getStatus())
+                .usingExpressions(request.isUsingExpressions())
+                .xpathExpressions(request.getXpathExpressions())
                 .build());
         return ResponseEntity.ok(output.getRestMockResponse());
     }
