@@ -63,7 +63,7 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                    .antMatchers("/api/rest/core/login", "/api/rest/core/version")
+                    .antMatchers("/api/rest/core/login", "/api/rest/core/version", "/doc/api/rest")
                     .permitAll()
                 .and()
                 .antMatcher("/api/rest/**")
@@ -71,14 +71,15 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest()
                     .authenticated()
                 .and()
+                    .httpBasic()
+                    .authenticationEntryPoint(new NoPopupBasicAuthenticationEntryPoint())
+                .and()
                     .csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.headers().cacheControl().disable();
-
         httpSecurity.addFilterBefore(securityInterceptor, UsernamePasswordAuthenticationFilter.class);
-
     }
 
     @Bean

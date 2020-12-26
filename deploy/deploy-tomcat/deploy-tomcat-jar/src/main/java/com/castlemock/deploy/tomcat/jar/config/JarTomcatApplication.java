@@ -57,8 +57,7 @@ public class JarTomcatApplication extends Application implements WebApplicationI
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
         return application.sources(JarTomcatApplication.class, MvcConfig.class, SecurityConfig.class,
-                WebSecurityConfig.class, RestSecurityConfig.class, MockSecurityConfig.class,
-                PropertyConfig.class, TomcatConfig.class);
+                RestSecurityConfig.class, MockSecurityConfig.class, PropertyConfig.class, TomcatConfig.class);
     }
 
     @Bean

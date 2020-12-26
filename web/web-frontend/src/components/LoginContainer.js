@@ -118,7 +118,7 @@ class LoginContainer extends PureComponent {
                                     </div>
 
                                     <div id="login-footer-info-api">
-                                        <a href="/doc/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
+                                        <a href="/castlemock/doc/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
                                     </div>
                                 </div>
                             )}

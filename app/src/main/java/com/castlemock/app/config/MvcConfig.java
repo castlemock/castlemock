@@ -41,11 +41,17 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/public/")
                 .resourceChain(false)
                 .addResolver(new PushStateResourceResolver());
+
+        registry.
+                addResourceHandler("/swagger-ui/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
+                .resourceChain(false);
     }
 
     @Override
     public void addViewControllers(final ViewControllerRegistry registry ) {
         registry.addViewController( "/" ).setViewName("forward:/index.html");
+        registry.addViewController("/swagger-ui/").setViewName("forward:/swagger-ui/index.html");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 

@@ -57,8 +57,7 @@ public class JarJettyApplication extends Application implements WebApplicationIn
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
         return application.sources(JarJettyApplication.class, MvcConfig.class, SecurityConfig.class,
-                WebSecurityConfig.class, RestSecurityConfig.class, MockSecurityConfig.class,
-                PropertyConfig.class, JettyConfig.class);
+                RestSecurityConfig.class, MockSecurityConfig.class, PropertyConfig.class, JettyConfig.class);
     }
 
     @Bean
