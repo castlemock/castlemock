@@ -39,12 +39,13 @@ class ProjectOverview extends PureComponent {
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.nameFormat = this.nameFormat.bind(this);
         this.typeFormat = this.typeFormat.bind(this);
+        this.setImportProjectType = this.setImportProjectType.bind(this);
+        this.setImportProjectFile = this.setImportProjectFile.bind(this);
         this.setNewProjectName = this.setNewProjectName.bind(this);
         this.setNewProjectDescription = this.setNewProjectDescription.bind(this);
         this.setNewProjectType = this.setNewProjectType.bind(this);
         this.onCreateProjectClick = this.onCreateProjectClick.bind(this);
         this.onImportProjectClick = this.onImportProjectClick.bind(this);
-        this.onExportProjectsClick = this.onExportProjectsClick.bind(this);
         this.onDeleteProjectsClick = this.onDeleteProjectsClick.bind(this);
         this.typeHeaderStyle = this.typeHeaderStyle.bind(this);
 
@@ -113,6 +114,9 @@ class ProjectOverview extends PureComponent {
                 description: "",
                 projectType: "REST"
             },
+            importProjectProjectType: 'REST',
+            importProjectSelectedFile: null,
+            importProjectSelectedFileName: "",
             unauthorized: false
         };
 
@@ -224,6 +228,20 @@ class ProjectOverview extends PureComponent {
         }
     }
 
+    setImportProjectType(projectType) {
+        this.setState({
+            importProjectProjectType: projectType
+        });
+    }
+
+    setImportProjectFile(event) {
+        let selectedFile = event.target.files[0];
+        this.setState({
+            importProjectSelectedFile: selectedFile,
+            importProjectSelectedFileName: selectedFile.name
+        });
+    }
+
     onCreateProjectClick(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -238,11 +256,17 @@ class ProjectOverview extends PureComponent {
     }
 
     onImportProjectClick() {
+        let data = new FormData();
+        data.append('file', this.state.importProjectSelectedFile);
 
-    }
-
-    onExportProjectsClick() {
-
+        axios
+            .post(process.env.PUBLIC_URL + "/api/rest/core/project/" + this.state.importProjectProjectType +  "/import", data, {})
+            .then(response => {
+                this.getProjects();
+            })
+            .catch(error => {
+                validateErrorResponse(error)
+            });
     }
 
     getProjects() {
@@ -317,8 +341,6 @@ class ProjectOverview extends PureComponent {
                         </div>
                         <div className="table-result">
                             <div className="panel-buttons">
-                                <button className="btn btn-primary panel-button demo-button-disabled panel-button" disabled={this.state.selectedProjects.length === 0}
-                                        data-toggle="modal" data-target="#exportProjectsModal"><i className="fas fa-cloud-download-alt"/> <span>Export projects</span></button>
                                 <AuthenticationContext.Consumer>
                                     {context => (
                                         <button className="btn btn-danger demo-button-disabled panel-button" disabled={this.state.selectedProjects.length === 0 || isOnlyReader(context.authentication.role)}
@@ -382,7 +404,24 @@ class ProjectOverview extends PureComponent {
                                 </button>
                             </div>
                             <div className="modal-body">
-
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">File</label>
+                                    <div className="col-sm-10">
+                                        <div className="custom-file">
+                                            <input type="file" className="custom-file-input" onChange={this.setImportProjectFile}/>
+                                            <label className="custom-file-label" >{this.state.importProjectSelectedFileName}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Type</label>
+                                    <div className="col-sm-10">
+                                        <select id="inputState" className="form-control" onChange={event => this.setImportProjectType(event.target.value)} defaultValue={"REST"}>
+                                            <option>REST</option>
+                                            <option>SOAP</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div className="modal-footer">
                                 <button className="btn btn-success" data-dismiss="modal" onClick={this.onImportProjectClick}>Import</button>
@@ -422,42 +461,6 @@ class ProjectOverview extends PureComponent {
                             </div>
                             <div className="modal-footer">
                                 <button className="btn btn-danger"data-dismiss="modal" onClick={this.onDeleteProjectsClick}>Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="modal fade" id="exportProjectsModal" tabIndex="-1" role="dialog"
-                     aria-labelledby="exportProjectsModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="exportProjectsModalLabel">Export projects</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p>Do you want export the following projects?</p>
-                                <div className="table-result">
-                                    <ToolkitProvider bootstrap4
-                                                     columns={ this.deleteColumns}
-                                                     data={ this.state.selectedProjects }
-                                                     keyField="id">
-                                        {
-                                            (props) => (
-                                                <div>
-                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedProjects} columns={this.deleteColumns}
-                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
-                                                                    striped
-                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
-                                                </div>
-                                            )}
-                                    </ToolkitProvider>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onExportProjectsClick}>Export</button>
                             </div>
                         </div>
                     </div>
