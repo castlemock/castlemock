@@ -20,6 +20,8 @@ import validateErrorResponse from "../../utility/HttpResponseValidator";
 import DeleteUserModal from "./modal/DeleteUserModal";
 import UpdateUserModal from "./modal/UpdateUserModal";
 import {userStatusFormatter, userRoleFormatter} from "./utility/UserFormatter";
+import {faUserEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class User extends PureComponent {
 
@@ -60,8 +62,8 @@ class User extends PureComponent {
                             <h1>User</h1>
                         </div>
                         <div className="menu">
-                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateUserModal"><span>Update user</span></button>
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteUserModal"><span>Delete user</span></button>
+                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateUserModal"><FontAwesomeIcon icon={faUserEdit} className="button-icon"/><span>Update user</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteUserModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete user</span></button>
                         </div>
                     </div>
                     <div className="content-summary">

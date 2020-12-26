@@ -18,7 +18,8 @@ import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import { withRouter } from "react-router";
-
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class DeleteMethodModal extends PureComponent {
 
@@ -55,7 +56,7 @@ class DeleteMethodModal extends PureComponent {
                             <p>Do you wanna delete the method?</p>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteMethodClick}>Delete</button>
+                            <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteMethodClick}><FontAwesomeIcon icon={faTrash} className="button-icon"/>Delete</button>
                         </div>
                     </div>
                 </div>

@@ -21,6 +21,8 @@ import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import preventEnterEvent from "../../../../../utility/KeyboardUtility";
+import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 class UpdateEndpointModal extends PureComponent {
@@ -109,7 +111,7 @@ class UpdateEndpointModal extends PureComponent {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-primary" data-dismiss="modal" onClick={this.onUpdateEndpointClick}>Update</button>
+                            <button className="btn btn-primary" data-dismiss="modal" onClick={this.onUpdateEndpointClick}><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/>Update</button>
                         </div>
                     </div>
                 </div>

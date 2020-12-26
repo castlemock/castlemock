@@ -22,6 +22,8 @@ import {
     methodResponseStrategyFormatter,
     methodStatusFormatter
 } from "../../utility/RestFormatter";
+import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class UpdateMethodModal extends PureComponent {
 
@@ -246,7 +248,7 @@ class UpdateMethodModal extends PureComponent {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateMethodClick}>Update</button>
+                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateMethodClick}><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/>Update</button>
                         </div>
                     </div>
                 </div>

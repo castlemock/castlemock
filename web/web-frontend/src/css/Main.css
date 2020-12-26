@@ -144,3 +144,10 @@
 .response-section {
     margin-top: 30px;
 }
+
+.button-icon {
+    font-size: 15px;
+    color: #FFFFFF;
+    margin-top: 5px;
+    margin-right: 10px;
+}

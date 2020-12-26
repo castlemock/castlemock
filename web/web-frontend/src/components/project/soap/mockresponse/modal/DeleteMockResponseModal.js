@@ -18,6 +18,8 @@ import React, {PureComponent} from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class DeleteMockResponseModal extends PureComponent {
 
@@ -53,7 +55,7 @@ class DeleteMockResponseModal extends PureComponent {
                             <p>Do you wanna delete the mock response?</p>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteMockResponseClick}>Delete</button>
+                            <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteMockResponseClick}><FontAwesomeIcon icon={faTrash} className="button-icon"/>Delete</button>
                         </div>
                     </div>
                 </div>

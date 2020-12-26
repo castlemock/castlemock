@@ -19,6 +19,8 @@ import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import {operationStatusFormatter, operationResponseStrategy, operationIdentifyStrategy} from "../../utility/SoapFormatter"
 import preventEnterEvent from "../../../../../utility/KeyboardUtility";
+import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class UpdateOperationModal extends PureComponent {
 
@@ -235,7 +237,7 @@ class UpdateOperationModal extends PureComponent {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateOperationClick}>Update</button>
+                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateOperationClick}><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/>Update</button>
                         </div>
                     </div>
                 </div>

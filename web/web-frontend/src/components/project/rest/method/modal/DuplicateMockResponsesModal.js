@@ -20,6 +20,8 @@ import validateErrorResponse from "../../../../../utility/HttpResponseValidator"
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
+import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 class DuplicateMockResponsesModal extends PureComponent {
@@ -95,7 +97,7 @@ class DuplicateMockResponsesModal extends PureComponent {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-primary" data-dismiss="modal" onClick={this.onDuplicateMockResponsesClick}>Duplicate</button>
+                            <button className="btn btn-primary" data-dismiss="modal" onClick={this.onDuplicateMockResponsesClick}><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/>Duplicate</button>
                         </div>
                     </div>
                 </div>

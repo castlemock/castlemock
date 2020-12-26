@@ -22,6 +22,8 @@ import {Redirect} from "react-router-dom";
 import AuthenticationContext from "../context/AuthenticationContext";
 import VersionContext from "../context/VersionContext";
 import ContextContext from "../context/ContextContext";
+import {faSignInAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class LoginContainer extends PureComponent {
 
@@ -106,7 +108,7 @@ class LoginContainer extends PureComponent {
                                     <div className="form-label-group">
                                         <input type="password" id="inputPassword" className="form-control" placeholder="Password" onChange={event => this.setPassword(event.target.value)} onKeyDown={event => this.onEnterClick(event, context)} required />
                                     </div>
-                                    <button className="btn btn-lg btn-success btn-block text-uppercase" onClick={event => this.onButtonLoginClick(context)}>Sign in</button>
+                                    <button className="btn btn-lg btn-success btn-block text-uppercase" onClick={event => this.onButtonLoginClick(context)}>Sign in <FontAwesomeIcon icon={faSignInAlt} className="button-icon"/></button>
                                 </div>
                             </div>
                         </div>

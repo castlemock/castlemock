@@ -18,6 +18,8 @@ import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import { withRouter } from "react-router";
+import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class CreateResourceModal extends PureComponent {
 
@@ -91,7 +93,7 @@ class CreateResourceModal extends PureComponent {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateResourceClick}>Create</button>
+                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateResourceClick}><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/>Create</button>
                         </div>
                     </div>
                 </div>

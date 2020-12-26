@@ -31,6 +31,8 @@ import DuplicateMockResponseModal from "./modal/DuplicateMockResponseModal"
 import {operationStatusFormatter, operationSoapVersionFormatter,
     operationIdentifyStrategy, operationResponseStrategy, mockResponseStatusFormatter} from "../utility/SoapFormatter"
 import ContextContext from "../../../../context/ContextContext";
+import {faTrash, faFile, faEdit} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -223,10 +225,12 @@ class SoapOperation extends PureComponent {
                                 <div className="menu" align="right">
                                     <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateOperationModal" disabled={isOnlyReader(context.authentication.role)}>
                                         <i className="fas fa-plus-circle"/>
+                                        <FontAwesomeIcon icon={faEdit} className="button-icon"/>
                                         <span>Update operation</span>
                                     </button>
                                     <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createMockResponseModal" disabled={isOnlyReader(context.authentication.role)}>
                                         <i className="fas fa-plus-circle"/>
+                                        <FontAwesomeIcon icon={faFile} className="button-icon"/>
                                         <span>Create response</span>
                                     </button>
                                 </div>
@@ -317,13 +321,13 @@ class SoapOperation extends PureComponent {
                                     <div className="panel-buttons">
                                         <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedMockResponses.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#updateStatusModal"><span>Update status</span></button>
+                                                data-target="#updateStatusModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update status</span></button>
                                         <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedMockResponses.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#duplicateModal"><span>Duplicate</span></button>
+                                                data-target="#duplicateModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Duplicate</span></button>
                                         <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedMockResponses.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#deleteMockResponsesModal"><span>Delete responses</span></button>
+                                                data-target="#deleteMockResponsesModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete responses</span></button>
                                     </div>
                                 )}
                             </AuthenticationContext.Consumer>

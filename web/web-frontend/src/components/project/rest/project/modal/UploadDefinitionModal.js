@@ -18,6 +18,8 @@ import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import {definitionTypeFormatter} from "../../utility/RestFormatter"
+import {faCloudUploadAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class UploadDefinitionModal extends PureComponent {
 
@@ -127,7 +129,7 @@ class UploadDefinitionModal extends PureComponent {
                                 <div className="upload-modal-button">
                                     <button className="btn btn-success" data-dismiss="modal"
                                             disabled={this.state.linkDefinitionUrl === ""}
-                                            onClick={this.linkDefinition}>Link</button>
+                                            onClick={this.linkDefinition}><FontAwesomeIcon icon={faCloudUploadAlt} className="button-icon"/>Link</button>
                                 </div>
                             </div>
 
@@ -152,7 +154,7 @@ class UploadDefinitionModal extends PureComponent {
                                 <div className="upload-modal-button">
                                     <button className="btn btn-success" data-dismiss="modal"
                                             disabled={this.state.selectedFile === null}
-                                            onClick={this.uploadDefinition}>Upload</button>
+                                            onClick={this.uploadDefinition}><FontAwesomeIcon icon={faCloudUploadAlt} className="button-icon"/>Upload</button>
                                 </div>
                             </div>
                         </div>

@@ -21,6 +21,8 @@ import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 import {Link} from "react-router-dom";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;
 
@@ -125,7 +127,7 @@ class EventOverview extends PureComponent {
                             <h1>Events</h1>
                         </div>
                         <div className="menu">
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteAllEventsModal"><span>Clear events</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteAllEventsModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Clear events</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -170,7 +172,7 @@ class EventOverview extends PureComponent {
                                 <p>Do you wanna delete all the events?</p>
                             </div>
                             <div className="modal-footer">
-                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteAllEventsClick}>Delete</button>
+                                <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeleteAllEventsClick}><FontAwesomeIcon icon={faTrash} className="button-icon"/>Delete</button>
                             </div>
                         </div>
                     </div>

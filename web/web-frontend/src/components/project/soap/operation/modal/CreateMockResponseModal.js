@@ -19,6 +19,8 @@ import axios from "axios";
 import { withRouter } from "react-router";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import {mockResponseStatusFormatter} from "../../utility/SoapFormatter";
+import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class CreateMockResponseModal extends PureComponent {
 
@@ -104,7 +106,7 @@ class CreateMockResponseModal extends PureComponent {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-primary" data-dismiss="modal" onClick={this.onCreateMockResponseClick}>Create</button>
+                            <button className="btn btn-primary" data-dismiss="modal" onClick={this.onCreateMockResponseClick}><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/>Create</button>
                         </div>
                     </div>
                 </div>

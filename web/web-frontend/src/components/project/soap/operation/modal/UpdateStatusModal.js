@@ -21,6 +21,8 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import {mockResponseStatusFormatter} from "../../utility/SoapFormatter"
+import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class UpdateStatusModal extends PureComponent {
 
@@ -112,7 +114,7 @@ class UpdateStatusModal extends PureComponent {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-primary" data-dismiss="modal" onClick={this.onUpdateStatusClick}>Update</button>
+                            <button className="btn btn-primary" data-dismiss="modal" onClick={this.onUpdateStatusClick}><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/>Update</button>
                         </div>
                     </div>
                 </div>

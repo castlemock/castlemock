@@ -25,6 +25,8 @@ import DeleteMockResponseModal from "./modal/DeleteMockResponseModal";
 import HeaderComponent from "../../utility/HeaderComponent";
 import XPathComponent from "../../utility/XPathComponent";
 import {mockResponseStatusFormatter} from "../utility/SoapFormatter";
+import {faTrash, faEdit} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class SoapMockResponse extends PureComponent {
 
@@ -202,7 +204,7 @@ class SoapMockResponse extends PureComponent {
                             <h1>Mock Response: {this.state.mockResponse.name}</h1>
                         </div>
                         <div className="menu" align="right">
-                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMockResponseModal"><span>Delete mock response</span></button>
+                            <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMockResponseModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete mock response</span></button>
                         </div>
                     </div>
                     <div className="content-summary">
@@ -248,8 +250,8 @@ class SoapMockResponse extends PureComponent {
                         </Tabs>
                     </div>
                     <div className="panel-buttons">
-                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onUpdateMockResponseClick}><span>Update response</span></button>
-                        <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onDiscardChangesClick}><span>Discard changes</span></button>
+                        <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onUpdateMockResponseClick}><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update response</span></button>
+                        <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onDiscardChangesClick}><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Discard changes</span></button>
                     </div>
                 </section>
 

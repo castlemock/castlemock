@@ -19,6 +19,8 @@ import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import preventEnterEvent from "../../../../../utility/KeyboardUtility"
 import { withRouter } from "react-router";
+import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class CreateApplicationModal extends PureComponent {
 
@@ -76,7 +78,7 @@ class CreateApplicationModal extends PureComponent {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateApplicationClick} onKeyDown={this.onCreateApplication}>Create</button>
+                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateApplicationClick} onKeyDown={this.onCreateApplication}><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/>Create</button>
                         </div>
                     </div>
                 </div>

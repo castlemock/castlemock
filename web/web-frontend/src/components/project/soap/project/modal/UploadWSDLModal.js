@@ -17,7 +17,8 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
-
+import {faCloudUploadAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class UploadWSDLModal extends PureComponent {
 
@@ -139,7 +140,7 @@ class UploadWSDLModal extends PureComponent {
                                 <div className="upload-modal-button">
                                     <button className="btn btn-success" data-dismiss="modal"
                                             disabled={this.state.linkWsdlUrl === ""}
-                                            onClick={this.linkWsdl}>Link</button>
+                                            onClick={this.linkWsdl}><FontAwesomeIcon icon={faCloudUploadAlt} className="button-icon"/>Link</button>
                                 </div>
                             </div>
 
@@ -164,7 +165,7 @@ class UploadWSDLModal extends PureComponent {
                                 <div className="upload-modal-button">
                                     <button className="btn btn-success" data-dismiss="modal"
                                             disabled={this.state.selectedFile === null}
-                                            onClick={this.uploadWsdl}>Upload</button>
+                                            onClick={this.uploadWsdl}><FontAwesomeIcon icon={faCloudUploadAlt} className="button-icon"/>Upload</button>
                                 </div>
                             </div>
                         </div>

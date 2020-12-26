@@ -18,6 +18,8 @@ import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 import preventEnterEvent from "../../../utility/KeyboardUtility";
+import {faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class UpdateUserModal extends PureComponent {
 
@@ -166,7 +168,7 @@ class UpdateUserModal extends PureComponent {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateUserClick}>Update</button>
+                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateUserClick}><FontAwesomeIcon icon={faUserEdit} className="button-icon"/>Update</button>
                         </div>
                     </div>
                 </div>

@@ -19,6 +19,8 @@ import axios from "axios";
 import validateErrorResponse from "../../utility/HttpResponseValidator";
 import {userStatusFormatter, userRoleFormatter} from "../user/utility/UserFormatter";
 import preventEnterEvent from "../../utility/KeyboardUtility";
+import {faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class Profile extends PureComponent {
 
@@ -119,7 +121,7 @@ class Profile extends PureComponent {
                             <h1>User</h1>
                         </div>
                         <div className="menu">
-                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateUserModal"><span>Update user</span></button>
+                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateUserModal"><FontAwesomeIcon icon={faUserEdit} className="button-icon"/><span>Update profile</span></button>
                         </div>
                     </div>
                     <div className="content-summary">
@@ -193,7 +195,7 @@ class Profile extends PureComponent {
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateUserClick}>Update</button>
+                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onUpdateUserClick}><FontAwesomeIcon icon={faUserEdit} className="button-icon"/>Update</button>
                             </div>
                         </div>
                     </div>

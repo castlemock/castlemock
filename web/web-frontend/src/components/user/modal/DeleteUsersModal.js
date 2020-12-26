@@ -20,7 +20,8 @@ import validateErrorResponse from "../../../utility/HttpResponseValidator";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
-
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class DeleteUsersModal extends PureComponent {
 
@@ -91,7 +92,7 @@ class DeleteUsersModal extends PureComponent {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-danger"data-dismiss="modal" onClick={this.onDeleteUsersClick}>Delete</button>
+                            <button className="btn btn-danger"data-dismiss="modal" onClick={this.onDeleteUsersClick}><FontAwesomeIcon icon={faTrash} className="button-icon"/>Delete</button>
                         </div>
                     </div>
                 </div>

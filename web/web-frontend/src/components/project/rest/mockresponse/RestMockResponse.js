@@ -26,6 +26,8 @@ import XPathComponent from "../../utility/XPathComponent";
 import {mockResponseStatusFormatter} from "../utility/RestFormatter";
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
+import {faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class RestMockResponse extends PureComponent {
 
@@ -209,7 +211,7 @@ class RestMockResponse extends PureComponent {
                         <AuthenticationContext.Consumer>
                             {context => (
                                 <div className="menu" align="right">
-                                    <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMockResponseModal" disabled={isOnlyReader(context.authentication.role)}><span>Delete mock response</span></button>
+                                    <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMockResponseModal" disabled={isOnlyReader(context.authentication.role)}><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete mock response</span></button>
                                 </div>
                             )}
                         </AuthenticationContext.Consumer>
@@ -259,8 +261,8 @@ class RestMockResponse extends PureComponent {
                     <AuthenticationContext.Consumer>
                         {context => (
                             <div className="panel-buttons">
-                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onUpdateMockResponseClick} disabled={isOnlyReader(context.authentication.role)}><span>Update response</span></button>
-                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onDiscardChangesClick}><span>Discard changes</span></button>
+                                <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onUpdateMockResponseClick} disabled={isOnlyReader(context.authentication.role)}><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update response</span></button>
+                                <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#updateProjectModal" onClick={this.onDiscardChangesClick}><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Discard changes</span></button>
                             </div>
                         )}
                     </AuthenticationContext.Consumer>

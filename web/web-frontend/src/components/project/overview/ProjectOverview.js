@@ -21,10 +21,12 @@ import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import Badge from 'react-bootstrap/Badge'
+import {faTrash, faFile, faCloudUploadAlt, faCheckCircle} from '@fortawesome/free-solid-svg-icons'
 import validateErrorResponse from "../../../utility/HttpResponseValidator"
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import {isOnlyReader} from "../../../utility/AuthorizeUtility";
 import preventEnterEvent from "../../../utility/KeyboardUtility";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;
 
@@ -308,8 +310,8 @@ class ProjectOverview extends PureComponent {
                         <AuthenticationContext.Consumer>
                             {context => (
                                 <div className="menu">
-                                    <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#newProjectModal" disabled={isOnlyReader(context.authentication.role)}><span>New project</span></button>
-                                    <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#importProjectModal" disabled={isOnlyReader(context.authentication.role)}><span>Import project</span></button>
+                                    <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#newProjectModal" disabled={isOnlyReader(context.authentication.role)}><FontAwesomeIcon icon={faFile} className="button-icon"/><span>New project</span></button>
+                                    <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#importProjectModal" disabled={isOnlyReader(context.authentication.role)}><FontAwesomeIcon icon={faCloudUploadAlt} className="button-icon"/><span>Import project</span></button>
                                 </div>
                             )}
                         </AuthenticationContext.Consumer>
@@ -344,7 +346,7 @@ class ProjectOverview extends PureComponent {
                                 <AuthenticationContext.Consumer>
                                     {context => (
                                         <button className="btn btn-danger demo-button-disabled panel-button" disabled={this.state.selectedProjects.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-toggle="modal" data-target="#deleteProjectsModal"><i className="fas fa-trash"/> <span>Delete projects</span></button>
+                                                data-toggle="modal" data-target="#deleteProjectsModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete projects</span></button>
                                             )}
                                 </AuthenticationContext.Consumer>
                             </div>
@@ -386,7 +388,7 @@ class ProjectOverview extends PureComponent {
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateProjectClick}>Create</button>
+                                    <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateProjectClick}><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/>Create</button>
                                 </div>
                             </form>
                         </div>
@@ -424,7 +426,7 @@ class ProjectOverview extends PureComponent {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onImportProjectClick}>Import</button>
+                                <button className="btn btn-success" data-dismiss="modal" onClick={this.onImportProjectClick}><FontAwesomeIcon icon={faCloudUploadAlt} className="button-icon"/>Import</button>
                             </div>
                         </div>
                     </div>
@@ -460,7 +462,7 @@ class ProjectOverview extends PureComponent {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button className="btn btn-danger"data-dismiss="modal" onClick={this.onDeleteProjectsClick}>Delete</button>
+                                <button className="btn btn-danger"data-dismiss="modal" onClick={this.onDeleteProjectsClick}><FontAwesomeIcon icon={faTrash} className="button-icon"/>Delete</button>
                             </div>
                         </div>
                     </div>

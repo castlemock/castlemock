@@ -19,6 +19,8 @@ import axios from "axios";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 import { withRouter } from "react-router";
 import preventEnterEvent from "../../../utility/KeyboardUtility";
+import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class NewUserModal extends PureComponent {
 
@@ -152,7 +154,7 @@ class NewUserModal extends PureComponent {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateUserClick}>Create</button>
+                            <button className="btn btn-success" data-dismiss="modal" onClick={this.onCreateUserClick}><FontAwesomeIcon icon={faUser} className="button-icon"/>Create</button>
                         </div>
                     </div>
                 </div>

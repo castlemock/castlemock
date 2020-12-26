@@ -20,6 +20,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class DeletePortsModal extends PureComponent {
 
@@ -89,7 +91,7 @@ class DeletePortsModal extends PureComponent {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeletePortClick}>Delete</button>
+                            <button className="btn btn-danger" data-dismiss="modal" onClick={this.onDeletePortClick}><FontAwesomeIcon icon={faTrash} className="button-icon"/>Delete</button>
                         </div>
                     </div>
                 </div>

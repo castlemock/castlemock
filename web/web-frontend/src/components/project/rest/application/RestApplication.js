@@ -29,6 +29,8 @@ import UpdateStatusModal from "./modal/UpdateStatusModal";
 import CreateResourceModal from "./modal/CreateResourceModal"
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
+import {faEdit, faTrash, faFile} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -196,9 +198,9 @@ class RestApplication extends PureComponent {
                         <AuthenticationContext.Consumer>
                             {context => (
                                 <div className="menu" align="right">
-                                    <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateApplicationModal" disabled={isOnlyReader(context.authentication.role)}><span>Update application</span></button>
-                                    <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createResourceModal" disabled={isOnlyReader(context.authentication.role)}><span>Create resource</span></button>
-                                    <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteApplicationModal" disabled={isOnlyReader(context.authentication.role)}><span>Delete application</span></button>
+                                    <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updateApplicationModal" disabled={isOnlyReader(context.authentication.role)}><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update application</span></button>
+                                    <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal" data-target="#createResourceModal" disabled={isOnlyReader(context.authentication.role)}><FontAwesomeIcon icon={faFile} className="button-icon"/><span>Create resource</span></button>
+                                    <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteApplicationModal" disabled={isOnlyReader(context.authentication.role)}><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete application</span></button>
                                 </div>
                                 )}
                         </AuthenticationContext.Consumer>
@@ -232,13 +234,13 @@ class RestApplication extends PureComponent {
                                     <div className="panel-buttons">
                                         <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedResources.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#updateStatusModal"><span>Update status</span></button>
+                                                data-target="#updateStatusModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update status</span></button>
                                         <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedResources.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#updateEndpointModal"><span>Update endpoint</span></button>
+                                                data-target="#updateEndpointModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update endpoint</span></button>
                                         <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedResources.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#deleteResourcesModal"><span>Delete resource</span></button>
+                                                data-target="#deleteResourcesModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete resource</span></button>
                                     </div>
                                 )}
                             </AuthenticationContext.Consumer>
