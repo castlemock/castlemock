@@ -21,6 +21,7 @@ import axios from "axios";
 import {Redirect} from "react-router-dom";
 import AuthenticationContext from "../context/AuthenticationContext";
 import VersionContext from "../context/VersionContext";
+import ContextContext from "../context/ContextContext";
 
 class LoginContainer extends PureComponent {
 
@@ -110,19 +111,25 @@ class LoginContainer extends PureComponent {
                             </div>
                         </div>
 
-                        <VersionContext.Consumer>
-                            {version => (
-                                <div id="login-footer">
-                                    <div id="login-footer-info">
-                                        <a href="https://www.castlemock.com" target="_blank" rel="noopener noreferrer">Castle Mock version. {version}</a>
-                                    </div>
 
-                                    <div id="login-footer-info-api">
-                                        <a href="/castlemock/doc/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
-                                    </div>
+                                <div id="login-footer">
+                                    <VersionContext.Consumer>
+                                        {version => (
+                                            <div id="login-footer-info">
+                                                <a href="https://www.castlemock.com" target="_blank" rel="noopener noreferrer">Castle Mock version. {version}</a>
+                                            </div>
+                                        )}
+                                    </VersionContext.Consumer>
+
+                                    <ContextContext.Consumer>
+                                        {context => (
+                                            <div id="login-footer-info-api">
+                                                <a href={context + "/doc/api/rest"} target="_blank" rel="noopener noreferrer">REST API</a>
+                                            </div>
+                                        )}
+                                    </ContextContext.Consumer>
                                 </div>
-                            )}
-                        </VersionContext.Consumer>
+
                     </div>
                 )}
             </AuthenticationContext.Consumer>

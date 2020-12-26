@@ -28,7 +28,6 @@ import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.rest.project.RestMethodRepository;
-import com.google.common.base.Strings;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -101,13 +100,7 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      */
     @Override
     protected void postInitiate() {
-        collection.values().stream()
-                .filter(restMethod -> !Strings.isNullOrEmpty(restMethod.getDefaultQueryMockResponseId()))
-                .forEach(restMethod -> {
-                    restMethod.setDefaultMockResponseId(restMethod.getDefaultQueryMockResponseId());
-                    restMethod.setDefaultQueryMockResponseId(null);
-                    save(restMethod);
-                });
+
     }
 
     /**
@@ -242,9 +235,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         private boolean simulateNetworkDelay;
         @Mapping("networkDelay")
         private long networkDelay;
-        @Mapping("defaultQueryMockResponseId")
-        @Deprecated
-        private String defaultQueryMockResponseId;
         @Mapping("defaultMockResponseId")
         private String defaultMockResponseId;
 
@@ -347,16 +337,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
 
         public void setNetworkDelay(long networkDelay) {
             this.networkDelay = networkDelay;
-        }
-
-        @XmlElement
-        @Deprecated
-        public String getDefaultQueryMockResponseId() {
-            return defaultQueryMockResponseId;
-        }
-
-        public void setDefaultQueryMockResponseId(String defaultQueryMockResponseId) {
-            this.defaultQueryMockResponseId = defaultQueryMockResponseId;
         }
 
         @XmlElement

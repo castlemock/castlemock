@@ -27,6 +27,7 @@ import DeletePortModal from "./modal/DeletePortModal"
 import UpdateEndpointModal from "./modal/UpdateEndpointModal";
 import UpdateStatusModal from "./modal/UpdateStatusModal";
 import {operationStatusFormatter, operationResponseStrategy} from "../utility/SoapFormatter"
+import ContextContext from "../../../../context/ContextContext";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -222,14 +223,20 @@ class SoapPort extends PureComponent {
                             <dt className="col-sm-2 content-title">URI</dt>
                             <dd className="col-sm-9">{this.state.port.uri}</dd>
                         </dl>
-                        <dl className="row">
-                            <dt className="col-sm-2 content-title">Address</dt>
-                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
-                        </dl>
-                        <dl className="row">
-                            <dt className="col-sm-2 content-title">WSDL</dt>
-                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri + "?wsdl"}</dd>
-                        </dl>
+                        <ContextContext.Consumer>
+                            {context => (
+                                <div>
+                                    <dl className="row">
+                                        <dt className="col-sm-2 content-title">Address</dt>
+                                        <dd className="col-sm-9">{window.location.origin + context + "/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
+                                    </dl>
+                                    <dl className="row">
+                                        <dt className="col-sm-2 content-title">WSDL</dt>
+                                        <dd className="col-sm-9">{window.location.origin + context + "/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri + "?wsdl"}</dd>
+                                    </dl>
+                                </div>
+                                )}
+                        </ContextContext.Consumer>
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="panel-heading table-panel-heading">

@@ -28,7 +28,6 @@ import com.castlemock.core.mock.rest.service.project.output.ImportRestDefinition
 import com.castlemock.web.basis.manager.FileManager;
 import com.castlemock.web.mock.rest.converter.RestDefinitionConverter;
 import com.castlemock.web.mock.rest.converter.RestDefinitionConverterFactory;
-import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
@@ -102,11 +101,6 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
 
                 for(RestMethod method : restResource.getMethods()){
                     method.setResourceId(savedResource.getId());
-
-                    if(!Strings.isNullOrEmpty(method.getDefaultQueryMockResponseId())){
-                        method.setDefaultMockResponseId(method.getDefaultQueryMockResponseId());
-                        method.setDefaultQueryMockResponseId(null);
-                    }
 
                     RestMethod savedMethod = this.methodRepository.save(method);
 

@@ -268,7 +268,6 @@ public class WADLRestDefinitionConverterTest {
         Assert.assertFalse(restMethod.getSimulateNetworkDelay());
         Assert.assertNull(restMethod.getId());
         Assert.assertNull(restMethod.getResourceId());
-        Assert.assertNull(restMethod.getInvokeAddress());
         Assert.assertNull(restMethod.getForwardedEndpoint());
         Assert.assertNull(restMethod.getDefaultBody());
 

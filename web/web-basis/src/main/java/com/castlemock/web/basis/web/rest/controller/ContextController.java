@@ -16,14 +16,17 @@
 
 package com.castlemock.web.basis.web.rest.controller;
 
+import com.castlemock.web.basis.web.rest.controller.model.ContextResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletContext;
 
@@ -32,21 +35,23 @@ import javax.servlet.ServletContext;
  * @since 1.52
  */
 @Controller
-@RequestMapping("/doc/api/rest")
+@RequestMapping("/api/rest/core")
 @Api(value="Core", tags = {"Core"})
-public class DocumentationController {
+public class ContextController {
 
     @Autowired
     private ServletContext servletContext;
 
-    /**
-     * Forward the user to the documentation
-     * @return Forward the user to the Swagger UI
-     */
-    @ApiOperation(value = "Documentation",notes = "Swagger REST API Documentation")
-    @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody RedirectView forward() {
-        return new RedirectView(servletContext.getContextPath() + "/swagger-ui/");
+    @ApiOperation(value = "Get context")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved context")
+    })
+    @RequestMapping(method = RequestMethod.GET, value = "/context")
+    public @ResponseBody
+    ResponseEntity<ContextResponse> getContext() {
+        return ResponseEntity.ok(ContextResponse.builder()
+                .context(servletContext.getContextPath())
+                .build());
     }
 
 }

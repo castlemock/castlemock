@@ -439,8 +439,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .forwardedEndpoint(FORWARD_ENDPOINT)
                 .httpMethod(HttpMethod.GET)
                 .id(METHOD_ID)
-                .invokeAddress("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + REST + SLASH +
-                        PROJECT + SLASH + PROJECT_ID + SLASH + APPLICATION + SLASH + APPLICATION_ID + "/method/test")
+                .uri("/method/test")
                 .name("Method name")
                 .networkDelay(0L)
                 .responseStrategy(RestResponseStrategy.SEQUENCE)
@@ -498,8 +497,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .forwardedEndpoint(FORWARD_ENDPOINT)
                 .httpMethod(HttpMethod.GET)
                 .id(METHOD_ID)
-                .invokeAddress("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + REST + SLASH +
-                        PROJECT + SLASH + PROJECT_ID + SLASH + APPLICATION + SLASH + APPLICATION_ID + "/method/{variable}")
+                .uri("/method/{variable}")
                 .name("Method name")
                 .networkDelay(0L)
                 .responseStrategy(RestResponseStrategy.SEQUENCE)

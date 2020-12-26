@@ -6,10 +6,13 @@ import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethodTestBuilder;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseTestBuilder;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.core.mock.rest.model.project.domain.RestResourceTestBuilder;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
+import com.castlemock.repository.rest.project.RestResourceRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,10 +21,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class ReadRestMethodServiceTest {
+
+    @Mock
+    private RestResourceRepository resourceRepository;
 
     @Mock
     private RestMethodRepository methodRepository;
@@ -40,6 +45,7 @@ public class ReadRestMethodServiceTest {
     @Test
     public void testProcess(){
         final String defaultMockResponseId = "MockResponseId";
+        final RestResource resource = RestResourceTestBuilder.builder().build();
         final RestMethod method = RestMethodTestBuilder.builder()
                 .defaultMockResponseId(defaultMockResponseId)
                 .build();
@@ -50,16 +56,18 @@ public class ReadRestMethodServiceTest {
                 ReadRestMethodInput.builder()
                         .restProjectId("ProjectId")
                         .restApplicationId("ApplicationId")
-                        .restResourceId("ResourceId")
+                        .restResourceId(resource.getId())
                         .restMethodId(method.getId())
                         .build();
         final ServiceTask<ReadRestMethodInput> serviceTask = new ServiceTask<ReadRestMethodInput>(input);
 
+        Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(resource);
         Mockito.when(methodRepository.findOne(method.getId())).thenReturn(method);
         Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(Collections.singletonList(mockResponse));
 
         final ServiceResult<ReadRestMethodOutput> result = service.process(serviceTask);
 
+        Mockito.verify(resourceRepository, Mockito.times(1)).findOne(resource.getId());
         Mockito.verify(methodRepository, Mockito.times(1)).findOne(method.getId());
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithMethodId(method.getId());
 
@@ -70,21 +78,24 @@ public class ReadRestMethodServiceTest {
 
     @Test
     public void testProcessMissingMockResponse(){
+        final RestResource resource = RestResourceTestBuilder.builder().build();
         final RestMethod method = RestMethodTestBuilder.builder().build();
         final ReadRestMethodInput input =
                 ReadRestMethodInput.builder()
                         .restProjectId("ProjectId")
                         .restApplicationId("ApplicationId")
-                        .restResourceId("ResourceId")
+                        .restResourceId(resource.getId())
                         .restMethodId(method.getId())
                         .build();
         final ServiceTask<ReadRestMethodInput> serviceTask = new ServiceTask<ReadRestMethodInput>(input);
 
+        Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(resource);
         Mockito.when(methodRepository.findOne(method.getId())).thenReturn(method);
         Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(Collections.emptyList());
 
         final ServiceResult<ReadRestMethodOutput> result = service.process(serviceTask);
 
+        Mockito.verify(resourceRepository, Mockito.times(1)).findOne(resource.getId());
         Mockito.verify(methodRepository, Mockito.times(1)).findOne(method.getId());
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithMethodId(method.getId());
 

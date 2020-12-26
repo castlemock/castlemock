@@ -30,6 +30,7 @@ import UpdateStatusModal from "./modal/UpdateStatusModal"
 import {mockResponseStatusFormatter, methodResponseStrategyFormatter, methodStatusFormatter} from "../utility/RestFormatter";
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
+import ContextContext from "../../../../context/ContextContext";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -203,10 +204,14 @@ class RestMethod extends PureComponent {
                             <dt className="col-sm-3 content-title">Response strategy</dt>
                             <dd className="col-sm-9">{methodResponseStrategyFormatter(this.state.method.responseStrategy)}</dd>
                         </dl>
-                        <dl className="row">
-                            <dt className="col-sm-3 content-title">Address</dt>
-                            <dd className="col-sm-9">Test</dd>
-                        </dl>
+                        <ContextContext.Consumer>
+                            {context => (
+                                <dl className="row">
+                                    <dt className="col-sm-3 content-title">Address</dt>
+                                    <dd className="col-sm-9">{window.location.origin + context + "/mock/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + this.state.method.uri}</dd>
+                                </dl>
+                            )}
+                        </ContextContext.Consumer>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Forwarded endpoint</dt>
                             <dd className="col-sm-9">{this.state.method.forwardedEndpoint}</dd>

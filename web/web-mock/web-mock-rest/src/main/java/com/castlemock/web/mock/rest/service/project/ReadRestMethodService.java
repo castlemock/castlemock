@@ -21,10 +21,9 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.core.mock.rest.model.project.domain.RestResource;
 import com.castlemock.core.mock.rest.service.project.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import java.util.List;
 
@@ -46,8 +45,11 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
     @Override
     public ServiceResult<ReadRestMethodOutput> process(final ServiceTask<ReadRestMethodInput> serviceTask) {
         final ReadRestMethodInput input = serviceTask.getInput();
+        final RestResource restResource = this.resourceRepository.findOne(input.getRestResourceId());
         final RestMethod restMethod = this.methodRepository.findOne(input.getRestMethodId());
         final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(input.getRestMethodId());
+
+        restMethod.setUri(restResource.getUri());
         restMethod.setMockResponses(mockResponses);
 
         if(restMethod.getDefaultMockResponseId() != null){

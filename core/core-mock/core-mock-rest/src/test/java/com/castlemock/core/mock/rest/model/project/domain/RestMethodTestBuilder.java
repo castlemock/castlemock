@@ -21,7 +21,7 @@ public final class RestMethodTestBuilder {
     private String defaultQueryMockResponseId;
     private String defaultMockResponseId;
     private List<RestMockResponse> mockResponses;
-    private String invokeAddress;
+    private String uri;
     private String defaultResponseName;
 
     private RestMethodTestBuilder(){
@@ -39,7 +39,7 @@ public final class RestMethodTestBuilder {
         this.defaultQueryMockResponseId = "";
         this.defaultMockResponseId = "";
         this.mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
-        this.invokeAddress = "";
+        this.uri = "/";
         this.defaultResponseName = "";
 
         this.mockResponses.add(RestMockResponseTestBuilder.builder().build());
@@ -116,8 +116,8 @@ public final class RestMethodTestBuilder {
         return this;
     }
 
-    public RestMethodTestBuilder invokeAddress(final String invokeAddress) {
-        this.invokeAddress = invokeAddress;
+    public RestMethodTestBuilder uri(final String uri) {
+        this.uri = uri;
         return this;
     }
 
@@ -146,7 +146,7 @@ public final class RestMethodTestBuilder {
                 .defaultQueryMockResponseId(defaultQueryMockResponseId)
                 .defaultMockResponseId(defaultMockResponseId)
                 .mockResponses(mockResponses)
-                .invokeAddress(invokeAddress)
+                .uri(uri)
                 .defaultResponseName(defaultResponseName)
                 .build();
     }

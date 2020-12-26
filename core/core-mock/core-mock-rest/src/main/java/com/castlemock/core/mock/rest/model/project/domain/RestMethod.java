@@ -44,12 +44,10 @@ public class RestMethod {
     private Integer currentResponseSequenceIndex = 0;
     private boolean simulateNetworkDelay;
     private long networkDelay;
-    @Deprecated
-    private String defaultQueryMockResponseId;
     private String defaultMockResponseId;
 
     private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
-    private String invokeAddress;
+    private String uri;
     private String defaultResponseName;
 
     public RestMethod(){
@@ -68,9 +66,8 @@ public class RestMethod {
         this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex);
         this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
         this.networkDelay = Objects.requireNonNull(builder.networkDelay);
-        this.defaultQueryMockResponseId = Objects.requireNonNull(builder.defaultQueryMockResponseId);
         this.defaultMockResponseId = Objects.requireNonNull(builder.defaultMockResponseId);
-        this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
+        this.uri = builder.uri;
         this.defaultResponseName = Objects.requireNonNull(builder.defaultResponseName);
         this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(CopyOnWriteArrayList::new);
     }
@@ -168,12 +165,12 @@ public class RestMethod {
     }
 
     @XmlElement
-    public String getInvokeAddress() {
-        return invokeAddress;
+    public String getUri() {
+        return uri;
     }
 
-    public void setInvokeAddress(String invokeAddress) {
-        this.invokeAddress = invokeAddress;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     @XmlElement
@@ -192,16 +189,6 @@ public class RestMethod {
 
     public void setNetworkDelay(long networkDelay) {
         this.networkDelay = networkDelay;
-    }
-
-    @XmlElement
-    @Deprecated
-    public String getDefaultQueryMockResponseId() {
-        return defaultQueryMockResponseId;
-    }
-
-    public void setDefaultQueryMockResponseId(String defaultQueryMockResponseId) {
-        this.defaultQueryMockResponseId = defaultQueryMockResponseId;
     }
 
     @XmlElement
@@ -238,16 +225,15 @@ public class RestMethod {
                 status == that.status &&
                 responseStrategy == that.responseStrategy &&
                 Objects.equals(currentResponseSequenceIndex, that.currentResponseSequenceIndex) &&
-                Objects.equals(defaultQueryMockResponseId, that.defaultQueryMockResponseId) &&
                 Objects.equals(defaultMockResponseId, that.defaultMockResponseId) &&
                 Objects.equals(mockResponses, that.mockResponses) &&
-                Objects.equals(invokeAddress, that.invokeAddress) &&
+                Objects.equals(uri, that.uri) &&
                 Objects.equals(defaultResponseName, that.defaultResponseName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, resourceId, defaultBody, httpMethod, forwardedEndpoint, status, responseStrategy, currentResponseSequenceIndex, simulateNetworkDelay, networkDelay, defaultQueryMockResponseId, defaultMockResponseId, mockResponses, invokeAddress, defaultResponseName);
+        return Objects.hash(id, name, resourceId, defaultBody, httpMethod, forwardedEndpoint, status, responseStrategy, currentResponseSequenceIndex, simulateNetworkDelay, networkDelay, defaultMockResponseId, mockResponses, uri, defaultResponseName);
     }
 
     @Override
@@ -264,10 +250,9 @@ public class RestMethod {
                 ", currentResponseSequenceIndex=" + currentResponseSequenceIndex +
                 ", simulateNetworkDelay=" + simulateNetworkDelay +
                 ", networkDelay=" + networkDelay +
-                ", defaultQueryMockResponseId='" + defaultQueryMockResponseId + '\'' +
                 ", defaultMockResponseId='" + defaultMockResponseId + '\'' +
                 ", mockResponses=" + mockResponses +
-                ", invokeAddress='" + invokeAddress + '\'' +
+                ", uri='" + uri + '\'' +
                 ", defaultResponseName='" + defaultResponseName + '\'' +
                 '}';
     }
@@ -291,7 +276,7 @@ public class RestMethod {
         private String defaultQueryMockResponseId;
         private String defaultMockResponseId;
         private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
-        private String invokeAddress;
+        private String uri;
         private String defaultResponseName;
 
         private Builder() {
@@ -367,8 +352,8 @@ public class RestMethod {
             return this;
         }
 
-        public Builder invokeAddress(final String invokeAddress) {
-            this.invokeAddress = invokeAddress;
+        public Builder uri(final String uri) {
+            this.uri = uri;
             return this;
         }
 

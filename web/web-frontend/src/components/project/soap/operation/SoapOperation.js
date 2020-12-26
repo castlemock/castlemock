@@ -30,6 +30,7 @@ import CreateMockResponseModal from "./modal/CreateMockResponseModal";
 import DuplicateMockResponseModal from "./modal/DuplicateMockResponseModal"
 import {operationStatusFormatter, operationSoapVersionFormatter,
     operationIdentifyStrategy, operationResponseStrategy, mockResponseStatusFormatter} from "../utility/SoapFormatter"
+import ContextContext from "../../../../context/ContextContext";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -253,10 +254,14 @@ class SoapOperation extends PureComponent {
                             <dt className="col-sm-3 content-title">Response strategy</dt>
                             <dd className="col-sm-9">{operationResponseStrategy(this.state.operation.responseStrategy)}</dd>
                         </dl>
-                        <dl className="row">
-                            <dt className="col-sm-3 content-title">Address</dt>
-                            <dd className="col-sm-9">{window.location.origin + "/castlemock/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
-                        </dl>
+                        <ContextContext.Consumer>
+                            {context => (
+                                <dl className="row">
+                                    <dt className="col-sm-3 content-title">Address</dt>
+                                    <dd className="col-sm-9">{window.location.origin + context + "/mock/soap/project/" + this.state.projectId + "/" + this.state.port.uri}</dd>
+                                </dl>
+                            )}
+                        </ContextContext.Consumer>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Original endpoint</dt>
                             <dd className="col-sm-9">{this.state.operation.originalEndpoint}</dd>

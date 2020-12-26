@@ -30,6 +30,7 @@ import CreateMethodModal from "./modal/CreateMethodModal"
 import {methodStatusFormatter} from "../utility/RestFormatter";
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
+import ContextContext from "../../../../context/ContextContext";
 
 const { SearchBar } = Search;
 const SELECT = true;
@@ -197,10 +198,14 @@ class RestResource extends PureComponent {
                             <dt className="col-sm-2 content-title">URI</dt>
                             <dd className="col-sm-9">{this.state.resource.uri}</dd>
                         </dl>
-                        <dl className="row">
-                            <dt className="col-sm-2 content-title">Address</dt>
-                            <dd className="col-sm-9">{window.location.origin + "castlemock/mock/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + this.state.resource.uri}</dd>
-                        </dl>
+                        <ContextContext.Consumer>
+                            {context => (
+                                <dl className="row">
+                                    <dt className="col-sm-2 content-title">Address</dt>
+                                    <dd className="col-sm-9">{window.location.origin + context + "/mock/rest/project/" + this.state.projectId + "/application/" + this.state.applicationId + this.state.resource.uri}</dd>
+                                </dl>
+                            )}
+                        </ContextContext.Consumer>
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="panel-heading table-panel-heading">

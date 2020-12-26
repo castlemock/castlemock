@@ -17,6 +17,7 @@
 import React, {PureComponent} from 'react'
 import '../css/Footer.css';
 import VersionContext from "../context/VersionContext";
+import ContextContext from "../context/ContextContext";
 
 class Footer extends PureComponent {
 
@@ -34,9 +35,14 @@ class Footer extends PureComponent {
                     )}
                 </VersionContext.Consumer>
 
-                <div className="login-footer-info-api">
-                    <a href="/castlemock/doc/api/rest" target="_blank" rel="noopener noreferrer">REST API</a>
-                </div>
+                <ContextContext.Consumer>
+                    {context => (
+                        <div className="login-footer-info-api">
+                            <a href={context + "/doc/api/rest"} target="_blank" rel="noopener noreferrer">REST API</a>
+                        </div>
+                    )}
+                </ContextContext.Consumer>
+
                 <div className="page-created">
                     Page created: {new Date().toISOString()}
                 </div>

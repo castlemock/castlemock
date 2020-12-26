@@ -63,7 +63,7 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                    .antMatchers("/api/rest/core/login", "/api/rest/core/version", "/doc/api/rest")
+                    .antMatchers("/api/rest/core/login", "/api/rest/core/version", "/api/rest/core/context", "/doc/api/rest")
                     .permitAll()
                 .and()
                 .antMatcher("/api/rest/**")

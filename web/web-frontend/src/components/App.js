@@ -32,6 +32,7 @@ import MainContainer from './MainContainer'
 import AuthenticationContext from "../context/AuthenticationContext";
 import VersionContext from "../context/VersionContext";
 import axios from "axios";
+import ContextContext from "../context/ContextContext";
 
 export const history = createBrowserHistory({
     basename: process.env.PUBLIC_URL
@@ -42,6 +43,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.getVersion = this.getVersion.bind(this);
+        this.getContext = this.getContext.bind(this);
 
         this.updateAuthentication = (authentication) => {
             this.setState({
@@ -52,10 +54,12 @@ class App extends Component {
         this.state = {
             authentication: {},
             updateAuthentication: this.updateAuthentication,
-            version: "1.0"
+            version: "1.0",
+            context: "castlemock"
         };
 
         this.getVersion();
+        this.getContext();
     }
 
     getVersion() {
@@ -66,23 +70,33 @@ class App extends Component {
             });
     }
 
+    getContext() {
+        axios
+            .get(process.env.PUBLIC_URL + "/api/rest/core/context")
+            .then(response => {
+                this.setState({context: response.data.context})
+            });
+    }
+
     render() {
         return (
-            <VersionContext.Provider value={this.state.version}>
-                <AuthenticationContext.Provider value={this.state}>
-                    <div className = "site-wrapper">
-                        <Router>
-                            <Switch>
-                                <Route path="/web/login"  component={LoginContainer} />
-                                <Route path="/web/logout"  component={LogoutContainer} />
-                                <Route path="/web/*"  component={MainContainer} />
-                                <Route path="/*"  component={MainContainer} />
-                                <Route path=""  component={MainContainer} />
-                            </Switch>
-                        </Router>
-                    </div>
-                </AuthenticationContext.Provider>
-            </VersionContext.Provider>
+            <ContextContext.Provider value={this.state.context}>
+                <VersionContext.Provider value={this.state.version}>
+                    <AuthenticationContext.Provider value={this.state}>
+                        <div className = "site-wrapper">
+                            <Router>
+                                <Switch>
+                                    <Route path="/web/login"  component={LoginContainer} />
+                                    <Route path="/web/logout"  component={LogoutContainer} />
+                                    <Route path="/web/*"  component={MainContainer} />
+                                    <Route path="/*"  component={MainContainer} />
+                                    <Route path=""  component={MainContainer} />
+                                </Switch>
+                            </Router>
+                        </div>
+                    </AuthenticationContext.Provider>
+                </VersionContext.Provider>
+            </ContextContext.Provider>
         );
     }
 }
