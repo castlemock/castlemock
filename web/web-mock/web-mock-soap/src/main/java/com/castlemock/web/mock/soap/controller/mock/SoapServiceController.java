@@ -16,9 +16,11 @@
 
 package com.castlemock.web.mock.soap.controller.mock;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,6 +45,10 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/mock/soap/project")
 public class SoapServiceController extends AbstractSoapServiceController {
 
+    @Autowired
+    public SoapServiceController(final ServiceProcessor serviceProcessor, final ServletContext servletContext){
+        super(serviceProcessor, servletContext);
+    }
 
     /**
      * The service is responsible for handling all the incoming SOAP requests. The SOAP requests will be processed

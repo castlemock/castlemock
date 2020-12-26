@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.rest.controller.mock;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
@@ -47,7 +48,7 @@ import com.castlemock.core.mock.rest.service.project.input.UpdateRestMethodsStat
 import com.castlemock.core.mock.rest.service.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
-import com.castlemock.web.basis.web.AbstractController;
+import com.castlemock.web.basis.controller.AbstractController;
 import com.castlemock.web.mock.rest.model.RestException;
 import com.castlemock.web.mock.rest.utility.RestHeaderQueryValidator;
 import com.castlemock.web.mock.rest.utility.RestParameterQueryValidator;
@@ -61,6 +62,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -74,6 +76,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -99,6 +102,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
     private static final RestMockResponseNameComparator MOCK_RESPONSE_NAME_COMPARATOR =
             new RestMockResponseNameComparator();
+
+    private final ServletContext servletContext;
+
+    protected AbstractRestServiceController(final ServiceProcessor serviceProcessor, final ServletContext servletContext){
+        super(serviceProcessor);
+        this.servletContext = Objects.requireNonNull(servletContext);
+    }
 
     /**
      * @param projectId           The id of the project which the incoming request and mocked response belongs to
@@ -155,7 +165,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
         final String body = HttpMessageSupport.getBody(httpServletRequest);
         final String incomingRequestUri = httpServletRequest.getRequestURI();
-        final String restResourceUri = incomingRequestUri.replace(getContext() + SLASH + MOCK + SLASH + REST +
+        final String restResourceUri = incomingRequestUri.replace(servletContext.getContextPath() + SLASH + MOCK + SLASH + REST +
                 SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId, EMPTY);
         final List<HttpParameter> httpParameters = HttpMessageSupport.extractParameters(httpServletRequest);
         final List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);

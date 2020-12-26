@@ -55,8 +55,6 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
 
     @Value(value = "${soap.event.file.directory}")
     private String soapEventFileDirectory;
-    @Value(value = "${legacy.soap.event.v1.directory}")
-    private String soapEventLegacyV1FileDirectory;
     @Value(value = "${soap.event.file.extension}")
     private String soapEventFileExtension;
 
@@ -82,16 +80,10 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
     /**
      * The initialize method is responsible for initiating the file repository. This procedure involves loading
      * the types (TYPE) from the file system and store them in the collection.
-     * @see #loadFiles()
      * @see #postInitiate()
      */
     @Override
     public void initialize(){
-
-        // Move the old event files to the new directory
-        fileRepositorySupport.moveAllFiles(soapEventLegacyV1FileDirectory,
-                soapEventFileDirectory, soapEventFileExtension);
-
         super.initialize();
     }
 

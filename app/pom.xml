@@ -31,10 +31,6 @@
             <groupId>com.castlemock.web.mock</groupId>
             <artifactId>web-mock-rest</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.castlemock.web.mock</groupId>
-            <artifactId>web-mock-graphql</artifactId>
-        </dependency>
 
         <!-- Third party dependencies -->
         <dependency>

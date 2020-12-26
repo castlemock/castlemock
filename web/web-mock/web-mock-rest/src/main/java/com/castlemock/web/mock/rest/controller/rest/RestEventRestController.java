@@ -16,11 +16,13 @@
 
 package com.castlemock.web.mock.rest.controller.rest;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
 import com.castlemock.core.mock.rest.service.event.input.ReadRestEventInput;
 import com.castlemock.core.mock.rest.service.event.output.ReadRestEventOutput;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("api/rest/rest")
 @Api(value="REST - Event", tags = {"REST - Event"})
 public class RestEventRestController extends AbstractRestController {
+
+    @Autowired
+    public RestEventRestController(final ServiceProcessor serviceProcessor){
+        super(serviceProcessor);
+    }
 
     @ApiOperation(value = "Get REST event", response = RestEvent.class)
     @ApiResponses(value = {

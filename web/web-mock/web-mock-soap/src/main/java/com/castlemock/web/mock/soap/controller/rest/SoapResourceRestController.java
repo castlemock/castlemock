@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
 import com.castlemock.core.mock.soap.service.project.input.ImportSoapResourceInput;
@@ -25,7 +26,7 @@ import com.castlemock.core.mock.soap.service.project.output.ImportSoapResourceOu
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapResourceOutput;
 import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("api/rest/soap")
@@ -48,10 +50,16 @@ import java.io.IOException;
 @ConditionalOnExpression("${server.mode.demo} == false")
 public class SoapResourceRestController extends AbstractRestController {
 
-    @Autowired
-    private FileManager fileManager;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(SoapResourceRestController.class);
+
+    private final FileManager fileManager;
+
+    @Autowired
+    public SoapResourceRestController(final ServiceProcessor serviceProcessor,
+                                     final FileManager fileManager){
+        super(serviceProcessor);
+        this.fileManager = Objects.requireNonNull(fileManager);
+    }
 
     @ApiOperation(value = "Get SOAP resource", response = SoapResource.class)
     @ApiResponses(value = {

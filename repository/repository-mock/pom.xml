@@ -16,7 +16,6 @@
     <modules>
         <module>repository-mock-rest</module>
         <module>repository-mock-soap</module>
-        <module>repository-mock-graphql</module>
     </modules>
 
     <dependencies>

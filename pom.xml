@@ -103,16 +103,6 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>core-mock-graphql</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.castlemock.web.mock</groupId>
-                <artifactId>web-mock-graphql</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.castlemock.web.mock</groupId>
                 <artifactId>web-mock-rest</artifactId>
                 <version>${project.version}</version>
@@ -130,21 +120,6 @@
             <dependency>
                 <groupId>com.castlemock.repository</groupId>
                 <artifactId>repository-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.castlemock.repository.mock.graphql</groupId>
-                <artifactId>repository-mock-graphql-file</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.castlemock.repository.mock.graphql</groupId>
-                <artifactId>repository-mock-graphql-model</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.castlemock.repository.mock.graphql</groupId>
-                <artifactId>repository-mock-graphql-mongodb</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -236,13 +211,6 @@
             <dependency>
                 <groupId>com.castlemock.core.mock</groupId>
                 <artifactId>core-mock-soap</artifactId>
-                <version>${project.version}</version>
-                <type>test-jar</type>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>core-mock-graphql</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
                 <scope>test</scope>

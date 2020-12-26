@@ -16,10 +16,12 @@
 
 package com.castlemock.web.mock.rest.controller.mock;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,6 +45,10 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/mock/rest/project")
 public class RestServiceController extends AbstractRestServiceController  {
 
+    @Autowired
+    public RestServiceController(final ServiceProcessor serviceProcessor, final ServletContext servletContext){
+        super(serviceProcessor, servletContext);
+    }
 
     /**
      * The service is responsible for handling all the incoming REST requests. The REST requests will be processed

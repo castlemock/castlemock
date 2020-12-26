@@ -21,7 +21,6 @@
     </dependencies>
 
     <modules>
-        <module>core-mock-graphql</module>
         <module>core-mock-rest</module>
         <module>core-mock-soap</module>
     </modules>

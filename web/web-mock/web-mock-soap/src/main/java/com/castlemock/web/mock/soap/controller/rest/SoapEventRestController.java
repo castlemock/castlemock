@@ -16,11 +16,13 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventOutput;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("api/rest/soap")
 @Api(value="SOAP - Event", tags = {"SOAP - Event"})
 public class SoapEventRestController extends AbstractRestController {
+
+    @Autowired
+    public SoapEventRestController(final ServiceProcessor serviceProcessor){
+        super(serviceProcessor);
+    }
 
     @ApiOperation(value = "Get SOAP event", response = SoapEvent.class)
     @ApiResponses(value = {

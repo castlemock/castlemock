@@ -16,17 +16,19 @@
 
 package com.castlemock.web.mock.rest.controller.rest;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
 import com.castlemock.core.mock.rest.service.project.input.*;
 import com.castlemock.core.mock.rest.service.project.output.CreateRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.DeleteRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.UpdateRestMethodOutput;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.rest.model.CreateRestMethodRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestMethodRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestMockResponseStatusesRequest;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/rest/rest")
 @Api(value="REST - Method", description="REST Operations for Castle Mock REST Operation", tags = {"REST - Method"})
 public class RestMethodRestController extends AbstractRestController {
+
+    @Autowired
+    public RestMethodRestController(final ServiceProcessor serviceProcessor){
+        super(serviceProcessor);
+    }
 
     @ApiOperation(value = "Get Method", response = RestMethod.class)
     @ApiResponses(value = {

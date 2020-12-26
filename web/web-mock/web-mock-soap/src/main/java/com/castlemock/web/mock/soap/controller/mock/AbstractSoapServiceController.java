@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.controller.mock;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.http.domain.ContentEncoding;
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
@@ -50,7 +51,7 @@ import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutp
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.support.CharsetUtility;
 import com.castlemock.web.basis.support.HttpMessageSupport;
-import com.castlemock.web.basis.web.AbstractController;
+import com.castlemock.web.basis.controller.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.utility.MtomUtility;
 import com.castlemock.web.mock.soap.utility.SoapUtility;
@@ -67,6 +68,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -79,6 +81,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
@@ -102,6 +105,14 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
     private static final SoapMockResponseNameComparator MOCK_RESPONSE_NAME_COMPARATOR =
             new SoapMockResponseNameComparator();
+
+    private final ServletContext servletContext;
+
+    protected AbstractSoapServiceController(final ServiceProcessor serviceProcessor,
+                                            final ServletContext servletContext){
+        super(serviceProcessor);
+        this.servletContext = Objects.requireNonNull(servletContext);
+    }
 
     /**
      * Process the incoming message by forwarding it to the main process method in
@@ -207,7 +218,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             identifier = SoapUtility.extractSoapRequestName(body);
         }
 
-        final String serviceUri = httpServletRequest.getRequestURI().replace(getContext() +
+        final String serviceUri = httpServletRequest.getRequestURI().replace(servletContext.getContextPath() +
                 SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
         final List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 

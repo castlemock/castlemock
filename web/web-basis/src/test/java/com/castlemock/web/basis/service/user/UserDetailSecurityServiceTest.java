@@ -53,7 +53,9 @@ public class UserDetailSecurityServiceTest {
     @Test
     public void testLoadUserByUsername(){
         final User user = UserTestBuilder.builder().build();
-        final ReadUserByUsernameOutput output = new ReadUserByUsernameOutput(user);
+        final ReadUserByUsernameOutput output = ReadUserByUsernameOutput.builder()
+                .user(user)
+                .build();
         Mockito.when(serviceProcessor.process(Mockito.any(ReadUserByUsernameInput.class))).thenReturn(output);
 
         final UserDetails userDetails = service.loadUserByUsername("username");

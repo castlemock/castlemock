@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.service.project.input.DeleteSoapPortInput;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapPortInput;
@@ -23,10 +24,11 @@ import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsF
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsStatusInput;
 import com.castlemock.core.mock.soap.service.project.output.DeleteSoapPortOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationForwardedEndpointsRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapOpertionStatusesRequest;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/rest/soap")
 @Api(value="SOAP - Port", description="REST Operations for Castle Mock SOAP Port", tags = {"SOAP - Port"})
 public class SoapPortRestController extends AbstractRestController {
+
+    @Autowired
+    public SoapPortRestController(final ServiceProcessor serviceProcessor){
+        super(serviceProcessor);
+    }
 
     @ApiOperation(value = "Get Port", response = SoapPort.class)
     @ApiResponses(value = {

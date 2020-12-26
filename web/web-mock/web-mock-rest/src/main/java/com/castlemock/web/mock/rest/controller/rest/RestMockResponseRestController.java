@@ -16,14 +16,16 @@
 
 package com.castlemock.web.mock.rest.controller.rest;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.service.project.input.*;
 import com.castlemock.core.mock.rest.service.project.output.*;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.rest.model.CreateRestMockResponseRequest;
 import com.castlemock.web.mock.rest.model.DuplicateRestMockOperationsRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestMockResponseRequest;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,11 @@ import org.springframework.web.bind.annotation.*;
 @Api(value="REST - Mocked response", description="REST Operations for Castle Mock REST mocked response",
         tags = {"REST - Mocked response"})
 public class RestMockResponseRestController extends AbstractRestController {
+
+    @Autowired
+    public RestMockResponseRestController(final ServiceProcessor serviceProcessor){
+        super(serviceProcessor);
+    }
 
     @ApiOperation(value = "Get mocked response", response = RestMockResponse.class)
     @ApiResponses(value = {

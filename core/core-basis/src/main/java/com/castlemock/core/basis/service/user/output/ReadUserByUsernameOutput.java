@@ -20,6 +20,8 @@ import com.castlemock.core.basis.model.Output;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,12 +31,32 @@ public final class ReadUserByUsernameOutput implements Output {
 
     private final User user;
 
-    public ReadUserByUsernameOutput(User user) {
-        this.user = user;
+    private ReadUserByUsernameOutput(final Builder builder) {
+        this.user = Objects.requireNonNull(builder.user);
     }
 
     public User getUser() {
         return user;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private User user;
+
+        private Builder() {
+        }
+
+        public Builder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public ReadUserByUsernameOutput build() {
+            return new ReadUserByUsernameOutput(this);
+        }
+    }
 }

@@ -16,13 +16,14 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapMockResponseStatusInput;
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapOperationOutput;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.UpdateSoapMockResponseStatusesRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationRequest;
 import io.swagger.annotations.Api;
@@ -30,6 +31,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -43,6 +45,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("api/rest/soap")
 @Api(value="SOAP - Operation", description="REST Operations for Castle Mock SOAP Operation", tags = {"SOAP - Operation"})
 public class SoapOperationRestController extends AbstractRestController {
+
+    @Autowired
+    public SoapOperationRestController(final ServiceProcessor serviceProcessor){
+        super(serviceProcessor);
+    }
 
     @ApiOperation(value = "Get Operation", response = SoapOperation.class)
     @ApiResponses(value = {

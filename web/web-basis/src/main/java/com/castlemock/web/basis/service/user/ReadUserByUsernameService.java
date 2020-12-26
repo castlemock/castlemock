@@ -43,6 +43,8 @@ public class ReadUserByUsernameService extends AbstractUserService implements Se
         final ReadUserByUsernameInput input = serviceTask.getInput();
         final String username = input.getUsername();
         final User user = findByUsername(username);
-        return createServiceResult(new ReadUserByUsernameOutput(user));
+        return createServiceResult(ReadUserByUsernameOutput.builder()
+                .user(user)
+                .build());
     }
 }

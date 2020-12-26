@@ -27,9 +27,9 @@ public class AuthenticationRequest {
 
     }
 
-    private AuthenticationRequest(final String username, final String password){
-        this.username = Objects.requireNonNull(username);
-        this.password = Objects.requireNonNull(password);
+    private AuthenticationRequest(final Builder builder){
+        this.username = Objects.requireNonNull(builder.username);
+        this.password = Objects.requireNonNull(builder.password);
     }
 
     public String getUsername() {
@@ -60,5 +60,32 @@ public class AuthenticationRequest {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String username;
+        private String password;
+
+        private Builder() {
+        }
+
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public AuthenticationRequest build() {
+            return new AuthenticationRequest(this);
+        }
     }
 }

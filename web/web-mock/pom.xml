@@ -14,7 +14,6 @@
     </parent>
 
     <modules>
-        <module>web-mock-graphql</module>
         <module>web-mock-rest</module>
         <module>web-mock-soap</module>
     </modules>

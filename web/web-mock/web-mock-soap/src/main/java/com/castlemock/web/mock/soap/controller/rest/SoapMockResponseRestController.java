@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
 import com.castlemock.core.mock.soap.service.project.input.CreateSoapMockResponseInput;
 import com.castlemock.core.mock.soap.service.project.input.DeleteSoapMockResponseInput;
@@ -26,7 +27,7 @@ import com.castlemock.core.mock.soap.service.project.output.CreateSoapMockRespon
 import com.castlemock.core.mock.soap.service.project.output.DeleteSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapMockResponseOutput;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.CreateSoapMockResponseRequest;
 import com.castlemock.web.mock.soap.model.DuplicateSoapMockOperationsRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapMockResponseRequest;
@@ -35,6 +36,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -49,6 +51,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(value="SOAP - Mocked response", description="REST Operations for Castle Mock SOAP mocked response",
         tags = {"SOAP - Mocked response"})
 public class SoapMockResponseRestController extends AbstractRestController {
+
+    @Autowired
+    public SoapMockResponseRestController(final ServiceProcessor serviceProcessor){
+        super(serviceProcessor);
+    }
 
     @ApiOperation(value = "Get mocked response", response = SoapMockResponse.class)
     @ApiResponses(value = {

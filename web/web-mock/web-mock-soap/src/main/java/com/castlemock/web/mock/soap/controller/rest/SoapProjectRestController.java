@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
 import com.castlemock.core.mock.soap.service.project.input.CreateSoapPortsInput;
 import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
@@ -23,7 +24,7 @@ import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsForwar
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsStatusInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
 import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.LinkWsdlRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapPortForwardedEndpointsRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapPortStatusesRequest;
@@ -38,14 +39,21 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("api/rest/soap")
 @Api(value="SOAP - Project", description="REST Operations for Castle Mock SOAP Project", tags = {"SOAP - Project"})
 public class SoapProjectRestController extends AbstractRestController {
 
+    private final FileManager fileManager;
+
     @Autowired
-    private FileManager fileManager;
+    public SoapProjectRestController(final ServiceProcessor serviceProcessor,
+                                     final FileManager fileManager){
+        super(serviceProcessor);
+        this.fileManager = Objects.requireNonNull(fileManager);
+    }
 
     @ApiOperation(value = "Get Project", response = SoapProject.class)
     @ApiResponses(value = {

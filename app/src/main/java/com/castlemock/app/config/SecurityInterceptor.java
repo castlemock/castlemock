@@ -24,7 +24,7 @@ import com.castlemock.core.basis.service.user.input.ReadUserInput;
 import com.castlemock.core.basis.service.user.output.ReadUserOutput;
 import com.castlemock.web.basis.config.JWTEncoderDecoder;
 import com.castlemock.web.basis.service.user.UserDetailSecurityService;
-import com.castlemock.web.basis.web.AbstractController;
+import com.castlemock.web.basis.controller.AbstractController;
 import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

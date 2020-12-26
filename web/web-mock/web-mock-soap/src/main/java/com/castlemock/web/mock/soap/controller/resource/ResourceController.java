@@ -16,9 +16,11 @@
 
 package com.castlemock.web.mock.soap.controller.resource;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.service.project.input.LoadSoapResourceInput;
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/resource/soap/project")
 public class ResourceController extends AbstractRestController {
+
+    @Autowired
+    public ResourceController(final ServiceProcessor serviceProcessor){
+        super(serviceProcessor);
+    }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/resource/{resourceId}")

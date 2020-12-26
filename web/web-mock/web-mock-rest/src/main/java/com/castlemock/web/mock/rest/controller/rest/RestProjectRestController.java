@@ -16,6 +16,7 @@
 
 package com.castlemock.web.mock.rest.controller.rest;
 
+import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.rest.model.RestDefinitionType;
 import com.castlemock.core.mock.rest.model.project.domain.RestProject;
 import com.castlemock.core.mock.rest.service.project.input.ImportRestDefinitionInput;
@@ -24,7 +25,7 @@ import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplication
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationsStatusInput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestProjectOutput;
 import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.web.rest.controller.AbstractRestController;
+import com.castlemock.web.basis.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.rest.model.LinkDefinitionRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestApplicationForwardedEndpointsRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestApplicationStatusesRequest;
@@ -39,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("api/rest/rest")
@@ -46,8 +48,14 @@ import java.util.List;
         tags = {"REST - Application"})
 public class RestProjectRestController extends AbstractRestController {
 
+    private final FileManager fileManager;
+
     @Autowired
-    private FileManager fileManager;
+    public RestProjectRestController(final ServiceProcessor serviceProcessor,
+                                     final FileManager fileManager){
+        super(serviceProcessor);
+        this.fileManager = Objects.requireNonNull(fileManager);
+    }
 
     @ApiOperation(value = "Get REST Project", response = RestProject.class)
     @ApiResponses(value = {
