@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.converter.types;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
-import com.castlemock.web.basis.support.DocumentUtility;
+import com.castlemock.web.basis.utility.DocumentUtility;
 import com.castlemock.web.mock.soap.utility.SoapUtility;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

@@ -17,7 +17,9 @@
 package com.castlemock.core.basis.service.system.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.basis.model.system.service.dto.SystemInformation;
+import com.castlemock.core.basis.model.system.domain.SystemInformation;
+
+import java.util.Objects;
 
 /**
  * Get system information output
@@ -29,11 +31,33 @@ public final class GetSystemInformationOutput implements Output {
 
     private final SystemInformation systemInformation;
 
-    public GetSystemInformationOutput(final SystemInformation systemInformation) {
-        this.systemInformation = systemInformation;
+    private GetSystemInformationOutput(final Builder builder) {
+        this.systemInformation = Objects.requireNonNull(builder.systemInformation);
     }
 
     public SystemInformation getSystemInformation() {
         return systemInformation;
+    }
+
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+
+        private SystemInformation systemInformation;
+
+        private Builder() {
+        }
+
+        public Builder systemInformation(final SystemInformation systemInformation) {
+            this.systemInformation = systemInformation;
+            return this;
+        }
+
+        public GetSystemInformationOutput build() {
+            return new GetSystemInformationOutput(this);
+        }
     }
 }

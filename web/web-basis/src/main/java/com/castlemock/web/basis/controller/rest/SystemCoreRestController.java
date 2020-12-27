@@ -17,7 +17,7 @@
 package com.castlemock.web.basis.controller.rest;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.system.service.dto.SystemInformation;
+import com.castlemock.core.basis.model.system.domain.SystemInformation;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.service.system.input.GetSystemInformationInput;
 import com.castlemock.core.basis.service.system.output.GetSystemInformationOutput;

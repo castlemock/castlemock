@@ -20,7 +20,7 @@ package com.castlemock.web.mock.rest.converter.wadl;
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.*;
 import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.support.DocumentUtility;
+import com.castlemock.web.basis.utility.DocumentUtility;
 import com.castlemock.web.mock.rest.converter.AbstractRestDefinitionConverter;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;

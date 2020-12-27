@@ -49,43 +49,6 @@ public class FileManager {
     private String tempFilesFolder;
     private static final Logger LOGGER = LoggerFactory.getLogger(FileManager.class);
 
-    /**
-     * The method uploads a list of MultipartFiles to the server. The output file directory is configurable and can be
-     * configured in the main property file under the key "temp.file.directory"
-     * @param files The list of files that should be uploaded
-     * @return Returns the uploaded files as a list of files. The files have the new server path.
-     * @throws IOException Throws an exception if the upload fails.
-     */
-    public List<File> uploadFiles(final List<MultipartFile> files) throws IOException {
-        final File fileDirectory = new File(tempFilesFolder);
-
-        if (!fileDirectory.exists()) {
-            fileDirectory.mkdirs();
-        }
-
-        final List<File> uploadedFiles = new ArrayList<File>();
-        LOGGER.debug("Starting uploading files");
-        for(MultipartFile file : files){
-            if(file.getOriginalFilename().isEmpty()){
-                continue;
-            }
-            final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss.SSS");
-            final String fileName = "Upload-" + formatter.format(new Date());
-
-            LOGGER.debug("Uploading file: " + fileName);
-            final File serverFile = new File(fileDirectory, fileName);
-            final byte[] bytes = file.getBytes();
-            final BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-            try{
-                stream.write(bytes);
-                uploadedFiles.add(serverFile);
-            }finally {
-                stream.close();
-            }
-        }
-        return uploadedFiles;
-    }
-
     public File uploadFile(final MultipartFile file) throws IOException {
         final File fileDirectory = new File(tempFilesFolder);
 
@@ -129,18 +92,6 @@ public class FileManager {
         final List<File> files = new ArrayList<>();
         files.add(file);
         return files;
-    }
-
-    /**
-     * The method takes a list of files that has been uploaded to the server and deletes them
-     * @param files The list of files that will be deleted
-     */
-    public void deleteUploadedFiles(final List<File> files){
-        Preconditions.checkNotNull(files, "Uploaded files list cannot be null");
-        LOGGER.debug("Deleting uploaded files");
-        for(File file : files) {
-            this.deleteUploadedFile(file);
-        }
     }
 
     /**

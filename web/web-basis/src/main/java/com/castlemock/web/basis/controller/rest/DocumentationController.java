@@ -38,7 +38,7 @@ import java.util.Objects;
 public class DocumentationController {
 
     @Autowired
-    private ServletContext servletContext;
+    private final ServletContext servletContext;
 
     @Autowired
     public DocumentationController(final ServletContext servletContext){

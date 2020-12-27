@@ -1,4 +1,4 @@
-package com.castlemock.core.basis.model.system.service.dto;
+package com.castlemock.core.basis.model.system.domain;
 
 public class MongoProperties {
 

@@ -19,7 +19,7 @@ package com.castlemock.web.mock.soap.converter;
 import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
 import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
 import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.support.DocumentUtility;
+import com.castlemock.web.basis.utility.DocumentUtility;
 import com.castlemock.web.basis.utility.UrlUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

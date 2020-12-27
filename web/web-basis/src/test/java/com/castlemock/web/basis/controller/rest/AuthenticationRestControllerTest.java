@@ -1,4 +1,3 @@
-package com.castlemock.web.basis.controller.rest;
 /*
  * Copyright 2020 Karl Dahlgren
  *
@@ -15,10 +14,12 @@ package com.castlemock.web.basis.controller.rest;
  * limitations under the License.
  */
 
+package com.castlemock.web.basis.controller.rest;
 
 import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
+import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
 import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
 import com.castlemock.web.basis.config.JWTEncoderDecoder;
 import com.castlemock.web.basis.model.AuthenticationRequestTestBuilder;
@@ -38,6 +39,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -87,7 +90,22 @@ class AuthenticationRestControllerTest {
         assertEquals(user.getUsername(), response.getUsername());
         assertEquals(user.getRole(), response.getRole());
         assertEquals(token, response.getToken());
+
+        verify(authentication, times(1)).isAuthenticated();
+        verify(authenticationManager, times(1)).authenticate(any());
+        verify(serviceProcessor, times(1)).process(any(ReadUserByUsernameInput.class));
+        verify(jwtEncoderDecoder, times(1)).createToken(any());
     }
 
+    @Test
+    @DisplayName("Logout")
+    void testLogout(){
+        final HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        final ResponseEntity<Void> responseEntity = authenticationRestController.logout(httpServletResponse);
+        assertNotNull(responseEntity);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        verify(httpServletResponse, times(2)).addCookie(any());
+    }
 
 }

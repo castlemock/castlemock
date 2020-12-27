@@ -20,7 +20,7 @@ import com.castlemock.core.basis.Environment;
 import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
-import com.castlemock.core.basis.model.system.service.dto.SystemInformation;
+import com.castlemock.core.basis.model.system.domain.SystemInformation;
 import com.castlemock.core.basis.service.system.input.GetSystemInformationInput;
 import com.castlemock.core.basis.service.system.output.GetSystemInformationOutput;
 import com.castlemock.repository.Profiles;
@@ -63,18 +63,19 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
      */
     @Override
     public ServiceResult<GetSystemInformationOutput> process(final ServiceTask<GetSystemInformationInput> serviceTask) {
-        final SystemInformation systemInformation = new SystemInformation();
-        systemInformation.setJavaVersion(System.getProperty("java.version"));
-        systemInformation.setJavaVendor(System.getProperty("java.vendor"));
-        systemInformation.setOperatingSystemName(System.getProperty("os.name"));
-        systemInformation.setTomcatBuilt(environment.getServerBuilt());
-        systemInformation.setTomcatInfo(environment.getServerInfo());
-        systemInformation.setTomcatVersion(environment.getServerNumber());
-        systemInformation.setAvailableProcessors(Runtime.getRuntime().availableProcessors());
-        systemInformation.setTotalMemory(Runtime.getRuntime().totalMemory() / 1000000); // Megabytes
-        systemInformation.setMaxMemory(Runtime.getRuntime().maxMemory() / 1000000); // Megabytes
-        systemInformation.setFreeMemory(Runtime.getRuntime().freeMemory() / 1000000); // Megabytes
-        systemInformation.setCastleMockHomeDirectory(this.castleMockHomeDirectory);
+        SystemInformation.Builder builder = SystemInformation.builder()
+                .javaVersion(System.getProperty("java.version"))
+                .javaVendor(System.getProperty("java.vendor"))
+                .operatingSystemName(System.getProperty("os.name"))
+                .tomcatBuilt(environment.getServerBuilt())
+                .tomcatInfo(environment.getServerInfo())
+                .tomcatVersion(environment.getServerNumber())
+                .availableProcessors(Runtime.getRuntime().availableProcessors())
+                .totalMemory(Runtime.getRuntime().totalMemory() / 1000000)
+                .maxMemory(Runtime.getRuntime().maxMemory() / 1000000)
+                .freeMemory(Runtime.getRuntime().freeMemory() / 1000000)
+                .castleMockHomeDirectory(this.castleMockHomeDirectory);
+
 
         final org.springframework.core.env.Profiles mongoProfiles =
                 org.springframework.core.env.Profiles.of(Profiles.MONGODB);
@@ -82,17 +83,19 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
                 org.springframework.core.env.Profiles.of(Profiles.FILE);
 
         if (springEnvironment.acceptsProfiles(mongoProfiles)) {
-            mongoPropertiesProvider.ifAvailable(props ->
-                    systemInformation.setMongoProperties(
-                            new com.castlemock.core.basis.model.system.service.dto.MongoProperties(
-                                    props.getHost(), props.getPort(), props.determineUri(),
-                                    props.getMongoClientDatabase(), isMongoUsesUri(props)))
-            );
+            com.castlemock.core.basis.model.system.domain.MongoProperties mongoProperties = mongoPropertiesProvider.stream().map(props ->
+                    new com.castlemock.core.basis.model.system.domain.MongoProperties(
+                            props.getHost(), props.getPort(), props.determineUri(),
+                            props.getMongoClientDatabase(), isMongoUsesUri(props)))
+                    .findFirst()
+                    .orElse(null);
+            builder = builder.mongoProperties(mongoProperties);
         }
-        systemInformation.setShowCastleMockHomeDirectory(springEnvironment.acceptsProfiles(mongoProfiles));
-        systemInformation.setShowMongoProperties(springEnvironment.acceptsProfiles(fileProfiles));
-        final GetSystemInformationOutput output = new GetSystemInformationOutput(systemInformation);
-        return createServiceResult(output);
+        builder = builder.showCastleMockHomeDirectory(springEnvironment.acceptsProfiles(mongoProfiles));
+        builder = builder.showMongoProperties(springEnvironment.acceptsProfiles(fileProfiles));
+        return createServiceResult(GetSystemInformationOutput.builder()
+                .systemInformation(builder.build())
+                .build());
     }
 
     // see org.springframework.boot.autoconfigure.mongo.MongoClientFactory

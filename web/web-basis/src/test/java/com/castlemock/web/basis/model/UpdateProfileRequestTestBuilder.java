@@ -16,19 +16,18 @@
 
 package com.castlemock.web.basis.model;
 
-import com.castlemock.web.basis.model.authentication.AuthenticationRequest;
+public final class UpdateProfileRequestTestBuilder {
 
-public class AuthenticationRequestTestBuilder {
-
-    private AuthenticationRequestTestBuilder(){
+    private UpdateProfileRequestTestBuilder(){
 
     }
 
-    public static AuthenticationRequest.Builder builder(){
-        return AuthenticationRequest.builder()
-            .username("username")
-            .password("password");
+    public static UpdateProfileRequest.Builder builder(){
+        return UpdateProfileRequest.builder()
+                .email("email@email.email")
+                .fullName("Full name")
+                .password("password")
+                .username("username");
     }
-
 
 }

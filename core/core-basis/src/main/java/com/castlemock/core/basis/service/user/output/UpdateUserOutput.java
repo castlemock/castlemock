@@ -21,6 +21,8 @@ import com.castlemock.core.basis.model.user.domain.User;
 import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.basis.service.user.input.UpdateUserInput;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -31,12 +33,31 @@ public final class UpdateUserOutput implements Output {
     @NotNull
     private final User updatedUser;
 
-    public UpdateUserOutput(User updatedUser) {
-        this.updatedUser = updatedUser;
+    public UpdateUserOutput(final Builder builder) {
+        this.updatedUser = Objects.requireNonNull(builder.updatedUser);
     }
 
     public User getUpdatedUser() {
         return updatedUser;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private User updatedUser;
+
+        private Builder() {
+        }
+
+        public Builder updatedUser(User updatedUser) {
+            this.updatedUser = updatedUser;
+            return this;
+        }
+
+        public UpdateUserOutput build() {
+            return new UpdateUserOutput(this);
+        }
+    }
 }

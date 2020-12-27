@@ -42,7 +42,6 @@ public class ReadUserService extends AbstractUserService implements Service<Read
     public ServiceResult<ReadUserOutput> process(final ServiceTask<ReadUserInput> serviceTask) {
         final ReadUserInput input = serviceTask.getInput();
         final User user = find(input.getUserId());
-        final ReadUserOutput output = new ReadUserOutput(user);
-        return createServiceResult(output);
+        return createServiceResult(ReadUserOutput.builder().user(user).build());
     }
 }

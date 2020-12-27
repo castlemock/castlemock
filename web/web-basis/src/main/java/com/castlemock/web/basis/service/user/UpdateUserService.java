@@ -44,6 +44,8 @@ public class UpdateUserService extends AbstractUserService implements Service<Up
         final String userId = input.getUserId();
         final User user = input.getUser();
         update(userId, user);
-        return createServiceResult(new UpdateUserOutput(user));
+        return createServiceResult(UpdateUserOutput.builder()
+                .updatedUser(user)
+                .build());
     }
 }

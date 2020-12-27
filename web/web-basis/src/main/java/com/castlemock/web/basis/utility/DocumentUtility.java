@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.basis.support;
+package com.castlemock.web.basis.utility;
 
 import org.w3c.dom.*;
 

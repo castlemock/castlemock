@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/api/rest/core")
 @Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
@@ -49,7 +51,7 @@ public class VersionCoreRestController extends AbstractRestController {
     public @ResponseBody
     ResponseEntity<VersionResponse> getVersion() {
         return ResponseEntity.ok(VersionResponse.builder()
-                .version(version)
+                .version(Optional.ofNullable(version).orElse("Undefined"))
                 .build());
     }
 

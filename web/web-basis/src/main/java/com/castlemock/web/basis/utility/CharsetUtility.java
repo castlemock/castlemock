@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.basis.support;
+package com.castlemock.web.basis.utility;
 
 import com.castlemock.core.basis.model.http.domain.HttpHeader;
 import org.slf4j.LoggerFactory;

@@ -28,6 +28,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -59,7 +60,7 @@ public class ProfileCoreRestController extends AbstractRestController {
     ResponseEntity<User> getProfile() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
-            throw new IllegalArgumentException("");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         final ReadUserByUsernameOutput output = serviceProcessor.process(ReadUserByUsernameInput.builder()
@@ -68,7 +69,7 @@ public class ProfileCoreRestController extends AbstractRestController {
         final User user = output.getUser();
 
         if(user == null) {
-            throw new IllegalArgumentException("");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         user.setPassword(EMPTY);
@@ -87,7 +88,7 @@ public class ProfileCoreRestController extends AbstractRestController {
     ResponseEntity<User> updateProfile(@RequestBody final UpdateProfileRequest request) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
-            throw new IllegalArgumentException("");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(ReadUserByUsernameInput.builder()
@@ -96,7 +97,7 @@ public class ProfileCoreRestController extends AbstractRestController {
         final User user = readUserByUsernameOutput.getUser();
 
         if(user == null) {
-            throw new IllegalArgumentException("");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         final UpdateCurrentUserOutput updateCurrentUserOutput = serviceProcessor.process(UpdateCurrentUserInput.builder()

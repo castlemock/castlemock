@@ -15,12 +15,11 @@
  */
 package com.castlemock.web.mock.soap.converter.types;
 
-import com.castlemock.web.basis.support.DocumentUtility;
+import com.castlemock.web.basis.utility.DocumentUtility;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;

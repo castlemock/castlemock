@@ -51,8 +51,8 @@ import java.util.Objects;
 @Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
 public class AuthenticationRestController extends AbstractRestController {
 
-    private AuthenticationManager authenticationManager;
-    private JWTEncoderDecoder jwtEncoderDecoder;
+    private final AuthenticationManager authenticationManager;
+    private final JWTEncoderDecoder jwtEncoderDecoder;
 
     @Autowired
     public AuthenticationRestController(final ServiceProcessor serviceProcessor,

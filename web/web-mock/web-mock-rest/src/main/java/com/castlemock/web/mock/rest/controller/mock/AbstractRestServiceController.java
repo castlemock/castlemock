@@ -46,8 +46,8 @@ import com.castlemock.core.mock.rest.service.project.input.IdentifyRestMethodInp
 import com.castlemock.core.mock.rest.service.project.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.castlemock.core.mock.rest.service.project.input.UpdateRestMethodsStatusInput;
 import com.castlemock.core.mock.rest.service.project.output.IdentifyRestMethodOutput;
-import com.castlemock.web.basis.support.CharsetUtility;
-import com.castlemock.web.basis.support.HttpMessageSupport;
+import com.castlemock.web.basis.utility.CharsetUtility;
+import com.castlemock.web.basis.utility.HttpMessageSupport;
 import com.castlemock.web.basis.controller.AbstractController;
 import com.castlemock.web.mock.rest.model.RestException;
 import com.castlemock.web.mock.rest.utility.RestHeaderQueryValidator;

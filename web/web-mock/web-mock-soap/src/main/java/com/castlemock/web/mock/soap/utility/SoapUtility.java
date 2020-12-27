@@ -17,7 +17,7 @@
 package com.castlemock.web.mock.soap.utility;
 
 import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
-import com.castlemock.web.basis.support.DocumentUtility;
+import com.castlemock.web.basis.utility.DocumentUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
