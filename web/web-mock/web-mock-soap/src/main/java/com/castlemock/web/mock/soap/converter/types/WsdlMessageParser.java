@@ -15,7 +15,7 @@
  */
 package com.castlemock.web.mock.soap.converter.types;
 
-import com.castlemock.web.basis.utility.DocumentUtility;
+import com.castlemock.web.core.utility.DocumentUtility;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

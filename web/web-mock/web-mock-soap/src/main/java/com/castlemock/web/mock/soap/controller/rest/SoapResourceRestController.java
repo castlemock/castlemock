@@ -25,8 +25,8 @@ import com.castlemock.core.mock.soap.service.project.input.ReadSoapResourceInput
 import com.castlemock.core.mock.soap.service.project.output.ImportSoapResourceOutput;
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapResourceOutput;
-import com.castlemock.web.basis.manager.FileManager;
-import com.castlemock.web.basis.controller.rest.AbstractRestController;
+import com.castlemock.web.core.manager.FileManager;
+import com.castlemock.web.core.controller.rest.AbstractRestController;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

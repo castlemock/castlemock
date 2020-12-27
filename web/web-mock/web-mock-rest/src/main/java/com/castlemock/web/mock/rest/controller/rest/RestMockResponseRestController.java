@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
 import com.castlemock.core.mock.rest.service.project.input.*;
 import com.castlemock.core.mock.rest.service.project.output.*;
-import com.castlemock.web.basis.controller.rest.AbstractRestController;
+import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.rest.model.CreateRestMockResponseRequest;
 import com.castlemock.web.mock.rest.model.DuplicateRestMockOperationsRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestMockResponseRequest;

@@ -16,7 +16,7 @@
 
 package com.castlemock.app.config;
 
-import com.castlemock.web.basis.config.JWTEncoderDecoder;
+import com.castlemock.web.core.config.JWTEncoderDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

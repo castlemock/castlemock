@@ -14,7 +14,7 @@
     </parent>
 
     <modules>
-        <module>web-basis</module>
+        <module>web-core</module>
         <module>web-mock</module>
         <module>web-frontend</module>
         <module>web-site</module>

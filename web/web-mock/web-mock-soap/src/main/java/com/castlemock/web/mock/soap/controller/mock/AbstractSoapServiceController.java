@@ -49,9 +49,9 @@ import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsS
 import com.castlemock.core.mock.soap.service.project.output.IdentifySoapOperationOutput;
 import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
-import com.castlemock.web.basis.utility.CharsetUtility;
-import com.castlemock.web.basis.utility.HttpMessageSupport;
-import com.castlemock.web.basis.controller.AbstractController;
+import com.castlemock.web.core.utility.CharsetUtility;
+import com.castlemock.web.core.utility.HttpMessageSupport;
+import com.castlemock.web.core.controller.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.utility.MtomUtility;
 import com.castlemock.web.mock.soap.utility.SoapUtility;

@@ -24,7 +24,7 @@ import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsF
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsStatusInput;
 import com.castlemock.core.mock.soap.service.project.output.DeleteSoapPortOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
-import com.castlemock.web.basis.controller.rest.AbstractRestController;
+import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationForwardedEndpointsRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapOpertionStatusesRequest;
 import io.swagger.annotations.*;

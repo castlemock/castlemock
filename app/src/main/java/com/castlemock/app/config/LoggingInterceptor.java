@@ -16,7 +16,7 @@
 
 package com.castlemock.app.config;
 
-import com.castlemock.web.basis.controller.AbstractController;
+import com.castlemock.web.core.controller.AbstractController;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.web.method.HandlerMethod;

@@ -22,7 +22,7 @@
         <!-- Castle Mock dependencies -->
         <dependency>
             <groupId>com.castlemock.web</groupId>
-            <artifactId>web-basis</artifactId>
+            <artifactId>web-core</artifactId>
         </dependency>
 
         <!-- Third party dependencies -->

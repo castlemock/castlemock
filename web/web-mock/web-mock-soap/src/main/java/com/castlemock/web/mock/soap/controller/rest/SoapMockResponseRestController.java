@@ -27,7 +27,7 @@ import com.castlemock.core.mock.soap.service.project.output.CreateSoapMockRespon
 import com.castlemock.core.mock.soap.service.project.output.DeleteSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapMockResponseOutput;
-import com.castlemock.web.basis.controller.rest.AbstractRestController;
+import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.CreateSoapMockResponseRequest;
 import com.castlemock.web.mock.soap.model.DuplicateSoapMockOperationsRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapMockResponseRequest;

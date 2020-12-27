@@ -2,7 +2,7 @@ package com.castlemock.web.mock.rest.converter.wadl;
 
 import com.castlemock.core.basis.model.http.domain.HttpMethod;
 import com.castlemock.core.mock.rest.model.project.domain.*;
-import com.castlemock.web.basis.manager.FileManager;
+import com.castlemock.web.core.manager.FileManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

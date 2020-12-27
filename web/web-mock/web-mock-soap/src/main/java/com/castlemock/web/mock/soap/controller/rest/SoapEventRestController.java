@@ -20,7 +20,7 @@ import com.castlemock.core.basis.model.ServiceProcessor;
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.core.mock.soap.service.event.input.ReadSoapEventInput;
 import com.castlemock.core.mock.soap.service.event.output.ReadSoapEventOutput;
-import com.castlemock.web.basis.controller.rest.AbstractRestController;
+import com.castlemock.web.core.controller.rest.AbstractRestController;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

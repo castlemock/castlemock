@@ -19,7 +19,7 @@ package com.castlemock.web.mock.soap.service.event;
 
 import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
 import com.castlemock.repository.soap.event.SoapEventRepository;
-import com.castlemock.web.basis.service.event.AbstractEventService;
+import com.castlemock.web.core.service.event.AbstractEventService;
 
 /**
  * The SOAP event service is responsible for all the functionality related to the SOAP events.

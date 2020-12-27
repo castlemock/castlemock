@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.web;
 
-import com.castlemock.web.basis.controller.AbstractController;
+import com.castlemock.web.core.controller.AbstractController;
 import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

@@ -23,7 +23,7 @@ import com.castlemock.core.mock.rest.service.project.output.CreateRestMethodOutp
 import com.castlemock.core.mock.rest.service.project.output.DeleteRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.ReadRestMethodOutput;
 import com.castlemock.core.mock.rest.service.project.output.UpdateRestMethodOutput;
-import com.castlemock.web.basis.controller.rest.AbstractRestController;
+import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.rest.model.CreateRestMethodRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestMethodRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestMockResponseStatusesRequest;

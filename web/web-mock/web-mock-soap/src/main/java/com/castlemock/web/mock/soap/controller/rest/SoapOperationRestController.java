@@ -23,7 +23,7 @@ import com.castlemock.core.mock.soap.service.project.input.UpdateSoapMockRespons
 import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationInput;
 import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
 import com.castlemock.core.mock.soap.service.project.output.UpdateSoapOperationOutput;
-import com.castlemock.web.basis.controller.rest.AbstractRestController;
+import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.UpdateSoapMockResponseStatusesRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationRequest;
 import io.swagger.annotations.Api;
