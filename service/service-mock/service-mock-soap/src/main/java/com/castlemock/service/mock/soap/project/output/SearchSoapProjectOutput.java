@@ -16,9 +16,9 @@
 
 package com.castlemock.service.mock.soap.project.output;
 
-import com.castlemock.model.core.model.Output;
-import com.castlemock.model.core.model.SearchResult;
-import com.castlemock.model.core.model.validation.NotNull;
+import com.castlemock.model.core.Output;
+import com.castlemock.model.core.SearchResult;
+import com.castlemock.model.core.validation.NotNull;
 
 import java.util.List;
 import java.util.Objects;

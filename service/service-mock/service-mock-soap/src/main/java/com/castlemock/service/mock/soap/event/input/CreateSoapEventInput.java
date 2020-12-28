@@ -16,7 +16,7 @@
 
 package com.castlemock.service.mock.soap.event.input;
 
-import com.castlemock.model.core.model.Input;
+import com.castlemock.model.core.Input;
 import com.castlemock.model.mock.soap.domain.SoapEvent;
 
 /**

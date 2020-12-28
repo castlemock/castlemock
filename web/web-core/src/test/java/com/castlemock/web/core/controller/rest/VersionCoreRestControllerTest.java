@@ -16,7 +16,7 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.web.core.model.VersionResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

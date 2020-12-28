@@ -16,9 +16,9 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.model.core.model.ServiceProcessor;
-import com.castlemock.model.core.model.system.domain.SystemInformation;
-import com.castlemock.model.core.model.system.domain.SystemInformationTestBuilder;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.system.SystemInformation;
+import com.castlemock.model.core.system.SystemInformationTestBuilder;
 import com.castlemock.service.core.system.output.GetSystemInformationOutput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,7 @@
 package com.castlemock.service.mock.rest.project;
 
-import com.castlemock.model.core.model.ServiceResult;
-import com.castlemock.model.core.model.ServiceTask;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.model.mock.rest.domain.RestMockResponseTestBuilder;
 import com.castlemock.service.mock.rest.project.input.ReadRestMockResponseInput;

@@ -16,10 +16,16 @@
 
 package com.castlemock.service.core;
 
-import com.castlemock.model.core.model.*;
-import com.castlemock.model.core.model.user.domain.User;
-import com.castlemock.model.core.model.validation.validator.NotNullValidator;
-import com.castlemock.model.core.model.validation.validator.Validator;
+import com.castlemock.model.core.Input;
+import com.castlemock.model.core.Message;
+import com.castlemock.model.core.Output;
+import com.castlemock.model.core.Service;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.validation.validator.NotNullValidator;
+import com.castlemock.model.core.validation.validator.Validator;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

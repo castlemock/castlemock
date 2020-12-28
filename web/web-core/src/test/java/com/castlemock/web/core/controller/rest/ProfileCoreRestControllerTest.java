@@ -16,8 +16,8 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.model.core.model.ServiceProcessor;
-import com.castlemock.model.core.model.user.domain.User;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.user.User;
 import com.castlemock.web.core.model.UpdateProfileRequestTestBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

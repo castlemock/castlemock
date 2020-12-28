@@ -17,7 +17,7 @@
 package com.castlemock.service.mock.soap;
 
 
-import com.castlemock.model.core.model.TypeIdentifier;
+import com.castlemock.model.core.TypeIdentifier;
 
 /**
  * The SoapTypeIdentifier is used to identify a SOAP project on the certain shared project pages:

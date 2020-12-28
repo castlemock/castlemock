@@ -16,7 +16,7 @@
 
 package com.castlemock.service.mock.rest.project.output;
 
-import com.castlemock.model.core.model.Output;
+import com.castlemock.model.core.Output;
 
 /**
  * @author Karl Dahlgren

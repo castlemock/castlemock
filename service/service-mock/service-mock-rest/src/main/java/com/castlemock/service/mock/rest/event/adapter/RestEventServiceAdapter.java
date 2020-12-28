@@ -16,9 +16,9 @@
 
 package com.castlemock.service.mock.rest.event.adapter;
 
-import com.castlemock.model.core.model.ServiceProcessor;
-import com.castlemock.model.core.model.TypeIdentifier;
-import com.castlemock.model.core.model.event.domain.Event;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.TypeIdentifier;
+import com.castlemock.model.core.event.Event;
 import com.castlemock.model.core.service.event.EventServiceAdapter;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 import com.castlemock.service.mock.rest.event.input.ClearAllRestEventInput;

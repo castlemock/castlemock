@@ -16,11 +16,11 @@
 
 package com.castlemock.service.core.project;
 
-import com.castlemock.model.core.model.SearchQuery;
-import com.castlemock.model.core.model.SearchResult;
-import com.castlemock.model.core.model.TypeIdentifiable;
-import com.castlemock.model.core.model.TypeIdentifier;
-import com.castlemock.model.core.model.project.domain.Project;
+import com.castlemock.model.core.SearchQuery;
+import com.castlemock.model.core.SearchResult;
+import com.castlemock.model.core.TypeIdentifiable;
+import com.castlemock.model.core.TypeIdentifier;
+import com.castlemock.model.core.project.Project;
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
 import com.castlemock.model.core.service.project.ProjectServiceFacade;
 import com.castlemock.service.core.ServiceFacadeImpl;
@@ -45,7 +45,7 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, String,
     /**
      * The initialize method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
-     * @see com.castlemock.model.core.model.Service
+     * @see com.castlemock.model.core.Service
      * @see TypeIdentifier
      * @see TypeIdentifiable
      */

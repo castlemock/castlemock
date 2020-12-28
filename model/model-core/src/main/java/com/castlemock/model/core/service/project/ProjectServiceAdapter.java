@@ -16,10 +16,10 @@
 
 package com.castlemock.model.core.service.project;
 
-import com.castlemock.model.core.model.SearchQuery;
-import com.castlemock.model.core.model.SearchResult;
-import com.castlemock.model.core.model.ServiceAdapter;
-import com.castlemock.model.core.model.project.domain.Project;
+import com.castlemock.model.core.SearchQuery;
+import com.castlemock.model.core.SearchResult;
+import com.castlemock.model.core.ServiceAdapter;
+import com.castlemock.model.core.project.Project;
 
 import java.util.List;
 

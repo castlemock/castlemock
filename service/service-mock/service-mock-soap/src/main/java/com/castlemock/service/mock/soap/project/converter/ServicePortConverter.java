@@ -16,7 +16,7 @@
 
 package com.castlemock.service.mock.soap.project.converter;
 
-import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.service.mock.soap.project.converter.types.*;
 

@@ -1,8 +1,8 @@
 package com.castlemock.service.core.system;
 
 import com.castlemock.model.core.Environment;
-import com.castlemock.model.core.model.ServiceResult;
-import com.castlemock.model.core.model.ServiceTask;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
 import com.castlemock.service.core.system.input.GetSystemInformationInput;
 import com.castlemock.service.core.system.output.GetSystemInformationOutput;
 import com.castlemock.repository.Profiles;

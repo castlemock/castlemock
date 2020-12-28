@@ -1,7 +1,7 @@
 package com.castlemock.model.mock.rest.domain;
 
-import com.castlemock.model.core.model.http.domain.ContentEncoding;
-import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpHeader;
 import com.google.common.collect.ImmutableList;
 
 import java.util.List;

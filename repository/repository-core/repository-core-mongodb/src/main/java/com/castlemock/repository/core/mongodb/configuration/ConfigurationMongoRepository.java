@@ -16,10 +16,10 @@
 
 package com.castlemock.repository.core.mongodb.configuration;
 
-import com.castlemock.model.core.model.Saveable;
-import com.castlemock.model.core.model.SearchQuery;
-import com.castlemock.model.core.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.model.core.model.configuration.domain.ConfigurationType;
+import com.castlemock.model.core.Saveable;
+import com.castlemock.model.core.SearchQuery;
+import com.castlemock.model.core.configuration.ConfigurationGroup;
+import com.castlemock.model.core.configuration.ConfigurationType;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.configuration.ConfigurationRepository;
 import com.castlemock.repository.core.mongodb.MongoRepository;

@@ -1,6 +1,6 @@
 package com.castlemock.model.mock.rest.domain;
 
-import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.core.http.HttpMethod;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

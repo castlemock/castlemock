@@ -1,6 +1,6 @@
 package com.castlemock.model.mock.rest.domain;
 
-import com.castlemock.model.core.model.TypeIdentifier;
+import com.castlemock.model.core.TypeIdentifier;
 
 import java.util.Date;
 

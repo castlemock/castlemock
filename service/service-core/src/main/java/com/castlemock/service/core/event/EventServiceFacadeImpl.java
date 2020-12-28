@@ -16,10 +16,10 @@
 
 package com.castlemock.service.core.event;
 
-import com.castlemock.model.core.model.TypeIdentifiable;
-import com.castlemock.model.core.model.TypeIdentifier;
-import com.castlemock.model.core.model.event.domain.Event;
-import com.castlemock.model.core.model.event.domain.EventStartDateComparator;
+import com.castlemock.model.core.TypeIdentifiable;
+import com.castlemock.model.core.TypeIdentifier;
+import com.castlemock.model.core.event.Event;
+import com.castlemock.model.core.event.EventStartDateComparator;
 import com.castlemock.model.core.service.event.EventServiceAdapter;
 import com.castlemock.model.core.service.event.EventServiceFacade;
 import com.castlemock.service.core.ServiceFacadeImpl;
@@ -43,7 +43,7 @@ public class EventServiceFacadeImpl extends ServiceFacadeImpl<Event, String, Eve
     /**
      * The initialize method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
-     * @see com.castlemock.model.core.model.Service
+     * @see com.castlemock.model.core.Service
      * @see TypeIdentifier
      * @see TypeIdentifiable
      */

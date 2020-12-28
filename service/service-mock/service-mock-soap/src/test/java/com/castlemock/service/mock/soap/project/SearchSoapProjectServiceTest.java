@@ -16,10 +16,10 @@
 
 package com.castlemock.service.mock.soap.project;
 
-import com.castlemock.model.core.model.SearchQuery;
-import com.castlemock.model.core.model.SearchResult;
-import com.castlemock.model.core.model.ServiceResult;
-import com.castlemock.model.core.model.ServiceTask;
+import com.castlemock.model.core.SearchQuery;
+import com.castlemock.model.core.SearchResult;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.service.mock.soap.project.input.SearchSoapProjectInput;

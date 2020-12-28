@@ -17,11 +17,11 @@
 
 package com.castlemock.repository.soap.mongodb.project;
 
-import com.castlemock.model.core.model.Saveable;
-import com.castlemock.model.core.model.SearchQuery;
-import com.castlemock.model.core.model.SearchResult;
-import com.castlemock.model.core.model.http.domain.ContentEncoding;
-import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.Saveable;
+import com.castlemock.model.core.SearchQuery;
+import com.castlemock.model.core.SearchResult;
+import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapOperation;

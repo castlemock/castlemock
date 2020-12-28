@@ -16,7 +16,7 @@
 
 package com.castlemock.repository.core.file;
 
-import com.castlemock.model.core.model.Saveable;
+import com.castlemock.model.core.Saveable;
 import com.castlemock.repository.Repository;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.RandomStringUtils;

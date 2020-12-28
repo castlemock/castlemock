@@ -1,6 +1,6 @@
 package com.castlemock.repository.soap.mongodb.project;
 
-import com.castlemock.model.core.model.SearchQuery;
+import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.repository.Profiles;
 import org.junit.After;

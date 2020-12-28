@@ -16,8 +16,8 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.model.core.model.ServiceProcessor;
-import com.castlemock.model.core.model.project.domain.Project;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.project.Project;
 import com.castlemock.model.core.service.project.ProjectServiceFacade;
 import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.web.core.model.project.CreateProjectRequest;

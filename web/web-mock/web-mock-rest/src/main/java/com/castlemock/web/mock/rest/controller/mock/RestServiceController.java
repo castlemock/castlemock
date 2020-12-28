@@ -16,8 +16,8 @@
 
 package com.castlemock.web.mock.rest.controller.mock;
 
-import com.castlemock.model.core.model.ServiceProcessor;
-import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.model.mock.rest.domain.RestResource;

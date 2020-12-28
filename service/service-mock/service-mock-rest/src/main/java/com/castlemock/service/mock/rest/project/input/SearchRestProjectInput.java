@@ -16,9 +16,9 @@
 
 package com.castlemock.service.mock.rest.project.input;
 
-import com.castlemock.model.core.model.Input;
-import com.castlemock.model.core.model.SearchQuery;
-import com.castlemock.model.core.model.validation.NotNull;
+import com.castlemock.model.core.Input;
+import com.castlemock.model.core.SearchQuery;
+import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 

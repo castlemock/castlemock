@@ -1,6 +1,6 @@
 package com.castlemock.model.mock.soap.domain;
 
-import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.core.http.HttpMethod;
 
 import java.util.ArrayList;
 import java.util.List;

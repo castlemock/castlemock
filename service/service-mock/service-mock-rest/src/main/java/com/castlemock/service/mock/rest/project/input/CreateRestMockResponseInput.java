@@ -16,10 +16,10 @@
 
 package com.castlemock.service.mock.rest.project.input;
 
-import com.castlemock.model.core.model.Input;
-import com.castlemock.model.core.model.http.domain.ContentEncoding;
-import com.castlemock.model.core.model.http.domain.HttpHeader;
-import com.castlemock.model.core.model.validation.NotNull;
+import com.castlemock.model.core.Input;
+import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpHeader;
+import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestHeaderQuery;
 import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;

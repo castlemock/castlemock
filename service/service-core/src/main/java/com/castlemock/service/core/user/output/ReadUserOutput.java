@@ -16,9 +16,9 @@
 
 package com.castlemock.service.core.user.output;
 
-import com.castlemock.model.core.model.Output;
-import com.castlemock.model.core.model.user.domain.User;
-import com.castlemock.model.core.model.validation.NotNull;
+import com.castlemock.model.core.Output;
+import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.input.ReadUserInput;
 
 import java.util.Objects;

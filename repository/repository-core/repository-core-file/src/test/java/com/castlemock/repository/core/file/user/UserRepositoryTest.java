@@ -17,8 +17,8 @@
 package com.castlemock.repository.core.file.user;
 
 
-import com.castlemock.model.core.model.user.domain.User;
-import com.castlemock.model.core.model.user.domain.UserTestBuilder;
+import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;

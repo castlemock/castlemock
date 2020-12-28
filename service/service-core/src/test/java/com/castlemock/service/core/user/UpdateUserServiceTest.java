@@ -16,12 +16,12 @@
 
 package com.castlemock.service.core.user;
 
-import com.castlemock.model.core.model.ServiceResult;
-import com.castlemock.model.core.model.ServiceTask;
-import com.castlemock.model.core.model.user.domain.Role;
-import com.castlemock.model.core.model.user.domain.Status;
-import com.castlemock.model.core.model.user.domain.User;
-import com.castlemock.model.core.model.user.domain.UserTestBuilder;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.user.Role;
+import com.castlemock.model.core.user.Status;
+import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.service.core.user.input.UpdateUserInput;
 import com.castlemock.service.core.user.output.UpdateUserOutput;
 import com.castlemock.repository.token.SessionTokenRepository;

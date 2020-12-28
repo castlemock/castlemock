@@ -16,9 +16,9 @@
 
 package com.castlemock.web.mock.soap.web.soap.controller;
 
-import com.castlemock.model.core.model.ServiceProcessor;
-import com.castlemock.model.core.model.http.domain.HttpMethod;
-import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.service.mock.soap.project.input.IdentifySoapOperationInput;
 import com.castlemock.service.mock.soap.project.input.LoadSoapResourceInput;

@@ -16,9 +16,9 @@
 
 package com.castlemock.model.mock.rest.domain;
 
-import com.castlemock.model.core.model.http.domain.HttpHeader;
-import com.castlemock.model.core.model.http.domain.HttpMethod;
-import com.castlemock.model.core.model.http.domain.HttpParameter;
+import com.castlemock.model.core.http.HttpHeader;
+import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.http.HttpParameter;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;

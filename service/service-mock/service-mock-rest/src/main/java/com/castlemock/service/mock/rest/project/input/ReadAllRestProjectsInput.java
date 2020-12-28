@@ -16,7 +16,7 @@
 
 package com.castlemock.service.mock.rest.project.input;
 
-import com.castlemock.model.core.model.Input;
+import com.castlemock.model.core.Input;
 
 /**
  * @author Karl Dahlgren

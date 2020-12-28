@@ -16,11 +16,11 @@
 
 package com.castlemock.service.core.configuration;
 
-import com.castlemock.model.core.model.ServiceResult;
-import com.castlemock.model.core.model.ServiceTask;
-import com.castlemock.model.core.model.configuration.domain.Configuration;
-import com.castlemock.model.core.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.model.core.model.configuration.domain.ConfigurationType;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.configuration.Configuration;
+import com.castlemock.model.core.configuration.ConfigurationGroup;
+import com.castlemock.model.core.configuration.ConfigurationType;
 import com.castlemock.service.core.configuration.input.ReadAllConfigurationGroupsInput;
 import com.castlemock.service.core.configuration.output.ReadAllConfigurationGroupsOutput;
 import com.castlemock.repository.configuration.ConfigurationRepository;

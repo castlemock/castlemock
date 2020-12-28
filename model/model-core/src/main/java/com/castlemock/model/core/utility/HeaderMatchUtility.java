@@ -16,7 +16,7 @@
 
 package com.castlemock.model.core.utility;
 
-import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.http.HttpHeader;
 
 import java.util.List;
 import java.util.regex.Matcher;

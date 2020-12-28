@@ -16,7 +16,7 @@
 
 package com.castlemock.model.mock.soap;
 
-import com.castlemock.model.core.model.ExportContainer;
+import com.castlemock.model.core.ExportContainer;
 import com.castlemock.model.mock.soap.domain.*;
 
 import javax.xml.bind.annotation.XmlElement;

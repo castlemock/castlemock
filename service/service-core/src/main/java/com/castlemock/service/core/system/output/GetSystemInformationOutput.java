@@ -16,8 +16,8 @@
 
 package com.castlemock.service.core.system.output;
 
-import com.castlemock.model.core.model.Output;
-import com.castlemock.model.core.model.system.domain.SystemInformation;
+import com.castlemock.model.core.Output;
+import com.castlemock.model.core.system.SystemInformation;
 
 import java.util.Objects;
 

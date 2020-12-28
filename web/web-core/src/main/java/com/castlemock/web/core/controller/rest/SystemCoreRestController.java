@@ -16,9 +16,9 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.model.core.model.ServiceProcessor;
-import com.castlemock.model.core.model.system.domain.SystemInformation;
-import com.castlemock.model.core.model.user.domain.User;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.system.SystemInformation;
+import com.castlemock.model.core.user.User;
 import com.castlemock.service.core.system.input.GetSystemInformationInput;
 import com.castlemock.service.core.system.output.GetSystemInformationOutput;
 import io.swagger.annotations.Api;

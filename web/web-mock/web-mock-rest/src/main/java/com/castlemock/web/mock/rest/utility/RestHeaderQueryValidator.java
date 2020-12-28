@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.utility;
 
-import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.mock.rest.domain.RestHeaderQuery;
 
 import java.util.List;

@@ -16,8 +16,8 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.model.core.model.ServiceProcessor;
-import com.castlemock.model.core.model.user.domain.User;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.user.User;
 import com.castlemock.service.core.user.input.ReadUserByUsernameInput;
 import com.castlemock.service.core.user.input.UpdateCurrentUserInput;
 import com.castlemock.service.core.user.output.ReadUserByUsernameOutput;

@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.model;
 
-import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
 

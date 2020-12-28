@@ -16,8 +16,8 @@
 
 package com.castlemock.service.mock.rest.project.converter.swagger;
 
-import com.castlemock.model.core.model.http.domain.HttpMethod;
-import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.utility.file.FileUtility;
 import com.castlemock.model.core.utility.parser.expression.*;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentArray;

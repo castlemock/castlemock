@@ -16,11 +16,11 @@
 
 package com.castlemock.service.core.configuration;
 
-import com.castlemock.model.core.model.Service;
-import com.castlemock.model.core.model.ServiceResult;
-import com.castlemock.model.core.model.ServiceTask;
-import com.castlemock.model.core.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.model.core.model.configuration.domain.Configuration;
+import com.castlemock.model.core.Service;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.configuration.ConfigurationGroup;
+import com.castlemock.model.core.configuration.Configuration;
 import com.castlemock.service.core.configuration.input.UpdateAllConfigurationGroupsInput;
 import com.castlemock.service.core.configuration.output.UpdateAllConfigurationGroupsOutput;
 import com.google.common.base.Preconditions;

@@ -16,11 +16,11 @@
 
 package com.castlemock.repository.core.mongodb.user;
 
-import com.castlemock.model.core.model.Saveable;
-import com.castlemock.model.core.model.SearchQuery;
-import com.castlemock.model.core.model.user.domain.Role;
-import com.castlemock.model.core.model.user.domain.Status;
-import com.castlemock.model.core.model.user.domain.User;
+import com.castlemock.model.core.Saveable;
+import com.castlemock.model.core.SearchQuery;
+import com.castlemock.model.core.user.Role;
+import com.castlemock.model.core.user.Status;
+import com.castlemock.model.core.user.User;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.mongodb.MongoRepository;
 import com.castlemock.repository.user.UserRepository;

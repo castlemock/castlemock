@@ -16,7 +16,7 @@
 
 package com.castlemock.service.core.user.output;
 
-import com.castlemock.model.core.model.Output;
+import com.castlemock.model.core.Output;
 import com.castlemock.service.core.user.input.DeleteUserInput;
 
 /**

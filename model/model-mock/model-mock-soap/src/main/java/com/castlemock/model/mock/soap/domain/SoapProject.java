@@ -16,8 +16,8 @@
 
 package com.castlemock.model.mock.soap.domain;
 
-import com.castlemock.model.core.model.TypeIdentifier;
-import com.castlemock.model.core.model.project.domain.Project;
+import com.castlemock.model.core.TypeIdentifier;
+import com.castlemock.model.core.project.Project;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;

@@ -16,9 +16,9 @@
 
 package com.castlemock.service.mock.rest.event;
 
-import com.castlemock.model.core.model.Service;
-import com.castlemock.model.core.model.ServiceResult;
-import com.castlemock.model.core.model.ServiceTask;
+import com.castlemock.model.core.Service;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
 import com.castlemock.service.mock.rest.event.input.ClearAllRestEventInput;
 import com.castlemock.service.mock.rest.event.output.ClearAllRestEventOutput;
 

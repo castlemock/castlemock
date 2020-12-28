@@ -16,9 +16,9 @@
 
 package com.castlemock.service.core;
 
-import com.castlemock.model.core.model.Input;
-import com.castlemock.model.core.model.Output;
-import com.castlemock.model.core.model.Service;
+import com.castlemock.model.core.Input;
+import com.castlemock.model.core.Output;
+import com.castlemock.model.core.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.GenericTypeResolver;

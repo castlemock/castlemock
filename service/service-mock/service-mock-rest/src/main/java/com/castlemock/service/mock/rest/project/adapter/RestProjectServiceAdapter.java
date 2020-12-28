@@ -16,11 +16,11 @@
 
 package com.castlemock.service.mock.rest.project.adapter;
 
-import com.castlemock.model.core.model.SearchQuery;
-import com.castlemock.model.core.model.SearchResult;
-import com.castlemock.model.core.model.ServiceProcessor;
-import com.castlemock.model.core.model.TypeIdentifier;
-import com.castlemock.model.core.model.project.domain.Project;
+import com.castlemock.model.core.SearchQuery;
+import com.castlemock.model.core.SearchResult;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.TypeIdentifier;
+import com.castlemock.model.core.project.Project;
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.service.mock.rest.project.input.CreateRestProjectInput;

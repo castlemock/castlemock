@@ -16,9 +16,9 @@
 
 package com.castlemock.service.core.configuration.output;
 
-import com.castlemock.model.core.model.Output;
-import com.castlemock.model.core.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.model.core.model.validation.NotNull;
+import com.castlemock.model.core.Output;
+import com.castlemock.model.core.configuration.ConfigurationGroup;
+import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.configuration.input.UpdateAllConfigurationGroupsInput;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.castlemock.service.mock.soap.project;
 
-import com.castlemock.model.core.model.ServiceResult;
-import com.castlemock.model.core.model.ServiceTask;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.soap.domain.SoapResource;
 import com.castlemock.model.mock.soap.domain.SoapResourceTestBuilder;
 import com.castlemock.service.mock.soap.project.input.LoadSoapResourceInput;

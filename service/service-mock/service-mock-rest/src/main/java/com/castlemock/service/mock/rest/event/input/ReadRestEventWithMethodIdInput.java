@@ -16,8 +16,8 @@
 
 package com.castlemock.service.mock.rest.event.input;
 
-import com.castlemock.model.core.model.Input;
-import com.castlemock.model.core.model.validation.NotNull;
+import com.castlemock.model.core.Input;
+import com.castlemock.model.core.validation.NotNull;
 
 /**
  * @author Karl Dahlgren

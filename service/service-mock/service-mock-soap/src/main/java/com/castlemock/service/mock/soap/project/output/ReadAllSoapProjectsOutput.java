@@ -16,7 +16,7 @@
 
 package com.castlemock.service.mock.soap.project.output;
 
-import com.castlemock.model.core.model.Output;
+import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 
 import java.util.List;

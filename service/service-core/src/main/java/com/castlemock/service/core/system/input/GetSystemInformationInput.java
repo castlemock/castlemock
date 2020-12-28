@@ -16,7 +16,7 @@
 
 package com.castlemock.service.core.system.input;
 
-import com.castlemock.model.core.model.Input;
+import com.castlemock.model.core.Input;
 
 /**
  * Get system information input

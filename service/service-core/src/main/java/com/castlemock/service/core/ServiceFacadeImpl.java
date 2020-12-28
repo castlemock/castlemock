@@ -16,7 +16,11 @@
 
 package com.castlemock.service.core;
 
-import com.castlemock.model.core.model.*;
+import com.castlemock.model.core.Service;
+import com.castlemock.model.core.ServiceAdapter;
+import com.castlemock.model.core.ServiceFacade;
+import com.castlemock.model.core.TypeIdentifiable;
+import com.castlemock.model.core.TypeIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 

@@ -1,7 +1,7 @@
 package com.castlemock.model.mock.soap.domain;
 
-import com.castlemock.model.core.model.http.domain.HttpHeader;
-import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.core.http.HttpHeader;
+import com.castlemock.model.core.http.HttpMethod;
 import com.google.common.collect.ImmutableList;
 
 import java.util.List;

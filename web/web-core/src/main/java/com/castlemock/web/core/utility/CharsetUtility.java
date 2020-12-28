@@ -16,7 +16,7 @@
 
 package com.castlemock.web.core.utility;
 
-import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.http.HttpHeader;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 

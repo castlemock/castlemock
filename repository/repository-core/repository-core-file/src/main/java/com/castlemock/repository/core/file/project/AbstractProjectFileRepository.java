@@ -1,6 +1,6 @@
 package com.castlemock.repository.core.file.project;
 
-import com.castlemock.model.core.model.Saveable;
+import com.castlemock.model.core.Saveable;
 import com.castlemock.repository.core.file.FileRepository;
 import org.dozer.Mapping;
 

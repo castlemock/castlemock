@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.soap.config;
 
-import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.service.core.manager.UrlManager;
 import com.castlemock.service.mock.soap.project.input.ImportSoapProjectInput;
 import com.google.common.base.Strings;

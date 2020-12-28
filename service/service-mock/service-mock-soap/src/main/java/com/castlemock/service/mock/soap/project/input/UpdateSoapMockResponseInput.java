@@ -16,9 +16,9 @@
 
 package com.castlemock.service.mock.soap.project.input;
 
-import com.castlemock.model.core.model.Input;
-import com.castlemock.model.core.model.http.domain.HttpHeader;
-import com.castlemock.model.core.model.validation.NotNull;
+import com.castlemock.model.core.Input;
+import com.castlemock.model.core.http.HttpHeader;
+import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
 

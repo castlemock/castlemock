@@ -16,11 +16,11 @@
 
 package com.castlemock.web.core.service;
 
-import com.castlemock.model.core.model.Input;
-import com.castlemock.model.core.model.Output;
-import com.castlemock.model.core.model.Service;
-import com.castlemock.model.core.model.ServiceResult;
-import com.castlemock.model.core.model.ServiceTask;
+import com.castlemock.model.core.Input;
+import com.castlemock.model.core.Output;
+import com.castlemock.model.core.Service;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
 import com.castlemock.service.core.ServiceProcessorImpl;
 import com.castlemock.service.core.ServiceRegistry;
 import org.junit.Assert;

@@ -16,9 +16,9 @@
 
 package com.castlemock.service.core.event;
 
-import com.castlemock.model.core.model.TypeIdentifier;
-import com.castlemock.model.core.model.event.domain.Event;
-import com.castlemock.model.core.model.event.domain.EventTestBuilder;
+import com.castlemock.model.core.TypeIdentifier;
+import com.castlemock.model.core.event.Event;
+import com.castlemock.model.core.event.EventTestBuilder;
 import com.castlemock.model.core.service.event.EventServiceAdapter;
 import org.junit.Assert;
 import org.junit.Before;

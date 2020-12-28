@@ -17,10 +17,10 @@
 
 package com.castlemock.repository.soap.file.project;
 
-import com.castlemock.model.core.model.Saveable;
-import com.castlemock.model.core.model.SearchQuery;
-import com.castlemock.model.core.model.SearchResult;
-import com.castlemock.model.core.model.SearchValidator;
+import com.castlemock.model.core.Saveable;
+import com.castlemock.model.core.SearchQuery;
+import com.castlemock.model.core.SearchResult;
+import com.castlemock.model.core.SearchValidator;
 import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.repository.Profiles;

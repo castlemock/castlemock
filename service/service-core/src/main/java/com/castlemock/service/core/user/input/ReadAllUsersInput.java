@@ -16,7 +16,7 @@
 
 package com.castlemock.service.core.user.input;
 
-import com.castlemock.model.core.model.Input;
+import com.castlemock.model.core.Input;
 import com.castlemock.service.core.user.output.ReadAllUsersOutput;
 
 /**

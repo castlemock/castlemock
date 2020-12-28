@@ -17,10 +17,10 @@
 package com.castlemock.service.core.system;
 
 import com.castlemock.model.core.Environment;
-import com.castlemock.model.core.model.Service;
-import com.castlemock.model.core.model.ServiceResult;
-import com.castlemock.model.core.model.ServiceTask;
-import com.castlemock.model.core.model.system.domain.SystemInformation;
+import com.castlemock.model.core.Service;
+import com.castlemock.model.core.ServiceResult;
+import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.system.SystemInformation;
 import com.castlemock.service.core.system.input.GetSystemInformationInput;
 import com.castlemock.service.core.system.output.GetSystemInformationOutput;
 import com.castlemock.repository.Profiles;
@@ -83,8 +83,8 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
                 org.springframework.core.env.Profiles.of(Profiles.FILE);
 
         if (springEnvironment.acceptsProfiles(mongoProfiles)) {
-            com.castlemock.model.core.model.system.domain.MongoProperties mongoProperties = mongoPropertiesProvider.stream().map(props ->
-                    new com.castlemock.model.core.model.system.domain.MongoProperties(
+            com.castlemock.model.core.system.MongoProperties mongoProperties = mongoPropertiesProvider.stream().map(props ->
+                    new com.castlemock.model.core.system.MongoProperties(
                             props.getHost(), props.getPort(), props.determineUri(),
                             props.getMongoClientDatabase(), isMongoUsesUri(props)))
                     .findFirst()

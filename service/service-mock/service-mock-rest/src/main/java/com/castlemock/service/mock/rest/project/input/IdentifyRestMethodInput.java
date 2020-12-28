@@ -16,10 +16,10 @@
 
 package com.castlemock.service.mock.rest.project.input;
 
-import com.castlemock.model.core.model.Input;
-import com.castlemock.model.core.model.http.domain.HttpMethod;
-import com.castlemock.model.core.model.http.domain.HttpParameter;
-import com.castlemock.model.core.model.validation.NotNull;
+import com.castlemock.model.core.Input;
+import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.http.HttpParameter;
+import com.castlemock.model.core.validation.NotNull;
 
 import java.util.*;
 

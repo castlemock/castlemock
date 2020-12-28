@@ -16,7 +16,7 @@
 
 package com.castlemock.model.core.utility;
 
-import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.http.HttpHeader;
 import org.junit.Test;
 
 import java.util.ArrayList;

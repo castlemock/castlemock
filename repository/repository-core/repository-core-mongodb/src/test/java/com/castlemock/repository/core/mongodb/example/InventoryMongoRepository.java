@@ -1,7 +1,7 @@
 package com.castlemock.repository.core.mongodb.example;
 
-import com.castlemock.model.core.model.Saveable;
-import com.castlemock.model.core.model.SearchQuery;
+import com.castlemock.model.core.Saveable;
+import com.castlemock.model.core.SearchQuery;
 import com.castlemock.repository.core.mongodb.MongoRepository;
 import org.dozer.Mapping;
 import org.springframework.stereotype.Repository;

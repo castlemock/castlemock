@@ -16,8 +16,8 @@
 
 package com.castlemock.repository.core.file.configuration;
 
-import com.castlemock.model.core.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.model.core.model.configuration.domain.ConfigurationGroupTestBuilder;
+import com.castlemock.model.core.configuration.ConfigurationGroup;
+import com.castlemock.model.core.configuration.ConfigurationGroupTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;

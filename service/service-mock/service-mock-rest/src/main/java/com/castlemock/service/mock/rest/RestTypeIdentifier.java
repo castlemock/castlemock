@@ -17,7 +17,7 @@
 package com.castlemock.service.mock.rest;
 
 
-import com.castlemock.model.core.model.TypeIdentifier;
+import com.castlemock.model.core.TypeIdentifier;
 
 /**
  * The RestTypeIdentifier is used to identify a REST project on the certain shared project pages:

@@ -16,8 +16,7 @@
 
 package com.castlemock.app.config;
 
-import com.castlemock.model.core.model.LegacyRepository;
-import com.castlemock.model.core.model.ServiceFacade;
+import com.castlemock.model.core.ServiceFacade;
 import com.castlemock.repository.Repository;
 import com.castlemock.repository.token.SessionTokenRepository;
 import com.castlemock.service.core.ServiceRegistry;
@@ -66,7 +65,7 @@ public abstract class Application extends SpringBootServletInitializer{
     /**
      * The initialize method is responsible for initiating all the components when the application has been started.
      * @see Repository
-     * @see com.castlemock.model.core.model.Service
+     * @see com.castlemock.model.core.Service
      */
     @PostConstruct
     protected void initiate(){
@@ -75,7 +74,6 @@ public abstract class Application extends SpringBootServletInitializer{
         updateBaseFileDirectory(); // This is required to change the base folder name from .fortmocks to .castlemock
         initializeProcessRegistry();
         initializeRepository();
-        initializeLegacyRepository();
         initializeServiceFacade();
         initializeTokenRepository();
     }
@@ -99,22 +97,6 @@ public abstract class Application extends SpringBootServletInitializer{
      * @see Repository
      */
     @SuppressWarnings("rawtypes")
-    protected void initializeLegacyRepository(){
-        final Map<String, Object> repositories = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Repository.class);
-        for(Map.Entry<String, Object> entry : repositories.entrySet()){
-            final Object value = entry.getValue();
-            if(value instanceof LegacyRepository){
-                final LegacyRepository repository = (LegacyRepository) value;
-                repository.initialize();
-            }
-        }
-    }
-
-    /**
-     * The method provides the functionality to retrieve all the repositories and initialize them
-     * @see Repository
-     */
-    @SuppressWarnings("rawtypes")
     protected void initializeRepository(){
         final Map<String, Object> repositories = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Repository.class);
         for(Map.Entry<String, Object> entry : repositories.entrySet()){
@@ -130,7 +112,7 @@ public abstract class Application extends SpringBootServletInitializer{
     /**
      * The method provides the functionality to retrieve all the service facades and initialize them
      * @see ServiceFacade
-     * @see com.castlemock.model.core.model.Service
+     * @see com.castlemock.model.core.Service
      */
     @SuppressWarnings("rawtypes")
     protected void initializeServiceFacade(){

@@ -16,11 +16,11 @@
 
 package com.castlemock.web.mock.rest.controller.mock;
 
-import com.castlemock.model.core.model.ServiceProcessor;
-import com.castlemock.model.core.model.http.domain.ContentEncoding;
-import com.castlemock.model.core.model.http.domain.HttpHeader;
-import com.castlemock.model.core.model.http.domain.HttpMethod;
-import com.castlemock.model.core.model.http.domain.HttpParameter;
+import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpHeader;
+import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.http.HttpParameter;
 import com.castlemock.model.core.utility.JsonPathUtility;
 import com.castlemock.model.core.utility.XPathUtility;
 import com.castlemock.model.core.utility.parser.TextParser;
