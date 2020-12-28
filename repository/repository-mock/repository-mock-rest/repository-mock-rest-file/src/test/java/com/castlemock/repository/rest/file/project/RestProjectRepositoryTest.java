@@ -17,8 +17,8 @@
 package com.castlemock.repository.rest.file.project;
 
 
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
-import com.castlemock.core.mock.rest.model.project.domain.RestProjectTestBuilder;
+import com.castlemock.model.mock.rest.domain.RestProject;
+import com.castlemock.model.mock.rest.domain.RestProjectTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -52,7 +52,7 @@ public class RestProjectRepositoryTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "restProjectFileDirectory", DIRECTORY);
         ReflectionTestUtils.setField(repository, "restProjectFileExtension", EXTENSION);
     }

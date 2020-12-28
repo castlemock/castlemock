@@ -1,10 +1,10 @@
 package com.castlemock.repository.soap.mongodb.project;
 
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifyStrategy;
-import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
+import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.mock.soap.domain.SoapOperation;
+import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
+import com.castlemock.model.mock.soap.domain.SoapOperationIdentifyStrategy;
+import com.castlemock.model.mock.soap.domain.SoapVersion;
 import com.castlemock.repository.Profiles;
 import org.junit.After;
 import org.junit.Test;

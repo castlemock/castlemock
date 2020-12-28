@@ -16,8 +16,8 @@
 
 package com.castlemock.web.mock.soap.utility.compare;
 
-import com.castlemock.core.basis.utility.compare.AlphanumComparator;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.model.core.utility.compare.AlphanumComparator;
+import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 
 import java.util.Comparator;
 

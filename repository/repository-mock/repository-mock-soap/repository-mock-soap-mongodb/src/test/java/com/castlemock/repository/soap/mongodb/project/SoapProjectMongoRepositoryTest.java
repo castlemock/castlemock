@@ -1,6 +1,6 @@
 package com.castlemock.repository.soap.mongodb.project;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.repository.Profiles;
 import org.junit.After;
 import org.junit.Test;

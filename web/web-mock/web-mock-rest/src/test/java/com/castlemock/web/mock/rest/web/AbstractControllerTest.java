@@ -58,7 +58,7 @@ public abstract class AbstractControllerTest {
 
     @Before
     public void initiateTest() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(getController()).build();
         when(servletContext.getContextPath()).thenReturn(CONTEXT);
 

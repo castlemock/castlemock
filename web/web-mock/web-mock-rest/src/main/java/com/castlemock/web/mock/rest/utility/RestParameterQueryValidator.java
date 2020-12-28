@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.utility;
 
-import com.castlemock.core.mock.rest.model.project.domain.RestParameterQuery;
+import com.castlemock.model.mock.rest.domain.RestParameterQuery;
 
 import java.util.List;
 import java.util.Map;

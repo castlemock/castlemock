@@ -16,8 +16,8 @@
 
 package com.castlemock.web.mock.rest.utility.compare;
 
-import com.castlemock.core.basis.utility.compare.AlphanumComparator;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.model.core.utility.compare.AlphanumComparator;
+import com.castlemock.model.mock.rest.domain.RestMockResponse;
 
 import java.util.Comparator;
 

@@ -16,10 +16,10 @@
 
 package com.castlemock.web.mock.soap.controller.mock;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.mock.soap.domain.SoapMockResponse;
+import com.castlemock.model.mock.soap.domain.SoapOperation;
+import com.castlemock.model.mock.soap.domain.SoapProject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

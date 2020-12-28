@@ -16,17 +16,17 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
-import com.castlemock.core.mock.soap.service.project.input.CreateSoapMockResponseInput;
-import com.castlemock.core.mock.soap.service.project.input.DeleteSoapMockResponseInput;
-import com.castlemock.core.mock.soap.service.project.input.DuplicateSoapMockResponsesInput;
-import com.castlemock.core.mock.soap.service.project.input.ReadSoapMockResponseInput;
-import com.castlemock.core.mock.soap.service.project.input.UpdateSoapMockResponseInput;
-import com.castlemock.core.mock.soap.service.project.output.CreateSoapMockResponseOutput;
-import com.castlemock.core.mock.soap.service.project.output.DeleteSoapMockResponseOutput;
-import com.castlemock.core.mock.soap.service.project.output.ReadSoapMockResponseOutput;
-import com.castlemock.core.mock.soap.service.project.output.UpdateSoapMockResponseOutput;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.mock.soap.domain.SoapMockResponse;
+import com.castlemock.service.mock.soap.project.input.CreateSoapMockResponseInput;
+import com.castlemock.service.mock.soap.project.input.DeleteSoapMockResponseInput;
+import com.castlemock.service.mock.soap.project.input.DuplicateSoapMockResponsesInput;
+import com.castlemock.service.mock.soap.project.input.ReadSoapMockResponseInput;
+import com.castlemock.service.mock.soap.project.input.UpdateSoapMockResponseInput;
+import com.castlemock.service.mock.soap.project.output.CreateSoapMockResponseOutput;
+import com.castlemock.service.mock.soap.project.output.DeleteSoapMockResponseOutput;
+import com.castlemock.service.mock.soap.project.output.ReadSoapMockResponseOutput;
+import com.castlemock.service.mock.soap.project.output.UpdateSoapMockResponseOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.CreateSoapMockResponseRequest;
 import com.castlemock.web.mock.soap.model.DuplicateSoapMockOperationsRequest;

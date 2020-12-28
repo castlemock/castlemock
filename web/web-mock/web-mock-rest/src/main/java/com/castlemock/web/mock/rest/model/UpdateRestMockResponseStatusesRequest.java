@@ -1,6 +1,6 @@
 package com.castlemock.web.mock.rest.model;
 
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
+import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 
 import java.util.Objects;
 import java.util.Set;

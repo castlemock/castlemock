@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>service-core</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>com.castlemock.service</groupId>
+        <artifactId>service</artifactId>
+        <version>${project.version}</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <dependencies>
+        <!-- Castle Mock dependencies -->
+        <dependency>
+            <groupId>com.castlemock.model</groupId>
+            <artifactId>model-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.repository.core</groupId>
+            <artifactId>repository-core-model</artifactId>
+        </dependency>
+
+        <!-- Castle Mock test dependencies -->
+        <dependency>
+            <groupId>com.castlemock.model</groupId>
+            <artifactId>model-core</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Third party dependencies -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>../../</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE</include>
+                    <include>NOTICE</include>
+                    <include>AUTHORS</include>
+                    <include>LICENSE-3RD-PARTY</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>./src/main/resources/META-INF/resources</directory>
+                <targetPath>META-INF/resources</targetPath>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>

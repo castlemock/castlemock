@@ -17,11 +17,11 @@
 
 package com.castlemock.repository.soap.mongodb.project;
 
-import com.castlemock.core.basis.model.Saveable;
-import com.castlemock.core.basis.model.SearchQuery;
-import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.model.core.model.Saveable;
+import com.castlemock.model.core.model.SearchQuery;
+import com.castlemock.model.core.model.SearchResult;
+import com.castlemock.model.mock.soap.domain.SoapPort;
+import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.mongodb.MongoRepository;
 import com.castlemock.repository.soap.project.SoapPortRepository;

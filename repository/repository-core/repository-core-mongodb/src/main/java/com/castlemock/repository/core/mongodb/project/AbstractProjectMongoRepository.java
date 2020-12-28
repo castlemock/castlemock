@@ -1,6 +1,6 @@
 package com.castlemock.repository.core.mongodb.project;
 
-import com.castlemock.core.basis.model.Saveable;
+import com.castlemock.model.core.model.Saveable;
 import com.castlemock.repository.core.mongodb.MongoRepository;
 import org.dozer.Mapping;
 

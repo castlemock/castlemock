@@ -16,8 +16,8 @@
 
 package com.castlemock.repository.soap.file.event;
 
-import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
-import com.castlemock.core.mock.soap.model.event.domain.SoapEventTestBuilder;
+import com.castlemock.model.mock.soap.domain.SoapEvent;
+import com.castlemock.model.mock.soap.domain.SoapEventTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -51,7 +51,7 @@ public class SoapEventRepositoryTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "soapEventFileDirectory", DIRECTORY);
         ReflectionTestUtils.setField(repository, "soapEventFileExtension", EXTENSION);
     }

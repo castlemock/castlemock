@@ -16,17 +16,17 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
-import com.castlemock.core.basis.service.user.input.DeleteUserInput;
-import com.castlemock.core.basis.service.user.input.ReadAllUsersInput;
-import com.castlemock.core.basis.service.user.input.ReadUserInput;
-import com.castlemock.core.basis.service.user.output.CreateUserOutput;
-import com.castlemock.core.basis.service.user.output.DeleteUserOutput;
-import com.castlemock.core.basis.service.user.output.ReadAllUsersOutput;
-import com.castlemock.core.basis.service.user.output.ReadUserOutput;
-import com.castlemock.core.basis.service.user.output.UpdateUserOutput;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.model.user.domain.User;
+import com.castlemock.model.core.model.user.domain.UserTestBuilder;
+import com.castlemock.service.core.user.input.DeleteUserInput;
+import com.castlemock.service.core.user.input.ReadAllUsersInput;
+import com.castlemock.service.core.user.input.ReadUserInput;
+import com.castlemock.service.core.user.output.CreateUserOutput;
+import com.castlemock.service.core.user.output.DeleteUserOutput;
+import com.castlemock.service.core.user.output.ReadAllUsersOutput;
+import com.castlemock.service.core.user.output.ReadUserOutput;
+import com.castlemock.service.core.user.output.UpdateUserOutput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -16,7 +16,13 @@
 
 package com.castlemock.web.core.service;
 
-import com.castlemock.core.basis.model.*;
+import com.castlemock.model.core.model.Input;
+import com.castlemock.model.core.model.Output;
+import com.castlemock.model.core.model.Service;
+import com.castlemock.model.core.model.ServiceResult;
+import com.castlemock.model.core.model.ServiceTask;
+import com.castlemock.service.core.ServiceProcessorImpl;
+import com.castlemock.service.core.ServiceRegistry;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +46,7 @@ public class ServiceProcessorImplTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test

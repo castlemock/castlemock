@@ -17,8 +17,8 @@
 package com.castlemock.repository.soap.file.project;
 
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProjectTestBuilder;
+import com.castlemock.model.mock.soap.domain.SoapProject;
+import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -52,7 +52,7 @@ public class SoapProjectRepositoryTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "soapProjectFileDirectory", DIRECTORY);
         ReflectionTestUtils.setField(repository, "soapProjectFileExtension", EXTENSION);
     }

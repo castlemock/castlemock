@@ -17,7 +17,7 @@
 package com.castlemock.repository.soap.event;
 
 
-import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
+import com.castlemock.model.mock.soap.domain.SoapEvent;
 import com.castlemock.repository.Repository;
 
 import java.util.List;

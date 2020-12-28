@@ -16,7 +16,7 @@
 
 package com.castlemock.repository.soap.project;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
+import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.repository.Repository;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public interface SoapPortRepository extends Repository<SoapPort, String> {
     SoapPort findWithUri(String projectId, String uri);
 
     /**
-     * Retrieve the {@link com.castlemock.core.mock.soap.model.project.domain.SoapProject} id
+     * Retrieve the {@link com.castlemock.model.mock.soap.domain.SoapProject} id
      * for the {@link SoapPort} with the provided id.
      * @param portId The id of the {@link SoapPort}.
      * @return The id of the project.

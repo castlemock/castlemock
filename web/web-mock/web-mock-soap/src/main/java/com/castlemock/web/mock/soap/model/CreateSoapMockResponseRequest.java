@@ -16,9 +16,9 @@
 
 package com.castlemock.web.mock.soap.model;
 
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponseStatus;
-import com.castlemock.core.mock.soap.model.project.domain.SoapXPathExpression;
+import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
+import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
 
 import java.util.List;
 import java.util.Objects;

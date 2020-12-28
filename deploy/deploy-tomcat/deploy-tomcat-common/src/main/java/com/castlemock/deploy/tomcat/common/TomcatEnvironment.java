@@ -16,7 +16,7 @@
 
 package com.castlemock.deploy.tomcat.common;
 
-import com.castlemock.core.basis.Environment;
+import com.castlemock.model.core.Environment;
 import org.apache.catalina.util.ServerInfo;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;

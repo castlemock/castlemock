@@ -73,33 +73,34 @@
 
     <modules>
         <module>app</module>
-        <module>core</module>
+        <module>model</module>
         <module>deploy</module>
         <module>repository</module>
         <module>web</module>
+        <module>service</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
             <!-- Castle Mock dependencies -->
             <dependency>
-                <groupId>com.castlemock.core</groupId>
-                <artifactId>core-expression</artifactId>
+                <groupId>com.castlemock.model</groupId>
+                <artifactId>model-expression</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.castlemock.core</groupId>
-                <artifactId>core-basis</artifactId>
+                <groupId>com.castlemock.model</groupId>
+                <artifactId>model-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>core-mock-rest</artifactId>
+                <groupId>com.castlemock.model.mock</groupId>
+                <artifactId>model-mock-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>core-mock-soap</artifactId>
+                <groupId>com.castlemock.model.mock</groupId>
+                <artifactId>model-mock-soap</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -192,25 +193,40 @@
                 <artifactId>web-frontend</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.castlemock.service</groupId>
+                <artifactId>service-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.castlemock.service</groupId>
+                <artifactId>service-mock-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.castlemock.service</groupId>
+                <artifactId>service-mock-soap</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!-- Castle Mock test dependencies -->
             <dependency>
-                <groupId>com.castlemock.core</groupId>
-                <artifactId>core-basis</artifactId>
+                <groupId>com.castlemock.model</groupId>
+                <artifactId>model-core</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>core-mock-rest</artifactId>
+                <groupId>com.castlemock.model.mock</groupId>
+                <artifactId>model-mock-rest</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>com.castlemock.core.mock</groupId>
-                <artifactId>core-mock-soap</artifactId>
+                <groupId>com.castlemock.model.mock</groupId>
+                <artifactId>model-mock-soap</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
@@ -542,15 +558,15 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>de.flapdoodle.embed</groupId>
-                <artifactId>de.flapdoodle.embed.mongo</artifactId>
-                <version>${flapdoodle.mongo.version}</version>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>3.6.28</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-all</artifactId>
-                <version>${mockito.version}</version>
+                <groupId>de.flapdoodle.embed</groupId>
+                <artifactId>de.flapdoodle.embed.mongo</artifactId>
+                <version>${flapdoodle.mongo.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -591,7 +607,7 @@
         <!-- Third party test dependencies -->
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
+            <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

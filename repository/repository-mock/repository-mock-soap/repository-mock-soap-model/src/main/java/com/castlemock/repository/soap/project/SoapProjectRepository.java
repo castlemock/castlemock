@@ -16,7 +16,7 @@
 
 package com.castlemock.repository.soap.project;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
+import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.repository.Repository;
 
 /**

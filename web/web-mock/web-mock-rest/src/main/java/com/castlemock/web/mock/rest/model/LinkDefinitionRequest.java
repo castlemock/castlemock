@@ -16,7 +16,7 @@
 
 package com.castlemock.web.mock.rest.model;
 
-import com.castlemock.core.mock.rest.model.RestDefinitionType;
+import com.castlemock.model.mock.rest.RestDefinitionType;
 
 import java.util.Objects;
 

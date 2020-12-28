@@ -16,7 +16,7 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
+import com.castlemock.model.core.model.ServiceProcessor;
 import com.castlemock.web.core.model.VersionResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

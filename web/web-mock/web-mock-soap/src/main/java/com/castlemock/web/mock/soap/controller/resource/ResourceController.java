@@ -16,9 +16,9 @@
 
 package com.castlemock.web.mock.soap.controller.resource;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.service.project.input.LoadSoapResourceInput;
-import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.service.mock.soap.project.input.LoadSoapResourceInput;
+import com.castlemock.service.mock.soap.project.output.LoadSoapResourceOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

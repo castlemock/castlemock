@@ -16,7 +16,7 @@
 
 package com.castlemock.deploy.jetty.common;
 
-import com.castlemock.core.basis.Environment;
+import com.castlemock.model.core.Environment;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.apache.tomcat.util.http.fileupload.IOUtils;

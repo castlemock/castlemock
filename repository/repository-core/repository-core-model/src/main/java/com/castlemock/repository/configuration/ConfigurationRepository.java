@@ -16,7 +16,7 @@
 
 package com.castlemock.repository.configuration;
 
-import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
+import com.castlemock.model.core.model.configuration.domain.ConfigurationGroup;
 import com.castlemock.repository.Repository;
 
 /**

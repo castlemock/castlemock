@@ -16,7 +16,7 @@
 
 package com.castlemock.web.core.controller;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
+import com.castlemock.model.core.model.ServiceProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 

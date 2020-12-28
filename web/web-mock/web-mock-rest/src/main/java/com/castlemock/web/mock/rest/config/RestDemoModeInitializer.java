@@ -16,12 +16,12 @@
 
 package com.castlemock.web.mock.rest.config;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.service.project.input.ImportRestProjectInput;
-import com.castlemock.web.core.manager.UrlManager;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.service.core.manager.UrlManager;
+import com.castlemock.service.mock.rest.project.input.ImportRestProjectInput;
 import com.google.common.base.Strings;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

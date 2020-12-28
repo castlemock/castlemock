@@ -16,13 +16,13 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.service.project.input.ReadSoapOperationInput;
-import com.castlemock.core.mock.soap.service.project.input.UpdateSoapMockResponseStatusInput;
-import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationInput;
-import com.castlemock.core.mock.soap.service.project.output.ReadSoapOperationOutput;
-import com.castlemock.core.mock.soap.service.project.output.UpdateSoapOperationOutput;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.mock.soap.domain.SoapOperation;
+import com.castlemock.service.mock.soap.project.input.ReadSoapOperationInput;
+import com.castlemock.service.mock.soap.project.input.UpdateSoapMockResponseStatusInput;
+import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationInput;
+import com.castlemock.service.mock.soap.project.output.ReadSoapOperationOutput;
+import com.castlemock.service.mock.soap.project.output.UpdateSoapOperationOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.UpdateSoapMockResponseStatusesRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationRequest;

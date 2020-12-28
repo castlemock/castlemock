@@ -16,24 +16,33 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.domain.SoapProject;
-import com.castlemock.core.mock.soap.service.project.input.CreateSoapPortsInput;
-import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
-import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsForwardedEndpointInput;
-import com.castlemock.core.mock.soap.service.project.input.UpdateSoapPortsStatusInput;
-import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
-import com.castlemock.web.core.manager.FileManager;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.mock.soap.domain.SoapProject;
+import com.castlemock.service.mock.soap.project.input.CreateSoapPortsInput;
+import com.castlemock.service.mock.soap.project.input.ReadSoapProjectInput;
+import com.castlemock.service.mock.soap.project.input.UpdateSoapPortsForwardedEndpointInput;
+import com.castlemock.service.mock.soap.project.input.UpdateSoapPortsStatusInput;
+import com.castlemock.service.mock.soap.project.output.ReadSoapProjectOutput;
+import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.LinkWsdlRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapPortForwardedEndpointsRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapPortStatusesRequest;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;

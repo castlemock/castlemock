@@ -16,7 +16,7 @@
 
 package com.castlemock.repository.rest.event;
 
-import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
+import com.castlemock.model.mock.rest.domain.RestEvent;
 import com.castlemock.repository.Repository;
 
 import java.util.List;

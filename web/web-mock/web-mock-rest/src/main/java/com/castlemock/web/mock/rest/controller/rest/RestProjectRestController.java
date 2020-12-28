@@ -16,25 +16,34 @@
 
 package com.castlemock.web.mock.rest.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.rest.model.RestDefinitionType;
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
-import com.castlemock.core.mock.rest.service.project.input.ImportRestDefinitionInput;
-import com.castlemock.core.mock.rest.service.project.input.ReadRestProjectInput;
-import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationsForwardedEndpointInput;
-import com.castlemock.core.mock.rest.service.project.input.UpdateRestApplicationsStatusInput;
-import com.castlemock.core.mock.rest.service.project.output.ReadRestProjectOutput;
-import com.castlemock.web.core.manager.FileManager;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.mock.rest.RestDefinitionType;
+import com.castlemock.model.mock.rest.domain.RestProject;
+import com.castlemock.service.mock.rest.project.input.ImportRestDefinitionInput;
+import com.castlemock.service.mock.rest.project.input.ReadRestProjectInput;
+import com.castlemock.service.mock.rest.project.input.UpdateRestApplicationsForwardedEndpointInput;
+import com.castlemock.service.mock.rest.project.input.UpdateRestApplicationsStatusInput;
+import com.castlemock.service.mock.rest.project.output.ReadRestProjectOutput;
+import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.rest.model.LinkDefinitionRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestApplicationForwardedEndpointsRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestApplicationStatusesRequest;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;

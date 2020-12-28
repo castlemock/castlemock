@@ -16,10 +16,10 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.event.domain.Event;
-import com.castlemock.core.basis.model.event.domain.EventTestBuilder;
-import com.castlemock.core.basis.service.event.EventServiceFacade;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.model.event.domain.Event;
+import com.castlemock.model.core.model.event.domain.EventTestBuilder;
+import com.castlemock.model.core.service.event.EventServiceFacade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

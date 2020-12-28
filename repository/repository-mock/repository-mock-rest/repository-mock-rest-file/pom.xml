@@ -15,12 +15,12 @@
     <dependencies>
         <!-- Castle Mock dependencies -->
         <dependency>
-            <groupId>com.castlemock.core</groupId>
-            <artifactId>core-basis</artifactId>
+            <groupId>com.castlemock.model</groupId>
+            <artifactId>model-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.castlemock.core.mock</groupId>
-            <artifactId>core-mock-rest</artifactId>
+            <groupId>com.castlemock.model.mock</groupId>
+            <artifactId>model-mock-rest</artifactId>
         </dependency>
         <dependency>
             <groupId>com.castlemock.repository.core</groupId>
@@ -37,8 +37,8 @@
 
         <!-- Castle Mock test dependencies -->
         <dependency>
-            <groupId>com.castlemock.core.mock</groupId>
-            <artifactId>core-mock-rest</artifactId>
+            <groupId>com.castlemock.model.mock</groupId>
+            <artifactId>model-mock-rest</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>

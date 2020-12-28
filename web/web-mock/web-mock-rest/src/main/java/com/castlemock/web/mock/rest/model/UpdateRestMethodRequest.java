@@ -16,9 +16,9 @@
 
 package com.castlemock.web.mock.rest.model;
 
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
-import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
+import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.mock.rest.domain.RestMethodStatus;
+import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

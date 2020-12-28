@@ -16,11 +16,11 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
-import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
-import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.model.user.domain.User;
+import com.castlemock.model.core.model.user.domain.UserTestBuilder;
+import com.castlemock.service.core.user.input.ReadUserByUsernameInput;
+import com.castlemock.service.core.user.output.ReadUserByUsernameOutput;
 import com.castlemock.web.core.config.JWTEncoderDecoder;
 import com.castlemock.web.core.model.AuthenticationRequestTestBuilder;
 import com.castlemock.web.core.model.authentication.AuthenticationRequest;

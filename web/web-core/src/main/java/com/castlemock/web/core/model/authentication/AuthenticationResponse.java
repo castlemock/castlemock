@@ -16,7 +16,7 @@
 
 package com.castlemock.web.core.model.authentication;
 
-import com.castlemock.core.basis.model.user.domain.Role;
+import com.castlemock.model.core.model.user.domain.Role;
 
 import java.util.Objects;
 

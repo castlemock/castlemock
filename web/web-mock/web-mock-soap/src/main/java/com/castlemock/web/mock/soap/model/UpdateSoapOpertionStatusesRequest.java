@@ -1,6 +1,6 @@
 package com.castlemock.web.mock.soap.model;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 
 import java.util.Objects;
 import java.util.Set;

@@ -16,16 +16,16 @@
 
 package com.castlemock.web.mock.soap.web.soap.controller;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.mock.soap.model.project.domain.*;
-import com.castlemock.core.mock.soap.service.project.input.IdentifySoapOperationInput;
-import com.castlemock.core.mock.soap.service.project.input.LoadSoapResourceInput;
-import com.castlemock.core.mock.soap.service.project.input.ReadSoapProjectInput;
-import com.castlemock.core.mock.soap.service.project.output.IdentifySoapOperationOutput;
-import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
-import com.castlemock.core.mock.soap.service.project.output.ReadSoapProjectOutput;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.mock.soap.domain.*;
+import com.castlemock.service.mock.soap.project.input.IdentifySoapOperationInput;
+import com.castlemock.service.mock.soap.project.input.LoadSoapResourceInput;
+import com.castlemock.service.mock.soap.project.input.ReadSoapProjectInput;
+import com.castlemock.service.mock.soap.project.output.IdentifySoapOperationOutput;
+import com.castlemock.service.mock.soap.project.output.LoadSoapResourceOutput;
+import com.castlemock.service.mock.soap.project.output.ReadSoapProjectOutput;
 import com.castlemock.web.core.controller.AbstractController;
 import com.castlemock.web.mock.soap.controller.mock.SoapServiceController;
 import com.castlemock.web.mock.soap.model.SoapException;

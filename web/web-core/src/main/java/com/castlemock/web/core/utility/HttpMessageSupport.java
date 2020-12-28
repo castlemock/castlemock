@@ -16,10 +16,10 @@
 
 package com.castlemock.web.core.utility;
 
-import com.castlemock.core.basis.model.http.domain.ContentEncoding;
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.basis.model.http.domain.HttpParameter;
+import com.castlemock.model.core.model.http.domain.ContentEncoding;
+import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.core.model.http.domain.HttpParameter;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 

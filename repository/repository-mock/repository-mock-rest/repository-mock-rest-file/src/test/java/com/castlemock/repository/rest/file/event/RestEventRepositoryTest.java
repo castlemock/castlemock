@@ -17,8 +17,8 @@
 package com.castlemock.repository.rest.file.event;
 
 
-import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
-import com.castlemock.core.mock.rest.model.event.domain.RestEventTestBuilder;
+import com.castlemock.model.mock.rest.domain.RestEvent;
+import com.castlemock.model.mock.rest.domain.RestEventTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -52,7 +52,7 @@ public class RestEventRepositoryTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "restEventFileDirectory", DIRECTORY);
         ReflectionTestUtils.setField(repository, "restEventFileExtension", EXTENSION);
     }

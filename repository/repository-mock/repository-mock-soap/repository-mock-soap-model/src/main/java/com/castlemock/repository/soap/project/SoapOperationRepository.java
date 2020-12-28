@@ -16,10 +16,10 @@
 
 package com.castlemock.repository.soap.project;
 
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperation;
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationIdentifier;
-import com.castlemock.core.mock.soap.model.project.domain.SoapVersion;
+import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.mock.soap.domain.SoapOperation;
+import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
+import com.castlemock.model.mock.soap.domain.SoapVersion;
 import com.castlemock.repository.Repository;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public interface SoapOperationRepository extends Repository<SoapOperation, Strin
 
 
     /**
-     * Retrieve the {@link com.castlemock.core.mock.soap.model.project.domain.SoapPort} id
+     * Retrieve the {@link com.castlemock.model.mock.soap.domain.SoapPort} id
      * for the {@link SoapOperation} with the provided id.
      * @param operationId The id of the {@link SoapOperation}.
      * @return The id of the port.

@@ -16,14 +16,14 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.domain.SoapPort;
-import com.castlemock.core.mock.soap.service.project.input.DeleteSoapPortInput;
-import com.castlemock.core.mock.soap.service.project.input.ReadSoapPortInput;
-import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsForwardedEndpointInput;
-import com.castlemock.core.mock.soap.service.project.input.UpdateSoapOperationsStatusInput;
-import com.castlemock.core.mock.soap.service.project.output.DeleteSoapPortOutput;
-import com.castlemock.core.mock.soap.service.project.output.ReadSoapPortOutput;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.mock.soap.domain.SoapPort;
+import com.castlemock.service.mock.soap.project.input.DeleteSoapPortInput;
+import com.castlemock.service.mock.soap.project.input.ReadSoapPortInput;
+import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationsForwardedEndpointInput;
+import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationsStatusInput;
+import com.castlemock.service.mock.soap.project.output.DeleteSoapPortOutput;
+import com.castlemock.service.mock.soap.project.output.ReadSoapPortOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationForwardedEndpointsRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapOpertionStatusesRequest;

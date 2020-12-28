@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>service-mock-rest</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>com.castlemock.service</groupId>
+        <artifactId>service-mock</artifactId>
+        <version>${project.version}</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.castlemock.model.mock</groupId>
+            <artifactId>model-mock-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.repository.mock.rest</groupId>
+            <artifactId>repository-mock-rest-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.castlemock.model.mock</groupId>
+            <artifactId>model-mock-rest</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.raml</groupId>
+            <artifactId>raml-parser-2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.parser.v3</groupId>
+            <artifactId>swagger-parser</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>../../</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE</include>
+                    <include>NOTICE</include>
+                    <include>AUTHORS</include>
+                    <include>LICENSE-3RD-PARTY</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>./src/main/resources/META-INF/resources</directory>
+                <targetPath>META-INF/resources</targetPath>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>

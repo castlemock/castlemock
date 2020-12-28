@@ -16,11 +16,11 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.project.domain.Project;
-import com.castlemock.core.basis.model.project.domain.ProjectTestBuilder;
-import com.castlemock.core.basis.service.project.ProjectServiceFacade;
-import com.castlemock.web.core.manager.FileManager;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.model.project.domain.Project;
+import com.castlemock.model.core.model.project.domain.ProjectTestBuilder;
+import com.castlemock.model.core.service.project.ProjectServiceFacade;
+import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.web.core.model.project.CreateProjectRequest;
 import com.castlemock.web.core.model.project.CreateProjectRequestTestBuilder;
 import com.castlemock.web.core.model.project.UpdateProjectRequest;

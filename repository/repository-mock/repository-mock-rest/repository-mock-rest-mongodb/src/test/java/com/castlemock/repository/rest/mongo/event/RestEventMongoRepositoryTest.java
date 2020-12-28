@@ -1,6 +1,6 @@
 package com.castlemock.repository.rest.mongo.event;
 
-import com.castlemock.core.mock.rest.model.event.domain.RestEvent;
+import com.castlemock.model.mock.rest.domain.RestEvent;
 import com.castlemock.repository.Profiles;
 import org.junit.After;
 import org.junit.Test;

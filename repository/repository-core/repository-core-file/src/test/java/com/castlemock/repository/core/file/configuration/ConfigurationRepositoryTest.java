@@ -16,8 +16,8 @@
 
 package com.castlemock.repository.core.file.configuration;
 
-import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroup;
-import com.castlemock.core.basis.model.configuration.domain.ConfigurationGroupTestBuilder;
+import com.castlemock.model.core.model.configuration.domain.ConfigurationGroup;
+import com.castlemock.model.core.model.configuration.domain.ConfigurationGroupTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -52,7 +52,7 @@ public class ConfigurationRepositoryTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "configurationFileDirectory", DIRECTORY);
         ReflectionTestUtils.setField(repository, "configurationFileExtension", EXTENSION);
     }

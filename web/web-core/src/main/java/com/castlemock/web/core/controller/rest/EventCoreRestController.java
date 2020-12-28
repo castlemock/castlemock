@@ -16,9 +16,9 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.event.domain.Event;
-import com.castlemock.core.basis.service.event.EventServiceFacade;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.model.event.domain.Event;
+import com.castlemock.model.core.service.event.EventServiceFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

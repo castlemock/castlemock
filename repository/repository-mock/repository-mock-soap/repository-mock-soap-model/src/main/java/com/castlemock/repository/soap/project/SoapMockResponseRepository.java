@@ -16,7 +16,7 @@
 
 package com.castlemock.repository.soap.project;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapMockResponse;
+import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.repository.Repository;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public interface SoapMockResponseRepository extends Repository<SoapMockResponse,
     List<SoapMockResponse> findWithOperationId(String operationId);
 
     /**
-     * Retrieve the {@link com.castlemock.core.mock.soap.model.project.domain.SoapOperation} id
+     * Retrieve the {@link com.castlemock.model.mock.soap.domain.SoapOperation} id
      * for the {@link SoapMockResponse} with the provided id.
      * @param mockResponseId The id of the {@link SoapMockResponse}.
      * @return The id of the operation.

@@ -16,9 +16,9 @@
 
 package com.castlemock.web.core.utility;
 
-import com.castlemock.core.basis.model.http.domain.ContentEncoding;
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.basis.model.http.domain.HttpParameter;
+import com.castlemock.model.core.model.http.domain.ContentEncoding;
+import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.model.http.domain.HttpParameter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;

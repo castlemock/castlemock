@@ -1,9 +1,9 @@
 package com.castlemock.repository.soap.mongodb.event;
 
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.soap.model.event.domain.SoapEvent;
-import com.castlemock.core.mock.soap.model.event.domain.SoapRequest;
+import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.mock.soap.domain.SoapEvent;
+import com.castlemock.model.mock.soap.domain.SoapRequest;
 import com.castlemock.repository.Profiles;
 import org.junit.After;
 import org.junit.Test;

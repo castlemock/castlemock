@@ -16,18 +16,22 @@
 
 package com.castlemock.web.mock.soap.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
-import com.castlemock.core.mock.soap.service.project.input.ImportSoapResourceInput;
-import com.castlemock.core.mock.soap.service.project.input.LoadSoapResourceInput;
-import com.castlemock.core.mock.soap.service.project.input.ReadSoapResourceInput;
-import com.castlemock.core.mock.soap.service.project.output.ImportSoapResourceOutput;
-import com.castlemock.core.mock.soap.service.project.output.LoadSoapResourceOutput;
-import com.castlemock.core.mock.soap.service.project.output.ReadSoapResourceOutput;
-import com.castlemock.web.core.manager.FileManager;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.mock.soap.domain.SoapResource;
+import com.castlemock.model.mock.soap.domain.SoapResourceType;
+import com.castlemock.service.mock.soap.project.input.ImportSoapResourceInput;
+import com.castlemock.service.mock.soap.project.input.LoadSoapResourceInput;
+import com.castlemock.service.mock.soap.project.input.ReadSoapResourceInput;
+import com.castlemock.service.mock.soap.project.output.ImportSoapResourceOutput;
+import com.castlemock.service.mock.soap.project.output.LoadSoapResourceOutput;
+import com.castlemock.service.mock.soap.project.output.ReadSoapResourceOutput;
+import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +39,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;

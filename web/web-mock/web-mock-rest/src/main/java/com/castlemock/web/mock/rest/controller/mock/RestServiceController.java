@@ -16,11 +16,11 @@
 
 package com.castlemock.web.mock.rest.controller.mock;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.http.domain.HttpMethod;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
-import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.model.http.domain.HttpMethod;
+import com.castlemock.model.mock.rest.domain.RestMockResponse;
+import com.castlemock.model.mock.rest.domain.RestProject;
+import com.castlemock.model.mock.rest.domain.RestResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

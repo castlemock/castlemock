@@ -1,10 +1,12 @@
 package com.castlemock.web.mock.rest.converter;
 
-import com.castlemock.core.mock.rest.model.RestDefinitionType;
-import com.castlemock.web.core.manager.FileManager;
-import com.castlemock.web.mock.rest.converter.raml.RAMLRestDefinitionConverter;
-import com.castlemock.web.mock.rest.converter.swagger.SwaggerRestDefinitionConverter;
-import com.castlemock.web.mock.rest.converter.wadl.WADLRestDefinitionConverter;
+import com.castlemock.model.mock.rest.RestDefinitionType;
+import com.castlemock.service.core.manager.FileManager;
+import com.castlemock.service.mock.rest.project.converter.RestDefinitionConverter;
+import com.castlemock.service.mock.rest.project.converter.RestDefinitionConverterFactory;
+import com.castlemock.service.mock.rest.project.converter.raml.RAMLRestDefinitionConverter;
+import com.castlemock.service.mock.rest.project.converter.swagger.SwaggerRestDefinitionConverter;
+import com.castlemock.service.mock.rest.project.converter.wadl.WADLRestDefinitionConverter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;

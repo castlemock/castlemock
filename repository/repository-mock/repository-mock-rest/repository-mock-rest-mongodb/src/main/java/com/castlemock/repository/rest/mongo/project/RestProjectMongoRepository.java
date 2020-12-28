@@ -16,9 +16,9 @@
 
 package com.castlemock.repository.rest.mongo.project;
 
-import com.castlemock.core.basis.model.SearchQuery;
-import com.castlemock.core.basis.model.SearchResult;
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.model.core.model.SearchQuery;
+import com.castlemock.model.core.model.SearchResult;
+import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.mongodb.project.AbstractProjectMongoRepository;
 import com.castlemock.repository.rest.project.RestProjectRepository;

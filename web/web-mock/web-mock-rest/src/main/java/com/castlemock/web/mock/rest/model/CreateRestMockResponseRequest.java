@@ -16,13 +16,13 @@
 
 package com.castlemock.web.mock.rest.model;
 
-import com.castlemock.core.basis.model.http.domain.ContentEncoding;
-import com.castlemock.core.basis.model.http.domain.HttpHeader;
-import com.castlemock.core.mock.rest.model.project.domain.RestHeaderQuery;
-import com.castlemock.core.mock.rest.model.project.domain.RestJsonPathExpression;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponseStatus;
-import com.castlemock.core.mock.rest.model.project.domain.RestParameterQuery;
-import com.castlemock.core.mock.rest.model.project.domain.RestXPathExpression;
+import com.castlemock.model.core.model.http.domain.ContentEncoding;
+import com.castlemock.model.core.model.http.domain.HttpHeader;
+import com.castlemock.model.mock.rest.domain.RestHeaderQuery;
+import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
+import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
+import com.castlemock.model.mock.rest.domain.RestParameterQuery;
+import com.castlemock.model.mock.rest.domain.RestXPathExpression;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;

@@ -17,7 +17,7 @@
 package com.castlemock.repository.rest.project;
 
 
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.repository.Repository;
 
 /**

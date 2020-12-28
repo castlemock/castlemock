@@ -1,7 +1,7 @@
 package com.castlemock.repository.core.mongodb;
 
-import com.castlemock.core.basis.model.Saveable;
-import com.castlemock.core.basis.model.SearchQuery;
+import com.castlemock.model.core.model.Saveable;
+import com.castlemock.model.core.model.SearchQuery;
 import com.castlemock.repository.Repository;
 import com.google.common.base.Preconditions;
 import org.slf4j.LoggerFactory;
@@ -220,7 +220,7 @@ public abstract class MongoRepository<T extends Saveable<I>, D, I extends Serial
     /**
      * Case-insensitive contains search.
      *
-     * @see com.castlemock.core.basis.model.SearchValidator#validate(String, String)
+     * @see com.castlemock.model.core.model.SearchValidator#validate(String, String)
      */
     protected Query getSearchQuery(String property, SearchQuery searchQuery) {
         return query(where(property).regex(".*" + searchQuery.getQuery() + ".*", "i"));

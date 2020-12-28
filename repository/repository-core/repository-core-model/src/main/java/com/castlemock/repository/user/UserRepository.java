@@ -16,7 +16,7 @@
 
 package com.castlemock.repository.user;
 
-import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.model.core.model.user.domain.User;
 import com.castlemock.repository.Repository;
 
 /**

@@ -16,9 +16,9 @@
 
 package com.castlemock.repository.rest.project;
 
-import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
-import com.castlemock.core.mock.rest.model.project.domain.RestResource;
+import com.castlemock.model.mock.rest.domain.RestApplication;
+import com.castlemock.model.mock.rest.domain.RestProject;
+import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.repository.Repository;
 
 import java.util.List;
@@ -63,7 +63,7 @@ public interface RestResourceRepository extends Repository<RestResource, String>
     RestResource findRestResourceByUri(String applicationId, String resourceUri);
 
     /**
-     * Retrieve the {@link com.castlemock.core.mock.rest.model.project.domain.RestApplication} id
+     * Retrieve the {@link com.castlemock.model.mock.rest.domain.RestApplication} id
      * for the {@link RestResource} with the provided id.
      * @param resourceId The id of the {@link RestResource}.
      * @return The id of the application.

@@ -16,7 +16,7 @@
 
 package com.castlemock.repository.rest.project;
 
-import com.castlemock.core.mock.rest.model.project.domain.RestMethod;
+import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.repository.Repository;
 
 import java.util.List;
@@ -59,7 +59,7 @@ public interface RestMethodRepository extends Repository<RestMethod, String> {
 
 
     /**
-     * Retrieve the {@link com.castlemock.core.mock.rest.model.project.domain.RestResource} id
+     * Retrieve the {@link com.castlemock.model.mock.rest.domain.RestResource} id
      * for the {@link RestMethod} with the provided id.
      * @param methodId The id of the {@link RestMethod}.
      * @return The id of the resource.

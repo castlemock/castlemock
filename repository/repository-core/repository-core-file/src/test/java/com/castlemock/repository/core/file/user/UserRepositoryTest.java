@@ -17,8 +17,8 @@
 package com.castlemock.repository.core.file.user;
 
 
-import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.model.user.domain.UserTestBuilder;
+import com.castlemock.model.core.model.user.domain.User;
+import com.castlemock.model.core.model.user.domain.UserTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
@@ -53,7 +53,7 @@ public class UserRepositoryTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "userFileDirectory", DIRECTORY);
         ReflectionTestUtils.setField(repository, "userFileExtension", EXTENSION);
     }

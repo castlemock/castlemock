@@ -16,11 +16,11 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.system.domain.SystemInformation;
-import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.system.input.GetSystemInformationInput;
-import com.castlemock.core.basis.service.system.output.GetSystemInformationOutput;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.model.system.domain.SystemInformation;
+import com.castlemock.model.core.model.user.domain.User;
+import com.castlemock.service.core.system.input.GetSystemInformationInput;
+import com.castlemock.service.core.system.output.GetSystemInformationOutput;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

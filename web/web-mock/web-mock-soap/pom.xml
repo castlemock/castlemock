@@ -15,8 +15,8 @@
     <dependencies>
         <!-- Castle Mock dependencies -->
         <dependency>
-            <groupId>com.castlemock.core.mock</groupId>
-            <artifactId>core-mock-soap</artifactId>
+            <groupId>com.castlemock.model.mock</groupId>
+            <artifactId>model-mock-soap</artifactId>
         </dependency>
         <dependency>
             <groupId>com.castlemock.repository.mock.soap</groupId>
@@ -30,11 +30,15 @@
             <groupId>com.castlemock.repository.mock.soap</groupId>
             <artifactId>repository-mock-soap-model</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.castlemock.service</groupId>
+            <artifactId>service-mock-soap</artifactId>
+        </dependency>
 
         <!-- Castle Mock test dependencies -->
         <dependency>
-            <groupId>com.castlemock.core.mock</groupId>
-            <artifactId>core-mock-soap</artifactId>
+            <groupId>com.castlemock.model.mock</groupId>
+            <artifactId>model-mock-soap</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>

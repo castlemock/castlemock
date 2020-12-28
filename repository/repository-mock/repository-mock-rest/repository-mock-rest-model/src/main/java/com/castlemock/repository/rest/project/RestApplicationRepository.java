@@ -16,7 +16,7 @@
 
 package com.castlemock.repository.rest.project;
 
-import com.castlemock.core.mock.rest.model.project.domain.RestApplication;
+import com.castlemock.model.mock.rest.domain.RestApplication;
 import com.castlemock.repository.Repository;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public interface RestApplicationRepository extends Repository<RestApplication, S
     List<RestApplication> findWithProjectId(String projectId);
 
     /**
-     * Retrieve the {@link com.castlemock.core.mock.rest.model.project.domain.RestProject} id
+     * Retrieve the {@link com.castlemock.model.mock.rest.domain.RestProject} id
      * for the {@link RestApplication} with the provided id.
      * @param applicationId The id of the {@link RestApplication}.
      * @return The id of the project.

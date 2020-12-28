@@ -1,7 +1,7 @@
 package com.castlemock.repository.rest.mongo.project;
 
-import com.castlemock.core.basis.model.SearchQuery;
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.model.core.model.SearchQuery;
+import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.repository.Profiles;
 import org.junit.After;
 import org.junit.Test;

@@ -16,11 +16,11 @@
 
 package com.castlemock.repository.core.file.user;
 
-import com.castlemock.core.basis.model.Saveable;
-import com.castlemock.core.basis.model.SearchQuery;
-import com.castlemock.core.basis.model.user.domain.Role;
-import com.castlemock.core.basis.model.user.domain.Status;
-import com.castlemock.core.basis.model.user.domain.User;
+import com.castlemock.model.core.model.Saveable;
+import com.castlemock.model.core.model.SearchQuery;
+import com.castlemock.model.core.model.user.domain.Role;
+import com.castlemock.model.core.model.user.domain.Status;
+import com.castlemock.model.core.model.user.domain.User;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.user.UserRepository;

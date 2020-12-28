@@ -16,12 +16,12 @@
 
 package com.castlemock.app.config;
 
-import com.castlemock.core.basis.model.LegacyRepository;
-import com.castlemock.core.basis.model.ServiceFacade;
+import com.castlemock.model.core.model.LegacyRepository;
+import com.castlemock.model.core.model.ServiceFacade;
 import com.castlemock.repository.Repository;
 import com.castlemock.repository.token.SessionTokenRepository;
-import com.castlemock.web.core.manager.FileManager;
-import com.castlemock.web.core.service.ServiceRegistry;
+import com.castlemock.service.core.ServiceRegistry;
+import com.castlemock.service.core.manager.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -66,7 +66,7 @@ public abstract class Application extends SpringBootServletInitializer{
     /**
      * The initialize method is responsible for initiating all the components when the application has been started.
      * @see Repository
-     * @see com.castlemock.core.basis.model.Service
+     * @see com.castlemock.model.core.model.Service
      */
     @PostConstruct
     protected void initiate(){
@@ -130,7 +130,7 @@ public abstract class Application extends SpringBootServletInitializer{
     /**
      * The method provides the functionality to retrieve all the service facades and initialize them
      * @see ServiceFacade
-     * @see com.castlemock.core.basis.model.Service
+     * @see com.castlemock.model.core.model.Service
      */
     @SuppressWarnings("rawtypes")
     protected void initializeServiceFacade(){

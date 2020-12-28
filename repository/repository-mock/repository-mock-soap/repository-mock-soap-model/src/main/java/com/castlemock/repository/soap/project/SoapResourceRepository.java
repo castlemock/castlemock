@@ -16,8 +16,8 @@
 
 package com.castlemock.repository.soap.project;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapResource;
-import com.castlemock.core.mock.soap.model.project.domain.SoapResourceType;
+import com.castlemock.model.mock.soap.domain.SoapResource;
+import com.castlemock.model.mock.soap.domain.SoapResourceType;
 import com.castlemock.repository.Repository;
 
 import java.util.Collection;
@@ -63,7 +63,7 @@ public interface SoapResourceRepository extends Repository<SoapResource, String>
 
 
     /**
-     * Retrieve the {@link com.castlemock.core.mock.soap.model.project.domain.SoapProject} id
+     * Retrieve the {@link com.castlemock.model.mock.soap.domain.SoapProject} id
      * for the {@link SoapResource} with the provided id.
      * @param portId The id of the {@link SoapResource}.
      * @return The id of the project.

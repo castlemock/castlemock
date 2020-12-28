@@ -16,12 +16,12 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import com.castlemock.core.basis.model.ServiceProcessor;
-import com.castlemock.core.basis.model.user.domain.User;
-import com.castlemock.core.basis.service.user.input.ReadUserByUsernameInput;
-import com.castlemock.core.basis.service.user.input.UpdateCurrentUserInput;
-import com.castlemock.core.basis.service.user.output.ReadUserByUsernameOutput;
-import com.castlemock.core.basis.service.user.output.UpdateCurrentUserOutput;
+import com.castlemock.model.core.model.ServiceProcessor;
+import com.castlemock.model.core.model.user.domain.User;
+import com.castlemock.service.core.user.input.ReadUserByUsernameInput;
+import com.castlemock.service.core.user.input.UpdateCurrentUserInput;
+import com.castlemock.service.core.user.output.ReadUserByUsernameOutput;
+import com.castlemock.service.core.user.output.UpdateCurrentUserOutput;
 import com.castlemock.web.core.model.UpdateProfileRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

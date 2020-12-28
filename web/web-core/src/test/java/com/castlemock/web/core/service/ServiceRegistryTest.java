@@ -17,10 +17,11 @@
 package com.castlemock.web.core.service;
 
 
-import com.castlemock.core.basis.service.user.input.DeleteUserInput;
-import com.castlemock.core.basis.service.user.input.ReadUserInput;
-import com.castlemock.web.core.service.user.DeleteUserService;
-import com.castlemock.web.core.service.user.ReadUserService;
+import com.castlemock.service.core.user.input.DeleteUserInput;
+import com.castlemock.service.core.user.input.ReadUserInput;
+import com.castlemock.service.core.ServiceRegistry;
+import com.castlemock.service.core.user.DeleteUserService;
+import com.castlemock.service.core.user.ReadUserService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class ServiceRegistryTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         final Map<String, Object> components = new HashMap<String, Object>();
         final ReadUserService readUserService = Mockito.mock(ReadUserService.class);
         components.put("readUserService",readUserService);

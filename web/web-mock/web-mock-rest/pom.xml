@@ -15,8 +15,8 @@
     <dependencies>
         <!-- Castle Mock dependencies -->
         <dependency>
-            <groupId>com.castlemock.core.mock</groupId>
-            <artifactId>core-mock-rest</artifactId>
+            <groupId>com.castlemock.model.mock</groupId>
+            <artifactId>model-mock-rest</artifactId>
         </dependency>
         <dependency>
             <groupId>com.castlemock.repository.mock.rest</groupId>
@@ -30,11 +30,15 @@
             <groupId>com.castlemock.repository.mock.rest</groupId>
             <artifactId>repository-mock-rest-model</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.castlemock.service</groupId>
+            <artifactId>service-mock-rest</artifactId>
+        </dependency>
 
         <!-- Castle Mock test dependencies -->
         <dependency>
-            <groupId>com.castlemock.core.mock</groupId>
-            <artifactId>core-mock-rest</artifactId>
+            <groupId>com.castlemock.model.mock</groupId>
+            <artifactId>model-mock-rest</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
@@ -45,26 +49,8 @@
             <artifactId>snakeyaml</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.raml</groupId>
-            <artifactId>raml-parser-2</artifactId>
-        </dependency>
-        <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger.parser.v3</groupId>
-            <artifactId>swagger-parser</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.yaml</groupId>
-                    <artifactId>snakeyaml</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.xml.bind</groupId>
-                    <artifactId>jaxb-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

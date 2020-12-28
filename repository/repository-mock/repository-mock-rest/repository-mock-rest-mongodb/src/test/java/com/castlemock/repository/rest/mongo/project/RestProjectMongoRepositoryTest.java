@@ -1,6 +1,6 @@
 package com.castlemock.repository.rest.mongo.project;
 
-import com.castlemock.core.mock.rest.model.project.domain.RestProject;
+import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.repository.Profiles;
 import org.junit.After;
 import org.junit.Test;

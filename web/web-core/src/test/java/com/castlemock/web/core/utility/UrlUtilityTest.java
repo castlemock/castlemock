@@ -17,6 +17,7 @@
 package com.castlemock.web.core.utility;
 
 
+import com.castlemock.service.core.utility.UrlUtility;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Assert;
 import org.junit.Test;

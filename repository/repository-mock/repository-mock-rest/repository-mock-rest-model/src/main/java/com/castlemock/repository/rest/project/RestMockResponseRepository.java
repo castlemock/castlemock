@@ -16,7 +16,7 @@
 
 package com.castlemock.repository.rest.project;
 
-import com.castlemock.core.mock.rest.model.project.domain.RestMockResponse;
+import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.repository.Repository;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public interface RestMockResponseRepository extends Repository<RestMockResponse,
     List<RestMockResponse> findWithMethodId(String methodId);
 
     /**
-     * Retrieve the {@link com.castlemock.core.mock.rest.model.project.domain.RestMethod} id
+     * Retrieve the {@link com.castlemock.model.mock.rest.domain.RestMethod} id
      * for the {@link RestMockResponse} with the provided id.
      * @param mockResponseId The id of the {@link RestMockResponse}.
      * @return The id of the method.

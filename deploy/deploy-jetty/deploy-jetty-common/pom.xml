@@ -15,8 +15,8 @@
     <dependencies>
         <!-- Castle Mock dependencies -->
         <dependency>
-            <groupId>com.castlemock.core</groupId>
-            <artifactId>core-basis</artifactId>
+            <groupId>com.castlemock.model</groupId>
+            <artifactId>model-core</artifactId>
         </dependency>
 
         <!-- Third party dependencies -->
