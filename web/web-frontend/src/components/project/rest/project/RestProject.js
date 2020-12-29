@@ -31,7 +31,7 @@ import CreateApplicationModal from "./modal/CreateApplicationModal";
 import UploadDefinitionModal from "./modal/UploadDefinitionModal"
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
-import {faCloudDownloadAlt, faFile, faTrash, faCloudUploadAlt, faEdit} from "@fortawesome/free-solid-svg-icons";
+import {faCloudDownloadAlt, faFile, faTrash, faCloudUploadAlt, faEdit, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;
@@ -269,7 +269,7 @@ class RestProject extends PureComponent {
                                                 data-target="#updateStatusModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update status</span></button>
                                         <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedApplications.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#updateEndpointModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update endpoint</span></button>
+                                                data-target="#updateEndpointModal"><FontAwesomeIcon icon={faCodeBranch} className="button-icon"/><span>Update endpoint</span></button>
                                         <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedApplications.length === 0 || isOnlyReader(context.authentication.role)}
                                                 data-target="#deleteApplicationsModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete application</span></button>

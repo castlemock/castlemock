@@ -24,7 +24,7 @@ import validateErrorResponse from "../../utility/HttpResponseValidator";
 import DeleteUsersModal from "./modal/DeleteUsersModal";
 import NewUserModal from "./modal/NewUserModal";
 import {userStatusFormatter, userRoleFormatter} from "../user/utility/UserFormatter";
-import {faTrash, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faUserPlus, faUserMinus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;
@@ -222,7 +222,7 @@ class UserOverview extends PureComponent {
                             <h1>Users</h1>
                         </div>
                         <div className="menu">
-                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#newUserModal"><FontAwesomeIcon icon={faUser} className="button-icon"/><span>New user</span></button>
+                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#newUserModal"><FontAwesomeIcon icon={faUserPlus} className="button-icon"/><span>New user</span></button>
                         </div>
                     </div>
                     <div className="panel panel-primary table-panel">
@@ -253,7 +253,7 @@ class UserOverview extends PureComponent {
                         <div className="table-result">
                             <div className="panel-buttons">
                                 <button className="btn btn-danger demo-button-disabled panel-button" disabled={this.state.selectedUsers.length === 0}
-                                        data-toggle="modal" data-target="#deleteUsersModal"><i className="fas fa-trash"/> <FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete users</span></button>
+                                        data-toggle="modal" data-target="#deleteUsersModal"><i className="fas fa-trash"/> <FontAwesomeIcon icon={faUserMinus} className="button-icon"/><span>Delete users</span></button>
                             </div>
                         </div>
                     </div>

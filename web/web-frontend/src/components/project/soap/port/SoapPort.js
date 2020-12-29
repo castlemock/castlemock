@@ -28,7 +28,7 @@ import UpdateEndpointModal from "./modal/UpdateEndpointModal";
 import UpdateStatusModal from "./modal/UpdateStatusModal";
 import {operationStatusFormatter, operationResponseStrategy} from "../utility/SoapFormatter"
 import ContextContext from "../../../../context/ContextContext";
-import {faTrash, faEdit} from "@fortawesome/free-solid-svg-icons";
+import {faTrash, faEdit, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;
@@ -274,7 +274,7 @@ class SoapPort extends PureComponent {
                                                 data-target="#updateStatusModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update status</span></button>
                                         <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedOperations.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#updateEndpointModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update endpoint</span></button>
+                                                data-target="#updateEndpointModal"><FontAwesomeIcon icon={faCodeBranch} className="button-icon"/><span>Update endpoint</span></button>
                                     </div>
                                 )}
                             </AuthenticationContext.Consumer>

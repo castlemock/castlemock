@@ -30,7 +30,7 @@ import UpdateProjectModal from "./modal/UpdateProjectModal"
 import DeletePortsModal from "./modal/DeletePortsModal"
 import DeleteProjectModal from "./modal/DeleteProjectModal"
 import UploadWSDLModal from "./modal/UploadWSDLModal"
-import {faEdit, faTrash, faCloudDownloadAlt, faCloudUploadAlt} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faTrash, faCloudDownloadAlt, faCloudUploadAlt, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;
@@ -341,7 +341,7 @@ class SoapProject extends PureComponent {
                                                 data-target="#updateStatusModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update status</span></button>
                                         <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedPorts.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#updateEndpointModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update endpoint</span></button>
+                                                data-target="#updateEndpointModal"><FontAwesomeIcon icon={faCodeBranch} className="button-icon"/><span>Update endpoint</span></button>
                                         <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedPorts.length === 0 || isOnlyReader(context.authentication.role)}
                                                 data-target="#deletePortsModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete port</span></button>

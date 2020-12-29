@@ -29,7 +29,7 @@ import UpdateStatusModal from "./modal/UpdateStatusModal";
 import CreateResourceModal from "./modal/CreateResourceModal"
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
-import {faEdit, faTrash, faFile} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faTrash, faFile, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;
@@ -237,7 +237,7 @@ class RestApplication extends PureComponent {
                                                 data-target="#updateStatusModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update status</span></button>
                                         <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedResources.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#updateEndpointModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update endpoint</span></button>
+                                                data-target="#updateEndpointModal"><FontAwesomeIcon icon={faCodeBranch} className="button-icon"/><span>Update endpoint</span></button>
                                         <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedResources.length === 0 || isOnlyReader(context.authentication.role)}
                                                 data-target="#deleteResourcesModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete resource</span></button>

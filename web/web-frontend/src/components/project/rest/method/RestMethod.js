@@ -31,7 +31,7 @@ import {mockResponseStatusFormatter, methodResponseStrategyFormatter, methodStat
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
 import ContextContext from "../../../../context/ContextContext";
-import {faEdit, faFile, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faFile, faTrash, faCopy} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;
@@ -264,7 +264,7 @@ class RestMethod extends PureComponent {
                                                 data-target="#updateStatusModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Update status</span></button>
                                         <button className="btn btn-primary demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedMockResponses.length === 0 || isOnlyReader(context.authentication.role)}
-                                                data-target="#duplicateMockResponsesModal"><FontAwesomeIcon icon={faEdit} className="button-icon"/><span>Duplicate</span></button>
+                                                data-target="#duplicateMockResponsesModal"><FontAwesomeIcon icon={faCopy} className="button-icon"/><span>Duplicate</span></button>
                                         <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal"
                                                 disabled={this.state.selectedMockResponses.length === 0 || isOnlyReader(context.authentication.role)}
                                                 data-target="#deleteMockResponsesModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete mock response</span></button>
