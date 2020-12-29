@@ -35,6 +35,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./deploy/tomcat/war/target/castlemock.war
+          asset_path: ./deploy/deploy-tomcat/deploy-tomcat-war/target/castlemock.war
           asset_name: castlemock.war
           asset_content_type: application/war
