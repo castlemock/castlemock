@@ -18,7 +18,7 @@ import React, {PureComponent} from "react";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 class HeaderComponent extends PureComponent {
 
@@ -118,7 +118,7 @@ class HeaderComponent extends PureComponent {
                         </div>
                     </div>
                     <div className="form-group row">
-                        <button className="btn btn-success demo-button-disabled menu-button" onClick={this.onAddHeaderClick}><span>Add header</span></button>
+                        <button className="btn btn-success demo-button-disabled menu-button" onClick={this.onAddHeaderClick}><FontAwesomeIcon icon={faPlus} className="button-icon"/><span>Add header</span></button>
                     </div>
                 </div>
                 <div className="table-result">

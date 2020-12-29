@@ -18,8 +18,7 @@ import React, {PureComponent} from "react";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
-
+import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 class XPathComponent extends PureComponent {
 
@@ -94,7 +93,7 @@ class XPathComponent extends PureComponent {
                         </div>
                     </div>
                     <div className="form-group row">
-                        <button className="btn btn-success demo-button-disabled menu-button" onClick={this.onAddXPathClick}><span>Add XPath</span></button>
+                        <button className="btn btn-success demo-button-disabled menu-button" onClick={this.onAddXPathClick}><FontAwesomeIcon icon={faPlus} className="button-icon"/><span>Add XPath</span></button>
                     </div>
                 </div>
                 <div className="table-result">
