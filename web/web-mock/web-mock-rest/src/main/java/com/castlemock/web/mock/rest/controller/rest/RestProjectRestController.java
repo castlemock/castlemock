@@ -156,20 +156,14 @@ public class RestProjectRestController extends AbstractRestController {
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestBody final LinkDefinitionRequest request){
-
-        try {
-            final List<File> files = fileManager.uploadFiles(request.getUrl());
-            super.serviceProcessor.process(ImportRestDefinitionInput.builder()
-                    .restProjectId(projectId)
-                    .files(files)
-                    .generateResponse(request.getGenerateResponse())
-                    .location(request.getUrl())
-                    .definitionType(request.getDefinitionType())
-                    .build());
-            return ResponseEntity.ok().build();
-        } catch (IOException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        super.serviceProcessor.process(ImportRestDefinitionInput.builder()
+                .restProjectId(projectId)
+                .files(null)
+                .generateResponse(request.getGenerateResponse())
+                .location(request.getUrl())
+                .definitionType(request.getDefinitionType())
+                .build());
+        return ResponseEntity.ok().build();
     }
 
 }

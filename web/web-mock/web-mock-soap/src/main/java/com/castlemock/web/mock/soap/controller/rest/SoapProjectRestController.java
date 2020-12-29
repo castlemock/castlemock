@@ -152,19 +152,14 @@ public class SoapProjectRestController extends AbstractRestController {
             @ApiParam(name = "projectId", value = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestBody final LinkWsdlRequest request){
-
-        try {
-            final List<File> files = fileManager.uploadFiles(request.getUrl());
-            super.serviceProcessor.process(CreateSoapPortsInput.builder()
-                    .projectId(projectId)
-                    .files(files)
-                    .includeImports(request.getIncludeImports())
-                    .generateResponse(request.getGenerateResponse())
-                    .build());
-            return ResponseEntity.ok().build();
-        } catch (IOException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        super.serviceProcessor.process(CreateSoapPortsInput.builder()
+                .projectId(projectId)
+                .files(null)
+                .location(request.getUrl())
+                .includeImports(request.getIncludeImports())
+                .generateResponse(request.getGenerateResponse())
+                .build());
+        return ResponseEntity.ok().build();
     }
 
 }
