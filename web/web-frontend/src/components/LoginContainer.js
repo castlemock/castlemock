@@ -97,6 +97,7 @@ class LoginContainer extends PureComponent {
                                 </div>
                                 <div className="credentialsBox">
                                     <div className="login-title">Castle Mock</div>
+                                    <div className="login-sub-title">Login with your Castle Mock ID</div>
 
                                     <div className="alert alert-danger" role="alert" hidden={this.state.loginFailed ? '' : 'hidden'}>
                                         Unable to login.

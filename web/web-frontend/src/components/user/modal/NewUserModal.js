@@ -27,6 +27,7 @@ class NewUserModal extends PureComponent {
     constructor(props) {
         super(props);
         this.setNewUserName = this.setNewUserName.bind(this);
+        this.setNewFullName = this.setNewFullName.bind(this);
         this.setNewEmail = this.setNewEmail.bind(this);
         this.setNewRole = this.setNewRole.bind(this);
         this.setNewStatus = this.setNewStatus.bind(this);
@@ -36,6 +37,7 @@ class NewUserModal extends PureComponent {
         this.state = {
             newUser: {
                 username: "",
+                fullName: "",
                 email: "",
                 password: "",
                 role: "READER",
@@ -49,6 +51,14 @@ class NewUserModal extends PureComponent {
             newUser: {
                 ...this.state.newUser,
                 username: username
+            } });
+    }
+
+    setNewFullName(fullName) {
+        this.setState({
+            newUser: {
+                ...this.state.newUser,
+                fullName: fullName
             } });
     }
 
@@ -115,9 +125,15 @@ class NewUserModal extends PureComponent {
                         <div className="modal-body">
                             <form>
                                 <div className="form-group row">
-                                    <label htmlFor="newUserUserName" className="col-sm-2 col-form-label">Name</label>
+                                    <label htmlFor="newUserUserName" className="col-sm-2 col-form-label">Username</label>
                                     <div className="col-sm-10">
                                         <input className="form-control" type="text" name="newUserUserName" id="newUserUserName" onChange={event => this.setNewUserName(event.target.value)} onKeyDown={preventEnterEvent}/>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label htmlFor="newUserName" className="col-sm-2 col-form-label">Name</label>
+                                    <div className="col-sm-10">
+                                        <input className="form-control" type="text" name="newUserName" id="newUserName" onChange={event => this.setNewFullName(event.target.value)} onKeyDown={preventEnterEvent}/>
                                     </div>
                                 </div>
                                 <div className="form-group row">

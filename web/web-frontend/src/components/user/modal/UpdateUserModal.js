@@ -26,6 +26,7 @@ class UpdateUserModal extends PureComponent {
     constructor(props) {
         super(props);
         this.setUpdateUserUserName = this.setUpdateUserUserName.bind(this);
+        this.setUpdateUserFullName = this.setUpdateUserFullName.bind(this);
         this.setUpdateUserEmail = this.setUpdateUserEmail.bind(this);
         this.setUpdateUserPassword = this.setUpdateUserPassword.bind(this);
         this.setUpdateUserRole = this.setUpdateUserRole.bind(this);
@@ -37,6 +38,8 @@ class UpdateUserModal extends PureComponent {
             updateUser: {
             }
         };
+
+        this.getUser();
     }
 
     getUser() {
@@ -46,6 +49,7 @@ class UpdateUserModal extends PureComponent {
                 this.setState({
                     updateUser: {
                         username: response.data.username,
+                        fullName: response.data.fullName,
                         email: response.data.email,
                         role: response.data.role,
                         status: response.data.status
@@ -62,6 +66,16 @@ class UpdateUserModal extends PureComponent {
             updateUser: {
                 ...this.state.updateUser,
                 username: username
+            }
+        });
+    }
+
+
+    setUpdateUserFullName(fullName) {
+        this.setState({
+            updateUser: {
+                ...this.state.updateUser,
+                fullName: fullName
             }
         });
     }
@@ -129,9 +143,15 @@ class UpdateUserModal extends PureComponent {
                         <div className="modal-body">
                             <form>
                                 <div className="form-group row">
-                                    <label htmlFor="updateUserUserName" className="col-sm-2 col-form-label">Name</label>
+                                    <label htmlFor="updateUserUserName" className="col-sm-2 col-form-label">Username</label>
                                     <div className="col-sm-10">
                                         <input className="form-control" type="text" name="updateUserUserName" id="updateUserUserName" defaultValue={this.props.user.username} onChange={event => this.setUpdateUserUserName(event.target.value)} onKeyDown={preventEnterEvent}/>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label htmlFor="updateUserFullName" className="col-sm-2 col-form-label">Name</label>
+                                    <div className="col-sm-10">
+                                        <input className="form-control" type="text" name="updateUserFullName" id="updateUserFullName" defaultValue={this.props.user.fullName} onChange={event => this.setUpdateUserFullName(event.target.value)} onKeyDown={preventEnterEvent}/>
                                     </div>
                                 </div>
                                 <div className="form-group row">

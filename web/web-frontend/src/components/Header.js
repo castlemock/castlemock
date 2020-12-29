@@ -25,7 +25,7 @@ import Logo from '../images/logo-landscape-white.png'
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import AuthenticationContext from "../context/AuthenticationContext";
-import {canModify, isAdministrator} from "../utility/AuthorizeUtility";
+import {isAdministrator} from "../utility/AuthorizeUtility";
 
 class Header extends Component {
 
@@ -60,7 +60,7 @@ class Header extends Component {
                                             <Link to={"/web/event"}><FontAwesomeIcon icon={faChartBar} className="header-menu-icon" /></Link>
                                         </OverlayTrigger>
                                     </div>
-                                    { canModify(context.authentication.role) &&
+                                    { isAdministrator(context.authentication.role) &&
                                         <div className="header-menu-link">
                                             <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Users</Tooltip>}>
                                                 <Link to={"/web/user"}><FontAwesomeIcon icon={faUsersCog} className="header-menu-icon"/></Link>
