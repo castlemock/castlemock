@@ -28,6 +28,8 @@ import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
 import {faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import JsonPathComponent from "../../utility/JsonPathComponent";
+import HeaderQueryComponent from "../../utility/HeaderQueryComponent";
 
 class RestMockResponse extends PureComponent {
 
@@ -45,6 +47,10 @@ class RestMockResponse extends PureComponent {
         this.onHeaderRemoved = this.onHeaderRemoved.bind(this);
         this.onXPathAdded = this.onXPathAdded.bind(this);
         this.onXPathRemoved = this.onXPathRemoved.bind(this);
+        this.onJsonPathAdded = this.onJsonPathAdded.bind(this);
+        this.onJsonPathRemoved = this.onJsonPathRemoved.bind(this);
+        this.onHeaderQueryAdded = this.onHeaderQueryAdded.bind(this);
+        this.onHeaderQueryRemoved = this.onHeaderQueryRemoved.bind(this);
 
         this.state = {
             projectId: this.props.match.params.projectId,
@@ -54,11 +60,15 @@ class RestMockResponse extends PureComponent {
             mockResponseId: this.props.match.params.mockResponseId,
             mockResponse: {
                 httpHeaders: [],
-                xpathExpressions: []
+                xpathExpressions: [],
+                jsonPathExpressions: [],
+                headerQueries: []
             },
             updateMockResponse: {
                 httpHeaders: [],
-                xpathExpressions: []
+                xpathExpressions: [],
+                jsonPathExpressions: [],
+                headerQueries: []
             }
         };
 
@@ -108,6 +118,52 @@ class RestMockResponse extends PureComponent {
             updateMockResponse: {
                 ...this.state.updateMockResponse,
                 xpathExpressions: xpathExpressions
+            }
+        })
+    }
+
+    onJsonPathAdded(jsonPath){
+        let jsonPathExpressions = this.state.updateMockResponse.jsonPathExpressions.slice();
+        jsonPathExpressions.push(jsonPath)
+        this.setState({
+            updateMockResponse: {
+                ...this.state.updateMockResponse,
+                jsonPathExpressions: jsonPathExpressions
+            }
+        })
+    }
+
+    onJsonPathRemoved(jsonPath){
+        let jsonPathExpressions = this.state.updateMockResponse.jsonPathExpressions.slice();
+        let index = jsonPathExpressions.indexOf(jsonPath);
+        jsonPathExpressions.splice(index, 1);
+        this.setState({
+            updateMockResponse: {
+                ...this.state.updateMockResponse,
+                jsonPathExpressions: jsonPathExpressions
+            }
+        })
+    }
+
+    onHeaderQueryAdded(headerQuery){
+        let headerQueries = this.state.updateMockResponse.headerQueries.slice();
+        headerQueries.push(headerQuery)
+        this.setState({
+            updateMockResponse: {
+                ...this.state.updateMockResponse,
+                headerQueries: headerQueries
+            }
+        })
+    }
+
+    onHeaderQueryRemoved(headerQuery){
+        let headerQueries = this.state.updateMockResponse.headerQueries.slice();
+        let index = headerQueries.indexOf(headerQuery);
+        headerQueries.splice(index, 1);
+        this.setState({
+            updateMockResponse: {
+                ...this.state.updateMockResponse,
+                headerQueries: headerQueries
             }
         })
     }
@@ -254,6 +310,16 @@ class RestMockResponse extends PureComponent {
                             <Tab eventKey="xpath" title="XPath">
                                 <div className="response-section">
                                     <XPathComponent onXPathAdded={this.onXPathAdded} onXPathRemoved={this.onXPathRemoved} xpathExpressions={this.state.updateMockResponse.xpathExpressions}/>
+                                </div>
+                            </Tab>
+                            <Tab eventKey="jsonPath" title="JSON Path">
+                                <div className="response-section">
+                                    <JsonPathComponent onJsonPathAdded={this.onJsonPathAdded} onJsonPathRemoved={this.onJsonPathRemoved} jsonPathExpressions={this.state.updateMockResponse.jsonPathExpressions}/>
+                                </div>
+                            </Tab>
+                            <Tab eventKey="headerQuery" title="Header Queries">
+                                <div className="response-section">
+                                    <HeaderQueryComponent onHeaderQueryAdded={this.onHeaderQueryAdded} onHeaderQueryRemoved={this.onHeaderQueryRemoved} headerQueries={this.state.updateMockResponse.headerQueries}/>
                                 </div>
                             </Tab>
                         </Tabs>

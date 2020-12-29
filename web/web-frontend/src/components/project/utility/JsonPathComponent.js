@@ -20,17 +20,17 @@ import BootstrapTable from "react-bootstrap-table-next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
-class XPathComponent extends PureComponent {
+class JsonPathComponent extends PureComponent {
 
     constructor(props) {
         super(props);
         this.setNewExpression = this.setNewExpression.bind(this);
-        this.onAddXPathClick = this.onAddXPathClick.bind(this);
-        this.onRemoveXPathClick = this.onRemoveXPathClick.bind(this);
+        this.onAddJsonPathClick = this.onAddJsonPathClick.bind(this);
+        this.onRemoveJsonPathClick = this.onRemoveJsonPathClick.bind(this);
         this.deleteHeaderFormat = this.deleteHeaderFormat.bind(this);
         this.deleteHeaderStyle = this.deleteHeaderStyle.bind(this);
 
-        this.xpathColumns = [
+        this.jsonPathColumns = [
             {
                 dataField: 'expression',
                 sort: false,
@@ -38,7 +38,7 @@ class XPathComponent extends PureComponent {
                 headerStyle: this.deleteHeaderStyle
             }, {
                 dataField: 'expression',
-                text: 'XPath',
+                text: 'JsonPath',
                 sort: true
             }
         ];
@@ -49,14 +49,14 @@ class XPathComponent extends PureComponent {
     }
 
 
-    onAddXPathClick(){
-        this.props.onXPathAdded({
+    onAddJsonPathClick(){
+        this.props.onJsonPathAdded({
             expression: this.state.expression
         });
     }
 
-    onRemoveXPathClick(row){
-        this.props.onXPathRemoved(row);
+    onRemoveJsonPathClick(row){
+        this.props.onJsonPathRemoved(row);
     }
 
     deleteHeaderFormat(cell, row) {
@@ -66,7 +66,7 @@ class XPathComponent extends PureComponent {
 
         return (
             <div className="table-delete-column">
-                <FontAwesomeIcon icon={faTrash} onClick={__ => this.onRemoveXPathClick(row)}/>
+                <FontAwesomeIcon icon={faTrash} onClick={__ => this.onRemoveJsonPathClick(row)}/>
             </div>
         )
     }
@@ -84,7 +84,7 @@ class XPathComponent extends PureComponent {
     render() {
         return (
             <div>
-                <h4>Add XPath</h4>
+                <h4>Add JsonPath</h4>
                 <div>
                     <div className="form-group row">
                         <label className="col-sm-2 col-form-label">Expression</label>
@@ -93,22 +93,22 @@ class XPathComponent extends PureComponent {
                         </div>
                     </div>
                     <div className="form-group row">
-                        <button className="btn btn-success demo-button-disabled menu-button" onClick={this.onAddXPathClick}><FontAwesomeIcon icon={faPlus} className="button-icon"/><span>Add XPath</span></button>
+                        <button className="btn btn-success demo-button-disabled menu-button" onClick={this.onAddJsonPathClick}><FontAwesomeIcon icon={faPlus} className="button-icon"/><span>Add JSON Path</span></button>
                     </div>
                 </div>
                 <div className="table-result">
                     <ToolkitProvider bootstrap4
-                                     columns={ this.xpathColumns}
-                                     data={this.props.xpathExpressions}
+                                     columns={ this.jsonPathColumns}
+                                     data={this.props.jsonPathExpressions}
                                      keyField="name"
                                      search>
                         {
                             (props) => (
                                 <div>
                                     <BootstrapTable {...props.baseProps} bootstrap4
-                                                    data={this.props.xpathExpressions} columns={this.xpathColumns}
+                                                    data={this.props.jsonPathExpressions} columns={this.jsonPathColumns}
                                                     defaultSorted={this.defaultSort} keyField='expression' hover
-                                                    noDataIndication="No XPaths"
+                                                    noDataIndication="No JsonPaths"
                                                     selectRow={this.selectRow}/>
                                 </div>
                             )}
@@ -120,4 +120,4 @@ class XPathComponent extends PureComponent {
 
 }
 
-export default XPathComponent;
+export default JsonPathComponent;
