@@ -21,11 +21,9 @@ import com.castlemock.model.core.http.ContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.utility.XPathUtility;
+import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
-import com.castlemock.model.core.utility.parser.expression.BodyXPathExpression;
-import com.castlemock.model.core.utility.parser.expression.UrlHostExpression;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
-import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
 import com.castlemock.model.mock.soap.domain.SoapEvent;
 import com.castlemock.model.mock.soap.domain.SoapRequest;
 import com.castlemock.model.mock.soap.domain.SoapResponse;
@@ -59,7 +57,6 @@ import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparat
 import com.castlemock.web.mock.soap.utility.config.AddressLocationConfigurer;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -395,15 +392,12 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         String body = mockResponse.getBody();
         if(mockResponse.isUsingExpressions()){
 
-            final ExpressionArgument<?> bodyArgument = new ExpressionArgumentString(request.getBody());
-            final ExpressionArgument<?> urlArgument = new ExpressionArgumentString(httpServletRequest.getRequestURL().toString());
-            final Map<String, ExpressionArgument<?>> externalInput =
-                    ImmutableMap.of(
-                            BodyXPathExpression.BODY_ARGUMENT, bodyArgument,
-                            UrlHostExpression.URL_ARGUMENT, urlArgument
-                    );
+            final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
+                    .requestUrl(httpServletRequest.getRequestURL().toString())
+                    .requestBody(request.getBody())
+                    .build();
 
-            body = TextParser.parse(body, externalInput);
+            body = new TextParser().parse(body, externalInput);
         }
         return SoapResponse.builder()
                 .body(body)

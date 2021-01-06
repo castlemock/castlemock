@@ -23,13 +23,9 @@ import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
 import com.castlemock.model.core.utility.JsonPathUtility;
 import com.castlemock.model.core.utility.XPathUtility;
+import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
-import com.castlemock.model.core.utility.parser.expression.PathParameterExpression;
-import com.castlemock.model.core.utility.parser.expression.QueryStringExpression;
-import com.castlemock.model.core.utility.parser.expression.UrlHostExpression;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
-import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentMap;
-import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 import com.castlemock.model.mock.rest.domain.RestRequest;
 import com.castlemock.model.mock.rest.domain.RestResponse;
@@ -55,7 +51,6 @@ import com.castlemock.web.mock.rest.utility.RestParameterQueryValidator;
 import com.castlemock.web.mock.rest.utility.compare.RestMockResponseNameComparator;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -91,7 +86,6 @@ import java.util.stream.Stream;
 public abstract class AbstractRestServiceController extends AbstractController {
 
     private static final String REST = "rest";
-    private static final String BODY = "BODY";
     private static final String APPLICATION = "application";
     private static final String CONTENT_ENCODING = "Content-Encoding";
     private static final String RECORDED_RESPONSE_NAME = "Recorded response";
@@ -526,32 +520,16 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
         String body = mockResponse.getBody();
         if (mockResponse.isUsingExpressions()) {
-            final ExpressionArgumentMap pathParametersArgument = new ExpressionArgumentMap();
-            pathParameters.forEach((key, value) -> {
-                ExpressionArgument<?> pathParameterArgument = new ExpressionArgumentString(value);
-                pathParametersArgument.addArgument(key, pathParameterArgument);
-            });
-
-            final ExpressionArgumentMap queryStringArgument = new ExpressionArgumentMap();
-            restRequest.getHttpParameters().forEach(parameter -> {
-                ExpressionArgument<?> pathParameterArgument = new ExpressionArgumentString(parameter.getValue());
-                queryStringArgument.addArgument(parameter.getName(), pathParameterArgument);
-            });
-
-            final ExpressionArgument<?> urlArgument = new ExpressionArgumentString(httpServletRequest.getRequestURL().toString());
-            final ExpressionArgument<?> bodyArgument = new ExpressionArgumentString(restRequest.getBody());
-
-            final Map<String, ExpressionArgument<?>> externalInput =
-                    ImmutableMap.of(
-                            BODY, bodyArgument,
-                            PathParameterExpression.PATH_PARAMETERS, pathParametersArgument,
-                            QueryStringExpression.QUERY_STRINGS, queryStringArgument,
-                            UrlHostExpression.URL_ARGUMENT, urlArgument
-                    );
+            final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
+                    .pathParameters(pathParameters)
+                    .queryStringParameters(restRequest.getHttpParameters())
+                    .requestUrl(httpServletRequest.getRequestURL().toString())
+                    .requestBody(restRequest.getBody())
+                    .build();
 
             // Parse the text and apply expression functionality if
             // the mock response is configured to use expressions
-            body = TextParser.parse(body, externalInput);
+            body = new TextParser().parse(body, externalInput);
         }
         return RestResponse.builder()
                 .body(body)
