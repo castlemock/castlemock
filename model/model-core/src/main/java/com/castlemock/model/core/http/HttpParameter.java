@@ -28,6 +28,15 @@ public class HttpParameter {
 
     private String name;
     private String value;
+    
+    public HttpParameter() {
+        
+    }
+    
+    public HttpParameter(String name, String value) {
+        this.name = name;
+        this.value = value;
+    }
 
     @XmlElement
     public String getName() {
