@@ -282,3 +282,10 @@ typings/
 # End of https://www.gitignore.io/api/node
 
 node/
+
+# Eclipse IDE
+.project
+/.apt_generated/
+/.apt_generated_tests/
+.classpath
+.factorypath

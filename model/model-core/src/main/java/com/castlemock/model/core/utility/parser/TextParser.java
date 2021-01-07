@@ -18,14 +18,11 @@ package com.castlemock.model.core.utility.parser;
 
 import com.castlemock.model.core.utility.parser.expression.*;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The {@link TextParser} provides the functionality to transform a text and replace all
@@ -63,7 +60,17 @@ public class TextParser {
         EXPRESSIONS.put(BodyXPathExpression.IDENTIFIER, new BodyXPathExpression());
         EXPRESSIONS.put(FakerExpression.IDENTIFIER, new FakerExpression());
     }
-
+    
+    private final Map<String,Expression> expressions;
+    
+    public TextParser() {
+        this.expressions = EXPRESSIONS;
+    }
+    
+    public TextParser(final Map<String,Expression> expressions) {
+        this.expressions = expressions;
+    }
+    
     /**
      * The parse method is responsible for parsing a provided text and transform the text
      * with the help of {@link Expression}. {@link Expression} in the texts will be transformed
@@ -73,7 +80,7 @@ public class TextParser {
      *          Please note that the same text will be returned if no expressions
      *          were found in the provided text.
      */
-    public static String parse(final String text){
+    public String parse(final String text){
         return parse(text, null);
     }
 
@@ -86,38 +93,53 @@ public class TextParser {
      *          Please note that the same text will be returned if no expressions
      *          were found in the provided text.
      */
-    public static String parse(final String text,
-                               final Map<String, ExpressionArgument<?>> arguments){
+    public String parse(final String text,
+                               final Map<String, ExpressionArgument<?>> arguments) {
         if(text == null){
             return null;
         }
-        String output = text;
-        Pattern pattern = Pattern.compile("(?=\\$\\{)(.*?)\\}");
-        Matcher matcher = pattern.matcher(text);
-        while (matcher.find()){
-            String match = matcher.group();
-            ExpressionInput expressionInput = ExpressionInputParser.parse(match);
-
-            if(arguments != null){
-                for(Map.Entry<String, ExpressionArgument<?>> argumentEntry : arguments.entrySet()){
-                    expressionInput.addArgument(argumentEntry.getKey(), argumentEntry.getValue());
+        final StringBuilder outputBuilder = new StringBuilder().append(text);
+        final String expressionBegin = "${";
+        final String expressionEnd = "}";
+        int indexOfStartExpression = -1;
+        do {
+            indexOfStartExpression = outputBuilder.indexOf(expressionBegin, indexOfStartExpression + 1);
+            if (indexOfStartExpression >= 0) {
+                int indexOfEndExpression = outputBuilder.indexOf(expressionEnd, indexOfStartExpression + 1);
+                if (indexOfEndExpression >= 0) {
+                    replaceExpressionByResult(outputBuilder, indexOfStartExpression, indexOfEndExpression, arguments);                  
                 }
             }
-
-            Expression expression = EXPRESSIONS.get(expressionInput.getName());
-
-            if(expression == null){
-                LOGGER.error("Unable to parse the following expression: " + expressionInput.getName());
-                continue;
-            }
-
-            String expressionResult = expression.transform(expressionInput);
-            output = StringUtils.replaceOnce(output, match, expressionResult);
-
-        }
-        return output;
+        } while (indexOfStartExpression >= 0);
+        
+        return outputBuilder.toString();
     }
-
-
+    
+    private void replaceExpressionByResult(final StringBuilder outputBuilder, final int indexOfStartExpression, final int indexOfEndExpression,
+            final Map<String, ExpressionArgument<?>> arguments) {
+        String expressionString = outputBuilder.substring(indexOfStartExpression, indexOfEndExpression + 1);
+        
+        ExpressionInput expressionInput = parseExpressionInput(expressionString, arguments);
+        
+        Expression expression = this.expressions.get(expressionInput.getName());
+        
+        if (expression != null){
+            String expressionResult = expression.transform(expressionInput);
+            outputBuilder.replace(indexOfStartExpression, indexOfEndExpression + 1, expressionResult);
+        } else {
+            LOGGER.error("Unable to parse the following expression: " + expressionInput.getName());
+        }
+    }
+    
+    private ExpressionInput parseExpressionInput(String expressionString, final Map<String, ExpressionArgument<?>> arguments) {
+        ExpressionInput expressionInput = ExpressionInputParser.parse(expressionString);
+        
+        if(arguments != null){
+            for(Map.Entry<String, ExpressionArgument<?>> argumentEntry : arguments.entrySet()){
+                expressionInput.addArgument(argumentEntry.getKey(), argumentEntry.getValue());
+            }
+        }
+        return expressionInput;
+    }
 
 }
