@@ -5,7 +5,6 @@
 <p align="center">
     <a href="https://travis-ci.org/castlemock/castlemock"><img src="https://travis-ci.org/castlemock/castlemock.svg?branch=master"></a>
     <a href="https://snyk.io/test/github/castlemock/castlemock"><img src="https://snyk.io/test/github/castlemock/castlemock/badge.svg"></a>
-    <a href="https://codecov.io/github/castlemock/castlemock"><img src="https://img.shields.io/codecov/c/github/castlemock/castlemock/master.svg"></a>
     <a href="https://github.com/castlemock/castlemock/releases"><img src="https://img.shields.io/github/release/castlemock/castlemock.svg"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue.svg"></a>
     <img src="https://img.shields.io/badge/platforms-Linux%C2%A0%7C%C2%A0macOS%20%7C%20Windows-blue">
