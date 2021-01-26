@@ -20,10 +20,12 @@ import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.soap.domain.SoapResource;
-import com.castlemock.model.mock.soap.domain.SoapResourceType;
 import com.castlemock.service.mock.soap.project.input.ImportSoapResourceInput;
 import com.castlemock.service.mock.soap.project.output.ImportSoapResourceOutput;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -50,11 +52,20 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
         final SoapResource soapResource = input.getResource();
         final String raw = input.getRaw();
 
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        String path = "/definitions/portType/@name";
+
+        String portName = null;
+        try {
+            portName = xPath.compile(path).evaluate(raw);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+
         if(soapResource.getName() == null){
             final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
             final Date now = new Date();
-            final String soapResourceName = soapResource.getType().name() + "-" + formatter.format(now);
-            soapResource.setName(soapResourceName);
+            soapResource.setName(portName);
         }
 
         SoapResource result = null;

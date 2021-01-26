@@ -403,32 +403,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         when(serviceProcessor.process(isA(ReadSoapProjectInput.class))).thenReturn(readSoapProjectOutput);
         when(serviceProcessor.process(isA(LoadSoapResourceInput.class))).thenReturn(loadSoapResourceOutput);
 
-        final ResponseEntity<?> responseEntity = soapServiceController.getMethod(PROJECT_ID, SOAP_PORT_ID, httpServletRequest, httpServletResponse);
-        Assert.assertEquals(WSDL, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }
-
-    @Test
-    public void testGetWsdlWildcard() {
-        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
-        when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(Collections.singletonList("wsdl")));
-        when(httpServletRequest.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + SOAP +
-        		SLASH + PROJECT + SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID));
-
-        final SoapProject soapProject = getSoapProject();
-        final ReadSoapProjectOutput readSoapProjectOutput = ReadSoapProjectOutput.builder()
-                .project(soapProject)
-                .build();
-
-        final HttpServletResponse httpServletResponse = getHttpServletResponse();
-        final LoadSoapResourceOutput loadSoapResourceOutput = LoadSoapResourceOutput.builder()
-                .resource(WSDL)
-                .build();
-
-        when(serviceProcessor.process(isA(ReadSoapProjectInput.class))).thenReturn(readSoapProjectOutput);
-        when(serviceProcessor.process(isA(LoadSoapResourceInput.class))).thenReturn(loadSoapResourceOutput);
-
-        final ResponseEntity<?> responseEntity = soapServiceController.getWildcardMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
+        final ResponseEntity<?> responseEntity = soapServiceController.getMethod(PROJECT_ID, "wsdl", httpServletRequest, httpServletResponse);
         Assert.assertEquals(WSDL, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }

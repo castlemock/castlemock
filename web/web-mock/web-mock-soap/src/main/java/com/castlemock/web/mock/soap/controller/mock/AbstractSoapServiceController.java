@@ -144,7 +144,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
     }
 
-    protected ResponseEntity<?> processGet(final String projectId, final String portId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity<?> processGet(final String projectId, final String portName, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
@@ -152,7 +152,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             while(parameterNames.hasMoreElements()){
                 String parameterName = parameterNames.nextElement();
                 if(parameterName.equalsIgnoreCase("wsdl")){
-                    String wsdl = getWsdl(projectId, portId);
+                    String wsdl = getWsdl(projectId, portName);
                     
                     wsdl = new AddressLocationConfigurer().configureAddressLocation(wsdl, httpServletRequest.getRequestURL().toString());
 
@@ -170,7 +170,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
     }
 
-    private String getWsdl(final String projectId, final String portId){
+    private String getWsdl(final String projectId, final String portName){
         final ReadSoapProjectOutput projectOutput = this.serviceProcessor.process(ReadSoapProjectInput.builder()
                 .projectId(projectId)
                 .build());
@@ -178,7 +178,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
         return soapProject.getResources().stream()
                 .filter(soapResource -> SoapResourceType.WSDL.equals(soapResource.getType()))
-                .filter(soapResource -> portId.equals(soapResource.getId()))
+                .filter(soapResource -> portName.equals(soapResource.getName()))
                 .findFirst()
                 .map(soapResource -> {
                     final LoadSoapResourceOutput loadOutput =
@@ -188,7 +188,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                                     .build());
                     return loadOutput.getResource();
                 })
-                .orElseThrow(() -> new IllegalArgumentException("Unable to find a WSDL file for the following project: " + projectId));
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find a WSDL file for the following project: " + projectId + " and port name: " + portName));
     }
 
     /**
