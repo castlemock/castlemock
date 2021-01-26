@@ -181,7 +181,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
 
         if(SoapResourceType.WSDL.equals(resourceFile.getType())){
             path += WSDL_DIRECTORY;
-        } else if(SoapResourceType.WSDL.equals(resourceFile.getType())){
+        } else if(SoapResourceType.SCHEMA.equals(resourceFile.getType())){
             path
                     += SCHEMA_DIRECTORY;
         }

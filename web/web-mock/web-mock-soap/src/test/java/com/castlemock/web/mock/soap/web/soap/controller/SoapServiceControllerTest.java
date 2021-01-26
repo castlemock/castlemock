@@ -403,7 +403,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         when(serviceProcessor.process(isA(ReadSoapProjectInput.class))).thenReturn(readSoapProjectOutput);
         when(serviceProcessor.process(isA(LoadSoapResourceInput.class))).thenReturn(loadSoapResourceOutput);
 
-        final ResponseEntity<?> responseEntity = soapServiceController.getMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
+        final ResponseEntity<?> responseEntity = soapServiceController.getMethod(PROJECT_ID, SOAP_PORT_ID, httpServletRequest, httpServletResponse);
         Assert.assertEquals(WSDL, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
