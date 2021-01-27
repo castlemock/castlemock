@@ -27,10 +27,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,12 +89,31 @@ public class SoapPortConverter {
         try {
             return documents.entrySet().stream()
                     .map(documentEntry -> {
-                        final String name = documentEntry.getKey();
+                        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+                        String name = documentEntry.getKey();
                         final WSDLDocument wsdlDocument = documentEntry.getValue();
                         final Document document = wsdlDocument.getDocument();
+                        final String content = DocumentUtility.toString(document);
+                        try {
+                            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+                            Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
+                            try {
+                                XPath xPath = XPathFactory.newInstance().newXPath();
+                                String path = "/definitions/portType/@name";
+                                Node node = (Node) xPath.compile(path).evaluate(xmlDocument, XPathConstants.NODE);
+                                name = node.getNodeValue();
+                            } catch (XPathExpressionException e) {
+                                e.printStackTrace();
+                            }
+                        } catch (ParserConfigurationException e) {
+                            e.printStackTrace();
+                        } catch (SAXException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         final Set<SoapPort> ports = DocumentConverter.toSoapParts(document, generateResponse);
 
-                        final String content = DocumentUtility.toString(document);
                         return SoapPortConverterResult.builder()
                                 .name(name)
                                 .ports(ports)
