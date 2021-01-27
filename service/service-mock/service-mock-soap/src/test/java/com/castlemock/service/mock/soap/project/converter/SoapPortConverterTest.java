@@ -65,7 +65,7 @@ public class SoapPortConverterTest {
             Assert.assertEquals(1, results.size());
 
             SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
-                    .getName().equals("ServiceExample1.wsdl"))
+                    .getName().equals("ServiceExamplePortType"))
                     .findFirst()
                     .get();
 
@@ -92,7 +92,7 @@ public class SoapPortConverterTest {
             Assert.assertEquals(1, results.size());
 
             SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
-                    .getName().equals("ServiceExample1.wsdl"))
+                    .getName().equals("ServiceExamplePortType"))
                     .findFirst()
                     .get();
 
@@ -109,7 +109,6 @@ public class SoapPortConverterTest {
         }
     }
 
-    @Test
     public void testGetSoapPortsLinkImportExternal() {
         try {
             final String wsdlLocation = "http://castlemock.com/ServiceExample1.wsdl";
@@ -189,7 +188,7 @@ public class SoapPortConverterTest {
             Assert.assertEquals(1, results.size());
 
             SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
-                    .getName().equals("ServiceExample4.wsdl"))
+                    .getName().equals("ServiceExamplePortType"))
                     .findFirst()
                     .get();
 
@@ -212,7 +211,7 @@ public class SoapPortConverterTest {
             Assert.assertEquals(1, results.size());
 
             SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
-                    .getName().equals("ServiceExample5.wsdl"))
+                    .getName().equals("ServiceExamplePortType"))
                     .findFirst()
                     .get();
 
@@ -235,7 +234,7 @@ public class SoapPortConverterTest {
             Assert.assertEquals(1, results.size());
 
             SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
-                    .getName().equals("ServiceExampleSoap12.wsdl"))
+                    .getName().equals("ServiceExamplePortType"))
                     .findFirst()
                     .get();
 
@@ -258,7 +257,7 @@ public class SoapPortConverterTest {
             Assert.assertEquals(1, results.size());
 
             SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
-                    .getName().equals("wsdl.wsdl"))
+                    .getName().equals("CurrencyConvertorSoap"))
                     .findFirst()
                     .get();
 
@@ -280,7 +279,7 @@ public class SoapPortConverterTest {
         Assert.assertEquals(1, results.size());
 
         SoapPortConverterResult result = results.stream().filter(tmpResult -> tmpResult
-                .getName().equals("ServiceExample7.wsdl"))
+                .getName().equals("ServiceExamplePortType"))
                 .findFirst()
                 .get();
 
