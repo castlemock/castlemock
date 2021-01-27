@@ -130,12 +130,13 @@ public class SoapResourceMongoRepository extends MongoRepository<SoapResourceMon
      * search criteria.
      *
      * @param soapProjectId The id of the project.
+     * @param soapResourceName The name of the resource.
      * @param types         The types of {@link SoapResource} that should be returned.
      * @return A list of {@link SoapResource} of the specific provided type.
      * All resources will be returned if the type is null.
      */
     @Override
-    public Collection<SoapResource> findSoapResources(final String soapProjectId, final SoapResourceType... types) {
+    public Collection<SoapResource> findSoapResources(final String soapProjectId, String soapResourceName, final SoapResourceType... types) {
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
 
         List<SoapResourceDocument> resources =
@@ -144,7 +145,7 @@ public class SoapResourceMongoRepository extends MongoRepository<SoapResourceMon
         final List<SoapResource> soapResources = new ArrayList<>();
         for (SoapResourceDocument soapResourceDocument : resources) {
             for (SoapResourceType type : types) {
-                if (type.equals(soapResourceDocument.getType())) {
+                if (type.equals(soapResourceDocument.getType()) && soapResourceDocument.getName().equals(soapResourceName)) {
                     SoapResource soapResource = mapper.map(soapResourceDocument, SoapResource.class);
                     soapResources.add(soapResource);
                 }

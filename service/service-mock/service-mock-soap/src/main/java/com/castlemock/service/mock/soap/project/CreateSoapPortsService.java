@@ -107,14 +107,14 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                         }
                     }
                 }
+
+                final Collection<SoapResource> wsdlSoapResources =
+                        this.resourceRepository.findSoapResources(soapProjectId, newSoapPort.getName(), SoapResourceType.WSDL, SoapResourceType.WSDL_IMPORT);
+
+                for(SoapResource wsdlSoapResource : wsdlSoapResources){
+                    this.resourceRepository.delete(wsdlSoapResource.getId());
+                }
             }
-        }
-
-        final Collection<SoapResource> wsdlSoapResources =
-                this.resourceRepository.findSoapResources(soapProjectId, SoapResourceType.WSDL, SoapResourceType.WSDL_IMPORT);
-
-        for(SoapResource wsdlSoapResource : wsdlSoapResources){
-            this.resourceRepository.delete(wsdlSoapResource.getId());
         }
 
         for(SoapPortConverterResult result : results){

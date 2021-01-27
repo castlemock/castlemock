@@ -235,18 +235,19 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
      * search criteria.
      *
      * @param soapProjectId The id of the project.
+     * @param soapResourceName The name of the resource.
      * @param types          The types of {@link SoapResource} that should be returned.
      * @return A list of {@link SoapResource} of the specific provided type.
      * All resources will be returned if the type is null.
      * @since 1.16
      */
     @Override
-    public Collection<SoapResource> findSoapResources(final String soapProjectId, final SoapResourceType... types) {
+    public Collection<SoapResource> findSoapResources(final String soapProjectId, final String soapResourceName, final SoapResourceType... types) {
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
 
         final List<SoapResource> soapResources = new ArrayList<>();
         for(SoapResourceFile soapResourceFile : this.collection.values()){
-            if(soapResourceFile.getProjectId().equals(soapProjectId)){
+            if(soapResourceFile.getProjectId().equals(soapProjectId) && soapResourceFile.getName().equals(soapResourceName)){
                 for(SoapResourceType type : types){
                     if(type.equals(soapResourceFile.getType())){
                         SoapResource soapResource = mapper.map(soapResourceFile, SoapResource.class);

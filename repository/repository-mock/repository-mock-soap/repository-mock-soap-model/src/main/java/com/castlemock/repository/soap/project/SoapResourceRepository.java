@@ -54,12 +54,13 @@ public interface SoapResourceRepository extends Repository<SoapResource, String>
      * The method returns a list of {@link SoapResource} that matches the
      * search criteria.
      * @param soapProjectId The id of the project.
+     * @param soapResourceName The name of the resource.
      * @param types The types of {@link SoapResource} that should be returned.
      * @return A list of {@link SoapResource} of the specific provided type.
      * All resources will be returned if the type is null.
      * @since 1.16
      */
-    Collection<SoapResource> findSoapResources(String soapProjectId, SoapResourceType... types);
+    Collection<SoapResource> findSoapResources(String soapProjectId, String soapResourceName, SoapResourceType... types);
 
 
     /**
