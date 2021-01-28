@@ -48,11 +48,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Objects;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
@@ -403,7 +399,32 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         when(serviceProcessor.process(isA(ReadSoapProjectInput.class))).thenReturn(readSoapProjectOutput);
         when(serviceProcessor.process(isA(LoadSoapResourceInput.class))).thenReturn(loadSoapResourceOutput);
 
-        final ResponseEntity<?> responseEntity = soapServiceController.getMethod(PROJECT_ID, "wsdl", httpServletRequest, httpServletResponse);
+        final ResponseEntity<?> responseEntity = soapServiceController.getMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
+        Assert.assertEquals(WSDL, responseEntity.getBody());
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void testGetWsdlWithOtherUrlParts(){
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
+        when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(List.of("user", "wsdl")));
+        when(httpServletRequest.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + SOAP +
+                SLASH + PROJECT + SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID));
+
+        final SoapProject soapProject = getSoapProject();
+        final ReadSoapProjectOutput readSoapProjectOutput = ReadSoapProjectOutput.builder()
+                .project(soapProject)
+                .build();
+
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+        final LoadSoapResourceOutput loadSoapResourceOutput = LoadSoapResourceOutput.builder()
+                .resource(WSDL)
+                .build();
+
+        when(serviceProcessor.process(isA(ReadSoapProjectInput.class))).thenReturn(readSoapProjectOutput);
+        when(serviceProcessor.process(isA(LoadSoapResourceInput.class))).thenReturn(loadSoapResourceOutput);
+
+        final ResponseEntity<?> responseEntity = soapServiceController.getMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
         Assert.assertEquals(WSDL, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }

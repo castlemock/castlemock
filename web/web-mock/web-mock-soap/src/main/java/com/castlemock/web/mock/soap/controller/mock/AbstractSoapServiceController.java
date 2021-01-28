@@ -57,6 +57,7 @@ import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparat
 import com.castlemock.web.mock.soap.utility.config.AddressLocationConfigurer;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -72,15 +73,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 /**
  * The AbstractSoapServiceController provides functionality that are shared for all the SOAP controllers
@@ -144,15 +137,16 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
     }
 
-    protected ResponseEntity<?> processGet(final String projectId, final String portName, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
+    protected ResponseEntity<?> processGet(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse){
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
             Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+            String requestUri = httpServletRequest.getRequestURI();
             while(parameterNames.hasMoreElements()){
                 String parameterName = parameterNames.nextElement();
                 if(parameterName.equalsIgnoreCase("wsdl")){
-                    String wsdl = getWsdl(projectId, portName);
+                    String wsdl = getWsdl(projectId, requestUri);
                     
                     wsdl = new AddressLocationConfigurer().configureAddressLocation(wsdl, httpServletRequest.getRequestURL().toString());
 
@@ -170,15 +164,18 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         }
     }
 
-    private String getWsdl(final String projectId, final String portName){
+    private String getWsdl(final String projectId, final String portPath){
+
         final ReadSoapProjectOutput projectOutput = this.serviceProcessor.process(ReadSoapProjectInput.builder()
                 .projectId(projectId)
                 .build());
         final SoapProject soapProject = projectOutput.getProject();
 
+        final Set<String> portPathParts = Sets.newHashSet(portPath.split("/"));
+
         return soapProject.getResources().stream()
                 .filter(soapResource -> SoapResourceType.WSDL.equals(soapResource.getType()))
-                .filter(soapResource -> portName.equals(soapResource.getName()))
+                .filter(soapResource -> portPathParts.contains(soapResource.getName()))
                 .findFirst()
                 .map(soapResource -> {
                     final LoadSoapResourceOutput loadOutput =
@@ -188,7 +185,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                                     .build());
                     return loadOutput.getResource();
                 })
-                .orElseThrow(() -> new IllegalArgumentException("Unable to find a WSDL file for the following project: " + projectId + " and port name: " + portName));
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find a WSDL file for the following project: " + projectId + " and port path: " + portPath));
     }
 
     /**
