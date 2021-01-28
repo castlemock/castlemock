@@ -60,32 +60,32 @@ public class SoapPortConverter {
     private FileManager fileManager;
 
     public Set<SoapPortConverterResult> getSoapPorts(final List<File> files,
-                                       final boolean generateResponse){
+                                                     final boolean generateResponse) {
         final Map<String, WSDLDocument> documents = this.getDocuments(files, SoapResourceType.WSDL);
         return getResults(documents, generateResponse);
     }
 
     public Set<SoapPortConverterResult> getSoapPorts(final String location,
                                                      final boolean generateResponse,
-                                                     final boolean loadExternal){
+                                                     final boolean loadExternal) {
         try {
             final List<File> files = this.fileManager.uploadFiles(location);
             final Map<String, WSDLDocument> documents = this.getDocuments(files, SoapResourceType.WSDL);
             final Map<String, WSDLDocument> allDocuments = new HashMap<>(documents);
 
-            if(loadExternal){
+            if (loadExternal) {
                 documents.values()
                         .forEach(document -> loadExternal(location, document, allDocuments));
             }
 
             return getResults(allDocuments, generateResponse);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
     private Set<SoapPortConverterResult> getResults(final Map<String, WSDLDocument> documents,
-                                                    final boolean generateResponse){
+                                                    final boolean generateResponse) {
         try {
             return documents.entrySet().stream()
                     .map(documentEntry -> {
@@ -101,7 +101,10 @@ public class SoapPortConverter {
                                 XPath xPath = XPathFactory.newInstance().newXPath();
                                 String path = "/definitions/portType/@name";
                                 Node node = (Node) xPath.compile(path).evaluate(xmlDocument, XPathConstants.NODE);
-                                name = node.getNodeValue();
+                                name = node
+                                        .getNodeValue()
+                                        .replace("_Port", "")
+                                ;
                             } catch (XPathExpressionException e) {
                                 e.printStackTrace();
                             }
@@ -122,14 +125,14 @@ public class SoapPortConverter {
                                 .build();
                     })
                     .collect(Collectors.toSet());
-        }catch (Exception exception) {
+        } catch (Exception exception) {
             LOGGER.error("Unable to parse WSDL: " + exception.getMessage(), exception);
             throw exception;
         }
     }
 
     private Map<String, WSDLDocument> getDocuments(final List<File> files,
-                                                   final SoapResourceType resourceType){
+                                                   final SoapResourceType resourceType) {
         try {
             final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilderFactory.setValidating(false);
@@ -138,7 +141,7 @@ public class SoapPortConverter {
             final Map<String, WSDLDocument> documents = new HashMap<>();
             final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-            for(File file : files){
+            for (File file : files) {
                 final Document document = documentBuilder.parse(file);
                 document.getDocumentElement().normalize();
                 documents.put(file.getName(), WSDLDocument.builder()
@@ -148,33 +151,33 @@ public class SoapPortConverter {
             }
 
             return documents;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
     private void loadExternal(final String url,
                               final WSDLDocument wsdlDocument,
-                              final Map<String, WSDLDocument> documents){
+                              final Map<String, WSDLDocument> documents) {
         try {
             final Set<String> externalPaths = this.getImports(url, wsdlDocument);
-            for(String externalPath : externalPaths){
+            for (String externalPath : externalPaths) {
                 final List<File> files = fileManager.uploadFiles(externalPath);
                 final Map<String, WSDLDocument> externalDocuments =
                         this.getDocuments(files, SoapResourceType.WSDL_IMPORT);
                 documents.putAll(externalDocuments);
 
-                for(WSDLDocument externalWsdlDocument : externalDocuments.values()){
+                for (WSDLDocument externalWsdlDocument : externalDocuments.values()) {
                     loadExternal(externalPath, externalWsdlDocument, documents);
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
     private Set<String> getImports(final String url,
-                                     final WSDLDocument wsdlDocument){
+                                   final WSDLDocument wsdlDocument) {
         final Document document = wsdlDocument.getDocument();
         final List<Element> importElements = DocumentUtility.getElements(document, WSDL_NAMESPACE, IMPORT_NAMESPACE);
 
