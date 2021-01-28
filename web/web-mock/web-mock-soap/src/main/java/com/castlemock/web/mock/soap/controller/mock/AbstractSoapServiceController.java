@@ -141,11 +141,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
         try{
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
-            Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
             String requestUri = httpServletRequest.getRequestURI();
-            while(parameterNames.hasMoreElements()){
-                String parameterName = parameterNames.nextElement();
-                if(parameterName.equalsIgnoreCase("wsdl")){
                     String wsdl = getWsdl(projectId, requestUri);
                     
                     wsdl = new AddressLocationConfigurer().configureAddressLocation(wsdl, httpServletRequest.getRequestURL().toString());
@@ -154,10 +150,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                     responseHeaders.put(CONTENT_TYPE, ImmutableList.of("text/xml; " + DEFAULT_CHAR_SET));
 
                     return new ResponseEntity<String>(wsdl, responseHeaders, HttpStatus.OK);
-                }
-            }
 
-            throw new IllegalArgumentException("Unable to parse incoming message");
         }catch(Exception exception){
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
             throw new SoapException(exception.getMessage());

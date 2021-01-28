@@ -407,9 +407,8 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
     @Test
     public void testGetWsdlWithOtherUrlParts(){
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
-        when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(List.of("user", "wsdl")));
         when(httpServletRequest.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + SOAP +
-                SLASH + PROJECT + SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID));
+                SLASH + PROJECT + SLASH + PROJECT_ID + SLASH + "RANDOM" + SLASH + "wsdl"));
 
         final SoapProject soapProject = getSoapProject();
         final ReadSoapProjectOutput readSoapProjectOutput = ReadSoapProjectOutput.builder()
@@ -439,7 +438,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         final HttpServletRequest httpServletRequestWrapper = new HttpServletRequestTest(httpServletRequest, body);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
-                SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
+                SLASH + PROJECT_ID + SLASH + "wsdl");
 
         when(httpServletRequest.getContentType()).thenReturn(APPLICATION_XML);
 
