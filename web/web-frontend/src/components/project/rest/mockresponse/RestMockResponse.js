@@ -39,7 +39,7 @@ class RestMockResponse extends PureComponent {
         this.onUpdateMockResponseClick = this.onUpdateMockResponseClick.bind(this);
         this.onDiscardChangesClick = this.onDiscardChangesClick.bind(this);
         this.setName = this.setName.bind(this);
-        this.setHttpStatus = this.setHttpStatus.bind(this);
+        this.setHttpStatusCode = this.setHttpStatusCode.bind(this);
         this.setStatus = this.setStatus.bind(this);
         this.setUsingExpression = this.setUsingExpression.bind(this);
         this.setBody = this.setBody.bind(this);
@@ -177,11 +177,11 @@ class RestMockResponse extends PureComponent {
         });
     }
 
-    setHttpStatus(source) {
+    setHttpStatusCode(source) {
         this.setState({
             updateMockResponse: {
                 ...this.state.updateMockResponse,
-                httpStatus: source.target.value
+                httpStatusCode: source.target.value
             }
         });
     }
@@ -279,7 +279,7 @@ class RestMockResponse extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">HTTP Status code</dt>
-                            <dd className="col-sm-9"><input type="number" defaultValue={this.state.mockResponse.httpStatusCode} onChange={this.setHttpStatus}/></dd>
+                            <dd className="col-sm-9"><input type="number" defaultValue={this.state.mockResponse.httpStatusCode} onChange={this.setHttpStatusCode}/></dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Status</dt>
