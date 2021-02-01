@@ -32,7 +32,7 @@ The Design Document for **Castle Mock** can be found on our wiki: [Design Docume
 
 **Castle Mock** is **licensed** under the **[Apache License](https://github.com/castlemock/castlemock/blob/master/LICENSE)**. 
 We consider all contributions as Apache License 2.0. We require all pull request submitters to sign the **[Individual Contributor
-License Agreement ("Agreement") V2.0](https://www.apache.org/licenses/icla.pdf)** and provide it to us before we permit any pull requests to be merged into the main codebase.
+License Agreement ("Agreement") V2.0](https://www.apache.org/licenses/icla.pdf)** and provide it to us before we permit any pull requests to be merged into the main codebase. Please send the signed icla to the following email address: karl.dahlgren@castlemock.com
 
 ## Continuous Integration
 **Castle Mock's** continuous integration environment is publicly available and can be access on the following link: [Travis CI](https://travis-ci.org/castlemock/castlemock)

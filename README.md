@@ -1,6 +1,6 @@
 <p align="center"><img src="https://raw.githubusercontent.com/castlemock/castlemock/master/web/web-frontend/src/images/logo.png"></div></p>
 
-<h1 align="center"> Castle Mock: Mock RESTful APIs and SOAP web services</h1>
+<h1 align="center"> Castle Mock: <br/>Mock RESTful APIs and SOAP web services</h1>
 
 <p align="center">
     <a href="https://travis-ci.org/castlemock/castlemock"><img src="https://travis-ci.org/castlemock/castlemock.svg?branch=master"></a>
