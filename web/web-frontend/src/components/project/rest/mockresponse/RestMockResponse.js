@@ -30,6 +30,8 @@ import {faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import JsonPathComponent from "../../utility/JsonPathComponent";
 import HeaderQueryComponent from "../../utility/HeaderQueryComponent";
+import ParameterQueryComponent from "../../utility/ParameterQueryComponent";
+
 
 class RestMockResponse extends PureComponent {
 
@@ -51,6 +53,8 @@ class RestMockResponse extends PureComponent {
         this.onJsonPathRemoved = this.onJsonPathRemoved.bind(this);
         this.onHeaderQueryAdded = this.onHeaderQueryAdded.bind(this);
         this.onHeaderQueryRemoved = this.onHeaderQueryRemoved.bind(this);
+        this.onParameterQueryAdded = this.onParameterQueryAdded.bind(this);
+        this.onParameterQueryRemoved = this.onParameterQueryRemoved.bind(this);
 
         this.state = {
             projectId: this.props.match.params.projectId,
@@ -62,13 +66,15 @@ class RestMockResponse extends PureComponent {
                 httpHeaders: [],
                 xpathExpressions: [],
                 jsonPathExpressions: [],
-                headerQueries: []
+                headerQueries: [],
+                parameterQueries: []
             },
             updateMockResponse: {
                 httpHeaders: [],
                 xpathExpressions: [],
                 jsonPathExpressions: [],
-                headerQueries: []
+                headerQueries: [],
+                parameterQueries: []
             }
         };
 
@@ -164,6 +170,29 @@ class RestMockResponse extends PureComponent {
             updateMockResponse: {
                 ...this.state.updateMockResponse,
                 headerQueries: headerQueries
+            }
+        })
+    }
+    
+    onParameterQueryAdded(parameterQuery){
+        let parameterQueries = this.state.updateMockResponse.parameterQueries.slice();
+        parameterQueries.push(parameterQuery)
+        this.setState({
+            updateMockResponse: {
+                ...this.state.updateMockResponse,
+                parameterQueries: parameterQueries
+            }
+        })
+    }
+
+    onParameterQueryRemoved(parameterQuery){
+        let parameterQueries = this.state.updateMockResponse.parameterQueries.slice();
+        let index = parameterQueries.indexOf(parameterQuery);
+        parameterQueries.splice(index, 1);
+        this.setState({
+            updateMockResponse: {
+                ...this.state.updateMockResponse,
+                parameterQueries: parameterQueries
             }
         })
     }
@@ -315,6 +344,11 @@ class RestMockResponse extends PureComponent {
                             <Tab eventKey="jsonPath" title="JSON Path">
                                 <div className="response-section">
                                     <JsonPathComponent onJsonPathAdded={this.onJsonPathAdded} onJsonPathRemoved={this.onJsonPathRemoved} jsonPathExpressions={this.state.updateMockResponse.jsonPathExpressions}/>
+                                </div>
+                            </Tab>
+                             <Tab eventKey="parameterQuery" title="Parameter Queries">
+                                <div className="response-section">
+                                    <ParameterQueryComponent onParameterQueryAdded={this.onParameterQueryAdded} onParameterQueryRemoved={this.onParameterQueryRemoved} parameterQueries={this.state.updateMockResponse.parameterQueries}/>
                                 </div>
                             </Tab>
                             <Tab eventKey="headerQuery" title="Header Queries">
