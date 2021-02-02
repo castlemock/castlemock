@@ -29,12 +29,12 @@ const methodResponseStrategyFormatter = (responseStrategy) => {
         return "Random";
     } else if(responseStrategy === "SEQUENCE"){
         return "Sequence"
-    } else if(responseStrategy === "XPATH_INPUT"){
+    } else if(responseStrategy === "XPATH"){
         return "XPath"
     } else if(responseStrategy === "JSON_PATH"){
         return "JSON Path"
     } else if(responseStrategy === "QUERY_MATCH"){
-        return "Query match"
+        return "Parameter query match"
     } else if(responseStrategy === "HEADER_QUERY_MATCH"){
         return "Header query match"
     }

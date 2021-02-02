@@ -208,7 +208,10 @@ class UpdateMethodModal extends PureComponent {
                                             onChange={event => this.onResponseStrategyChange(event.target.value)}>
                                         <option value={"RANDOM"}>{methodResponseStrategyFormatter("RANDOM")}</option>
                                         <option value={"SEQUENCE"}>{methodResponseStrategyFormatter("SEQUENCE")}</option>
-                                        <option value={"XPATH_INPUT"}>{methodResponseStrategyFormatter("XPATH_INPUT")}</option>
+                                        <option value={"XPATH"}>{methodResponseStrategyFormatter("XPATH")}</option>
+                                        <option value={"JSON_PATH"}>{methodResponseStrategyFormatter("JSON_PATH")}</option>
+                                        <option value={"QUERY_MATCH"}>{methodResponseStrategyFormatter("QUERY_MATCH")}</option>
+                                        <option value={"HEADER_QUERY_MATCH"}>{methodResponseStrategyFormatter("HEADER_QUERY_MATCH")}</option>
                                     </select>
                                 </div>
                             </div>
