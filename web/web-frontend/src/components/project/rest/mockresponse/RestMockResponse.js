@@ -348,7 +348,7 @@ class RestMockResponse extends PureComponent {
                             </Tab>
                              <Tab eventKey="parameterQuery" title="Parameter Queries">
                                 <div className="response-section">
-                                    <ParameterQueryComponent onParameterQueryAdded={this.onParameterQueryAdded} onParameterQueryRemoved={this.onParameterQueryRemoved} parameterQueries={this.state.updateMockResponse.parameterQueries}/>
+                                    <ParameterQueryComponent onParameterQueryAdded={this.onParameterQueryAdded} onParameterQueryRemoved={this.onParameterQueryRemoved} parameterQueries={this.state.updateMockResponse.parameterQueries} projectId={this.state.projectId} applicationId={this.state.applicationId} resourceId={this.state.resourceId}/>
                                 </div>
                             </Tab>
                             <Tab eventKey="headerQuery" title="Header Queries">

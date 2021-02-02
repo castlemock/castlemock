@@ -15,6 +15,7 @@
  */
 
 import React, {PureComponent} from "react";
+import axios from "axios";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -34,6 +35,8 @@ class ParameterQueryComponent extends PureComponent {
         this.onRemoveParameterQueryClick = this.onRemoveParameterQueryClick.bind(this);
         this.deleteParameterFormat = this.deleteParameterFormat.bind(this);
         this.deleteParameterStyle = this.deleteParameterStyle.bind(this);
+        this.getResourceParameters = this.getResourceParameters.bind(this);
+
 
         this.parameterQueryColumns = [
             {
@@ -72,8 +75,11 @@ class ParameterQueryComponent extends PureComponent {
                 matchAny: false,
                 matchCase: false,
                 matchRegex: false
-            }
+            },
+            resourceParameters: []
         };
+
+        this.getResourceParameters();
     }
 
     onAddParameterQueryClick(){
@@ -140,6 +146,19 @@ class ParameterQueryComponent extends PureComponent {
         });
     }
 
+    getResourceParameters() {
+            axios
+                .get(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/parameter")
+                .then(response => {
+                    this.setState({
+                        resourceParameters: response.data
+                    });
+                })
+                .catch(error => {
+                    validateErrorResponse(error)
+                });
+        }
+
     render() {
         return (
             <div>
@@ -148,7 +167,12 @@ class ParameterQueryComponent extends PureComponent {
                     <div className="form-group row">
                         <label className="col-sm-2 col-form-label">Parameter</label>
                         <div className="col-sm-10">
-                            <input className="form-control" type="text" onChange={event => this.setNewParameterParameter(event.target.value)} />
+                            <select id="inputStatus" className="form-control" onChange={event => this.setNewParameterParameter(event.target.value)} >
+                                <option value={""}> -- select a parameter -- </option>
+                                {this.state.resourceParameters.map(resourceParameter =>
+                                    <option key={resourceParameter.query} value={resourceParameter.query}>{resourceParameter.query}</option>
+                                )};
+                            </select>
                         </div>
                     </div>
                     <div className="form-group row">
@@ -176,7 +200,11 @@ class ParameterQueryComponent extends PureComponent {
                         </div>
                     </div>
                     <div className="form-group row">
-                        <button className="btn btn-success demo-button-disabled menu-button" onClick={this.onAddParameterQueryClick}><FontAwesomeIcon icon={faPlus} className="button-icon"/><span>Add Parameter Query</span></button>
+                        <button className="btn btn-success demo-button-disabled menu-button"
+                            onClick={this.onAddParameterQueryClick} disabled={this.state.newParameterQuery.parameter === ""}>
+                                <FontAwesomeIcon icon={faPlus} className="button-icon"/>
+                                <span>Add Parameter Query</span>
+                        </button>
                     </div>
                 </div>
                 <div className="table-result">
