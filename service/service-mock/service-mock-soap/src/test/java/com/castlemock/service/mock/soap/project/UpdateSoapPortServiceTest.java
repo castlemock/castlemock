@@ -51,14 +51,14 @@ public class UpdateSoapPortServiceTest {
     @Test
     public void testProcess(){
         final String projectId = "ProjectId";
+        final String newUri = "newUri";
         final SoapPort port = SoapPortTestBuilder.builder().build();
         final UpdateSoapPortInput input = UpdateSoapPortInput.builder()
                 .projectId(projectId)
                 .portId(port.getId())
-                .port(port)
+                .uri(newUri)
                 .build();
         final ServiceTask<UpdateSoapPortInput> serviceTask = new ServiceTask<UpdateSoapPortInput>(input);
-
 
         Mockito.when(soapPortRepository.findOne(port.getId())).thenReturn(port);
         Mockito.when(soapPortRepository.update(Mockito.anyString(), Mockito.any(SoapPort.class))).thenReturn(port);

@@ -5,16 +5,16 @@ import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import java.util.Objects;
 import java.util.Set;
 
-public class UpdateSoapOpertionStatusesRequest {
+public class UpdateSoapOperationStatusesRequest {
 
     private Set<String> operationIds;
     private SoapOperationStatus status;
 
-    private UpdateSoapOpertionStatusesRequest() {
+    private UpdateSoapOperationStatusesRequest() {
 
     }
 
-    private UpdateSoapOpertionStatusesRequest(final Builder builder) {
+    private UpdateSoapOperationStatusesRequest(final Builder builder) {
         this.operationIds = Objects.requireNonNull(builder.operationIds);
         this.status = Objects.requireNonNull(builder.status);
     }
@@ -31,7 +31,7 @@ public class UpdateSoapOpertionStatusesRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateSoapOpertionStatusesRequest that = (UpdateSoapOpertionStatusesRequest) o;
+        UpdateSoapOperationStatusesRequest that = (UpdateSoapOperationStatusesRequest) o;
         return Objects.equals(operationIds, that.operationIds) &&
                 status == that.status;
     }
@@ -71,8 +71,8 @@ public class UpdateSoapOpertionStatusesRequest {
             return this;
         }
 
-        public UpdateSoapOpertionStatusesRequest build() {
-            return new UpdateSoapOpertionStatusesRequest(this);
+        public UpdateSoapOperationStatusesRequest build() {
+            return new UpdateSoapOperationStatusesRequest(this);
         }
     }
     

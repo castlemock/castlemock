@@ -18,7 +18,6 @@ package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.validation.NotNull;
-import com.castlemock.model.mock.soap.domain.SoapPort;
 
 import java.util.Objects;
 
@@ -33,12 +32,12 @@ public final class UpdateSoapPortInput implements Input {
     @NotNull
     private final String portId;
     @NotNull
-    private final SoapPort soapPort;
+    private final String uri;
 
     public UpdateSoapPortInput(final Builder builder) {
         this.projectId = Objects.requireNonNull(builder.projectId);
         this.portId = Objects.requireNonNull(builder.portId);
-        this.soapPort = Objects.requireNonNull(builder.port);
+        this.uri = Objects.requireNonNull(builder.uri);
     }
 
     public String getProjectId() {
@@ -49,8 +48,8 @@ public final class UpdateSoapPortInput implements Input {
         return portId;
     }
 
-    public SoapPort getSoapPort() {
-        return soapPort;
+    public String getUri() {
+        return uri;
     }
 
     public static Builder builder(){
@@ -60,7 +59,7 @@ public final class UpdateSoapPortInput implements Input {
     public static class Builder {
         private String projectId;
         private String portId;
-        private SoapPort port;
+        private String uri;
 
         private Builder(){
 
@@ -76,8 +75,8 @@ public final class UpdateSoapPortInput implements Input {
             return this;
         }
 
-        public Builder port(final SoapPort port){
-            this.port = port;
+        public Builder uri(final String uri){
+            this.uri = uri;
             return this;
         }
 

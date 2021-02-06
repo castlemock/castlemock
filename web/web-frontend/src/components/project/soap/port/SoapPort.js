@@ -22,6 +22,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import PaginationFactory from "react-bootstrap-table2-paginator";
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
+import UpdatePortModal from "./modal/UpdatePortModal";
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import DeletePortModal from "./modal/DeletePortModal"
 import UpdateEndpointModal from "./modal/UpdateEndpointModal";
@@ -213,6 +214,11 @@ class SoapPort extends PureComponent {
                         <AuthenticationContext.Consumer>
                             {context => (
                                 <div className="menu" align="right">
+                                    <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#updatePortModal" disabled={isOnlyReader(context.authentication.role)}>
+                                        <i className="fas fa-plus-circle"/>
+                                        <FontAwesomeIcon icon={faEdit} className="button-icon"/>
+                                        <span>Update port</span>
+                                    </button>
                                     <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deletePortModal" disabled={isOnlyReader(context.authentication.role)}>
                                         <FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete port</span>
                                     </button>
@@ -281,7 +287,7 @@ class SoapPort extends PureComponent {
                         </div>
                     </div>
                 </section>
-
+                <UpdatePortModal projectId={this.state.projectId} portId={this.state.portId} getPort={this.getPort} />
                 <DeletePortModal projectId={this.state.projectId} portId={this.state.portId} selectedOperations={this.state.selectedOperations} />
                 <UpdateEndpointModal projectId={this.state.projectId} portId={this.state.portId} selectedOperations={this.state.selectedOperations} getPort={this.getPort} />
                 <UpdateStatusModal projectId={this.state.projectId} portId={this.state.portId} selectedOperations={this.state.selectedOperations} getPort={this.getPort} />
