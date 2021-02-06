@@ -20,10 +20,10 @@ import com.auth0.jwt.interfaces.Claim;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.user.Status;
 import com.castlemock.model.core.user.User;
+import com.castlemock.service.core.user.UserDetailSecurityService;
 import com.castlemock.service.core.user.input.ReadUserInput;
 import com.castlemock.service.core.user.output.ReadUserOutput;
 import com.castlemock.web.core.config.JWTEncoderDecoder;
-import com.castlemock.service.core.user.UserDetailSecurityService;
 import com.castlemock.web.core.controller.AbstractController;
 import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
@@ -37,9 +37,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,7 +65,7 @@ import java.util.stream.Stream;
  *
  */
 @Component
-public class SecurityInterceptor extends HandlerInterceptorAdapter implements Filter {
+public class SecurityInterceptor implements HandlerInterceptor, Filter {
 
     @Autowired
     private ServiceProcessor serviceProcessor;

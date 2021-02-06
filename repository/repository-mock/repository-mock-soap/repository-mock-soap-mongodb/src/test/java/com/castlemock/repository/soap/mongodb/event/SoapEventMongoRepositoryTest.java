@@ -75,10 +75,10 @@ public class SoapEventMongoRepositoryTest {
         soapEventMongoRepository.save(oldest);
 
         SoapEvent oldestEventFromMongo = soapEventMongoRepository.getOldestEvent();
-        assertThat(oldestEventFromMongo).isEqualToIgnoringGivenFields(oldest, "id");
+        assertThat(oldestEventFromMongo).usingRecursiveComparison().ignoringFields( "id").isEqualTo(oldest);
 
         SoapEvent deleteOldestEvent = soapEventMongoRepository.deleteOldestEvent();
-        assertThat(deleteOldestEvent).isEqualToIgnoringGivenFields(oldest, "id");
+        assertThat(deleteOldestEvent).usingRecursiveComparison().ignoringFields( "id").isEqualTo(oldest);
 
         assertThat(soapEventMongoRepository.count()).isEqualTo(3);
     }

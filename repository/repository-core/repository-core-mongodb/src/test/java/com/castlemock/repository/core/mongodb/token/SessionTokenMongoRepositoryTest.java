@@ -44,7 +44,7 @@ public class SessionTokenMongoRepositoryTest {
 
         PersistentRememberMeToken rememberMeTokenFromDb = sessionTokenRepository.getTokenForSeries(series);
 
-        assertThat(rememberMeTokenFromDb).isEqualToComparingFieldByField(rememberMeToken);
+        assertThat(rememberMeTokenFromDb).usingRecursiveComparison().isEqualTo(rememberMeToken);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class SessionTokenMongoRepositoryTest {
         PersistentRememberMeToken tokenFromDb = sessionTokenRepository.getTokenForSeries(series);
 
         assertThat(tokenFromDb.getUsername()).isEqualTo("farida");
-        assertThat(tokenFromDb).isEqualToIgnoringGivenFields(rememberMeToken, "username");
+        assertThat(tokenFromDb).usingRecursiveComparison().ignoringFields("username").isEqualTo(rememberMeToken);
     }
 
     @Test

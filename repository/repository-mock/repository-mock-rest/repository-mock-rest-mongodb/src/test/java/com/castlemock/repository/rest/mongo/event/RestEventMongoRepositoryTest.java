@@ -52,10 +52,10 @@ public class RestEventMongoRepositoryTest {
         restEventMongoRepository.save(oldest);
 
         RestEvent oldestEventFromMongo = restEventMongoRepository.getOldestEvent();
-        assertThat(oldestEventFromMongo).isEqualToIgnoringGivenFields(oldest, "id");
+        assertThat(oldestEventFromMongo).usingRecursiveComparison().ignoringFields("id").isEqualTo(oldest);
 
         RestEvent deleteOldestEvent = restEventMongoRepository.deleteOldestEvent();
-        assertThat(deleteOldestEvent).isEqualToIgnoringGivenFields(oldest, "id");
+        assertThat(deleteOldestEvent).usingRecursiveComparison().ignoringFields("id").isEqualTo(oldest);
 
         assertThat(restEventMongoRepository.count()).isEqualTo(3);
     }

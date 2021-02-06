@@ -17,10 +17,10 @@
 package com.castlemock.app.config;
 
 import com.castlemock.web.core.controller.AbstractController;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
  * @see MvcConfig
  * @see AbstractController
  */
-public class LoggingInterceptor extends HandlerInterceptorAdapter {
+public class LoggingInterceptor implements AsyncHandlerInterceptor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingInterceptor.class);
 

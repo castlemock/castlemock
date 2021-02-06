@@ -37,8 +37,7 @@ public class MongoRepositoryTest {
 
         assertThat(allInventory).hasSize(1);
         assertThat(allInventory.get(0).getId()).isNotNull();
-        assertThat(allInventory.get(0))
-                .isEqualToIgnoringGivenFields(new InventoryDocument("Apple Watch", 20.0), "id");
+        assertThat(allInventory.get(0)).usingRecursiveComparison().ignoringFields("id").isEqualTo(new InventoryDocument("Apple Watch", 20.0));
     }
 
     @Test
@@ -64,8 +63,7 @@ public class MongoRepositoryTest {
         mongoOperations.save(document);
 
         Inventory validInventory = inventoryMongoRepository.findOne(document.getId());
-        assertThat(validInventory)
-                .isEqualToComparingFieldByField(document);
+        assertThat(validInventory).usingRecursiveComparison().isEqualTo(document);
     }
 
     @Test
@@ -121,7 +119,7 @@ public class MongoRepositoryTest {
         mongoOperations.save(new InventoryDocument("Philips TV", 1.0));
 
         Inventory deleted = inventoryMongoRepository.delete(toBeDeleted.getId());
-        assertThat(deleted).isEqualToComparingFieldByField(toBeDeleted);
+        assertThat(deleted).usingRecursiveComparison().isEqualTo(toBeDeleted);
 
         List<Inventory> all = inventoryMongoRepository.findAll();
         assertThat(all).hasSize(2);

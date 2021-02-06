@@ -31,7 +31,7 @@ public class RestResourceMongoRepositoryTest {
 
         RestResource fromDb = restResourceMongoRepository.findRestResourceByUri("app1", "URI1");
 
-        assertThat(fromDb).isEqualToIgnoringGivenFields(toMatch, "id");
+        assertThat(fromDb).usingRecursiveComparison().ignoringFields("id").isEqualTo(toMatch);
     }
 
     @After
