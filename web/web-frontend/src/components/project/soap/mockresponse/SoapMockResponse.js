@@ -22,10 +22,11 @@ import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import DeleteMockResponseModal from "./modal/DeleteMockResponseModal";
+import ValidateExpressionModal from "../../utility/modal/ValidateExpressionModal"
 import HeaderComponent from "../../utility/HeaderComponent";
 import XPathComponent from "../../utility/XPathComponent";
 import {mockResponseStatusFormatter} from "../utility/SoapFormatter";
-import {faTrash, faEdit} from "@fortawesome/free-solid-svg-icons";
+import {faTrash, faEdit, faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class SoapMockResponse extends PureComponent {
@@ -204,6 +205,7 @@ class SoapMockResponse extends PureComponent {
                             <h1>Mock Response: {this.state.mockResponse.name}</h1>
                         </div>
                         <div className="menu" align="right">
+                            <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#validateExpressionModal"><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/><span>Validate expression</span></button>
                             <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMockResponseModal"><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete mock response</span></button>
                         </div>
                     </div>
@@ -256,6 +258,7 @@ class SoapMockResponse extends PureComponent {
                 </section>
 
                 <DeleteMockResponseModal projectId={this.state.projectId} portId={this.state.portId} operationId={this.state.operationId} mockResponseId={this.state.mockResponseId}/>
+                <ValidateExpressionModal />
             </div>
         )
     }

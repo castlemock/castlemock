@@ -25,8 +25,9 @@ import HeaderComponent from "../../utility/HeaderComponent";
 import XPathComponent from "../../utility/XPathComponent";
 import {mockResponseStatusFormatter} from "../utility/RestFormatter";
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
+import ValidateExpressionModal from "../../utility/modal/ValidateExpressionModal"
 import AuthenticationContext from "../../../../context/AuthenticationContext";
-import {faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faTrash, faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import JsonPathComponent from "../../utility/JsonPathComponent";
 import HeaderQueryComponent from "../../utility/HeaderQueryComponent";
@@ -296,6 +297,7 @@ class RestMockResponse extends PureComponent {
                         <AuthenticationContext.Consumer>
                             {context => (
                                 <div className="menu" align="right">
+                                    <button className="btn btn-success demo-button-disabled menu-button" data-toggle="modal" data-target="#validateExpressionModal"><FontAwesomeIcon icon={faCheckCircle} className="button-icon"/><span>Validate expression</span></button>
                                     <button className="btn btn-danger demo-button-disabled menu-button" data-toggle="modal" data-target="#deleteMockResponseModal" disabled={isOnlyReader(context.authentication.role)}><FontAwesomeIcon icon={faTrash} className="button-icon"/><span>Delete mock response</span></button>
                                 </div>
                             )}
@@ -369,6 +371,7 @@ class RestMockResponse extends PureComponent {
                 </section>
 
                 <DeleteMockResponseModal projectId={this.state.projectId} portId={this.state.portId} operationId={this.state.operationId} mockResponseId={this.state.mockResponseId}/>
+                <ValidateExpressionModal />
             </div>
         )
     }
