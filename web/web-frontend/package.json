@@ -10,7 +10,7 @@
     "classnames": "^2.2.6",
     "history": "^5.0.0",
     "jquery": "^3.3.1",
-    "pako": "^2.0.2",
+    "pako": "^2.0.3",
     "popper.js": "^1.14.7",
     "prop-types": "^15.7.2",
     "react": "17.0.1",
