@@ -14,7 +14,7 @@
     "popper.js": "^1.14.7",
     "prop-types": "^15.7.2",
     "react": "17.0.2",
-    "react-bootstrap": "^1.5.0",
+    "react-bootstrap": "^1.5.2",
     "react-bootstrap-table-next": "^4.0.3",
     "react-bootstrap-table2-filter": "^1.1.6",
     "react-bootstrap-table2-paginator": "^2.0.4",
