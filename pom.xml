@@ -47,7 +47,7 @@
         <httpclient.version>4.5.13</httpclient.version>
         <servlet.api.version>4.0.1</servlet.api.version>
         <antlr.maven.version>4.7.2</antlr.maven.version>
-        <commons.lang.version>3.11</commons.lang.version>
+        <commons.lang.version>3.12.0</commons.lang.version>
         <raml.parser.version>1.0.51</raml.parser.version>
         <jaxb.runtime.version>2.3.3</jaxb.runtime.version>
         <swagger.core.version>1.6.0</swagger.core.version>
