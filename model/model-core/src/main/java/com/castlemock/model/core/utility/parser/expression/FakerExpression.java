@@ -1,17 +1,16 @@
 package com.castlemock.model.core.utility.parser.expression;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
+import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
+import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
+import com.github.javafaker.Faker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
-import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
-import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
-import com.github.javafaker.Faker;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * {@link FakerExpression} is an {@link Expression} and will call {@link Faker}
@@ -39,10 +38,15 @@ public class FakerExpression extends AbstractExpression {
 	@Override
 	public String transform(ExpressionInput input) {
 		final ExpressionArgument<?> apiArgument = input.getArgument(API_ARGUMENT);
-		final ExpressionArgument<?> localeArgument = input.getArgument(LOCALE_ARGUMENT);
 
+		if(apiArgument == null) {
+			return "";
+		}
+
+		final ExpressionArgument<?> localeArgument = input.getArgument(LOCALE_ARGUMENT);
+		final String locale = getLocaleLanguageTag(localeArgument);
 		try {
-			Faker faker = getFaker(getLocaleLanguageTag(localeArgument));
+			Faker faker = getFaker(locale);
 			String springExpression = getApiArgumentString(apiArgument);
 
 			org.springframework.expression.ExpressionParser parser = new SpelExpressionParser();
@@ -56,7 +60,7 @@ public class FakerExpression extends AbstractExpression {
 			}
 		} catch (Exception e) {
 			LOGGER.warn("Can not transform ${FAKER(api=\"" + apiArgument.getValue() + "\", locale=\""
-					+ localeArgument.getValue() + "\")", e);
+					+ locale + "\")", e);
 		}
 
 		return "";
@@ -86,7 +90,7 @@ public class FakerExpression extends AbstractExpression {
 		if (localeArgument instanceof ExpressionArgumentString) {
 			return ((ExpressionArgumentString) localeArgument).getValue();
 		}
-		return null;
+		return "en";
 	}
 
 	private String getApiArgumentString(final ExpressionArgument<?> apiArgument) {

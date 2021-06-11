@@ -16,12 +16,12 @@
 
 package com.castlemock.model.core.utility.parser.expression;
 
+import com.castlemock.core.expression.ExpressionLexer;
+import com.castlemock.core.expression.ExpressionParser;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentArray;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentNumber;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
-import com.castlemock.core.expression.ExpressionLexer;
-import com.castlemock.core.expression.ExpressionParser;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
