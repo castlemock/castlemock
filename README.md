@@ -48,7 +48,7 @@ Non-source downloads such as WAR files can be found on our website: [https://www
 
 ## Installation
 
-**Castle Mock** can be downloaded as Java Web Archive (.war) file and be deployed on a Apache Tomcat server (Java 11+ and Apache Tomcat 8.5 or higher). **Castle Mock** can also be deployed by using Docker. For more information go to the offical **Castle Mock** Docker page: [https://hub.docker.com/r/castlemock/castlemock/](https://hub.docker.com/r/castlemock/castlemock/).
+**Castle Mock** can be downloaded as Java Web Archive (.war) file and be deployed on a Apache Tomcat server (Java 11+ and Apache Tomcat 8.5 or 9). **Castle Mock** can also be deployed by using Docker. For more information go to the offical **Castle Mock** Docker page: [https://hub.docker.com/r/castlemock/castlemock/](https://hub.docker.com/r/castlemock/castlemock/).
 
 Upon successful installation and deployment, **Castle Mock** can be accessed from the web browser:
 
