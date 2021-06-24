@@ -19,6 +19,8 @@ package com.castlemock.model.core.utility.parser.expression;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentNumber;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * {@link RandomDoubleExpression} is an {@link Expression} and will
  * transform an matching input string into a random double.
@@ -40,21 +42,21 @@ public class RandomDoubleExpression extends AbstractExpression {
      */
     @Override
     public String transform(final ExpressionInput input) {
-        int minLength = 0;
-        int maxLength = Integer.MAX_VALUE;
+        double lowerBound = Double.MIN_VALUE;
+        double upperBound = Double.MAX_VALUE;
 
         final ExpressionArgument<?> minArgument = input.getArgument(MIN_ARGUMENT);
         final ExpressionArgument<?> maxArgument = input.getArgument(MAX_ARGUMENT);
 
         if(minArgument != null && minArgument instanceof ExpressionArgumentNumber){
-            minLength = ((ExpressionArgumentNumber) minArgument).getValue().intValue();
+            lowerBound = ((ExpressionArgumentNumber) minArgument).getValue();
         }
         if(maxArgument != null && maxArgument instanceof ExpressionArgumentNumber){
-            maxLength = ((ExpressionArgumentNumber) maxArgument).getValue().intValue();
+            upperBound = ((ExpressionArgumentNumber) maxArgument).getValue();
         }
 
-        final Integer randomValue = RANDOM.nextInt(maxLength) + minLength;
-        return Double.toString(randomValue.doubleValue());
+        final Double randomValue = ThreadLocalRandom.current().nextDouble(lowerBound, upperBound);
+        return Double.toString(randomValue);
     }
 
     /**
