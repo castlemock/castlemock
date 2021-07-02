@@ -44,6 +44,7 @@
         <jaxb.core.version>2.3.0.1</jaxb.core.version>
         <maven.exec.version>1.2.1</maven.exec.version>
         <servlet.jsp.version>2.2</servlet.jsp.version>
+        <commons.io.version>2.10.0</commons.io.version>
         <httpclient.version>4.5.13</httpclient.version>
         <servlet.api.version>4.0.1</servlet.api.version>
         <antlr.maven.version>4.9.2</antlr.maven.version>
@@ -505,6 +506,11 @@
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-rt-frontend-jaxws</artifactId>
                 <version>${cxf.rt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
             </dependency>
             <dependency>
                 <groupId>wsdl4j</groupId>
