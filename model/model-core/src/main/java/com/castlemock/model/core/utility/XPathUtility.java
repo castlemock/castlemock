@@ -19,6 +19,7 @@ package com.castlemock.model.core.utility;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -68,12 +69,43 @@ public final class XPathUtility {
         try {
             final Document document = createDocument(body);
             final XPath xPath = createXPath();
-            final NodeList evaluate = (NodeList) xPath.compile(xpathExpr).evaluate(document, XPathConstants.NODESET);
-            return evaluate.getLength() > 0;
+
+            // NODESET
+            try {
+                final NodeList evaluate = (NodeList) xPath.compile(xpathExpr).evaluate(document, XPathConstants.NODESET);
+                return evaluate != null && evaluate.getLength() > 0;
+            } catch (Exception ignored) { }
+
+            // NUMBER
+            try {
+                final Number evaluate = (Number) xPath.compile(xpathExpr).evaluate(document, XPathConstants.NUMBER);
+                return evaluate != null;
+            } catch (Exception ignored) { }
+
+            // STRING
+            try {
+                final String evaluate = (String) xPath.compile(xpathExpr).evaluate(document, XPathConstants.STRING);
+                return evaluate != null;
+            } catch (Exception ignored) { }
+
+            // NODE
+            try {
+                final Node evaluate = (Node) xPath.compile(xpathExpr).evaluate(document, XPathConstants.NODE);
+                return evaluate != null;
+            } catch (Exception ignored) { }
+
+            // BOOLEAN
+            try {
+                final Boolean evaluate = (Boolean) xPath.compile(xpathExpr).evaluate(document, XPathConstants.BOOLEAN);
+                return evaluate != null;
+            } catch (Exception ignored) { }
+
         } catch (Exception exception) {
             LOGGER.error("Unable to evaluate xpath expression", exception);
             return false;
         }
+
+        return false;
     }
 
     private static Document createDocument(final String body) throws ParserConfigurationException, IOException, SAXException {

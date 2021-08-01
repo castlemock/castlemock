@@ -45,6 +45,25 @@ public class XPathUtilityTest {
     }
 
     @Test
+    public void testIsValidXPathExprNumber(){
+        final String body = "<entries>\n" +
+                "     <entry>\n" +
+                "        <value>10.50</value>\n" +
+                "     </entry>\n" +
+                "     <entry>\n" +
+                "        <value>1.50</value>\n" +
+                "     </entry>\n" +
+                "      <entry>\n" +
+                "        <value>10</value>\n" +
+                "     </entry>\n" +
+                "</entries>";
+
+        final String xpath = "sum(//value)";
+        boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
+        Assert.assertTrue(validXPathValue);
+    }
+
+    @Test
     public void testIsValidXPathExprWithAttribute(){
 
         String body = "<soapenv:Envelope xmlns:cm=\"http://castlemock.com\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://schemas.xmlsoap.org/wsdl/\">\n" +
@@ -180,6 +199,24 @@ public class XPathUtilityTest {
         final String xpath = "substring-after(//GetWhoIS/HostName/text(), '-')";
 
         assertEquals("After", XPathUtility.getXPathValue(body, xpath).orElse(null));
+    }
+
+    @Test
+    public void testXPathMathSum() {
+        final String body = "<entries>\n" +
+                "     <entry>\n" +
+                "        <value>10.50</value>\n" +
+                "     </entry>\n" +
+                "     <entry>\n" +
+                "        <value>1.50</value>\n" +
+                "     </entry>\n" +
+                "      <entry>\n" +
+                "        <value>10</value>\n" +
+                "     </entry>\n" +
+                "</entries>";
+
+        final String xpath = "sum(//value)";
+        assertEquals("22", XPathUtility.getXPathValue(body, xpath).orElse(null));
     }
 
 }
