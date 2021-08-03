@@ -37,10 +37,7 @@ Table Of Content
 
 ## What to Use Castle Mock for and When to Use It
 
-Use **Castle Mock** to mock out RESTful APIs and SOAP web services for testing purposes for when either performing system or integration tests. It is recommended to only use **Castle Mock** on an internal network and never be used publically. **Castle Mock** is not developed or meant for anything else other than for testing purposes. **Castle Mock** is commonly used for:
-
-- Mock RESTful APIs and SOAP web services for system or integration tests.
-- Network analysis between systems. 
+Use **Castle Mock** to mock out RESTful APIs and SOAP web services for testing purposes for when either performing system or integration tests. It is recommended to only use **Castle Mock** on an internal network and never be used publically. **Castle Mock** is **NOT** developed or meant for anything else other than for testing purposes.
 
 ## Download
 
