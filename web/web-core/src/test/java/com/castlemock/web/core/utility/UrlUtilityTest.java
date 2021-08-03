@@ -95,41 +95,58 @@ public class UrlUtilityTest {
 
     @Test
     public void canGetQueryStringParameters(){
-        final Map<String, String> queryParams = ImmutableMap.of("userId", "1");
-        final Map<String, String> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}", queryParams);
+        final Map<String, Set<String>> queryParams = ImmutableMap.of("userId", Set.of("1"));
+        final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}", queryParams);
 
         Assert.assertTrue(map.containsKey("userId"));
-        Assert.assertEquals("1", map.get("userId"));
+        Assert.assertEquals(1, map.get("userId").size());
+        Assert.assertTrue(map.get("userId").contains("1"));
     }
 
     @Test
     public void canGetQueryStringParametersWithDifferentName(){
-        final Map<String, String> queryParams = ImmutableMap.of("userId", "1");
-        final Map<String, String> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={id}", queryParams);
+        final Map<String, Set<String>> queryParams = ImmutableMap.of("userId", Set.of("1"));
+        final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={id}", queryParams);
 
         Assert.assertTrue(map.containsKey("userId"));
-        Assert.assertEquals("1", map.get("userId"));
+        Assert.assertEquals(1, map.get("userId").size());
+        Assert.assertTrue(map.get("userId").contains("1"));
     }
 
     @Test
     public void canGetQueryStringMultipleParameters(){
-        final Map<String, String> queryParams = ImmutableMap.of(
-                "userId", "1",
-                "username", "Karl");
-        final Map<String, String> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}&username={username}", queryParams);
+        final Map<String, Set<String>> queryParams = ImmutableMap.of(
+                "userId", Set.of("1"),
+                "username", Set.of("Karl"));
+        final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}&username={username}", queryParams);
 
         Assert.assertTrue(map.containsKey("userId"));
         Assert.assertTrue(map.containsKey("username"));
-        Assert.assertEquals("1", map.get("userId"));
-        Assert.assertEquals("Karl", map.get("username"));
+        Assert.assertEquals(1, map.get("userId").size());
+        Assert.assertEquals(1, map.get("username").size());
+        Assert.assertTrue(map.get("userId").contains("1"));
+        Assert.assertTrue(map.get("username").contains("Karl"));
+    }
+
+    @Test
+    public void canGetQueryStringMultipleParameterValues(){
+        final Map<String, Set<String>> queryParams = Map.of(
+                "userId", Set.of("1", "2"));
+        final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}&userId=1", queryParams);
+
+        Assert.assertTrue(map.containsKey("userId"));
+        Assert.assertEquals(2, map.get("userId").size());
+        Assert.assertTrue(map.get("userId").contains("1"));
+        Assert.assertTrue(map.get("userId").contains("2"));
     }
 
     @Test
     public void getPathParametersShouldNotConsiderQueryParameters(){
-        Map<String, String> pathParameters = UrlUtility.getPathParameters("/rest/api/{user}?param={param}", "/rest/api/johndoe");
+        Map<String, Set<String>> pathParameters = UrlUtility.getPathParameters("/rest/api/{user}?param={param}", "/rest/api/johndoe");
         Assert.assertEquals(1, pathParameters.size());
         Assert.assertTrue(pathParameters.containsKey("user"));
-        Assert.assertEquals("johndoe", pathParameters.get("user"));
+        Assert.assertEquals(1, pathParameters.get("user").size());
+        Assert.assertTrue(pathParameters.get("user").contains("johndoe"));
     }
 
     @Test

@@ -133,8 +133,8 @@ public class HttpMessageSupportTest {
 
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         Mockito.when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(parameterNames));
-        Mockito.when(httpServletRequest.getParameter("Parameter1")).thenReturn("Value1");
-        Mockito.when(httpServletRequest.getParameter("Parameter2")).thenReturn("Value2");
+        Mockito.when(httpServletRequest.getParameterValues("Parameter1")).thenReturn(new String[]{"Value1"});
+        Mockito.when(httpServletRequest.getParameterValues("Parameter2")).thenReturn(new String[]{"Value2"});
 
         List<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
 
@@ -147,6 +147,27 @@ public class HttpMessageSupportTest {
         Assert.assertEquals("Value1", parameter1.getValue());
 
         Assert.assertEquals("Parameter2", parameter2.getName());
+        Assert.assertEquals("Value2", parameter2.getValue());
+    }
+
+    @Test
+    public void testExtractParametersMultiple(){
+        final List<String> parameterNames = List.of("Parameter1");
+
+        final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
+        Mockito.when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(parameterNames));
+        Mockito.when(httpServletRequest.getParameterValues("Parameter1")).thenReturn(new String[]{"Value1", "Value2"});
+        List<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
+
+        Assert.assertEquals(2, parameters.size());
+
+        HttpParameter parameter1 = parameters.get(0);
+        HttpParameter parameter2 = parameters.get(1);
+
+        Assert.assertEquals("Parameter1", parameter1.getName());
+        Assert.assertEquals("Value1", parameter1.getValue());
+
+        Assert.assertEquals("Parameter1", parameter2.getName());
         Assert.assertEquals("Value2", parameter2.getValue());
     }
 

@@ -26,6 +26,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.util.stream.Collectors.toMap;
+
 /**
  * @author Karl Dahlgren
  * @since 1.8
@@ -50,18 +52,21 @@ public class UrlUtility {
         }
     }
 
-    public static Map<String, String> getPathParameters(final String pattern, final String path){
+    public static Map<String, Set<String>> getPathParameters(final String pattern, final String path){
         try {
             final PathPattern.PathMatchInfo matchInfo = getMatchInfo(pattern, path);
-            return matchInfo.getUriVariables();
+            return matchInfo.getUriVariables()
+                    .entrySet()
+                    .stream()
+                    .collect(toMap(Map.Entry::getKey, entry -> Set.of(entry.getValue())));
         } catch (Exception exception) {
             return Collections.emptyMap();
         }
     }
 
-    public static Map<String, String> getQueryStringParameters(final String uri,
-                                                               final Map<String, String> httpParameters) {
-        final HashMap<String, String> output = new HashMap<>();
+    public static Map<String, Set<String>> getQueryStringParameters(final String uri,
+                                                               final Map<String, Set<String>> httpParameters) {
+        final HashMap<String, Set<String>> output = new HashMap<>();
         if(uri.indexOf('?') > 0){
             final String queryString = uri.split("\\?")[1];
             final String[] queries = queryString.split("&");
@@ -77,9 +82,12 @@ public class UrlUtility {
                 final String queryValue = queryParts[1];
 
                 if(queryValue.startsWith("{") && queryValue.endsWith("}")){
-                    final String value = httpParameters.get(queryName);
-                    if(value != null){
-                        output.put(queryName, value);
+                    final Set<String> values = httpParameters.get(queryName);
+                    if(values != null){
+                        if(!output.containsKey(queryName)) {
+                            output.put(queryName, new HashSet<>());
+                        }
+                        values.forEach(value -> output.get(queryName).add(value));
                     }
                 }
             }

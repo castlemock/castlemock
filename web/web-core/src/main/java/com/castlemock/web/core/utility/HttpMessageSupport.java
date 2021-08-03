@@ -158,16 +158,18 @@ public class HttpMessageSupport {
      * @return A map with the extracted parameters
      */
     public static List<HttpParameter> extractParameters(final HttpServletRequest httpServletRequest){
-        final List<HttpParameter> httpParameters = new ArrayList<HttpParameter>();
+        final List<HttpParameter> httpParameters = new ArrayList<>();
 
         final Enumeration<String> enumeration = httpServletRequest.getParameterNames();
         while(enumeration.hasMoreElements()){
-            final HttpParameter httpParameter = new HttpParameter();
             final String parameterName = enumeration.nextElement();
-            final String parameterValue = httpServletRequest.getParameter(parameterName);
-            httpParameter.setName(parameterName);
-            httpParameter.setValue(parameterValue);
-            httpParameters.add(httpParameter);
+            final String[] parameterValues = httpServletRequest.getParameterValues(parameterName);
+            for(final String parameterValue : parameterValues){
+                httpParameters.add(HttpParameter.builder()
+                        .name(parameterName)
+                        .value(parameterValue)
+                        .build());
+            }
         }
         return httpParameters;
     }

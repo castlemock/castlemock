@@ -21,6 +21,7 @@ import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren
@@ -44,11 +45,11 @@ public final class IdentifyRestMethodOutput implements Output{
     private final RestMethod restMethod;
 
     @NotNull
-    private final Map<String, String> pathParameters;
+    private final Map<String, Set<String>> pathParameters;
 
     private IdentifyRestMethodOutput(final String restProjectId, final String restApplicationId,
                                     final String restResourceId, final String restMethodId,
-                                    final RestMethod restMethod, final Map<String, String> pathParameters) {
+                                    final RestMethod restMethod, final Map<String, Set<String>> pathParameters) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResourceId = restResourceId;
@@ -77,7 +78,7 @@ public final class IdentifyRestMethodOutput implements Output{
         return restMethodId;
     }
 
-    public Map<String, String> getPathParameters() {
+    public Map<String, Set<String>> getPathParameters() {
         return pathParameters;
     }
 
@@ -93,7 +94,7 @@ public final class IdentifyRestMethodOutput implements Output{
         private String restResourceId;
         private String restMethodId;
         private RestMethod restMethod;
-        private Map<String, String> pathParameters;
+        private Map<String, Set<String>> pathParameters;
 
         public Builder restProjectId(final String restProjectId){
             this.restProjectId = restProjectId;
@@ -120,7 +121,7 @@ public final class IdentifyRestMethodOutput implements Output{
             return this;
         }
 
-        public Builder pathParameters(final Map<String, String> pathParameters){
+        public Builder pathParameters(final Map<String, Set<String>> pathParameters){
             this.pathParameters = pathParameters;
             return this;
         }

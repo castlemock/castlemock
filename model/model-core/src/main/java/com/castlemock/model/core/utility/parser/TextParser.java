@@ -115,13 +115,11 @@ public class TextParser {
         return outputBuilder.toString();
     }
     
-    private void replaceExpressionByResult(final StringBuilder outputBuilder, final int indexOfStartExpression, final int indexOfEndExpression,
-            final Map<String, ExpressionArgument<?>> arguments) {
-        String expressionString = outputBuilder.substring(indexOfStartExpression, indexOfEndExpression + 1);
-        
-        ExpressionInput expressionInput = parseExpressionInput(expressionString, arguments);
-        
-        Expression expression = this.expressions.get(expressionInput.getName());
+    private void replaceExpressionByResult(final StringBuilder outputBuilder, final int indexOfStartExpression,
+                                           final int indexOfEndExpression, final Map<String, ExpressionArgument<?>> arguments) {
+        final String expressionString = outputBuilder.substring(indexOfStartExpression, indexOfEndExpression + 1);
+        final ExpressionInput expressionInput = parseExpressionInput(expressionString, arguments);
+        final Expression expression = this.expressions.get(expressionInput.getName());
         
         if (expression != null){
             String expressionResult = expression.transform(expressionInput);
@@ -131,8 +129,8 @@ public class TextParser {
         }
     }
     
-    private ExpressionInput parseExpressionInput(String expressionString, final Map<String, ExpressionArgument<?>> arguments) {
-        ExpressionInput expressionInput = ExpressionInputParser.parse(expressionString);
+    private ExpressionInput parseExpressionInput(final String expressionString, final Map<String, ExpressionArgument<?>> arguments) {
+        final ExpressionInput expressionInput = ExpressionInputParser.parse(expressionString);
         
         if(arguments != null){
             for(Map.Entry<String, ExpressionArgument<?>> argumentEntry : arguments.entrySet()){

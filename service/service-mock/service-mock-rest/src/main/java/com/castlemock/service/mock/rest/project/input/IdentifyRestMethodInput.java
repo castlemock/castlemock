@@ -37,8 +37,8 @@ public final class IdentifyRestMethodInput implements Input {
     private final String restResourceUri;
     @NotNull
     private final HttpMethod httpMethod;
-
-    private Map<String, String> httpParameters;
+    @NotNull
+    private final Map<String, Set<String>> httpParameters;
 
     private IdentifyRestMethodInput(final Builder builder) {
         this.restProjectId = Objects.requireNonNull(builder.restProjectId);
@@ -48,10 +48,14 @@ public final class IdentifyRestMethodInput implements Input {
         this.httpParameters = builder.httpParameters != null ? convert(builder.httpParameters) : Collections.emptyMap();
     }
 
-    private static Map<String, String> convert(List<HttpParameter> httpParameters) {
-        Map<String, String> out = new HashMap<>();
+    private static Map<String, Set<String>> convert(List<HttpParameter> httpParameters) {
+        Map<String, Set<String>> out = new HashMap<>();
         for(HttpParameter httpParam:httpParameters){
-            out.put(httpParam.getName(), httpParam.getValue());
+            if(!out.containsKey(httpParam.getName())){
+                out.put(httpParam.getName(), new HashSet<>());
+            }
+
+            out.get(httpParam.getName()).add(httpParam.getValue());
         }
         return out;
     }
@@ -72,7 +76,7 @@ public final class IdentifyRestMethodInput implements Input {
         return httpMethod;
     }
 
-    public Map<String, String> getHttpParameters(){ return httpParameters; }
+    public Map<String, Set<String>> getHttpParameters(){ return httpParameters; }
 
     public static Builder builder(){
         return new Builder();

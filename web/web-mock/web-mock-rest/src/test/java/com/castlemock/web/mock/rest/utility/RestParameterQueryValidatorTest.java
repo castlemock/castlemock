@@ -17,12 +17,11 @@
 package com.castlemock.web.mock.rest.utility;
 
 import com.castlemock.model.mock.rest.domain.RestParameterQuery;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -39,13 +38,23 @@ public class RestParameterQueryValidatorTest {
         parameterQuery2.setQuery("SE");
 
         final List<RestParameterQuery> parameterQueries =
-                ImmutableList.of(parameterQuery1, parameterQuery2);
+                List.of(parameterQuery1, parameterQuery2);
 
-        final Map<String, String> pathParameters =
-                ImmutableMap.of("userId", "123", "country", "SE");
-
+        final Map<String, Set<String>> pathParameters = Map.of("userId", Set.of("123"), "country", Set.of("SE"));
         final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
 
+        assertTrue(result);
+    }
+
+    @Test
+    public void canValidateMatchMultipleValues(){
+        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
+        parameterQuery1.setParameter("userId");
+        parameterQuery1.setQuery("123");
+
+        final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
+        final Map<String, Set<String>> pathParameters = Map.of("userId", Set.of("123", "456"));
+        final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
         assertTrue(result);
     }
 
@@ -59,10 +68,9 @@ public class RestParameterQueryValidatorTest {
         parameterQuery2.setQuery("SE");
 
         final List<RestParameterQuery> parameterQueries =
-                ImmutableList.of(parameterQuery1, parameterQuery2);
+                List.of(parameterQuery1, parameterQuery2);
 
-        final Map<String, String> pathParameters =
-                ImmutableMap.of("userId", "123", "country", "SE");
+        final Map<String, Set<String>> pathParameters = Map.of("userId", Set.of("123"), "country", Set.of("SE"));
 
         final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
 
@@ -75,13 +83,10 @@ public class RestParameterQueryValidatorTest {
         parameterQuery1.setParameter("userId");
         parameterQuery1.setQuery("123");
 
-        final List<RestParameterQuery> parameterQueries = ImmutableList.of(parameterQuery1);
+        final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
-        final Map<String, String> pathParameters =
-                ImmutableMap.of("userId", "123", "country", "SE");
-
+        final Map<String, Set<String>> pathParameters = Map.of("userId", Set.of("123"), "country", Set.of("SE"));
         final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
-
         assertFalse(result);
     }
 
@@ -97,12 +102,9 @@ public class RestParameterQueryValidatorTest {
         parameterQuery3.setParameter("country");
         parameterQuery3.setQuery("NO");
 
-        final List<RestParameterQuery> parameterQueries =
-                ImmutableList.of(parameterQuery1, parameterQuery2, parameterQuery3);
+        final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1, parameterQuery2, parameterQuery3);
 
-        final Map<String, String> pathParameters =
-                ImmutableMap.of("userId", "123", "country", "SE");
-
+        final Map<String, Set<String>> pathParameters = Map.of("userId", Set.of("123"), "country", Set.of("SE"));
         final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
 
         assertTrue(result);
@@ -115,10 +117,9 @@ public class RestParameterQueryValidatorTest {
         parameterQuery1.setQuery("karl");
         parameterQuery1.setMatchCase(false);
 
-        final List<RestParameterQuery> parameterQueries = ImmutableList.of(parameterQuery1);
+        final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
-        final Map<String, String> pathParameters =
-                ImmutableMap.of("username", "kArL");
+        final Map<String, Set<String>> pathParameters = Map.of("username", Set.of("kArL"));
 
         final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
 
@@ -132,10 +133,9 @@ public class RestParameterQueryValidatorTest {
         parameterQuery1.setQuery("karl");
         parameterQuery1.setMatchCase(true);
 
-        final List<RestParameterQuery> parameterQueries = ImmutableList.of(parameterQuery1);
+        final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
-        final Map<String, String> pathParameters =
-                ImmutableMap.of("username", "kArL");
+        final Map<String, Set<String>> pathParameters = Map.of("username", Set.of("kArL"));
 
         final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
 
@@ -148,10 +148,9 @@ public class RestParameterQueryValidatorTest {
         parameterQuery1.setParameter("username");
         parameterQuery1.setMatchAny(true);
 
-        final List<RestParameterQuery> parameterQueries = ImmutableList.of(parameterQuery1);
+        final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
-        final Map<String, String> pathParameters =
-                ImmutableMap.of("username", "username");
+        final Map<String, Set<String>> pathParameters = Map.of("username", Set.of("username"));
 
         final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
 
@@ -166,10 +165,10 @@ public class RestParameterQueryValidatorTest {
         parameterQuery1.setMatchRegex(true);
         parameterQuery1.setMatchCase(true);
 
-        final List<RestParameterQuery> parameterQueries = ImmutableList.of(parameterQuery1);
+        final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
-        assertTrue(RestParameterQueryValidator.validate(parameterQueries, ImmutableMap.of("username", "aaaaab")));
-        assertFalse(RestParameterQueryValidator.validate(parameterQueries, ImmutableMap.of("username", "AAAAB")));
+        assertTrue(RestParameterQueryValidator.validate(parameterQueries, Map.of("username", Set.of("aaaaab"))));
+        assertFalse(RestParameterQueryValidator.validate(parameterQueries, Map.of("username", Set.of("AAAAB"))));
     }
 
     @Test
@@ -180,10 +179,10 @@ public class RestParameterQueryValidatorTest {
         parameterQuery1.setMatchRegex(true);
         parameterQuery1.setMatchCase(false);
 
-        final List<RestParameterQuery> parameterQueries = ImmutableList.of(parameterQuery1);
+        final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
-        assertTrue(RestParameterQueryValidator.validate(parameterQueries, ImmutableMap.of("username", "aaaaab")));
-        assertTrue(RestParameterQueryValidator.validate(parameterQueries, ImmutableMap.of("username", "AAAAB")));
+        assertTrue(RestParameterQueryValidator.validate(parameterQueries, Map.of("username", Set.of("aaaaab"))));
+        assertTrue(RestParameterQueryValidator.validate(parameterQueries, Map.of("username", Set.of("AAAAB"))));
     }
 
 }

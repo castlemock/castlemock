@@ -32,20 +32,17 @@ public final class RestParameterQueryValidator {
     }
 
     public static boolean validate(final List<RestParameterQuery> parameterQueries,
-                                   final Map<String, String> pathParameters){
-
-        for(Map.Entry<String, String> pathParameterEntry : pathParameters.entrySet()){
-
-            String pathParameter = pathParameterEntry.getKey();
-            String pathQuery = pathParameterEntry.getValue();
-
-
-            final Set<RestParameterQuery> matching = parameterQueries.stream()
-                    .filter(parameterQuery -> parameterQuery.getParameter().equals(pathParameter))
-                    .filter(parameterQuery -> validate(pathQuery, parameterQuery))
+                                   final Map<String, Set<String>> pathParameters){
+        for(Map.Entry<String, Set<String>> pathParameterEntry : pathParameters.entrySet()){
+            final String pathParameter = pathParameterEntry.getKey();
+            final Set<RestParameterQuery> matching = pathParameterEntry.getValue()
+                    .stream()
+                    .flatMap(pathQuery -> parameterQueries.stream()
+                            .filter(parameterQuery -> parameterQuery.getParameter().equals(pathParameter))
+                            .filter(parameterQuery -> validate(pathQuery, parameterQuery)))
                     .collect(Collectors.toSet());
 
-            if(matching.isEmpty()){
+            if (matching.isEmpty()) {
                 return false;
             }
         }

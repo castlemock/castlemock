@@ -15,15 +15,6 @@
  */
 package com.castlemock.model.core.utility.parser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import com.castlemock.model.core.http.HttpParameter;
 import com.castlemock.model.core.utility.parser.expression.BodyXPathExpression;
 import com.castlemock.model.core.utility.parser.expression.PathParameterExpression;
@@ -31,17 +22,26 @@ import com.castlemock.model.core.utility.parser.expression.QueryStringExpression
 import com.castlemock.model.core.utility.parser.expression.UrlHostExpression;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 class ExternalInputBuilderTest {
-	private static Map<String, String> pathParameters;
+	private static Map<String, Set<String>> pathParameters;
 	private static List<HttpParameter> queryStringParameters;
 	
 	@BeforeAll
 	static void initAll() {
 		pathParameters = new HashMap<>();
-    	pathParameters.put("param1", "X");
-    	pathParameters.put("param2", "Y");
-    	pathParameters.put("param3", "Z");
+    	pathParameters.put("param1", Set.of("X"));
+    	pathParameters.put("param2", Set.of("Y"));
+    	pathParameters.put("param3", Set.of("Z"));
 
     	queryStringParameters = new ArrayList<>();
     	queryStringParameters.add(new HttpParameter("queryParam1", "Apple"));
@@ -52,7 +52,9 @@ class ExternalInputBuilderTest {
 	
 	@Test
 	void testPathParameters() {
-    	final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder().pathParameters(pathParameters).build();
+    	final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
+				.pathParameters(pathParameters)
+				.build();
     	
     	Assertions.assertTrue(externalInput.containsKey(PathParameterExpression.PATH_PARAMETERS));
     	@SuppressWarnings("unchecked")

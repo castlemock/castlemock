@@ -74,6 +74,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -136,7 +137,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
             return process(restRequest, projectId, applicationId, resourceId,
                     output.getRestMethod(), output.getPathParameters(),
-                    httpServletRequest, httpServletResponse);
+                    httpServletRequest);
         } catch (Exception exception) {
             LOGGER.error("REST service exception: " + exception.getMessage(), exception);
             throw new RestException(exception.getMessage());
@@ -183,7 +184,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @param applicationId       The id of the application that the incoming request belongs to
      * @param resourceId          The id of the resource that the incoming request belongs to
      * @param restMethod          The REST method which the incoming request belongs to
-     * @param httpServletResponse The HTTP servlet response
      * @return A response in String format
      */
     protected ResponseEntity<String> process(final RestRequest restRequest,
@@ -191,9 +191,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                              final String applicationId,
                                              final String resourceId,
                                              final RestMethod restMethod,
-                                             final Map<String, String> pathParameters,
-                                             final HttpServletRequest httpServletRequest,
-                                             final HttpServletResponse httpServletResponse) {
+                                             final Map<String, Set<String>> pathParameters,
+                                             final HttpServletRequest httpServletRequest) {
         Preconditions.checkNotNull(restRequest, "Rest request cannot be null");
         RestEvent event = null;
         RestResponse response = null;
@@ -256,7 +255,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                         final String applicationId,
                                         final String resourceId,
                                         final RestMethod restMethod,
-                                        final Map<String, String> pathParameters,
+                                        final Map<String, Set<String>> pathParameters,
                                         final HttpServletRequest httpServletRequest) {
         if (demoMode) {
             // If the application is configured to run in demo mode, then use mocked response instead
@@ -319,7 +318,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                                          final String applicationId,
                                                          final String resourceId,
                                                          final RestMethod restMethod,
-                                                         final Map<String, String> pathParameters,
+                                                         final Map<String, Set<String>> pathParameters,
                                                          final HttpServletRequest httpServletRequest) {
         final RestResponse response = forwardRequest(restRequest, projectId, applicationId, resourceId,
                 restMethod, pathParameters, httpServletRequest);
@@ -356,7 +355,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                                              final String applicationId,
                                                              final String resourceId,
                                                              final RestMethod restMethod,
-                                                             final Map<String, String> pathParameters,
+                                                             final Map<String, Set<String>> pathParameters,
                                                              final HttpServletRequest httpServletRequest) {
         final RestResponse response =
                 forwardRequestAndRecordResponse(restRequest, projectId,
@@ -406,7 +405,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                         final String applicationId,
                                         final String resourceId,
                                         final RestMethod restMethod,
-                                        final Map<String, String> pathParameters,
+                                        final Map<String, Set<String>> pathParameters,
                                         final HttpServletRequest httpServletRequest) {
         // Extract the accept header value.
         final Collection<String> acceptHeaderValues = getHeaderValues(ACCEPT_HEADER, restRequest.getHttpHeaders());

@@ -33,8 +33,8 @@ import com.castlemock.model.mock.rest.domain.RestXPathExpression;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.core.controller.AbstractController;
-import com.castlemock.web.mock.rest.web.AbstractControllerTest;
 import com.castlemock.web.mock.rest.controller.mock.RestServiceController;
+import com.castlemock.web.mock.rest.web.AbstractControllerTest;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,6 +58,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -82,8 +83,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private static final String APPLICATION_JSON = "application/json";
     private static final String CONTENT_TYPE_HEADER = "Content-type";
     private static final String ACCEPT_HEADER = "Accept";
-    private static final Map<String, String> PATH_PARAMETERS = ImmutableMap.of("Path", "Value");
-    private static final Map<String, String> NO_MATCHING_PATH_PARAMETERS = ImmutableMap.of("Path", "OtherValue");
+    private static final Map<String, Set<String>> PATH_PARAMETERS = ImmutableMap.of("Path", Set.of("Value"));
+    private static final Map<String, Set<String>> NO_MATCHING_PATH_PARAMETERS = ImmutableMap.of("Path", Set.of("OtherValue"));
 
 
     private static final String XML_REQUEST_BODY = "<request>\n" +

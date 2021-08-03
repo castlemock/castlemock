@@ -16,6 +16,12 @@
 
 package com.castlemock.model.core.utility.parser;
 
+import com.castlemock.model.core.http.HttpParameter;
+import com.google.common.io.Resources;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -23,13 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import com.castlemock.model.core.http.HttpParameter;
-import com.google.common.io.Resources;
+import java.util.Set;
 
 
 /**
@@ -158,19 +158,30 @@ public class TextParserTest {
     }
     
     @Test
-    public void testParsePathParameter() throws IOException{
-        final Map<String, String> pathParameters = new HashMap<>();
-        pathParameters.put("param1", "X");
-        pathParameters.put("param2", "Y");
-        pathParameters.put("param3", "Z");
+    public void testParsePathParameter() {
+        final Map<String, Set<String>> pathParameters = new HashMap<>();
+        pathParameters.put("param1", Set.of("X"));
+        pathParameters.put("param2", Set.of("Y"));
+        pathParameters.put("param3", Set.of("Z"));
         
         String input = "a: ${PATH_PARAMETER(parameter=\"param1\")}, b: ${PATH_PARAMETER(parameter=\"param2\")}.";
         String output = textParser.parse(input, new ExternalInputBuilder().pathParameters(pathParameters).build());
         Assertions.assertEquals("a: X, b: Y.", output);
     }
-    
+
     @Test
-    public void testParseQueryString() throws IOException{
+    public void testParsePathParameterMultipleValues() {
+        final Map<String, Set<String>> pathParameters = new HashMap<>();
+        pathParameters.put("param1", Set.of("X", "Y"));
+
+        String input = "${PATH_PARAMETER(parameter=\"param1\")}";
+        String output = textParser.parse(input, new ExternalInputBuilder().pathParameters(pathParameters).build());
+        Assertions.assertEquals("X", output);
+    }
+
+
+    @Test
+    public void testParseQueryString() {
         final List<HttpParameter> queryStringParameters = new ArrayList<>();
         queryStringParameters.add(new HttpParameter("queryParam1", "Apple"));
         queryStringParameters.add(new HttpParameter("queryParam2", "Orange"));

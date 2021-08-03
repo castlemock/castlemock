@@ -22,15 +22,16 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.model.mock.rest.domain.RestResource;
+import com.castlemock.service.core.utility.UrlUtility;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
-import com.castlemock.service.core.utility.UrlUtility;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.toMap;
@@ -75,7 +76,7 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
         final RestResource resource = Optional.ofNullable(resources.get(method.getResourceId()))
                 .orElseThrow(() -> new IllegalArgumentException("Unable to get REST resource: " + method.getResourceId()));
 
-        final Map<String, String> pathParameters = new HashMap<>();
+        final Map<String, Set<String>> pathParameters = new HashMap<>();
         pathParameters.putAll(UrlUtility.getPathParameters(resource.getUri(), input.getRestResourceUri()));
         pathParameters.putAll(UrlUtility.getQueryStringParameters(resource.getUri(), input.getHttpParameters()));
 

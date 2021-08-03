@@ -18,6 +18,7 @@ package com.castlemock.model.core.http;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -38,6 +39,11 @@ public class HttpParameter {
         this.value = value;
     }
 
+    public HttpParameter(final Builder builder) {
+        this.name = Objects.requireNonNull(builder.name);
+        this.value = Objects.requireNonNull(builder.value);
+    }
+
     @XmlElement
     public String getName() {
         return name;
@@ -54,5 +60,52 @@ public class HttpParameter {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HttpParameter that = (HttpParameter) o;
+        return Objects.equals(name, that.name) && Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value);
+    }
+
+    @Override
+    public String toString() {
+        return "HttpParameter{" +
+                "name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String name;
+        private String value;
+
+        private Builder() {
+        }
+
+        public Builder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder value(final String value) {
+            this.value = value;
+            return this;
+        }
+
+        public HttpParameter build() {
+            return new HttpParameter(this);
+        }
     }
 }

@@ -17,6 +17,7 @@
 package com.castlemock.model.core.utility.parser.expression;
 
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
+import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentArray;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentMap;
 
 /**
@@ -51,13 +52,18 @@ public class PathParameterExpression extends AbstractExpression {
 
         final ExpressionArgumentMap parametersMap = (ExpressionArgumentMap) parametersArgument;
         final Object key = parameterIdentifierArgument.getValue();
-        final ExpressionArgument<?> result = parametersMap.getArgument(key);
+        final ExpressionArgumentArray result = (ExpressionArgumentArray) parametersMap.getArgument(key);
 
         if(result == null){
             return MISSING_PATH_PARAMETER;
         }
 
-        return result.getValue().toString();
+        return result.getValue().stream()
+                .map(ExpressionArgument::getValue)
+                .map(Object::toString)
+                .sorted()
+                .findFirst()
+                .orElse(MISSING_PATH_PARAMETER);
     }
 
     /**

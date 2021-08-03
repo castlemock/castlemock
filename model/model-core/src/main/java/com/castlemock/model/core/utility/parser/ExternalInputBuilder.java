@@ -15,23 +15,25 @@
  */
 package com.castlemock.model.core.utility.parser;
 
-import java.util.List;
-import java.util.Map;
-
 import com.castlemock.model.core.http.HttpParameter;
 import com.castlemock.model.core.utility.parser.expression.BodyXPathExpression;
 import com.castlemock.model.core.utility.parser.expression.PathParameterExpression;
 import com.castlemock.model.core.utility.parser.expression.QueryStringExpression;
 import com.castlemock.model.core.utility.parser.expression.UrlHostExpression;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
+import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentArray;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentMap;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
 import com.google.common.collect.ImmutableMap;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class ExternalInputBuilder {
 	private String requestBody;
 	private String requestUrl;
-	private Map<String, String> pathParameters;
+	private Map<String, Set<String>> pathParameters;
 	private List<HttpParameter> queryStringParameters;
 	
 	public ExternalInputBuilder requestBody(final String requestBody) {
@@ -44,7 +46,7 @@ public class ExternalInputBuilder {
 		return this;
 	}
 	
-	public ExternalInputBuilder pathParameters(final Map<String, String> pathParameters) {
+	public ExternalInputBuilder pathParameters(final Map<String, Set<String>> pathParameters) {
 		this.pathParameters= pathParameters;
 		return this;
 	}
@@ -71,20 +73,20 @@ public class ExternalInputBuilder {
 			immutableMapBuilder.put(QueryStringExpression.QUERY_STRINGS, buildQueryStringArgument());
 		}
 		
-		final Map<String, ExpressionArgument<?>> externalInput = immutableMapBuilder.build();
-		return externalInput;
+		return immutableMapBuilder.build();
 	}
 	
 	private ExpressionArgumentMap buildPathParametersArgument() {
 		final ExpressionArgumentMap pathParametersArgument = new ExpressionArgumentMap();
-        this.pathParameters.forEach((key, value) -> {
-            ExpressionArgument<?> pathParameterArgument = new ExpressionArgumentString(value);
+        this.pathParameters.forEach((key, values) -> {
+			final ExpressionArgumentArray pathParameterArgument = new ExpressionArgumentArray();
+			values.forEach(value -> pathParameterArgument.addArgument(new ExpressionArgumentString(value)));
             pathParametersArgument.addArgument(key, pathParameterArgument);
         });
         return pathParametersArgument;
 	}
 	
-	private final ExpressionArgumentMap buildQueryStringArgument() {
+	private ExpressionArgumentMap buildQueryStringArgument() {
 		final ExpressionArgumentMap queryStringArgument = new ExpressionArgumentMap();
         this.queryStringParameters.forEach(parameter -> {
             ExpressionArgument<?> pathParameterArgument = new ExpressionArgumentString(parameter.getValue());
