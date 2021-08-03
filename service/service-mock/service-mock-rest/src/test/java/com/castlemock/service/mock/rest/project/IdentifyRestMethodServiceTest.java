@@ -24,12 +24,11 @@ import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodTestBuilder;
 import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.model.mock.rest.domain.RestResourceTestBuilder;
-import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
-import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
-import com.google.common.collect.ImmutableList;
+import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
+import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +40,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -82,7 +82,7 @@ public class IdentifyRestMethodServiceTest {
         final RestResource restResource1 = RestResourceTestBuilder.builder()
                 .id("Resource1")
                 .uri("/user")
-                .methods(ImmutableList.of(restMethod1, restMethod2, restMethod3))
+                .methods(List.of(restMethod1, restMethod2, restMethod3))
                 .build();
 
 
@@ -97,7 +97,7 @@ public class IdentifyRestMethodServiceTest {
         final RestResource restResource2 = RestResourceTestBuilder.builder()
                 .id("Resource2")
                 .uri("/user/resource")
-                .methods(ImmutableList.of(restMethod4, restMethod5))
+                .methods(List.of(restMethod4, restMethod5))
                 .build();
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId"))
@@ -164,7 +164,7 @@ public class IdentifyRestMethodServiceTest {
         final RestResource restResource1 = RestResourceTestBuilder.builder()
                 .id("Resource1")
                 .uri("/user")
-                .methods(ImmutableList.of(restMethod1, restMethod2, restMethod3))
+                .methods(List.of(restMethod1, restMethod2, restMethod3))
                 .build();
 
         final RestMethod restMethod4 = RestMethodTestBuilder.builder()
@@ -179,7 +179,7 @@ public class IdentifyRestMethodServiceTest {
         final RestResource restResource2 = RestResourceTestBuilder.builder()
                 .id("Resource2")
                 .uri("/user/resource")
-                .methods(ImmutableList.of(restMethod4, restMethod5))
+                .methods(List.of(restMethod4, restMethod5))
                 .build();
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2));
@@ -216,7 +216,7 @@ public class IdentifyRestMethodServiceTest {
         final RestResource restResource1 = RestResourceTestBuilder.builder()
                 .id("Resource1")
                 .uri("/user")
-                .methods(ImmutableList.of(restMethod1, restMethod2, restMethod3))
+                .methods(List.of(restMethod1, restMethod2, restMethod3))
                 .build();
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1));
@@ -364,7 +364,7 @@ public class IdentifyRestMethodServiceTest {
         final RestResource restResource1 = RestResourceTestBuilder.builder()
                 .id("Resource1")
                 .uri("/user/{userId}")
-                .methods(ImmutableList.of(restMethod1))
+                .methods(List.of(restMethod1))
                 .build();
 
         final RestMethod restMethod2 = RestMethodTestBuilder.builder()
@@ -374,7 +374,7 @@ public class IdentifyRestMethodServiceTest {
         final RestResource restResource2 = RestResourceTestBuilder.builder()
                 .id("Resource2")
                 .uri("/user/search")
-                .methods(ImmutableList.of(restMethod1))
+                .methods(List.of(restMethod1))
                 .build();
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2));

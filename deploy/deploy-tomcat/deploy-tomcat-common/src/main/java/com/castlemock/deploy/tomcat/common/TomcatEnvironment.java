@@ -18,9 +18,9 @@ package com.castlemock.deploy.tomcat.common;
 
 import com.castlemock.model.core.Environment;
 import org.apache.catalina.util.ServerInfo;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

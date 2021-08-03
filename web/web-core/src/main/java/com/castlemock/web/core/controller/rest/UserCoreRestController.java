@@ -18,7 +18,11 @@ package com.castlemock.web.core.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.user.User;
-import com.castlemock.service.core.user.input.*;
+import com.castlemock.service.core.user.input.CreateUserInput;
+import com.castlemock.service.core.user.input.DeleteUserInput;
+import com.castlemock.service.core.user.input.ReadAllUsersInput;
+import com.castlemock.service.core.user.input.ReadUserInput;
+import com.castlemock.service.core.user.input.UpdateUserInput;
 import com.castlemock.service.core.user.output.CreateUserOutput;
 import com.castlemock.service.core.user.output.ReadAllUsersOutput;
 import com.castlemock.service.core.user.output.ReadUserOutput;
@@ -31,7 +35,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 

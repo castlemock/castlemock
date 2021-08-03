@@ -18,7 +18,6 @@ package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestParameterQuery;
-import com.google.common.collect.ImmutableSet;
 
 import java.util.Set;
 
@@ -27,7 +26,7 @@ public final class ReadRestResourceQueryParametersOutput implements Output {
     private final Set<RestParameterQuery> queries;
 
     private ReadRestResourceQueryParametersOutput(final Builder builder){
-        this.queries = ImmutableSet.copyOf(builder.queries);
+        this.queries = Set.copyOf(builder.queries);
     }
 
     public Set<RestParameterQuery> getQueries() {

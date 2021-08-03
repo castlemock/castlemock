@@ -16,7 +16,12 @@
 
 package com.castlemock.deploy.tomcat.jar.config;
 
-import com.castlemock.app.config.*;
+import com.castlemock.app.config.Application;
+import com.castlemock.app.config.MockSecurityConfig;
+import com.castlemock.app.config.MvcConfig;
+import com.castlemock.app.config.PropertyConfig;
+import com.castlemock.app.config.RestSecurityConfig;
+import com.castlemock.app.config.SecurityConfig;
 import com.castlemock.deploy.tomcat.common.TomcatConfig;
 import org.apache.tomcat.JarScanner;
 import org.apache.tomcat.util.scan.StandardJarScanner;

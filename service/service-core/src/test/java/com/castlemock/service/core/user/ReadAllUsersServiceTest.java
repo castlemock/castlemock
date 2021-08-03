@@ -20,10 +20,9 @@ import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.core.user.User;
 import com.castlemock.model.core.user.UserTestBuilder;
+import com.castlemock.repository.user.UserRepository;
 import com.castlemock.service.core.user.input.ReadAllUsersInput;
 import com.castlemock.service.core.user.output.ReadAllUsersOutput;
-import com.castlemock.repository.user.UserRepository;
-import com.google.common.collect.ImmutableList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,7 +53,7 @@ public class ReadAllUsersServiceTest {
     @Test
     public void testProcess(){
         final User user = UserTestBuilder.builder().build();
-        final List<User> users = ImmutableList.of(user);
+        final List<User> users = List.of(user);
 
 
         Mockito.when(repository.findAll()).thenReturn(users);

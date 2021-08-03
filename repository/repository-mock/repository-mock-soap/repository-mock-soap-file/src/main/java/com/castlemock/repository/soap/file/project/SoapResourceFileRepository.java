@@ -29,9 +29,9 @@ import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.soap.project.SoapResourceRepository;
 import com.google.common.base.Preconditions;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import org.dozer.Mapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -40,7 +40,11 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 @Repository
 @Profile(Profiles.FILE)

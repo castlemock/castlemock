@@ -1,16 +1,15 @@
 package com.castlemock.model.core.utility.parser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-
-import org.junit.Test;
-
 import com.castlemock.model.core.utility.parser.expression.ExpressionInput;
 import com.castlemock.model.core.utility.parser.expression.FakerExpression;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
+import org.junit.Test;
+
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class FakerExpressionTest {
 

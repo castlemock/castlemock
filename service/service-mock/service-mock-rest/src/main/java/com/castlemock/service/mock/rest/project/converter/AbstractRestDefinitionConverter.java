@@ -18,8 +18,8 @@
 package com.castlemock.service.mock.rest.project.converter;
 
 
-import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
+import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 
 /**
  * @author Karl Dahlgren

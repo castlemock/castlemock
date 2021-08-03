@@ -17,7 +17,14 @@
 package com.castlemock.service.mock.soap.project.converter;
 
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
-import com.castlemock.service.mock.soap.project.converter.types.*;
+import com.castlemock.service.mock.soap.project.converter.types.BindingOperation;
+import com.castlemock.service.mock.soap.project.converter.types.BindingOperationInput;
+import com.castlemock.service.mock.soap.project.converter.types.BindingOperationInputBody;
+import com.castlemock.service.mock.soap.project.converter.types.BindingOperationOutput;
+import com.castlemock.service.mock.soap.project.converter.types.BindingOperationOutputBody;
+import com.castlemock.service.mock.soap.project.converter.types.Message;
+import com.castlemock.service.mock.soap.project.converter.types.MessagePart;
+import com.castlemock.service.mock.soap.project.converter.types.Namespace;
 
 import java.util.Optional;
 import java.util.Set;

@@ -25,15 +25,15 @@ import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.model.mock.soap.domain.SoapEvent;
-import com.castlemock.model.mock.soap.domain.SoapRequest;
-import com.castlemock.model.mock.soap.domain.SoapResponse;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
 import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import com.castlemock.model.mock.soap.domain.SoapProject;
+import com.castlemock.model.mock.soap.domain.SoapRequest;
 import com.castlemock.model.mock.soap.domain.SoapResourceType;
+import com.castlemock.model.mock.soap.domain.SoapResponse;
 import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
 import com.castlemock.model.mock.soap.domain.SoapVersion;
 import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
@@ -47,16 +47,15 @@ import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationsStatus
 import com.castlemock.service.mock.soap.project.output.IdentifySoapOperationOutput;
 import com.castlemock.service.mock.soap.project.output.LoadSoapResourceOutput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapProjectOutput;
+import com.castlemock.service.mock.soap.utility.SoapUtility;
+import com.castlemock.web.core.controller.AbstractController;
 import com.castlemock.web.core.utility.CharsetUtility;
 import com.castlemock.web.core.utility.HttpMessageSupport;
-import com.castlemock.web.core.controller.AbstractController;
 import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.utility.MtomUtility;
-import com.castlemock.service.mock.soap.utility.SoapUtility;
 import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparator;
 import com.castlemock.web.mock.soap.utility.config.AddressLocationConfigurer;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -157,7 +156,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
                     wsdl = new AddressLocationConfigurer().configureAddressLocation(wsdl, httpServletRequest.getRequestURL().toString());
 
                     final HttpHeaders responseHeaders = new HttpHeaders();
-                    responseHeaders.put(CONTENT_TYPE, ImmutableList.of("text/xml; " + DEFAULT_CHAR_SET));
+                    responseHeaders.put(CONTENT_TYPE, List.of("text/xml; " + DEFAULT_CHAR_SET));
 
                     return new ResponseEntity<String>(wsdl, responseHeaders, HttpStatus.OK);
                 }
@@ -271,9 +270,9 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
             final HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.put(CONTENT_TYPE,
-                    ImmutableList.of(request.getSoapVersion().getContextType() + "; " + DEFAULT_CHAR_SET));
+                    List.of(request.getSoapVersion().getContextType() + "; " + DEFAULT_CHAR_SET));
             for(HttpHeader httpHeader : response.getHttpHeaders()){
-                responseHeaders.put(httpHeader.getName(), ImmutableList.of(httpHeader.getValue()));
+                responseHeaders.put(httpHeader.getName(), List.of(httpHeader.getValue()));
             }
 
             response.getHttpHeaders()
@@ -314,7 +313,7 @@ public abstract class AbstractSoapServiceController extends AbstractController{
      * @since 1.14
      */
     private SoapResponse echoResponse(final SoapRequest request) {
-        final List<HttpHeader> headers = ImmutableList.of(HttpHeader.builder()
+        final List<HttpHeader> headers = List.of(HttpHeader.builder()
                 .name(CONTENT_TYPE)
                 .value(request.getContentType())
                 .build());

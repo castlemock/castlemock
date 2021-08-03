@@ -25,7 +25,6 @@ import com.castlemock.service.core.user.input.ReadUserInput;
 import com.castlemock.service.core.user.output.ReadUserOutput;
 import com.castlemock.web.core.config.JWTEncoderDecoder;
 import com.castlemock.web.core.controller.AbstractController;
-import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +48,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -133,7 +133,7 @@ public class SecurityInterceptor implements HandlerInterceptor, Filter {
             response.sendRedirect(request.getContextPath());
             return false;
         } else {
-            final UserDetails userDetails = new org.springframework.security.core.userdetails.User(loggedInUser.getUsername(), loggedInUser.getPassword(), ImmutableList.of(new SimpleGrantedAuthority(loggedInUser.getRole().name())));
+            final UserDetails userDetails = new org.springframework.security.core.userdetails.User(loggedInUser.getUsername(), loggedInUser.getPassword(), List.of(new SimpleGrantedAuthority(loggedInUser.getRole().name())));
             final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, loggedInUser.getPassword(), userDetails.getAuthorities());
             usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

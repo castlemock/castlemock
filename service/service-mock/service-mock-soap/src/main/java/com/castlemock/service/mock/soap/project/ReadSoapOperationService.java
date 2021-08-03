@@ -23,8 +23,8 @@ import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.service.mock.soap.project.input.ReadSoapOperationInput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapOperationOutput;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 

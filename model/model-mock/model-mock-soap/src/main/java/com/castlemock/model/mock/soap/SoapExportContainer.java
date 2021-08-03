@@ -17,7 +17,11 @@
 package com.castlemock.model.mock.soap;
 
 import com.castlemock.model.core.ExportContainer;
-import com.castlemock.model.mock.soap.domain.*;
+import com.castlemock.model.mock.soap.domain.SoapMockResponse;
+import com.castlemock.model.mock.soap.domain.SoapOperation;
+import com.castlemock.model.mock.soap.domain.SoapPort;
+import com.castlemock.model.mock.soap.domain.SoapProject;
+import com.castlemock.model.mock.soap.domain.SoapResource;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;

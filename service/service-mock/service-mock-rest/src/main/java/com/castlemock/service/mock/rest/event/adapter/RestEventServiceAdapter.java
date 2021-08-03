@@ -21,12 +21,12 @@ import com.castlemock.model.core.TypeIdentifier;
 import com.castlemock.model.core.event.Event;
 import com.castlemock.model.core.service.event.EventServiceAdapter;
 import com.castlemock.model.mock.rest.domain.RestEvent;
+import com.castlemock.service.mock.rest.RestTypeIdentifier;
 import com.castlemock.service.mock.rest.event.input.ClearAllRestEventInput;
 import com.castlemock.service.mock.rest.event.input.ReadAllRestEventInput;
 import com.castlemock.service.mock.rest.event.input.ReadRestEventInput;
 import com.castlemock.service.mock.rest.event.output.ReadAllRestEventOutput;
 import com.castlemock.service.mock.rest.event.output.ReadRestEventOutput;
-import com.castlemock.service.mock.rest.RestTypeIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

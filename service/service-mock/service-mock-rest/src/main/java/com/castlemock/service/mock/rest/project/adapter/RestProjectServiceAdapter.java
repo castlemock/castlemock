@@ -23,6 +23,7 @@ import com.castlemock.model.core.TypeIdentifier;
 import com.castlemock.model.core.project.Project;
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
 import com.castlemock.model.mock.rest.domain.RestProject;
+import com.castlemock.service.mock.rest.RestTypeIdentifier;
 import com.castlemock.service.mock.rest.project.input.CreateRestProjectInput;
 import com.castlemock.service.mock.rest.project.input.DeleteRestProjectInput;
 import com.castlemock.service.mock.rest.project.input.ExportRestProjectInput;
@@ -39,7 +40,6 @@ import com.castlemock.service.mock.rest.project.output.ReadAllRestProjectsOutput
 import com.castlemock.service.mock.rest.project.output.ReadRestProjectOutput;
 import com.castlemock.service.mock.rest.project.output.SearchRestProjectOutput;
 import com.castlemock.service.mock.rest.project.output.UpdateRestProjectOutput;
-import com.castlemock.service.mock.rest.RestTypeIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

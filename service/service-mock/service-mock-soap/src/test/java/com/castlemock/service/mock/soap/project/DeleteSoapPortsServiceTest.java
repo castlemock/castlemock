@@ -26,12 +26,11 @@ import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.model.mock.soap.domain.SoapPortTestBuilder;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
-import com.castlemock.service.mock.soap.project.input.DeleteSoapPortsInput;
-import com.castlemock.service.mock.soap.project.output.DeleteSoapPortsOutput;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.repository.soap.project.SoapPortRepository;
-import com.google.common.collect.ImmutableList;
+import com.castlemock.service.mock.soap.project.input.DeleteSoapPortsInput;
+import com.castlemock.service.mock.soap.project.output.DeleteSoapPortsOutput;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,6 +41,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -81,7 +81,7 @@ public class DeleteSoapPortsServiceTest {
 
         final DeleteSoapPortsInput input = DeleteSoapPortsInput.builder()
                 .projectId(soapProject.getId())
-                .ports(ImmutableList.of(soapPort))
+                .ports(List.of(soapPort))
                 .build();
         final ServiceTask<DeleteSoapPortsInput> serviceTask = new ServiceTask<DeleteSoapPortsInput>(input);
         final ServiceResult<DeleteSoapPortsOutput> serviceResult = service.process(serviceTask);

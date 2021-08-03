@@ -18,13 +18,17 @@ package com.castlemock.service.mock.rest.event;
 
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.repository.rest.event.RestEventRepository;
 import com.castlemock.service.mock.rest.event.input.ClearAllRestEventInput;
 import com.castlemock.service.mock.rest.event.output.ClearAllRestEventOutput;
-import com.castlemock.repository.rest.event.RestEventRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 /**
  * @author Karl Dahlgren

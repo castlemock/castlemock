@@ -18,7 +18,11 @@ package com.castlemock.web.mock.rest.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.service.mock.rest.project.input.*;
+import com.castlemock.service.mock.rest.project.input.CreateRestMethodInput;
+import com.castlemock.service.mock.rest.project.input.DeleteRestMethodInput;
+import com.castlemock.service.mock.rest.project.input.ReadRestMethodInput;
+import com.castlemock.service.mock.rest.project.input.UpdateRestMethodInput;
+import com.castlemock.service.mock.rest.project.input.UpdateRestMockResponseStatusInput;
 import com.castlemock.service.mock.rest.project.output.CreateRestMethodOutput;
 import com.castlemock.service.mock.rest.project.output.DeleteRestMethodOutput;
 import com.castlemock.service.mock.rest.project.output.ReadRestMethodOutput;
@@ -27,12 +31,20 @@ import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.rest.model.CreateRestMethodRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestMethodRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestMockResponseStatusesRequest;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("api/rest/rest")

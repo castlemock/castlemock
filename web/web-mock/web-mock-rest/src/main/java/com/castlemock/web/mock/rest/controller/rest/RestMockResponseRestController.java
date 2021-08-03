@@ -18,18 +18,33 @@ package com.castlemock.web.mock.rest.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.service.mock.rest.project.input.*;
-import com.castlemock.service.mock.rest.project.output.*;
+import com.castlemock.service.mock.rest.project.input.CreateRestMockResponseInput;
+import com.castlemock.service.mock.rest.project.input.DeleteRestMockResponseInput;
+import com.castlemock.service.mock.rest.project.input.DuplicateRestMockResponsesInput;
+import com.castlemock.service.mock.rest.project.input.ReadRestMockResponseInput;
+import com.castlemock.service.mock.rest.project.input.UpdateRestMockResponseInput;
+import com.castlemock.service.mock.rest.project.output.CreateRestMockResponseOutput;
+import com.castlemock.service.mock.rest.project.output.DeleteRestMockResponseOutput;
+import com.castlemock.service.mock.rest.project.output.ReadRestMockResponseOutput;
+import com.castlemock.service.mock.rest.project.output.UpdateRestMockResponseOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.rest.model.CreateRestMockResponseRequest;
 import com.castlemock.web.mock.rest.model.DuplicateRestMockOperationsRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestMockResponseRequest;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("api/rest/rest")

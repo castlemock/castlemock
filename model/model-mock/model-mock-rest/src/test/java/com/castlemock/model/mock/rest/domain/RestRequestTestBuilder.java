@@ -3,7 +3,6 @@ package com.castlemock.model.mock.rest.domain;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
-import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
@@ -21,8 +20,8 @@ public final class RestRequestTestBuilder {
         this.body = "Rest request body";
         this.contentType = "application/json";
         this.httpMethod = HttpMethod.POST;
-        this.httpHeaders = ImmutableList.of();
-        this.httpParameters = ImmutableList.of();
+        this.httpHeaders = List.of();
+        this.httpParameters = List.of();
     }
 
     public static RestRequestTestBuilder builder(){

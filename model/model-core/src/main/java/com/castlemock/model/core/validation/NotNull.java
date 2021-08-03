@@ -20,7 +20,11 @@ import com.castlemock.model.core.Input;
 import com.castlemock.model.core.Message;
 import com.castlemock.model.core.Output;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * The NotNull annotation will be used to enforce that variables are not null in a {@link Message}

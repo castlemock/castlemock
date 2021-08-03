@@ -24,8 +24,8 @@ import com.castlemock.model.core.utility.parser.expression.argument.ExpressionAr
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentArray;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentMap;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
-import com.google.common.collect.ImmutableMap;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -57,7 +57,7 @@ public class ExternalInputBuilder {
 	}
 	
 	public Map<String, ExpressionArgument<?>> build() {
-		ImmutableMap.Builder<String, ExpressionArgument<?>> immutableMapBuilder = ImmutableMap.builder();
+		final Map<String, ExpressionArgument<?>> immutableMapBuilder = new HashMap<>();
 		if (this.requestBody != null) {
 			final ExpressionArgument<?> bodyArgument = new ExpressionArgumentString(this.requestBody);
 			immutableMapBuilder.put(BodyXPathExpression.BODY_ARGUMENT, bodyArgument);
@@ -73,7 +73,7 @@ public class ExternalInputBuilder {
 			immutableMapBuilder.put(QueryStringExpression.QUERY_STRINGS, buildQueryStringArgument());
 		}
 		
-		return immutableMapBuilder.build();
+		return immutableMapBuilder;
 	}
 	
 	private ExpressionArgumentMap buildPathParametersArgument() {

@@ -26,7 +26,6 @@ import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
-
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;

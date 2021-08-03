@@ -35,7 +35,6 @@ import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.core.controller.AbstractController;
 import com.castlemock.web.mock.rest.controller.mock.RestServiceController;
 import com.castlemock.web.mock.rest.web.AbstractControllerTest;
-import com.google.common.collect.ImmutableMap;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -83,8 +82,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private static final String APPLICATION_JSON = "application/json";
     private static final String CONTENT_TYPE_HEADER = "Content-type";
     private static final String ACCEPT_HEADER = "Accept";
-    private static final Map<String, Set<String>> PATH_PARAMETERS = ImmutableMap.of("Path", Set.of("Value"));
-    private static final Map<String, Set<String>> NO_MATCHING_PATH_PARAMETERS = ImmutableMap.of("Path", Set.of("OtherValue"));
+    private static final Map<String, Set<String>> PATH_PARAMETERS = Map.of("Path", Set.of("Value"));
+    private static final Map<String, Set<String>> NO_MATCHING_PATH_PARAMETERS = Map.of("Path", Set.of("OtherValue"));
 
 
     private static final String XML_REQUEST_BODY = "<request>\n" +

@@ -18,13 +18,17 @@ package com.castlemock.service.mock.soap.event;
 
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.repository.soap.event.SoapEventRepository;
 import com.castlemock.service.mock.soap.event.input.ClearAllSoapEventInput;
 import com.castlemock.service.mock.soap.event.output.ClearAllSoapEventOutput;
-import com.castlemock.repository.soap.event.SoapEventRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 /**
  * @author Karl Dahlgren

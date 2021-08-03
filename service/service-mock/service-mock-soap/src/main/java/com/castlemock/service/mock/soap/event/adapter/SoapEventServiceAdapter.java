@@ -22,12 +22,12 @@ import com.castlemock.model.core.event.Event;
 import com.castlemock.model.core.service.event.EventServiceAdapter;
 import com.castlemock.model.core.service.event.EventServiceFacade;
 import com.castlemock.model.mock.soap.domain.SoapEvent;
+import com.castlemock.service.mock.soap.SoapTypeIdentifier;
 import com.castlemock.service.mock.soap.event.input.ClearAllSoapEventInput;
 import com.castlemock.service.mock.soap.event.input.ReadAllSoapEventInput;
 import com.castlemock.service.mock.soap.event.input.ReadSoapEventInput;
 import com.castlemock.service.mock.soap.event.output.ReadAllSoapEventOutput;
 import com.castlemock.service.mock.soap.event.output.ReadSoapEventOutput;
-import com.castlemock.service.mock.soap.SoapTypeIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

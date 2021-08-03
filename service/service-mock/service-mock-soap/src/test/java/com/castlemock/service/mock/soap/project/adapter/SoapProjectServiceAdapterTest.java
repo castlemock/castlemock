@@ -23,6 +23,7 @@ import com.castlemock.model.core.TypeIdentifier;
 import com.castlemock.model.core.project.Project;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
+import com.castlemock.service.mock.soap.SoapTypeIdentifier;
 import com.castlemock.service.mock.soap.project.input.CreateSoapProjectInput;
 import com.castlemock.service.mock.soap.project.input.DeleteSoapProjectInput;
 import com.castlemock.service.mock.soap.project.input.ExportSoapProjectInput;
@@ -39,7 +40,6 @@ import com.castlemock.service.mock.soap.project.output.ReadAllSoapProjectsOutput
 import com.castlemock.service.mock.soap.project.output.ReadSoapProjectOutput;
 import com.castlemock.service.mock.soap.project.output.SearchSoapProjectOutput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapProjectOutput;
-import com.castlemock.service.mock.soap.SoapTypeIdentifier;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -19,8 +19,8 @@ package com.castlemock.service.mock.soap.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
-import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
+import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapPortsStatusInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapPortsStatusOutput;
 

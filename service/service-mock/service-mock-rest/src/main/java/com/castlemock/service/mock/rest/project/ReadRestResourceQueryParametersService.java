@@ -21,9 +21,9 @@ import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.rest.domain.RestParameterQuery;
 import com.castlemock.model.mock.rest.domain.RestResource;
+import com.castlemock.service.core.utility.UrlUtility;
 import com.castlemock.service.mock.rest.project.input.ReadRestResourceQueryParametersInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestResourceQueryParametersOutput;
-import com.castlemock.service.core.utility.UrlUtility;
 
 import java.util.Set;
 import java.util.stream.Collectors;

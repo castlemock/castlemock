@@ -16,7 +16,12 @@
 
 package com.castlemock.deploy.jetty.jar.config;
 
-import com.castlemock.app.config.*;
+import com.castlemock.app.config.Application;
+import com.castlemock.app.config.MockSecurityConfig;
+import com.castlemock.app.config.MvcConfig;
+import com.castlemock.app.config.PropertyConfig;
+import com.castlemock.app.config.RestSecurityConfig;
+import com.castlemock.app.config.SecurityConfig;
 import com.castlemock.deploy.jetty.common.JettyConfig;
 import org.apache.tomcat.JarScanner;
 import org.apache.tomcat.util.scan.StandardJarScanner;

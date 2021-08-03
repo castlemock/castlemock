@@ -2,7 +2,6 @@ package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
-import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public final class SoapRequestTestBuilder {
         this.operationName = "ServiceName";
         this.httpMethod = HttpMethod.POST;
         this.soapVersion = SoapVersion.SOAP11;
-        this.httpHeaders = ImmutableList.of();
+        this.httpHeaders = List.of();
         this.uri = "";
         this.operationIdentifier = SoapOperationIdentifier.builder()
                 .name("")

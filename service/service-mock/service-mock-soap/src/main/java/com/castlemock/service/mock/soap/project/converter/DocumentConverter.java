@@ -19,7 +19,16 @@ package com.castlemock.service.mock.soap.project.converter;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapPort;
-import com.castlemock.service.mock.soap.project.converter.types.*;
+import com.castlemock.service.mock.soap.project.converter.types.Binding;
+import com.castlemock.service.mock.soap.project.converter.types.Message;
+import com.castlemock.service.mock.soap.project.converter.types.Namespace;
+import com.castlemock.service.mock.soap.project.converter.types.PortType;
+import com.castlemock.service.mock.soap.project.converter.types.Service;
+import com.castlemock.service.mock.soap.project.converter.types.WsdlBindingParser;
+import com.castlemock.service.mock.soap.project.converter.types.WsdlMessageParser;
+import com.castlemock.service.mock.soap.project.converter.types.WsdlNamespaceParser;
+import com.castlemock.service.mock.soap.project.converter.types.WsdlPortTypeParser;
+import com.castlemock.service.mock.soap.project.converter.types.WsdlServiceParser;
 import org.w3c.dom.Document;
 
 import java.util.Collection;

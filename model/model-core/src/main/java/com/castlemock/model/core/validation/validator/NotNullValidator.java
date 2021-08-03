@@ -19,8 +19,8 @@ package com.castlemock.model.core.validation.validator;
 import com.castlemock.model.core.Message;
 import com.castlemock.model.core.validation.NotNull;
 import org.apache.commons.lang3.reflect.FieldUtils;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The NotNullValidator is used to check and enforce the {@link NotNull} rule for messages.

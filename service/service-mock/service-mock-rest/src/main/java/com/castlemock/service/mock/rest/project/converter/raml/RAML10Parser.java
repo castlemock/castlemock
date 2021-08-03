@@ -16,20 +16,20 @@
 
 package com.castlemock.service.mock.rest.project.converter.raml;
 
-import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpHeader;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
-import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
-import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
+import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.rest.domain.RestMethod;
+import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
+import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.model.mock.rest.domain.RestResource;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
+import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
 import org.raml.v2.api.model.v10.bodies.Response;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.api.model.v10.methods.Method;
 import org.raml.v2.api.model.v10.resources.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;

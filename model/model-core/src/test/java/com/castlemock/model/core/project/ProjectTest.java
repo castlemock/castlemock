@@ -18,7 +18,6 @@
 package com.castlemock.model.core.project;
 
 import com.castlemock.model.core.TypeIdentifier;
-import com.castlemock.model.core.project.Project;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;

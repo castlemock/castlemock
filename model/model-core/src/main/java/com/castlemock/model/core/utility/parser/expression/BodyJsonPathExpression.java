@@ -19,8 +19,8 @@ package com.castlemock.model.core.utility.parser.expression;
 
 import com.castlemock.model.core.utility.JsonPathUtility;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 

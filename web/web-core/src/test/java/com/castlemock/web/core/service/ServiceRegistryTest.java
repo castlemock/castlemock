@@ -17,11 +17,11 @@
 package com.castlemock.web.core.service;
 
 
-import com.castlemock.service.core.user.input.DeleteUserInput;
-import com.castlemock.service.core.user.input.ReadUserInput;
 import com.castlemock.service.core.ServiceRegistry;
 import com.castlemock.service.core.user.DeleteUserService;
 import com.castlemock.service.core.user.ReadUserService;
+import com.castlemock.service.core.user.input.DeleteUserInput;
+import com.castlemock.service.core.user.input.ReadUserInput;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

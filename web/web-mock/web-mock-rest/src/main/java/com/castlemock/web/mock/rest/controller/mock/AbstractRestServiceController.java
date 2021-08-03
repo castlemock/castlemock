@@ -27,13 +27,13 @@ import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.model.mock.rest.domain.RestEvent;
-import com.castlemock.model.mock.rest.domain.RestRequest;
-import com.castlemock.model.mock.rest.domain.RestResponse;
 import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
+import com.castlemock.model.mock.rest.domain.RestRequest;
+import com.castlemock.model.mock.rest.domain.RestResponse;
 import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
 import com.castlemock.model.mock.rest.domain.RestXPathExpression;
 import com.castlemock.service.mock.rest.event.input.CreateRestEventInput;
@@ -42,15 +42,14 @@ import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
 import com.castlemock.service.mock.rest.project.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.castlemock.service.mock.rest.project.input.UpdateRestMethodsStatusInput;
 import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
+import com.castlemock.web.core.controller.AbstractController;
 import com.castlemock.web.core.utility.CharsetUtility;
 import com.castlemock.web.core.utility.HttpMessageSupport;
-import com.castlemock.web.core.controller.AbstractController;
 import com.castlemock.web.mock.rest.model.RestException;
 import com.castlemock.web.mock.rest.utility.RestHeaderQueryValidator;
 import com.castlemock.web.mock.rest.utility.RestParameterQueryValidator;
 import com.castlemock.web.mock.rest.utility.compare.RestMockResponseNameComparator;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -145,7 +144,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
     }
 
     /**
-     * The method prepares an request
+     * The method prepares a request
      *
      * @param projectId          The id of the project that the incoming request belongs to
      * @param applicationId      The id of the application that the incoming request belongs to
@@ -380,7 +379,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @since 1.14
      */
     private RestResponse echoResponse(final RestRequest request) {
-        final List<HttpHeader> headers = ImmutableList.of(HttpHeader.builder()
+        final List<HttpHeader> headers = List.of(HttpHeader.builder()
                 .name(CONTENT_TYPE)
                 .value(request.getContentType())
                 .build());
@@ -407,7 +406,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                         final RestMethod restMethod,
                                         final Map<String, Set<String>> pathParameters,
                                         final HttpServletRequest httpServletRequest) {
-        // Extract the accept header value.
+        // Extract the accept-header value.
         final Collection<String> acceptHeaderValues = getHeaderValues(ACCEPT_HEADER, restRequest.getHttpHeaders());
 
 
@@ -425,7 +424,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final List<RestMockResponse> mockResponses = new ArrayList<>();
 
         if (acceptHeaderValues != null) {
-            // Find request that matches the accept header.
+            // Find request that matches the accept-header.
             for (RestMockResponse mockResponse : enabledMockResponses) {
                 // The accept header has to match the content type.
                 final Collection<String> mockResponseContentTypeValues = getHeaderValues(CONTENT_TYPE, mockResponse.getHttpHeaders());
@@ -436,7 +435,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             }
         }
 
-        // If no mock responses are matching the accept header, then
+        // If no mock responses are matching the accept-header, then
         // any mock response will do.
         if (mockResponses.isEmpty()) {
             mockResponses.addAll(enabledMockResponses);

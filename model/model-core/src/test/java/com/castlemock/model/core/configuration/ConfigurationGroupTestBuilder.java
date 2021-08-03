@@ -1,7 +1,5 @@
 package com.castlemock.model.core.configuration;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.List;
 
 public final class ConfigurationGroupTestBuilder {
@@ -13,7 +11,7 @@ public final class ConfigurationGroupTestBuilder {
     private ConfigurationGroupTestBuilder() {
         this.id = "ConfigurationGroupId";
         this.name = "Configuration group name";
-        this.configurations = ImmutableList.of(ConfigurationTestBuilder.builder().build());
+        this.configurations = List.of(ConfigurationTestBuilder.builder().build());
     }
 
     public static ConfigurationGroupTestBuilder builder() {

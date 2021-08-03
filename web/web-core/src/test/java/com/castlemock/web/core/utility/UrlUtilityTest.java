@@ -18,7 +18,6 @@ package com.castlemock.web.core.utility;
 
 
 import com.castlemock.service.core.utility.UrlUtility;
-import com.google.common.collect.ImmutableMap;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -95,7 +94,7 @@ public class UrlUtilityTest {
 
     @Test
     public void canGetQueryStringParameters(){
-        final Map<String, Set<String>> queryParams = ImmutableMap.of("userId", Set.of("1"));
+        final Map<String, Set<String>> queryParams = Map.of("userId", Set.of("1"));
         final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}", queryParams);
 
         Assert.assertTrue(map.containsKey("userId"));
@@ -105,7 +104,7 @@ public class UrlUtilityTest {
 
     @Test
     public void canGetQueryStringParametersWithDifferentName(){
-        final Map<String, Set<String>> queryParams = ImmutableMap.of("userId", Set.of("1"));
+        final Map<String, Set<String>> queryParams = Map.of("userId", Set.of("1"));
         final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={id}", queryParams);
 
         Assert.assertTrue(map.containsKey("userId"));
@@ -115,7 +114,7 @@ public class UrlUtilityTest {
 
     @Test
     public void canGetQueryStringMultipleParameters(){
-        final Map<String, Set<String>> queryParams = ImmutableMap.of(
+        final Map<String, Set<String>> queryParams = Map.of(
                 "userId", Set.of("1"),
                 "username", Set.of("Karl"));
         final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}&username={username}", queryParams);

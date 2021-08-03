@@ -8,18 +8,19 @@ import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodTestBuilder;
 import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.model.mock.rest.domain.RestResourceTestBuilder;
-import com.castlemock.service.mock.rest.project.input.UpdateRestResourcesForwardedEndpointInput;
-import com.castlemock.service.mock.rest.project.output.UpdateRestResourcesForwardedEndpointOutput;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
+import com.castlemock.service.mock.rest.project.input.UpdateRestResourcesForwardedEndpointInput;
+import com.castlemock.service.mock.rest.project.output.UpdateRestResourcesForwardedEndpointOutput;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -53,15 +54,15 @@ public class UpdateRestResourcesForwardedEndpointServiceTest {
                 .id("resource-1")
                 .build();
         final RestApplication application = RestApplicationTestBuilder.builder()
-                .resources(ImmutableList.of(resource1))
+                .resources(List.of(resource1))
                 .build();
 
-        Mockito.when(methodRepository.findWithResourceId(resource1.getId())).thenReturn(ImmutableList.of(method1, method2));
+        Mockito.when(methodRepository.findWithResourceId(resource1.getId())).thenReturn(List.of(method1, method2));
 
         final UpdateRestResourcesForwardedEndpointInput input = UpdateRestResourcesForwardedEndpointInput.builder()
                 .projectId("project")
                 .applicationId(application.getId())
-                .resourceIds(ImmutableSet.of(resource1.getId()))
+                .resourceIds(Set.of(resource1.getId()))
                 .forwardedEndpoint("new-endpoint")
                 .build();
         final ServiceTask<UpdateRestResourcesForwardedEndpointInput> serviceTask = new ServiceTask<>(input);

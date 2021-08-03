@@ -15,11 +15,6 @@
  */
 package com.castlemock.model.core.utility.parser;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.mockito.Mockito;
-
 import com.castlemock.model.core.utility.parser.expression.BodyJsonPathExpression;
 import com.castlemock.model.core.utility.parser.expression.BodyXPathExpression;
 import com.castlemock.model.core.utility.parser.expression.Expression;
@@ -40,6 +35,10 @@ import com.castlemock.model.core.utility.parser.expression.RandomPasswordExpress
 import com.castlemock.model.core.utility.parser.expression.RandomStringExpression;
 import com.castlemock.model.core.utility.parser.expression.RandomUUIDExpression;
 import com.castlemock.model.core.utility.parser.expression.UrlHostExpression;
+import org.mockito.Mockito;
+
+import java.util.HashMap;
+import java.util.Map;
 
 class TextParseMockConfig {
 	

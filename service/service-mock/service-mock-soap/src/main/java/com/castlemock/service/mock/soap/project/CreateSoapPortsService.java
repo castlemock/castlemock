@@ -24,10 +24,10 @@ import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.model.mock.soap.domain.SoapResource;
 import com.castlemock.model.mock.soap.domain.SoapResourceType;
-import com.castlemock.service.mock.soap.project.input.CreateSoapPortsInput;
-import com.castlemock.service.mock.soap.project.output.CreateSoapPortsOutput;
 import com.castlemock.service.mock.soap.project.converter.SoapPortConverter;
 import com.castlemock.service.mock.soap.project.converter.SoapPortConverterResult;
+import com.castlemock.service.mock.soap.project.input.CreateSoapPortsInput;
+import com.castlemock.service.mock.soap.project.output.CreateSoapPortsOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;

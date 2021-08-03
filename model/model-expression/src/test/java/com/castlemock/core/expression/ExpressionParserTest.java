@@ -1,6 +1,8 @@
 package com.castlemock.core.expression;
 
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CodePointCharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.Assert;
 import org.junit.Test;
 

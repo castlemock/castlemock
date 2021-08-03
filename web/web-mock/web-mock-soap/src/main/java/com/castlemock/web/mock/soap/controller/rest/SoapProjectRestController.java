@@ -18,12 +18,12 @@ package com.castlemock.web.mock.soap.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.mock.soap.domain.SoapProject;
+import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.service.mock.soap.project.input.CreateSoapPortsInput;
 import com.castlemock.service.mock.soap.project.input.ReadSoapProjectInput;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapPortsForwardedEndpointInput;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapPortsStatusInput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapProjectOutput;
-import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.LinkWsdlRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapPortForwardedEndpointsRequest;

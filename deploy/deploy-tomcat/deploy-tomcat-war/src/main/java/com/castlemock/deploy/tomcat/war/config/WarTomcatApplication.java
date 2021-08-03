@@ -16,7 +16,12 @@
 
 package com.castlemock.deploy.tomcat.war.config;
 
-import com.castlemock.app.config.*;
+import com.castlemock.app.config.Application;
+import com.castlemock.app.config.MockSecurityConfig;
+import com.castlemock.app.config.MvcConfig;
+import com.castlemock.app.config.PropertyConfig;
+import com.castlemock.app.config.RestSecurityConfig;
+import com.castlemock.app.config.SecurityConfig;
 import com.castlemock.deploy.tomcat.common.TomcatConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

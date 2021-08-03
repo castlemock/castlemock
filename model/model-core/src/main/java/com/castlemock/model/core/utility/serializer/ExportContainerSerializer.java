@@ -17,8 +17,8 @@
 package com.castlemock.model.core.utility.serializer;
 
 import com.castlemock.model.core.ExportContainer;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

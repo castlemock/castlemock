@@ -23,11 +23,11 @@ import com.castlemock.model.mock.rest.domain.RestApplication;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.model.mock.rest.domain.RestResource;
-import com.castlemock.service.mock.rest.project.input.ImportRestDefinitionInput;
-import com.castlemock.service.mock.rest.project.output.ImportRestDefinitionOutput;
 import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.service.mock.rest.project.converter.RestDefinitionConverter;
 import com.castlemock.service.mock.rest.project.converter.RestDefinitionConverterFactory;
+import com.castlemock.service.mock.rest.project.input.ImportRestDefinitionInput;
+import com.castlemock.service.mock.rest.project.output.ImportRestDefinitionOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;

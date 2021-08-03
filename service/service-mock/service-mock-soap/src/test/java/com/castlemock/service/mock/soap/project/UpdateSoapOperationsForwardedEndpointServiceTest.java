@@ -20,16 +20,17 @@ import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapOperationTestBuilder;
+import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationsForwardedEndpointInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapOperationsForwardedEndpointOutput;
-import com.castlemock.repository.soap.project.SoapOperationRepository;
-import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren
@@ -58,7 +59,7 @@ public class UpdateSoapOperationsForwardedEndpointServiceTest {
         final UpdateSoapOperationsForwardedEndpointInput input = UpdateSoapOperationsForwardedEndpointInput.builder()
                 .projectId(projectId)
                 .portId(portId)
-                .operationIds(ImmutableSet.of(operation.getId()))
+                .operationIds(Set.of(operation.getId()))
                 .forwardedEndpoint("Forward Endpoint")
                 .build();
 

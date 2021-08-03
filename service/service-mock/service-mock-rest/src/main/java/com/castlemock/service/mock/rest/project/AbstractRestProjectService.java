@@ -29,9 +29,9 @@ import com.castlemock.repository.rest.project.RestProjectRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
 import com.castlemock.service.core.AbstractService;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,10 +151,8 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
      */
     protected Map<RestMethodStatus, Integer> getRestMethodStatusCount(final RestResource restResource){
         Preconditions.checkNotNull(restResource, "The REST resource cannot be null");
-        final Map<RestMethodStatus, Integer> statuses =
-                ImmutableSet.copyOf(RestMethodStatus.values()).stream()
+        final Map<RestMethodStatus, Integer> statuses = Arrays.stream(RestMethodStatus.values())
                 .collect(toMap(status -> status, status -> 0));
-
         final List<RestMethod> methods = this.methodRepository.findWithResourceId(restResource.getId());
         methods.stream()
                 .map(RestMethod::getStatus)

@@ -17,7 +17,11 @@
 package com.castlemock.model.mock.rest;
 
 import com.castlemock.model.core.ExportContainer;
-import com.castlemock.model.mock.rest.domain.*;
+import com.castlemock.model.mock.rest.domain.RestApplication;
+import com.castlemock.model.mock.rest.domain.RestMethod;
+import com.castlemock.model.mock.rest.domain.RestMockResponse;
+import com.castlemock.model.mock.rest.domain.RestProject;
+import com.castlemock.model.mock.rest.domain.RestResource;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;

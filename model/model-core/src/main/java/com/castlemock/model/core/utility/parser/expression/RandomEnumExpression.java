@@ -18,8 +18,8 @@ package com.castlemock.model.core.utility.parser.expression;
 
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentArray;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@link RandomEnumExpression} is an {@link Expression} and will

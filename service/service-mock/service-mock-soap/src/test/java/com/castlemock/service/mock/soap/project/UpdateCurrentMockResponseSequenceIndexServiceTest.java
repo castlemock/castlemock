@@ -18,9 +18,9 @@ package com.castlemock.service.mock.soap.project;
 
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.service.mock.soap.project.input.UpdateCurrentMockResponseSequenceIndexInput;
 import com.castlemock.service.mock.soap.project.output.UpdateCurrentMockResponseSequenceIndexOutput;
-import com.castlemock.repository.soap.project.SoapOperationRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

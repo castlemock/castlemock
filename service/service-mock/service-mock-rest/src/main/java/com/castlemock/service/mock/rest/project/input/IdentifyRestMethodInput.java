@@ -21,7 +21,13 @@ import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
 import com.castlemock.model.core.validation.NotNull;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren

@@ -2,7 +2,6 @@ package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.ContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
-import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -29,9 +28,9 @@ public class SoapMockResponseTestBuilder {
         this.status = SoapMockResponseStatus.ENABLED;
         this.httpStatusCode = 200;
         this.usingExpressions = Boolean.TRUE;
-        this.httpHeaders = ImmutableList.of();
-        this.contentEncodings = ImmutableList.of();
-        this.xpathExpressions = ImmutableList.of();
+        this.httpHeaders = List.of();
+        this.contentEncodings = List.of();
+        this.xpathExpressions = List.of();
 
         this.httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
         this.contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
