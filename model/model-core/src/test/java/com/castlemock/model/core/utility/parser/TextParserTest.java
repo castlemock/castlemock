@@ -200,7 +200,7 @@ public class TextParserTest {
         
         String input = "a: ${BODY_JSON_PATH(expression=\"$.store.book[0].title\")}, b: ${BODY_JSON_PATH(expression=\"$.store.book[1].title\")}.";
         String output = textParser.parse(input, new ExternalInputBuilder().requestBody(requestBodyJson).build());
-        Assertions.assertEquals("a: Moby Dick, b: The Lord of the Rings.", output);
+        Assertions.assertEquals("a: Book title 1, b: Book title 2.", output);
     }
     
     @Test

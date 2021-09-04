@@ -152,12 +152,12 @@ public class XPathUtilityTest {
                 "   <soapenv:Body>\n" +
                 "      <web:GetWhoIS>\n" +
                 "         <!--Optional:-->\n" +
-                "         <web:HostName>google.com</web:HostName>\n" +
+                "         <web:HostName>castlemock.com</web:HostName>\n" +
                 "      </web:GetWhoIS>\n" +
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
 
-        String xpath = "//GetWhoIS/HostName[text() = 'google.com']";
+        String xpath = "//GetWhoIS/HostName[text() = 'castlemock.com']";
 
         boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
         Assert.assertTrue(validXPathValue);
@@ -170,13 +170,13 @@ public class XPathUtilityTest {
                 "   <soapenv:Body>\n" +
                 "      <web:GetWhoIS>\n" +
                 "         <!--Optional:-->\n" +
-                "         <web:HostName>google.com</web:HostName>\n" +
+                "         <web:HostName>castlemock.com</web:HostName>\n" +
                 "      </web:GetWhoIS>\n" +
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
         final String xpath = "//GetWhoIS/HostName/text()";
 
-        assertEquals("google.com", XPathUtility.getXPathValue(body, xpath).orElse(null));
+        assertEquals("castlemock.com", XPathUtility.getXPathValue(body, xpath).orElse(null));
     }
 
     @Test
@@ -186,11 +186,11 @@ public class XPathUtilityTest {
                 "   <soapenv:Body>\n" +
                 "      <web:GetWhoIS>\n" +
                 "         <!--Optional:-->\n" +
-                "         <web:HostName>google.com</web:HostName>\n" +
+                "         <web:HostName>castlemock.com</web:HostName>\n" +
                 "      </web:GetWhoIS>\n" +
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
-        final String xpath = "substring(//GetWhoIS/HostName/text(), 8, 3)";
+        final String xpath = "substring(//GetWhoIS/HostName/text(), 12, 3)";
 
         assertEquals("com", XPathUtility.getXPathValue(body, xpath).orElse(null));
     }

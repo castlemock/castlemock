@@ -37,7 +37,7 @@ public class JsonPathUtilityTest {
     @Test
     public void testExpression2() {
         final String body = getBody();
-        final String expression = "$.store.book[?(@.author == 'Nigel Rees')]";
+        final String expression = "$.store.book[?(@.author == 'Author 1')]";
         final boolean result = JsonPathUtility.isValidJsonPathExpr(body, expression);
         assertTrue(result);
     }
@@ -71,7 +71,7 @@ public class JsonPathUtilityTest {
         final String body = getBody();
         final String expression = "$.store.book[?(@.price > 20)].author";
         final Optional<String> value = JsonPathUtility.getValueWithJsonPathExpr(body, expression);
-        assertEquals("J.R.R. Tolkien", value.orElse(null));
+        assertEquals("Author 3", value.orElse(null));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class JsonPathUtilityTest {
         final String body = getBody();
         final String expression = "$.store.book[*]";
         final Optional<String> value = JsonPathUtility.getValueWithJsonPathExpr(body, expression);
-        assertEquals("[{\"category\":\"reference\",\"author\":\"Nigel Rees\",\"title\":\"Sayings of the Century\",\"price\":8.95},{\"category\":\"fiction\",\"author\":\"Herman Melville\",\"title\":\"Moby Dick\",\"isbn\":\"0-553-21311-3\",\"price\":8.99},{\"category\":\"fiction\",\"author\":\"J.R.R. Tolkien\",\"title\":\"The Lord of the Rings\",\"isbn\":\"0-395-19395-8\",\"price\":22.99}]", value.orElse(null));
+        assertEquals("[{\"category\":\"reference\",\"author\":\"Author 1\",\"title\":\"Book title 1\",\"price\":8.95},{\"category\":\"fiction\",\"author\":\"Author 2\",\"title\":\"Book title 2\",\"isbn\":\"1-553-21311-3\",\"price\":8.99},{\"category\":\"fiction\",\"author\":\"Author 3\",\"title\":\"Book title 3\",\"isbn\":\"1-395-19395-8\",\"price\":22.99}]", value.orElse(null));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class JsonPathUtilityTest {
         final String body = getBody();
         final String expression = "$.store.book[?(@.price > 1)].author";
         final Optional<String> value = JsonPathUtility.getValueWithJsonPathExpr(body, expression);
-        assertEquals("[\"Nigel Rees\",\"Herman Melville\",\"J.R.R. Tolkien\"]", value.orElse(null));
+        assertEquals("[\"Author 1\",\"Author 2\",\"Author 3\"]", value.orElse(null));
     }
 
     @Test
@@ -112,22 +112,22 @@ public class JsonPathUtilityTest {
                 "    \"book\": [\n" +
                 "      {\n" +
                 "        \"category\": \"reference\",\n" +
-                "        \"author\": \"Nigel Rees\",\n" +
-                "        \"title\": \"Sayings of the Century\",\n" +
+                "        \"author\": \"Author 1\",\n" +
+                "        \"title\": \"Book title 1\",\n" +
                 "        \"price\": 8.95\n" +
                 "      },\n" +
                 "      {\n" +
                 "        \"category\": \"fiction\",\n" +
-                "        \"author\": \"Herman Melville\",\n" +
-                "        \"title\": \"Moby Dick\",\n" +
-                "        \"isbn\": \"0-553-21311-3\",\n" +
+                "        \"author\": \"Author 2\",\n" +
+                "        \"title\": \"Book title 2\",\n" +
+                "        \"isbn\": \"1-553-21311-3\",\n" +
                 "        \"price\": 8.99\n" +
                 "      },\n" +
                 "      {\n" +
                 "        \"category\": \"fiction\",\n" +
-                "        \"author\": \"J.R.R. Tolkien\",\n" +
-                "        \"title\": \"The Lord of the Rings\",\n" +
-                "        \"isbn\": \"0-395-19395-8\",\n" +
+                "        \"author\": \"Author 3\",\n" +
+                "        \"title\": \"Book title 3\",\n" +
+                "        \"isbn\": \"1-395-19395-8\",\n" +
                 "        \"price\": 22.99\n" +
                 "      }\n" +
                 "    ],\n" +

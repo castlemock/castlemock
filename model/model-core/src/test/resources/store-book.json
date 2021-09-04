@@ -3,16 +3,16 @@
         "book": [
         {
             "category": "fiction",
-            "author": "Herman Melville",
-            "title": "Moby Dick",
-            "isbn": "0-553-21311-3",
+            "author": "Author 1",
+            "title": "Book title 1",
+            "isbn": "1-553-21311-3",
             "price": 8.99
         },
         {
             "category": "fiction",
-            "author": "J.R.R. Tolkien",
-            "title": "The Lord of the Rings",
-            "isbn": "0-395-19395-8",
+            "author": "Author 2",
+            "title": "Book title 2",
+            "isbn": "1-395-19395-8",
             "price": 22.99
         }
         ]
