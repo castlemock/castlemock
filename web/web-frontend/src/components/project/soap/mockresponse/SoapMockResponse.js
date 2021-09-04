@@ -212,16 +212,16 @@ class SoapMockResponse extends PureComponent {
                     <div className="content-summary">
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Name</dt>
-                            <dd className="col-sm-9"><input defaultValue={this.state.mockResponse.name} onChange={this.setName}/></dd>
+                            <dd className="col-sm-9"><input value={this.state.updateMockResponse.name} onChange={this.setName}/></dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">HTTP Status code</dt>
-                            <dd className="col-sm-9"><input type="number" defaultValue={this.state.mockResponse.httpStatusCode} onChange={this.setHttpStatusCode}/></dd>
+                            <dd className="col-sm-9"><input type="number" value={this.state.updateMockResponse.httpStatusCode} onChange={this.setHttpStatusCode}/></dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Status</dt>
                             <dd className="col-sm-2">
-                                <select id="inputState" className="form-control" defaultValue={this.state.mockResponse.status} onChange={this.setStatus}>
+                                <select id="inputState" className="form-control" value={this.state.updateMockResponse.status} onChange={this.setStatus}>
                                     <option value={"ENABLED"}>{mockResponseStatusFormatter("ENABLED")}</option>
                                     <option value={"DISABLED"}>{mockResponseStatusFormatter("DISABLED")}</option>
                                 </select>
@@ -229,7 +229,7 @@ class SoapMockResponse extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Use Expression</dt>
-                            <dd className="col-sm-9"><input type="checkbox" defaultChecked={this.state.mockResponse.usingExpressions} onChange={this.setUsingExpression}/></dd>
+                            <dd className="col-sm-9"><input type="checkbox" checked={this.state.updateMockResponse.usingExpressions} onChange={this.setUsingExpression}/></dd>
                         </dl>
                     </div>
                     <div>
