@@ -39,6 +39,7 @@ class LoginContainer extends PureComponent {
             username: "",
             password: "",
             authenticated: false,
+            loginFailed: false,
             authentication: {}
         };
     }
@@ -64,10 +65,14 @@ class LoginContainer extends PureComponent {
                     role: response.data.role
                 });
                 this.setState({
-                    authenticated: true
+                    authenticated: true,
+                    loginFailed: false
                 })
             })
             .catch(error => {
+               this.setState({
+                    loginFailed: true
+                })
             });
     }
 
@@ -100,7 +105,7 @@ class LoginContainer extends PureComponent {
                                     <div className="login-sub-title">Login with your Castle Mock ID</div>
 
                                     <div className="alert alert-danger" role="alert" hidden={this.state.loginFailed ? '' : 'hidden'}>
-                                        Unable to login.
+                                        Invalid credentials. Please try again.
                                     </div>
 
                                     <div className="form-label-group">
