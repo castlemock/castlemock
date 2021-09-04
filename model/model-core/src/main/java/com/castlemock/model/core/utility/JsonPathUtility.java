@@ -56,9 +56,16 @@ public final class JsonPathUtility {
 
         if(result instanceof JSONArray){
             final JSONArray jsonArray = (JSONArray) result;
-            return jsonArray.stream()
-                    .findFirst()
-                    .map(Object::toString);
+
+            if(jsonArray.isEmpty()) {
+                return Optional.empty();
+            } else if(jsonArray.size() == 1) {
+                return jsonArray.stream()
+                        .findFirst()
+                        .map(Object::toString);
+            }
+
+            return Optional.of(jsonArray.toString());
         }
 
         return Optional.ofNullable(result)

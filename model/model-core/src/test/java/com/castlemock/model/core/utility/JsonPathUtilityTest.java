@@ -75,6 +75,22 @@ public class JsonPathUtilityTest {
     }
 
     @Test
+    public void testGetValueList(){
+        final String body = getBody();
+        final String expression = "$.store.book[*]";
+        final Optional<String> value = JsonPathUtility.getValueWithJsonPathExpr(body, expression);
+        assertEquals("[{\"category\":\"reference\",\"author\":\"Nigel Rees\",\"title\":\"Sayings of the Century\",\"price\":8.95},{\"category\":\"fiction\",\"author\":\"Herman Melville\",\"title\":\"Moby Dick\",\"isbn\":\"0-553-21311-3\",\"price\":8.99},{\"category\":\"fiction\",\"author\":\"J.R.R. Tolkien\",\"title\":\"The Lord of the Rings\",\"isbn\":\"0-395-19395-8\",\"price\":22.99}]", value.orElse(null));
+    }
+
+    @Test
+    public void testGetValueList2(){
+        final String body = getBody();
+        final String expression = "$.store.book[?(@.price > 1)].author";
+        final Optional<String> value = JsonPathUtility.getValueWithJsonPathExpr(body, expression);
+        assertEquals("[\"Nigel Rees\",\"Herman Melville\",\"J.R.R. Tolkien\"]", value.orElse(null));
+    }
+
+    @Test
     public void shouldParseValueWhenPropertyIsDefinite(){
         final String body = getBodyWithDefiniteProperty();
         final String expression = "$.definite";
