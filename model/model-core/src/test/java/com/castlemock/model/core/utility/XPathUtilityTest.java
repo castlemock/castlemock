@@ -88,6 +88,29 @@ public class XPathUtilityTest {
     }
 
     @Test
+    public void testIsValidXPathExprWithAttributeMultipleExpression(){
+
+        String body = "<soapenv:Envelope xmlns:cm=\"http://castlemock.com\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://schemas.xmlsoap.org/wsdl/\">\n" +
+                "   <soapenv:Body>\n" +
+                "      <cm:getUser>\n" +
+                "         <username>admin</username>\n" +
+                "         <permissions>\n" +
+                "            <permission name=\"READ\">The user can read</permission>\n" +
+                "            <permission name=\"WRITE\">The user can write</permission>\n" +
+                "            <permission name=\"DELETE\">The user can delete</permission>\n" +
+                "            <permission name=\"MODIFY\">The user can modify</permission>\n" +
+                "         </permissions>\n" +
+                "      </cm:getUser>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
+
+        String xpath = "//getUser/permissions/permission[@name='READ'][text()='The user can read' and //getUser/permissions/permission[@name='WRITE'][text()='The user can write']]";
+
+        boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
+        Assert.assertTrue(validXPathValue);
+    }
+
+    @Test
     public void testIsValidXPathExprAttr(){
 
         String body = "<entries>\n" +
