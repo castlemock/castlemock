@@ -5,7 +5,10 @@ import com.castlemock.model.core.utility.parser.expression.FakerExpression;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
 import org.junit.Test;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -42,9 +45,10 @@ public class FakerExpressionTest {
 	}
 
 	@Test
-	public void testWithParamsDouble() {
-		String result = fakerExpression.transform(createExpressionInput("commerce().price(10.5, 1000.29)"));
-		Double resultDouble = Double.valueOf(result);
+	public void testWithParamsDouble() throws ParseException {
+		final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.UK);
+		final String result = fakerExpression.transform(createExpressionInput("commerce().price(10.5, 1000.29)"));
+		final Double resultDouble = numberFormat.parse(result).doubleValue();
 		assertTrue(resultDouble >= 10.5 && resultDouble <= 1000.29);
 	}
 
