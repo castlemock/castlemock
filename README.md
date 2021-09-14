@@ -3,7 +3,7 @@
 <h1 align="center"> Castle Mock: <br/>Mock RESTful APIs and SOAP web services</h1>
 
 <p align="center">
-    <a href="https://travis-ci.org/castlemock/castlemock"><img src="https://travis-ci.org/castlemock/castlemock.svg?branch=master"></a>
+    <a href="https://app.travis-ci.com/github/castlemock/castlemock"><img src="https://app.travis-ci.com/castlemock/castlemock.svg?branch=master"></a>
     <a href="https://snyk.io/test/github/castlemock/castlemock"><img src="https://snyk.io/test/github/castlemock/castlemock/badge.svg"></a>
     <a href="https://github.com/castlemock/castlemock/releases"><img src="https://img.shields.io/github/release/castlemock/castlemock.svg"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue.svg"></a>
