@@ -91,8 +91,24 @@ class RestEvent extends PureComponent {
                     </div>
                     <div className="content-summary">
                         <dl className="row">
-                            <dt className="col-sm-3 content-title">Id</dt>
+                            <dt className="col-sm-3 content-title">Event Id</dt>
                             <dd className="col-sm-9">{this.state.event.id}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Project id</dt>
+                            <dd className="col-sm-9"><Link to={"/web/rest/project/" + this.state.event.projectId}>{this.state.event.projectId}</Link></dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Application id</dt>
+                            <dd className="col-sm-9"><Link to={"/web/rest/project/" + this.state.event.projectId + "/application/" + this.state.event.applicationId}>{this.state.event.applicationId}</Link></dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Resource id</dt>
+                            <dd className="col-sm-9"><Link to={"/web/rest/project/" + this.state.event.projectId + "/application/" + this.state.event.applicationId + "/resource/" + this.state.event.resourceId}>{this.state.event.resourceId}</Link></dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Method id</dt>
+                            <dd className="col-sm-9"><Link to={"/web/rest/project/" + this.state.event.projectId + "/application/" + this.state.event.applicationId + "/resource/" + this.state.event.resourceId + "/method/" + this.state.event.methodId}>{this.state.event.methodId}</Link></dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Start date</dt>

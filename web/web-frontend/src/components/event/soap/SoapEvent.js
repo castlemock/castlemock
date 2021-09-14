@@ -96,8 +96,20 @@ class SoapEvent extends PureComponent {
                     </div>
                     <div className="content-summary">
                         <dl className="row">
-                            <dt className="col-sm-3 content-title">Id</dt>
+                            <dt className="col-sm-3 content-title">Event Id</dt>
                             <dd className="col-sm-9">{this.state.event.id}</dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Project id</dt>
+                            <dd className="col-sm-9"><Link to={"/web/soap/project/" + this.state.event.projectId}>{this.state.event.projectId}</Link></dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Port id</dt>
+                            <dd className="col-sm-9"><Link to={"/web/soap/project/" + this.state.event.projectId + "/port/" + this.state.event.portId}>{this.state.event.portId}</Link></dd>
+                        </dl>
+                        <dl className="row">
+                            <dt className="col-sm-3 content-title">Operation id</dt>
+                            <dd className="col-sm-9"><Link to={"/web/soap/project/" + this.state.event.projectId + "/port/" + this.state.event.portId + "/operation/" + this.state.event.operationId}>{this.state.event.operationId}</Link></dd>
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Start date</dt>
