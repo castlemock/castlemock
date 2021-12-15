@@ -18,56 +18,56 @@
         <java.version>1.11</java.version>
         <jaxb.version>2.3.1</jaxb.version>
         <dozer.version>5.5.1</dozer.version>
-        <antlr.version>4.8-1</antlr.version>
-        <log4j.version>2.14.0</log4j.version>
-        <slf4j.version>1.7.30</slf4j.version>
+        <antlr.version>4.9.2</antlr.version>
+        <log4j.version>2.16.0</log4j.version>
+        <slf4j.version>1.7.31</slf4j.version>
         <junit.version>4.13.1</junit.version>
         <graphql.version>8.0</graphql.version>
         <jsr305.version>3.0.2</jsr305.version>
-        <cxf.rt.version>3.4.0</cxf.rt.version>
+        <cxf.rt.version>3.4.4</cxf.rt.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
-        <guava.version>30.1-jre</guava.version>
+        <guava.version>30.1.1-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
         <graphql.version>8.0</graphql.version>
-        <jackson.version>2.12.0</jackson.version>
+        <jackson.version>2.12.4</jackson.version>
         <jaxb.api.version>2.3.1</jaxb.api.version>
         <sun.jaxb.version>2.3.0</sun.jaxb.version>
         <mockito.version>1.10.19</mockito.version>
-        <snakeyaml.version>1.26</snakeyaml.version>
-        <jaxb.impl.version>2.3.3</jaxb.impl.version>
+        <snakeyaml.version>1.29</snakeyaml.version>
+        <jaxb.impl.version>2.3.4</jaxb.impl.version>
         <javafaker.version>1.0.2</javafaker.version>
         <springfox.version>3.0.0</springfox.version>
         <maven.jar.version>3.1.1</maven.jar.version>
-        <json.path.version>2.4.0</json.path.version>
+        <json.path.version>2.6.0</json.path.version>
         <joda.time.version>2.10.6</joda.time.version>
         <activation.version>1.1.1</activation.version>
         <jaxb.core.version>2.3.0.1</jaxb.core.version>
         <maven.exec.version>1.2.1</maven.exec.version>
         <servlet.jsp.version>2.2</servlet.jsp.version>
-        <httpclient.version>4.5.12</httpclient.version>
+        <commons.io.version>2.10.0</commons.io.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <servlet.api.version>4.0.1</servlet.api.version>
-        <antlr.maven.version>4.7.2</antlr.maven.version>
-        <commons.lang.version>3.9</commons.lang.version>
-        <raml.parser.version>1.0.48</raml.parser.version>
+        <antlr.maven.version>4.9.2</antlr.maven.version>
+        <commons.lang.version>3.12.0</commons.lang.version>
+        <raml.parser.version>1.0.51</raml.parser.version>
         <jaxb.runtime.version>2.3.3</jaxb.runtime.version>
         <swagger.core.version>1.6.0</swagger.core.version>
         <commons.codec.version>1.14</commons.codec.version>
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
-        <tomcat.embedd.version>9.0.40</tomcat.embedd.version>
+        <tomcat.embedd.version>9.0.50</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
-        <swagger.parser.version>2.0.21</swagger.parser.version>
-        <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
+        <swagger.parser.version>2.0.27</swagger.parser.version>
+        <spring.boot.version>2.5.2</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
-        <flapdoodle.mongo.version>2.2.0</flapdoodle.mongo.version>
+        <flapdoodle.mongo.version>3.0.0</flapdoodle.mongo.version>
         <jackson.databind.version>2.11.2</jackson.databind.version>
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <spring.security.version>5.3.5.RELEASE</spring.security.version>
-        <spring.framework.version>5.2.8.RELEASE</spring.framework.version>
+        <spring.framework.version>5.3.8</spring.framework.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
     </properties>
 
@@ -335,7 +335,7 @@
             <dependency>
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
-                <version>3.12.0</version>
+                <version>3.18.1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.tomcat.embed</groupId>
@@ -508,6 +508,11 @@
                 <version>${cxf.rt.version}</version>
             </dependency>
             <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>wsdl4j</groupId>
                 <artifactId>wsdl4j</artifactId>
                 <version>${wsdl4j.version}</version>
@@ -520,7 +525,7 @@
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
-                <version>4.5.12</version>
+                <version>${httpclient.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.dozer</groupId>
