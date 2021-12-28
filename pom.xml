@@ -29,7 +29,7 @@
         <guava.version>30.1.1-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
         <graphql.version>8.0</graphql.version>
-        <jackson.version>2.12.4</jackson.version>
+        <jackson.version>2.12.6</jackson.version>
         <jaxb.api.version>2.3.1</jaxb.api.version>
         <sun.jaxb.version>2.3.0</sun.jaxb.version>
         <mockito.version>1.10.19</mockito.version>
@@ -59,7 +59,7 @@
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <swagger.parser.version>2.0.27</swagger.parser.version>
-        <spring.boot.version>2.5.2</spring.boot.version>
+        <spring.boot.version>2.5.8</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
         <flapdoodle.mongo.version>3.0.0</flapdoodle.mongo.version>
