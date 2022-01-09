@@ -18,7 +18,7 @@
         <java.version>1.11</java.version>
         <jaxb.version>2.3.1</jaxb.version>
         <dozer.version>5.5.1</dozer.version>
-        <antlr.version>4.9.2</antlr.version>
+        <antlr.version>4.9.3</antlr.version>
         <log4j.version>2.17.1</log4j.version>
         <slf4j.version>1.7.31</slf4j.version>
         <junit.version>4.13.1</junit.version>
@@ -54,12 +54,12 @@
         <swagger.core.version>1.6.0</swagger.core.version>
         <commons.codec.version>1.14</commons.codec.version>
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
-        <tomcat.embedd.version>9.0.50</tomcat.embedd.version>
+        <tomcat.embedd.version>9.0.56</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <swagger.parser.version>2.0.27</swagger.parser.version>
-        <spring.boot.version>2.5.8</spring.boot.version>
+        <spring.boot.version>2.6.1</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
         <flapdoodle.mongo.version>3.0.0</flapdoodle.mongo.version>
@@ -335,7 +335,7 @@
             <dependency>
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
-                <version>3.18.1</version>
+                <version>3.18.2</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.tomcat.embed</groupId>
