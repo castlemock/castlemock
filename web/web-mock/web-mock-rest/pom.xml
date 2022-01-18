@@ -24,10 +24,6 @@
         </dependency>
         <dependency>
             <groupId>com.castlemock.repository.mock.rest</groupId>
-            <artifactId>repository-mock-rest-mongodb</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.castlemock.repository.mock.rest</groupId>
             <artifactId>repository-mock-rest-model</artifactId>
         </dependency>
         <dependency>

@@ -16,7 +16,6 @@
     <modules>
         <module>repository-mock-soap-file</module>
         <module>repository-mock-soap-model</module>
-        <module>repository-mock-soap-mongodb</module>
     </modules>
 
 </project>

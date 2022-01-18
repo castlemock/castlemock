@@ -24,10 +24,6 @@
         </dependency>
         <dependency>
             <groupId>com.castlemock.repository.mock.soap</groupId>
-            <artifactId>repository-mock-soap-mongodb</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.castlemock.repository.mock.soap</groupId>
             <artifactId>repository-mock-soap-model</artifactId>
         </dependency>
         <dependency>

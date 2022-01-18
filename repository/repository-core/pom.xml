@@ -16,7 +16,6 @@
     <modules>
         <module>repository-core-file</module>
         <module>repository-core-model</module>
-        <module>repository-core-mongodb</module>
     </modules>
 
 </project>

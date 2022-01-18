@@ -51,18 +51,17 @@
         <commons.lang.version>3.12.0</commons.lang.version>
         <raml.parser.version>1.0.51</raml.parser.version>
         <jaxb.runtime.version>2.3.3</jaxb.runtime.version>
-        <swagger.core.version>1.6.0</swagger.core.version>
+        <swagger.core.version>1.6.4</swagger.core.version>
         <commons.codec.version>1.14</commons.codec.version>
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
         <tomcat.embedd.version>9.0.56</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
-        <swagger.parser.version>2.0.28</swagger.parser.version>
+        <swagger.parser.version>2.0.29</swagger.parser.version>
         <spring.boot.version>2.6.1</spring.boot.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
-        <flapdoodle.mongo.version>3.0.0</flapdoodle.mongo.version>
         <jackson.databind.version>2.11.2</jackson.databind.version>
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
@@ -134,11 +133,6 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.castlemock.repository.mock.rest</groupId>
-                <artifactId>repository-mock-rest-mongodb</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.castlemock.repository.mock.soap</groupId>
                 <artifactId>repository-mock-soap-file</artifactId>
                 <version>${project.version}</version>
@@ -149,11 +143,6 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.castlemock.repository.mock.soap</groupId>
-                <artifactId>repository-mock-soap-mongodb</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
                 <artifactId>repository-core-model</artifactId>
                 <version>${project.version}</version>
@@ -161,11 +150,6 @@
             <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
                 <artifactId>repository-core-file</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.castlemock.repository.core</groupId>
-                <artifactId>repository-core-mongodb</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -267,25 +251,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jetty</artifactId>
                 <version>${spring.boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-mongodb</artifactId>
-                <version>${spring.boot.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>ch.qos.logback</groupId>
-                        <artifactId>logback-classic</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>ch.qos.logback</groupId>
-                        <artifactId>logback-core</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.logging.log4j</groupId>
-                        <artifactId>log4j-to-slf4j</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -566,12 +531,6 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>3.6.28</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>de.flapdoodle.embed</groupId>
-                <artifactId>de.flapdoodle.embed.mongo</artifactId>
-                <version>${flapdoodle.mongo.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

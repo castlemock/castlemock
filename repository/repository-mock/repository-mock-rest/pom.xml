@@ -16,7 +16,6 @@
     <modules>
         <module>repository-mock-rest-file</module>
         <module>repository-mock-rest-model</module>
-        <module>repository-mock-rest-mongodb</module>
     </modules>
 
 </project>
