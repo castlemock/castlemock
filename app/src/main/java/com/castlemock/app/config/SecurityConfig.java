@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -43,25 +44,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     @Autowired
+    @Order(1)
     @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
-
-    /**
-     * Configure which attributes will be used for when doing authentication
-     *
-     * @param authenticationManagerBuilder The authentication manager builder
-     * @throws IllegalStateException Throws an exception if the configuration fails
-     */
-    @Autowired
-    public void configureGlobal(final AuthenticationManagerBuilder authenticationManagerBuilder) throws IllegalStateException {
-        try {
-            authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        } catch (Exception exception) {
-            LOGGER.error("Unable to configure the authentication manager builder", exception);
-            throw new IllegalStateException("Unable to configure the authentication manager builder");
-        }
-    }
 
     /**
      * Create the password encoder
@@ -72,4 +58,23 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    /**
+     * Configure which attributes will be used for when doing authentication
+     *
+     * @param authenticationManagerBuilder The authentication manager builder
+     * @throws IllegalStateException Throws an exception if the configuration fails
+     */
+    @Order(2)
+    @Autowired
+    public void configureGlobal(final AuthenticationManagerBuilder authenticationManagerBuilder, @Lazy final PasswordEncoder passwordEncoder) throws IllegalStateException {
+        try {
+            authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        } catch (Exception exception) {
+            LOGGER.error("Unable to configure the authentication manager builder", exception);
+            throw new IllegalStateException("Unable to configure the authentication manager builder");
+        }
+    }
+
+
 }
