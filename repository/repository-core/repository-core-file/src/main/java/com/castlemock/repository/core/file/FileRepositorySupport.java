@@ -88,7 +88,7 @@ public class FileRepositorySupport {
 
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(file));
+            writer = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8));
             writer.write(data);
         } catch (Exception e) {
             LOGGER.error("Unable to save the following file: " + filename, e);
@@ -140,7 +140,7 @@ public class FileRepositorySupport {
             final JAXBContext context = JAXBContext.newInstance(type.getClass());
             final Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            writer = new FileWriter(filename);
+            writer = new FileWriter(filename, StandardCharsets.UTF_8);
             marshaller.marshal(type, writer);
         } catch (JAXBException e) {
             LOGGER.error("Unable to parse file: " + filename, e);
