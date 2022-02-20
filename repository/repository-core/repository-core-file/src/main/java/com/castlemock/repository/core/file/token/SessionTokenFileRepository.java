@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -148,7 +149,7 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
             JAXBContext context = JAXBContext.newInstance(SessionTokenList.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            writer = new FileWriter(filename);
+            writer = new FileWriter(filename, StandardCharsets.UTF_8);
             marshaller.marshal(tokens, writer);
         } catch (JAXBException e) {
             LOGGER.error("Unable to parse the following file: " + tokenFileName, e);

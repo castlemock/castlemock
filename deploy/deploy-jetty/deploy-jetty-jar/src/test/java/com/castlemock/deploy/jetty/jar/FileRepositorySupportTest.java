@@ -4,13 +4,17 @@ import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.soap.file.project.SoapMockResponseFileRepository;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FileRepositorySupportTest {
 
     @Test
-    public void testSave(){
+    public void testSave() throws IOException{
         final FileRepositorySupport fileRepositorySupport = new FileRepositorySupport();
         final FileRepository.HttpHeaderFile httpHeaderFile = new FileRepository.HttpHeaderFile();
         final SoapMockResponseFileRepository.SoapMockResponseFile soapMockResponseFile = new SoapMockResponseFileRepository.SoapMockResponseFile();
@@ -35,7 +39,7 @@ public class FileRepositorySupportTest {
                 "\n" +
                 "<soap:Body>\n" +
                 "  <m:GetPrice xmlns:m=\"https://www.w3schools.com/prices\">\n" +
-                "    <m:Item>Apples</m:Item>\n" +
+                "    <m:Item>Apples Maçãs</m:Item>\n" +
                 "  </m:GetPrice>\n" +
                 "</soap:Body>\n" +
                 "\n" +
@@ -43,8 +47,14 @@ public class FileRepositorySupportTest {
         soapMockResponseFile.setHttpHeaders(headers);
         soapMockResponseFile.setXpathExpressions(expressions);
 
-        // TODO Resolve test
-        //fileRepositorySupport.save(soapMockResponseFile, "/home/karl/.castlemock/soap/response/v2/0qirU2.res");
+        Path saveFilePath = Files.createTempFile(null, ".res");
+        
+        fileRepositorySupport.save(soapMockResponseFile, saveFilePath.toString());
+        String savedContent = fileRepositorySupport.load(saveFilePath.getParent().toString(), saveFilePath.getFileName().toString());
+        
+        Assertions.assertTrue(savedContent.contains("Apples Maçãs"));
+        
+        Files.deleteIfExists(saveFilePath);
     }
 
 }
