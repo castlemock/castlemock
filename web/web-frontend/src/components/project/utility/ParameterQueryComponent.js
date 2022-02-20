@@ -30,6 +30,7 @@ class ParameterQueryComponent extends PureComponent {
         this.setNewParameterMatchAny = this.setNewParameterMatchAny.bind(this);
         this.setNewParameterMatchCase = this.setNewParameterMatchCase.bind(this);
         this.setNewParameterMatchRegex = this.setNewParameterMatchRegex.bind(this);
+        this.setNewParameterUrlEncoded = this.setNewParameterUrlEncoded.bind(this);
 
         this.onAddParameterQueryClick = this.onAddParameterQueryClick.bind(this);
         this.onRemoveParameterQueryClick = this.onRemoveParameterQueryClick.bind(this);
@@ -65,6 +66,10 @@ class ParameterQueryComponent extends PureComponent {
                 dataField: 'matchRegex',
                 text: 'Match Regex',
                 sort: true
+            }, {
+                dataField: 'urlEncoded',
+                text: 'URL Encoded',
+                sort: true
             }
         ];
 
@@ -74,7 +79,8 @@ class ParameterQueryComponent extends PureComponent {
                 query: "",
                 matchAny: false,
                 matchCase: false,
-                matchRegex: false
+                matchRegex: false,
+                urlEncoded: false
             },
             resourceParameters: []
         };
@@ -146,6 +152,14 @@ class ParameterQueryComponent extends PureComponent {
         });
     }
 
+    setNewParameterUrlEncoded(urlEncoded) {
+        this.setState({ newParameterQuery: {
+                ...this.state.newParameterQuery,
+                urlEncoded: urlEncoded
+            }
+        });
+    }
+
     getResourceParameters() {
             axios
                 .get(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId + "/resource/" + this.props.resourceId + "/parameter")
@@ -197,6 +211,12 @@ class ParameterQueryComponent extends PureComponent {
                         <label className="col-sm-2 col-form-label">Match Regex</label>
                         <div className="col-sm-10">
                             <input type="checkbox" onChange={event => this.setNewParameterMatchRegex(event.target.checked)}/>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-sm-2 col-form-label">URL Encoded</label>
+                        <div className="col-sm-10">
+                            <input type="checkbox" onChange={event => this.setNewParameterUrlEncoded(event.target.checked)}/>
                         </div>
                     </div>
                     <div className="form-group row">

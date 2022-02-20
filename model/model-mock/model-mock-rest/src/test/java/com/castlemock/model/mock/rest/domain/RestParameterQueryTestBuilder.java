@@ -7,6 +7,7 @@ public final class RestParameterQueryTestBuilder {
     private Boolean matchCase;
     private Boolean matchAny;
     private Boolean matchRegex;
+    private Boolean urlEncoded;
 
     private RestParameterQueryTestBuilder() {
         this.parameter = "user";
@@ -14,6 +15,7 @@ public final class RestParameterQueryTestBuilder {
         this.matchCase = Boolean.FALSE;
         this.matchAny = Boolean.FALSE;
         this.matchRegex = Boolean.FALSE;
+        this.urlEncoded = Boolean.FALSE;
     }
 
     public RestParameterQueryTestBuilder parameter(final String parameter) {
@@ -41,6 +43,11 @@ public final class RestParameterQueryTestBuilder {
         return this;
     }
 
+    public RestParameterQueryTestBuilder urlEncoded(final Boolean urlEncoded) {
+        this.urlEncoded = urlEncoded;
+        return this;
+    }
+
     public static RestParameterQueryTestBuilder builder(){
         return new RestParameterQueryTestBuilder();
     }
@@ -52,6 +59,7 @@ public final class RestParameterQueryTestBuilder {
                 .matchCase(matchCase)
                 .matchAny(matchAny)
                 .matchRegex(matchRegex)
+                .urlEncoded(urlEncoded)
                 .build();
     }
 
