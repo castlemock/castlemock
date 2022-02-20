@@ -12,6 +12,7 @@ public class RestParameterQuery {
     private boolean matchCase;
     private boolean matchAny;
     private boolean matchRegex;
+    private boolean urlEncoded;
 
     public RestParameterQuery(){
 
@@ -23,6 +24,7 @@ public class RestParameterQuery {
         this.matchCase = Objects.requireNonNull(builder.matchCase);
         this.matchAny = Objects.requireNonNull(builder.matchAny);
         this.matchRegex = Objects.requireNonNull(builder.matchRegex);
+        this.urlEncoded = Objects.requireNonNull(builder.urlEncoded);
     }
 
     @XmlElement
@@ -70,21 +72,26 @@ public class RestParameterQuery {
         this.matchRegex = matchRegex;
     }
 
+    @XmlElement
+    public boolean getUrlEncoded() {
+        return urlEncoded;
+    }
+
+    public void setUrlEncoded(boolean urlEncoded) {
+        this.urlEncoded = urlEncoded;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RestParameterQuery that = (RestParameterQuery) o;
-        return matchCase == that.matchCase &&
-                matchAny == that.matchAny &&
-                matchRegex == that.matchRegex &&
-                Objects.equals(parameter, that.parameter) &&
-                Objects.equals(query, that.query);
+        return matchCase == that.matchCase && matchAny == that.matchAny && matchRegex == that.matchRegex && urlEncoded == that.urlEncoded && Objects.equals(parameter, that.parameter) && Objects.equals(query, that.query);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(parameter, query, matchCase, matchAny, matchRegex);
+        return Objects.hash(parameter, query, matchCase, matchAny, matchRegex, urlEncoded);
     }
 
     @Override
@@ -95,6 +102,7 @@ public class RestParameterQuery {
                 ", matchCase=" + matchCase +
                 ", matchAny=" + matchAny +
                 ", matchRegex=" + matchRegex +
+                ", urlEncoded=" + urlEncoded +
                 '}';
     }
 
@@ -104,7 +112,8 @@ public class RestParameterQuery {
                 .query(query)
                 .matchCase(matchCase)
                 .matchAny(matchAny)
-                .matchRegex(matchRegex);
+                .matchRegex(matchRegex)
+                .urlEncoded(urlEncoded);
     }
 
     public static Builder builder() {
@@ -117,6 +126,7 @@ public class RestParameterQuery {
         private Boolean matchCase;
         private Boolean matchAny;
         private Boolean matchRegex;
+        private Boolean urlEncoded;
 
         private Builder() {
         }
@@ -143,6 +153,11 @@ public class RestParameterQuery {
 
         public Builder matchRegex(final Boolean matchRegex) {
             this.matchRegex = matchRegex;
+            return this;
+        }
+
+        public Builder urlEncoded(final Boolean urlEncoded) {
+            this.urlEncoded = urlEncoded;
             return this;
         }
 

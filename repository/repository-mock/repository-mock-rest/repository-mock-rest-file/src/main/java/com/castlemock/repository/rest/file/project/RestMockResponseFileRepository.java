@@ -374,6 +374,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         private boolean matchCase;
         private boolean matchAny;
         private boolean matchRegex;
+        private boolean urlEncoded;
 
         @XmlElement
         public String getParameter() {
@@ -418,6 +419,15 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
 
         public void setMatchRegex(boolean matchRegex) {
             this.matchRegex = matchRegex;
+        }
+
+        @XmlElement
+        public boolean getUrlEncoded() {
+            return urlEncoded;
+        }
+
+        public void setUrlEncoded(boolean urlEncoded) {
+            this.urlEncoded = urlEncoded;
         }
     }
 

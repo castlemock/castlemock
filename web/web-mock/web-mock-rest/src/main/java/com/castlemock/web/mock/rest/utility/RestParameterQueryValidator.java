@@ -18,6 +18,8 @@ package com.castlemock.web.mock.rest.utility;
 
 import com.castlemock.model.mock.rest.domain.RestParameterQuery;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,6 +54,11 @@ public final class RestParameterQueryValidator {
 
     private static boolean validate(final String pathQuery,
                                     final RestParameterQuery parameterQuery){
+        String query = pathQuery;
+        if(parameterQuery.getUrlEncoded()) {
+            query = URLEncoder.encode(pathQuery, StandardCharsets.UTF_8);
+        }
+
         if(parameterQuery.getMatchAny()){
             return true;
         } else if(parameterQuery.getMatchRegex()){
@@ -59,13 +66,13 @@ public final class RestParameterQueryValidator {
                     Pattern.compile(parameterQuery.getQuery()) :
                     Pattern.compile(parameterQuery.getQuery(), Pattern.CASE_INSENSITIVE);
 
-            final Matcher matcher = pattern.matcher(pathQuery);
+            final Matcher matcher = pattern.matcher(query);
             return matcher.matches();
         } else if(parameterQuery.getMatchCase()){
-            return pathQuery.equals(parameterQuery.getQuery());
+            return query.equals(parameterQuery.getQuery());
         }
 
-        return pathQuery.equalsIgnoreCase(parameterQuery.getQuery());
+        return query.equalsIgnoreCase(parameterQuery.getQuery());
     }
 
 }

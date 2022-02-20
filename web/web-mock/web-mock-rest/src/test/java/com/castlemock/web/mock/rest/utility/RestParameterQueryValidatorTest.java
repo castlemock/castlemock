@@ -17,7 +17,9 @@
 package com.castlemock.web.mock.rest.utility;
 
 import com.castlemock.model.mock.rest.domain.RestParameterQuery;
+import com.castlemock.model.mock.rest.domain.RestParameterQueryTestBuilder;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,40 @@ public class RestParameterQueryValidatorTest {
         final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
 
         assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Validate match with URL encoded parameter: Encoding enabled")
+    public void canValidateMatchUrlEncodedEnabled(){
+        final RestParameterQuery parameterQuery = RestParameterQueryTestBuilder.builder()
+                .parameter("input")
+                .query("%3Cxml%3Etest%3C%2Fxml%3E")
+                .urlEncoded(true)
+                .build();
+
+        final List<RestParameterQuery> parameterQueries = List.of(parameterQuery);
+
+        final Map<String, Set<String>> pathParameters = Map.of("input", Set.of("<xml>test</xml>"));
+        final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
+
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Validate match with URL encoded parameter: Encoding disabled")
+    public void canValidateMatchUrlEncodedDisabled(){
+        final RestParameterQuery parameterQuery = RestParameterQueryTestBuilder.builder()
+                .parameter("input")
+                .query("%3Cxml%3Etest%3C%2Fxml%3E")
+                .urlEncoded(false)
+                .build();
+
+        final List<RestParameterQuery> parameterQueries = List.of(parameterQuery);
+
+        final Map<String, Set<String>> pathParameters = Map.of("input", Set.of("<xml>test</xml>"));
+        final boolean result = RestParameterQueryValidator.validate(parameterQueries, pathParameters);
+
+        assertFalse(result);
     }
 
     @Test
