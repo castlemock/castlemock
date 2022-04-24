@@ -29,7 +29,7 @@
         <guava.version>30.1.1-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
         <graphql.version>8.0</graphql.version>
-        <jackson.version>2.13.2</jackson.version>
+        <jackson.version>2.13.2.2</jackson.version>
         <jaxb.api.version>2.3.1</jaxb.api.version>
         <sun.jaxb.version>2.3.0</sun.jaxb.version>
         <mockito.version>1.10.19</mockito.version>
@@ -54,12 +54,12 @@
         <swagger.core.version>1.6.4</swagger.core.version>
         <commons.codec.version>1.14</commons.codec.version>
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
-        <tomcat.embedd.version>9.0.60</tomcat.embedd.version>
+        <tomcat.embedd.version>9.0.62</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
-        <swagger.parser.version>2.0.31</swagger.parser.version>
         <spring.boot.version>2.6.7</spring.boot.version>
+        <swagger.parser.version>2.0.32</swagger.parser.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
         <jackson.databind.version>2.11.2</jackson.databind.version>
