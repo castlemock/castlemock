@@ -5,7 +5,7 @@
   "homepage": ".",
   "dependencies": {
     "axios": "^0.26.0",
-    "@popperjs/core": "^2.11.4",
+    "@popperjs/core": "^2.11.5",
     "bootstrap": "^4.6.1",
     "classnames": "^2.3.1",
     "history": "^5.3.0",
