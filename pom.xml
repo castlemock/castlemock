@@ -35,7 +35,7 @@
         <mockito.version>1.10.19</mockito.version>
         <snakeyaml.version>1.30</snakeyaml.version>
         <jaxb.impl.version>2.3.6</jaxb.impl.version>
-        <javafaker.version>1.0.2</javafaker.version>
+        <datafaker.version>1.6.0</datafaker.version>
         <springfox.version>3.0.0</springfox.version>
         <maven.jar.version>3.1.1</maven.jar.version>
         <json.path.version>2.7.0</json.path.version>
@@ -368,9 +368,9 @@
                 <version>${json.path.version}</version>
             </dependency>
             <dependency>
-			    <groupId>com.github.javafaker</groupId>
-			    <artifactId>javafaker</artifactId>
-			    <version>${javafaker.version}</version>
+			    <groupId>net.datafaker</groupId>
+			    <artifactId>datafaker</artifactId>
+			    <version>${datafaker.version}</version>
 			</dependency>
             <dependency>
                 <groupId>javax.activation</groupId>
