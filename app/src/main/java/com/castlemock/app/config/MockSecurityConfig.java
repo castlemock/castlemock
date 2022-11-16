@@ -29,6 +29,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @Configuration
 @Order(1)
+@SuppressWarnings("deprecation")
 public class MockSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**

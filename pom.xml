@@ -18,7 +18,7 @@
         <java.version>1.11</java.version>
         <jaxb.version>2.3.1</jaxb.version>
         <dozer.version>5.5.1</dozer.version>
-        <antlr.version>4.10.1</antlr.version>
+        <antlr.version>4.11.1</antlr.version>
         <log4j.version>2.17.2</log4j.version>
         <slf4j.version>1.7.31</slf4j.version>
         <junit.version>4.13.1</junit.version>
@@ -29,11 +29,11 @@
         <guava.version>30.1.1-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
         <graphql.version>8.0</graphql.version>
-        <jackson.version>2.13.4.2</jackson.version>
+        <jackson.version>2.14.0</jackson.version>
         <jaxb.api.version>2.3.1</jaxb.api.version>
         <sun.jaxb.version>2.3.0</sun.jaxb.version>
         <mockito.version>1.10.19</mockito.version>
-        <snakeyaml.version>1.32</snakeyaml.version>
+        <snakeyaml.version>1.33</snakeyaml.version>
         <jaxb.impl.version>2.3.6</jaxb.impl.version>
         <javafaker.version>1.0.2</javafaker.version>
         <springfox.version>3.0.0</springfox.version>
@@ -47,18 +47,18 @@
         <commons.io.version>2.10.0</commons.io.version>
         <httpclient.version>4.5.13</httpclient.version>
         <servlet.api.version>4.0.1</servlet.api.version>
-        <antlr.maven.version>4.9.2</antlr.maven.version>
+        <antlr.maven.version>4.11.1</antlr.maven.version>
         <commons.lang.version>3.12.0</commons.lang.version>
         <raml.parser.version>1.0.51</raml.parser.version>
         <jaxb.runtime.version>2.3.3</jaxb.runtime.version>
         <swagger.core.version>1.6.4</swagger.core.version>
-        <commons.codec.version>1.14</commons.codec.version>
+        <commons.codec.version>1.15</commons.codec.version>
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
         <tomcat.embedd.version>9.0.68</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
-        <spring.boot.version>2.6.13</spring.boot.version>
+        <spring.boot.version>2.7.5</spring.boot.version>
         <swagger.parser.version>2.1.9</swagger.parser.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
@@ -66,7 +66,7 @@
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <spring.framework.version>5.3.20</spring.framework.version>
+        <spring.framework.version>5.3.23</spring.framework.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
     </properties>
 
