@@ -34,7 +34,7 @@
         <sun.jaxb.version>2.3.0</sun.jaxb.version>
         <mockito.version>1.10.19</mockito.version>
         <snakeyaml.version>1.33</snakeyaml.version>
-        <jaxb.impl.version>2.3.6</jaxb.impl.version>
+        <jaxb.impl.version>2.3.7</jaxb.impl.version>
         <javafaker.version>1.0.2</javafaker.version>
         <springfox.version>3.0.0</springfox.version>
         <maven.jar.version>3.1.1</maven.jar.version>
