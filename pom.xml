@@ -24,7 +24,7 @@
         <junit.version>4.13.1</junit.version>
         <graphql.version>8.0</graphql.version>
         <jsr305.version>3.0.2</jsr305.version>
-        <cxf.rt.version>3.5.4</cxf.rt.version>
+        <cxf.rt.version>3.5.5</cxf.rt.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
         <guava.version>30.1.1-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
