@@ -84,7 +84,6 @@ Documentation can be found under our [GitHub Wiki](https://github.com/castlemock
 
 ## Communication
 - Website: [https://www.castlemock.com/](https://www.castlemock.com/)
-- Twitter: [@CastleMock](http://twitter.com/CastleMock)
 - [GitHub Issues](https://github.com/castlemock/castlemock/issues)
 - [Docker Hub](https://hub.docker.com/r/castlemock/castlemock/)
 
