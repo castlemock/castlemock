@@ -351,10 +351,9 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
         SoapMockResponse mockResponse = null;
         if(mockResponses.isEmpty()){
-            if (soapOperation.getForwardedEndpoint() == null) {
-                throw new SoapException("No Mocked Responses where found and no forwarded endpoint is defined.");
+            if (soapOperation.getForwardedEndpoint() != null) {
+                return forwardRequest(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
             }
-            return forwardRequest(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
         } else if(soapOperation.getResponseStrategy().equals(SoapResponseStrategy.RANDOM)){
             final Integer responseIndex = RANDOM.nextInt(mockResponses.size());
             mockResponse = mockResponses.get(responseIndex);
@@ -384,6 +383,10 @@ public abstract class AbstractSoapServiceController extends AbstractController{
             if(mockResponse == null){
                 LOGGER.info("Unable to match the input XPath to a response");
                 mockResponse = this.getDefaultMockResponse(soapOperation, mockResponses).orElse(null);
+
+                if (mockResponse == null && soapOperation.getForwardedEndpoint() != null) {
+                    return forwardRequest(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
+                }
             }
         }
 

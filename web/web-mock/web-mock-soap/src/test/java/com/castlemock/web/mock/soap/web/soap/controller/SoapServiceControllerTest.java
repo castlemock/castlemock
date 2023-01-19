@@ -194,6 +194,36 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testMockedAutomaticForwardXPathMockedResponseNotMatchingAndForwardURLIsDefined(){
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final SoapOperation soapOperation = getSoapOperation();
+        soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
+        SoapOperation spySoapOperation = spy(soapOperation);
+
+        final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
+                .projectId(PROJECT_ID)
+                .portId(SOAP_PORT_ID)
+                .operationId(SOAP_OPERATION_ID)
+                .operation(spySoapOperation)
+                .build();
+
+        when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
+        when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
+                SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
+
+        try {
+            soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
+        } catch (SoapException ignored) {
+            // This exception is excepted since the forwarded request cannot be fullfilled in this test due to a connection refused error
+        }
+
+        verify(spySoapOperation, times(2)).getForwardedEndpoint();
+    }
+
+    @Test
     public void testMockedSequence(){
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
@@ -319,28 +349,32 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).get(0));
     }
 
-    @Test(expected = SoapException.class)
-    public void testMockedXpathNoMatchAndNoDefaultResponse(){
+    @Test
+    public void testMockedXpathNoMatchAndNoDefaultResponseAndNoForwardingURL(){
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
         final SoapOperation soapOperation = getSoapOperation();
-
+        soapOperation.setForwardedEndpoint(null);
         soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
+        SoapOperation spySoapOperation = spy(soapOperation);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
                 .portId(SOAP_PORT_ID)
                 .operationId(SOAP_OPERATION_ID)
-                .operation(soapOperation)
+                .operation(spySoapOperation)
                 .build();
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
                 SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
 
-        soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
+        Assert.assertThrows(SoapException.class, () -> {
+            soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
+        });
+        verify(spySoapOperation, times(1)).getForwardedEndpoint();
     }
 
 
