@@ -351,7 +351,10 @@ public abstract class AbstractSoapServiceController extends AbstractController{
 
         SoapMockResponse mockResponse = null;
         if(mockResponses.isEmpty()){
-            throw new SoapException("No mocked response created for operation " + soapOperation.getName());
+            if (soapOperation.getForwardedEndpoint() == null) {
+                throw new SoapException("No Mocked Responses where found and no forwarded endpoint is defined.");
+            }
+            return forwardRequest(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
         } else if(soapOperation.getResponseStrategy().equals(SoapResponseStrategy.RANDOM)){
             final Integer responseIndex = RANDOM.nextInt(mockResponses.size());
             mockResponse = mockResponses.get(responseIndex);

@@ -64,7 +64,7 @@ import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Karl Dahlgren
@@ -136,6 +136,62 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
             "    </wsdl:port>\n" +
             "  </wsdl:service>\n" +
             "</wsdl:definitions>";
+
+    @Test
+    public void testMockedAutomaticForwarNoMockedResponseAndForwardURLIsDefined(){
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final SoapOperation soapOperation = getSoapOperationWithNoMockedResponses();
+        soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
+        SoapOperation spySoapOperation = spy(soapOperation);
+
+        final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
+                .projectId(PROJECT_ID)
+                .portId(SOAP_PORT_ID)
+                .operationId(SOAP_OPERATION_ID)
+                .operation(spySoapOperation)
+                .build();
+
+        when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
+        when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
+                SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
+
+        try {
+            soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
+        } catch (SoapException ignored) {
+            // This exception is excepted since the forwarded request cannot be fullfilled in this test due to a connection refused error
+        }
+
+        // if getForwardedEndopointIsCalled is called it means we are actually forwarding the request
+        verify(spySoapOperation, times(2)).getForwardedEndpoint();
+    }
+
+    @Test(expected = SoapException.class)
+    public void testMockedAutomaticForwarNoMockedResponseAndNoForwardURLIsDefined(){
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final SoapOperation soapOperation = getSoapOperationWithNoMockedResponses();
+        soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
+        soapOperation.setForwardedEndpoint(null);
+        SoapOperation spySoapOperation = spy(soapOperation);
+
+        final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
+                .projectId(PROJECT_ID)
+                .portId(SOAP_PORT_ID)
+                .operationId(SOAP_OPERATION_ID)
+                .operation(spySoapOperation)
+                .build();
+
+        when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
+        when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
+                SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
+
+        soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
+    }
 
     @Test
     public void testMockedSequence(){
@@ -494,6 +550,33 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
 
     private HttpServletResponse getHttpServletResponse(){
         return Mockito.mock(HttpServletResponse.class);
+    }
+
+    private SoapOperation getSoapOperationWithNoMockedResponses(){
+        final HttpHeader contentTypeHeader = new HttpHeader();
+        contentTypeHeader.setName(CONTENT_TYPE_HEADER);
+        contentTypeHeader.setValue(APPLICATION_XML);
+
+        final HttpHeader acceptHeader = new HttpHeader();
+        acceptHeader.setName(ACCEPT_HEADER);
+        acceptHeader.setValue(APPLICATION_XML);
+
+        final SoapOperation soapOperation = new SoapOperation();
+        soapOperation.setCurrentResponseSequenceIndex(0);
+        soapOperation.setForwardedEndpoint(FORWARD_ENDPOINT);
+        soapOperation.setHttpMethod(HttpMethod.GET);
+        soapOperation.setId(SOAP_OPERATION_ID);
+        soapOperation.setInvokeAddress("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH +
+                PROJECT + SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
+        soapOperation.setName("SOAP operation name");
+        soapOperation.setNetworkDelay(0L);
+        soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
+        soapOperation.setSimulateNetworkDelay(false);
+        soapOperation.setStatus(SoapOperationStatus.MOCKED);
+        soapOperation.setMockResponses(Collections.emptyList());
+        soapOperation.setMockOnFailure(false);
+
+        return soapOperation;
     }
 
     private SoapOperation getSoapOperation(){
