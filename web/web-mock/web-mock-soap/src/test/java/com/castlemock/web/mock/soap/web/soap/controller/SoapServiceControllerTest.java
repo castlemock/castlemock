@@ -19,15 +19,7 @@ package com.castlemock.web.mock.soap.web.soap.controller;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.mock.soap.domain.SoapMockResponse;
-import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
-import com.castlemock.model.mock.soap.domain.SoapProject;
-import com.castlemock.model.mock.soap.domain.SoapResource;
-import com.castlemock.model.mock.soap.domain.SoapResourceType;
-import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
-import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
+import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.service.mock.soap.project.input.IdentifySoapOperationInput;
 import com.castlemock.service.mock.soap.project.input.LoadSoapResourceInput;
 import com.castlemock.service.mock.soap.project.input.ReadSoapProjectInput;
@@ -148,18 +140,20 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
 
         final SoapOperation soapOperation = getSoapOperationWithNoMockedResponses();
         soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
-        SoapOperation spySoapOperation = spy(soapOperation);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
             .projectId(PROJECT_ID)
             .portId(SOAP_PORT_ID)
             .operationId(SOAP_OPERATION_ID)
-            .operation(spySoapOperation)
+            .operation(soapOperation)
             .build();
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
             SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
+
+        SoapClient soapClientSpy = spy(this.soapClient);
+        soapServiceController = new SoapServiceController(serviceProcessor, this.servletContext, soapClientSpy);
 
         try {
             soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
@@ -167,8 +161,8 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
             // This exception is excepted since the forwarded request cannot be fullfilled in this test due to a connection refused error
         }
 
-        // if getForwardedEndopointIsCalled is called it means we are actually forwarding the request
-        verify(spySoapOperation, times(2)).getForwardedEndpoint();
+        // if getResponse is called it means we are actually forwarding the request
+        verify(soapClientSpy, times(1)).getResponse(any(SoapRequest.class), any(SoapOperation.class));
     }
 
     @Test(expected = SoapException.class)
@@ -204,18 +198,20 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
 
         final SoapOperation soapOperation = getSoapOperation();
         soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
-        SoapOperation spySoapOperation = spy(soapOperation);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
             .projectId(PROJECT_ID)
             .portId(SOAP_PORT_ID)
             .operationId(SOAP_OPERATION_ID)
-            .operation(spySoapOperation)
+            .operation(soapOperation)
             .build();
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
             SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
+
+        SoapClient soapClientSpy = spy(this.soapClient);
+        soapServiceController = new SoapServiceController(serviceProcessor, this.servletContext, soapClientSpy);
 
         try {
             soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
@@ -223,7 +219,8 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
             // This exception is excepted since the forwarded request cannot be fullfilled in this test due to a connection refused error
         }
 
-        verify(spySoapOperation, times(2)).getForwardedEndpoint();
+        // if getResponse is called it means we are actually forwarding the request
+        verify(soapClientSpy, times(1)).getResponse(any(SoapRequest.class), any(SoapOperation.class));
     }
 
     @Test
@@ -361,23 +358,25 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final SoapOperation soapOperation = getSoapOperation();
         soapOperation.setForwardedEndpoint(null);
         soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
-        SoapOperation spySoapOperation = spy(soapOperation);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
             .projectId(PROJECT_ID)
             .portId(SOAP_PORT_ID)
             .operationId(SOAP_OPERATION_ID)
-            .operation(spySoapOperation)
+            .operation(soapOperation)
             .build();
 
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
             SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
 
+        SoapClient soapClientSpy = spy(this.soapClient);
+        soapServiceController = new SoapServiceController(serviceProcessor, this.servletContext, soapClientSpy);
+
         Assert.assertThrows(SoapException.class, () -> {
             soapServiceController.postMethod(PROJECT_ID, httpServletRequest, httpServletResponse);
         });
-        verify(spySoapOperation, times(1)).getForwardedEndpoint();
+        verify(soapClientSpy, times(0)).getResponse(any(SoapRequest.class), any(SoapOperation.class));
     }
 
 
