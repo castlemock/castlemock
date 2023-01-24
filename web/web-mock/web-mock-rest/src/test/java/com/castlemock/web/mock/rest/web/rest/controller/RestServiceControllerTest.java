@@ -33,6 +33,7 @@ import com.castlemock.model.mock.rest.domain.RestXPathExpression;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.core.controller.AbstractController;
+import com.castlemock.web.mock.rest.controller.mock.RestClient;
 import com.castlemock.web.mock.rest.controller.mock.RestServiceController;
 import com.castlemock.web.mock.rest.web.AbstractControllerTest;
 import org.junit.Assert;
@@ -72,6 +73,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private RestServiceController restServiceController;
     @Mock
     private ServiceProcessor serviceProcessor;
+    @Mock
+    private RestClient restClient;
 
     private static final String PROJECT_ID = "ProjectId";
     private static final String APPLICATION_ID = "ApplicationId";
