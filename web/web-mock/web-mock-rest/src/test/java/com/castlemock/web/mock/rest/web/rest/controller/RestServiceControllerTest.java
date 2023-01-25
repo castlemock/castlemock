@@ -19,22 +19,13 @@ package com.castlemock.web.mock.rest.web.rest.controller;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
-import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
-import com.castlemock.model.mock.rest.domain.RestMethodTestBuilder;
-import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
-import com.castlemock.model.mock.rest.domain.RestMockResponseTestBuilder;
-import com.castlemock.model.mock.rest.domain.RestParameterQuery;
-import com.castlemock.model.mock.rest.domain.RestParameterQueryTestBuilder;
-import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
-import com.castlemock.model.mock.rest.domain.RestXPathExpression;
+import com.castlemock.model.mock.rest.domain.*;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.core.controller.AbstractController;
 import com.castlemock.web.mock.rest.controller.mock.RestClient;
 import com.castlemock.web.mock.rest.controller.mock.RestServiceController;
+import com.castlemock.web.mock.rest.model.RestException;
 import com.castlemock.web.mock.rest.web.AbstractControllerTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -61,7 +52,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Karl Dahlgren
@@ -231,6 +222,28 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
     }
 
+    @Test
+    public void testForwardingStrategy() {
+        RestClient restClientSpy = spy(restClient);
+        restServiceController = new RestServiceController(this.serviceProcessor, this.servletContext, restClientSpy);
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestMethod restMethod = getForwardingRestMethod();
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .build();
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+
+        Assert.assertThrows(RestException.class, () ->
+                restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse));
+
+        verify(restClientSpy, times(1)).getResponse(any(RestRequest.class), any(RestMethod.class));
+    }
 
     @Test
     public void testEcho() {
@@ -509,6 +522,19 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .mockResponses(Arrays.asList(restMockResponse1, restMockResponse2))
                 .defaultResponseName("Mocked response 2")
                 .defaultMockResponseId("MockResponseId2")
+                .build();
+    }
+
+    private RestMethod getForwardingRestMethod() {
+        return RestMethodTestBuilder.builder()
+                .forwardedEndpoint(FORWARD_ENDPOINT)
+                .httpMethod(HttpMethod.GET)
+                .id(METHOD_ID)
+                .uri("/method/{variable}")
+                .name("Method name")
+                .networkDelay(0L)
+                .simulateNetworkDelay(Boolean.FALSE)
+                .status(RestMethodStatus.FORWARDED)
                 .build();
     }
 
