@@ -32,6 +32,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -64,7 +65,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private RestServiceController restServiceController;
     @Mock
     private ServiceProcessor serviceProcessor;
-    @Mock
+    @Spy
     private RestClient restClient;
 
     private static final String PROJECT_ID = "ProjectId";
@@ -224,8 +225,6 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
     @Test
     public void testForwardingStrategy() {
-        RestClient restClientSpy = spy(restClient);
-        restServiceController = new RestServiceController(this.serviceProcessor, this.servletContext, restClientSpy);
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
@@ -242,7 +241,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertThrows(RestException.class, () ->
                 restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse));
 
-        verify(restClientSpy, times(1)).getResponse(any(RestRequest.class), any(RestMethod.class));
+        verify(restClient, times(1)).getResponse(any(RestRequest.class), any(RestMethod.class));
     }
 
     @Test
@@ -250,8 +249,6 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
-        RestClient restClientSpy = spy(restClient);
-        restServiceController = new RestServiceController(this.serviceProcessor, this.servletContext, restClientSpy);
 
         final RestMethod restMethod = getQueryNotMatchingNotDefaultResponseRestMethod();
 
@@ -270,7 +267,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertThrows(RestException.class, () ->
                 restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse));
 
-        verify(restClientSpy, times(1)).getResponse(any(RestRequest.class), any(RestMethod.class));
+        verify(restClient, times(1)).getResponse(any(RestRequest.class), any(RestMethod.class));
     }
 
     @Test
@@ -278,8 +275,6 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
-        RestClient restClientSpy = spy(restClient);
-        restServiceController = new RestServiceController(this.serviceProcessor, this.servletContext, restClientSpy);
 
         final RestMethod restMethod = getQueryNotMatchingAndDefaultResponseRestMethod();
 
@@ -297,7 +292,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
         restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
 
-        verify(restClientSpy, times(0)).getResponse(any(RestRequest.class), any(RestMethod.class));
+        verify(restClient, times(0)).getResponse(any(RestRequest.class), any(RestMethod.class));
     }
 
     @Test
