@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project.converter;
 
 import com.castlemock.model.mock.rest.RestDefinitionType;
 import com.castlemock.service.core.manager.FileManager;
+import com.castlemock.service.mock.rest.project.converter.openapi.OpenApiRestDefinitionConverter;
 import com.castlemock.service.mock.rest.project.converter.raml.RAMLRestDefinitionConverter;
 import com.castlemock.service.mock.rest.project.converter.swagger.SwaggerRestDefinitionConverter;
 import com.castlemock.service.mock.rest.project.converter.wadl.WADLRestDefinitionConverter;
@@ -53,6 +54,8 @@ public final class RestDefinitionConverterFactory {
                 return new WADLRestDefinitionConverter(fileManager);
             case SWAGGER:
                 return new SwaggerRestDefinitionConverter();
+            case OPENAPI:
+                return new OpenApiRestDefinitionConverter();
             case RAML:
                 return new RAMLRestDefinitionConverter();
         }

@@ -22,7 +22,7 @@ package com.castlemock.model.mock.rest;
  */
 public enum RestDefinitionType {
 
-    SWAGGER("Swagger"), WADL("WADL"), RAML("RAML");
+    SWAGGER("Swagger"), OPENAPI("Openapi"), WADL("WADL"), RAML("RAML");
 
 
     private final String displayName;
