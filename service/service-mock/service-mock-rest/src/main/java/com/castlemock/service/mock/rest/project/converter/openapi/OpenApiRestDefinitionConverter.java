@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Karl Dahlgren
+ * Copyright 2023 Jebish Moses
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +29,16 @@ import io.swagger.v3.oas.models.headers.Header;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.parser.core.models.SwaggerParseResult;
+import io.swagger.v3.parser.core.models.ParseOptions;
 import joptsimple.internal.Strings;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.File;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * The {@link OpenApiRestDefinitionConverter} provides OpenAPI V3 related functionality.
@@ -49,8 +54,11 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
      */
     @Override
     public List<RestApplication> convert(final File file, final boolean generateResponse) {
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setResolve(true);
+        parseOptions.setResolveFully(true);
         final String openApiContent = FileUtility.getFileContent(file);
-        SwaggerParseResult result = new OpenAPIParser().readContents(openApiContent, null, null);
+        SwaggerParseResult result = new OpenAPIParser().readContents(openApiContent, null, parseOptions);
         OpenAPI openAPI = result.getOpenAPI();
         final RestApplication restApplication = convertOpenApi(openAPI, generateResponse);
         return List.of(restApplication);
@@ -66,7 +74,10 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
      */
     @Override
     public List<RestApplication> convert(final String location, final boolean generateResponse) {
-        SwaggerParseResult result = new OpenAPIParser().readLocation(location, null, null);
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setResolve(true);
+        parseOptions.setResolveFully(true);
+        final SwaggerParseResult result = new OpenAPIParser().readLocation(location, null, parseOptions);
         OpenAPI openAPI = result.getOpenAPI();
         final RestApplication restApplication = convertOpenApi(openAPI, generateResponse);
         return List.of(restApplication);
@@ -297,3 +308,4 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
                 "from the following swagger config: " + openAPI);
     }
 }
+
