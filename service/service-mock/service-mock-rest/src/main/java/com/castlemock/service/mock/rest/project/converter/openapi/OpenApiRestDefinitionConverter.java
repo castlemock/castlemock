@@ -153,7 +153,7 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
      */
     private String getForwardAddress(final OpenAPI openAPI) {
         if (!openAPI.getServers().isEmpty() && openAPI.getServers().get(0).getUrl() != null) {
-            openAPI.getServers().get(0).getUrl();
+            return openAPI.getServers().get(0).getUrl();
         }
         return Strings.EMPTY;
     }
@@ -269,7 +269,6 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
                 String headerName = headerEntry.getKey();
                 HttpHeader httpHeader = new HttpHeader();
                 httpHeader.setName(headerName);
-                // Swagger does not include an example value for the response.
                 restMockResponse.getHttpHeaders().add(httpHeader);
             }
         }
