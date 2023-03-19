@@ -19,7 +19,7 @@
         <jaxb.version>2.3.1</jaxb.version>
         <dozer.version>5.5.1</dozer.version>
         <antlr.version>4.12.0</antlr.version>
-        <log4j.version>2.19.0</log4j.version>
+        <log4j.version>2.20.0</log4j.version>
         <slf4j.version>1.7.31</slf4j.version>
         <junit.version>4.13.1</junit.version>
         <graphql.version>8.0</graphql.version>
@@ -54,7 +54,7 @@
         <swagger.core.version>1.6.4</swagger.core.version>
         <commons.codec.version>1.15</commons.codec.version>
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
-        <tomcat.embedd.version>9.0.71</tomcat.embedd.version>
+        <tomcat.embedd.version>9.0.72</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
