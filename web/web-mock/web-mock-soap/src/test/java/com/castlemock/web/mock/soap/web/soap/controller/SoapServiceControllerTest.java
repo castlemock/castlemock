@@ -19,7 +19,16 @@ package com.castlemock.web.mock.soap.web.soap.controller;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.mock.soap.domain.*;
+import com.castlemock.model.mock.soap.domain.SoapMockResponse;
+import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
+import com.castlemock.model.mock.soap.domain.SoapOperation;
+import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
+import com.castlemock.model.mock.soap.domain.SoapProject;
+import com.castlemock.model.mock.soap.domain.SoapRequest;
+import com.castlemock.model.mock.soap.domain.SoapResource;
+import com.castlemock.model.mock.soap.domain.SoapResourceType;
+import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
+import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
 import com.castlemock.service.mock.soap.project.input.IdentifySoapOperationInput;
 import com.castlemock.service.mock.soap.project.input.LoadSoapResourceInput;
 import com.castlemock.service.mock.soap.project.input.ReadSoapProjectInput;
@@ -58,7 +67,10 @@ import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Karl Dahlgren

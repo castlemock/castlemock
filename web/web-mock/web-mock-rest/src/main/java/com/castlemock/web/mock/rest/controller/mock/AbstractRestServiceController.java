@@ -25,7 +25,16 @@ import com.castlemock.model.core.utility.XPathUtility;
 import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
-import com.castlemock.model.mock.rest.domain.*;
+import com.castlemock.model.mock.rest.domain.RestEvent;
+import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
+import com.castlemock.model.mock.rest.domain.RestMethod;
+import com.castlemock.model.mock.rest.domain.RestMethodStatus;
+import com.castlemock.model.mock.rest.domain.RestMockResponse;
+import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
+import com.castlemock.model.mock.rest.domain.RestRequest;
+import com.castlemock.model.mock.rest.domain.RestResponse;
+import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
+import com.castlemock.model.mock.rest.domain.RestXPathExpression;
 import com.castlemock.service.mock.rest.event.input.CreateRestEventInput;
 import com.castlemock.service.mock.rest.project.input.CreateRestMockResponseInput;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
@@ -50,7 +59,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -241,13 +260,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             return mockResponse(request, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
         }
 
-
-        Optional<RestResponse> optionalRestResponse = restClient.getResponse(request, restMethod);
-        if (optionalRestResponse.isPresent()) {
-            return optionalRestResponse.get();
-        } else {
-            throw new RestException("Unable to forward request to configured endpoint");
-        }
+        return restClient.getResponse(request, restMethod).orElseThrow(() -> new RestException("Unable to forward request to configured endpoint"));
     }
 
     /**
