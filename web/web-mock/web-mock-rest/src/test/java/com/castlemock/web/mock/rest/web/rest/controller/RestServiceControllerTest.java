@@ -238,14 +238,40 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
 
-        Assert.assertThrows(RestException.class, () ->
-                restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse));
+        restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
 
         verify(restClient, times(1)).getResponse(any(RestRequest.class), any(RestMethod.class));
     }
 
     @Test
-    public void testMockedQueryNoMatchNoDefaultResponseAndForwardingUrl() {
+    public void testMockedQueryNoMatchNoDefaultResponseAndForwardingUrlWithoutAutomaticForward() {
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestMethod restMethod = getQueryNotMatchingNotDefaultResponseRestMethod();
+        restMethod.setAutomaticForward(false);
+
+        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+
+        Assert.assertThrows(RestException.class, () ->
+                restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse));
+
+        verify(restClient, times(0)).getResponse(any(RestRequest.class), any(RestMethod.class));
+    }
+
+    @Test
+    public void testMockedQueryNoMatchNoDefaultResponseAndForwardingUrlWithAutomaticForward() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -264,8 +290,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
 
-        Assert.assertThrows(RestException.class, () ->
-                restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse));
+        restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
 
         verify(restClient, times(1)).getResponse(any(RestRequest.class), any(RestMethod.class));
     }
@@ -643,6 +668,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         return RestMethodTestBuilder.builder()
                 .currentResponseSequenceIndex(0)
                 .forwardedEndpoint(FORWARD_ENDPOINT)
+                .automaticForward(true)
                 .httpMethod(HttpMethod.GET)
                 .id(METHOD_ID)
                 .uri("/method/{variable}")

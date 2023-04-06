@@ -23,6 +23,7 @@ public final class RestMethodTestBuilder {
     private List<RestMockResponse> mockResponses;
     private String uri;
     private String defaultResponseName;
+    private Boolean automaticForward;
 
     private RestMethodTestBuilder(){
         this.id = "OSIFJL";
@@ -41,6 +42,7 @@ public final class RestMethodTestBuilder {
         this.mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
         this.uri = "/";
         this.defaultResponseName = "";
+        this.automaticForward = Boolean.FALSE;
 
         this.mockResponses.add(RestMockResponseTestBuilder.builder().build());
     }
@@ -126,6 +128,11 @@ public final class RestMethodTestBuilder {
         return this;
     }
 
+    public RestMethodTestBuilder automaticForward(final Boolean automaticForward) {
+        this.automaticForward = automaticForward;
+        return this;
+    }
+
     public static RestMethodTestBuilder builder(){
         return new RestMethodTestBuilder();
     }
@@ -148,6 +155,7 @@ public final class RestMethodTestBuilder {
                 .mockResponses(mockResponses)
                 .uri(uri)
                 .defaultResponseName(defaultResponseName)
+                .automaticForward(automaticForward)
                 .build();
     }
 }

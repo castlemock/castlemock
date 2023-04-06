@@ -219,6 +219,10 @@ class RestMethod extends PureComponent {
                             <dd className="col-sm-9">{this.state.method.forwardedEndpoint}</dd>
                         </dl>
                         <dl className="row">
+                            <dt className="col-sm-3 content-title">Automatic forward with no match</dt>
+                            <dd className="col-sm-9"><input type="checkbox" checked={this.state.method.automaticForward} disabled={true}/></dd>
+                        </dl>
+                        <dl className="row">
                             <dt className="col-sm-3 content-title">Simulate network delay</dt>
                             <dd className="col-sm-9"><input type="checkbox" checked={this.state.method.simulateNetworkDelay} disabled={true}/></dd>
                         </dl>

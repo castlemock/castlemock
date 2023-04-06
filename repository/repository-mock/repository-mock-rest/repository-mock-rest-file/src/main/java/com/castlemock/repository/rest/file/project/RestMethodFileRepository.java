@@ -237,6 +237,8 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         private long networkDelay;
         @Mapping("defaultMockResponseId")
         private String defaultMockResponseId;
+        @Mapping("automaticForward")
+        private boolean automaticForward;
 
         @Override
         @XmlElement

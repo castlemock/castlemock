@@ -471,7 +471,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             }
         }
 
-        if (mockResponse == null && restMethod.getForwardedEndpoint() != null) {
+        if (mockResponse == null && restMethod.getAutomaticForward() && restMethod.getForwardedEndpoint() != null) {
             return forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
         }
 

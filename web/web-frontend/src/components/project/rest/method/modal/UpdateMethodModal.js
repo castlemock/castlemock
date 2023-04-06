@@ -35,6 +35,7 @@ class UpdateMethodModal extends PureComponent {
         this.onResponseStrategyChange = this.onResponseStrategyChange.bind(this);
         this.onForwardedEndpointChange = this.onForwardedEndpointChange.bind(this);
         this.onSimulateNetworkDelayChange = this.onSimulateNetworkDelayChange.bind(this);
+        this.onAutomaticForward = this.onAutomaticForward.bind(this);
         this.onNetworkDelayChange = this.onNetworkDelayChange.bind(this);
         this.onUpdateMethodClick = this.onUpdateMethodClick.bind(this);
         this.onDefaultMockResponseIdChange = this.onDefaultMockResponseIdChange.bind(this);
@@ -84,7 +85,8 @@ class UpdateMethodModal extends PureComponent {
     onForwardedEndpointChange(forwardedEndpoint){
         this.setState({ updateMethod: {
                 ...this.state.updateMethod,
-                forwardedEndpoint: forwardedEndpoint
+                forwardedEndpoint: forwardedEndpoint,
+                automaticForward: forwardedEndpoint ? this.state.updateMethod.automaticForward : false
             }
         });
     }
@@ -93,6 +95,14 @@ class UpdateMethodModal extends PureComponent {
         this.setState({ updateMethod: {
                 ...this.state.updateMethod,
                 simulateNetworkDelay: simulateNetworkDelay
+            }
+        });
+    }
+
+    onAutomaticForward(automaticForward){
+        this.setState({ updateMethod: {
+                ...this.state.updateMethod,
+                automaticForward: automaticForward
             }
         });
     }
@@ -118,7 +128,8 @@ class UpdateMethodModal extends PureComponent {
                         forwardedEndpoint: response.data.forwardedEndpoint,
                         simulateNetworkDelay: response.data.simulateNetworkDelay,
                         networkDelay: response.data.networkDelay,
-                        defaultMockResponseId: response.data.defaultMockResponseId
+                        defaultMockResponseId: response.data.defaultMockResponseId,
+                        automaticForward: response.data.automaticForward,
                     },
                     mockResponses: response.data.mockResponses
                 });
@@ -129,9 +140,11 @@ class UpdateMethodModal extends PureComponent {
     }
 
     onDefaultMockResponseIdChange(defaultMockResponseId){
+        console.log(defaultMockResponseId)
         this.setState({ updateMethod: {
                 ...this.state.updateMethod,
-                defaultMockResponseId: defaultMockResponseId
+                defaultMockResponseId: defaultMockResponseId,
+                automaticForward: defaultMockResponseId == "-- select an option --" ? this.state.updateMethod.automaticForward : false
             }
         });
     }
@@ -146,6 +159,11 @@ class UpdateMethodModal extends PureComponent {
             .catch(error => {
                 validateErrorResponse(error)
             });
+    }
+
+    canEnableAutomaticForward() {
+        return this.state.updateMethod.forwardedEndpoint
+            && (this.state.updateMethod.defaultMockResponseId == null || this.state.updateMethod.defaultMockResponseId == "-- select an option --")
     }
 
     render() {
@@ -221,6 +239,15 @@ class UpdateMethodModal extends PureComponent {
                                     <input className="form-control" type="text"
                                            defaultValue={this.state.updateMethod.forwardedEndpoint}
                                            onChange={event => this.onForwardedEndpointChange(event.target.value)} onKeyDown={preventEnterEvent}/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Automatic forward with no match</label>
+                                <div className="col-sm-9">
+                                    <input type="checkbox"
+                                            checked={this.canEnableAutomaticForward() && this.state.updateMethod.automaticForward}
+                                            disabled={!this.canEnableAutomaticForward()}
+                                            onChange={event => this.onAutomaticForward(event.target.checked)}/>
                                 </div>
                             </div>
                             <div className="form-group row">
