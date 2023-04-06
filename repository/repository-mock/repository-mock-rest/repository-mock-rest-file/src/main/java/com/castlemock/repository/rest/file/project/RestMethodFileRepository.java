@@ -349,5 +349,14 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         public void setDefaultMockResponseId(String defaultMockResponseId) {
             this.defaultMockResponseId = defaultMockResponseId;
         }
+
+        @XmlElement
+        protected boolean getAutomaticForward() {
+            return automaticForward;
+        }
+
+        protected void setAutomaticForward(boolean automaticForward) {
+            this.automaticForward = automaticForward;
+        }
     }
 }

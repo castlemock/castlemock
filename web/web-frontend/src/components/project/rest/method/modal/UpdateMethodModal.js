@@ -129,7 +129,7 @@ class UpdateMethodModal extends PureComponent {
                         simulateNetworkDelay: response.data.simulateNetworkDelay,
                         networkDelay: response.data.networkDelay,
                         defaultMockResponseId: response.data.defaultMockResponseId,
-                        automaticForward: response.data.automaticForward,
+                        automaticForward: response.data.automaticForward
                     },
                     mockResponses: response.data.mockResponses
                 });
@@ -140,7 +140,6 @@ class UpdateMethodModal extends PureComponent {
     }
 
     onDefaultMockResponseIdChange(defaultMockResponseId){
-        console.log(defaultMockResponseId)
         this.setState({ updateMethod: {
                 ...this.state.updateMethod,
                 defaultMockResponseId: defaultMockResponseId,
@@ -237,7 +236,7 @@ class UpdateMethodModal extends PureComponent {
                                 <label className="col-sm-3 col-form-label">Forwarded endpoint</label>
                                 <div className="col-sm-9">
                                     <input className="form-control" type="text"
-                                           defaultValue={this.state.updateMethod.forwardedEndpoint}
+                                           value={this.state.updateMethod.forwardedEndpoint}
                                            onChange={event => this.onForwardedEndpointChange(event.target.value)} onKeyDown={preventEnterEvent}/>
                                 </div>
                             </div>

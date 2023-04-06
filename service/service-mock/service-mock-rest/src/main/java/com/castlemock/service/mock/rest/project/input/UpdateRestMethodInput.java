@@ -69,7 +69,7 @@ public final class UpdateRestMethodInput implements Input {
         this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
         this.networkDelay = Objects.requireNonNull(builder.networkDelay);
         this.defaultMockResponseId = builder.defaultMockResponseId;
-        this.automaticForward = builder.automaticForward;
+        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
     }
 
     public String getRestProjectId() {
