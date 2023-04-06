@@ -59,6 +59,7 @@ public class SoapOperation {
     private String invokeAddress;
 
     private String defaultResponseName;
+    private boolean automaticForward;
 
     public SoapOperation(){
 
@@ -87,6 +88,7 @@ public class SoapOperation {
         this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
         this.defaultResponseName = builder.defaultResponseName;
         this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(CopyOnWriteArrayList::new);
+        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
     }
 
     @XmlElement
@@ -289,6 +291,14 @@ public class SoapOperation {
         this.defaultMockResponseId = defaultMockResponseId;
     }
 
+    public boolean getAutomaticForward() {
+        return automaticForward;
+    }
+
+    public void setAutomaticForward(boolean automaticForward) {
+        this.automaticForward = automaticForward;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -316,6 +326,7 @@ public class SoapOperation {
         private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<SoapMockResponse>();
         private String invokeAddress;
         private String defaultResponseName;
+        private Boolean automaticForward;
 
         private Builder() {
         }
@@ -427,6 +438,11 @@ public class SoapOperation {
 
         public Builder defaultResponseName(final String defaultResponseName) {
             this.defaultResponseName = defaultResponseName;
+            return this;
+        }
+
+        public Builder automaticForward(final Boolean automaticForward) {
+            this.automaticForward = automaticForward;
             return this;
         }
 

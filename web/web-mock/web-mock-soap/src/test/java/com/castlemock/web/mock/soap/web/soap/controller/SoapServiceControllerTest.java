@@ -152,6 +152,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
         final SoapOperation soapOperation = getSoapOperationWithNoMockedResponses();
+        soapOperation.setAutomaticForward(true);
         soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
@@ -207,6 +208,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
         final SoapOperation soapOperation = getSoapOperation();
+        soapOperation.setAutomaticForward(true);
         soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
@@ -357,13 +359,13 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testMockedXpathNoMatchAndNoDefaultResponseAndNoForwardingURL() {
+    public void testMockedXpathNoMatchAndNoDefaultResponseAndNoAutomaticForward() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
         final SoapOperation soapOperation = getSoapOperation();
-        soapOperation.setForwardedEndpoint(null);
+        soapOperation.setAutomaticForward(false);
         soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
