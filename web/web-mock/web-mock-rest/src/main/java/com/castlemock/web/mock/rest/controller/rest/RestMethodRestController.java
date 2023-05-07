@@ -134,6 +134,7 @@ public class RestMethodRestController extends AbstractRestController {
                 .responseStrategy(request.getResponseStrategy())
                 .simulateNetworkDelay(request.getSimulateNetworkDelay())
                 .status(request.getStatus())
+                .automaticForward(request.getAutomaticForward())
                 .build());
         return ResponseEntity.ok(output.getRestMethod());
     }

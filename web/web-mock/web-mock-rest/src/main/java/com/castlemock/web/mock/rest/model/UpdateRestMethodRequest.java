@@ -39,6 +39,7 @@ public class UpdateRestMethodRequest {
     private boolean simulateNetworkDelay;
     private long networkDelay;
     private String defaultMockResponseId;
+    private boolean automaticForward;
 
     public UpdateRestMethodRequest(){
 
@@ -53,6 +54,7 @@ public class UpdateRestMethodRequest {
         this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
         this.networkDelay = Objects.requireNonNull(builder.networkDelay);
         this.defaultMockResponseId = Objects.requireNonNull(builder.defaultMockResponseId);
+        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
     }
 
     @XmlElement
@@ -127,17 +129,25 @@ public class UpdateRestMethodRequest {
         this.defaultMockResponseId = defaultMockResponseId;
     }
 
+    public boolean getAutomaticForward() {
+        return automaticForward;
+    }
+
+    public void setAutomaticForward(boolean automaticForward) {
+        this.automaticForward = automaticForward;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UpdateRestMethodRequest that = (UpdateRestMethodRequest) o;
-        return simulateNetworkDelay == that.simulateNetworkDelay && networkDelay == that.networkDelay && Objects.equals(name, that.name) && httpMethod == that.httpMethod && Objects.equals(forwardedEndpoint, that.forwardedEndpoint) && status == that.status && responseStrategy == that.responseStrategy && Objects.equals(defaultMockResponseId, that.defaultMockResponseId);
+        return automaticForward == that.automaticForward && simulateNetworkDelay == that.simulateNetworkDelay && networkDelay == that.networkDelay && Objects.equals(name, that.name) && httpMethod == that.httpMethod && Objects.equals(forwardedEndpoint, that.forwardedEndpoint) && status == that.status && responseStrategy == that.responseStrategy && Objects.equals(defaultMockResponseId, that.defaultMockResponseId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, httpMethod, forwardedEndpoint, status, responseStrategy, simulateNetworkDelay, networkDelay, defaultMockResponseId);
+        return Objects.hash(name, httpMethod, forwardedEndpoint, status, responseStrategy, simulateNetworkDelay, networkDelay, defaultMockResponseId, automaticForward);
     }
 
     @Override
@@ -151,6 +161,7 @@ public class UpdateRestMethodRequest {
                 ", simulateNetworkDelay=" + simulateNetworkDelay +
                 ", networkDelay=" + networkDelay +
                 ", defaultMockResponseId='" + defaultMockResponseId + '\'' +
+                ", automaticForward='" + automaticForward + '\'' +
                 '}';
     }
 
@@ -167,6 +178,7 @@ public class UpdateRestMethodRequest {
         private Boolean simulateNetworkDelay;
         private Long networkDelay;
         private String defaultMockResponseId;
+        private Boolean automaticForward;
 
         private Builder() {
         }
@@ -208,6 +220,11 @@ public class UpdateRestMethodRequest {
 
         public Builder defaultMockResponseId(final String defaultMockResponseId) {
             this.defaultMockResponseId = defaultMockResponseId;
+            return this;
+        }
+
+        public Builder automaticForward(final Boolean automaticForward) {
+            this.automaticForward = automaticForward;
             return this;
         }
 

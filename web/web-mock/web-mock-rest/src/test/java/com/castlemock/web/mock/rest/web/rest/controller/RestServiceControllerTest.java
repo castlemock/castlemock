@@ -19,27 +19,20 @@ package com.castlemock.web.mock.rest.web.rest.controller;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
-import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
-import com.castlemock.model.mock.rest.domain.RestMethodTestBuilder;
-import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
-import com.castlemock.model.mock.rest.domain.RestMockResponseTestBuilder;
-import com.castlemock.model.mock.rest.domain.RestParameterQuery;
-import com.castlemock.model.mock.rest.domain.RestParameterQueryTestBuilder;
-import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
-import com.castlemock.model.mock.rest.domain.RestXPathExpression;
+import com.castlemock.model.mock.rest.domain.*;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.core.controller.AbstractController;
+import com.castlemock.web.mock.rest.controller.mock.RestClient;
 import com.castlemock.web.mock.rest.controller.mock.RestServiceController;
+import com.castlemock.web.mock.rest.model.RestException;
 import com.castlemock.web.mock.rest.web.AbstractControllerTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -60,7 +53,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Karl Dahlgren
@@ -72,6 +65,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private RestServiceController restServiceController;
     @Mock
     private ServiceProcessor serviceProcessor;
+    @Spy
+    private RestClient restClient;
 
     private static final String PROJECT_ID = "ProjectId";
     private static final String APPLICATION_ID = "ApplicationId";
@@ -228,6 +223,102 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
     }
 
+    @Test
+    public void testForwardingStrategy() {
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestMethod restMethod = getForwardingRestMethod();
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .build();
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+
+        restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
+
+        verify(restClient, times(1)).getResponse(any(RestRequest.class), any(RestMethod.class));
+    }
+
+    @Test
+    public void testMockedQueryNoMatchNoDefaultResponseAndForwardingUrlWithoutAutomaticForward() {
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestMethod restMethod = getQueryNotMatchingNotDefaultResponseRestMethod();
+        restMethod.setAutomaticForward(false);
+
+        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+
+        Assert.assertThrows(RestException.class, () ->
+                restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse));
+
+        verify(restClient, times(0)).getResponse(any(RestRequest.class), any(RestMethod.class));
+    }
+
+    @Test
+    public void testMockedQueryNoMatchNoDefaultResponseAndForwardingUrlWithAutomaticForward() {
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestMethod restMethod = getQueryNotMatchingNotDefaultResponseRestMethod();
+
+        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+
+        restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
+
+        verify(restClient, times(1)).getResponse(any(RestRequest.class), any(RestMethod.class));
+    }
+
+    @Test
+    public void testMockedQueryNoMatchAndDefaultResponseAndForwardingUrl() {
+        // Input
+        final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
+        final HttpServletResponse httpServletResponse = getHttpServletResponse();
+
+        final RestMethod restMethod = getQueryNotMatchingAndDefaultResponseRestMethod();
+
+        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+
+        final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
+                .restProjectId(PROJECT_ID)
+                .restApplicationId(APPLICATION_ID)
+                .restResourceId(RESOURCE_ID)
+                .restMethodId(METHOD_ID)
+                .restMethod(restMethod)
+                .pathParameters(PATH_PARAMETERS)
+                .build();
+        when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+
+        restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
+
+        verify(restClient, times(0)).getResponse(any(RestRequest.class), any(RestMethod.class));
+    }
 
     @Test
     public void testEcho() {
@@ -506,6 +597,100 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .mockResponses(Arrays.asList(restMockResponse1, restMockResponse2))
                 .defaultResponseName("Mocked response 2")
                 .defaultMockResponseId("MockResponseId2")
+                .build();
+    }
+
+    private RestMethod getQueryNotMatchingAndDefaultResponseRestMethod() {
+        final HttpHeader contentTypeHeader = HttpHeader.builder()
+                .name(CONTENT_TYPE_HEADER)
+                .value(APPLICATION_XML)
+                .build();
+
+        final HttpHeader acceptHeader = HttpHeader.builder()
+                .name(ACCEPT_HEADER)
+                .value(APPLICATION_XML)
+                .build();
+
+        // Mock
+        final String mockResponseId = "MockResponseId1";
+        final String mockResponseName = "Mocked response 1";
+        final RestMockResponse restMockResponse1 = RestMockResponseTestBuilder.builder()
+                .body(XML_RESPONSE_BODY)
+                .contentEncodings(new ArrayList<>())
+                .httpHeaders(Arrays.asList(contentTypeHeader, acceptHeader))
+                .httpStatusCode(200)
+                .id(mockResponseId)
+                .name(mockResponseName)
+                .usingExpressions(Boolean.FALSE)
+                .parameterQueries(Collections.emptyList())
+                .build();
+
+        return RestMethodTestBuilder.builder()
+                .currentResponseSequenceIndex(0)
+                .forwardedEndpoint(FORWARD_ENDPOINT)
+                .httpMethod(HttpMethod.GET)
+                .id(METHOD_ID)
+                .uri("/method/{variable}")
+                .name("Method name")
+                .networkDelay(0L)
+                .responseStrategy(RestResponseStrategy.SEQUENCE)
+                .simulateNetworkDelay(Boolean.FALSE)
+                .status(RestMethodStatus.MOCKED)
+                .mockResponses(Arrays.asList(restMockResponse1))
+                .defaultMockResponseId(mockResponseId)
+                .defaultResponseName(mockResponseName)
+                .build();
+    }
+
+    private RestMethod getQueryNotMatchingNotDefaultResponseRestMethod() {
+        final HttpHeader contentTypeHeader = HttpHeader.builder()
+                .name(CONTENT_TYPE_HEADER)
+                .value(APPLICATION_XML)
+                .build();
+
+        final HttpHeader acceptHeader = HttpHeader.builder()
+                .name(ACCEPT_HEADER)
+                .value(APPLICATION_XML)
+                .build();
+
+        // Mock
+        final RestMockResponse restMockResponse1 = RestMockResponseTestBuilder.builder()
+                .body(XML_RESPONSE_BODY)
+                .contentEncodings(new ArrayList<>())
+                .httpHeaders(Arrays.asList(contentTypeHeader, acceptHeader))
+                .httpStatusCode(200)
+                .id("MockResponseId1")
+                .name("Mocked response 1")
+                .usingExpressions(Boolean.FALSE)
+                .parameterQueries(Collections.emptyList())
+                .build();
+
+        return RestMethodTestBuilder.builder()
+                .currentResponseSequenceIndex(0)
+                .forwardedEndpoint(FORWARD_ENDPOINT)
+                .automaticForward(true)
+                .httpMethod(HttpMethod.GET)
+                .id(METHOD_ID)
+                .uri("/method/{variable}")
+                .name("Method name")
+                .networkDelay(0L)
+                .responseStrategy(RestResponseStrategy.SEQUENCE)
+                .simulateNetworkDelay(Boolean.FALSE)
+                .status(RestMethodStatus.MOCKED)
+                .mockResponses(Arrays.asList(restMockResponse1))
+                .build();
+    }
+
+    private RestMethod getForwardingRestMethod() {
+        return RestMethodTestBuilder.builder()
+                .forwardedEndpoint(FORWARD_ENDPOINT)
+                .httpMethod(HttpMethod.GET)
+                .id(METHOD_ID)
+                .uri("/method/{variable}")
+                .name("Method name")
+                .networkDelay(0L)
+                .simulateNetworkDelay(Boolean.FALSE)
+                .status(RestMethodStatus.FORWARDED)
                 .build();
     }
 

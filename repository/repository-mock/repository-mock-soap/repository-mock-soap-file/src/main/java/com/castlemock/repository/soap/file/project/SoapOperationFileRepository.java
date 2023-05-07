@@ -303,6 +303,8 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         private boolean mockOnFailure;
         @Mapping("identifyStrategy")
         private SoapOperationIdentifyStrategy identifyStrategy;
+        @Mapping("automaticForward")
+        private boolean automaticForward;
 
         @XmlElement
         @Override
@@ -476,6 +478,15 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
 
         public void setDefaultMockResponseId(String defaultMockResponseId) {
             this.defaultMockResponseId = defaultMockResponseId;
+        }
+
+        @XmlElement
+        protected boolean getAutomaticForward() {
+            return automaticForward;
+        }
+
+        protected void setAutomaticForward(boolean automaticForward) {
+            this.automaticForward = automaticForward;
         }
     }
 

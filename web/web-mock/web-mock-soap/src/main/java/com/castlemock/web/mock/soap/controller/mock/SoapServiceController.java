@@ -46,8 +46,10 @@ import javax.servlet.http.HttpServletResponse;
 public class SoapServiceController extends AbstractSoapServiceController {
 
     @Autowired
-    public SoapServiceController(final ServiceProcessor serviceProcessor, final ServletContext servletContext){
-        super(serviceProcessor, servletContext);
+    public SoapServiceController(final ServiceProcessor serviceProcessor,
+                                 final ServletContext servletContext,
+                                 final SoapClient soapClient){
+        super(serviceProcessor, servletContext, soapClient);
     }
 
     /**

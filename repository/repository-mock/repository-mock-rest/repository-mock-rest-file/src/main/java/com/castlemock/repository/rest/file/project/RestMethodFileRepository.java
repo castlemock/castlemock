@@ -237,6 +237,8 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         private long networkDelay;
         @Mapping("defaultMockResponseId")
         private String defaultMockResponseId;
+        @Mapping("automaticForward")
+        private boolean automaticForward;
 
         @Override
         @XmlElement
@@ -346,6 +348,15 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
 
         public void setDefaultMockResponseId(String defaultMockResponseId) {
             this.defaultMockResponseId = defaultMockResponseId;
+        }
+
+        @XmlElement
+        protected boolean getAutomaticForward() {
+            return automaticForward;
+        }
+
+        protected void setAutomaticForward(boolean automaticForward) {
+            this.automaticForward = automaticForward;
         }
     }
 }

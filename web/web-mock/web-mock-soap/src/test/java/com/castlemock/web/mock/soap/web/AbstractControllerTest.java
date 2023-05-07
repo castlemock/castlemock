@@ -42,7 +42,7 @@ public abstract class AbstractControllerTest {
     @Mock
     protected MessageSource messageSource;
     @Mock
-    private ServletContext servletContext;
+    protected ServletContext servletContext;
     protected MockMvc mockMvc;
     protected static final String CONTEXT = "/castlemock";
     protected static final String PARTIAL = "partial";

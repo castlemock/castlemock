@@ -30,6 +30,7 @@ public final class SoapOperationTestBuilder {
     private List<SoapMockResponse> mockResponses;
     private String invokeAddress;
     private String defaultResponseName;
+    private Boolean automaticForward;
 
     private SoapOperationTestBuilder() {
         this.id = "SOAP OPERATION";
@@ -52,6 +53,7 @@ public final class SoapOperationTestBuilder {
         this.mockResponses = new ArrayList<SoapMockResponse>();
         this.mockResponses = new CopyOnWriteArrayList<SoapMockResponse>();
         this.operationIdentifier = SoapOperationIdentifierTestBuilder.builder().build();
+        this.automaticForward = Boolean.FALSE;
     }
 
     public static SoapOperationTestBuilder builder(){
@@ -168,6 +170,11 @@ public final class SoapOperationTestBuilder {
         return this;
     }
 
+    public SoapOperationTestBuilder automaticForward(final Boolean automaticForward) {
+        this.automaticForward = automaticForward;
+        return this;
+    }
+
     public SoapOperation build() {
         return SoapOperation.builder()
                 .currentResponseSequenceIndex(currentResponseSequenceIndex)
@@ -192,6 +199,7 @@ public final class SoapOperationTestBuilder {
                 .simulateNetworkDelay(simulateNetworkDelay)
                 .soapVersion(soapVersion)
                 .status(status)
+                .automaticForward(automaticForward)
                 .build();
 
     }

@@ -66,6 +66,7 @@ public class UpdateSoapOperationServiceTest {
                 .identifyStrategy(operation.getIdentifyStrategy())
                 .forwardedEndpoint(operation.getForwardedEndpoint())
                 .defaultMockResponseId(operation.getDefaultMockResponseId())
+                .automaticForward(operation.getAutomaticForward())
                 .build();
         final ServiceTask<UpdateSoapOperationInput> serviceTask = new ServiceTask<UpdateSoapOperationInput>(input);
 
