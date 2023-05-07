@@ -98,6 +98,7 @@ public class SoapOperationRestController extends AbstractRestController {
                 .responseStrategy(request.getResponseStrategy())
                 .simulateNetworkDelay(request.getSimulateNetworkDelay())
                 .status(request.getStatus())
+                .automaticForward(request.getAutomaticForward())
                 .build());
         return ResponseEntity.ok(output.getOperation());
     }

@@ -17,7 +17,6 @@
 package com.castlemock.web.mock.rest.controller.mock;
 
 import com.castlemock.model.core.ServiceProcessor;
-import com.castlemock.model.core.http.ContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
@@ -43,7 +42,6 @@ import com.castlemock.service.mock.rest.project.input.UpdateCurrentRestMockRespo
 import com.castlemock.service.mock.rest.project.input.UpdateRestMethodsStatusInput;
 import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.core.controller.AbstractController;
-import com.castlemock.web.core.utility.CharsetUtility;
 import com.castlemock.web.core.utility.HttpMessageSupport;
 import com.castlemock.web.mock.rest.model.RestException;
 import com.castlemock.web.mock.rest.utility.RestHeaderQueryValidator;
@@ -59,8 +57,6 @@ import org.springframework.http.ResponseEntity;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -89,7 +85,6 @@ public abstract class AbstractRestServiceController extends AbstractController {
     private static final String APPLICATION = "application";
     private static final String CONTENT_ENCODING = "Content-Encoding";
     private static final String RECORDED_RESPONSE_NAME = "Recorded response";
-    private static final String FORWARDED_RESPONSE_NAME = "Forwarded response";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static final Random RANDOM = new Random();
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRestServiceController.class);
@@ -98,10 +93,14 @@ public abstract class AbstractRestServiceController extends AbstractController {
             new RestMockResponseNameComparator();
 
     private final ServletContext servletContext;
+    private final RestClient restClient;
 
-    protected AbstractRestServiceController(final ServiceProcessor serviceProcessor, final ServletContext servletContext){
+    protected AbstractRestServiceController(final ServiceProcessor serviceProcessor,
+                                            final ServletContext servletContext,
+                                            final RestClient restClient){
         super(serviceProcessor);
         this.servletContext = Objects.requireNonNull(servletContext);
+        this.restClient = restClient;
     }
 
     /**
@@ -261,47 +260,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             return mockResponse(request, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
         }
 
-
-
-        HttpURLConnection connection = null;
-        try {
-
-            String requestBody = null;
-
-            if (HttpMethod.POST.equals(request.getHttpMethod()) ||
-                    HttpMethod.PUT.equals(request.getHttpMethod()) ||
-                    HttpMethod.DELETE.equals(request.getHttpMethod())) {
-                requestBody = request.getBody();
-            }
-
-            final String parameterUri = HttpMessageSupport.buildParameterUri(request.getHttpParameters());
-            final String endpoint = restMethod.getForwardedEndpoint() + request.getUri() + parameterUri;
-
-            connection = HttpMessageSupport.establishConnection(
-                    endpoint,
-                    request.getHttpMethod(),
-                    requestBody,
-                    request.getHttpHeaders());
-
-            final List<ContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
-            final List<HttpHeader> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
-            final String characterEncoding = CharsetUtility.parseHttpHeaders(responseHttpHeaders);
-            final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings, characterEncoding);
-            return RestResponse.builder()
-                    .body(responseBody)
-                    .mockResponseName(FORWARDED_RESPONSE_NAME)
-                    .httpHeaders(responseHttpHeaders)
-                    .httpStatusCode(connection.getResponseCode())
-                    .contentEncodings(encodings)
-                    .build();
-        } catch (IOException exception) {
-            LOGGER.error("Unable to forward request", exception);
-            throw new RestException("Unable to forward request to configured endpoint");
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
+        return restClient.getResponse(request, restMethod).orElseThrow(() -> new RestException("Unable to forward request to configured endpoint"));
     }
 
     /**
@@ -510,6 +469,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 LOGGER.info("Unable to match the input Query to a response");
                 mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
             }
+        }
+
+        if (mockResponse == null && restMethod.getAutomaticForward() && restMethod.getForwardedEndpoint() != null) {
+            return forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
         }
 
         if (mockResponse == null) {
