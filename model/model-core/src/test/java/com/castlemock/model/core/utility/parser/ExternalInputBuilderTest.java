@@ -21,6 +21,7 @@ import com.castlemock.model.core.utility.parser.expression.PathParameterExpressi
 import com.castlemock.model.core.utility.parser.expression.QueryStringExpression;
 import com.castlemock.model.core.utility.parser.expression.UrlHostExpression;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
+import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentArray;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -58,10 +59,10 @@ class ExternalInputBuilderTest {
     	
     	Assertions.assertTrue(externalInput.containsKey(PathParameterExpression.PATH_PARAMETERS));
     	@SuppressWarnings("unchecked")
-        Map<String, ExpressionArgumentString> returnedPathParameter = (Map<String, ExpressionArgumentString>) externalInput.get(PathParameterExpression.PATH_PARAMETERS).getValue();
-    	Assertions.assertEquals("X", returnedPathParameter.get("param1").getValue());
-    	Assertions.assertEquals("Y", returnedPathParameter.get("param2").getValue());
-    	Assertions.assertEquals("Z", returnedPathParameter.get("param3").getValue());
+        Map<String, ExpressionArgumentArray> returnedPathParameter = (Map<String, ExpressionArgumentArray>) externalInput.get(PathParameterExpression.PATH_PARAMETERS).getValue();
+    	Assertions.assertEquals("X", returnedPathParameter.get("param1").getValue().get(0).getValue());
+    	Assertions.assertEquals("Y", returnedPathParameter.get("param2").getValue().get(0).getValue());
+    	Assertions.assertEquals("Z", returnedPathParameter.get("param3").getValue().get(0).getValue());
 	}
 	
 	@Test

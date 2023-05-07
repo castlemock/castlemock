@@ -19,8 +19,8 @@ package com.castlemock.model.core.utility;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
-import net.minidev.json.JSONArray;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -36,7 +36,7 @@ public final class JsonPathUtility {
     public static boolean isValidJsonPathExpr(final String body,
                                               final String expression) {
         final Object document = Configuration.defaultConfiguration().jsonProvider().parse(body);
-        final JSONArray array = JsonPath.read(document, expression);
+        final List<?> array = JsonPath.read(document, expression);
         return !array.isEmpty();
     }
 
@@ -54,8 +54,8 @@ public final class JsonPathUtility {
                 .parse(document)
                 .read(expression);
 
-        if(result instanceof JSONArray){
-            final JSONArray jsonArray = (JSONArray) result;
+        if(result instanceof List){
+            final List<?> jsonArray = (List<?>) result;
 
             if(jsonArray.isEmpty()) {
                 return Optional.empty();

@@ -23,7 +23,7 @@ public class FakerExpressionTest {
 		assertTrue(fakerExpression.match("FAKER"));
 		assertTrue(fakerExpression.match("faker"));
 	}
-	
+
 	@Test
 	public void testWithoutParams() {
 		String result = fakerExpression.transform(createExpressionInput("name().fullName()"));
@@ -46,9 +46,10 @@ public class FakerExpressionTest {
 
 	@Test
 	public void testWithParamsDouble() throws ParseException {
+		Locale.setDefault(Locale.of("en", "UK"));
 		final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.UK);
 		final String result = fakerExpression.transform(createExpressionInput("commerce().price(10.5, 1000.29)"));
-		final Double resultDouble = numberFormat.parse(result).doubleValue();
+		final double resultDouble = numberFormat.parse(result).doubleValue();
 		assertTrue(resultDouble >= 10.5 && resultDouble <= 1000.29);
 	}
 
@@ -71,20 +72,20 @@ public class FakerExpressionTest {
 		String result = fakerExpression.transform(createExpressionInput(springExpression));
 		assertTrue(result.length() > 0);
 	}
-	
+
 	@Test
 	public void testLocale() {
 		String result = fakerExpression.transform(createExpressionInput("name().fullName()", "pt-BR"));
 		assertNotNull(result);
 		assertTrue(result.length() > 0);
 	}
-	
+
 	@Test
 	public void testInvalidLocale() {
 		String result = fakerExpression.transform(createExpressionInput("name().fullName()", "invalidLocale"));
 		assertEquals("", result);
 	}
-	
+
 	@Test
 	public void testInvalidApi() {
 		String result = fakerExpression.transform(createExpressionInput("notExisting().notExisting()"));
@@ -94,12 +95,12 @@ public class FakerExpressionTest {
 	private ExpressionInput createExpressionInput(String argumentApiValue) {
 		return createExpressionInput(argumentApiValue, null);
 	}
-	
+
 	private ExpressionInput createExpressionInput(String argumentApiValue, String argumentLocaleValue) {
 		final ExpressionInput expressionInput = new ExpressionInput(FakerExpression.IDENTIFIER);
 		expressionInput.addArgument(FakerExpression.API_ARGUMENT, new ExpressionArgumentString(argumentApiValue));
 		if (argumentApiValue != null) {
-			expressionInput.addArgument(FakerExpression.LOCALE_ARGUMENT, new ExpressionArgumentString(argumentLocaleValue));	
+			expressionInput.addArgument(FakerExpression.LOCALE_ARGUMENT, new ExpressionArgumentString(argumentLocaleValue));
 		}
 		return expressionInput;
 	}
