@@ -45,12 +45,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -65,7 +60,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private RestServiceController restServiceController;
     @Mock
     private ServiceProcessor serviceProcessor;
-    @Spy
+    @Mock
     private RestClient restClient;
 
     private static final String PROJECT_ID = "ProjectId";
@@ -237,6 +232,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .restMethod(restMethod)
                 .build();
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+        when(restClient.getResponse(any(), any())).thenReturn(Optional.of(RestResponseTestBuilder.builder().build()));
 
         restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
 
@@ -289,6 +285,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .pathParameters(PATH_PARAMETERS)
                 .build();
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
+        when(restClient.getResponse(any(), any())).thenReturn(Optional.of(RestResponseTestBuilder.builder().build()));
 
         restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
 

@@ -82,7 +82,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
     private SoapServiceController soapServiceController;
     @Mock
     private ServiceProcessor serviceProcessor;
-    @Spy
+    @Mock
     private SoapClient soapClient;
 
     private static final String PROJECT_ID = "ProjectId";
