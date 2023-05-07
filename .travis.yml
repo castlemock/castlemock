@@ -1,4 +1,0 @@
-language: java
-jdk:
-  - openjdk19
-  - openjdk20

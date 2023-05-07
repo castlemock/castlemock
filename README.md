@@ -3,7 +3,6 @@
 <h1 align="center"> Castle Mock: <br/>Mock RESTful APIs and SOAP web services</h1>
 
 <p align="center">
-    <a href="https://app.travis-ci.com/github/castlemock/castlemock"><img src="https://app.travis-ci.com/castlemock/castlemock.svg?branch=master"></a>
     <a href="https://snyk.io/test/github/castlemock/castlemock"><img src="https://snyk.io/test/github/castlemock/castlemock/badge.svg"></a>
     <a href="https://github.com/castlemock/castlemock/releases"><img src="https://img.shields.io/github/release/castlemock/castlemock.svg"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue.svg"></a>
@@ -45,7 +44,7 @@ Non-source downloads such as WAR files can be found on our website: [https://www
 
 ## Installation
 
-**Castle Mock** can be downloaded as Java Web Archive (.war) file and be deployed on a Apache Tomcat server (Java 11+ and Apache Tomcat 8.5 or 9). **Castle Mock** can also be deployed by using Docker. For more information go to the offical **Castle Mock** Docker page: [https://hub.docker.com/r/castlemock/castlemock/](https://hub.docker.com/r/castlemock/castlemock/).
+**Castle Mock** can be downloaded as Java Web Archive (.war) file and be deployed on a Apache Tomcat server (Java 17+ and Apache Tomcat 8.5 or 9). **Castle Mock** can also be deployed by using Docker. For more information go to the offical **Castle Mock** Docker page: [https://hub.docker.com/r/castlemock/castlemock/](https://hub.docker.com/r/castlemock/castlemock/).
 
 Upon successful installation and deployment, **Castle Mock** can be accessed from the web browser:
 
