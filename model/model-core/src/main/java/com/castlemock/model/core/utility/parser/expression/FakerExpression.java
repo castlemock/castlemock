@@ -2,7 +2,7 @@ package com.castlemock.model.core.utility.parser.expression;
 
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -33,7 +33,7 @@ public class FakerExpression extends AbstractExpression {
 	 * @return A transformed <code>input</code>.
 	 * 
 	 * @see https://docs.spring.io/spring/docs/5.2.x/spring-framework-reference/core.html#expressions
-	 * @see https://github.com/DiUS/java-faker
+	 * @see https://github.com/datafaker-net/datafaker
 	 */
 	@Override
 	public String transform(ExpressionInput input) {
