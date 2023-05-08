@@ -49,6 +49,7 @@ public class RestMethod {
     private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
     private String uri;
     private String defaultResponseName;
+    private boolean automaticForward;
 
     public RestMethod(){
 
@@ -70,6 +71,7 @@ public class RestMethod {
         this.uri = builder.uri;
         this.defaultResponseName = Objects.requireNonNull(builder.defaultResponseName);
         this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(CopyOnWriteArrayList::new);
+        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
     }
 
 
@@ -209,12 +211,21 @@ public class RestMethod {
         this.defaultMockResponseId = defaultMockResponseId;
     }
 
+    public boolean getAutomaticForward() {
+        return automaticForward;
+    }
+
+    public void setAutomaticForward(boolean automaticForward) {
+        this.automaticForward = automaticForward;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RestMethod that = (RestMethod) o;
-        return simulateNetworkDelay == that.simulateNetworkDelay &&
+        return automaticForward == that.automaticForward &&
+                simulateNetworkDelay == that.simulateNetworkDelay &&
                 networkDelay == that.networkDelay &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
@@ -233,7 +244,7 @@ public class RestMethod {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, resourceId, defaultBody, httpMethod, forwardedEndpoint, status, responseStrategy, currentResponseSequenceIndex, simulateNetworkDelay, networkDelay, defaultMockResponseId, mockResponses, uri, defaultResponseName);
+        return Objects.hash(id, name, resourceId, defaultBody, httpMethod, forwardedEndpoint, status, responseStrategy, currentResponseSequenceIndex, simulateNetworkDelay, networkDelay, defaultMockResponseId, mockResponses, uri, defaultResponseName, automaticForward);
     }
 
     @Override
@@ -254,6 +265,7 @@ public class RestMethod {
                 ", mockResponses=" + mockResponses +
                 ", uri='" + uri + '\'' +
                 ", defaultResponseName='" + defaultResponseName + '\'' +
+                ", automaticForward='" + automaticForward + '\'' +
                 '}';
     }
 
@@ -278,6 +290,7 @@ public class RestMethod {
         private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
         private String uri;
         private String defaultResponseName;
+        private Boolean automaticForward;
 
         private Builder() {
         }
@@ -359,6 +372,12 @@ public class RestMethod {
 
         public Builder defaultResponseName(final String defaultResponseName) {
             this.defaultResponseName = defaultResponseName;
+            return this;
+        }
+
+
+        public Builder automaticForward(final Boolean automaticForward) {
+            this.automaticForward = automaticForward;
             return this;
         }
 

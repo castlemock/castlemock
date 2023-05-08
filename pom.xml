@@ -9,37 +9,39 @@
 
     <properties>
         <!-- Project properties -->
-        <project.version>1.63</project.version>
+        <project.version>1.64</project.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Version properties -->
-        <java.release>11</java.release>
-        <java.version>1.11</java.version>
+        <java.release>19</java.release>
+        <java.version>1.19</java.version>
         <jaxb.version>2.3.1</jaxb.version>
         <dozer.version>5.5.1</dozer.version>
-        <antlr.version>4.10.1</antlr.version>
-        <log4j.version>2.17.2</log4j.version>
+        <antlr.version>4.12.0</antlr.version>
+        <log4j.version>2.20.0</log4j.version>
+        <jakarta.version>2.3.3</jakarta.version>
         <slf4j.version>1.7.31</slf4j.version>
         <junit.version>4.13.1</junit.version>
         <graphql.version>8.0</graphql.version>
         <jsr305.version>3.0.2</jsr305.version>
-        <cxf.rt.version>3.5.2</cxf.rt.version>
+        <cxf.rt.version>3.5.5</cxf.rt.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
         <guava.version>30.1.1-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
         <graphql.version>8.0</graphql.version>
-        <jackson.version>2.13.2.2</jackson.version>
+        <jackson.version>2.14.2</jackson.version>
         <jaxb.api.version>2.3.1</jaxb.api.version>
         <sun.jaxb.version>2.3.0</sun.jaxb.version>
         <mockito.version>1.10.19</mockito.version>
-        <snakeyaml.version>1.30</snakeyaml.version>
         <jaxb.impl.version>2.3.6</jaxb.impl.version>
-        <datafaker.version>1.6.0</datafaker.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
+        <jaxb.impl.version>2.3.8</jaxb.impl.version>
+        <datafaker.version>1.9.0</datafaker.version>
         <springfox.version>3.0.0</springfox.version>
         <maven.jar.version>3.1.1</maven.jar.version>
-        <json.path.version>2.7.0</json.path.version>
-        <joda.time.version>2.10.6</joda.time.version>
+        <json.path.version>2.8.0</json.path.version>
+        <joda.time.version>2.12.5</joda.time.version>
         <activation.version>1.1.1</activation.version>
         <jaxb.core.version>2.3.0.1</jaxb.core.version>
         <maven.exec.version>1.2.1</maven.exec.version>
@@ -47,26 +49,27 @@
         <commons.io.version>2.10.0</commons.io.version>
         <httpclient.version>4.5.13</httpclient.version>
         <servlet.api.version>4.0.1</servlet.api.version>
-        <antlr.maven.version>4.9.2</antlr.maven.version>
+        <antlr.maven.version>4.11.1</antlr.maven.version>
         <commons.lang.version>3.12.0</commons.lang.version>
         <raml.parser.version>1.0.51</raml.parser.version>
         <jaxb.runtime.version>2.3.3</jaxb.runtime.version>
         <swagger.core.version>1.6.4</swagger.core.version>
-        <commons.codec.version>1.14</commons.codec.version>
+        <commons.codec.version>1.15</commons.codec.version>
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
-        <tomcat.embedd.version>9.0.62</tomcat.embedd.version>
+        <tomcat.embedd.version>9.0.73</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
-        <spring.boot.version>2.6.8</spring.boot.version>
-        <swagger.parser.version>2.0.32</swagger.parser.version>
+        <spring.boot.version>2.7.11</spring.boot.version>
+        <swagger.parser.version>2.1.9</swagger.parser.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
         <jackson.databind.version>2.11.2</jackson.databind.version>
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <spring.framework.version>5.3.20</spring.framework.version>
+        <spring.framework.version>5.3.27</spring.framework.version>
+        <spring.framework.security.version>5.8.3</spring.framework.security.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
     </properties>
 
@@ -220,9 +223,13 @@
             <dependency>
                 <groupId>jakarta.xml.bind</groupId>
                 <artifactId>jakarta.xml.bind-api</artifactId>
-                <version>2.3.3</version>
+                <version>${jakarta.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda.time.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -283,6 +290,16 @@
                 <version>${spring.framework.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${spring.framework.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-web</artifactId>
+                <version>${spring.framework.security.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring.boot.version}</version>
@@ -300,7 +317,7 @@
             <dependency>
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
-                <version>3.19.0</version>
+                <version>3.19.4</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.tomcat.embed</groupId>
@@ -310,6 +327,11 @@
             <dependency>
                 <groupId>org.apache.tomcat.embed</groupId>
                 <artifactId>tomcat-embed-core</artifactId>
+                <version>${tomcat.embedd.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-el</artifactId>
                 <version>${tomcat.embedd.version}</version>
             </dependency>
             <dependency>
@@ -368,10 +390,10 @@
                 <version>${json.path.version}</version>
             </dependency>
             <dependency>
-			    <groupId>net.datafaker</groupId>
-			    <artifactId>datafaker</artifactId>
-			    <version>${datafaker.version}</version>
-			</dependency>
+                <groupId>net.datafaker</groupId>
+                <artifactId>datafaker</artifactId>
+                <version>${datafaker.version}</version>
+            </dependency>
             <dependency>
                 <groupId>javax.activation</groupId>
                 <artifactId>activation</artifactId>
@@ -410,6 +432,11 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
             <dependency>

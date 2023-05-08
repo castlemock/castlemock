@@ -217,7 +217,8 @@ class RestProject extends PureComponent {
                                         </button>
                                         <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                             <button className="dropdown-item" data-toggle="modal" data-target="#uploadRAMLDefinitionModal">RAML</button>
-                                            <button className="dropdown-item" data-toggle="modal" data-target="#uploadSWAGGERDefinitionModal">Swagger</button>
+                                            <button className="dropdown-item" data-toggle="modal" data-target="#uploadSWAGGERDefinitionModal">Swagger V2</button>
+                                            <button className="dropdown-item" data-toggle="modal" data-target="#uploadOPENAPIDefinitionModal">OpenAPI V3</button>
                                             <button className="dropdown-item" data-toggle="modal" data-target="#uploadWADLDefinitionModal">WADL</button>
                                         </div>
                                     </div>
@@ -287,6 +288,7 @@ class RestProject extends PureComponent {
                 <UpdateProjectModal projectId={this.state.projectId} getProject={this.getProject} project={this.state.project}/>
                 <UpdateStatusModal projectId={this.state.projectId} getProject={this.getProject} selectedApplications={this.state.selectedApplications}/>
                 <UploadDefinitionModal projectId={this.state.projectId} getProject={this.getProject} definitionType={"SWAGGER"} />
+                <UploadDefinitionModal projectId={this.state.projectId} getProject={this.getProject} definitionType={"OPENAPI"} />
                 <UploadDefinitionModal projectId={this.state.projectId} getProject={this.getProject} definitionType={"RAML"} />
                 <UploadDefinitionModal projectId={this.state.projectId} getProject={this.getProject} definitionType={"WADL"} />
             </div>

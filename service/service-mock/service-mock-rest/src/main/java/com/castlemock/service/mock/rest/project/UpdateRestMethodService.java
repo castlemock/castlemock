@@ -51,6 +51,7 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
         existing.setNetworkDelay(input.getNetworkDelay());
         existing.setSimulateNetworkDelay(input.getSimulateNetworkDelay());
         existing.setDefaultMockResponseId(input.getDefaultMockResponseId().orElse(null));
+        existing.setAutomaticForward(input.getAutomaticForward());
 
         final RestMethod updated = this.methodRepository.update(input.getRestMethodId(), existing);
         return createServiceResult(UpdateRestMethodOutput.builder()

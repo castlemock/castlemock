@@ -53,6 +53,8 @@ public final class UpdateRestMethodInput implements Input {
     @NotNull
     private long networkDelay;
     private String defaultMockResponseId;
+    @NotNull
+    private boolean automaticForward;
 
     private UpdateRestMethodInput(final Builder builder) {
         this.restProjectId = Objects.requireNonNull(builder.restProjectId);
@@ -67,6 +69,7 @@ public final class UpdateRestMethodInput implements Input {
         this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
         this.networkDelay = Objects.requireNonNull(builder.networkDelay);
         this.defaultMockResponseId = builder.defaultMockResponseId;
+        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
     }
 
     public String getRestProjectId() {
@@ -117,6 +120,10 @@ public final class UpdateRestMethodInput implements Input {
         return Optional.ofNullable(defaultMockResponseId);
     }
 
+    public boolean getAutomaticForward() {
+        return automaticForward;
+    }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -135,6 +142,7 @@ public final class UpdateRestMethodInput implements Input {
         private Boolean simulateNetworkDelay;
         private Long networkDelay;
         private String defaultMockResponseId;
+        private Boolean automaticForward;
 
         public Builder restProjectId(final String restProjectId){
             this.restProjectId = restProjectId;
@@ -193,6 +201,11 @@ public final class UpdateRestMethodInput implements Input {
 
         public Builder defaultMockResponseId(final String defaultMockResponseId) {
             this.defaultMockResponseId = defaultMockResponseId;
+            return this;
+        }
+
+        public Builder automaticForward(final Boolean automaticForward) {
+            this.automaticForward = automaticForward;
             return this;
         }
 

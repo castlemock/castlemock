@@ -46,8 +46,10 @@ import javax.servlet.http.HttpServletResponse;
 public class RestServiceController extends AbstractRestServiceController  {
 
     @Autowired
-    public RestServiceController(final ServiceProcessor serviceProcessor, final ServletContext servletContext){
-        super(serviceProcessor, servletContext);
+    public RestServiceController(final ServiceProcessor serviceProcessor,
+                                 final ServletContext servletContext,
+                                 final RestClient restClient){
+        super(serviceProcessor, servletContext, restClient);
     }
 
     /**

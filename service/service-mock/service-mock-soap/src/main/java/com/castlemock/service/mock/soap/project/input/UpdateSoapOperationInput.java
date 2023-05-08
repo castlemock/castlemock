@@ -51,6 +51,8 @@ public final class UpdateSoapOperationInput implements Input {
     private Boolean mockOnFailure;
     @NotNull
     private SoapOperationIdentifyStrategy identifyStrategy;
+    @NotNull
+    private boolean automaticForward;
 
     public UpdateSoapOperationInput(final Builder builder) {
         this.projectId = Objects.requireNonNull(builder.projectId);
@@ -64,6 +66,7 @@ public final class UpdateSoapOperationInput implements Input {
         this.defaultMockResponseId = builder.defaultMockResponseId;
         this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure);
         this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy);
+        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
     }
 
     public String getProjectId() {
@@ -110,6 +113,10 @@ public final class UpdateSoapOperationInput implements Input {
         return identifyStrategy;
     }
 
+    public boolean getAutomaticForward() {
+        return automaticForward;
+    }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -126,6 +133,7 @@ public final class UpdateSoapOperationInput implements Input {
         private String defaultMockResponseId;
         private Boolean mockOnFailure;
         private SoapOperationIdentifyStrategy identifyStrategy;
+        private Boolean automaticForward;
 
         private Builder(){
 
@@ -186,6 +194,12 @@ public final class UpdateSoapOperationInput implements Input {
             this.identifyStrategy = identifyStrategy;
             return this;
         }
+
+        public Builder automaticForward(final Boolean automaticForward) {
+            this.automaticForward = automaticForward;
+            return this;
+        }
+
         public UpdateSoapOperationInput build(){
             return new UpdateSoapOperationInput(this);
         }
