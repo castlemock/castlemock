@@ -289,3 +289,6 @@ node/
 /.apt_generated_tests/
 .classpath
 .factorypath
+
+# Mac
+*.DS_Store
