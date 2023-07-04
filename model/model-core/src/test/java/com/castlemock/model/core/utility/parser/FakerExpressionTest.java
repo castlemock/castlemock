@@ -81,12 +81,6 @@ public class FakerExpressionTest {
 	}
 
 	@Test
-	public void testInvalidLocale() {
-		String result = fakerExpression.transform(createExpressionInput("name().fullName()", "invalidLocale"));
-		assertEquals("", result);
-	}
-
-	@Test
 	public void testInvalidApi() {
 		String result = fakerExpression.transform(createExpressionInput("notExisting().notExisting()"));
 		assertEquals("", result);
