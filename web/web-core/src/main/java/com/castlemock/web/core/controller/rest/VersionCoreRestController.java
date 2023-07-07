@@ -18,10 +18,8 @@ package com.castlemock.web.core.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.web.core.model.VersionResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,7 +31,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/rest/core")
-@Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
+@Tag(name="Core - Version", description="REST Operations for Castle Mock Core")
 public class VersionCoreRestController extends AbstractRestController {
 
     @Value("${app.version:Undefined}")
@@ -43,10 +41,7 @@ public class VersionCoreRestController extends AbstractRestController {
         super(serviceProcessor);
     }
 
-    @ApiOperation(value = "Get system version")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved system version")
-    })
+    @Operation(summary =  "Get system version")
     @RequestMapping(method = RequestMethod.GET, value = "/version")
     public @ResponseBody
     ResponseEntity<VersionResponse> getVersion() {

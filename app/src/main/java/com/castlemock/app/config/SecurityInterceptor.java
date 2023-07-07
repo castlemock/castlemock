@@ -38,15 +38,15 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -154,11 +154,16 @@ public class SecurityInterceptor implements HandlerInterceptor, Filter {
 
     private Optional<String> getTokenFromBearerHeader(final HttpServletRequest request) {
         final String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authorizationHeader == null || authorizationHeader.length() != 2) {
+        if (authorizationHeader == null) {
             return Optional.empty();
         }
 
-        return Optional.ofNullable(authorizationHeader.split(" ")[1]);
+        final String[] authorizationParts = authorizationHeader.split(" ");
+        if(authorizationParts.length != 2) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(authorizationParts[1]);
 
     }
 

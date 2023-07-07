@@ -24,10 +24,10 @@ import com.castlemock.service.core.user.output.ReadUserByUsernameOutput;
 import com.castlemock.web.core.config.JWTEncoderDecoder;
 import com.castlemock.web.core.model.authentication.AuthenticationRequest;
 import com.castlemock.web.core.model.authentication.AuthenticationResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,15 +40,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 @Controller
 @RequestMapping("/api/rest/core")
-@Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
+@Tag(name="Core - Authentication", description="REST Operations for Castle Mock Core")
 public class AuthenticationRestController extends AbstractRestController {
 
     private final AuthenticationManager authenticationManager;
@@ -67,11 +65,7 @@ public class AuthenticationRestController extends AbstractRestController {
      * Authenticate user
      * @return Token upon successfully authenticating the user.
      */
-    @ApiOperation(value = "Login",response = AuthenticationResponse.class,
-            notes = "Authenticate user")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully authenticated")
-    })
+    @Operation(summary =  "Login", description = "Authenticate user")
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public @ResponseBody ResponseEntity<AuthenticationResponse> login(@RequestBody final AuthenticationRequest request, final HttpServletResponse httpServletResponse) {
         final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
@@ -104,10 +98,7 @@ public class AuthenticationRestController extends AbstractRestController {
      * Logout user
      * @return Token upon successfully logout the user.
      */
-    @ApiOperation(value = "Logout",notes = "Logout user")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully logged out")
-    })
+    @Operation(summary =  "Logout", description = "Logout user")
     @RequestMapping(method = RequestMethod.GET, value = "/logout")
     public @ResponseBody ResponseEntity<Void> logout(final HttpServletResponse httpServletResponse) {
         final Cookie tokenCookie = new Cookie("token",null);

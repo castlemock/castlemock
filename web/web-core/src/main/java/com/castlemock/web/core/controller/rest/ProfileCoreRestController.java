@@ -23,10 +23,8 @@ import com.castlemock.service.core.user.input.UpdateCurrentUserInput;
 import com.castlemock.service.core.user.output.ReadUserByUsernameOutput;
 import com.castlemock.service.core.user.output.UpdateCurrentUserOutput;
 import com.castlemock.web.core.model.UpdateProfileRequest;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/api/rest/core")
-@Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
+@Tag(name="Core - Profile", description="REST Operations for Castle Mock Core")
 @ConditionalOnExpression("${server.mode.demo} == false")
 public class ProfileCoreRestController extends AbstractRestController {
 
@@ -49,11 +47,7 @@ public class ProfileCoreRestController extends AbstractRestController {
         super(serviceProcessor);
     }
 
-    @ApiOperation(value = "Get profile",response = User.class,
-            notes = "Get current profile. Required authorization: Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved current profile")
-    })
+    @Operation(summary = "Get profile", description = "Get current profile. Required authorization: Admin.")
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
@@ -77,11 +71,8 @@ public class ProfileCoreRestController extends AbstractRestController {
     }
 
 
-    @ApiOperation(value = "Update profile",response = User.class,
-            notes = "Get current profile. Required authorization: Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved current profile")
-    })
+    @Operation(summary =  "Update profile",
+            description = "Get current profile. Required authorization: Admin.")
     @RequestMapping(method = RequestMethod.PUT, value = "/profile")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody

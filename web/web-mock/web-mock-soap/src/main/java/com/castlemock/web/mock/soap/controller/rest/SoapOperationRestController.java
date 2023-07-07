@@ -26,11 +26,9 @@ import com.castlemock.service.mock.soap.project.output.UpdateSoapOperationOutput
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.UpdateSoapMockResponseStatusesRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationRequest;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,7 +41,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("api/rest/soap")
-@Api(value="SOAP - Operation", description="REST Operations for Castle Mock SOAP Operation", tags = {"SOAP - Operation"})
+@Tag(name="SOAP - Operation", description="REST Operations for Castle Mock SOAP Operation")
 public class SoapOperationRestController extends AbstractRestController {
 
     @Autowired
@@ -51,18 +49,16 @@ public class SoapOperationRestController extends AbstractRestController {
         super(serviceProcessor);
     }
 
-    @ApiOperation(value = "Get Operation", response = SoapOperation.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved operation")})
+    @Operation(summary =  "Get Operation")
     @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}/port/{portId}/operation/{operationId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<SoapOperation> getOperation(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "portId", value = "The id of the port")
+            @Parameter(name = "portId", description = "The id of the port")
             @PathVariable(value = "portId") final String portId,
-            @ApiParam(name = "operationId", value = "The id of the operation")
+            @Parameter(name = "operationId", description = "The id of the operation")
             @PathVariable(value = "operationId") final String operationId) {
         final ReadSoapOperationOutput output = super.serviceProcessor.process(ReadSoapOperationInput.builder()
                 .projectId(projectId)
@@ -72,18 +68,16 @@ public class SoapOperationRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getOperation());
     }
 
-    @ApiOperation(value = "Update Operation", response = SoapOperation.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved operation")})
+    @Operation(summary =  "Update Operation")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/{portId}/operation/{operationId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<SoapOperation> updateOperation(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "portId", value = "The id of the port")
+            @Parameter(name = "portId", description = "The id of the port")
             @PathVariable(value = "portId") final String portId,
-            @ApiParam(name = "operationId", value = "The id of the operation")
+            @Parameter(name = "operationId", description = "The id of the operation")
             @PathVariable(value = "operationId") final String operationId,
             @RequestBody final UpdateSoapOperationRequest request) {
         final UpdateSoapOperationOutput output = super.serviceProcessor.process(UpdateSoapOperationInput.builder()
@@ -103,18 +97,16 @@ public class SoapOperationRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getOperation());
     }
 
-    @ApiOperation(value = "Update mock response statuses")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully updated SOAP operation statuses")})
+    @Operation(summary =  "Update mock response statuses")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/{portId}/operation/{operationId}/mockresponse/status")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updateMockResponseStatuses(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "portId", value = "The id of the port")
+            @Parameter(name = "portId", description = "The id of the port")
             @PathVariable(value = "portId") final String portId,
-            @ApiParam(name = "operationId", value = "The id of the operation")
+            @Parameter(name = "operationId", description = "The id of the operation")
             @PathVariable(value = "operationId") final String operationId,
             @RequestBody UpdateSoapMockResponseStatusesRequest request){
         request.getMockResponseIds()

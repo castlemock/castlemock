@@ -21,10 +21,8 @@ import com.castlemock.service.core.expression.input.ValidateExpressionInput;
 import com.castlemock.service.core.expression.output.ValidateExpressionOutput;
 import com.castlemock.web.core.model.ValidateExpressionRequest;
 import com.castlemock.web.core.model.ValidateExpressionResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/api/rest/core")
-@Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
+@Tag(name="Core - Expression", description="REST Operations for Castle Mock Core")
 @ConditionalOnExpression("${server.mode.demo} == false")
 public class ExpressionRestController extends AbstractRestController {
 
@@ -48,11 +46,8 @@ public class ExpressionRestController extends AbstractRestController {
         super(serviceProcessor);
     }
 
-    @ApiOperation(value = "Validate expression",response = ValidateExpressionResponse.class,
-            notes = "Validate expression. Required authorization: Reader, Modification, Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully validated expression")
-    })
+    @Operation(summary =  "Validate expression",
+            description = "Validate expression. Required authorization: Reader, Modification, Admin.")
     @RequestMapping(method = RequestMethod.POST, value = "/expression/validate")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody

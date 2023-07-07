@@ -21,11 +21,9 @@ import com.castlemock.model.mock.soap.domain.SoapEvent;
 import com.castlemock.service.mock.soap.event.input.ReadSoapEventInput;
 import com.castlemock.service.mock.soap.event.output.ReadSoapEventOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,7 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("api/rest/soap")
-@Api(value="SOAP - Event", tags = {"SOAP - Event"})
+@Tag(name="SOAP - Event")
 public class SoapEventRestController extends AbstractRestController {
 
     @Autowired
@@ -45,14 +43,12 @@ public class SoapEventRestController extends AbstractRestController {
         super(serviceProcessor);
     }
 
-    @ApiOperation(value = "Get SOAP event", response = SoapEvent.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved SOAP event")})
+    @Operation(summary =  "Get SOAP event")
     @RequestMapping(method = RequestMethod.GET, value = "/event/{eventId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<SoapEvent> getSoapEvent(
-            @ApiParam(name = "eventId", value = "The id of the event")
+            @Parameter(name = "eventId", description = "The id of the event")
             @PathVariable(value = "eventId") final String eventId) {
         final ReadSoapEventOutput output = super.serviceProcessor.process(ReadSoapEventInput.builder()
                 .soapEventId(eventId)

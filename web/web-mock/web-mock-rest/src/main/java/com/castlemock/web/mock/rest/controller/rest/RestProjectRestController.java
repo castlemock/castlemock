@@ -29,11 +29,11 @@ import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.rest.model.LinkDefinitionRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestApplicationForwardedEndpointsRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestApplicationStatusesRequest;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -53,8 +53,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("api/rest/rest")
-@Api(value="REST - Application", description="REST Operations for Castle Mock REST Application",
-        tags = {"REST - Application"})
+@Tag(name="REST - Application", description="REST Operations for Castle Mock REST Application")
 public class RestProjectRestController extends AbstractRestController {
 
     private final FileManager fileManager;
@@ -66,14 +65,14 @@ public class RestProjectRestController extends AbstractRestController {
         this.fileManager = Objects.requireNonNull(fileManager);
     }
 
-    @ApiOperation(value = "Get REST Project", response = RestProject.class)
+    @Operation(summary =  "Get REST Project")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved REST Project")})
     @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<RestProject> getRestProject(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId) {
         final ReadRestProjectOutput output = super.serviceProcessor.process(ReadRestProjectInput.builder()
                 .restProjectId(projectId)
@@ -82,14 +81,14 @@ public class RestProjectRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getRestProject());
     }
 
-    @ApiOperation(value = "Update Application statuses")
+    @Operation(summary =  "Update Application statuses")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated REST application statuses")})
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/status")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updateApplicationStatuses(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestBody UpdateRestApplicationStatusesRequest request){
         request.getApplicationIds()
@@ -101,14 +100,14 @@ public class RestProjectRestController extends AbstractRestController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "Update Application forwarded endpoints")
+    @Operation(summary =  "Update Application forwarded endpoints")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated REST application forwarded endpoints")})
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/endpoint/forwarded")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updateApplicationForwardedEndpoints(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestBody UpdateRestApplicationForwardedEndpointsRequest request){
         super.serviceProcessor.process(UpdateRestApplicationsForwardedEndpointInput.builder()
@@ -119,14 +118,14 @@ public class RestProjectRestController extends AbstractRestController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "Upload definition")
+    @Operation(summary =  "Upload definition")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully uploaded definition")})
     @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/definition/file")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> uploadDefinition(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestParam("file") final MultipartFile multipartFile,
             @RequestParam("generateResponse") final boolean generateResponse,
@@ -146,14 +145,14 @@ public class RestProjectRestController extends AbstractRestController {
         }
     }
 
-    @ApiOperation(value = "Link definition")
+    @Operation(summary =  "Link definition")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully linked definition")})
     @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/definition/link")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> linkDefinition(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestBody final LinkDefinitionRequest request){
         super.serviceProcessor.process(ImportRestDefinitionInput.builder()

@@ -29,11 +29,9 @@ import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationForwardedEndpointsRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationStatusesRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapPortRequest;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +44,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("api/rest/soap")
-@Api(value="SOAP - Port", description="REST Operations for Castle Mock SOAP Port", tags = {"SOAP - Port"})
+@Tag(name="SOAP - Port", description="REST Operations for Castle Mock SOAP Port")
 public class SoapPortRestController extends AbstractRestController {
 
     @Autowired
@@ -54,15 +52,13 @@ public class SoapPortRestController extends AbstractRestController {
         super(serviceProcessor);
     }
 
-    @ApiOperation(value = "Get Port", response = SoapPort.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved SOAP port")})
+    @Operation(summary =  "Get Port")
     @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}/port/{portId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody ResponseEntity<SoapPort> getPort(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "portId", value = "The id of the port")
+            @Parameter(name = "portId", description = "The id of the port")
             @PathVariable(value = "portId") final String portId) {
         final ReadSoapPortOutput output = super.serviceProcessor.process(ReadSoapPortInput.builder()
                 .projectId(projectId)
@@ -71,15 +67,13 @@ public class SoapPortRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getPort());
     }
 
-    @ApiOperation(value = "Delete Port", response = SoapPort.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully deleted SOAP port")})
+    @Operation(summary =  "Delete Port")
     @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}/port/{portId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody ResponseEntity<SoapPort> deletePort(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "portId", value = "The id of the port")
+            @Parameter(name = "portId", description = "The id of the port")
             @PathVariable(value = "portId") final String portId) {
         final DeleteSoapPortOutput output = super.serviceProcessor.process(DeleteSoapPortInput.builder()
                 .projectId(projectId)
@@ -88,16 +82,14 @@ public class SoapPortRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getPort());
     }
 
-    @ApiOperation(value = "Update Port")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully updated SOAP port")})
+    @Operation(summary =  "Update Port")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/{portId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updatePort(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "portId", value = "The id of the port")
+            @Parameter(name = "portId", description = "The id of the port")
             @PathVariable(value = "portId") final String portId,
             @RequestBody UpdateSoapPortRequest request){
         super.serviceProcessor.process(UpdateSoapPortInput.builder()
@@ -108,16 +100,14 @@ public class SoapPortRestController extends AbstractRestController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "Update operation statuses")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully updated SOAP operation statuses")})
+    @Operation(summary =  "Update operation statuses")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/{portId}/operation/status")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updateOperationStatuses(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "portId", value = "The id of the port")
+            @Parameter(name = "portId", description = "The id of the port")
             @PathVariable(value = "portId") final String portId,
             @RequestBody UpdateSoapOperationStatusesRequest request){
         request.getOperationIds()
@@ -130,16 +120,14 @@ public class SoapPortRestController extends AbstractRestController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "Update Operation forwarded endpoints")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully updated SOAP Operation forwarded endpoints")})
+    @Operation(summary =  "Update Operation forwarded endpoints")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/{portId}/operation/endpoint/forwarded")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updateOperationForwardedEndpoints(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "portId", value = "The id of the port")
+            @Parameter(name = "portId", description = "The id of the port")
             @PathVariable(value = "portId") final String portId,
             @RequestBody UpdateSoapOperationForwardedEndpointsRequest request){
         super.serviceProcessor.process(UpdateSoapOperationsForwardedEndpointInput.builder()

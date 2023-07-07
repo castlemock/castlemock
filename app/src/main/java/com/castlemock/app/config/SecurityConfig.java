@@ -24,8 +24,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,7 +43,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @Order(1)
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -59,22 +62,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    /**
-     * Configure which attributes will be used for when doing authentication
-     *
-     * @param authenticationManagerBuilder The authentication manager builder
-     * @throws IllegalStateException Throws an exception if the configuration fails
-     */
-    @Order(2)
-    @Autowired
-    public void configureGlobal(final AuthenticationManagerBuilder authenticationManagerBuilder, @Lazy final PasswordEncoder passwordEncoder) throws IllegalStateException {
-        try {
-            authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        } catch (Exception exception) {
-            LOGGER.error("Unable to configure the authentication manager builder", exception);
-            throw new IllegalStateException("Unable to configure the authentication manager builder");
-        }
-    }
 
+    @Order(2)
+    @Bean
+    public AuthenticationManager authenticationManager(final HttpSecurity http, @Lazy final PasswordEncoder passwordEncoder) throws Exception {
+        final AuthenticationManagerBuilder authenticationManagerBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
+        return authenticationManagerBuilder.build();
+    }
 
 }

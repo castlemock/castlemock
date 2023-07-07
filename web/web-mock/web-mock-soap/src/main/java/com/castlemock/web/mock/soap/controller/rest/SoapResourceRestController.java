@@ -27,11 +27,9 @@ import com.castlemock.service.mock.soap.project.output.ImportSoapResourceOutput;
 import com.castlemock.service.mock.soap.project.output.LoadSoapResourceOutput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapResourceOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +52,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("api/rest/soap")
-@Api(value="SOAP", description="REST Operations for Castle Mock SOAP", tags = {"SOAP - Resource"})
+@Tag(name="SOAP - Resource", description="REST Operations for Castle Mock SOAP")
 @ConditionalOnExpression("${server.mode.demo} == false")
 public class SoapResourceRestController extends AbstractRestController {
 
@@ -69,16 +67,14 @@ public class SoapResourceRestController extends AbstractRestController {
         this.fileManager = Objects.requireNonNull(fileManager);
     }
 
-    @ApiOperation(value = "Get SOAP resource", response = SoapResource.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved SOAP resource")})
+    @Operation(summary =  "Get SOAP resource")
     @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}/resource/{resourceId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<SoapResource> getResource(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "resourceId", value = "The id of the resource")
+            @Parameter(name = "resourceId", description = "The id of the resource")
             @PathVariable(value = "resourceId") final String resourceId) {
         final ReadSoapResourceOutput output = this.serviceProcessor.process(ReadSoapResourceInput.builder()
                 .projectId(projectId)
@@ -94,16 +90,14 @@ public class SoapResourceRestController extends AbstractRestController {
         return ResponseEntity.ok(soapResource);
     }
 
-    @ApiOperation(value = "Get SOAP resource content", response = SoapResource.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved SOAP resource content")})
+    @Operation(summary =  "Get SOAP resource content")
     @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}/resource/{resourceId}/content")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<String> getResourceContent(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "resourceId", value = "The id of the resource")
+            @Parameter(name = "resourceId", description = "The id of the resource")
             @PathVariable(value = "resourceId") final String resourceId) {
         final LoadSoapResourceOutput output = this.serviceProcessor.process(LoadSoapResourceInput.builder()
                         .projectId(projectId)
@@ -112,24 +106,19 @@ public class SoapResourceRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getResource());
     }
 
-    @ApiOperation(value = "Import resource", notes = "The service will upload a SOAP resource. " +
-            "Either the project id or the resource id is required. Required authorization: Modifier or Admin.",
-            response = SoapResource.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully imported SOAP project resource")
-    }
-    )
+    @Operation(summary =  "Import resource", description = "The service will upload a SOAP resource. " +
+            "Either the project id or the resource id is required. Required authorization: Modifier or Admin.")
     @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/resource/{resourceId}/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<SoapResource> importResource(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "resourceId", value = "The id of the resource")
+            @Parameter(name = "resourceId", description = "The id of the resource")
             @PathVariable(value = "resourceId") final String resourceId,
-            @ApiParam(name = "resourceType", value = "The resource type", allowableValues = "WSDL,SCHEMA")
+            @Parameter(name = "resourceType", description = "The resource type", example = "WSDL,SCHEMA")
             @RequestParam("resourceType") final SoapResourceType resourceType,
-            @ApiParam(name = "file", value = "The project file which will be imported.")
+            @Parameter(name = "file", description = "The project file which will be imported.")
             @RequestParam("file") final MultipartFile file) {
         File uploadedFile = null;
         try {

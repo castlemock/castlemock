@@ -28,11 +28,9 @@ import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.LinkWsdlRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapPortForwardedEndpointsRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapPortStatusesRequest;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -52,7 +50,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("api/rest/soap")
-@Api(value="SOAP - Project", description="REST Operations for Castle Mock SOAP Project", tags = {"SOAP - Project"})
+@Tag(name="SOAP - Project", description="REST Operations for Castle Mock SOAP Project")
 public class SoapProjectRestController extends AbstractRestController {
 
     private final FileManager fileManager;
@@ -64,14 +62,12 @@ public class SoapProjectRestController extends AbstractRestController {
         this.fileManager = Objects.requireNonNull(fileManager);
     }
 
-    @ApiOperation(value = "Get Project", response = SoapProject.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved SOAP project")})
+    @Operation(summary =  "Get Project")
     @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<SoapProject> getProject(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId){
         final ReadSoapProjectOutput output = super.serviceProcessor.process(ReadSoapProjectInput.builder()
                 .projectId(projectId)
@@ -79,14 +75,12 @@ public class SoapProjectRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getProject());
     }
 
-    @ApiOperation(value = "Update Port statuses")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully updated SOAP port statuses")})
+    @Operation(summary =  "Update Port statuses")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/status")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updatePortStatuses(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestBody UpdateSoapPortStatusesRequest request){
         request.getPortIds()
@@ -98,14 +92,12 @@ public class SoapProjectRestController extends AbstractRestController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "Update Port forwarded endpoints")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully updated SOAP port forwarded endpoints")})
+    @Operation(summary =  "Update Port forwarded endpoints")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/endpoint/forwarded")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updatePortForwardedEndpoints(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestBody UpdateSoapPortForwardedEndpointsRequest request){
         super.serviceProcessor.process(UpdateSoapPortsForwardedEndpointInput.builder()
@@ -116,14 +108,12 @@ public class SoapProjectRestController extends AbstractRestController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "Upload WSDL")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully uploaded WSDL")})
+    @Operation(summary =  "Upload WSDL")
     @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/wsdl/file")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> uploadWSDL(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestParam("file") final MultipartFile multipartFile,
             @RequestParam("generateResponse") final boolean generateResponse){
@@ -142,14 +132,12 @@ public class SoapProjectRestController extends AbstractRestController {
         }
     }
 
-    @ApiOperation(value = "Link WSDL")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully linked WSDL")})
+    @Operation(summary =  "Link WSDL")
     @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/wsdl/link")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> linkWSDL(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestBody final LinkWsdlRequest request){
         super.serviceProcessor.process(CreateSoapPortsInput.builder()

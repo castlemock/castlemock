@@ -100,6 +100,7 @@ public class ServiceProcessorImpl implements ServiceProcessor {
      */
     @Override
     @Async
+    @SuppressWarnings("deprecation")
     public <I extends Input, O extends Output> Future<O> processAsync(final I input) {
         O output = process(input);
         return new AsyncResult<O>(output);

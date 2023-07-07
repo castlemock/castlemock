@@ -27,10 +27,8 @@ import com.castlemock.service.core.user.output.CreateUserOutput;
 import com.castlemock.service.core.user.output.ReadAllUsersOutput;
 import com.castlemock.service.core.user.output.ReadUserOutput;
 import com.castlemock.service.core.user.output.UpdateUserOutput;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,7 +43,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/rest/core")
-@Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
+@Tag(name="Core - User", description="REST Operations for Castle Mock Core")
 @ConditionalOnExpression("${server.mode.demo} == false")
 public class UserCoreRestController extends AbstractRestController {
 
@@ -53,11 +51,8 @@ public class UserCoreRestController extends AbstractRestController {
         super(serviceProcessor);
     }
 
-    @ApiOperation(value = "Create user",response = User.class,
-            notes = "Create user. Required authorization: Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully created user")
-    })
+    @Operation(summary =  "Create user",
+            description = "Create user. Required authorization: Admin.")
     @RequestMapping(method = RequestMethod.POST, value = "/user")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
@@ -70,11 +65,8 @@ public class UserCoreRestController extends AbstractRestController {
         return ResponseEntity.ok(createdUser);
     }
 
-    @ApiOperation(value = "Update user",response = User.class,
-            notes = "Update user. Required authorization: Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully updated user")
-    })
+    @Operation(summary =  "Update user",
+            description = "Update user. Required authorization: Admin.")
     @RequestMapping(method = RequestMethod.PUT, value = "/user/{userId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
@@ -89,11 +81,8 @@ public class UserCoreRestController extends AbstractRestController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @ApiOperation(value = "Get all users",response = User.class,
-            notes = "Get all users. Required authorization: Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved all users")
-    })
+    @Operation(summary =  "Get all users",
+            description = "Get all users. Required authorization: Admin.")
     @RequestMapping(method = RequestMethod.GET, value = "/user")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
@@ -104,11 +93,8 @@ public class UserCoreRestController extends AbstractRestController {
         return ResponseEntity.ok(users);
     }
 
-    @ApiOperation(value = "Get user",response = User.class,
-            notes = "Get user. Required authorization: Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved user")
-    })
+    @Operation(summary =  "Get user",
+            description = "Get user. Required authorization: Admin.")
     @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
@@ -121,10 +107,7 @@ public class UserCoreRestController extends AbstractRestController {
         return ResponseEntity.ok(user);
     }
 
-    @ApiOperation(value = "Delete user", notes = "Delete user. Required authorization: Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully deleted user")
-    })
+    @Operation(summary =  "Delete user", description = "Delete user. Required authorization: Admin.")
     @RequestMapping(method = RequestMethod.DELETE, value = "/user/{userId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody

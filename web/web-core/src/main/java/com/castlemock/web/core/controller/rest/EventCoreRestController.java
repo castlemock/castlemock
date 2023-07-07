@@ -19,11 +19,9 @@ package com.castlemock.web.core.controller.rest;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.event.Event;
 import com.castlemock.model.core.service.event.EventServiceFacade;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,7 +42,7 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping("/api/rest/core")
-@Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
+@Tag(name="Core - Event", description="REST Operations for Castle Mock Core")
 @ConditionalOnExpression("${server.mode.demo} == false")
 public class EventCoreRestController extends AbstractRestController {
 
@@ -60,11 +58,7 @@ public class EventCoreRestController extends AbstractRestController {
      * The method retrieves all events
      * @return The retrieved event.
      */
-    @ApiOperation(value = "Get events",response = Event.class,
-            notes = "Get events. Required authorization: Reader, Modifier or Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved event")
-    })
+    @Operation(summary =  "Get events", description = "Get events. Required authorization: Reader, Modifier or Admin.")
     @RequestMapping(method = RequestMethod.GET, value = "/event")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
@@ -78,27 +72,19 @@ public class EventCoreRestController extends AbstractRestController {
      * @param eventId The event id.
      * @return The retrieved event.
      */
-    @ApiOperation(value = "Get event",response = Event.class,
-            notes = "Get event. Required authorization: Reader, Modifier or Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved event")
-    })
+    @Operation(summary =  "Get event", description = "Get event. Required authorization: Reader, Modifier or Admin.")
     @RequestMapping(method = RequestMethod.GET, value = "/event/{type}/{eventId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Event> getEvent(
-            @ApiParam(name = "type", value = "The type of the event", allowableValues = "rest,soap")
+            @Parameter(name = "type", description = "The type of the event", example = "rest,soap")
             @PathVariable("type") final String type,
-            @ApiParam(name = "eventId", value = "The id of the event")
+            @Parameter(name = "eventId", description = "The id of the event")
             @PathVariable("eventId") final String eventId) {
         return ResponseEntity.ok(eventServiceFacade.findOne(type, eventId));
     }
 
-    @ApiOperation(value = "Delete all event",response = Event.class,
-            notes = "Delete all event. Required authorization: Modifier or Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved event")
-    })
+    @Operation(summary =  "Delete all event", description = "Delete all event. Required authorization: Modifier or Admin.")
     @RequestMapping(method = RequestMethod.DELETE, value = "/event")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody

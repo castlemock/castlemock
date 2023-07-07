@@ -22,14 +22,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -42,7 +41,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Order(2)
 @EnableWebSecurity
 @SuppressWarnings("deprecation")
-public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
+public class RestSecurityConfig {
 
     @Autowired
     @Qualifier("userDetailsService")
@@ -54,51 +53,26 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityInterceptor securityInterceptor;
 
-    /**
-     * The method configure is responsible for the security configuration.
-     *
-     * @param httpSecurity httpSecurity will be used to configure the authentication process.
-     * @throws Exception Throws an exception if the configuration fails
-     */
-    @Override
-    protected void configure(final HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .authorizeRequests()
-                    .antMatchers("/api/rest/core/login", "/api/rest/core/version", "/api/rest/core/context", "/doc/api/rest")
-                    .permitAll()
-                .and()
-                .antMatcher("/api/rest/**")
-                    .authorizeRequests()
-                    .anyRequest()
-                    .authenticated()
-                .and()
-                    .httpBasic()
-                    .authenticationEntryPoint(new NoPopupBasicAuthenticationEntryPoint())
-                .and()
-                    .csrf().disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        httpSecurity.headers().cacheControl().disable();
-        httpSecurity.addFilterBefore(securityInterceptor, UsernamePasswordAuthenticationFilter.class);
-    }
 
     @Bean
-    public AuthenticationManager customAuthenticationManager() throws Exception {
-        return authenticationManager();
+    public SecurityFilterChain restSecurityFilterChain(final HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests((authz) -> authz.requestMatchers("/api/rest/core/login", "/api/rest/core/version", "/api/rest/core/context", "/doc/api/rest")
+                        .permitAll()
+                ).authorizeHttpRequests((authz) -> authz.requestMatchers("/api/rest/**")
+                        .authenticated()
+                )
+                .httpBasic((authz) -> authz.authenticationEntryPoint(new NoPopupBasicAuthenticationEntryPoint()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .headers((config) -> config.cacheControl(HeadersConfigurer.CacheControlConfig::disable))
+                .addFilterBefore(securityInterceptor, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+
     }
 
     @Bean
     public JWTEncoderDecoder jwtEncoderDecoder() {
         return new JWTEncoderDecoder();
-    }
-
-    @Autowired
-    @Override
-    public void configure(final AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder);
     }
 
 }

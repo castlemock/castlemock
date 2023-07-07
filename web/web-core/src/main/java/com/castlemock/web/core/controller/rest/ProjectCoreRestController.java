@@ -22,11 +22,9 @@ import com.castlemock.model.core.service.project.ProjectServiceFacade;
 import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.web.core.model.project.CreateProjectRequest;
 import com.castlemock.web.core.model.project.UpdateProjectRequest;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +55,7 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping("/api/rest/core")
-@Api(value="Core", description="REST Operations for Castle Mock Core", tags = {"Core"})
+@Tag(name="Core - Project", description="REST Operations for Castle Mock Core")
 @ConditionalOnExpression("${server.mode.demo} == false")
 public class ProjectCoreRestController extends AbstractRestController {
 
@@ -80,11 +78,8 @@ public class ProjectCoreRestController extends AbstractRestController {
      * The method retrieves all projects
      * @return The retrieved project.
      */
-    @ApiOperation(value = "Get projects",response = Project.class,
-            notes = "Get projects. Required authorization: Reader, Modifier or Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved project")
-    })
+    @Operation(summary =  "Get projects",
+            description = "Get projects. Required authorization: Reader, Modifier or Admin.")
     @RequestMapping(method = RequestMethod.GET, value = "/project")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
@@ -98,18 +93,15 @@ public class ProjectCoreRestController extends AbstractRestController {
      * @param projectId The project id.
      * @return The retrieved project.
      */
-    @ApiOperation(value = "Get project",response = Project.class,
-            notes = "Get project. Required authorization: Reader, Modifier or Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved project")
-    })
+    @Operation(summary =  "Get project",
+            description = "Get project. Required authorization: Reader, Modifier or Admin.")
     @RequestMapping(method = RequestMethod.GET, value = "/project/{type}/{projectId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Project> getProject(
-            @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
+            @Parameter(name = "type", description = "The type of the project", example = "rest,soap")
             @PathVariable("type") final String type,
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable("projectId") final String projectId) {
         return ResponseEntity.ok(projectServiceFacade.findOne(type, projectId));
     }
@@ -119,11 +111,7 @@ public class ProjectCoreRestController extends AbstractRestController {
      * The method creates a new project
      * @return The retrieved project.
      */
-    @ApiOperation(value = "Create project",response = Project.class,
-            notes = "Create project. Required authorization: Modifier or Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully created project")
-    })
+    @Operation(summary =  "Create project", description = "Create project. Required authorization: Modifier or Admin.")
     @RequestMapping(method = RequestMethod.POST, value = "/project")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody ResponseEntity<Project> createProject(@RequestBody final CreateProjectRequest request) {
@@ -139,16 +127,13 @@ public class ProjectCoreRestController extends AbstractRestController {
      * The method updates an existing project
      * @return The updated project.
      */
-    @ApiOperation(value = "Update project",response = Project.class,
-            notes = "Update project. Required authorization: Modifier or Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully created project")
-    })
+    @Operation(summary =  "Update project",
+            description = "Update project. Required authorization: Modifier or Admin.")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{type}/{projectId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public @ResponseBody ResponseEntity<Project> updateProject( @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
+    public @ResponseBody ResponseEntity<Project> updateProject( @Parameter(name = "type", description = "The type of the project", example = "rest,soap")
                                                     @PathVariable("type") final String type,
-                                                @ApiParam(name = "projectId", value = "The id of the project")
+                                                @Parameter(name = "projectId", description = "The id of the project")
                                                     @PathVariable("projectId") final String projectId,
                                                 @RequestBody final UpdateProjectRequest request) {
         final Project project = projectServiceFacade.findOne(type, projectId);
@@ -163,18 +148,15 @@ public class ProjectCoreRestController extends AbstractRestController {
      * @param projectId The project id.
      * @return The deleted project
      */
-    @ApiOperation(value = "Delete project",response = Project.class,
-            notes = "Delete project. Required authorization: Modifier or Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully deleted project")
-    })
+    @Operation(summary =  "Delete project",
+            description = "Delete project. Required authorization: Modifier or Admin.")
     @RequestMapping(method = RequestMethod.DELETE, value = "/project/{type}/{projectId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Project> deleteProject(
-            @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
+            @Parameter(name = "type", description = "The type of the project", example = "rest,soap")
             @PathVariable("type") final String type,
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable("projectId") final String projectId) {
         return ResponseEntity.ok(projectServiceFacade.delete(type, projectId));
     }
@@ -185,18 +167,15 @@ public class ProjectCoreRestController extends AbstractRestController {
      * @param multipartFile The project file which will be imported.
      * @return A HTTP response.
      */
-    @ApiOperation(value = "Import project",response = Project.class,
-            notes = "Import project. Required authorization: Modifier or Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully imported project")
-    })
+    @Operation(summary =  "Import project",
+            description = "Import project. Required authorization: Modifier or Admin.")
     @RequestMapping(method = RequestMethod.POST, value = "/project/{type}/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Project> importProject(
-            @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
+            @Parameter(name = "type", description = "The type of the project", example = "rest,soap")
             @PathVariable("type") final String type,
-            @ApiParam(name = "file", value = "The project file which will be imported.")
+            @Parameter(name = "file", description = "The project file which will be imported.")
             @RequestParam("file") final MultipartFile multipartFile) {
         File file = null;
         try {
@@ -226,18 +205,15 @@ public class ProjectCoreRestController extends AbstractRestController {
      * @param projectId The id of the project that will be exported.
      * @return A HTTP response.
      */
-    @ApiOperation(value = "Export project",response = Project.class,
-            notes = "Export project. Required authorization: Reader, Modifier or Admin.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully exported project")
-    })
+    @Operation(summary =  "Export project",
+            description = "Export project. Required authorization: Reader, Modifier or Admin.")
     @RequestMapping(method = RequestMethod.GET, value = "/project/{type}/{projectId}/export")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<String> exportProject(
-            @ApiParam(name = "type", value = "The type of the project", allowableValues = "rest,soap")
+            @Parameter(name = "type", description = "The type of the project", example = "rest,soap")
             @PathVariable("type") final String type,
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable("projectId") final String projectId) {
         return ResponseEntity.ok(projectServiceFacade.exportProject(type, projectId));
     }

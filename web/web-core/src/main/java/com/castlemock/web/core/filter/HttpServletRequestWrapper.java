@@ -18,9 +18,9 @@ package com.castlemock.web.core.filter;
 
 import com.google.common.io.ByteStreams;
 
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -38,7 +38,7 @@ import java.io.InputStreamReader;
  * @author Karl Dahlgren
  * @since 1.18
  */
-public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletRequestWrapper {
+public class HttpServletRequestWrapper extends jakarta.servlet.http.HttpServletRequestWrapper {
     private byte[] bytes;
 
     HttpServletRequestWrapper(final HttpServletRequest request) throws IOException {

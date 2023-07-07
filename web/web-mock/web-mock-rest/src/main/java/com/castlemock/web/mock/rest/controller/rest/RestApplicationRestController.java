@@ -33,11 +33,11 @@ import com.castlemock.web.mock.rest.model.CreateRestApplicationRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestApplicationRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestResourceForwardedEndpointsRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestResourceStatusesRequest;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,8 +50,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("api/rest/rest")
-@Api(value="REST - Application", description="REST Operations for Castle Mock REST Application",
-        tags = {"REST - Application"})
+@Tag(name="REST - Application", description="REST Operations for Castle Mock REST Application")
 public class RestApplicationRestController extends AbstractRestController {
 
     @Autowired
@@ -59,15 +58,15 @@ public class RestApplicationRestController extends AbstractRestController {
         super(serviceProcessor);
     }
 
-    @ApiOperation(value = "Get Application", response = RestApplication.class)
+    @Operation(summary =  "Get Application")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved REST Application")})
     @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}/application/{applicationId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody ResponseEntity<RestApplication> getApplication(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "applicationId", value = "The id of the application")
+            @Parameter(name = "applicationId", description = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId) {
         final ReadRestApplicationOutput output = super.serviceProcessor.process(ReadRestApplicationInput.builder()
                 .restProjectId(projectId)
@@ -76,15 +75,15 @@ public class RestApplicationRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getRestApplication());
     }
 
-    @ApiOperation(value = "Delete Application", response = RestApplication.class)
+    @Operation(summary =  "Delete Application")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted REST Application")})
     @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}/application/{applicationId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public ResponseEntity<RestApplication> deleteApplication(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "applicationId", value = "The id of the application")
+            @Parameter(name = "applicationId", description = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId) {
         final DeleteRestApplicationOutput output = super.serviceProcessor.process(DeleteRestApplicationInput.builder()
                 .restProjectId(projectId)
@@ -93,15 +92,15 @@ public class RestApplicationRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getApplication());
     }
 
-    @ApiOperation(value = "Update Application", response = RestApplication.class)
+    @Operation(summary =  "Update Application")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated REST Application")})
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/{applicationId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public ResponseEntity<RestApplication> updateApplication(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "applicationId", value = "The id of the application")
+            @Parameter(name = "applicationId", description = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId,
             @RequestBody final UpdateRestApplicationRequest request) {
         final UpdateRestApplicationOutput output = super.serviceProcessor.process(UpdateRestApplicationInput.builder()
@@ -112,13 +111,13 @@ public class RestApplicationRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getUpdatedRestApplication());
     }
 
-    @ApiOperation(value = "Create Application", response = RestApplication.class)
+    @Operation(summary =  "Create Application")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully created REST Application")})
     @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/application")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public ResponseEntity<RestApplication> createApplication(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @RequestBody CreateRestApplicationRequest request) {
         final CreateRestApplicationOutput output = super.serviceProcessor.process(CreateRestApplicationInput.builder()
@@ -128,16 +127,16 @@ public class RestApplicationRestController extends AbstractRestController {
         return ResponseEntity.ok(output.getSavedRestApplication());
     }
 
-    @ApiOperation(value = "Update resource statuses")
+    @Operation(summary =  "Update resource statuses")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated REST resource statuses")})
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/{applicationId}/resource/status")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updateResourceStatuses(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "applicationId", value = "The id of the application")
+            @Parameter(name = "applicationId", description = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId,
             @RequestBody UpdateRestResourceStatusesRequest request){
         request.getResourceIds()
@@ -150,16 +149,16 @@ public class RestApplicationRestController extends AbstractRestController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "Update Resource forwarded endpoints")
+    @Operation(summary =  "Update Resource forwarded endpoints")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated REST Resource forwarded endpoints")})
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/{applicationId}/resource/endpoint/forwarded")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updateResourceForwardedEndpoints(
-            @ApiParam(name = "projectId", value = "The id of the project")
+            @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
-            @ApiParam(name = "applicationId", value = "The id of the application")
+            @Parameter(name = "applicationId", description = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId,
             @org.springframework.web.bind.annotation.RequestBody UpdateRestResourceForwardedEndpointsRequest request){
         super.serviceProcessor.process(UpdateRestResourcesForwardedEndpointInput.builder()

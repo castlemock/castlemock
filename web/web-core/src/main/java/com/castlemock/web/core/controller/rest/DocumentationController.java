@@ -16,8 +16,9 @@
 
 package com.castlemock.web.core.controller.rest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.ServletContext;
 import java.util.Objects;
 
 /**
@@ -34,7 +34,7 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping("/doc/api/rest")
-@Api(value="Core", tags = {"Core"})
+@Tag(name="Core - Documentation")
 public class DocumentationController {
 
     @Autowired
@@ -49,7 +49,7 @@ public class DocumentationController {
      * Forward the user to the documentation
      * @return Forward the user to the Swagger UI
      */
-    @ApiOperation(value = "Documentation",notes = "Swagger REST API Documentation")
+    @Operation(summary =  "Documentation",description = "Swagger REST API Documentation")
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody RedirectView forward() {
         return new RedirectView(servletContext.getContextPath() + "/swagger-ui/");

@@ -16,10 +16,12 @@
 
 package com.castlemock.app.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * The class {@link MockSecurityConfig} provides the configuration for security regarding the mock services.
@@ -30,24 +32,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @Order(1)
 @SuppressWarnings("deprecation")
-public class MockSecurityConfig extends WebSecurityConfigurerAdapter {
+public class MockSecurityConfig {
 
-    /**
-     * The method configure is responsible for the security configuration.
-     *
-     * @param httpSecurity httpSecurity will be used to configure the authentication process.
-     * @throws Exception Throws an exception if the configuration fails
-     */
-    @Override
-    protected void configure(final HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .antMatcher("/mock/**")
-                    .authorizeRequests()
-                    .anyRequest()
-                    .permitAll()
-                    .and()
-                .csrf()
-                    .disable();
+
+    @Bean
+    public SecurityFilterChain mockSecurityFilterChain(final HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests((authz) -> authz.requestMatchers("/mock/**")
+                        .authenticated()
+                        .anyRequest()
+                        .permitAll()
+                )
+                .csrf(AbstractHttpConfigurer::disable);
+        return http.build();
+
     }
 
 }

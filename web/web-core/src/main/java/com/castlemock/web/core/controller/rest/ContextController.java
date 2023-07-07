@@ -17,10 +17,9 @@
 package com.castlemock.web.core.controller.rest;
 
 import com.castlemock.web.core.model.ContextResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletContext;
 import java.util.Objects;
 
 /**
@@ -37,7 +35,7 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping("/api/rest/core")
-@Api(value="Core", tags = {"Core"})
+@Tag(name="Core - Context")
 public class ContextController {
 
     private final ServletContext servletContext;
@@ -47,10 +45,7 @@ public class ContextController {
         this.servletContext = Objects.requireNonNull(servletContext);
     }
 
-    @ApiOperation(value = "Get context")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved context")
-    })
+    @Operation(summary =  "Get context")
     @RequestMapping(method = RequestMethod.GET, value = "/context")
     public @ResponseBody
     ResponseEntity<ContextResponse> getContext() {

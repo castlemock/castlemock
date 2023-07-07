@@ -16,24 +16,16 @@
 
 package com.castlemock.web.core.config;
 
+import io.swagger.v3.oas.models.ExternalDocumentation;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import jakarta.servlet.ServletContext;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.RequestParameterBuilder;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.ParameterType;
-import springfox.documentation.service.RequestParameter;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import javax.servlet.ServletContext;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * The {@link SwaggerConfig} is responsible for configure Swagger.
@@ -41,7 +33,6 @@ import java.util.List;
  * @since 1.19
  */
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
 
     @Value("${app.version:Undefined}")
@@ -51,33 +42,24 @@ public class SwaggerConfig {
     private ServletContext servletContext;
 
     @Bean
-    public Docket api() {
-        final RequestParameter authorizationParameter = new RequestParameterBuilder()
-                .name("Authorization")
-                .in(ParameterType.HEADER)
-                .required(false)
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+                .group("Castle Mock")
+                .pathsToMatch("/api/**")
                 .build();
-
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant(servletContext.getContextPath() + "/api/rest/**"))
-                .build()
-                .apiInfo(apiInfo())
-                .globalRequestParameters(List.of(authorizationParameter));
     }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfo(
-                "Castle Mock REST API",
-                "",
-                this.version,
-                null,
-                new Contact("Castle Mock",
-                        "https://www.castlemock.com",
-                        "contact@castlemock.com"),
-                "Apache License 2.0",
-                "https://github.com/castlemock/castlemock/blob/master/LICENSE",
-                Collections.emptyList());
+    @Bean
+    public OpenAPI springShopOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title("Castle Mock")
+                        .description("Castle Mock is a web application that provides the functionality to mock out RESTful APIs and SOAP web-services. " +
+                                "This functionality allows client-side developers to completely mimic a server side behavior and shape the responses " +
+                                "themselves for when writing and conducting integration tests.")
+                        .version("v1")
+                        .license(new License().name("Apache License 2.0").url("https://github.com/castlemock/castlemock/blob/master/LICENSE")))
+                .externalDocs(new ExternalDocumentation()
+                        .description("Castle Mock Wiki Documentation")
+                        .url("https://github.com/castlemock/castlemock/wiki"));
     }
 }

@@ -34,7 +34,7 @@ class LogoutContainer extends PureComponent {
 
     logout() {
         axios
-            .get(process.env.PUBLIC_URL + "/api/rest/core/logout/")
+            .get(process.env.PUBLIC_URL + "/api/rest/core/logout")
             .then(response => {
             })
             .catch(error => {
