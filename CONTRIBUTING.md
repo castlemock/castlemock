@@ -7,9 +7,9 @@ This page provides information about contributing code to the **Castle Mock** co
 1. Fork the repository on GitHub
 2. Clone the forked repository to your machine
 3. Install the development tools. In order to develop **Castle Mock**, you need the following tools:
-   * Java Development Kit (JDK) 11 or higher.
-   * Maven 3.5.4 or above
-    * NPM and Yarn for frontend
+   * Java Development Kit (JDK)
+   * Maven
+   * NPM and Yarn for frontend
    * Any IDE which supports importing Maven projects.
 
 ## Building
