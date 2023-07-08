@@ -169,13 +169,13 @@ class ProjectOverview extends PureComponent {
         if(cell === "SOAP") {
             return (
                 <div>
-                    <Badge variant="primary">{cell}</Badge>
+                    <Badge bg="primary" text="light">{cell}</Badge>
                 </div>
             )
         } else if(cell === "REST") {
             return (
                 <div>
-                    <Badge variant="success">{cell}</Badge>
+                    <Badge bg="success" text="light">{cell}</Badge>
                 </div>
             )
         }

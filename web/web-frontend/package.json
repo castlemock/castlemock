@@ -4,9 +4,9 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "axios": "^0.27.2",
-    "bootstrap": "^4.6.2",
     "@popperjs/core": "^2.11.8",
+    "axios": "^1.4.0",
+    "bootstrap": "^4.6.2",
     "classnames": "^2.3.2",
     "history": "^5.3.0",
     "jquery": "^3.7.0",
@@ -14,7 +14,7 @@
     "popper.js": "^1.14.7",
     "prop-types": "^15.8.0",
     "react": "17.0.2",
-    "react-bootstrap": "^1.6.7",
+    "react-bootstrap": "^2.8.0",
     "react-bootstrap-table-next": "^4.0.3",
     "react-bootstrap-table2-filter": "^1.1.6",
     "react-bootstrap-table2-paginator": "^2.0.4",
@@ -23,11 +23,11 @@
     "react-router-dom": "^5.3.4"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.15",
-    "@fortawesome/free-brands-svg-icons": "^5.7.2",
-    "@fortawesome/free-solid-svg-icons": "^5.7.2",
-    "@fortawesome/react-fontawesome": "^0.1.4",
-    "react-scripts": "4.0.1"
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "react-scripts": "4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

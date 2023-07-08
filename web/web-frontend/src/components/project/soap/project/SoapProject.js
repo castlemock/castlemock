@@ -305,7 +305,7 @@ class SoapProject extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-2 content-title">Type</dt>
-                            <dd className="col-sm-9"><Badge variant="primary">SOAP</Badge></dd>
+                            <dd className="col-sm-9"><Badge bg="primary" text="light">SOAP</Badge></dd>
                         </dl>
                     </div>
                     <div className="panel panel-primary table-panel">
