@@ -27,7 +27,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "react-scripts": "4.0.3"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
