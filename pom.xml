@@ -62,7 +62,7 @@
         <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
-        <jakarta.xml.bind.version>4.0.0</jakarta.xml.bind.version>
+        <jakarta.xml.bind.version>4.0.1</jakarta.xml.bind.version>
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
         <jakarta.validation.version>3.0.2</jakarta.validation.version>
