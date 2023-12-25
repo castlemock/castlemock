@@ -4,12 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.castlemock</groupId>
     <artifactId>castlemock</artifactId>
-    <version>${project.version}</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <properties>
         <!-- Project properties -->
-        <project.version>1.65</project.version>
+        <revision>1.66</revision>
+        <project.version>1.66</project.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -86,133 +87,133 @@
             <dependency>
                 <groupId>com.castlemock.model</groupId>
                 <artifactId>model-expression</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model</groupId>
                 <artifactId>model-core</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model.mock</groupId>
                 <artifactId>model-mock-rest</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model.mock</groupId>
                 <artifactId>model-mock-soap</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web.mock</groupId>
                 <artifactId>web-mock-rest</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web.mock</groupId>
                 <artifactId>web-mock-soap</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web</groupId>
                 <artifactId>web-core</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository</groupId>
                 <artifactId>repository-core</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.rest</groupId>
                 <artifactId>repository-mock-rest-file</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.rest</groupId>
                 <artifactId>repository-mock-rest-model</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.soap</groupId>
                 <artifactId>repository-mock-soap-file</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.soap</groupId>
                 <artifactId>repository-mock-soap-model</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
                 <artifactId>repository-core-model</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
                 <artifactId>repository-core-file</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.app</groupId>
                 <artifactId>app</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.deploy.tomcat</groupId>
                 <artifactId>deploy-tomcat-common</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.deploy.jetty</groupId>
                 <artifactId>deploy-jetty-common</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web</groupId>
                 <artifactId>web-site</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web</groupId>
                 <artifactId>web-frontend</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.service</groupId>
                 <artifactId>service-core</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.service</groupId>
                 <artifactId>service-mock-rest</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.service</groupId>
                 <artifactId>service-mock-soap</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- Castle Mock test dependencies -->
             <dependency>
                 <groupId>com.castlemock.model</groupId>
                 <artifactId>model-core</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model.mock</groupId>
                 <artifactId>model-mock-rest</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model.mock</groupId>
                 <artifactId>model-mock-soap</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
@@ -260,6 +261,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jetty</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-tomcat</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
             <dependency>

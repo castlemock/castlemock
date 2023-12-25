@@ -50,6 +50,7 @@ class ValidateExpressionModal extends PureComponent {
         axios
             .post(process.env.PUBLIC_URL + "/api/rest/core/expression/validate", {
                 requestUrl: this.state.requestUrl,
+                expressionType: this.props.expressionType,
                 requestBody: this.state.requestBody,
                 responseBody: this.state.responseBody
             })

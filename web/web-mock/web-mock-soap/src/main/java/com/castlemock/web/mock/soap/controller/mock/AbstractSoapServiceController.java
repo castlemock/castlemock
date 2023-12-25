@@ -23,19 +23,7 @@ import com.castlemock.model.core.utility.XPathUtility;
 import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
-import com.castlemock.model.mock.soap.domain.SoapEvent;
-import com.castlemock.model.mock.soap.domain.SoapMockResponse;
-import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
-import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
-import com.castlemock.model.mock.soap.domain.SoapProject;
-import com.castlemock.model.mock.soap.domain.SoapRequest;
-import com.castlemock.model.mock.soap.domain.SoapResourceType;
-import com.castlemock.model.mock.soap.domain.SoapResponse;
-import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
-import com.castlemock.model.mock.soap.domain.SoapVersion;
-import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
+import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.service.mock.soap.event.input.CreateSoapEventInput;
 import com.castlemock.service.mock.soap.project.input.CreateSoapMockResponseInput;
 import com.castlemock.service.mock.soap.project.input.IdentifySoapOperationInput;
@@ -51,6 +39,7 @@ import com.castlemock.web.core.controller.AbstractController;
 import com.castlemock.web.core.utility.HttpMessageSupport;
 import com.castlemock.web.mock.soap.model.SoapException;
 import com.castlemock.web.mock.soap.utility.MtomUtility;
+import com.castlemock.model.core.utility.XsltUtility;
 import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparator;
 import com.castlemock.web.mock.soap.utility.config.AddressLocationConfigurer;
 import com.google.common.base.Preconditions;
@@ -399,13 +388,16 @@ public abstract class AbstractSoapServiceController extends AbstractController {
 
         String body = mockResponse.getBody();
         if (mockResponse.isUsingExpressions()) {
+            if(SoapExpressionType.XSLT.equals(mockResponse.getExpressionType())){
+                body = XsltUtility.transform(request.getBody(), body);
+            } else {
+                final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
+                        .requestUrl(httpServletRequest.getRequestURL().toString())
+                        .requestBody(request.getBody())
+                        .build();
 
-            final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
-                    .requestUrl(httpServletRequest.getRequestURL().toString())
-                    .requestBody(request.getBody())
-                    .build();
-
-            body = new TextParser().parse(body, externalInput);
+                body = new TextParser().parse(body, externalInput);
+            }
         }
         return SoapResponse.builder()
                 .body(body)

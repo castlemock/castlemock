@@ -16,6 +16,8 @@
 
 package com.castlemock.app.config;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 import com.castlemock.web.core.config.JWTEncoderDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +32,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 /**
  * The class {@link RestSecurityConfig} provides the configuration for the REST interfaces.
@@ -57,9 +61,9 @@ public class RestSecurityConfig {
     @Bean
     public SecurityFilterChain restSecurityFilterChain(final HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authz) -> authz.requestMatchers("/api/rest/core/login", "/api/rest/core/version", "/api/rest/core/context", "/doc/api/rest")
+                .authorizeHttpRequests((authz) -> authz.requestMatchers(antMatcher("/api/rest/core/login"), antMatcher("/api/rest/core/version"), antMatcher("/api/rest/core/context"), antMatcher("/doc/api/rest"))
                         .permitAll()
-                ).authorizeHttpRequests((authz) -> authz.requestMatchers("/api/rest/**")
+                ).authorizeHttpRequests((authz) -> authz.requestMatchers(antMatcher("/api/rest/**"))
                         .authenticated()
                 )
                 .httpBasic((authz) -> authz.authenticationEntryPoint(new NoPopupBasicAuthenticationEntryPoint()))

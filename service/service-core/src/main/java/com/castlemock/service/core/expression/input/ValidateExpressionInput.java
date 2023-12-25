@@ -17,6 +17,7 @@
 package com.castlemock.service.core.expression.input;
 
 import com.castlemock.model.core.Input;
+import com.castlemock.model.mock.soap.domain.SoapExpressionType;
 
 import java.util.Objects;
 
@@ -26,12 +27,18 @@ import java.util.Objects;
  */
 public final class ValidateExpressionInput implements Input {
 
+    private final SoapExpressionType expressionType;
     private final String requestBody;
     private final String responseBody;
 
     private ValidateExpressionInput(final Builder builder) {
+        this.expressionType = builder.expressionType;
         this.responseBody = Objects.requireNonNull(builder.responseBody);
         this.requestBody = Objects.requireNonNull(builder.requestBody);
+    }
+
+    public SoapExpressionType getExpressionType() {
+        return expressionType;
     }
 
     public String getRequestBody() {
@@ -48,10 +55,16 @@ public final class ValidateExpressionInput implements Input {
 
     public static final class Builder {
 
+        private SoapExpressionType expressionType;
         private String requestBody;
         private String responseBody;
 
         private Builder() {
+        }
+
+        public Builder expressionType(final SoapExpressionType expressionType) {
+            this.expressionType = expressionType;
+            return this;
         }
 
         public Builder requestBody(final String requestBody) {

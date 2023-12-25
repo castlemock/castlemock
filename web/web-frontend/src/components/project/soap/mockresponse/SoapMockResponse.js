@@ -40,6 +40,7 @@ class SoapMockResponse extends PureComponent {
         this.setHttpStatusCode = this.setHttpStatusCode.bind(this);
         this.setStatus = this.setStatus.bind(this);
         this.setUsingExpression = this.setUsingExpression.bind(this);
+        this.setExpressionType = this.setExpressionType.bind(this);
         this.setBody = this.setBody.bind(this);
         this.onHeaderAdded = this.onHeaderAdded.bind(this);
         this.onHeaderRemoved = this.onHeaderRemoved.bind(this);
@@ -141,7 +142,17 @@ class SoapMockResponse extends PureComponent {
         this.setState({
             updateMockResponse: {
                 ...this.state.updateMockResponse,
-                usingExpressions: source.target.checked
+                usingExpressions: source.target.checked,
+                expressionType: source.target.checked === true ? "XPATH" : null
+            }
+        });
+    }
+
+    setExpressionType(source) {
+        this.setState({
+            updateMockResponse: {
+                ...this.state.updateMockResponse,
+                expressionType: source.target.value
             }
         });
     }
@@ -229,7 +240,13 @@ class SoapMockResponse extends PureComponent {
                         </dl>
                         <dl className="row">
                             <dt className="col-sm-3 content-title">Use Expression</dt>
-                            <dd className="col-sm-9"><input type="checkbox" checked={this.state.updateMockResponse.usingExpressions} onChange={this.setUsingExpression}/></dd>
+                            <dd className="col-sm-9">
+                                <input type="checkbox" checked={this.state.updateMockResponse.usingExpressions} onChange={this.setUsingExpression}/>&nbsp;
+                                <select disabled={!this.state.updateMockResponse.usingExpressions} value={this.state.updateMockResponse.expressionType} onChange={this.setExpressionType}>
+                                    <option value={"XPATH"}>XPath</option>
+                                    <option value={"XSLT"}>XSLT</option>
+                                </select>
+                            </dd>
                         </dl>
                     </div>
                     <div>
@@ -258,7 +275,7 @@ class SoapMockResponse extends PureComponent {
                 </section>
 
                 <DeleteMockResponseModal projectId={this.state.projectId} portId={this.state.portId} operationId={this.state.operationId} mockResponseId={this.state.mockResponseId}/>
-                <ValidateExpressionModal />
+                <ValidateExpressionModal expressionType={this.state.updateMockResponse.expressionType}/>
             </div>
         )
     }

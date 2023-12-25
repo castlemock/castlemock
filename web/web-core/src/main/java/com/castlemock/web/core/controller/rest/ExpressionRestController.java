@@ -53,6 +53,7 @@ public class ExpressionRestController extends AbstractRestController {
     public @ResponseBody
     ResponseEntity<ValidateExpressionResponse> validateExpression(@RequestBody final ValidateExpressionRequest request) {
         final ValidateExpressionOutput output = serviceProcessor.process(ValidateExpressionInput.builder()
+                .expressionType(request.getExpressionType())
                 .requestBody(request.getRequestBody())
                 .responseBody(request.getResponseBody())
                 .build());

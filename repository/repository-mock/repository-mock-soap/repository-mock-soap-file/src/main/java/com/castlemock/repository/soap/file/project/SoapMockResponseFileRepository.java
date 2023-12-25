@@ -22,6 +22,7 @@ import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
 import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.mock.soap.domain.SoapExpressionType;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
@@ -208,6 +209,8 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         private Integer httpStatusCode;
         @Mapping("usingExpressions")
         private boolean usingExpressions;
+        @Mapping("expressionType")
+        private SoapExpressionType expressionType;
         @Mapping("xpathExpression")
         @Deprecated
         private String xpathExpression;
@@ -281,6 +284,16 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
 
         public void setUsingExpressions(boolean usingExpressions) {
             this.usingExpressions = usingExpressions;
+        }
+
+
+        @XmlElement
+        public SoapExpressionType getExpressionType() {
+            return expressionType;
+        }
+
+        public void setExpressionType(SoapExpressionType expressionType) {
+            this.expressionType = expressionType;
         }
 
         @XmlElementWrapper(name = "httpHeaders")
