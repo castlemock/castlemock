@@ -8,8 +8,8 @@
     <parent>
         <groupId>com.castlemock.repository.mock.soap</groupId>
         <artifactId>repository-mock-soap</artifactId>
-        <version>${project.version}</version>
-        <relativePath>../</relativePath>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <dependencies>

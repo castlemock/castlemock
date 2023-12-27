@@ -8,8 +8,8 @@
     <parent>
         <groupId>com.castlemock.repository.mock.rest</groupId>
         <artifactId>repository-mock-rest</artifactId>
-        <version>${project.version}</version>
-        <relativePath>../</relativePath>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <dependencies>

@@ -17,6 +17,7 @@
 package com.castlemock.web.mock.soap.model;
 
 import com.castlemock.model.core.http.HttpHeader;
+import com.castlemock.model.mock.soap.domain.SoapExpressionType;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
 
@@ -40,6 +41,7 @@ public class UpdateSoapMockResponseRequest {
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
     private Boolean usingExpressions;
+    private SoapExpressionType expressionType;
     private List<HttpHeader> httpHeaders;
     private List<SoapXPathExpression> xpathExpressions;
 
@@ -53,6 +55,7 @@ public class UpdateSoapMockResponseRequest {
         this.status = Objects.requireNonNull(builder.status);
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
         this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
+        this.expressionType = Objects.requireNonNull(builder.expressionType);
         this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
         this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
     }
@@ -102,6 +105,15 @@ public class UpdateSoapMockResponseRequest {
         this.usingExpressions = usingExpressions;
     }
 
+    @XmlElement
+    public SoapExpressionType getExpressionType() {
+        return expressionType;
+    }
+
+    public void setExpressionType(SoapExpressionType expressionType) {
+        this.expressionType = expressionType;
+    }
+
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
@@ -133,6 +145,7 @@ public class UpdateSoapMockResponseRequest {
         private SoapMockResponseStatus status;
         private Integer httpStatusCode;
         private Boolean usingExpressions;
+        private SoapExpressionType expressionType;
         private List<HttpHeader> httpHeaders;
         private List<SoapXPathExpression> xpathExpressions;
 
@@ -161,6 +174,11 @@ public class UpdateSoapMockResponseRequest {
 
         public Builder usingExpressions(final Boolean usingExpressions) {
             this.usingExpressions = usingExpressions;
+            return this;
+        }
+
+        public Builder expressionType(final SoapExpressionType expressionType) {
+            this.expressionType = expressionType;
             return this;
         }
 

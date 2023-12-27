@@ -43,6 +43,7 @@ public class SoapMockResponse {
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
     private boolean usingExpressions;
+    private SoapExpressionType expressionType;
     @Deprecated
     private String xpathExpression;
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
@@ -61,6 +62,9 @@ public class SoapMockResponse {
         this.status = Objects.requireNonNull(builder.status);
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
         this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
+        if (this.usingExpressions) {
+            this.expressionType = Objects.requireNonNull(builder.expressionType);
+        }
         this.xpathExpression = builder.xpathExpression;
         this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
         this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
@@ -131,6 +135,18 @@ public class SoapMockResponse {
         this.usingExpressions = usingExpressions;
     }
 
+    @XmlElement
+    public SoapExpressionType getExpressionType() {
+        if (expressionType == null && this.isUsingExpressions()) {
+            return SoapExpressionType.XPATH;
+        }
+        return expressionType;
+    }
+
+    public void setExpressionType(SoapExpressionType expressionType) {
+        this.expressionType = expressionType;
+    }
+
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
@@ -181,6 +197,7 @@ public class SoapMockResponse {
                 .status(status)
                 .httpStatusCode(httpStatusCode)
                 .usingExpressions(usingExpressions)
+                .expressionType(expressionType)
                 .xpathExpression(xpathExpression)
                 .httpHeaders(httpHeaders.stream()
                         .map(HttpHeader::toBuilder)
@@ -206,6 +223,7 @@ public class SoapMockResponse {
         private SoapMockResponseStatus status;
         private Integer httpStatusCode;
         private Boolean usingExpressions;
+        private SoapExpressionType expressionType;
         private String xpathExpression;
         private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
@@ -246,6 +264,11 @@ public class SoapMockResponse {
 
         public Builder usingExpressions(final Boolean usingExpressions) {
             this.usingExpressions = usingExpressions;
+            return this;
+        }
+
+        public Builder expressionType(final SoapExpressionType expressionType) {
+            this.expressionType = expressionType;
             return this;
         }
 

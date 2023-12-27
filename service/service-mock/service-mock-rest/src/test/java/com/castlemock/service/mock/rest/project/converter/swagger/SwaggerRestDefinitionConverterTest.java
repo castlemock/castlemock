@@ -96,7 +96,7 @@ public class SwaggerRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("successful operation (application/xml)", response200Xml.getName());
-            Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
+            Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                     "<Mock><name>${RANDOM_STRING()}</name><id>${RANDOM_LONG()}</id><createdBy>${RANDOM_STRING()}</createdBy>" +
                     "<mockStatus>${RANDOM_INTEGER()}</mockStatus></Mock>", response200Xml.getBody());
 
@@ -303,7 +303,7 @@ public class SwaggerRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("successful operation (application/xml)", response200Xml.getName());
-            Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
+            Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                     "<Mock><name>${RANDOM_STRING()}" +
                     "</name><id>${RANDOM_LONG()}</id><createdBy>${RANDOM_STRING()}" +
                     "</createdBy><mockStatus>${RANDOM_INTEGER()}</mockStatus></Mock>", response200Xml.getBody());

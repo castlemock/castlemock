@@ -93,7 +93,8 @@ public class HttpMessageSupport {
 
                 if(linesIterator.hasNext()){
                     // Add a new line. Mainly required to parse MTOM requests.
-                    builder.append(System.lineSeparator());
+                    // Tests are failing with System.lineSeparator()
+                    builder.append('\n');
                 }
             }
 

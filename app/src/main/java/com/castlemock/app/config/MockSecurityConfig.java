@@ -16,6 +16,8 @@
 
 package com.castlemock.app.config;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -34,11 +36,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @SuppressWarnings("deprecation")
 public class MockSecurityConfig {
 
-
     @Bean
     public SecurityFilterChain mockSecurityFilterChain(final HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((authz) -> authz.requestMatchers("/mock/**")
-                        .authenticated()
+        http.authorizeHttpRequests((authz) -> authz.requestMatchers(antMatcher("/mock/**"))
+                        .permitAll()
                         .anyRequest()
                         .permitAll()
                 )

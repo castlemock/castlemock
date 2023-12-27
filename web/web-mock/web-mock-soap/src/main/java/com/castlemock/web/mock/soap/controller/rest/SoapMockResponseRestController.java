@@ -129,6 +129,7 @@ public class SoapMockResponseRestController extends AbstractRestController {
                 .name(request.getName())
                 .status(request.getStatus())
                 .usingExpressions(request.isUsingExpressions())
+                .expressionType(request.getExpressionType())
                 .xpathExpressions(request.getXpathExpressions())
                 .build());
         return ResponseEntity.ok(output.getMockResponse());

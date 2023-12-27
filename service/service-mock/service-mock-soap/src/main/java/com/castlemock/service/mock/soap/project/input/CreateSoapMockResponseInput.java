@@ -19,6 +19,7 @@ package com.castlemock.service.mock.soap.project.input;
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.validation.NotNull;
+import com.castlemock.model.mock.soap.domain.SoapExpressionType;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
 
@@ -45,6 +46,7 @@ public final class CreateSoapMockResponseInput implements Input {
     private final String body;
     private final Integer httpStatusCode;
     private final Boolean usingExpressions;
+    private final SoapExpressionType expressionType;
     private final List<HttpHeader> httpHeaders;
     private final List<SoapXPathExpression> xpathExpressions;
 
@@ -58,6 +60,7 @@ public final class CreateSoapMockResponseInput implements Input {
         this.status = Objects.requireNonNull(builder.status);
         this.httpStatusCode = builder.httpStatusCode;
         this.usingExpressions = builder.usingExpressions;
+        this.expressionType = builder.expressionType;
         this.httpHeaders = builder.httpHeaders;
         this.xpathExpressions = builder.xpathExpressions;
     }
@@ -94,6 +97,10 @@ public final class CreateSoapMockResponseInput implements Input {
         return Optional.ofNullable(usingExpressions);
     }
 
+    public Optional<SoapExpressionType> getExpressionType() {
+        return Optional.ofNullable(expressionType);
+    }
+
     public Optional<List<HttpHeader>> getHttpHeaders() {
         return Optional.ofNullable(httpHeaders);
     }
@@ -115,6 +122,7 @@ public final class CreateSoapMockResponseInput implements Input {
         private SoapMockResponseStatus status;
         private Integer httpStatusCode;
         private Boolean usingExpressions;
+        private SoapExpressionType expressionType;
         private List<HttpHeader> httpHeaders;
         private List<SoapXPathExpression> xpathExpressions;
 
@@ -159,6 +167,11 @@ public final class CreateSoapMockResponseInput implements Input {
 
         public Builder usingExpressions(final Boolean usingExpressions) {
             this.usingExpressions = usingExpressions;
+            return this;
+        }
+
+        public Builder expressionType(final SoapExpressionType expressionType) {
+            this.expressionType = expressionType;
             return this;
         }
 

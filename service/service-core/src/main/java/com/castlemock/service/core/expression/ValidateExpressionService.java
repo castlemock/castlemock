@@ -19,9 +19,11 @@ package com.castlemock.service.core.expression;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.utility.XsltUtility;
 import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
+import com.castlemock.model.mock.soap.domain.SoapExpressionType;
 import com.castlemock.service.core.configuration.AbstractConfigurationGroupService;
 import com.castlemock.service.core.expression.input.ValidateExpressionInput;
 import com.castlemock.service.core.expression.output.ValidateExpressionOutput;
@@ -47,10 +49,15 @@ public class ValidateExpressionService extends AbstractConfigurationGroupService
     @Override
     public ServiceResult<ValidateExpressionOutput> process(final ServiceTask<ValidateExpressionInput> serviceTask) {
         final ValidateExpressionInput input = serviceTask.getInput();
-        final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
-                .requestBody(input.getRequestBody())
-                .build();
-        final String output = new TextParser().parse(input.getResponseBody(), externalInput);
+        String output = null;
+        if (SoapExpressionType.XSLT.equals(input.getExpressionType())) {
+            output = XsltUtility.transform(input.getRequestBody(), input.getResponseBody());
+        } else {
+            final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
+                    .requestBody(input.getRequestBody())
+                    .build();
+            output = new TextParser().parse(input.getResponseBody(), externalInput);
+        }
         return createServiceResult(ValidateExpressionOutput.builder()
                 .output(output)
                 .build());

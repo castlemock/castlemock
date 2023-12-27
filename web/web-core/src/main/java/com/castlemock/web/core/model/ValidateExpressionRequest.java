@@ -16,6 +16,8 @@
 
 package com.castlemock.web.core.model;
 
+import com.castlemock.model.mock.soap.domain.SoapExpressionType;
+
 import java.util.Objects;
 
 /**
@@ -24,6 +26,7 @@ import java.util.Objects;
  */
 public class ValidateExpressionRequest {
 
+    private SoapExpressionType expressionType;
     private String requestBody;
     private String responseBody;
 
@@ -32,8 +35,18 @@ public class ValidateExpressionRequest {
     }
 
     private ValidateExpressionRequest(final Builder builder) {
+        this.expressionType = Objects.requireNonNull(builder.expressionType);
         this.responseBody = Objects.requireNonNull(builder.responseBody);
         this.requestBody = Objects.requireNonNull(builder.requestBody);
+    }
+
+
+    public SoapExpressionType getExpressionType() {
+        return expressionType;
+    }
+
+    public void setExpressionType(SoapExpressionType expressionType) {
+        this.expressionType = expressionType;
     }
 
     public String getRequestBody() {
@@ -61,7 +74,7 @@ public class ValidateExpressionRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ValidateExpressionRequest that = (ValidateExpressionRequest) o;
-        return Objects.equals(requestBody, that.requestBody) && Objects.equals(responseBody, that.responseBody);
+        return Objects.equals(expressionType, that.expressionType) &&  Objects.equals(requestBody, that.requestBody) && Objects.equals(responseBody, that.responseBody);
     }
 
     @Override
@@ -72,17 +85,24 @@ public class ValidateExpressionRequest {
     @Override
     public String toString() {
         return "ValidateExpressionRequest{" +
-                "requestBody='" + requestBody + '\'' +
+                "expressionType='" + expressionType + '\'' +
+                ". requestBody='" + requestBody + '\'' +
                 ", responseBody='" + responseBody + '\'' +
                 '}';
     }
 
     public static final class Builder {
 
+        private SoapExpressionType expressionType;
         private String requestBody;
         private String responseBody;
 
         private Builder() {
+        }
+
+        public Builder expressionType(final SoapExpressionType expressionType) {
+            this.expressionType = expressionType;
+            return this;
         }
 
         public Builder requestBody(final String requestBody) {

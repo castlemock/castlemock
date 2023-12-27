@@ -15,6 +15,7 @@ public class SoapMockResponseTestBuilder {
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
     private Boolean usingExpressions;
+    private SoapExpressionType expressionType;
     private String xpathExpression;
     private List<HttpHeader> httpHeaders;
     private List<ContentEncoding> contentEncodings;
@@ -28,6 +29,7 @@ public class SoapMockResponseTestBuilder {
         this.status = SoapMockResponseStatus.ENABLED;
         this.httpStatusCode = 200;
         this.usingExpressions = Boolean.TRUE;
+        this.expressionType = SoapExpressionType.XPATH;
         this.httpHeaders = List.of();
         this.contentEncodings = List.of();
         this.xpathExpressions = List.of();
@@ -114,6 +116,7 @@ public class SoapMockResponseTestBuilder {
                 .operationId(operationId)
                 .status(status)
                 .usingExpressions(usingExpressions)
+                .expressionType(expressionType)
                 .xpathExpression(xpathExpression)
                 .xpathExpressions(xpathExpressions)
                 .build();
