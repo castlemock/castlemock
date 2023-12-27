@@ -34,7 +34,7 @@
                     <addResources>true</addResources>
                     <fork>true</fork>
                     <skip>false</skip>
-                    <mainClass>>com.castlemock.deploy.tomcat.jar.config.JarTomcatApplication</mainClass>
+                    <mainClass>com.castlemock.deploy.tomcat.jar.config.JarTomcatApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
