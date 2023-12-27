@@ -129,6 +129,7 @@ public class UrlUtility {
         return pattern.substring(0, index);
     }
 
+    @SuppressWarnings("deprecation")
     public static String getPath(final String originalPath,
                                  final String newPath){
 

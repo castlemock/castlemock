@@ -21,14 +21,14 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
+import java.net.URI;
 import java.util.Optional;
 
 @Component
 public class UrlManager {
 
     public Optional<String> readFromUrl(final String location){
-        try (InputStream inputStream = new URL(location).openStream())
+        try (InputStream inputStream = new URI(location).toURL().openStream())
         {
             final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             final StringBuilder builder = new StringBuilder();

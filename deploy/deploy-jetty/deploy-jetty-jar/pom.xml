@@ -32,7 +32,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <addResources>true</addResources>
-                    <fork>true</fork>
                     <skip>false</skip>
                     <mainClass>com.castlemock.deploy.jetty.jar.config.JarJettyApplication</mainClass>
                 </configuration>

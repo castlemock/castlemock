@@ -16,9 +16,6 @@
 
 package com.castlemock.web.core.filter;
 
-import org.junit.Test;
-import org.mockito.Mockito;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
@@ -26,6 +23,9 @@ import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import org.junit.Test;
+import org.mockito.Mockito;
+
 import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.anyInt;

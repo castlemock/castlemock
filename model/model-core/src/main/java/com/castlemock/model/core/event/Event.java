@@ -51,12 +51,12 @@ public class Event implements TypeIdentifiable {
      */
     public Event(final String resourceName){
         this.resourceName = resourceName;
-        setStartDate(new Date());
+        this.startDate = new Date();
     }
 
     /**
      * The constructor provides the functionality to initialize a new event DTO based on another event DTO
-     * @param eventDto The event DTO that the new event DTO is going to based on
+     * @param eventDto The event DTO that the new event DTO is going to be based on
      */
     public Event(final Event eventDto){
         this.resourceName = eventDto.getResourceName();
@@ -64,6 +64,7 @@ public class Event implements TypeIdentifiable {
         this.id = eventDto.getId();
         this.startDate = eventDto.getStartDate();
         this.endDate = eventDto.getEndDate();
+        this.typeIdentifier = eventDto.getTypeIdentifier();
     }
 
     @XmlElement

@@ -20,7 +20,8 @@ import com.castlemock.model.core.utility.parser.expression.argument.ExpressionAr
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * {@link UrlHostExpression} is an {@link Expression} and will extract the host name
@@ -46,11 +47,10 @@ public class UrlHostExpression extends AbstractExpression {
     public String transform(final ExpressionInput input) {
         final ExpressionArgument<?> urlArgument = input.getArgument(URL_ARGUMENT);
 
-        if(!(urlArgument instanceof ExpressionArgumentString)){
+        if(!(urlArgument instanceof ExpressionArgumentString argument)){
             return MISSING_URL_ARGUMENT;
         }
 
-        final ExpressionArgumentString argument = (ExpressionArgumentString) urlArgument;
         final String rawUrl = argument.getValue();
 
         if(rawUrl == null){
@@ -58,8 +58,8 @@ public class UrlHostExpression extends AbstractExpression {
         }
 
         try {
-            return new URL(rawUrl).getHost();
-        } catch (MalformedURLException e) {
+            return new URI(rawUrl).toURL().getHost();
+        } catch (MalformedURLException | URISyntaxException e) {
             return MISSING_URL_ARGUMENT;
         }
     }

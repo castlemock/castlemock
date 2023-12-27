@@ -1,10 +1,9 @@
 package com.castlemock.web.core.utility;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 public class BaseUrlInfoTest {
 

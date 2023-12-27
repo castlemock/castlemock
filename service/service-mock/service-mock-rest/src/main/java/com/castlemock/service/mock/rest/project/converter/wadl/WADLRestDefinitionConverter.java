@@ -37,6 +37,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -140,7 +142,7 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
                 List<RestApplication> convertedRestApplications = convert(file, generateResponse);
                 restApplications.addAll(convertedRestApplications);
             }
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             LOGGER.error("Unable to download file file: " + location, e);
         } finally {
             if(files != null){
@@ -196,9 +198,9 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
                 .filter(resourceBase -> !resourceBase.isEmpty())
                 .map(resourceBase -> {
                     try {
-                        final URL url = new URL(resourceBase);
+                        final URL url = new URI(resourceBase).toURL();
                         return url.getPath();
-                    } catch (MalformedURLException e) {
+                    } catch (MalformedURLException | URISyntaxException e) {
                         LOGGER.error("Unable to create an URL for the following URL " + resourceBase);
                         return null;
                     }

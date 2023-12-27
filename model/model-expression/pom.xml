@@ -87,6 +87,19 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <release>${java.release}</release>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <showWarnings>false</showWarnings>
+                    <failOnWarning>false</failOnWarning>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
         </plugins>
         <resources>
             <resource>

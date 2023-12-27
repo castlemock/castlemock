@@ -19,7 +19,13 @@ package com.castlemock.service.mock.rest.project.converter.openapi;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.utility.file.FileUtility;
-import com.castlemock.model.mock.rest.domain.*;
+import com.castlemock.model.mock.rest.domain.RestApplication;
+import com.castlemock.model.mock.rest.domain.RestMethod;
+import com.castlemock.model.mock.rest.domain.RestMethodStatus;
+import com.castlemock.model.mock.rest.domain.RestMockResponse;
+import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
+import com.castlemock.model.mock.rest.domain.RestResource;
+import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
 import com.castlemock.service.mock.rest.project.converter.AbstractRestDefinitionConverter;
 import io.swagger.parser.OpenAPIParser;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -28,17 +34,17 @@ import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.headers.Header;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
-import io.swagger.v3.parser.core.models.SwaggerParseResult;
 import io.swagger.v3.parser.core.models.ParseOptions;
+import io.swagger.v3.parser.core.models.SwaggerParseResult;
 import joptsimple.internal.Strings;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 
 /**
  * The {@link OpenApiRestDefinitionConverter} provides OpenAPI V3 related functionality.

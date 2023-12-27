@@ -25,6 +25,7 @@ import com.castlemock.web.core.config.JWTEncoderDecoder;
 import com.castlemock.web.core.model.AuthenticationRequestTestBuilder;
 import com.castlemock.web.core.model.authentication.AuthenticationRequest;
 import com.castlemock.web.core.model.authentication.AuthenticationResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,8 +33,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-
-import jakarta.servlet.http.HttpServletResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

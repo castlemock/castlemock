@@ -20,18 +20,18 @@ import com.castlemock.model.core.http.ContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -40,9 +40,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 import java.util.zip.InflaterInputStream;
 
 /**
@@ -203,7 +201,9 @@ public class HttpMessageSupport {
             HttpParameter httpParameter = httpParameters.get(index);
             String parameterName = httpParameter.getName();
             String parameterValue = httpParameter.getValue();
-            stringBuilder.append(parameterName + "=" + parameterValue);
+            stringBuilder.append(parameterName)
+                    .append("=")
+                    .append(parameterValue);
 
             // Add a & (and) character if the Http parameter is not the last one
             if(index < httpParameters.size() - 1){
@@ -223,7 +223,7 @@ public class HttpMessageSupport {
      * @param body The body that will be sent in the request. No body will be sent if the value <code>null</code> has been provided.
      * @param headers The headers that will be added to the request.
      * @return An established connection towards the endpoint.
-     * @throws IOException
+     * @throws IOException Due to being unable to close buffered reader
      * @since 1.18
      */
     public static HttpURLConnection establishConnection(final String endpoint,
@@ -232,7 +232,7 @@ public class HttpMessageSupport {
                                                         final List<HttpHeader> headers) throws IOException {
         OutputStream outputStream = null;
         try {
-            final URL url = new URL(endpoint);
+            final URL url = new URI(endpoint).toURL();
             final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod(httpMethod.name());
@@ -247,9 +247,9 @@ public class HttpMessageSupport {
             }
 
             return connection;
-        }catch (Exception e){
-            LOGGER.error("Unable to establish connection towards " + endpoint, e);
-            throw e;
+        }catch (Exception exception){
+            LOGGER.error("Unable to establish connection towards " + endpoint, exception);
+            throw new IllegalStateException(exception);
         } finally {
             if(outputStream != null){
                 try {
@@ -267,7 +267,7 @@ public class HttpMessageSupport {
      * @param encodings The encoding that will be used to parse and decode the body.
      * @param characterEncoding The character encoding
      * @return The decoded body in String format.
-     * @throws IOException
+     * @throws IOException Due to being unable to close buffered reader
      * @since 1.18
      */
     public static String extractHttpBody(final HttpURLConnection connection,
@@ -329,59 +329,6 @@ public class HttpMessageSupport {
             }
         }
 
-    }
-
-    /**
-     * Encode the provided <code>body</code> with a particular {@link ContentEncoding}.
-     * @param body The body that will be encoded.
-     * @param encoding The encoding the body will be encoded with.
-     * @param characterEncoding The character encoding
-     * @return Encoded value of the body.
-     * @since 1.18
-     */
-    public static String encodeBody(final String body,
-                                    final ContentEncoding encoding,
-                                    final String characterEncoding) {
-
-        ByteArrayOutputStream outputStream = null;
-        OutputStream encodingStream = null;
-        try {
-            if (ContentEncoding.GZIP.equals(encoding)) {
-                outputStream = new ByteArrayOutputStream();
-                encodingStream = new GZIPOutputStream(outputStream);
-            } else if (ContentEncoding.DEFLATE.equals(encoding)) {
-                outputStream = new ByteArrayOutputStream();
-                encodingStream = new DeflaterOutputStream(outputStream);
-            }
-
-            if(encodingStream == null){
-                LOGGER.warn("Unable to match the HTTP encoding to an encoder");
-                return body;
-            }
-
-            encodingStream.write(body.getBytes());
-            encodingStream.flush();
-
-            return new String( outputStream.toByteArray(), characterEncoding );
-        }catch (Exception e){
-            LOGGER.error("Unable to encode the body", e);
-            throw new RuntimeException(e);
-        } finally {
-            if(outputStream != null){
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    LOGGER.warn("Unable to close the byte array output stream");
-                }
-            }
-            if(encodingStream != null){
-                try {
-                    encodingStream.close();
-                } catch (IOException e) {
-                    LOGGER.warn("Unable to close the encoding stream");
-                }
-            }
-        }
     }
 
     /**

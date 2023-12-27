@@ -28,6 +28,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,7 +55,11 @@ public class FileManager {
         final File fileDirectory = new File(tempFilesFolder);
 
         if (!fileDirectory.exists()) {
-            fileDirectory.mkdirs();
+            if(fileDirectory.mkdirs()) {
+                LOGGER.debug("Created temp file directory");
+            } else {
+                throw new IllegalStateException("Unable to create file directory");
+            }
         }
 
         final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
@@ -72,19 +78,27 @@ public class FileManager {
         return serverFile;
     }
 
-    public List<File> uploadFiles(final String downloadURL) throws IOException {
+    public List<File> uploadFiles(final String downloadURL) throws URISyntaxException, IOException {
         final File fileDirectory = new File(tempFilesFolder);
 
         if (!fileDirectory.exists()) {
-            fileDirectory.mkdirs();
+            if(fileDirectory.mkdirs()) {
+                LOGGER.debug("Created temp file directory");
+            } else {
+                throw new IllegalStateException("Unable to create file directory");
+            }
         }
 
-        final URL url = new URL(downloadURL);
+        final URL url = new URI(downloadURL).toURL();
         final String fileName = generateNewFileName();
         final File file = new File(fileDirectory.getAbsolutePath() + File.separator + fileName);
 
         if(!file.exists()){
-            file.createNewFile();
+            if(file.createNewFile()) {
+                LOGGER.debug("Created file");
+            } else {
+                throw new IllegalStateException("Unable to create file directory");
+            }
         }
 
         final Path targetPath = file.toPath();

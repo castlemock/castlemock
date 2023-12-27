@@ -20,13 +20,13 @@ import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.service.core.manager.UrlManager;
 import com.castlemock.service.mock.rest.project.input.ImportRestProjectInput;
 import com.google.common.base.Strings;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PostConstruct;
 import java.util.Optional;
 
 @Component

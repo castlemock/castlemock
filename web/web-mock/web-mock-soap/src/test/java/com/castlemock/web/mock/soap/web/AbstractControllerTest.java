@@ -17,6 +17,7 @@
 package com.castlemock.web.mock.soap.web;
 
 import com.castlemock.web.core.controller.AbstractController;
+import jakarta.servlet.ServletContext;
 import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -24,7 +25,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import jakarta.servlet.ServletContext;
 import java.util.Locale;
 
 import static org.mockito.ArgumentMatchers.any;

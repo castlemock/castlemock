@@ -31,7 +31,6 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @Order(1)
-@SuppressWarnings("deprecation")
 public class MockSecurityConfig {
 
 

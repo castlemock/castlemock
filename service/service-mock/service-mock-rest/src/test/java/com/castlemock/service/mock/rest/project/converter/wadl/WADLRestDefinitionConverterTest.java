@@ -22,6 +22,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class WADLRestDefinitionConverterTest {
 
@@ -39,7 +40,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertGetPath(){
         final List<RestApplication> restApplications = loadApplicationsWithPath("get.wadl", false);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "get",
                 "getUser",
                 "/UserService/V1/getUser",
@@ -51,7 +52,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertGet(){
         final List<RestApplication> restApplications = loadApplications("get.wadl", false);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "get",
                 "getUser",
                 "/UserService/V1/getUser",
@@ -63,7 +64,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertPost(){
         final List<RestApplication> restApplications = loadApplications("post.wadl", false);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "post",
                 "createUser",
                 "/UserService/V1/createUser",
@@ -75,7 +76,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertPut(){
         final List<RestApplication> restApplications = loadApplications("put.wadl", false);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "put",
                 "updateUser",
                 "/UserService/V1/updateUser",
@@ -87,7 +88,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertDelete(){
         final List<RestApplication> restApplications = loadApplications("delete.wadl", false);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "delete",
                 "deleteUser",
                 "/UserService/V1/deleteUser",
@@ -99,7 +100,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertHead(){
         final List<RestApplication> restApplications = loadApplications("head.wadl", false);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "head",
                 "headUser",
                 "/UserService/V1/headUser",
@@ -111,7 +112,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertOptions(){
         final List<RestApplication> restApplications = loadApplications("options.wadl", false);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "options",
                 "optionsUser",
                 "/UserService/V1/optionsUser",
@@ -123,7 +124,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertPatch(){
         final List<RestApplication> restApplications = loadApplications("patch.wadl", false);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "patch",
                 "patchUser",
                 "/UserService/V1/patchUser",
@@ -136,7 +137,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertTrace(){
         final List<RestApplication> restApplications = loadApplications("trace.wadl", false);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "trace",
                 "traceUser",
                 "/UserService/V1/traceUser",
@@ -148,7 +149,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertGetGenerateResult(){
         final List<RestApplication> restApplications = loadApplications("get.wadl", true);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "get",
                 "getUser",
                 "/UserService/V1/getUser",
@@ -160,7 +161,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertPostGenerateResult(){
         final List<RestApplication> restApplications = loadApplications("post.wadl", true);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "post",
                 "createUser",
                 "/UserService/V1/createUser",
@@ -172,7 +173,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertPutGenerateResult(){
         final List<RestApplication> restApplications = loadApplications("put.wadl", true);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "put",
                 "updateUser",
                 "/UserService/V1/updateUser",
@@ -184,7 +185,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertDeleteGenerateResult(){
         final List<RestApplication> restApplications = loadApplications("delete.wadl", true);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "delete",
                 "deleteUser",
                 "/UserService/V1/deleteUser",
@@ -196,7 +197,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertHeadGenerateResult(){
         final List<RestApplication> restApplications = loadApplications("head.wadl", true);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "head",
                 "headUser",
                 "/UserService/V1/headUser",
@@ -208,7 +209,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertOptionsGenerateResult(){
         final List<RestApplication> restApplications = loadApplications("options.wadl", true);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "options",
                 "optionsUser",
                 "/UserService/V1/optionsUser",
@@ -220,7 +221,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertPatchGenerateResult(){
         final List<RestApplication> restApplications = loadApplications("patch.wadl", true);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "patch",
                 "patchUser",
                 "/UserService/V1/patchUser",
@@ -233,7 +234,7 @@ public class WADLRestDefinitionConverterTest {
     @Test
     public void testConvertTraceGenerateResult(){
         final List<RestApplication> restApplications = loadApplications("trace.wadl", true);
-        verifyApplication(restApplications.get(0),
+        verifyApplication(restApplications.getFirst(),
                 "trace",
                 "traceUser",
                 "/UserService/V1/traceUser",
@@ -255,7 +256,7 @@ public class WADLRestDefinitionConverterTest {
         //Assert.assertNull(restApplication.getStatusCount());
 
         Assert.assertEquals(1, restApplication.getResources().size());
-        RestResource restResource = restApplication.getResources().get(0);
+        RestResource restResource = restApplication.getResources().getFirst();
 
         Assert.assertEquals(resourceName, restResource.getName());
         Assert.assertEquals(resourceUri, restResource.getUri());
@@ -265,7 +266,7 @@ public class WADLRestDefinitionConverterTest {
         //Assert.assertNull(restResource.getStatusCount());
 
         Assert.assertEquals(1, restResource.getMethods().size());
-        RestMethod restMethod = restResource.getMethods().get(0);
+        RestMethod restMethod = restResource.getMethods().getFirst();
         Assert.assertEquals(methodName, restMethod.getName());
         Assert.assertEquals(httpMethod, restMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, restMethod.getStatus());
@@ -279,7 +280,7 @@ public class WADLRestDefinitionConverterTest {
 
         if(generatedResponse){
             Assert.assertEquals(1, restMethod.getMockResponses().size());
-            RestMockResponse restMockResponse = restMethod.getMockResponses().get(0);
+            RestMockResponse restMockResponse = restMethod.getMockResponses().getFirst();
             Assert.assertEquals(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME, restMockResponse.getName());
             Assert.assertEquals(Integer.valueOf(DEFAULT_RESPONSE_CODE), restMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, restMockResponse.getStatus());
@@ -302,7 +303,7 @@ public class WADLRestDefinitionConverterTest {
         final URL url = WADLRestDefinitionConverter.class.getResource(path);
         final File file;
         try {
-            file = new File(url.toURI());
+            file = new File(Objects.requireNonNull(url).toURI());
         } catch (URISyntaxException e) {
             Assert.fail(e.getMessage());
             throw new RuntimeException(e);
@@ -317,7 +318,7 @@ public class WADLRestDefinitionConverterTest {
         final URL url = WADLRestDefinitionConverter.class.getResource(path);
         final File file;
         try {
-            file = new File(url.toURI());
+            file = new File(Objects.requireNonNull(url).toURI());
         } catch (URISyntaxException e) {
             Assert.fail(e.getMessage());
             throw new RuntimeException(e);
@@ -326,7 +327,7 @@ public class WADLRestDefinitionConverterTest {
         try {
             Mockito.when(fileManager.uploadFiles(Mockito.anyString())).thenReturn(Collections.singletonList(file));
             Mockito.when(fileManager.deleteFile(Mockito.any(File.class))).thenReturn(true);
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             Assert.fail(e.getMessage());
             throw new RuntimeException(e);
         }

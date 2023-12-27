@@ -16,12 +16,12 @@
 
 package com.castlemock.web.core.filter;
 
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import jakarta.servlet.ServletInputStream;
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.anyInt;

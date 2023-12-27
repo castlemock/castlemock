@@ -21,13 +21,13 @@ import com.castlemock.repository.Repository;
 import com.castlemock.repository.token.SessionTokenRepository;
 import com.castlemock.service.core.ServiceRegistry;
 import com.castlemock.service.core.manager.FileManager;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -87,7 +87,9 @@ public abstract class Application extends SpringBootServletInitializer{
         logo.append("| |___| (_| \\__ \\ |_| |  __/ | |  | | (_) | (__|   < \n");
         logo.append(" \\_____\\__,_|___/\\__|_|\\___| |_|  |_|\\___/ \\___|_|\\_\\\n");
         logo.append("=====================================================\n");
-        logo.append("Castle Mock (v" + version + ")");
+        logo.append("Castle Mock (v");
+        logo.append(version);
+        logo.append(")");
         logo.append("\n");
         System.out.println(logo);
     }
@@ -101,8 +103,7 @@ public abstract class Application extends SpringBootServletInitializer{
         final Map<String, Object> repositories = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Repository.class);
         for(Map.Entry<String, Object> entry : repositories.entrySet()){
             final Object value = entry.getValue();
-            if(value instanceof Repository){
-                final Repository repository = (Repository) value;
+            if(value instanceof Repository repository){
                 repository.initialize();
             }
         }
@@ -119,8 +120,7 @@ public abstract class Application extends SpringBootServletInitializer{
         final Map<String, Object> components = applicationContext.getBeansWithAnnotation(Service.class);
         for(Map.Entry<String, Object> entry : components.entrySet()){
             final Object value = entry.getValue();
-            if(value instanceof ServiceFacade){
-                final ServiceFacade serviceFacade = (ServiceFacade) value;
+            if(value instanceof ServiceFacade serviceFacade){
                 serviceFacade.initiate();
             }
         }
