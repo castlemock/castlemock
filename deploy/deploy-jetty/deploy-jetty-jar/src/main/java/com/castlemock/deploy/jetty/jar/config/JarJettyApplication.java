@@ -17,7 +17,6 @@
 package com.castlemock.deploy.jetty.jar.config;
 
 import com.castlemock.app.config.Application;
-import com.castlemock.app.config.MockSecurityConfig;
 import com.castlemock.app.config.MvcConfig;
 import com.castlemock.app.config.PropertyConfig;
 import com.castlemock.app.config.RestSecurityConfig;
@@ -62,7 +61,7 @@ public class JarJettyApplication extends Application implements WebApplicationIn
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
         return application.sources(JarJettyApplication.class, MvcConfig.class, SecurityConfig.class,
-                RestSecurityConfig.class, MockSecurityConfig.class, PropertyConfig.class, JettyConfig.class);
+                RestSecurityConfig.class, PropertyConfig.class, JettyConfig.class);
     }
 
     @Bean

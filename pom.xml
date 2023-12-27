@@ -647,6 +647,7 @@
                         <arg>-Xlint:-options</arg>
                         <arg>-Xlint:all</arg>
                         <arg>-Werror</arg>
+                        <arg>-parameters</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
