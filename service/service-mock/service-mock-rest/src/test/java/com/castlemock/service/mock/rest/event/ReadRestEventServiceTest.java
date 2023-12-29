@@ -56,7 +56,7 @@ public class ReadRestEventServiceTest {
         final ReadRestEventInput input = ReadRestEventInput.builder()
                 .restEventId(restEvent.getId())
                 .build();
-        final ServiceTask<ReadRestEventInput> serviceTask = new ServiceTask<ReadRestEventInput>(input);
+        final ServiceTask<ReadRestEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadRestEventOutput> serviceResult = service.process(serviceTask);
         final ReadRestEventOutput output = serviceResult.getOutput();
         final RestEvent returnedRestEvent = output.getRestEvent();

@@ -16,12 +16,8 @@
 
 package com.castlemock.model.core.project;
 
-import com.castlemock.model.core.TypeIdentifiable;
-import com.castlemock.model.core.TypeIdentifier;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.util.Date;
 import java.util.Objects;
 
@@ -31,32 +27,24 @@ import java.util.Objects;
  * @since 1.0
  */
 @XmlRootElement
-public class Project implements TypeIdentifiable {
+public class Project {
 
     protected String id;
     protected String name;
     protected Date updated;
     protected Date created;
     protected String description;
-    protected TypeIdentifier typeIdentifier;
 
-    /**
-     * The default constructor for the project DTO
-     */
-    public Project() {
-        // Empty constructor
+    protected Project() {
+
     }
 
-    /**
-     * The constructor provides the functionality to initialize a new project DTO based on another project DTO
-     * @param projectDto The project DTO that the new project DTO is going to based on
-     */
-    protected Project(Project projectDto){
-        this.id = projectDto.getId();
-        this.name = projectDto.getName();
-        this.updated = projectDto.getUpdated();
-        this.created = projectDto.getCreated();
-        this.description = projectDto.getDescription();
+    protected Project(final Builder<?> builder){
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.updated = Objects.requireNonNull(builder.updated, "updated");
+        this.created = Objects.requireNonNull(builder.created, "created");
+        this.description = Objects.requireNonNull(builder.description, "description");
     }
 
     @XmlElement
@@ -105,17 +93,6 @@ public class Project implements TypeIdentifiable {
     }
 
     @Override
-    @XmlTransient
-    public TypeIdentifier getTypeIdentifier() {
-        return typeIdentifier;
-    }
-
-    @Override
-    public void setTypeIdentifier(final TypeIdentifier typeIdentifier) {
-        this.typeIdentifier = typeIdentifier;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -124,13 +101,12 @@ public class Project implements TypeIdentifiable {
                 Objects.equals(name, project.name) &&
                 Objects.equals(updated, project.updated) &&
                 Objects.equals(created, project.created) &&
-                Objects.equals(description, project.description) &&
-                Objects.equals(typeIdentifier, project.typeIdentifier);
+                Objects.equals(description, project.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, updated, created, description, typeIdentifier);
+        return Objects.hash(id, name, updated, created, description);
     }
 
     @Override
@@ -141,9 +117,46 @@ public class Project implements TypeIdentifiable {
                 ", updated=" + updated +
                 ", created=" + created +
                 ", description='" + description + '\'' +
-                ", typeIdentifier=" + typeIdentifier +
                 '}';
     }
 
+    @SuppressWarnings("unchecked")
+    public static class Builder<B extends Builder<B>> {
+
+        private String id;
+        private String name;
+        private Date updated;
+        private Date created;
+        private String description;
+
+        protected Builder() {
+        }
+
+        public B id(final String id) {
+            this.id = id;
+            return (B) this;
+        }
+
+        public B name(final String name) {
+            this.name = name;
+            return (B) this;
+        }
+
+        public B updated(final Date updated) {
+            this.updated = updated;
+            return (B) this;
+        }
+
+        public B created(final Date created) {
+            this.created = created;
+            return (B) this;
+        }
+
+        public B description(final String description) {
+            this.description = description;
+            return (B) this;
+        }
+
+    }
 
 }

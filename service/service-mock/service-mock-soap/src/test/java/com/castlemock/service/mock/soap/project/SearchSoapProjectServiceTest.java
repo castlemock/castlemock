@@ -100,8 +100,7 @@ public class SearchSoapProjectServiceTest {
         final SearchSoapProjectInput input = SearchSoapProjectInput.builder()
                 .searchQuery(searchQuery)
                 .build();
-        final ServiceTask<SearchSoapProjectInput> serviceTask = new ServiceTask<SearchSoapProjectInput>();
-        serviceTask.setInput(input);
+        final ServiceTask<SearchSoapProjectInput> serviceTask = ServiceTask.of(input, "user");
 
         final ServiceResult<SearchSoapProjectOutput> serviceResult = service.process(serviceTask);
         final SearchSoapProjectOutput searchSoapProjectOutput = serviceResult.getOutput();

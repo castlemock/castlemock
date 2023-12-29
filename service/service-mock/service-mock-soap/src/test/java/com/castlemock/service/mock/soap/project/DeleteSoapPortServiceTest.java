@@ -86,7 +86,7 @@ public class DeleteSoapPortServiceTest {
                 .projectId(soapProject.getId())
                 .portId(soapPort.getId())
                 .build();
-        final ServiceTask<DeleteSoapPortInput> serviceTask = new ServiceTask<DeleteSoapPortInput>(input);
+        final ServiceTask<DeleteSoapPortInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<DeleteSoapPortOutput> serviceResult = service.process(serviceTask);
 
         assertNotNull(serviceResult);

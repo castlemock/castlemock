@@ -46,7 +46,7 @@ public class ReadSoapPortServiceTest {
                 .projectId(projectId)
                 .portId(port.getId())
                 .build();
-        final ServiceTask<ReadSoapPortInput> serviceTask = new ServiceTask<ReadSoapPortInput>(input);
+        final ServiceTask<ReadSoapPortInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(portRepository.findOne(port.getId())).thenReturn(port);
         Mockito.when(operationRepository.findWithPortId(port.getId())).thenReturn(Arrays.asList(operation));

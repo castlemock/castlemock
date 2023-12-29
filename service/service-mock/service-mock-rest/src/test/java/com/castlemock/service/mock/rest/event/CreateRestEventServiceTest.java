@@ -61,7 +61,7 @@ public class CreateRestEventServiceTest {
         Mockito.when(repository.save(Mockito.any(RestEvent.class))).thenReturn(RestEventTestBuilder.builder().build());
 
         final CreateRestEventInput input = CreateRestEventInput.builder().restEvent(restEvent).build();
-        final ServiceTask<CreateRestEventInput> serviceTask = new ServiceTask<CreateRestEventInput>(input);
+        final ServiceTask<CreateRestEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestEventOutput> serviceResult = service.process(serviceTask);
         final CreateRestEventOutput createRestApplicationOutput = serviceResult.getOutput();
         final RestEvent returnedRestEvent = createRestApplicationOutput.getCreatedRestEvent();
@@ -80,7 +80,7 @@ public class CreateRestEventServiceTest {
         Mockito.when(repository.count()).thenReturn(6);
 
         final CreateRestEventInput input = CreateRestEventInput.builder().restEvent(restEvent).build();
-        final ServiceTask<CreateRestEventInput> serviceTask = new ServiceTask<CreateRestEventInput>(input);
+        final ServiceTask<CreateRestEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestEventOutput> serviceResult = service.process(serviceTask);
         final CreateRestEventOutput output = serviceResult.getOutput();
         final RestEvent returnedSoapEvent = output.getCreatedRestEvent();

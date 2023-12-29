@@ -17,15 +17,28 @@
 package com.castlemock.web.mock.rest.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
+import com.castlemock.model.core.project.Project;
 import com.castlemock.model.mock.rest.RestDefinitionType;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.service.core.manager.FileManager;
+import com.castlemock.service.mock.rest.project.input.CreateRestProjectInput;
+import com.castlemock.service.mock.rest.project.input.DeleteRestProjectInput;
+import com.castlemock.service.mock.rest.project.input.ExportRestProjectInput;
 import com.castlemock.service.mock.rest.project.input.ImportRestDefinitionInput;
+import com.castlemock.service.mock.rest.project.input.ImportRestProjectInput;
 import com.castlemock.service.mock.rest.project.input.ReadRestProjectInput;
 import com.castlemock.service.mock.rest.project.input.UpdateRestApplicationsForwardedEndpointInput;
 import com.castlemock.service.mock.rest.project.input.UpdateRestApplicationsStatusInput;
+import com.castlemock.service.mock.rest.project.input.UpdateRestProjectInput;
+import com.castlemock.service.mock.rest.project.output.CreateRestProjectOutput;
+import com.castlemock.service.mock.rest.project.output.DeleteRestProjectOutput;
+import com.castlemock.service.mock.rest.project.output.ExportRestProjectOutput;
+import com.castlemock.service.mock.rest.project.output.ImportRestProjectOutput;
 import com.castlemock.service.mock.rest.project.output.ReadRestProjectOutput;
+import com.castlemock.service.mock.rest.project.output.UpdateRestProjectOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
+import com.castlemock.web.core.model.project.CreateProjectRequest;
+import com.castlemock.web.core.model.project.UpdateProjectRequest;
 import com.castlemock.web.mock.rest.model.LinkDefinitionRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestApplicationForwardedEndpointsRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestApplicationStatusesRequest;
@@ -34,6 +47,8 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +61,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -55,6 +72,8 @@ import java.util.Objects;
 @RequestMapping("api/rest/rest")
 @Tag(name="REST - Application", description="REST Operations for Castle Mock REST Application")
 public class RestProjectRestController extends AbstractRestController {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(RestProjectRestController.class);
 
     private final FileManager fileManager;
 
@@ -79,6 +98,41 @@ public class RestProjectRestController extends AbstractRestController {
                 .build());
 
         return ResponseEntity.ok(output.getRestProject());
+    }
+
+    /**
+     * The method creates a new project
+     * @return The retrieved project.
+     */
+    @Operation(summary =  "Create REST project", description = "Create REST project. Required authorization: Modifier or Admin.")
+    @RequestMapping(method = RequestMethod.POST, value = "/project")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody ResponseEntity<RestProject> createRestProject(@RequestBody final CreateProjectRequest request) {
+        final CreateRestProjectOutput output = super.serviceProcessor.process(CreateRestProjectInput.builder()
+                .name(request.getName())
+                .description(request.getDescription())
+                .build());
+
+        return ResponseEntity.ok(output.getSavedRestProject());
+    }
+
+    /**
+     * The method updates an existing project
+     * @return The updated project.
+     */
+    @Operation(summary =  "Update REST project",
+            description = "Update REST project. Required authorization: Modifier or Admin.")
+    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody ResponseEntity<Project> updateProject(@Parameter(name = "projectId", description = "The id of the project")
+                                                               @PathVariable("projectId") final String projectId,
+                                                               @RequestBody final UpdateProjectRequest request) {
+        final UpdateRestProjectOutput output = super.serviceProcessor.process(UpdateRestProjectInput.builder()
+                .projectId(projectId)
+                .name(request.getName())
+                .description(request.getDescription())
+                .build());
+        return ResponseEntity.ok(output.getUpdatedRestProject());
     }
 
     @Operation(summary =  "Update Application statuses")
@@ -163,6 +217,83 @@ public class RestProjectRestController extends AbstractRestController {
                 .definitionType(request.getDefinitionType())
                 .build());
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * The REST operation deletes a project with a particular ID.
+     * @param projectId The project id.
+     * @return The deleted project
+     */
+    @Operation(summary =  "Delete project",
+            description = "Delete project. Required authorization: Modifier or Admin.")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<Project> deleteProject(
+            @Parameter(name = "projectId", description = "The id of the project")
+            @PathVariable("projectId") final String projectId) {
+        final DeleteRestProjectOutput output = this.serviceProcessor.process(DeleteRestProjectInput.builder()
+                .restProjectId(projectId)
+                .build());
+        return ResponseEntity.ok(output.getProject());
+    }
+
+    /**
+     * The REST operations imports a project.
+     * @param multipartFile The project file which will be imported.
+     * @return A HTTP response.
+     */
+    @Operation(summary =  "Import project",
+            description = "Import project. Required authorization: Modifier or Admin.")
+    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/import")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<Project> importProject(
+            @Parameter(name = "file", description = "The project file which will be imported.")
+            @RequestParam("file") final MultipartFile multipartFile) {
+        File file = null;
+        try {
+            file = fileManager.uploadFile(multipartFile);
+            final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            final StringBuilder stringBuilder = new StringBuilder();
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                stringBuilder.append(line).append("\n");
+            }
+
+            final ImportRestProjectOutput output = this.serviceProcessor.process(ImportRestProjectInput.builder()
+                    .projectRaw(stringBuilder.toString())
+                    .build());
+
+            final Project project = output.getProject();
+            return ResponseEntity.ok(project);
+        } catch (Exception e) {
+            LOGGER.error("Unable to import project", e);
+            throw new RuntimeException(e);
+        } finally {
+            fileManager.deleteUploadedFile(file);
+        }
+    }
+
+    /**
+     * The REST operations exports a project.
+     * @param projectId The id of the project that will be exported.
+     * @return A HTTP response.
+     */
+    @Operation(summary =  "Export project",
+            description = "Export project. Required authorization: Reader, Modifier or Admin.")
+    @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}/export")
+    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<String> exportProject(
+            @Parameter(name = "projectId", description = "The id of the project")
+            @PathVariable("projectId") final String projectId) {
+        final ExportRestProjectOutput output = this.serviceProcessor.process(ExportRestProjectInput.builder()
+                .restProjectId(projectId)
+                .build());
+        return ResponseEntity.ok(output.getExportedProject());
     }
 
 }

@@ -37,7 +37,7 @@ public class ReadSoapResourceServiceTest {
                 .projectId(projectId)
                 .resourceId(resource.getId())
                 .build();
-        final ServiceTask<ReadSoapResourceInput> serviceTask = new ServiceTask<ReadSoapResourceInput>(input);
+        final ServiceTask<ReadSoapResourceInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(resource);
         final ServiceResult<ReadSoapResourceOutput> result = service.process(serviceTask);

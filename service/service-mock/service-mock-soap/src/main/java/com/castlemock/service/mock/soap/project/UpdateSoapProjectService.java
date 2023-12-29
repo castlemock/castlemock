@@ -23,6 +23,9 @@ import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapProjectInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapProjectOutput;
 
+import java.util.Date;
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -42,10 +45,14 @@ public class UpdateSoapProjectService extends AbstractSoapProjectService impleme
     public ServiceResult<UpdateSoapProjectOutput> process(final ServiceTask<UpdateSoapProjectInput> serviceTask) {
         final UpdateSoapProjectInput input = serviceTask.getInput();
         final String soapProjectId = input.getProjectId();
-        final SoapProject soapProject = input.getProject();
-        final SoapProject updatedSoapProject = update(soapProjectId, soapProject);
+        final SoapProject soapProject = find(soapProjectId);
+        soapProject.setName(input.getName());
+        soapProject.setDescription(input.getDescription());
+        soapProject.setUpdated(new Date());
+
+        final Optional<SoapProject> updatedSoapProject = update(soapProjectId, soapProject);
         return createServiceResult(UpdateSoapProjectOutput.builder()
-                .project(updatedSoapProject)
+                .project(updatedSoapProject.orElse(null))
                 .build());
     }
 }

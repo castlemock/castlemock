@@ -18,7 +18,6 @@ package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.validation.NotNull;
-import com.castlemock.model.mock.soap.domain.SoapProject;
 
 import java.util.Objects;
 
@@ -31,19 +30,26 @@ public final class UpdateSoapProjectInput implements Input {
     @NotNull
     private final String projectId;
     @NotNull
-    private final SoapProject project;
+    private final String name;
+    @NotNull
+    private final String description;
 
-    public UpdateSoapProjectInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.project = Objects.requireNonNull(builder.project);
+    private UpdateSoapProjectInput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.description = Objects.requireNonNull(builder.description, "description");
     }
 
     public String getProjectId() {
         return projectId;
     }
 
-    public SoapProject getProject() {
-        return project;
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public static Builder builder(){
@@ -51,8 +57,10 @@ public final class UpdateSoapProjectInput implements Input {
     }
 
     public static class Builder {
+
         private String projectId;
-        private SoapProject project;
+        private String name;
+        private String description;
 
         private Builder(){
 
@@ -63,8 +71,13 @@ public final class UpdateSoapProjectInput implements Input {
             return this;
         }
 
-        public Builder project(final SoapProject project){
-            this.project = project;
+        public Builder name(final String name){
+            this.name = name;
+            return this;
+        }
+
+        public Builder description(final String description){
+            this.description = description;
             return this;
         }
 

@@ -11,6 +11,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * {@link FakerExpression} is an {@link Expression} and will call {@link Faker}
@@ -31,12 +32,9 @@ public class FakerExpression extends AbstractExpression {
 	 *
 	 * @param input The input string that will be transformed.
 	 * @return A transformed <code>input</code>.
-	 * 
-	 * @see https://docs.spring.io/spring/docs/5.2.x/spring-framework-reference/core.html#expressions
-	 * @see https://github.com/datafaker-net/datafaker
 	 */
 	@Override
-	public String transform(ExpressionInput input) {
+	public String transform(final ExpressionInput input) {
 		final ExpressionArgument<?> apiArgument = input.getArgument(API_ARGUMENT);
 
 		if(apiArgument == null) {
@@ -46,14 +44,15 @@ public class FakerExpression extends AbstractExpression {
 		final ExpressionArgument<?> localeArgument = input.getArgument(LOCALE_ARGUMENT);
 		final String locale = getLocaleLanguageTag(localeArgument);
 		try {
-			Faker faker = getFaker(locale);
-			String springExpression = getApiArgumentString(apiArgument);
+			final Faker faker = getFaker(locale);
+			final String springExpression = getApiArgumentString(apiArgument)
+					.orElseThrow(() -> new IllegalStateException("Unable to extract api argument"));
 
 			org.springframework.expression.ExpressionParser parser = new SpelExpressionParser();
 			org.springframework.expression.Expression exp = parser.parseExpression(springExpression);
 			org.springframework.expression.EvaluationContext context = new StandardEvaluationContext(faker);
 
-			Object result = exp.getValue(context);
+			final Object result = exp.getValue(context);
 
 			if (result != null) {
 				return String.valueOf(result);
@@ -67,7 +66,7 @@ public class FakerExpression extends AbstractExpression {
 	}
 
 	@Override
-	public boolean match(String input) {
+	public boolean match(final String input) {
 		return IDENTIFIER.equalsIgnoreCase(input);
 	}
 
@@ -93,11 +92,11 @@ public class FakerExpression extends AbstractExpression {
 		return "en";
 	}
 
-	private String getApiArgumentString(final ExpressionArgument<?> apiArgument) {
+	private Optional<String> getApiArgumentString(final ExpressionArgument<?> apiArgument) {
 		if (apiArgument instanceof ExpressionArgumentString) {
-			return ((ExpressionArgumentString) apiArgument).getValue();
+			return Optional.of(((ExpressionArgumentString) apiArgument).getValue());
 		}
-		return null;
+		return Optional.empty();
 	}
 
 }

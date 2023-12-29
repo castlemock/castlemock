@@ -95,7 +95,7 @@ public class DeleteSoapProjectServiceTest {
         final DeleteSoapProjectInput input = DeleteSoapProjectInput.builder()
                 .projectId(soapProject.getId())
                 .build();
-        final ServiceTask<DeleteSoapProjectInput> serviceTask = new ServiceTask<DeleteSoapProjectInput>(input);
+        final ServiceTask<DeleteSoapProjectInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<DeleteSoapProjectOutput> serviceResult = service.process(serviceTask);
 
         Mockito.verify(repository, Mockito.times(1)).delete(soapProject.getId());

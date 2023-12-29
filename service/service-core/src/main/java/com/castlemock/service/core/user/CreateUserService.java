@@ -21,6 +21,7 @@ import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.core.user.Status;
 import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.service.core.user.input.CreateUserInput;
 import com.castlemock.service.core.user.output.CreateUserOutput;
 
@@ -46,13 +47,14 @@ public class CreateUserService extends AbstractUserService implements Service<Cr
         final CreateUserInput input = serviceTask.getInput();
         final User user = input.getUser();
 
-        final User existingUser = findByUsername(user.getUsername());
+        final User existingUser = findByUsername(user.getUsername())
+                .orElse(null);
         if(existingUser != null){
             throw new IllegalArgumentException("User with the username '" + user.getUsername() + "' already exists.");
         }
 
 
-        user.setId(null);
+        user.setId(IdUtility.generateId());
         user.setCreated(new Date());
         user.setUpdated(new Date());
         user.setStatus(Status.ACTIVE);

@@ -60,7 +60,7 @@ public class UpdateSoapOperationsStatusServiceTest {
                 .operationId(soapOperation.getId())
                 .operationStatus(SoapOperationStatus.MOCKED)
                 .build();
-        final ServiceTask<UpdateSoapOperationsStatusInput> serviceTask = new ServiceTask<UpdateSoapOperationsStatusInput>(input);
+        final ServiceTask<UpdateSoapOperationsStatusInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(operationRepository.findOne(soapOperation.getId())).thenReturn(soapOperation);
         Mockito.when(operationRepository.update(Mockito.anyString(), Mockito.any(SoapOperation.class))).thenReturn(soapOperation);

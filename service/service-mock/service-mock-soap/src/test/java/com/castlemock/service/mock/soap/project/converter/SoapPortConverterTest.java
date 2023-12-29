@@ -41,6 +41,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SoapPortConverterTest {
@@ -60,7 +61,7 @@ public class SoapPortConverterTest {
     public void testGetSoapPortsFiles() {
         try {
             final List<File> files = this.loadFile("ServiceExample1.wsdl");
-            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, UUID.randomUUID().toString(), true);
 
             Assert.assertEquals(1, results.size());
 
@@ -87,7 +88,7 @@ public class SoapPortConverterTest {
 
             Mockito.when(fileManager.uploadFiles(wsdlLocation)).thenReturn(files);
 
-            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(wsdlLocation, true, false);
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(wsdlLocation, UUID.randomUUID().toString(), true, false);
 
             Assert.assertEquals(1, results.size());
 
@@ -126,7 +127,7 @@ public class SoapPortConverterTest {
 
             // External files
 
-            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(wsdlLocation, true, true);
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(wsdlLocation, UUID.randomUUID().toString(), true, true);
 
             Assert.assertEquals(3, results.size());
 
@@ -184,7 +185,7 @@ public class SoapPortConverterTest {
     public void testGetSoapPortsMultipleInputParts() {
         try {
             final List<File> files = this.loadFile("ServiceExample4.wsdl");
-            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, UUID.randomUUID().toString(), true);
 
             Assert.assertEquals(1, results.size());
 
@@ -207,7 +208,7 @@ public class SoapPortConverterTest {
     public void testGetSoapPortsWithoutBodyParts() {
         try {
             final List<File> files = this.loadFile("ServiceExample5.wsdl");
-            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, UUID.randomUUID().toString(), true);
 
             Assert.assertEquals(1, results.size());
 
@@ -230,7 +231,7 @@ public class SoapPortConverterTest {
     public void testGetSoapPortsSoap12() {
         try {
             final List<File> files = this.loadFile("ServiceExampleSoap12.wsdl");
-            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, UUID.randomUUID().toString(), true);
 
             Assert.assertEquals(1, results.size());
 
@@ -253,7 +254,7 @@ public class SoapPortConverterTest {
     public void testGetSoapPorts() {
         try {
             final List<File> files = this.loadFile("wsdl.wsdl");
-            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
+            final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, UUID.randomUUID().toString(), true);
 
             Assert.assertEquals(1, results.size());
 
@@ -275,7 +276,7 @@ public class SoapPortConverterTest {
     @Test
     public void testGetOperationIdentifier() throws URISyntaxException {
         final List<File> files = this.loadFile("ServiceExample7.wsdl");
-        final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, true);
+        final Set<SoapPortConverterResult> results = soapPortConverter.getSoapPorts(files, UUID.randomUUID().toString(), true);
 
         Assert.assertEquals(1, results.size());
 

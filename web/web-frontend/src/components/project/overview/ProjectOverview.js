@@ -56,7 +56,7 @@ class ProjectOverview extends PureComponent {
             text: 'id',
             hidden: true
         }, {
-            dataField: 'typeIdentifier.type',
+            dataField: 'type',
             width: "20",
             maxWidth: 20,
             text: 'Type',
@@ -80,7 +80,7 @@ class ProjectOverview extends PureComponent {
             text: 'id',
             hidden: true
         }, {
-            dataField: 'typeIdentifier.type',
+            dataField: 'type',
             width: 20,
             maxWidth: 20,
             text: 'Type',
@@ -156,7 +156,7 @@ class ProjectOverview extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/web/" + row.typeIdentifier.typeUrl + "/project/" + row.id}>{cell}</Link>
+                <Link to={"/web/" + row.type + "/project/" + row.id}>{cell}</Link>
             </div>
         )
     }
@@ -191,9 +191,7 @@ class ProjectOverview extends PureComponent {
             id: value.id,
             name: value.name,
             description: value.description,
-            typeIdentifier: {
-                type: value.typeIdentifier.type
-            }
+            type: value.type
         };
         if(mode === SELECT){
             projects.push(project);
@@ -214,9 +212,7 @@ class ProjectOverview extends PureComponent {
                     id: value.id,
                     name: value.name,
                     description: value.description,
-                    typeIdentifier: {
-                        type: value.typeIdentifier.type
-                    }
+                    type: value.type
                 };
                 projects.push(project);
             });
@@ -248,9 +244,9 @@ class ProjectOverview extends PureComponent {
         event.preventDefault();
         event.stopPropagation();
         axios
-            .post(process.env.PUBLIC_URL + "/api/rest/core/project", this.state.newProject)
+            .post(process.env.PUBLIC_URL + "/api/rest/" + this.state.newProject.projectType + "/project", this.state.newProject)
             .then(response => {
-                this.props.history.push("/web/" + response.data.typeIdentifier.typeUrl + "/project/" + response.data.id);
+                this.props.history.push("/web/" + response.data.type + "/project/" + response.data.id);
             })
             .catch(error => {
                 validateErrorResponse(error)
@@ -287,7 +283,7 @@ class ProjectOverview extends PureComponent {
     onDeleteProjectsClick() {
         Array.from(this.state.selectedProjects).forEach(project => {
             axios
-                .delete(process.env.PUBLIC_URL + "/api/rest/core/project/" + project.typeIdentifier.type + "/" + project.id)
+                .delete(process.env.PUBLIC_URL + "/api/rest/core/project/" + project.type + "/" + project.id)
                 .then(response => {
                     this.getProjects();
                 })

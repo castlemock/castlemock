@@ -43,7 +43,7 @@ public class ReadRestMockResponseServiceTest {
                 .restMethodId(methodId)
                 .restMockResponse(mockResponse.getId())
                 .build();
-        final ServiceTask<ReadRestMockResponseInput> serviceTask = new ServiceTask<ReadRestMockResponseInput>(input);
+        final ServiceTask<ReadRestMockResponseInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(mockResponseRepository.findOne(mockResponse.getId())).thenReturn(mockResponse);
         final ServiceResult<ReadRestMockResponseOutput> result = service.process(serviceTask);

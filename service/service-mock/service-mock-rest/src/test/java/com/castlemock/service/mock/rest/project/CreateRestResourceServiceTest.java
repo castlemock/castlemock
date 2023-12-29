@@ -63,7 +63,7 @@ public class CreateRestResourceServiceTest {
                 .name(resource.getName())
                 .uri(resource.getUri())
                 .build();
-        final ServiceTask<CreateRestResourceInput> serviceTask = new ServiceTask<CreateRestResourceInput>(input);
+        final ServiceTask<CreateRestResourceInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestResourceOutput> serviceResult = service.process(serviceTask);
 
         Assert.assertNotNull(serviceResult.getOutput());

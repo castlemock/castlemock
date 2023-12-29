@@ -45,7 +45,7 @@ public class GetSystemInformationServiceTest {
     @Test
     public void testProcess(){
         final GetSystemInformationInput input = new GetSystemInformationInput();
-        final ServiceTask<GetSystemInformationInput> serviceTask = new ServiceTask<GetSystemInformationInput>(input);
+        final ServiceTask<GetSystemInformationInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<GetSystemInformationOutput> output = service.process(serviceTask);
         Assert.assertNotNull(output);
     }

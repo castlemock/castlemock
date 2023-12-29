@@ -18,6 +18,7 @@ package com.castlemock.service.mock.rest.project.converter.openapi;
 
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.core.utility.file.FileUtility;
 import com.castlemock.model.mock.rest.domain.RestApplication;
 import com.castlemock.model.mock.rest.domain.RestMethod;
@@ -45,6 +46,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * The {@link OpenApiRestDefinitionConverter} provides OpenAPI V3 related functionality.
@@ -59,14 +61,14 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
      * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplication> convert(final File file, final boolean generateResponse) {
+    public List<RestApplication> convert(final File file, final String projectId, final boolean generateResponse) {
         ParseOptions parseOptions = new ParseOptions();
         parseOptions.setResolve(true);
         parseOptions.setResolveFully(true);
         final String openApiContent = FileUtility.getFileContent(file);
         SwaggerParseResult result = new OpenAPIParser().readContents(openApiContent, null, parseOptions);
         OpenAPI openAPI = result.getOpenAPI();
-        final RestApplication restApplication = convertOpenApi(openAPI, generateResponse);
+        final RestApplication restApplication = convertOpenApi(openAPI, projectId, generateResponse);
         return List.of(restApplication);
     }
 
@@ -79,13 +81,13 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
      * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplication> convert(final String location, final boolean generateResponse) {
+    public List<RestApplication> convert(final String location, final String projectId, final boolean generateResponse) {
         ParseOptions parseOptions = new ParseOptions();
         parseOptions.setResolve(true);
         parseOptions.setResolveFully(true);
         final SwaggerParseResult result = new OpenAPIParser().readLocation(location, null, parseOptions);
         OpenAPI openAPI = result.getOpenAPI();
-        final RestApplication restApplication = convertOpenApi(openAPI, generateResponse);
+        final RestApplication restApplication = convertOpenApi(openAPI, projectId, generateResponse);
         return List.of(restApplication);
     }
 
@@ -106,53 +108,58 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
      * @return A {@link RestApplication} based on the provided Swagger content.
      */
-    private RestApplication convertOpenApi(final OpenAPI openAPI, final boolean generateResponse) {
+    private RestApplication convertOpenApi(final OpenAPI openAPI, final String projectId, final boolean generateResponse) {
 
         if (openAPI == null) {
             throw new IllegalArgumentException("Unable to parse the OpenApi content.");
         }
 
-        final RestApplication restApplication = new RestApplication();
-        restApplication.setName(this.getApplicationName(openAPI));
+        final RestApplication restApplication = RestApplication.builder()
+                .id(IdUtility.generateId())
+                .projectId(projectId)
+                .name(this.getApplicationName(openAPI))
+                .build();
 
         final String forwardAddress = getForwardAddress(openAPI);
 
         for (Map.Entry<String, PathItem> pathEntry : openAPI.getPaths().entrySet()) {
             final String resourceName = pathEntry.getKey();
             final PathItem resourcePath = pathEntry.getValue();
-            final RestResource restResource = new RestResource();
-
-            restResource.setName(resourceName);
-            restResource.setUri(resourceName);
+            final RestResource restResource = RestResource.builder()
+                    .id(IdUtility.generateId())
+                    .applicationId(restApplication.getId())
+                    .name(resourceName)
+                    .uri(resourceName)
+                    .build();
 
             if (resourcePath.getGet() != null) {
                 Operation operation = resourcePath.getGet();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.GET, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.GET, forwardAddress, restResource.getId(), generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if (resourcePath.getPost() != null) {
                 Operation operation = resourcePath.getPost();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.POST, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.POST, forwardAddress, restResource.getId(), generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if (resourcePath.getPut() != null) {
                 Operation operation = resourcePath.getPut();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.PUT, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.PUT, forwardAddress, restResource.getId(), generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if (resourcePath.getDelete() != null) {
                 Operation operation = resourcePath.getDelete();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.DELETE, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.DELETE, forwardAddress, restResource.getId(), generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if (resourcePath.getHead() != null) {
                 Operation operation = resourcePath.getHead();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.HEAD, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.HEAD, forwardAddress, restResource.getId(), generateResponse);
                 restResource.getMethods().add(restMethod);
             }
             if (resourcePath.getOptions() != null) {
                 Operation operation = resourcePath.getOptions();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.OPTIONS, forwardAddress, generateResponse);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.OPTIONS, forwardAddress, restResource.getId(), generateResponse);
                 restResource.getMethods().add(restMethod);
             }
 
@@ -188,9 +195,8 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
      */
     private RestMethod createRestMethod(final Operation operation,
                                         final HttpMethod httpMethod, final String forwardAddress,
+                                        final String resourceId,
                                         final boolean generateResponse) {
-        final RestMethod restMethod = new RestMethod();
-
         String methodName;
         if (operation.getOperationId() != null) {
             methodName = operation.getOperationId();
@@ -200,23 +206,29 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
             methodName = httpMethod.name();
         }
 
-        restMethod.setHttpMethod(httpMethod);
-        restMethod.setName(methodName);
-        restMethod.setStatus(RestMethodStatus.MOCKED);
-        restMethod.setResponseStrategy(RestResponseStrategy.SEQUENCE);
-        restMethod.setForwardedEndpoint(forwardAddress);
-
+        final List<RestMockResponse> mockResponses = new ArrayList<>();
+        final String methodId = UUID.randomUUID().toString();
         if (generateResponse) {
             if (ObjectUtils.isNotEmpty(operation.getResponses())) {
-                Collection<RestMockResponse> mockResponses = generateResponse(operation.getResponses());
-                restMethod.getMockResponses().addAll(mockResponses);
+                mockResponses.addAll(generateResponse(operation.getResponses(), methodId));
             } else {
-                RestMockResponse generatedResponse = generateResponse();
-                restMethod.getMockResponses().add(generatedResponse);
+                mockResponses.add(generateResponse(methodId));
             }
         }
 
-        return restMethod;
+        return RestMethod.builder()
+                .id(methodId)
+                .resourceId(resourceId)
+                .name(methodName)
+                .httpMethod(httpMethod)
+                .status(RestMethodStatus.MOCKED)
+                .responseStrategy(RestResponseStrategy.SEQUENCE)
+                .forwardedEndpoint(forwardAddress)
+                .mockResponses(mockResponses)
+                .simulateNetworkDelay(false)
+                .networkDelay(0L)
+                .automaticForward(false)
+                .build();
     }
 
     /**
@@ -225,7 +237,7 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param responses The Swagger response definitions
      * @return The newly generated {@link RestMockResponse}.
      */
-    private Collection<RestMockResponse> generateResponse(final ApiResponses responses) {
+    private Collection<RestMockResponse> generateResponse(final ApiResponses responses, final String methodId) {
         if (responses == null) {
             return Collections.emptyList();
         }
@@ -236,7 +248,7 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
 
             int httpStatusCode = extractHttpStatusCode(responseEntry.getKey());
 
-            RestMockResponse restMockResponse = generateResponse(httpStatusCode, response);
+            RestMockResponse restMockResponse = generateResponse(httpStatusCode, methodId, response);
             mockResponses.add(restMockResponse);
 
         }
@@ -270,26 +282,35 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param response       The Swagger response that the mocked response will be based on.
      * @return A new {@link RestMockResponse} based on the provided {@link ApiResponse}.
      */
-    private RestMockResponse generateResponse(final int httpStatusCode, final ApiResponse response) {
-        RestMockResponse restMockResponse = new RestMockResponse();
-        restMockResponse.setName(response.getDescription());
-        restMockResponse.setHttpStatusCode(httpStatusCode);
-        restMockResponse.setUsingExpressions(true);
+    private RestMockResponse generateResponse(final int httpStatusCode, final String methodId, final ApiResponse response) {
+
+        final RestMockResponseStatus status;
         if (httpStatusCode == DEFAULT_RESPONSE_CODE) {
-            restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
+            status = RestMockResponseStatus.ENABLED;
         } else {
-            restMockResponse.setStatus(RestMockResponseStatus.DISABLED);
+            status = RestMockResponseStatus.DISABLED;
         }
 
+        final List<HttpHeader> headers = new ArrayList<>();
         if (response.getHeaders() != null) {
             for (Map.Entry<String, Header> headerEntry : response.getHeaders().entrySet()) {
-                String headerName = headerEntry.getKey();
-                HttpHeader httpHeader = new HttpHeader();
-                httpHeader.setName(headerName);
-                restMockResponse.getHttpHeaders().add(httpHeader);
+                final String headerName = headerEntry.getKey();
+                final HttpHeader httpHeader = HttpHeader.builder()
+                        .name(headerName)
+                        .value("")
+                        .build();
+                headers.add(httpHeader);
             }
         }
-        return restMockResponse;
+        return RestMockResponse.builder()
+                .id(IdUtility.generateId())
+                .methodId(methodId)
+                .name(response.getDescription())
+                .httpStatusCode(httpStatusCode)
+                .usingExpressions(true)
+                .httpHeaders(headers)
+                .status(status)
+                .build();
     }
 
     private String getApplicationName(final OpenAPI openAPI) {

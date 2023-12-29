@@ -92,8 +92,7 @@ public class UpdateAllConfigurationGroupsServiceTest {
         Mockito.when(repository.save(Mockito.any(ConfigurationGroup.class))).thenReturn(updatedConfigurationGroup);
 
         final UpdateAllConfigurationGroupsInput input = new UpdateAllConfigurationGroupsInput(configurationGroups);
-        final ServiceTask<UpdateAllConfigurationGroupsInput> serviceTask = new ServiceTask<>();
-        serviceTask.setInput(input);
+        final ServiceTask<UpdateAllConfigurationGroupsInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<UpdateAllConfigurationGroupsOutput> serviceResult = service.process(serviceTask);
         final UpdateAllConfigurationGroupsOutput output = serviceResult.getOutput();
 

@@ -95,19 +95,6 @@ public interface Repository<D, I extends Serializable> {
     List<D> search(SearchQuery query);
 
     /**
-     * The method provides the functionality to export an entity and convert it to a String
-     * @param id The id of the entityy that will be converted and exported
-     * @return The entity with the provided id as a String
-     */
-    String exportOne(I id);
-
-    /**
-     * The method provides the functionality to import a enity as a String
-     * @param raw The entity as a String
-     */
-    D importOne(String raw);
-
-    /**
      * Checks if the provided <code>id</code> already exists.
      * @param id The id that will be checked if it is already being used.
      * @return <code>true</code> if the id exists. <code>false</code> otherwise.

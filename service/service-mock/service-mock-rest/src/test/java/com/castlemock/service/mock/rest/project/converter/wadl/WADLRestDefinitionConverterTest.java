@@ -251,8 +251,6 @@ public class WADLRestDefinitionConverterTest {
                                    final HttpMethod httpMethod,
                                    final boolean generatedResponse){
         Assert.assertEquals(applicationName, restApplication.getName());
-        Assert.assertNull(restApplication.getId());
-        Assert.assertNull(restApplication.getProjectId());
         //Assert.assertNull(restApplication.getStatusCount());
 
         Assert.assertEquals(1, restApplication.getResources().size());
@@ -260,8 +258,6 @@ public class WADLRestDefinitionConverterTest {
 
         Assert.assertEquals(resourceName, restResource.getName());
         Assert.assertEquals(resourceUri, restResource.getUri());
-        Assert.assertNull(restResource.getId());
-        Assert.assertNull(restResource.getApplicationId());
         Assert.assertNull(restResource.getInvokeAddress());
         //Assert.assertNull(restResource.getStatusCount());
 
@@ -271,12 +267,10 @@ public class WADLRestDefinitionConverterTest {
         Assert.assertEquals(httpMethod, restMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, restMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.RANDOM, restMethod.getResponseStrategy());
-        Assert.assertEquals(0, restMethod.getNetworkDelay());
         Assert.assertFalse(restMethod.getSimulateNetworkDelay());
-        Assert.assertNull(restMethod.getId());
-        Assert.assertNull(restMethod.getResourceId());
         Assert.assertNull(restMethod.getForwardedEndpoint());
         Assert.assertNull(restMethod.getDefaultBody());
+        Assert.assertNull(restMethod.getNetworkDelay());
 
         if(generatedResponse){
             Assert.assertEquals(1, restMethod.getMockResponses().size());
@@ -288,8 +282,6 @@ public class WADLRestDefinitionConverterTest {
             Assert.assertTrue(restMockResponse.getHttpHeaders().isEmpty());
             Assert.assertTrue(restMockResponse.isUsingExpressions());
 
-            Assert.assertNull(restMockResponse.getId());
-            Assert.assertNull(restMockResponse.getMethodId());
             Assert.assertNull(restMockResponse.getBody());
 
         }else {
@@ -309,7 +301,7 @@ public class WADLRestDefinitionConverterTest {
             throw new RuntimeException(e);
         }
 
-        return converter.convert(file, generatedResponse);
+        return converter.convert(file, "1", generatedResponse);
     }
 
     private List<RestApplication> loadApplicationsWithPath(final String path,
@@ -332,7 +324,7 @@ public class WADLRestDefinitionConverterTest {
             throw new RuntimeException(e);
         }
 
-        return converter.convert(path, generatedResponse);
+        return converter.convert(path, "1", generatedResponse);
     }
 
 }

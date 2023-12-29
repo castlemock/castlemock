@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * The {@link TextParser} provides the functionality to transform a text and replace all
@@ -101,7 +102,7 @@ public class TextParser {
      *          Please note that the same text will be returned if no expressions
      *          were found in the provided text.
      */
-    public String parse(final String text){
+    public Optional<String> parse(final String text){
         return parse(text, null);
     }
 
@@ -114,10 +115,10 @@ public class TextParser {
      *          Please note that the same text will be returned if no expressions
      *          were found in the provided text.
      */
-    public String parse(final String text,
-                               final Map<String, ExpressionArgument<?>> arguments) {
+    public Optional<String> parse(final String text,
+                                 final Map<String, ExpressionArgument<?>> arguments) {
         if(text == null){
-            return null;
+            return Optional.empty();
         }
         final StringBuilder outputBuilder = new StringBuilder().append(text);
         final String expressionBegin = "${";
@@ -133,7 +134,7 @@ public class TextParser {
             }
         } while (indexOfStartExpression >= 0);
         
-        return outputBuilder.toString();
+        return Optional.of(outputBuilder.toString());
     }
     
     private void replaceExpressionByResult(final StringBuilder outputBuilder, final int indexOfStartExpression,

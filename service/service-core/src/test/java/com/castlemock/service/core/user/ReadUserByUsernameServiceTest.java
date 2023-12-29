@@ -21,6 +21,7 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.core.user.Role;
 import com.castlemock.model.core.user.Status;
 import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.user.UserRepository;
 import com.castlemock.service.core.user.input.ReadUserByUsernameInput;
 import com.castlemock.service.core.user.output.ReadUserByUsernameOutput;
@@ -32,7 +33,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,22 +54,20 @@ public class ReadUserByUsernameServiceTest {
 
     @Test
     public void testProcess(){
-        List<User> users = new ArrayList<User>();
-        User user = new User();
-        user.setId("123");
-        user.setUsername("Username");
-        user.setStatus(Status.ACTIVE);
-        user.setRole(Role.ADMIN);
-        user.setEmail("email@email.com");
-        users.add(user);
+        final User user = UserTestBuilder.builder()
+                .id("123")
+                .username("Username")
+                .password("Password")
+                .status(Status.ACTIVE)
+                .role(Role.ADMIN)
+                .email("email@email.com")
+                .build();
 
-
-        Mockito.when(repository.findAll()).thenReturn(users);
+        Mockito.when(repository.findAll()).thenReturn(List.of(user));
         final ReadUserByUsernameInput input = ReadUserByUsernameInput.builder()
                 .username("Username")
                 .build();
-        final ServiceTask<ReadUserByUsernameInput> serviceTask = new ServiceTask<ReadUserByUsernameInput>();
-        serviceTask.setInput(input);
+        final ServiceTask<ReadUserByUsernameInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadUserByUsernameOutput> serviceResult = service.process(serviceTask);
         final ReadUserByUsernameOutput output = serviceResult.getOutput();
 

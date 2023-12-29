@@ -62,7 +62,7 @@ public class CreateSoapEventServiceTest {
         Mockito.when(repository.count()).thenReturn(0);
 
         final CreateSoapEventInput input = CreateSoapEventInput.builder().soapEvent(soapEvent).build();
-        final ServiceTask<CreateSoapEventInput> serviceTask = new ServiceTask<CreateSoapEventInput>(input);
+        final ServiceTask<CreateSoapEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateSoapEventOutput> serviceResult = service.process(serviceTask);
         final CreateSoapEventOutput createRestApplicationOutput = serviceResult.getOutput();
         final SoapEvent returnedSoapEvent = createRestApplicationOutput.getCreatedSoapEvent();
@@ -82,7 +82,7 @@ public class CreateSoapEventServiceTest {
         Mockito.when(repository.count()).thenReturn(6);
 
         final CreateSoapEventInput input = CreateSoapEventInput.builder().soapEvent(soapEvent).build();
-        final ServiceTask<CreateSoapEventInput> serviceTask = new ServiceTask<CreateSoapEventInput>(input);
+        final ServiceTask<CreateSoapEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateSoapEventOutput> serviceResult = service.process(serviceTask);
         final CreateSoapEventOutput createRestApplicationOutput = serviceResult.getOutput();
         final SoapEvent returnedSoapEvent = createRestApplicationOutput.getCreatedSoapEvent();

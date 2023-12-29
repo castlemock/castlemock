@@ -17,6 +17,7 @@
 package com.castlemock.service.mock.soap.project.converter;
 
 import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifyStrategy;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public final class ServicePortConverter {
@@ -50,6 +52,7 @@ public final class ServicePortConverter {
     }
 
     public static SoapPort toSoapPort(final ServicePort servicePort,
+                                      final String projectId,
                                       final Set<Binding> bindings,
                                       final Set<PortType> portTypes,
                                       final Set<Message> messages,
@@ -64,18 +67,23 @@ public final class ServicePortConverter {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Unable to find the port type"));
 
+        final String portId = UUID.randomUUID().toString();
         final List<SoapOperation> operations = binding.getOperations().stream()
-                .map(bindingOperation -> toSoapOperation(bindingOperation, portType, messages, namespaces, servicePort.getAddress()))
+                .map(bindingOperation -> toSoapOperation(bindingOperation,portId, portType, messages, namespaces, servicePort.getAddress()))
                 .collect(Collectors.toList());
 
-        final SoapPort soapPort = new SoapPort();
-        soapPort.setName(servicePort.getName());
-        soapPort.setOperations(operations);
-        soapPort.setUri(servicePort.getName());
-        return soapPort;
+        return SoapPort.builder()
+                .id(portId)
+                .projectId(projectId)
+                .name(servicePort.getName())
+                .operations(operations)
+                .uri(servicePort.getName())
+                .invokeAddress(servicePort.getName())
+                .build();
     }
 
     private static SoapOperation toSoapOperation(final BindingOperation bindingOperation,
+                                                 final String portId,
                                                  final PortType portType,
                                                  final Set<Message> messages,
                                                  final Set<Namespace> namespaces,
@@ -109,22 +117,26 @@ public final class ServicePortConverter {
                 BindingOperationConverter.toSoapOperationIdentifierOutput(bindingOperation,
                         outputMessage.orElse(null), namespaces);
 
-        final SoapOperation soapOperation = new SoapOperation();
-
-        soapOperation.setOperationIdentifier(operationRequestIdentifier);
-        soapOperation.setName(bindingOperation.getName());
-        soapOperation.setHttpMethod(HttpMethod.POST);
-        soapOperation.setStatus(SoapOperationStatus.MOCKED);
-        soapOperation.setResponseStrategy(SoapResponseStrategy.RANDOM);
-        soapOperation.setForwardedEndpoint(address.getLocation());
-        soapOperation.setOriginalEndpoint(address.getLocation());
-        soapOperation.setSoapVersion(address.getVersion());
-        soapOperation.setMockResponses(new ArrayList<>());
-        soapOperation.setDefaultBody(SoapOperationIdentifierConverter.toDefaultBody(operationResponseIdentifier));
-        soapOperation.setCurrentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX);
-        soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
-
-        return soapOperation;
+        return SoapOperation.builder()
+                .id(IdUtility.generateId())
+                .portId(portId)
+                .identifier(bindingOperation.getName())
+                .operationIdentifier(operationRequestIdentifier)
+                .name(bindingOperation.getName())
+                .httpMethod(HttpMethod.POST)
+                .status(SoapOperationStatus.MOCKED)
+                .responseStrategy(SoapResponseStrategy.RANDOM)
+                .forwardedEndpoint(address.getLocation())
+                .originalEndpoint(address.getLocation())
+                .soapVersion(address.getVersion())
+                .mockResponses(new ArrayList<>())
+                .defaultBody(SoapOperationIdentifierConverter.toDefaultBody(operationResponseIdentifier))
+                .currentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX)
+                .identifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE)
+                .simulateNetworkDelay(false)
+                .mockOnFailure(false)
+                .automaticForward(false)
+                .build();
     }
 
 }

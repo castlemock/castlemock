@@ -16,11 +16,9 @@
 
 package com.castlemock.service.mock.soap.project;
 
-import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.service.mock.soap.project.input.UpdateCurrentMockResponseSequenceIndexInput;
-import com.castlemock.service.mock.soap.project.output.UpdateCurrentMockResponseSequenceIndexOutput;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -58,8 +56,8 @@ public class UpdateCurrentMockResponseSequenceIndexServiceTest {
                 .operationId(operationId)
                 .currentResponseSequenceIndex(responseIndex)
                 .build();
-        final ServiceTask<UpdateCurrentMockResponseSequenceIndexInput> serviceTask = new ServiceTask<UpdateCurrentMockResponseSequenceIndexInput>(input);
-        final ServiceResult<UpdateCurrentMockResponseSequenceIndexOutput> result = service.process(serviceTask);
+        final ServiceTask<UpdateCurrentMockResponseSequenceIndexInput> serviceTask = ServiceTask.of(input, "user");
+        service.process(serviceTask);
 
         Mockito.verify(operationRepository, Mockito.times(1)).setCurrentResponseSequenceIndex(operationId, responseIndex);
     }

@@ -73,7 +73,7 @@ public class ReadSoapEventsByOperationIdServiceTest {
         final ReadSoapEventsByOperationIdInput input = ReadSoapEventsByOperationIdInput.builder()
                 .operationId("OperationId")
                 .build();
-        final ServiceTask<ReadSoapEventsByOperationIdInput> serviceTask = new ServiceTask<ReadSoapEventsByOperationIdInput>(input);
+        final ServiceTask<ReadSoapEventsByOperationIdInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadSoapEventsByOperationIdOutput> serviceResult = service.process(serviceTask);
         final ReadSoapEventsByOperationIdOutput output = serviceResult.getOutput();
 

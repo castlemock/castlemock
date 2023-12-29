@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ReadAllSoapProjectsServiceTest {
@@ -34,10 +33,10 @@ public class ReadAllSoapProjectsServiceTest {
     @Test
     public void testProcess(){
         final SoapProject project = SoapProjectTestBuilder.builder().build();
-        final List<SoapProject> projects = Arrays.asList(project);
+        final List<SoapProject> projects = List.of(project);
 
         final ReadAllSoapProjectsInput input = ReadAllSoapProjectsInput.builder().build();
-        final ServiceTask<ReadAllSoapProjectsInput> serviceTask = new ServiceTask<ReadAllSoapProjectsInput>(input);
+        final ServiceTask<ReadAllSoapProjectsInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(repository.findAll()).thenReturn(projects);
         final ServiceResult<ReadAllSoapProjectsOutput> result = service.process(serviceTask);

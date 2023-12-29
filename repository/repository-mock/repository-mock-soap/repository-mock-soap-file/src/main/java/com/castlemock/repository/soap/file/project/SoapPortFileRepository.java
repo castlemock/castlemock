@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Profile(Profiles.FILE)
@@ -107,9 +108,9 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
 
     @Override
     public void deleteWithProjectId(String projectId) {
-        Iterator<SoapPortFile> iterator = this.collection.values().iterator();
+        final Iterator<SoapPortFile> iterator = this.collection.values().iterator();
         while (iterator.hasNext()){
-            SoapPortFile port = iterator.next();
+            final SoapPortFile port = iterator.next();
             if(port.getProjectId().equals(projectId)){
                 delete(port.getId());
             }
@@ -121,7 +122,7 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
         final List<SoapPort> ports = new ArrayList<>();
         for(SoapPortFile portFile : this.collection.values()){
             if(portFile.getProjectId().equals(projectId)){
-                SoapPort port = this.mapper.map(portFile, SoapPort.class);
+                final SoapPort port = this.mapper.map(portFile, SoapPort.class);
                 ports.add(port);
             }
         }
@@ -134,32 +135,31 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
     @Override
-    public SoapPort findWithName(final String projectId, final String soapPortName) {
+    public Optional<SoapPort> findWithName(final String projectId, final String soapPortName) {
         for(SoapPortFile soapPort : collection.values()){
             if(soapPort.getProjectId().equals(projectId) &&
                     soapPort.getName().equals(soapPortName)){
-                return mapper.map(soapPort, SoapPort.class);
+                return Optional.ofNullable(mapper.map(soapPort, SoapPort.class));
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
      * The method finds a {@link SoapPort} with the provided uri
      *
-     * @param projectId
      * @param uri       The uri used by the {@link SoapPort}
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
     @Override
-    public SoapPort findWithUri(String projectId, String uri) {
+    public Optional<SoapPort> findWithUri(String projectId, String uri) {
         for(SoapPortFile soapPort : collection.values()){
             if(soapPort.getProjectId().equals(projectId) &&
                     soapPort.getUri().equals(uri)){
-                return mapper.map(soapPort, SoapPort.class);
+                return Optional.ofNullable(mapper.map(soapPort, SoapPort.class));
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**

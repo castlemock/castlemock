@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -96,10 +97,10 @@ public abstract class AbstractService<D, I extends Serializable, R extends Repos
      * @param dto The dto contains the new information that will be stored
      * @return The updated version of the instance that matches the id
      */
-    protected D update(final I id, final D dto) {
+    protected Optional<D> update(final I id, final D dto) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         Preconditions.checkNotNull(dto, "Unable to update due to invalid " + dto.getClass().getName() + " instance. Instance cannot be null");
-        return null;
+        return Optional.empty();
 
     }
 

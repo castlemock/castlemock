@@ -60,9 +60,9 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         Set<SoapPortConverterResult> results = null;
         try {
             if(input.getFiles() != null){
-                results = soapPortConverter.getSoapPorts(input.getFiles(), input.isGenerateResponse());
+                results = soapPortConverter.getSoapPorts(input.getFiles(), soapProjectId, input.isGenerateResponse());
             } else if(input.getLocation() != null){
-                results = soapPortConverter.getSoapPorts(input.getLocation(), input.isGenerateResponse(), input.isIncludeImports());
+                results = soapPortConverter.getSoapPorts(input.getLocation(), soapProjectId, input.isGenerateResponse(), input.isIncludeImports());
             } else {
                 throw new IllegalArgumentException("Neither files or links were provided when importing SOAP ports");
             }
@@ -73,7 +73,8 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         for(SoapPortConverterResult result : results){
             for(SoapPort newSoapPort : result.getPorts()){
                 newSoapPort.setProjectId(soapProjectId);
-                SoapPort existingSoapPort = this.portRepository.findWithName(soapProjectId, newSoapPort.getName());
+                SoapPort existingSoapPort = this.portRepository.findWithName(soapProjectId, newSoapPort.getName())
+                        .orElse(null);
 
                 if(existingSoapPort == null){
                     SoapPort savedSoapPort = this.portRepository.save(newSoapPort);
@@ -92,7 +93,8 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
 
                 for(SoapOperation newSoapOperation : newSoapPort.getOperations()){
                     SoapOperation existingSoapOperation =
-                            this.operationRepository.findWithName(existingSoapPort.getId(), newSoapOperation.getName());
+                            this.operationRepository.findWithName(existingSoapPort.getId(), newSoapOperation.getName())
+                                    .orElse(null);
 
                     if(existingSoapOperation != null){
                         existingSoapOperation.setOriginalEndpoint(newSoapOperation.getOriginalEndpoint());
@@ -118,10 +120,11 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         }
 
         for(SoapPortConverterResult result : results){
-            SoapResource soapResource = new SoapResource();
-            soapResource.setProjectId(soapProjectId);
-            soapResource.setName(result.getName());
-            soapResource.setType(result.getResourceType());
+            final SoapResource soapResource = SoapResource.builder()
+                    .projectId(soapProjectId)
+                    .name(result.getName())
+                    .type(result.getResourceType())
+                    .build();
             this.resourceRepository.saveSoapResource(soapResource, result.getDefinition());
         }
 

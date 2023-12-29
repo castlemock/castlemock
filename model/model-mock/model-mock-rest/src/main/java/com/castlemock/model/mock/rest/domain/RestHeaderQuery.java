@@ -29,7 +29,7 @@ public class RestHeaderQuery {
     private boolean matchAny;
     private boolean matchRegex;
 
-    public RestHeaderQuery(){
+    private RestHeaderQuery(){
 
     }
 

@@ -63,7 +63,7 @@ public class UpdateSoapOperationsForwardedEndpointServiceTest {
                 .forwardedEndpoint("Forward Endpoint")
                 .build();
 
-        final ServiceTask<UpdateSoapOperationsForwardedEndpointInput> serviceTask = new ServiceTask<UpdateSoapOperationsForwardedEndpointInput>(input);
+        final ServiceTask<UpdateSoapOperationsForwardedEndpointInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(operation);
         Mockito.when(operationRepository.update(Mockito.anyString(), Mockito.any(SoapOperation.class))).thenReturn(operation);

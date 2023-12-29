@@ -83,7 +83,7 @@ public class DeleteSoapPortsServiceTest {
                 .projectId(soapProject.getId())
                 .ports(List.of(soapPort))
                 .build();
-        final ServiceTask<DeleteSoapPortsInput> serviceTask = new ServiceTask<DeleteSoapPortsInput>(input);
+        final ServiceTask<DeleteSoapPortsInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<DeleteSoapPortsOutput> serviceResult = service.process(serviceTask);
 
         Mockito.verify(portRepository, Mockito.times(1)).delete(soapPort.getId());

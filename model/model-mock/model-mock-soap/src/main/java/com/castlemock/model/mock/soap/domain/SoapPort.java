@@ -42,11 +42,11 @@ public class SoapPort {
     private List<SoapOperation> operations = new CopyOnWriteArrayList<SoapOperation>();
     private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
 
-    public SoapPort(){
+    private SoapPort(){
 
     }
 
-    public SoapPort(final Builder builder){
+    private SoapPort(final Builder builder){
         this.id = Objects.requireNonNull(builder.id);
         this.name = Objects.requireNonNull(builder.name);
         this.uri = Objects.requireNonNull(builder.uri);

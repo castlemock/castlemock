@@ -16,7 +16,6 @@
 
 package com.castlemock.repository.core.file;
 
-import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -40,7 +39,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -54,17 +52,6 @@ import static java.util.stream.Collectors.toList;
 public class FileRepositorySupport {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileRepositorySupport.class);
-
-    public String read(File file){
-        Preconditions.checkNotNull(file, "The file cannot be null");
-        try {
-            final byte[] raw = Files.readAllBytes(file.toPath());
-            return new String(raw);
-        } catch (IOException e) {
-            LOGGER.error("Unable to find the following file: " + file.getName(), e);
-            throw new IllegalStateException("Unable to find the following file: " + file.getName());
-        }
-    }
 
     public String load(String directory, String filename){
         final Path path = FileSystems.getDefault().getPath(directory);
@@ -95,7 +82,9 @@ public class FileRepositorySupport {
             throw new IllegalStateException("Unable to save the following file: " + filename);
         } finally {
             try {
-                writer.close();
+                if(writer != null) {
+                    writer.close();
+                }
             } catch (IOException e) {
                 LOGGER.error("Unable to close the writer", e);
             }
@@ -114,24 +103,24 @@ public class FileRepositorySupport {
                         .filter(File::isFile)
                         .filter(file -> file.getName().endsWith(postfix))
                         .map(file -> load(file, entityClass))
-                        .filter(Objects::nonNull)
+                        .flatMap(Optional::stream)
                         .collect(toList()))
                 .orElseGet(Collections::emptyList);
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T load(final File file, final Class<T> entityClass){
+    private <T> Optional<T> load(final File file, final Class<T> entityClass){
         try(final InputStream inputStream= new FileInputStream(file)) {
             try(final Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)){
                 final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass, FileRepository.HttpHeaderFile.class, FileRepository.HttpParameterFile.class);
                 final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
                 LOGGER.debug("\tLoaded " + file.getName());
-                return (T) jaxbUnmarshaller.unmarshal(reader);
+                return Optional.ofNullable((T) jaxbUnmarshaller.unmarshal(reader));
             }
         } catch (JAXBException | IOException e) {
             LOGGER.error("Unable to parse the following file: " + file.getAbsolutePath(), e);
         }
-        return null;
+        return Optional.empty();
     }
 
     public <T> void save(T type, String filename){
@@ -174,30 +163,6 @@ public class FileRepositorySupport {
             throw new IllegalStateException("Unable to delete the following file: " + filename);
         }
     }
-
-    public void moveAllFiles(String oldDirectory, String newDirectory, String postfix){
-        final Path oldPath = FileSystems.getDefault().getPath(oldDirectory);
-        final Path newPath = FileSystems.getDefault().getPath(newDirectory);
-
-        this.createDirectory(oldPath);
-        this.createDirectory(newPath);
-
-        final File oldFolder = new File(oldDirectory);
-        final File newFolder = new File(newDirectory);
-        for (final File oldFile : oldFolder.listFiles()) {
-            if (oldFile.isFile() && oldFile.getName().endsWith(postfix)) {
-                File newFile = new File(newFolder, oldFile.getName());
-                Path fromPath = oldFile.toPath();
-                Path toPath = newFile.toPath();
-                try {
-                    Files.move(fromPath, toPath);
-                } catch (IOException e) {
-                    LOGGER.debug("Unable to move the following file: " + fromPath);
-                }
-            }
-        }
-    }
-
 
     private void createDirectory(Path path){
         if(!Files.exists(path)){

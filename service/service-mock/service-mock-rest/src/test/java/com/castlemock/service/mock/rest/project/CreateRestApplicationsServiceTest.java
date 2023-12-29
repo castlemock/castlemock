@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project;
 import com.castlemock.model.mock.rest.domain.RestApplication;
 import com.castlemock.model.mock.rest.domain.RestApplicationTestBuilder;
 import com.castlemock.model.mock.rest.domain.RestProject;
+import com.castlemock.model.mock.rest.domain.RestProjectTestBuilder;
 import com.castlemock.repository.rest.project.RestProjectRepository;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
@@ -56,7 +57,7 @@ public class CreateRestApplicationsServiceTest {
     @Test
     @Ignore
     public void testProcess(){
-        final RestProject restProject = new RestProject();
+        final RestProject restProject = RestProjectTestBuilder.build();
         restProject.setApplications(new ArrayList<RestApplication>());
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(restProject);
 

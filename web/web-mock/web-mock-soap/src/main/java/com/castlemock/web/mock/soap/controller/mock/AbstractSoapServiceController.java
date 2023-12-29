@@ -19,6 +19,7 @@ package com.castlemock.web.mock.soap.controller.mock;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.core.utility.XPathUtility;
 import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
@@ -140,7 +141,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
             return process(projectId, output.getPortId(), operation, request, httpServletRequest, httpServletResponse);
         } catch (Exception exception) {
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
-            throw new SoapException(exception.getMessage());
+            throw new SoapException(exception);
         }
     }
 
@@ -166,7 +167,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
             throw new IllegalArgumentException("Unable to parse incoming message");
         } catch (Exception exception) {
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
-            throw new SoapException(exception.getMessage());
+            throw new SoapException(exception);
         }
     }
 
@@ -255,10 +256,9 @@ public abstract class AbstractSoapServiceController extends AbstractController {
         if (soapOperation == null) {
             throw new SoapException("Soap operation could not be found");
         }
-        SoapEvent event = null;
+        final Date startDate = new Date();
         SoapResponse response = null;
         try {
-            event = new SoapEvent(soapOperation.getName(), request, soapProjectId, soapPortId, soapOperation.getId());
             if (SoapOperationStatus.DISABLED.equals(soapOperation.getStatus())) {
                 throw new SoapException("The requested soap operation, " + soapOperation.getName() + ", is disabled");
             } else if (SoapOperationStatus.FORWARDED.equals(soapOperation.getStatus()) ||
@@ -294,15 +294,24 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                 }
             }
 
-            return new ResponseEntity<String>(response.getBody(), responseHeaders,
+            return new ResponseEntity<>(response.getBody(), responseHeaders,
                     HttpStatus.valueOf(response.getHttpStatusCode()));
         } finally {
-            if (event != null) {
-                event.finish(response);
-                serviceProcessor.processAsync(CreateSoapEventInput.builder()
-                        .soapEvent(event)
-                        .build());
-            }
+            final SoapEvent event = SoapEvent.builder()
+                    .id(IdUtility.generateId())
+                    .startDate(startDate)
+                    .endDate(new Date())
+                    .resourceName(soapOperation.getName())
+                    .request(request)
+                    .response(response)
+                    .projectId(soapProjectId)
+                    .portId(soapPortId)
+                    .operationId(soapOperation.getId())
+                    .resourceLink("INVESTIGATE") //
+                    .build();
+            serviceProcessor.processAsync(CreateSoapEventInput.builder()
+                    .soapEvent(event)
+                    .build());
         }
     }
 
@@ -338,7 +347,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
      *                      the provided SOAP operation.
      * @return A mocked response based on the provided SOAP operation
      */
-    private SoapResponse mockResponse(SoapRequest request,
+    private SoapResponse mockResponse(final SoapRequest request,
                                       final String soapProjectId,
                                       final String soapPortId,
                                       final SoapOperation soapOperation,
@@ -358,7 +367,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                 return forwardRequest(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
             }
         } else if (soapOperation.getResponseStrategy().equals(SoapResponseStrategy.RANDOM)) {
-            final Integer responseIndex = RANDOM.nextInt(mockResponses.size());
+            final int responseIndex = RANDOM.nextInt(mockResponses.size());
             mockResponse = mockResponses.get(responseIndex);
         } else if (soapOperation.getResponseStrategy().equals(SoapResponseStrategy.SEQUENCE)) {
             Integer currentSequenceNumber = soapOperation.getCurrentResponseSequenceIndex();
@@ -405,7 +414,8 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                     .requestBody(request.getBody())
                     .build();
 
-            body = new TextParser().parse(body, externalInput);
+            body = new TextParser().parse(body, externalInput)
+                    .orElse("");
         }
         return SoapResponse.builder()
                 .body(body)

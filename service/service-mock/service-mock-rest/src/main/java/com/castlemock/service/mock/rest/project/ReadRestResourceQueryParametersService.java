@@ -51,11 +51,9 @@ public class ReadRestResourceQueryParametersService extends AbstractRestProjectS
         final RestResource resource = super.resourceRepository.findOne(input.getResourceId());
         final Set<String> pathParameters = UrlUtility.getPathParameters(resource.getUri());
         final Set<RestParameterQuery> parameterQueries = pathParameters.stream()
-                .map(pathParameter -> {
-                    RestParameterQuery query = new RestParameterQuery();
-                    query.setQuery(pathParameter);
-                    return query;
-                })
+                .map(pathParameter -> RestParameterQuery.builder()
+                        .query(pathParameter)
+                        .build())
                 .collect(Collectors.toSet());
 
         return createServiceResult(ReadRestResourceQueryParametersOutput.builder()

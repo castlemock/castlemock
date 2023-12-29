@@ -16,12 +16,10 @@
 
 package com.castlemock.model.mock.rest.domain;
 
-import com.castlemock.model.core.TypeIdentifier;
 import com.castlemock.model.core.event.Event;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -38,59 +36,18 @@ public class RestEvent extends Event {
     private String resourceId;
     private String methodId;
 
-    /**
-     * Default constructor for the REST event DTO
-     */
-    public RestEvent() {
+    private RestEvent() {
+
     }
 
-    /**
-     * Default constructor for the REST event DTO
-     */
-    public RestEvent(final Event eventDto) {
-        super(eventDto);
-    }
-
-    public RestEvent(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
-        this.resourceName = Objects.requireNonNull(builder.resourceName);
-        this.startDate = Objects.requireNonNull(builder.startDate);
-        this.endDate = Objects.requireNonNull(builder.endDate);
-        this.typeIdentifier = Objects.requireNonNull(builder.typeIdentifier);
-        this.resourceLink = Objects.requireNonNull(builder.resourceLink);
-        this.request = Objects.requireNonNull(builder.request);
-        this.response = Objects.requireNonNull(builder.response);
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.applicationId = Objects.requireNonNull(builder.applicationId);
-        this.resourceId = Objects.requireNonNull(builder.resourceId);
-        this.methodId = Objects.requireNonNull(builder.methodId);
-    }
-
-    /**
-     * Constructor for the REST event DTO
-     * @param request The REST request that the event is representing
-     * @param projectId The project id that the event belongs to
-     * @param applicationId The application id that the event belongs to
-     * @param resourceId The resource id that the event belongs to
-     * @param methodId The id of the REST operation that is affected by the provided REST request
-     */
-    public RestEvent(final String resourceName, final RestRequest request, final String projectId, final String applicationId, final String resourceId, final String methodId) {
-        super(resourceName);
-        this.request = request;
-        this.projectId = projectId;
-        this.applicationId = applicationId;
-        this.resourceId = resourceId;
-        this.methodId = methodId;
-    }
-
-    /**
-     * The finish method is used to sent the response that was sent back, but was also
-     * to set the date/time for when the event ended.
-     * @param restResponse
-     */
-    public void finish(final RestResponse restResponse) {
-        this.response = restResponse;
-        setEndDate(new Date());
+    private RestEvent(final Builder builder){
+        super(builder);
+        this.request = Objects.requireNonNull(builder.request, "request");
+        this.response = Objects.requireNonNull(builder.response, "response");
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
+        this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
+        this.methodId = Objects.requireNonNull(builder.methodId, "methodId");
     }
 
     @XmlElement
@@ -148,10 +105,9 @@ public class RestEvent extends Event {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof RestEvent)) return false;
-        RestEvent restEvent = (RestEvent) o;
+        if (!(o instanceof RestEvent restEvent)) return false;
         return Objects.equals(request, restEvent.request) &&
                 Objects.equals(response, restEvent.response) &&
                 Objects.equals(projectId, restEvent.projectId) &&
@@ -181,19 +137,23 @@ public class RestEvent extends Event {
         return new Builder();
     }
 
-    public static final class Builder {
+    public static Builder builder(final Event event) {
+        return builder()
+                .id(event.getId())
+                .startDate(event.getStartDate())
+                .endDate(event.getEndDate())
+                .resourceLink(event.getResourceLink())
+                .resourceName(event.getResourceName());
+    }
+
+    public static final class Builder extends Event.Builder<Builder> {
         private RestRequest request;
         private RestResponse response;
         private String projectId;
         private String applicationId;
-        private String id;
         private String resourceId;
-        private String resourceName;
         private String methodId;
-        private Date startDate;
-        private Date endDate;
-        private TypeIdentifier typeIdentifier;
-        private String resourceLink;
+
 
         private Builder() {
         }
@@ -218,43 +178,13 @@ public class RestEvent extends Event {
             return this;
         }
 
-        public Builder id(final String id) {
-            this.id = id;
-            return this;
-        }
-
         public Builder resourceId(final String resourceId) {
             this.resourceId = resourceId;
             return this;
         }
 
-        public Builder resourceName(final String resourceName) {
-            this.resourceName = resourceName;
-            return this;
-        }
-
         public Builder methodId(final String methodId) {
             this.methodId = methodId;
-            return this;
-        }
-
-        public Builder startDate(final Date startDate) {
-            this.startDate = startDate;
-            return this;
-        }
-
-        public Builder endDate(final Date endDate) {
-            this.endDate = endDate;
-            return this;
-        }
-
-        public Builder typeIdentifier(final TypeIdentifier typeIdentifier) {
-            this.typeIdentifier = typeIdentifier;
-            return this;
-        }
-
-        public Builder resourceLink(final String resourceLink) {
-            this.resourceLink = resourceLink;
             return this;
         }
 

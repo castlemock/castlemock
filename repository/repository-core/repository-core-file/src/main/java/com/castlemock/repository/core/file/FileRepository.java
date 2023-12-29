@@ -19,7 +19,6 @@ package com.castlemock.repository.core.file;
 import com.castlemock.model.core.Saveable;
 import com.castlemock.repository.Repository;
 import com.google.common.base.Preconditions;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapping;
 import org.slf4j.Logger;
@@ -28,14 +27,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.Serializable;
-import java.io.StringWriter;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
@@ -172,13 +167,6 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
     @SuppressWarnings("unchecked")
     protected D save(final T type){
         I id = type.getId();
-
-        if(id == null){
-            do {
-                id = (I)generateId();
-            } while (exists(id));
-            type.setId(id);
-        }
         checkType(type);
         final String filename = getFilename(id);
 
@@ -256,56 +244,6 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
             throw new IllegalStateException("Unable to accuire the write lock", e);
         } finally {
             writeLock.release();
-        }
-    }
-
-
-    /**
-     * The method provides the functionality to export an entity and convert it to a String
-     * @param id The id of the entityy that will be converted and exported
-     * @return The entity with the provided id as a String
-     */
-    @Override
-    public String exportOne(final I id){
-        try {
-            final T type = collection.get(id);
-            final Marshaller marshaller = this.jaxbContext.createMarshaller();
-            final StringWriter writer = new StringWriter();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(type, writer);
-            return writer.toString();
-        }
-        catch (JAXBException e) {
-            throw new IllegalStateException("Unable to export type", e);
-        }
-    }
-
-    /**
-     * The method provides the functionality to import a enity as a String
-     * @param raw The entity as a String
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public D importOne(final String raw){
-
-        try {
-            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream (raw.getBytes());
-
-            final Unmarshaller jaxbUnmarshaller = this.jaxbContext.createUnmarshaller();
-            final T type = (T) jaxbUnmarshaller.unmarshal(byteArrayInputStream);
-
-            // Check if a type already have the same id.
-            // If so, throw a new exception.
-            D existing = findOne(type.getId());
-            if(existing != null){
-                throw new IllegalArgumentException("A type with the following ID already exists: " + type.getId());
-            }
-
-            D dto = mapper.map(type, dtoClass);
-            dto = save(dto);
-            return dto;
-        } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to import type", e);
         }
     }
 
@@ -397,15 +335,6 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
         return types.stream()
                 .map(type -> mapper.map(type, clazz))
                 .collect(toList());
-    }
-
-    /**
-     * The method is responsible for generating new ID for the entity. The
-     * ID will be six character and contain both characters and numbers.
-     * @return A generated ID
-     */
-    protected String generateId(){
-        return RandomStringUtils.random(6, true, true);
     }
 
     @XmlRootElement(name = "httpHeader")

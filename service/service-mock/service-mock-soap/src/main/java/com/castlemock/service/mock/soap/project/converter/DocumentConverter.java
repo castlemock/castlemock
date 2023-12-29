@@ -16,6 +16,7 @@
 
 package com.castlemock.service.mock.soap.project.converter;
 
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapPort;
@@ -60,6 +61,7 @@ public final class DocumentConverter {
      * @return A list of SOAP ports
      */
     public static Set<SoapPort> toSoapParts(final Document document,
+                                        final String projectId,
                                         final boolean generateResponse){
         final Set<Binding> bindings = BINDING_PARSER.parseBindings(document);
         final Set<Message> messages = MESSAGE_PARSER.parseMessages(document);
@@ -70,7 +72,8 @@ public final class DocumentConverter {
         final Set<SoapPort> ports = services.stream()
                 .map(Service::getPorts)
                 .flatMap(Collection::stream)
-                .map(servicePort -> ServicePortConverter.toSoapPort(servicePort, bindings, portTypes, messages, namespaces))
+                .map(servicePort -> ServicePortConverter
+                        .toSoapPort(servicePort, projectId, bindings, portTypes, messages, namespaces))
                 .collect(Collectors.toSet());
 
         if(generateResponse){
@@ -78,19 +81,23 @@ public final class DocumentConverter {
                 .map(SoapPort::getOperations)
                 .flatMap(List::stream)
                 .forEach(operation -> operation.getMockResponses()
-                        .add(createSoapMockResponse(operation.getDefaultBody())));
+                        .add(createSoapMockResponse(operation.getDefaultBody(), operation.getId())));
         }
 
         return ports;
     }
 
-    private static SoapMockResponse createSoapMockResponse(final String defaultBody){
-        final SoapMockResponse mockResponse = new SoapMockResponse();
-        mockResponse.setBody(defaultBody);
-        mockResponse.setStatus(SoapMockResponseStatus.ENABLED);
-        mockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
-        mockResponse.setHttpStatusCode(DEFAULT_HTTP_STATUS_CODE);
-        return mockResponse;
+    private static SoapMockResponse createSoapMockResponse(final String defaultBody,
+                                                           final String operationId){
+        return SoapMockResponse.builder()
+                .id(IdUtility.generateId())
+                .operationId(operationId)
+                .body(defaultBody)
+                .status(SoapMockResponseStatus.ENABLED)
+                .name(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME)
+                .httpStatusCode(DEFAULT_HTTP_STATUS_CODE)
+                .usingExpressions(false)
+                .build();
     }
 
 }

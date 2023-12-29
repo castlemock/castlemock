@@ -35,13 +35,15 @@ public final class HeaderMatchUtility {
 
     }
 
-    public static boolean isValidHeaderParameterExpr(List<HttpHeader> headers,
+    public static boolean isValidHeaderParameterExpr(final List<HttpHeader> headers,
                                                      String expression) {
         expression = expression.replace(SPACE, "");
         if (validate(expression)) {
             for (HttpHeader httpHeader : headers) {
                 String header = httpHeader.getName() + DASH + GREATHER_THAN_SIGN + httpHeader.getValue();
-                if (header.equalsIgnoreCase(expression)) return true;
+                if (header.equalsIgnoreCase(expression)) {
+                    return true;
+                }
             }
         }
         return false;

@@ -18,7 +18,6 @@ package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.validation.NotNull;
-import com.castlemock.model.mock.rest.domain.RestProject;
 
 import java.util.Objects;
 
@@ -29,33 +28,49 @@ import java.util.Objects;
 public final class CreateRestProjectInput implements Input {
 
     @NotNull
-    private final RestProject restProject;
+    private final String name;
+    @NotNull
+    private final String description;
 
     private CreateRestProjectInput(final Builder builder) {
-        this.restProject = Objects.requireNonNull(builder.restProject);
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.description = Objects.requireNonNull(builder.description, "description");
     }
 
-    public RestProject getRestProject() {
-        return restProject;
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public static Builder builder(){
         return new Builder();
     }
 
-    public static final class Builder {
+    public static class Builder {
 
-        private RestProject restProject;
+        private String name;
+        private String description;
 
-        public Builder restProject(final RestProject restProject){
-            this.restProject = restProject;
+        private Builder(){
+
+        }
+
+        public Builder name(final String name){
+            this.name = name;
+            return this;
+        }
+
+        public Builder description(final String description){
+            this.description = description;
             return this;
         }
 
         public CreateRestProjectInput build(){
             return new CreateRestProjectInput(this);
         }
-
     }
 
 }

@@ -32,12 +32,14 @@ public class RestParameterQueryValidatorTest {
 
     @Test
     public void canValidateMatch(){
-        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
-        parameterQuery1.setParameter("userId");
-        parameterQuery1.setQuery("123");
-        final RestParameterQuery parameterQuery2 = new RestParameterQuery();
-        parameterQuery2.setParameter("country");
-        parameterQuery2.setQuery("SE");
+        final RestParameterQuery parameterQuery1 = RestParameterQueryTestBuilder.builder()
+                .parameter("userId")
+                .query("123")
+                .build();
+        final RestParameterQuery parameterQuery2 = RestParameterQueryTestBuilder.builder()
+                .parameter("country")
+                .query("SE")
+                .build();
 
         final List<RestParameterQuery> parameterQueries =
                 List.of(parameterQuery1, parameterQuery2);
@@ -84,9 +86,10 @@ public class RestParameterQueryValidatorTest {
 
     @Test
     public void canValidateMatchMultipleValues(){
-        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
-        parameterQuery1.setParameter("userId");
-        parameterQuery1.setQuery("123");
+        final RestParameterQuery parameterQuery1 = RestParameterQueryTestBuilder.builder()
+                .parameter("userId")
+                .query("123")
+                .build();
 
         final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
         final Map<String, Set<String>> pathParameters = Map.of("userId", Set.of("123", "456"));
@@ -96,12 +99,14 @@ public class RestParameterQueryValidatorTest {
 
     @Test
     public void canValidateNoMatch(){
-        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
-        parameterQuery1.setParameter("userId");
-        parameterQuery1.setQuery("345");
-        final RestParameterQuery parameterQuery2 = new RestParameterQuery();
-        parameterQuery2.setParameter("country");
-        parameterQuery2.setQuery("SE");
+        final RestParameterQuery parameterQuery1 = RestParameterQueryTestBuilder.builder()
+                .parameter("userId2")
+                .query("345")
+                .build();
+        final RestParameterQuery parameterQuery2 = RestParameterQueryTestBuilder.builder()
+                .parameter("country")
+                .query("SE")
+                .build();
 
         final List<RestParameterQuery> parameterQueries =
                 List.of(parameterQuery1, parameterQuery2);
@@ -115,9 +120,10 @@ public class RestParameterQueryValidatorTest {
 
     @Test
     public void canValidateMissing(){
-        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
-        parameterQuery1.setParameter("userId");
-        parameterQuery1.setQuery("123");
+        final RestParameterQuery parameterQuery1 = RestParameterQueryTestBuilder.builder()
+                .parameter("userId")
+                .query("123")
+                .build();
 
         final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
@@ -128,15 +134,18 @@ public class RestParameterQueryValidatorTest {
 
     @Test
     public void canValidateMultiple(){
-        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
-        parameterQuery1.setParameter("userId");
-        parameterQuery1.setQuery("123");
-        final RestParameterQuery parameterQuery2 = new RestParameterQuery();
-        parameterQuery2.setParameter("country");
-        parameterQuery2.setQuery("SE");
-        final RestParameterQuery parameterQuery3 = new RestParameterQuery();
-        parameterQuery3.setParameter("country");
-        parameterQuery3.setQuery("NO");
+        final RestParameterQuery parameterQuery1 = RestParameterQueryTestBuilder.builder()
+                .parameter("userId")
+                .query("123")
+                .build();
+        final RestParameterQuery parameterQuery2 = RestParameterQueryTestBuilder.builder()
+                .parameter("country")
+                .query("SE")
+                .build();
+        final RestParameterQuery parameterQuery3 = RestParameterQueryTestBuilder.builder()
+                .parameter("country")
+                .query("NO")
+                .build();
 
         final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1, parameterQuery2, parameterQuery3);
 
@@ -148,10 +157,11 @@ public class RestParameterQueryValidatorTest {
 
     @Test
     public void canValidateNotMatchCase(){
-        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
-        parameterQuery1.setParameter("username");
-        parameterQuery1.setQuery("karl");
-        parameterQuery1.setMatchCase(false);
+        final RestParameterQuery parameterQuery1 = RestParameterQueryTestBuilder.builder()
+                .parameter("username")
+                .query("karl")
+                .matchCase(false)
+                .build();
 
         final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
@@ -164,10 +174,11 @@ public class RestParameterQueryValidatorTest {
 
     @Test
     public void canValidateMatchCase(){
-        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
-        parameterQuery1.setParameter("username");
-        parameterQuery1.setQuery("karl");
-        parameterQuery1.setMatchCase(true);
+        final RestParameterQuery parameterQuery1 = RestParameterQueryTestBuilder.builder()
+                .parameter("username")
+                .query("karl")
+                .matchCase(true)
+                .build();
 
         final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
@@ -180,9 +191,10 @@ public class RestParameterQueryValidatorTest {
 
     @Test
     public void canValidateMatchAny(){
-        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
-        parameterQuery1.setParameter("username");
-        parameterQuery1.setMatchAny(true);
+        final RestParameterQuery parameterQuery1 = RestParameterQueryTestBuilder.builder()
+                .parameter("username")
+                .matchAny(true)
+                .build();
 
         final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
@@ -195,11 +207,12 @@ public class RestParameterQueryValidatorTest {
 
     @Test
     public void canValidateMatchReqexCaseSensetive(){
-        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
-        parameterQuery1.setParameter("username");
-        parameterQuery1.setQuery("a*b");
-        parameterQuery1.setMatchRegex(true);
-        parameterQuery1.setMatchCase(true);
+        final RestParameterQuery parameterQuery1 = RestParameterQueryTestBuilder.builder()
+                .parameter("username")
+                .query("a*b")
+                .matchRegex(true)
+                .matchCase(true)
+                .build();
 
         final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 
@@ -209,11 +222,12 @@ public class RestParameterQueryValidatorTest {
 
     @Test
     public void canValidateMatchReqexIgnoreCase(){
-        final RestParameterQuery parameterQuery1 = new RestParameterQuery();
-        parameterQuery1.setParameter("username");
-        parameterQuery1.setQuery("a*b");
-        parameterQuery1.setMatchRegex(true);
-        parameterQuery1.setMatchCase(false);
+        final RestParameterQuery parameterQuery1 = RestParameterQueryTestBuilder.builder()
+                .parameter("username")
+                .query("a*b")
+                .matchRegex(true)
+                .matchCase(false)
+                .build();
 
         final List<RestParameterQuery> parameterQueries = List.of(parameterQuery1);
 

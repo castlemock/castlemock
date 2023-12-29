@@ -80,7 +80,7 @@ public class DeleteRestResourceServiceTest {
                 .restApplicationId(applicationId)
                 .restResourceId(resourceId)
                 .build();
-        final ServiceTask<DeleteRestResourceInput> serviceTask = new ServiceTask<DeleteRestResourceInput>(input);
+        final ServiceTask<DeleteRestResourceInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<DeleteRestResourceOutput> serviceResult = service.process(serviceTask);
 
         Mockito.verify(resourceRepository, Mockito.times(1)).delete(resourceId);

@@ -24,7 +24,7 @@ public class SwaggerRestDefinitionConverterTest {
         final SwaggerRestDefinitionConverter converter = new SwaggerRestDefinitionConverter();
         final URL url = SwaggerRestDefinitionConverter.class.getResource("full.json");
         final File file = new File(url.toURI());
-        final List<RestApplication> restApplications = converter.convert(file, false);
+        final List<RestApplication> restApplications = converter.convert(file, "1", false);
         this.verifyResult(restApplications, false);
     }
 
@@ -33,7 +33,7 @@ public class SwaggerRestDefinitionConverterTest {
         final SwaggerRestDefinitionConverter converter = new SwaggerRestDefinitionConverter();
         final URL url = SwaggerRestDefinitionConverter.class.getResource("full.json");
         final File file = new File(url.toURI());
-        final List<RestApplication> restApplications = converter.convert(file, true);
+        final List<RestApplication> restApplications = converter.convert(file,"1", true);
         this.verifyResult(restApplications, true);
     }
 
@@ -45,11 +45,9 @@ public class SwaggerRestDefinitionConverterTest {
         Assert.assertNotNull(restApplications);
         Assert.assertEquals(1, restApplications.size());
 
-        final RestApplication restApplication = restApplications.get(0);
+        final RestApplication restApplication = restApplications.getFirst();
 
         Assert.assertEquals("Castle Mock Swagger", restApplication.getName());
-        Assert.assertNull(restApplication.getId());
-        Assert.assertNull(restApplication.getProjectId());
         Assert.assertEquals(2, restApplication.getResources().size());
 
 
@@ -62,9 +60,6 @@ public class SwaggerRestDefinitionConverterTest {
         Assert.assertNotNull(mockResource);
         Assert.assertEquals("/mock", mockResource.getName());
         Assert.assertEquals("/mock", mockResource.getUri());
-        Assert.assertNull(mockResource.getId());
-        Assert.assertNull(mockResource.getApplicationId());
-        Assert.assertNull(mockResource.getInvokeAddress());
 
         // /mock (GET) - getAllMockServices
 
@@ -80,11 +75,8 @@ public class SwaggerRestDefinitionConverterTest {
         Assert.assertEquals(RestMethodStatus.MOCKED, getAllMockServicesMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, getAllMockServicesMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), getAllMockServicesMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(0L, getAllMockServicesMethod.getNetworkDelay());
+        Assert.assertEquals(Long.valueOf(0L), getAllMockServicesMethod.getNetworkDelay());
         Assert.assertFalse(getAllMockServicesMethod.getSimulateNetworkDelay());
-        Assert.assertNull(getAllMockServicesMethod.getDefaultBody());
-        Assert.assertNull(getAllMockServicesMethod.getId());
-        Assert.assertNull(getAllMockServicesMethod.getResourceId());
 
         if(generatedResponse){
             Assert.assertEquals(4, getAllMockServicesMethod.getMockResponses().size());
@@ -104,11 +96,9 @@ public class SwaggerRestDefinitionConverterTest {
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Xml.getStatus());
             Assert.assertTrue(response200Xml.isUsingExpressions());
             Assert.assertTrue(response200Xml.getContentEncodings().isEmpty());
-            Assert.assertNull(response200Xml.getId());
-            Assert.assertNull(response200Xml.getMethodId());
             Assert.assertEquals(1, response200Xml.getHttpHeaders().size());
-            Assert.assertEquals("Content-Type", response200Xml.getHttpHeaders().get(0).getName());
-            Assert.assertEquals("application/xml", response200Xml.getHttpHeaders().get(0).getValue());
+            Assert.assertEquals("Content-Type", response200Xml.getHttpHeaders().getFirst().getName());
+            Assert.assertEquals("application/xml", response200Xml.getHttpHeaders().getFirst().getValue());
 
             // XML
             RestMockResponse response200Json = getAllMockServicesMethod.getMockResponses().stream()
@@ -125,11 +115,9 @@ public class SwaggerRestDefinitionConverterTest {
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Json.getStatus());
             Assert.assertTrue(response200Json.isUsingExpressions());
             Assert.assertTrue(response200Json.getContentEncodings().isEmpty());
-            Assert.assertNull(response200Json.getId());
-            Assert.assertNull(response200Json.getMethodId());
             Assert.assertEquals(1, response200Json.getHttpHeaders().size());
-            Assert.assertEquals("Content-Type", response200Json.getHttpHeaders().get(0).getName());
-            Assert.assertEquals("application/json", response200Json.getHttpHeaders().get(0).getValue());
+            Assert.assertEquals("Content-Type", response200Json.getHttpHeaders().getFirst().getName());
+            Assert.assertEquals("application/json", response200Json.getHttpHeaders().getFirst().getValue());
 
 
             // Invalid mock id supplied
@@ -139,14 +127,11 @@ public class SwaggerRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
             Assert.assertTrue(invalidMockResponse.isUsingExpressions());
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
-            Assert.assertNull(invalidMockResponse.getId());
-            Assert.assertNull(invalidMockResponse.getMethodId());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
             // Mock not found
@@ -156,14 +141,11 @@ public class SwaggerRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Mock not found", notFoundResponse.getName());
-            Assert.assertNull(notFoundResponse.getBody());
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
             Assert.assertTrue(notFoundResponse.isUsingExpressions());
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
-            Assert.assertNull(notFoundResponse.getId());
-            Assert.assertNull(notFoundResponse.getMethodId());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
             Assert.assertEquals(0, getAllMockServicesMethod.getMockResponses().size());
@@ -184,11 +166,8 @@ public class SwaggerRestDefinitionConverterTest {
         Assert.assertEquals(RestMethodStatus.MOCKED, createMockMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, createMockMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), createMockMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(0L, createMockMethod.getNetworkDelay());
+        Assert.assertEquals(Long.valueOf(0L), createMockMethod.getNetworkDelay());
         Assert.assertFalse(createMockMethod.getSimulateNetworkDelay());
-        Assert.assertNull(createMockMethod.getDefaultBody());
-        Assert.assertNull(createMockMethod.getId());
-        Assert.assertNull(createMockMethod.getResourceId());
 
         if(generatedResponse){
             Assert.assertEquals(1, createMockMethod.getMockResponses().size());
@@ -200,14 +179,11 @@ public class SwaggerRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
             Assert.assertTrue(invalidMockResponse.isUsingExpressions());
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
-            Assert.assertNull(invalidMockResponse.getId());
-            Assert.assertNull(invalidMockResponse.getMethodId());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
         } else {
@@ -232,11 +208,8 @@ public class SwaggerRestDefinitionConverterTest {
         Assert.assertEquals(RestMethodStatus.MOCKED, headMockMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, headMockMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), headMockMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(0L, headMockMethod.getNetworkDelay());
+        Assert.assertEquals(Long.valueOf(0L), headMockMethod.getNetworkDelay());
         Assert.assertFalse(headMockMethod.getSimulateNetworkDelay());
-        Assert.assertNull(headMockMethod.getDefaultBody());
-        Assert.assertNull(headMockMethod.getId());
-        Assert.assertNull(headMockMethod.getResourceId());
 
         // /mock (OPTIONS) - headerMock
 
@@ -252,12 +225,8 @@ public class SwaggerRestDefinitionConverterTest {
         Assert.assertEquals(RestMethodStatus.MOCKED, optionsMockMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, optionsMockMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), optionsMockMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(0L, optionsMockMethod.getNetworkDelay());
+        Assert.assertEquals(Long.valueOf(0L), optionsMockMethod.getNetworkDelay());
         Assert.assertFalse(optionsMockMethod.getSimulateNetworkDelay());
-        Assert.assertNull(optionsMockMethod.getDefaultBody());
-        Assert.assertNull(optionsMockMethod.getId());
-        Assert.assertNull(optionsMockMethod.getResourceId());
-
 
 
         // /mock/{mockId}
@@ -269,9 +238,6 @@ public class SwaggerRestDefinitionConverterTest {
         Assert.assertNotNull(mockWithParameterResource);
         Assert.assertEquals("/mock/{mockId}", mockWithParameterResource.getName());
         Assert.assertEquals("/mock/{mockId}", mockWithParameterResource.getUri());
-        Assert.assertNull(mockWithParameterResource.getId());
-        Assert.assertNull(mockWithParameterResource.getApplicationId());
-        Assert.assertNull(mockWithParameterResource.getInvokeAddress());
 
         // /mock/{mockId} (GET) - getMockById
 
@@ -287,11 +253,8 @@ public class SwaggerRestDefinitionConverterTest {
         Assert.assertEquals(RestMethodStatus.MOCKED, getMockByIdMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, getMockByIdMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), getMockByIdMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(0L, getMockByIdMethod.getNetworkDelay());
+        Assert.assertEquals(Long.valueOf(0L), getMockByIdMethod.getNetworkDelay());
         Assert.assertFalse(getMockByIdMethod.getSimulateNetworkDelay());
-        Assert.assertNull(getMockByIdMethod.getDefaultBody());
-        Assert.assertNull(getMockByIdMethod.getId());
-        Assert.assertNull(getMockByIdMethod.getResourceId());
 
         if(generatedResponse){
             Assert.assertEquals(4, getMockByIdMethod.getMockResponses().size());
@@ -312,8 +275,6 @@ public class SwaggerRestDefinitionConverterTest {
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Xml.getStatus());
             Assert.assertTrue(response200Xml.isUsingExpressions());
             Assert.assertTrue(response200Xml.getContentEncodings().isEmpty());
-            Assert.assertNull(response200Xml.getId());
-            Assert.assertNull(response200Xml.getMethodId());
             Assert.assertEquals(1, response200Xml.getHttpHeaders().size());
             Assert.assertEquals("Content-Type", response200Xml.getHttpHeaders().get(0).getName());
             Assert.assertEquals("application/xml", response200Xml.getHttpHeaders().get(0).getValue());
@@ -333,11 +294,9 @@ public class SwaggerRestDefinitionConverterTest {
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Json.getStatus());
             Assert.assertTrue(response200Json.isUsingExpressions());
             Assert.assertTrue(response200Json.getContentEncodings().isEmpty());
-            Assert.assertNull(response200Json.getId());
-            Assert.assertNull(response200Json.getMethodId());
             Assert.assertEquals(1, response200Json.getHttpHeaders().size());
-            Assert.assertEquals("Content-Type", response200Json.getHttpHeaders().get(0).getName());
-            Assert.assertEquals("application/json", response200Json.getHttpHeaders().get(0).getValue());
+            Assert.assertEquals("Content-Type", response200Json.getHttpHeaders().getFirst().getName());
+            Assert.assertEquals("application/json", response200Json.getHttpHeaders().getFirst().getValue());
 
 
             // Invalid mock id supplied
@@ -347,14 +306,11 @@ public class SwaggerRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
             Assert.assertTrue(invalidMockResponse.isUsingExpressions());
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
-            Assert.assertNull(invalidMockResponse.getId());
-            Assert.assertNull(invalidMockResponse.getMethodId());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
             // Mock not found
@@ -364,14 +320,11 @@ public class SwaggerRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Mock not found", notFoundResponse.getName());
-            Assert.assertNull(notFoundResponse.getBody());
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
             Assert.assertTrue(notFoundResponse.isUsingExpressions());
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
-            Assert.assertNull(notFoundResponse.getId());
-            Assert.assertNull(notFoundResponse.getMethodId());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
             Assert.assertEquals(0, getMockByIdMethod.getMockResponses().size());
@@ -392,11 +345,8 @@ public class SwaggerRestDefinitionConverterTest {
         Assert.assertEquals(RestMethodStatus.MOCKED, updateMockMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, updateMockMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), updateMockMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(0L, updateMockMethod.getNetworkDelay());
+        Assert.assertEquals(Long.valueOf(0L), updateMockMethod.getNetworkDelay());
         Assert.assertFalse(updateMockMethod.getSimulateNetworkDelay());
-        Assert.assertNull(updateMockMethod.getDefaultBody());
-        Assert.assertNull(updateMockMethod.getId());
-        Assert.assertNull(updateMockMethod.getResourceId());
 
         if(generatedResponse){
             Assert.assertEquals(2, updateMockMethod.getMockResponses().size());
@@ -408,14 +358,11 @@ public class SwaggerRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid mock supplied", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
             Assert.assertTrue(invalidMockResponse.isUsingExpressions());
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
-            Assert.assertNull(invalidMockResponse.getId());
-            Assert.assertNull(invalidMockResponse.getMethodId());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
             // Mock not found
@@ -425,14 +372,11 @@ public class SwaggerRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Mock not found", notFoundResponse.getName());
-            Assert.assertNull(notFoundResponse.getBody());
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
             Assert.assertTrue(notFoundResponse.isUsingExpressions());
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
-            Assert.assertNull(notFoundResponse.getId());
-            Assert.assertNull(notFoundResponse.getMethodId());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
             Assert.assertEquals(0, updateMockMethod.getMockResponses().size());
@@ -452,12 +396,8 @@ public class SwaggerRestDefinitionConverterTest {
         Assert.assertEquals(RestMethodStatus.MOCKED, deleteMockMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, deleteMockMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), deleteMockMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(0L, deleteMockMethod.getNetworkDelay());
+        Assert.assertEquals(Long.valueOf(0L), deleteMockMethod.getNetworkDelay());
         Assert.assertFalse(deleteMockMethod.getSimulateNetworkDelay());
-        Assert.assertNull(deleteMockMethod.getDefaultBody());
-        Assert.assertNull(deleteMockMethod.getId());
-        Assert.assertNull(deleteMockMethod.getResourceId());
-
 
         if(generatedResponse){
             Assert.assertEquals(1, deleteMockMethod.getMockResponses().size());
@@ -469,14 +409,11 @@ public class SwaggerRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Mock not found", notFoundResponse.getName());
-            Assert.assertNull(notFoundResponse.getBody());
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
             Assert.assertTrue(notFoundResponse.isUsingExpressions());
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
-            Assert.assertNull(notFoundResponse.getId());
-            Assert.assertNull(notFoundResponse.getMethodId());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
             Assert.assertEquals(0, deleteMockMethod.getMockResponses().size());

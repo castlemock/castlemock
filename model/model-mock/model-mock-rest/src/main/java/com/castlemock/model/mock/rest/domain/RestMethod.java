@@ -42,16 +42,16 @@ public class RestMethod {
     private RestMethodStatus status;
     private RestResponseStrategy responseStrategy;
     private Integer currentResponseSequenceIndex = 0;
-    private boolean simulateNetworkDelay;
-    private long networkDelay;
+    private Boolean simulateNetworkDelay;
+    private Long networkDelay;
     private String defaultMockResponseId;
 
     private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
     private String uri;
     private String defaultResponseName;
-    private boolean automaticForward;
+    private Boolean automaticForward;
 
-    public RestMethod(){
+    private RestMethod(){
 
     }
 
@@ -59,19 +59,19 @@ public class RestMethod {
         this.id = Objects.requireNonNull(builder.id);
         this.name = Objects.requireNonNull(builder.name);
         this.resourceId = Objects.requireNonNull(builder.resourceId);
-        this.defaultBody = Objects.requireNonNull(builder.defaultBody);
+        this.defaultBody = builder.defaultBody;
         this.httpMethod = Objects.requireNonNull(builder.httpMethod);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
+        this.forwardedEndpoint = builder.forwardedEndpoint;
         this.status = Objects.requireNonNull(builder.status);
         this.responseStrategy = Objects.requireNonNull(builder.responseStrategy);
         this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex);
-        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
-        this.networkDelay = Objects.requireNonNull(builder.networkDelay);
-        this.defaultMockResponseId = Objects.requireNonNull(builder.defaultMockResponseId);
+        this.simulateNetworkDelay = builder.simulateNetworkDelay;
+        this.networkDelay = builder.networkDelay;
+        this.defaultMockResponseId = builder.defaultMockResponseId;
         this.uri = builder.uri;
-        this.defaultResponseName = Objects.requireNonNull(builder.defaultResponseName);
+        this.defaultResponseName = builder.defaultResponseName;
         this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(CopyOnWriteArrayList::new);
-        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
+        this.automaticForward = builder.automaticForward;
     }
 
 
@@ -185,7 +185,7 @@ public class RestMethod {
     }
 
     @XmlElement
-    public long getNetworkDelay() {
+    public Long getNetworkDelay() {
         return networkDelay;
     }
 

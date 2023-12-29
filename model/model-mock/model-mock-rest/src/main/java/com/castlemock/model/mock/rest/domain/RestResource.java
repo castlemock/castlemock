@@ -42,16 +42,16 @@ public class RestResource {
     private List<RestMethod> methods = new CopyOnWriteArrayList<RestMethod>();
     private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
 
-    public RestResource(){
+    private RestResource(){
 
     }
 
     private RestResource(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
-        this.name = Objects.requireNonNull(builder.name);
-        this.uri = Objects.requireNonNull(builder.uri);
-        this.applicationId = Objects.requireNonNull(builder.applicationId);
-        this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.uri = Objects.requireNonNull(builder.uri, "uri");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
+        this.invokeAddress = builder.invokeAddress;
         this.methods = Optional.ofNullable(builder.methods).orElseGet(CopyOnWriteArrayList::new);
         this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(HashMap::new);
     }

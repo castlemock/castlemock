@@ -59,7 +59,7 @@ public class ReadRestMethodServiceTest {
                         .restResourceId(resource.getId())
                         .restMethodId(method.getId())
                         .build();
-        final ServiceTask<ReadRestMethodInput> serviceTask = new ServiceTask<ReadRestMethodInput>(input);
+        final ServiceTask<ReadRestMethodInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(resource);
         Mockito.when(methodRepository.findOne(method.getId())).thenReturn(method);
@@ -87,7 +87,7 @@ public class ReadRestMethodServiceTest {
                         .restResourceId(resource.getId())
                         .restMethodId(method.getId())
                         .build();
-        final ServiceTask<ReadRestMethodInput> serviceTask = new ServiceTask<ReadRestMethodInput>(input);
+        final ServiceTask<ReadRestMethodInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(resource);
         Mockito.when(methodRepository.findOne(method.getId())).thenReturn(method);

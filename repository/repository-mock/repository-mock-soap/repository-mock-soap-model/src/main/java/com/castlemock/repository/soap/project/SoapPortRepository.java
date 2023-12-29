@@ -20,6 +20,7 @@ import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.repository.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SoapPortRepository extends Repository<SoapPort, String> {
 
@@ -32,14 +33,14 @@ public interface SoapPortRepository extends Repository<SoapPort, String> {
      * @param soapPortName The name of the {@link SoapPort}
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
-    SoapPort findWithName(String projectId, String soapPortName);
+    Optional<SoapPort> findWithName(String projectId, String soapPortName);
 
     /**
      * The method finds a {@link SoapPort} with the provided uri
      * @param uri The uri used by the {@link SoapPort}
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
-    SoapPort findWithUri(String projectId, String uri);
+    Optional<SoapPort> findWithUri(String projectId, String uri);
 
     /**
      * Retrieve the {@link com.castlemock.model.mock.soap.domain.SoapProject} id

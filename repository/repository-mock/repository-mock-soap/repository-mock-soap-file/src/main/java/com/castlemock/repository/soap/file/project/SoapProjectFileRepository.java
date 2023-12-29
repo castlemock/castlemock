@@ -31,6 +31,7 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -78,15 +79,15 @@ public class SoapProjectFileRepository extends AbstractProjectFileRepository<Soa
      * @return Returns a project with the provided name
      */
     @Override
-    public SoapProject findSoapProjectWithName(final String name) {
+    public Optional<SoapProject> findSoapProjectWithName(final String name) {
         Preconditions.checkNotNull(name, "Project name cannot be null");
         Preconditions.checkArgument(!name.isEmpty(), "Project name cannot be empty");
         for(SoapProjectFile soapProject : collection.values()){
             if(soapProject.getName().equalsIgnoreCase(name)) {
-                return mapper.map(soapProject, SoapProject.class);
+                return Optional.ofNullable(mapper.map(soapProject, SoapProject.class));
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**

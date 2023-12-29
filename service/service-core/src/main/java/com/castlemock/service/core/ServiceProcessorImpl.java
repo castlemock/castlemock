@@ -78,9 +78,7 @@ public class ServiceProcessorImpl implements ServiceProcessor {
             throw new IllegalArgumentException("Unable to find service for " + input.getClass().getSimpleName());
         }
 
-        final ServiceTask<I> serviceTask = new ServiceTask<I>();
-        serviceTask.setInput(input);
-        serviceTask.setServiceConsumer(getLoggedInUsername());
+        final ServiceTask<I> serviceTask = ServiceTask.of(input, getLoggedInUsername());
         LOGGER.debug(getLoggedInUsername() + " is requesting " + service.getClass().getSimpleName() + " to process the following input message: " + input.getClass().getSimpleName());
         final ServiceResult<O> serviceResult = service.process(serviceTask);
         validateMessage(serviceResult.getOutput());

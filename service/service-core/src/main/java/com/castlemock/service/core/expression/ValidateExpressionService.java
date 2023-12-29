@@ -27,6 +27,7 @@ import com.castlemock.service.core.expression.input.ValidateExpressionInput;
 import com.castlemock.service.core.expression.output.ValidateExpressionOutput;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -50,9 +51,9 @@ public class ValidateExpressionService extends AbstractConfigurationGroupService
         final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
                 .requestBody(input.getRequestBody())
                 .build();
-        final String output = new TextParser().parse(input.getResponseBody(), externalInput);
+        final Optional<String> output = new TextParser().parse(input.getResponseBody(), externalInput);
         return createServiceResult(ValidateExpressionOutput.builder()
-                .output(output)
+                .output(output.orElse(null))
                 .build());
     }
 

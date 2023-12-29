@@ -18,6 +18,7 @@ package com.castlemock.service.mock.rest.project.converter.raml;
 
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
@@ -51,34 +52,38 @@ class RAML10Parser extends AbstractRAMLParser {
         }
 
         for(Resource resource : resources){
-            String uri = path + resource.relativeUri().value();
-
-            List<Method> methods = resource.methods();
+            final String uri = path + resource.relativeUri().value();
+            final List<Method> methods = resource.methods();
             if(!methods.isEmpty()){
-                RestResource restResource = new RestResource();
-                restResource.setName(resource.displayName().value());
-                restResource.setUri(uri);
+                final RestResource restResource = RestResource.builder()
+                        .id(IdUtility.generateId())
+                        .name(resource.displayName().value())
+                        .uri(uri)
+                        .build();
                 result.add(restResource);
 
                 for(Method method : methods){
-                    HttpMethod httpMethod = HttpMethod.getValue(method.method());
+                    HttpMethod httpMethod = HttpMethod.getValue(method.method())
+                            .orElse(null);
                     if(httpMethod == null){
                         LOGGER.error("The REST method '" + method.method() + "' is not supported.");
                         continue;
                     }
 
-                    RestMethod restMethod = new RestMethod();
-                    restMethod.setName(method.displayName().value());
-                    restMethod.setStatus(RestMethodStatus.MOCKED);
-                    restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
-                    restMethod.setHttpMethod(httpMethod);
-
+                    final List<RestMockResponse> mockResponses = new ArrayList<>();
                     if(generateResponse){
-                        final Collection<RestMockResponse> mockResponses = createMockResponses(method.responses());
-                        restMethod.getMockResponses().addAll(mockResponses);
+                        mockResponses.addAll(createMockResponses(method.responses()));
                     }
 
-                    restResource.getMethods().add(restMethod);
+                    restResource.getMethods().add(RestMethod.builder()
+                            .id(IdUtility.generateId())
+                            .resourceId(restResource.getId())
+                            .name(method.displayName().value())
+                            .status(RestMethodStatus.MOCKED)
+                            .responseStrategy(RestResponseStrategy.RANDOM)
+                            .httpMethod(httpMethod)
+                            .mockResponses(mockResponses)
+                            .build());
                 }
 
             }
@@ -87,43 +92,48 @@ class RAML10Parser extends AbstractRAMLParser {
         }
     }
 
-    private Collection<RestMockResponse> createMockResponses(List<Response> responses){
+    private Collection<RestMockResponse> createMockResponses(final List<Response> responses){
         final List<RestMockResponse> mockResponses = new ArrayList<>();
 
-
         for(int index = 0; index < responses.size(); index++){
-            Response response = responses.get(index);
-            String responseCode = response.code().value();
-            int httpStatusCode = super.extractHttpStatusCode(responseCode);
-            RestMockResponse restMockResponse = new RestMockResponse();
-            restMockResponse.setName(RESPONSE_NAME_PREFIX + (index + 1));
-            restMockResponse.setHttpStatusCode(httpStatusCode);
+            final Response response = responses.get(index);
+            final String responseCode = response.code().value();
+            final int httpStatusCode = super.extractHttpStatusCode(responseCode);
 
+            final RestMockResponseStatus status;
             if(httpStatusCode == DEFAULT_RESPONSE_CODE){
-                restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
+                status = RestMockResponseStatus.ENABLED;
             } else {
-                restMockResponse.setStatus(RestMockResponseStatus.DISABLED);
+                status = RestMockResponseStatus.DISABLED;
             }
 
+            String body = "";
             if(response.body() != null && !response.body().isEmpty()){
-                TypeDeclaration typeDeclaration = response.body().get(0);
+                final TypeDeclaration typeDeclaration = response.body().getFirst();
 
                 if(typeDeclaration.example() != null){
-                    String body = typeDeclaration.example().value();
-                    restMockResponse.setBody(body);
+                    body = typeDeclaration.example().value();
                 }
             }
 
+            final List<HttpHeader> headers = new ArrayList<>();
             if(response.headers() != null){
                 for(TypeDeclaration parameter : response.headers()){
-                    HttpHeader httpHeader = new HttpHeader();
-                    httpHeader.setName(parameter.name());
-                    httpHeader.setValue(parameter.defaultValue());
-                    restMockResponse.getHttpHeaders().add(httpHeader);
+                    final HttpHeader httpHeader = HttpHeader.builder()
+                            .name(parameter.name())
+                            .value(parameter.defaultValue())
+                            .build();
+                    headers.add(httpHeader);
                 }
             }
 
-            mockResponses.add(restMockResponse);
+            mockResponses.add(RestMockResponse.builder()
+                    .name(RESPONSE_NAME_PREFIX + (index + 1))
+                    .httpStatusCode(httpStatusCode)
+                    .httpHeaders(headers)
+                    .body(body)
+                    .status(status)
+                    .build());
         }
 
         return mockResponses;

@@ -18,8 +18,6 @@ package com.castlemock.service.core.project;
 
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.TypeIdentifier;
-import com.castlemock.model.core.project.Project;
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
 import org.junit.Assert;
 import org.junit.Before;
@@ -56,31 +54,13 @@ public class ProjectServiceFacadeImplTest {
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-
         projectServiceAdapter = Mockito.mock(ProjectServiceAdapter.class);
-        final TypeIdentifier typeIdentifier = Mockito.mock(TypeIdentifier.class);
-        Mockito.when(typeIdentifier.getType()).thenReturn(TYPE);
-        Mockito.when(typeIdentifier.getTypeUrl()).thenReturn(TYPE_URL);
-        Mockito.when(projectServiceAdapter.getTypeIdentifier()).thenReturn(typeIdentifier);
 
         final Map<String, Object> projectServiceAdapters = new HashMap<String, Object>();
         projectServiceAdapters.put("ProjectServiceAdapter", projectServiceAdapter);
         Mockito.when(applicationContext.getBeansWithAnnotation(Mockito.any(Class.class))).thenReturn(projectServiceAdapters);
 
         serviceFacade.initiate();
-    }
-
-    @Test
-    public void testExportProject(){
-        Mockito.when(projectServiceAdapter.exportProject(Mockito.anyString())).thenReturn("ExportId");
-        final String id = serviceFacade.exportProject(TYPE_URL, "ExportId");
-        Assert.assertEquals(id, "ExportId");
-    }
-
-    @Test
-    public void testImportProject(){
-        serviceFacade.importProject(TYPE, "Imported project");
-        Mockito.verify(projectServiceAdapter, Mockito.times(1)).importProject(Mockito.anyString());
     }
 
     @Test
@@ -117,68 +97,5 @@ public class ProjectServiceFacadeImplTest {
         }
 
     }
-
-    @Test
-    public void testSave(){
-        final Project projectDto = new Project();
-        Mockito.when(projectServiceAdapter.convertType(Mockito.any(Project.class))).thenReturn(projectDto);
-        Mockito.when(projectServiceAdapter.create(Mockito.any(Project.class))).thenReturn(projectDto);
-        serviceFacade.save(TYPE, projectDto);
-        Mockito.verify(projectServiceAdapter, Mockito.times(1)).create(Mockito.any(Project.class));
-    }
-
-    @Test
-    public void testDelete(){
-        final Project projectDto = new Project();
-        Mockito.when(projectServiceAdapter.delete(Mockito.any())).thenReturn(projectDto);
-        serviceFacade.delete(TYPE_URL, "Delete project");
-        Mockito.verify(projectServiceAdapter, Mockito.times(1)).delete(Mockito.anyString());
-    }
-
-    @Test
-    public void testUpdate(){
-        final Project projectDto = new Project();
-        Mockito.when(projectServiceAdapter.convertType(Mockito.any(Project.class))).thenReturn(projectDto);
-        Mockito.when(projectServiceAdapter.update(Mockito.any(), Mockito.any(Project.class))).thenReturn(projectDto);
-        serviceFacade.update(TYPE_URL, "Id", projectDto);
-        Mockito.verify(projectServiceAdapter, Mockito.times(1)).update(Mockito.anyString(), Mockito.any(Project.class));
-    }
-
-    @Test
-    public void testFindAll(){
-        final Project projectDto = new Project();
-        final List<Project> projectDtos = new ArrayList<Project>();
-        projectDtos.add(projectDto);
-        Mockito.when(projectServiceAdapter.readAll()).thenReturn(projectDtos);
-
-        final List<Project> returnedProjectDtos = serviceFacade.findAll();
-        Assert.assertEquals(1, returnedProjectDtos.size());
-
-        for(Project returnedProjectDto : returnedProjectDtos){
-            Assert.assertEquals(TYPE, returnedProjectDto.getTypeIdentifier().getType());
-        }
-    }
-
-    @Test
-    public void testFindOne(){
-        final Project projectDto = new Project();
-        Mockito.when(projectServiceAdapter.read(Mockito.anyString())).thenReturn(projectDto);
-        final Project returnedProjectDto = serviceFacade.findOne(TYPE_URL, "Id");
-        Assert.assertEquals(projectDto, returnedProjectDto);
-        Assert.assertEquals(TYPE, projectDto.getTypeIdentifier().getType());
-    }
-
-    @Test
-    public void tesGetTypes(){
-        List<String> types = serviceFacade.getTypes();
-        Assert.assertEquals(1, types.size());
-        Assert.assertEquals(TYPE.toUpperCase(), types.get(0));
-    }
-
-    @Test
-    public void testGetTypeUrl(){
-        final String typeUrl = serviceFacade.getTypeUrl(TYPE);
-        Assert.assertEquals(TYPE_URL, typeUrl);
-    }
-
+    
 }

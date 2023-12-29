@@ -33,7 +33,7 @@ public class SoapResource {
     private String content;
     private SoapResourceType type;
 
-    public SoapResource(){
+    private SoapResource(){
 
     }
 

@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
@@ -50,13 +51,18 @@ public class LoggingInterceptor implements AsyncHandlerInterceptor {
      * @see AbstractController
      */
     @Override
-    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
+    public boolean preHandle(@NonNull final HttpServletRequest request, @NonNull final HttpServletResponse response,
+                             @NonNull final Object handler) {
         if(LOGGER.isDebugEnabled()){
             final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("Start processing the following request: " + request.getRequestURI() + " (" + request.getMethod() + ").");
-            if(handler instanceof HandlerMethod){
-                final HandlerMethod handlerMethod = (HandlerMethod) handler;
-                stringBuilder.append("This request is going to be processed by the following controller: " + handlerMethod.getBeanType().getSimpleName());
+            stringBuilder.append("Start processing the following request: ")
+                    .append(request.getRequestURI())
+                    .append(" (")
+                    .append(request.getMethod())
+                    .append(").");
+            if(handler instanceof HandlerMethod handlerMethod){
+                stringBuilder.append("This request is going to be processed by the following controller: ")
+                        .append(handlerMethod.getBeanType().getSimpleName());
             }
             LOGGER.debug(stringBuilder.toString());
         }
@@ -76,13 +82,17 @@ public class LoggingInterceptor implements AsyncHandlerInterceptor {
      * @see AbstractController
      */
     @Override
-    public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response, final Object handler, final Exception exception) {
+    public void afterCompletion(@NonNull final HttpServletRequest request, @NonNull final HttpServletResponse response,
+                                @NonNull final Object handler, final Exception exception) {
         if(LOGGER.isDebugEnabled()){
             final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("Finished processing the following request: " + request.getRequestURI() + " (" + request.getMethod() + ").");
-            if(handler instanceof HandlerMethod){
-                final HandlerMethod handlerMethod = (HandlerMethod) handler;
-                stringBuilder.append("This request was processed by the following controller: " + handlerMethod.getBeanType().getSimpleName());
+            stringBuilder.append("Finished processing the following request: ")
+                    .append(request.getRequestURI()).append(" (")
+                    .append(request.getMethod())
+                    .append(").");
+            if(handler instanceof HandlerMethod handlerMethod){
+                stringBuilder.append("This request was processed by the following controller: ")
+                        .append(handlerMethod.getBeanType().getSimpleName());
             }
             LOGGER.debug(stringBuilder.toString());
         }

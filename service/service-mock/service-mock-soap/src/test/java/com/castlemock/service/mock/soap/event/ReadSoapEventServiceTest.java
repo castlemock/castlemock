@@ -56,7 +56,7 @@ public class ReadSoapEventServiceTest {
         final ReadSoapEventInput input = ReadSoapEventInput.builder()
                 .soapEventId(soapEvent.getId())
                 .build();
-        final ServiceTask<ReadSoapEventInput> serviceTask = new ServiceTask<ReadSoapEventInput>(input);
+        final ServiceTask<ReadSoapEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadSoapEventOutput> serviceResult = service.process(serviceTask);
         final ReadSoapEventOutput output = serviceResult.getOutput();
         final SoapEvent returnedSoapEvent = output.getSoapEvent();

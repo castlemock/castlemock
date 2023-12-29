@@ -16,8 +16,6 @@
 
 package com.castlemock.app.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -49,7 +47,6 @@ public class SecurityConfig {
     @Order(1)
     @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
 
     /**
      * Create the password encoder
@@ -64,7 +61,8 @@ public class SecurityConfig {
 
     @Order(2)
     @Bean
-    public AuthenticationManager authenticationManager(final HttpSecurity http, @Lazy final PasswordEncoder passwordEncoder) throws Exception {
+    public AuthenticationManager authenticationManager(final HttpSecurity http,
+                                                       @Lazy final PasswordEncoder passwordEncoder) throws Exception {
         final AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService)

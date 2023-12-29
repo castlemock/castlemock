@@ -36,7 +36,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -64,7 +63,6 @@ public class SoapUtility {
                                                       final String namespace){
         return DocumentUtility.getElements(portElement, namespace, ADDRESS_NAMESPACE).stream()
                 .map(element -> element.getAttribute(LOCATION_NAMESPACE))
-                .filter(Objects::nonNull)
                 .findFirst();
     }
 
@@ -82,10 +80,10 @@ public class SoapUtility {
             final String serviceNameWithPrefix = message.getNodeName();
             final Map<String, Node> attributes = getAttributes(message);
             final ElementName elementName = getElementName(serviceNameWithPrefix);
-            final String namespace = getNamespace(elementName, attributes);
+            final Optional<String> namespace = getNamespace(elementName, attributes);
 
             return SoapOperationIdentifier.builder()
-                    .namespace(namespace)
+                    .namespace(namespace.orElse(null))
                     .name(elementName.getLocalName())
                     .build();
         }catch(Exception exception){
@@ -128,17 +126,17 @@ public class SoapUtility {
                 .orElseThrow(() -> new IllegalStateException("Unable to extract the service name"));
     }
 
-    private static String getNamespace(final ElementName elementName, final Map<String, Node> attributes){
+    private static Optional<String> getNamespace(final ElementName elementName, final Map<String, Node> attributes){
         if(elementName.getNamespace().isPresent() &&
                 attributes.containsKey(elementName.getNamespace().get())){
-            Node namespaceNode = attributes.get(elementName.getNamespace().get());
-            return namespaceNode.getNodeValue();
+            final Node namespaceNode = attributes.get(elementName.getNamespace().get());
+            return Optional.ofNullable(namespaceNode.getNodeValue());
         } else if(attributes.containsKey(XMLNS)){
-            Node namespaceNode = attributes.get(XMLNS);
-            return namespaceNode.getNodeValue();
+            final Node namespaceNode = attributes.get(XMLNS);
+            return Optional.ofNullable(namespaceNode.getNodeValue());
         }
 
-        return null;
+        return Optional.empty();
     }
 
     private static Map<String, Node> getAttributes(final Node bodyRequestNode){
@@ -155,9 +153,8 @@ public class SoapUtility {
                                      final Map<String, Node> attributes){
         final TypeInfo typeInfo = element.getSchemaTypeInfo();
 
-        if(typeInfo instanceof Node){
-            Node node = (Node) typeInfo;
-            NamedNodeMap nodeMap = node.getAttributes();
+        if(typeInfo instanceof Node node){
+            final NamedNodeMap nodeMap = node.getAttributes();
 
             for(int index = 0; index < nodeMap.getLength(); index++){
                 final Node attributeNode = nodeMap.item(index);
@@ -167,9 +164,9 @@ public class SoapUtility {
             }
         }
 
-        Node parentNode = element.getParentNode();
-        if(parentNode instanceof Element){
-            getAttributes((Element) parentNode, attributes);
+        final Node parentNode = element.getParentNode();
+        if(parentNode instanceof Element elementParentNode){
+            getAttributes(elementParentNode, attributes);
         }
     }
 

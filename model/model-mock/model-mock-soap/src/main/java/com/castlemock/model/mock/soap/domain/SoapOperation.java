@@ -61,7 +61,7 @@ public class SoapOperation {
     private String defaultResponseName;
     private boolean automaticForward;
 
-    public SoapOperation(){
+    private SoapOperation(){
 
     }
 
@@ -79,13 +79,13 @@ public class SoapOperation {
         this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
         this.originalEndpoint = Objects.requireNonNull(builder.originalEndpoint);
         this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
-        this.networkDelay = Objects.requireNonNull(builder.networkDelay);
+        this.networkDelay = builder.networkDelay;
         this.defaultXPathMockResponseId = builder.defaultXPathMockResponseId;
         this.defaultMockResponseId = builder.defaultMockResponseId;
         this.portId = Objects.requireNonNull(builder.portId);
         this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure);
         this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy);
-        this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
+        this.invokeAddress = builder.invokeAddress;
         this.defaultResponseName = builder.defaultResponseName;
         this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(CopyOnWriteArrayList::new);
         this.automaticForward = Objects.requireNonNull(builder.automaticForward);

@@ -32,6 +32,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -73,15 +74,15 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
      * @throws NullPointerException Throws NullPointerException if provided username is null
      * @throws IllegalArgumentException Throws IllegalArgumentException if provided username is empty
      */
-    protected User findByUsername(final String username) {
+    protected Optional<User> findByUsername(final String username) {
         Preconditions.checkNotNull(username, "Username cannot be null");
         Preconditions.checkArgument(!username.isEmpty(), "Username cannot be empty");
         for (User user : findAll()) {
             if(username.equalsIgnoreCase(user.getUsername())){
-                return user;
+                return Optional.of(user);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -91,17 +92,18 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
      * @return Returns the updated user
      */
     @Override
-    public User update(final String userId, final User updatedUser){
+    public Optional<User> update(final String userId, final User updatedUser){
         Preconditions.checkNotNull(updatedUser);
         Preconditions.checkArgument(!updatedUser.getUsername().isEmpty(), "Invalid username. Username cannot be empty");
-        final User existingUser = findByUsername(updatedUser.getUsername());
+        final User existingUser = findByUsername(updatedUser.getUsername())
+                .orElse(null);
         Preconditions.checkArgument(existingUser == null || existingUser.getId().equals(userId), "Invalid username. Username is already being used");
 
         final List<User> administrators = findByRole(Role.ADMIN);
-        if(administrators.size() == 1 && userId.equals(administrators.get(0).getId()) && !updatedUser.getRole().equals(Role.ADMIN)){
+        if(administrators.size() == 1 && userId.equals(administrators.getFirst().getId()) && !updatedUser.getRole().equals(Role.ADMIN)){
             throw new IllegalArgumentException("Invalid user update. The last admin cannot be deleted");
         }
-        if(administrators.size() == 1 && userId.equals(administrators.get(0).getId()) && !updatedUser.getStatus().equals(Status.ACTIVE)){
+        if(administrators.size() == 1 && userId.equals(administrators.getFirst().getId()) && !updatedUser.getStatus().equals(Status.ACTIVE)){
             throw new IllegalArgumentException("Invalid user update. The last admin cannot be inactivated or locked");
         }
 
@@ -129,7 +131,7 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
         }
         User savedUser = super.save(user);
         sessionTokenRepository.updateToken(oldUsername, user.getUsername());
-        return savedUser;
+        return Optional.of(savedUser);
     }
 
     /**

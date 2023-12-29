@@ -30,13 +30,8 @@ import java.util.Objects;
 @XmlRootElement
 public class Configuration {
 
-
     private String key;
-
-
     private String value;
-
-
     private ConfigurationType type;
 
     public Configuration(){
@@ -44,9 +39,9 @@ public class Configuration {
     }
 
     private Configuration(final Builder builder){
-        this.key = Objects.requireNonNull(builder.key);
-        this.value = Objects.requireNonNull(builder.value);
-        this.type = Objects.requireNonNull(builder.type);
+        this.key = Objects.requireNonNull(builder.key, "key");
+        this.value = Objects.requireNonNull(builder.value, "value");
+        this.type = Objects.requireNonNull(builder.type, "type");
     }
 
     public static Builder builder() {

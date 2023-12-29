@@ -18,16 +18,16 @@ package com.castlemock.service.core.project;
 
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.TypeIdentifiable;
-import com.castlemock.model.core.TypeIdentifier;
+import com.castlemock.model.core.project.OverviewProject;
 import com.castlemock.model.core.project.Project;
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
 import com.castlemock.model.core.service.project.ProjectServiceFacade;
 import com.castlemock.service.core.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The project service component is used to assembly all the project service layers and interact with them
@@ -46,36 +46,10 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, String,
      * The initialize method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
      * @see com.castlemock.model.core.Service
-     * @see TypeIdentifier
-     * @see TypeIdentifiable
      */
     @Override
     public void initiate(){
         initiate(ProjectServiceAdapter.class);
-    }
-
-    /**
-     * The method provides the functionality to export a project and convert it to a String
-     * @param typeUrl The url for the specific type that the instance belongs to
-     * @param id The id of the project that will be converted and exported
-     * @return The project with the provided id as a String
-     */
-    @Override
-    public String exportProject(final String typeUrl, final String id){
-        final ProjectServiceAdapter<Project> service = findByTypeUrl(typeUrl);
-        return service.exportProject(id);
-    }
-
-    /**
-     * The method provides the functionality to import a project as a String
-     * @param type The type value for the specific type that the instance belongs to
-     * @param rawProject The imported project file
-     * @return The imported project
-     */
-    @Override
-    public Project importProject(String type, String rawProject) {
-        final ProjectServiceAdapter<Project> service = findByType(type);
-        return service.importProject(rawProject);
     }
 
     /**
@@ -85,13 +59,24 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, String,
      * @return A list of search results
      */
     @Override
-    public List<SearchResult> search(SearchQuery searchQuery) {
-        final List<SearchResult> searchResults = new LinkedList<SearchResult>();
-        for(ProjectServiceAdapter<?> projectServiceAdapter : services.values()){
-            List<SearchResult> projectServiceSearchResult = projectServiceAdapter.search(searchQuery);
-            searchResults.addAll(projectServiceSearchResult);
-        }
-        return searchResults;
+    public List<SearchResult> search(final SearchQuery searchQuery) {
+        return services.stream()
+                .map(adapter -> adapter.search(searchQuery))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OverviewProject> findAll() {
+        return services.stream()
+                .map(adapter -> adapter.readAll()
+                        .stream()
+                        .map(project -> OverviewProject.toBuilder(project)
+                                .type(adapter.getType())
+                                .build())
+                        .collect(Collectors.toList()))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
 }

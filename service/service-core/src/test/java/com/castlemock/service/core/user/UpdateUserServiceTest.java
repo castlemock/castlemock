@@ -72,8 +72,7 @@ public class UpdateUserServiceTest {
                 .userId(user.getId())
                 .user(updatedUser)
                 .build();
-        final ServiceTask<UpdateUserInput> serviceTask = new ServiceTask<UpdateUserInput>();
-        serviceTask.setInput(input);
+        final ServiceTask<UpdateUserInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<UpdateUserOutput> serviceResult = service.process(serviceTask);
         final UpdateUserOutput output = serviceResult.getOutput();
 

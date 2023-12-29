@@ -121,9 +121,10 @@ public class HttpMessageSupport {
         while(headers.hasMoreElements()){
             final String headerName = headers.nextElement();
             final String headerValue = httpServletRequest.getHeader(headerName);
-            final HttpHeader httpHeader = new HttpHeader();
-            httpHeader.setName(headerName);
-            httpHeader.setValue(headerValue);
+            final HttpHeader httpHeader = HttpHeader.builder()
+                    .name(headerName)
+                    .value(headerValue)
+                    .build();
             httpHeaders.add(httpHeader);
         }
         return httpHeaders;
@@ -151,9 +152,10 @@ public class HttpMessageSupport {
                     continue;
                 }
 
-                final HttpHeader httpHeader = new HttpHeader();
-                httpHeader.setName(headerName);
-                httpHeader.setValue(headerValue);
+                final HttpHeader httpHeader = HttpHeader.builder()
+                        .name(headerName)
+                        .value(headerValue)
+                        .build();
                 httpHeaders.add(httpHeader);
             }
 

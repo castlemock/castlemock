@@ -44,7 +44,7 @@ public class LoadSoapResourceServiceTest {
                 .projectId("Project id")
                 .resourceId(soapResource.getId())
                 .build();
-        final ServiceTask<LoadSoapResourceInput> serviceTask = new ServiceTask<LoadSoapResourceInput>(input);
+        final ServiceTask<LoadSoapResourceInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<LoadSoapResourceOutput> serviceResult = service.process(serviceTask);
 
         Assert.assertNotNull(serviceResult.getOutput());

@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -77,12 +78,13 @@ public class SecurityInterceptor implements HandlerInterceptor, Filter {
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityInterceptor.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(final FilterConfig filterConfig) {
 
     }
 
     @Override
-    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse,
+                         final FilterChain filterChain) throws IOException, ServletException {
         process((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse);
         filterChain.doFilter(servletRequest, servletResponse);
     }
@@ -102,7 +104,9 @@ public class SecurityInterceptor implements HandlerInterceptor, Filter {
      * @throws ServletException Upon unable to logout the user
      */
     @Override
-    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws IOException, ServletException {
+    public boolean preHandle(@NonNull final HttpServletRequest request,
+                             @NonNull final HttpServletResponse response, @NonNull final Object handler)
+            throws IOException, ServletException {
         return process(request, response);
     }
 

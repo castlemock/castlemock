@@ -77,7 +77,7 @@ public class DeleteSoapMockResponseServiceTest {
                 .operationId(soapOperation.getId())
                 .mockResponseId(soapMockResponse.getId())
                 .build();
-        final ServiceTask<DeleteSoapMockResponseInput> serviceTask = new ServiceTask<DeleteSoapMockResponseInput>(input);
+        final ServiceTask<DeleteSoapMockResponseInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<DeleteSoapMockResponseOutput> serviceResult = service.process(serviceTask);
         serviceResult.getOutput();
 

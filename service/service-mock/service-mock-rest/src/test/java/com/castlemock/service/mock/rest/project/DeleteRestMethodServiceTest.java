@@ -16,7 +16,6 @@
 
 package com.castlemock.service.mock.rest.project;
 
-import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodTestBuilder;
@@ -25,7 +24,6 @@ import com.castlemock.model.mock.rest.domain.RestMockResponseTestBuilder;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import com.castlemock.service.mock.rest.project.input.DeleteRestMethodInput;
-import com.castlemock.service.mock.rest.project.output.DeleteRestMethodOutput;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -73,8 +71,8 @@ public class DeleteRestMethodServiceTest {
                 .restResourceId(resourceId)
                 .restMethodId(methodId)
                 .build();
-        final ServiceTask<DeleteRestMethodInput> serviceTask = new ServiceTask<DeleteRestMethodInput>(input);
-        final ServiceResult<DeleteRestMethodOutput> serviceResult = service.process(serviceTask);
+        final ServiceTask<DeleteRestMethodInput> serviceTask = ServiceTask.of(input, "user");
+        service.process(serviceTask);
 
         Mockito.verify(methodRepository, Mockito.times(1)).delete(methodId);
         Mockito.verify(mockResponseRepository, Mockito.times(1)).delete(mockResponse.getId());

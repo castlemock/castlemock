@@ -50,17 +50,18 @@ public class CreateRestProjectServiceTest {
 
     @Test
     public void testProcess(){
-        final RestProject project = RestProjectTestBuilder.builder().build();
-        Mockito.when(repository.save(Mockito.any(RestProject.class))).thenReturn(project);
-
-        final CreateRestProjectInput input = CreateRestProjectInput.builder()
-                .restProject(project)
+        final RestProject project = RestProjectTestBuilder.builder()
                 .build();
-        final ServiceTask<CreateRestProjectInput> serviceTask = new ServiceTask<CreateRestProjectInput>(input);
+        Mockito.when(repository.save(Mockito.any(RestProject.class))).thenReturn(project);
+        final CreateRestProjectInput input = CreateRestProjectInput.builder()
+                .name(project.getName())
+                .description(project.getDescription())
+                .build();
+        final ServiceTask<CreateRestProjectInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestProjectOutput> serviceResult = service.process(serviceTask);
 
         Assert.assertNotNull(serviceResult.getOutput());
         Assert.assertEquals(project, serviceResult.getOutput().getSavedRestProject());
-        Mockito.verify(repository, Mockito.times(1)).save(project);
+        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any());
     }
 }

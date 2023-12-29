@@ -39,7 +39,7 @@ public class SoapResponse {
     private List<HttpHeader> httpHeaders;
     private List<ContentEncoding> contentEncodings;
 
-    public SoapResponse(){
+    private SoapResponse(){
 
     }
 

@@ -19,6 +19,7 @@ package com.castlemock.model.core.utility.parser.expression;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 /**
@@ -39,7 +40,7 @@ public class ExpressionInput {
      * @param name The name of the expression.
      */
     public ExpressionInput(final String name){
-        this.name = name;
+        this.name = Objects.requireNonNull(name);
         this.arguments = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     }
 

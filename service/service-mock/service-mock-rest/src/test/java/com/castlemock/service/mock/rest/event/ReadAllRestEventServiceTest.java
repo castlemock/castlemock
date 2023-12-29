@@ -62,7 +62,7 @@ public class ReadAllRestEventServiceTest {
         Mockito.when(repository.findAll()).thenReturn(restEvents);
 
         final ReadAllRestEventInput input = ReadAllRestEventInput.builder().build();
-        final ServiceTask<ReadAllRestEventInput> serviceTask = new ServiceTask<ReadAllRestEventInput>(input);
+        final ServiceTask<ReadAllRestEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadAllRestEventOutput> serviceResult = service.process(serviceTask);
         final ReadAllRestEventOutput output = serviceResult.getOutput();
 

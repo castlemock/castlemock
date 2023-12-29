@@ -89,7 +89,7 @@ public class DeleteRestProjectServiceTest {
         final DeleteRestProjectInput input = DeleteRestProjectInput.builder()
                 .restProjectId(project.getId())
                 .build();
-        final ServiceTask<DeleteRestProjectInput> serviceTask = new ServiceTask<DeleteRestProjectInput>(input);
+        final ServiceTask<DeleteRestProjectInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<DeleteRestProjectOutput> serviceResult = service.process(serviceTask);
 
         Mockito.verify(repository, Mockito.times(1)).delete(project.getId());

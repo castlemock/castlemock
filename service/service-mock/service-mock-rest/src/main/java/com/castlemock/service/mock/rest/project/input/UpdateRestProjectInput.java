@@ -18,7 +18,6 @@ package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.validation.NotNull;
-import com.castlemock.model.mock.rest.domain.RestProject;
 
 import java.util.Objects;
 
@@ -29,46 +28,62 @@ import java.util.Objects;
 public final class UpdateRestProjectInput implements Input {
 
     @NotNull
-    private final String restProjectId;
+    private final String projectId;
     @NotNull
-    private final RestProject restProject;
+    private final String name;
+    @NotNull
+    private final String description;
 
     private UpdateRestProjectInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restProject = Objects.requireNonNull(builder.restProject);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.description = Objects.requireNonNull(builder.description, "description");
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public RestProject getRestProject() {
-        return restProject;
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public static Builder builder(){
         return new Builder();
     }
 
-    public static final class Builder {
+    public static class Builder {
 
-        private String restProjectId;
-        private RestProject restProject;
+        private String projectId;
+        private String name;
+        private String description;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        private Builder(){
+
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 
-        public Builder restProject(final RestProject restProject){
-            this.restProject = restProject;
+        public Builder name(final String name){
+            this.name = name;
+            return this;
+        }
+
+        public Builder description(final String description){
+            this.description = description;
             return this;
         }
 
         public UpdateRestProjectInput build(){
             return new UpdateRestProjectInput(this);
         }
-
     }
 
 

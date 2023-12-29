@@ -21,6 +21,7 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.core.user.Role;
 import com.castlemock.model.core.user.Status;
 import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.user.UserRepository;
 import com.castlemock.service.core.user.input.CreateUserInput;
 import com.castlemock.service.core.user.output.CreateUserOutput;
@@ -51,32 +52,25 @@ public class CreateUserServiceTest {
 
     @Test
     public void testProcess(){
-        User user = new User();
-        user.setUsername("Username");
-        user.setPassword("Password");
-        user.setStatus(Status.ACTIVE);
-        user.setRole(Role.ADMIN);
-        user.setEmail("email@email.com");
+        final User user = UserTestBuilder.builder()
+                .id("123")
+                .username("Username")
+                .password("Password")
+                .status(Status.ACTIVE)
+                .role(Role.ADMIN)
+                .email("email@email.com")
+                .build();
 
-        User createdUser = new User();
-        createdUser.setId(new String());
-        createdUser.setPassword("Password");
-        createdUser.setUsername("Username");
-        createdUser.setStatus(Status.ACTIVE);
-        createdUser.setRole(Role.ADMIN);
-        createdUser.setEmail("email@email.com");
-
-        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(createdUser);
+        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
         final CreateUserInput input = CreateUserInput.builder().user(user).build();
-        final ServiceTask<CreateUserInput> serviceTask = new ServiceTask<CreateUserInput>();
-        serviceTask.setInput(input);
+        final ServiceTask<CreateUserInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateUserOutput> serviceResult = service.process(serviceTask);
         final CreateUserOutput output = serviceResult.getOutput();
 
         final User returnedUser = output.getSavedUser();
         Assert.assertNotNull(returnedUser);
-        Assert.assertEquals(returnedUser.getId(), createdUser.getId());
-        Assert.assertNotEquals(user.getPassword(), returnedUser.getPassword());
+        Assert.assertEquals(returnedUser.getId(), user.getId());
+        Assert.assertEquals(user.getPassword(), returnedUser.getPassword());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
         Assert.assertEquals(user.getRole(), returnedUser.getRole());
         Assert.assertEquals(user.getStatus(), returnedUser.getStatus());

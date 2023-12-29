@@ -32,8 +32,16 @@ public class RestException extends RuntimeException {
      * The default constructor for the RestException class
      * @param message The exception message
      */
-    public RestException(String message) {
+    public RestException(final String message) {
         super(message);
+    }
+
+    /**
+     * The default constructor for the RestException class
+     * @param exception The exception
+     */
+    public RestException(final Exception exception) {
+        super(exception);
     }
 
 }

@@ -20,7 +20,6 @@ import com.castlemock.model.core.http.HttpHeader;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,25 +31,22 @@ public class CharsetUtilityTest {
 
     @Test
     public void testParseHttpHeaders(){
-        final List<HttpHeader> httpHeaders = new ArrayList<>();
+        final HttpHeader contentLength = HttpHeader.builder()
+                .name("Content-Length")
+                .value("100")
+                .build();
 
-        HttpHeader contentLength = new HttpHeader();
-        contentLength.setName("Content-Length");
-        contentLength.setValue("100");
+        final HttpHeader contentEncoding = HttpHeader.builder()
+                .name("Content-Encoding")
+                .value("gzip")
+                .build();
 
-        HttpHeader contentEncoding = new HttpHeader();
-        contentEncoding.setName("Content-Encoding");
-        contentEncoding.setValue("gzip");
+        final HttpHeader contentType = HttpHeader.builder()
+                .name("Content-Type")
+                .value("text/xml;charset=iso-8859-1")
+                .build();
 
-        HttpHeader contentType = new HttpHeader();
-        contentEncoding.setName("Content-Type");
-        contentEncoding.setValue("text/xml;charset=iso-8859-1");
-
-        httpHeaders.add(contentLength);
-        httpHeaders.add(contentEncoding);
-        httpHeaders.add(contentType);
-
-        final String charset = CharsetUtility.parseHttpHeaders(httpHeaders);
+        final String charset = CharsetUtility.parseHttpHeaders(List.of(contentLength, contentEncoding, contentType));
         Assert.assertEquals("ISO-8859-1", charset);
     }
 
@@ -62,20 +58,17 @@ public class CharsetUtilityTest {
 
     @Test
     public void testParseHttpHeadersMissingHeader(){
-        final List<HttpHeader> httpHeaders = new ArrayList<>();
+        final HttpHeader contentLength = HttpHeader.builder()
+                .name("Content-Length")
+                .value("100")
+                .build();
 
-        HttpHeader contentLength = new HttpHeader();
-        contentLength.setName("Content-Length");
-        contentLength.setValue("100");
+        final HttpHeader contentEncoding = HttpHeader.builder()
+                .name("Content-Encoding")
+                .value("gzip")
+                .build();
 
-        HttpHeader contentEncoding = new HttpHeader();
-        contentEncoding.setName("Content-Encoding");
-        contentEncoding.setValue("gzip");
-
-        httpHeaders.add(contentLength);
-        httpHeaders.add(contentEncoding);
-
-        final String charset = CharsetUtility.parseHttpHeaders(httpHeaders);
+        final String charset = CharsetUtility.parseHttpHeaders(List.of(contentEncoding, contentLength));
         Assert.assertEquals("UTF-8", charset);
     }
 

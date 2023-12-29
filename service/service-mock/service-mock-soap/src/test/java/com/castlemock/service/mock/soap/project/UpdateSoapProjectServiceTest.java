@@ -58,9 +58,10 @@ public class UpdateSoapProjectServiceTest {
         final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
         final UpdateSoapProjectInput input = UpdateSoapProjectInput.builder()
                 .projectId(soapProject.getId())
-                .project(soapProject)
+                .name("New name")
+                .description("New description")
                 .build();
-        final ServiceTask<UpdateSoapProjectInput> serviceTask = new ServiceTask<>(input);
+        final ServiceTask<UpdateSoapProjectInput> serviceTask = ServiceTask.of(input, "user");
 
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(soapProject);

@@ -44,7 +44,6 @@ import java.util.Map;
  * @author Mohammad Hewedy
  * @since 1.0
  */
-@SuppressWarnings("rawtypes")
 public abstract class Application extends SpringBootServletInitializer{
 
     @Value("${app.version}")
@@ -56,7 +55,7 @@ public abstract class Application extends SpringBootServletInitializer{
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
-    private ServiceRegistry serviceRegistry;
+    private ServiceRegistry<?,?> serviceRegistry;
     @Autowired
     private SessionTokenRepository tokenRepository;
     @Autowired
@@ -69,13 +68,12 @@ public abstract class Application extends SpringBootServletInitializer{
      */
     @PostConstruct
     protected void initiate(){
-        printLogo();
-        initializeUnSecureTLS();
-        updateBaseFileDirectory(); // This is required to change the base folder name from .fortmocks to .castlemock
-        initializeProcessRegistry();
-        initializeRepository();
-        initializeServiceFacade();
-        initializeTokenRepository();
+        this.printLogo();
+        this.initializeUnSecureTLS();
+        this.initializeProcessRegistry();
+        this.initializeRepository();
+        this.initializeServiceFacade();
+        this.initializeTokenRepository();
     }
 
     protected void printLogo(){
@@ -127,7 +125,7 @@ public abstract class Application extends SpringBootServletInitializer{
     }
 
     protected void initializeTokenRepository(){
-        tokenRepository.initialize();
+        this.tokenRepository.initialize();
     }
 
     /**
@@ -135,18 +133,7 @@ public abstract class Application extends SpringBootServletInitializer{
      * @see Repository
      */
     protected void initializeProcessRegistry(){
-        serviceRegistry.initialize();
-    }
-
-    /**
-     * The method is only a temporary method used to change the the base file directory name for
-     * .fortmocks to .castlemock. This method can later be removed when users have had the change
-     * to update the version of Castle mock to a newer version.
-     * @since 1.5
-     */
-    private void updateBaseFileDirectory(){
-        String previousBaseFolderDirectory = baseFileDirectory.replace(".castlemock", ".fortmocks");
-        fileManager.renameDirectory(previousBaseFolderDirectory, baseFileDirectory);
+        this.serviceRegistry.initialize();
     }
 
     /**
@@ -157,21 +144,21 @@ public abstract class Application extends SpringBootServletInitializer{
         if (!securityCertificationValidationEnabled) {
             try {
                 // Create a trust manager that does not validate certificate chains
-                TrustManager[] trustAllCerts = new TrustManager[]{
+                final TrustManager[] trustAllCerts = new TrustManager[]{
                         new X509TrustManager() {
                             public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                                 return null;
                             }
 
-                            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                            public void checkClientTrusted(final X509Certificate[] certs, final String authType) {
                             }
 
-                            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                            public void checkServerTrusted(final X509Certificate[] certs, final String authType) {
                             }
                         }
                 };
                 // Install the all-trusting trust manager
-                SSLContext sc = SSLContext.getInstance("SSL");
+                final SSLContext sc = SSLContext.getInstance("SSL");
                 sc.init(null, trustAllCerts, new java.security.SecureRandom());
                 HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 

@@ -41,9 +41,9 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Profile(Profiles.FILE)
@@ -152,10 +152,8 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
 
     @Override
     public void deleteWithPortId(String portId) {
-        Iterator<SoapOperationFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            SoapOperationFile operation = iterator.next();
-            if(operation.getPortId().equals(portId)){
+        for (SoapOperationFile operation : this.collection.values()) {
+            if (operation.getPortId().equals(portId)) {
                 delete(operation.getId());
             }
         }
@@ -181,15 +179,15 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
      * name then null will be returned.
      */
     @Override
-    public SoapOperation findWithName(final String soapPortId,
-                                      final String soapOperationName){
+    public Optional<SoapOperation> findWithName(final String soapPortId,
+                                               final String soapOperationName){
         for(SoapOperationFile soapOperation : this.collection.values()){
             if(soapOperation.getPortId().equals(soapPortId) &&
                     soapOperation.getName().equals(soapOperationName)){
-                return mapper.map(soapOperation, SoapOperation.class);
+                return Optional.ofNullable(mapper.map(soapOperation, SoapOperation.class));
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -202,7 +200,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
      * @return A {@link SoapOperation} that matches the provided search criteria.
      */
     @Override
-    public SoapOperation findWithMethodAndVersionAndIdentifier(final String portId, final HttpMethod method,
+    public Optional<SoapOperation> findWithMethodAndVersionAndIdentifier(final String portId, final HttpMethod method,
                                                                final SoapVersion version,
                                                                final SoapOperationIdentifier operationIdentifier) {
         for(SoapOperationFile soapOperation : this.collection.values()){
@@ -222,12 +220,12 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
                     if(operationIdentifierFile.getNamespace() == null ||
                             soapOperation.getIdentifyStrategy() == SoapOperationIdentifyStrategy.ELEMENT ||
                             operationIdentifierFile.getNamespace().equalsIgnoreCase(operationIdentifier.getNamespace())) {
-                        return this.mapper.map(soapOperation, SoapOperation.class);
+                        return Optional.ofNullable(this.mapper.map(soapOperation, SoapOperation.class));
                     }
                 }
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -313,7 +311,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         }
 
         @Override
-        public void setId(String id) {
+        public void setId(final String id) {
             this.id = id;
         }
 
@@ -322,7 +320,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return name;
         }
 
-        public void setName(String name) {
+        public void setName(final String name) {
             this.name = name;
         }
 
@@ -331,7 +329,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return identifier;
         }
 
-        public void setIdentifier(String identifier) {
+        public void setIdentifier(final String identifier) {
             this.identifier = identifier;
         }
 
@@ -340,7 +338,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return operationIdentifier;
         }
 
-        public void setOperationIdentifier(SoapOperationIdentifierFile operationIdentifier) {
+        public void setOperationIdentifier(final SoapOperationIdentifierFile operationIdentifier) {
             this.operationIdentifier = operationIdentifier;
         }
 
@@ -349,7 +347,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return portId;
         }
 
-        public void setPortId(String portId) {
+        public void setPortId(final String portId) {
             this.portId = portId;
         }
 
@@ -358,7 +356,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return responseStrategy;
         }
 
-        public void setResponseStrategy(SoapResponseStrategy responseStrategy) {
+        public void setResponseStrategy(final SoapResponseStrategy responseStrategy) {
             this.responseStrategy = responseStrategy;
         }
 
@@ -367,7 +365,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return status;
         }
 
-        public void setStatus(SoapOperationStatus status) {
+        public void setStatus(final SoapOperationStatus status) {
             this.status = status;
         }
 
@@ -376,7 +374,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return httpMethod;
         }
 
-        public void setHttpMethod(HttpMethod httpMethod) {
+        public void setHttpMethod(final HttpMethod httpMethod) {
             this.httpMethod = httpMethod;
         }
 
@@ -385,7 +383,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return soapVersion;
         }
 
-        public void setSoapVersion(SoapVersion soapVersion) {
+        public void setSoapVersion(final SoapVersion soapVersion) {
             this.soapVersion = soapVersion;
         }
 
@@ -394,7 +392,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return defaultBody;
         }
 
-        public void setDefaultBody(String defaultBody) {
+        public void setDefaultBody(final String defaultBody) {
             this.defaultBody = defaultBody;
         }
 
@@ -403,7 +401,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return currentResponseSequenceIndex;
         }
 
-        public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
+        public void setCurrentResponseSequenceIndex(final Integer currentResponseSequenceIndex) {
             this.currentResponseSequenceIndex = currentResponseSequenceIndex;
         }
 
@@ -412,7 +410,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return forwardedEndpoint;
         }
 
-        public void setForwardedEndpoint(String forwardedEndpoint) {
+        public void setForwardedEndpoint(final String forwardedEndpoint) {
             this.forwardedEndpoint = forwardedEndpoint;
         }
 
@@ -421,7 +419,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return originalEndpoint;
         }
 
-        public void setOriginalEndpoint(String originalEndpoint) {
+        public void setOriginalEndpoint(final String originalEndpoint) {
             this.originalEndpoint = originalEndpoint;
         }
 
@@ -430,7 +428,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return simulateNetworkDelay;
         }
 
-        public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
+        public void setSimulateNetworkDelay(final boolean simulateNetworkDelay) {
             this.simulateNetworkDelay = simulateNetworkDelay;
         }
 
@@ -439,7 +437,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return networkDelay;
         }
 
-        public void setNetworkDelay(long networkDelay) {
+        public void setNetworkDelay(final long networkDelay) {
             this.networkDelay = networkDelay;
         }
 
@@ -449,7 +447,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return defaultXPathMockResponseId;
         }
 
-        public void setDefaultXPathMockResponseId(String defaultXPathMockResponseId) {
+        public void setDefaultXPathMockResponseId(final String defaultXPathMockResponseId) {
             this.defaultXPathMockResponseId = defaultXPathMockResponseId;
         }
 
@@ -458,7 +456,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return mockOnFailure;
         }
 
-        public void setMockOnFailure(boolean mockOnFailure) {
+        public void setMockOnFailure(final boolean mockOnFailure) {
             this.mockOnFailure = mockOnFailure;
         }
 
@@ -467,7 +465,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return identifyStrategy;
         }
 
-        public void setIdentifyStrategy(SoapOperationIdentifyStrategy identifyStrategy) {
+        public void setIdentifyStrategy(final SoapOperationIdentifyStrategy identifyStrategy) {
             this.identifyStrategy = identifyStrategy;
         }
 
@@ -476,7 +474,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return defaultMockResponseId;
         }
 
-        public void setDefaultMockResponseId(String defaultMockResponseId) {
+        public void setDefaultMockResponseId(final String defaultMockResponseId) {
             this.defaultMockResponseId = defaultMockResponseId;
         }
 
@@ -504,7 +502,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             return name;
         }
 
-        public void setName(String name) {
+        public void setName(final String name) {
             this.name = name;
         }
 

@@ -21,6 +21,7 @@ import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.user.Role;
 import com.castlemock.model.core.user.Status;
 import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.user.UserRepository;
@@ -69,16 +70,17 @@ public class UserFileRepository extends FileRepository<UserFileRepository.UserFi
     @Override
     protected void postInitiate() {
         if(collection.isEmpty()){
-            final User user = new User();
-            user.setId(generateId());
-            user.setUsername("admin");
-            user.setFullName("Admin Admin");
-            user.setPassword(PASSWORD_ENCODER.encode("admin"));
-            user.setStatus(Status.ACTIVE);
-            user.setRole(Role.ADMIN);
-            user.setCreated(new Date());
-            user.setUpdated(new Date());
-            user.setEmail(new String());
+            final User user = User.builder()
+                    .id(IdUtility.generateId())
+                    .username("admin")
+                    .fullName("Admin Admin")
+                    .password(PASSWORD_ENCODER.encode("admin"))
+                    .status(Status.ACTIVE)
+                    .role(Role.ADMIN)
+                    .created(new Date())
+                    .updated(new Date())
+                    .email("")
+                    .build();
             save(user);
         }
     }

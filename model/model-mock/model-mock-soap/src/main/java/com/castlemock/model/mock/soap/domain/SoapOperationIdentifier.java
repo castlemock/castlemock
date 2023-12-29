@@ -27,13 +27,13 @@ public class SoapOperationIdentifier {
     private String name;
     private String namespace;
 
-    public SoapOperationIdentifier(){
+    private SoapOperationIdentifier(){
 
     }
 
     private SoapOperationIdentifier(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
-        this.namespace =builder.namespace;
+        this.namespace = builder.namespace;
     }
 
 

@@ -60,9 +60,10 @@ public class CreateSoapProjectServiceTest {
         Mockito.when(repository.save(Mockito.any(SoapProject.class))).thenReturn(soapProject);
 
         final CreateSoapProjectInput input = CreateSoapProjectInput.builder()
-                .project(soapProject)
+                .name("New name")
+                .description("New description")
                 .build();
-        final ServiceTask<CreateSoapProjectInput> serviceTask = new ServiceTask<CreateSoapProjectInput>(input);
+        final ServiceTask<CreateSoapProjectInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateSoapProjectOutput> serviceResult = service.process(serviceTask);
         final CreateSoapProjectOutput output = serviceResult.getOutput();
         final SoapProject returnedSoapProject = output.getProject();

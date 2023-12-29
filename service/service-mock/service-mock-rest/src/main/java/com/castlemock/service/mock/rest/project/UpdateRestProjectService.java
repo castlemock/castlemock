@@ -23,6 +23,9 @@ import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.service.mock.rest.project.input.UpdateRestProjectInput;
 import com.castlemock.service.mock.rest.project.output.UpdateRestProjectOutput;
 
+import java.util.Date;
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,11 +44,14 @@ public class UpdateRestProjectService extends AbstractRestProjectService impleme
     @Override
     public ServiceResult<UpdateRestProjectOutput> process(final ServiceTask<UpdateRestProjectInput> serviceTask) {
         final UpdateRestProjectInput input = serviceTask.getInput();
-        final String restProjectId = input.getRestProjectId();
-        final RestProject restProject = input.getRestProject();
-        final RestProject updatedRestProject = update(restProjectId, restProject);
+        final String restProjectId = input.getProjectId();
+        final RestProject restProject = find(restProjectId);
+        restProject.setName(input.getName());
+        restProject.setDescription(input.getDescription());
+        restProject.setUpdated(new Date());
+        final Optional<RestProject> updatedRestProject = update(restProjectId, restProject);
         return createServiceResult(UpdateRestProjectOutput.builder()
-                .updatedRestProject(updatedRestProject)
+                .updatedRestProject(updatedRestProject.orElse(null))
                 .build());
     }
 }

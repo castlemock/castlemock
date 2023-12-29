@@ -19,9 +19,12 @@ package com.castlemock.service.mock.soap.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.service.mock.soap.project.input.CreateSoapProjectInput;
 import com.castlemock.service.mock.soap.project.output.CreateSoapProjectOutput;
+
+import java.util.Date;
 
 /**
  * @author Karl Dahlgren
@@ -41,7 +44,13 @@ public class CreateSoapProjectService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<CreateSoapProjectOutput> process(final ServiceTask<CreateSoapProjectInput> serviceTask) {
         final CreateSoapProjectInput input = serviceTask.getInput();
-        final SoapProject soapProject = input.getProject();
+        final SoapProject soapProject = SoapProject.builder()
+                .id(IdUtility.generateId())
+                .name(input.getName())
+                .description(input.getDescription())
+                .created(new Date())
+                .updated(new Date())
+                .build();
         final SoapProject savedSoapProject = save(soapProject);
         return createServiceResult(CreateSoapProjectOutput.builder()
                 .project(savedSoapProject)

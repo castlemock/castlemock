@@ -36,11 +36,7 @@ public class ConfigurationGroup {
 
 
     private String id;
-
-
     private String name;
-
-
     private List<Configuration> configurations;
 
     public ConfigurationGroup(){
@@ -48,9 +44,9 @@ public class ConfigurationGroup {
     }
 
     private ConfigurationGroup(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
-        this.name = Objects.requireNonNull(builder.name);
-        this.configurations = Objects.requireNonNull(builder.configurations);
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.configurations = Objects.requireNonNull(builder.configurations, "configurations");
     }
 
     /**

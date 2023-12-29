@@ -1,68 +1,47 @@
 package com.castlemock.model.core.event;
 
-import com.castlemock.model.core.TypeIdentifier;
+import com.castlemock.model.core.utility.IdUtility;
 
 import java.util.Date;
-import java.util.UUID;
 
 public final class EventTestBuilder {
 
-    private String id;
-    private String resourceName;
-    private Date startDate;
-    private Date endDate;
-    private TypeIdentifier typeIdentifier;
-    private String resourceLink;
-
     private EventTestBuilder(){
-        this.id = UUID.randomUUID().toString();
-        this.startDate = new Date();
-        this.endDate = new Date();
     }
 
-    public static EventTestBuilder builder(){
-        return new EventTestBuilder();
+    public static TestEvent.Builder builder(){
+        return TestEvent.builder()
+                .id(IdUtility.generateId())
+                .startDate(new Date())
+                .endDate(new Date())
+                .resourceLink("Resource link")
+                .resourceName("Resource name");
     }
 
-    public EventTestBuilder id(final String id){
-        this.id = id;
-        return this;
+    public static TestEvent build() {
+        return builder().build();
     }
 
-    public EventTestBuilder resourceName(final String resourceName){
-        this.resourceName = resourceName;
-        return this;
-    }
+    public static class TestEvent extends Event {
 
-    public EventTestBuilder startDate(final Date startDate){
-        this.startDate = startDate;
-        return this;
-    }
+        private TestEvent(final Builder builder) {
+            super(builder);
+        }
 
-    public EventTestBuilder endDate(final Date endDate){
-        this.endDate = endDate;
-        return this;
-    }
+        public static Builder builder() {
+            return new Builder();
+        }
 
-    public EventTestBuilder typeIdentifier(final TypeIdentifier typeIdentifier){
-        this.typeIdentifier = typeIdentifier;
-        return this;
-    }
+        public static class Builder extends Event.Builder<Builder> {
 
-    public EventTestBuilder resourceLink(final String resourceLink){
-        this.resourceLink = resourceLink;
-        return this;
-    }
+            private Builder() {
+            }
 
-    public Event build(){
-        final Event event = new Event();
-        event.setEndDate(endDate);
-        event.setId(id);
-        event.setResourceLink(resourceLink);
-        event.setResourceName(resourceName);
-        event.setStartDate(startDate);
-        event.setTypeIdentifier(typeIdentifier);
-        return event;
+            public TestEvent build(){
+                return new TestEvent(this);
+            }
+        }
+
     }
 
 }

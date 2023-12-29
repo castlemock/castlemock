@@ -70,7 +70,7 @@ public class CreateRestMethodServiceTest {
                 .name(restMethod.getName())
                 .httpMethod(restMethod.getHttpMethod())
                 .build();
-        final ServiceTask<CreateRestMethodInput> serviceTask = new ServiceTask<CreateRestMethodInput>(input);
+        final ServiceTask<CreateRestMethodInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestMethodOutput> serviceResult = service.process(serviceTask);
         final CreateRestMethodOutput createRestApplicationOutput = serviceResult.getOutput();
         final RestMethod returnedRestMethod = createRestApplicationOutput.getCreatedRestMethod();

@@ -129,19 +129,21 @@ public class SoapResourceRestController extends AbstractRestController {
             String line;
             while ((line = bufferedReader.readLine()) != null)
             {
-                stringBuilder.append(line + "\n");
+                stringBuilder.append(line).append("\n");
             }
 
             final String raw = stringBuilder.toString();
-            final SoapResource resource = new SoapResource();
-            resource.setId(resourceId);
-            resource.setType(resourceType);
-            ImportSoapResourceInput input = ImportSoapResourceInput.builder()
+            final SoapResource resource = SoapResource.builder()
+                    .id(resourceId)
+                    .type(resourceType)
+                    .build();
+
+            final ImportSoapResourceInput input = ImportSoapResourceInput.builder()
                     .projectId(projectId)
                     .resource(resource)
                     .raw(raw)
                     .build();
-            ImportSoapResourceOutput output = this.serviceProcessor.process(input);
+            final ImportSoapResourceOutput output = this.serviceProcessor.process(input);
             return ResponseEntity.ok(output.getResource());
         } catch (IOException e) {
             LOGGER.error("Unable to import resource", e);

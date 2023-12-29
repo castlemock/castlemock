@@ -68,7 +68,7 @@ public class UpdateSoapOperationServiceTest {
                 .defaultMockResponseId(operation.getDefaultMockResponseId())
                 .automaticForward(operation.getAutomaticForward())
                 .build();
-        final ServiceTask<UpdateSoapOperationInput> serviceTask = new ServiceTask<UpdateSoapOperationInput>(input);
+        final ServiceTask<UpdateSoapOperationInput> serviceTask = ServiceTask.of(input, "user");
 
 
         Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(operation);

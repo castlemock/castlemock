@@ -62,7 +62,7 @@ public class ReadAllSoapEventServiceTest {
         Mockito.when(repository.findAll()).thenReturn(soapEvents);
 
         final ReadAllSoapEventInput input = ReadAllSoapEventInput.builder().build();
-        final ServiceTask<ReadAllSoapEventInput> serviceTask = new ServiceTask<ReadAllSoapEventInput>(input);
+        final ServiceTask<ReadAllSoapEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadAllSoapEventOutput> serviceResult = service.process(serviceTask);
         final ReadAllSoapEventOutput output = serviceResult.getOutput();
 

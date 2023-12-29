@@ -49,7 +49,7 @@ public class SoapMockResponse {
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
     private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpression>();
 
-    public SoapMockResponse(){
+    private SoapMockResponse(){
 
     }
 

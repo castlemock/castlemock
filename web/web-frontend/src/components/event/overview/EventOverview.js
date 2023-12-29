@@ -44,7 +44,7 @@ class EventOverview extends PureComponent {
             sort: true,
             formatter: this.nameFormat
         }, {
-            dataField: 'typeIdentifier.type',
+            dataField: 'type',
             text: 'type',
             sort: true
         }, {
@@ -78,7 +78,7 @@ class EventOverview extends PureComponent {
 
         return (
             <div className="table-link">
-                <Link to={"/web/" + row.typeIdentifier.typeUrl + "/event/" + row.id}>{cell}</Link>
+                <Link to={"/web/" + row.type + "/event/" + row.id}>{cell}</Link>
             </div>
         )
     }

@@ -21,11 +21,15 @@ import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
+import com.castlemock.model.mock.soap.domain.SoapMockResponseTestBuilder;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
+import com.castlemock.model.mock.soap.domain.SoapOperationTestBuilder;
 import com.castlemock.model.mock.soap.domain.SoapProject;
+import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.model.mock.soap.domain.SoapRequest;
 import com.castlemock.model.mock.soap.domain.SoapResource;
+import com.castlemock.model.mock.soap.domain.SoapResourceTestBuilder;
 import com.castlemock.model.mock.soap.domain.SoapResourceType;
 import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
 import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
@@ -594,78 +598,71 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
     }
 
     private SoapOperation getSoapOperationWithNoMockedResponses() {
-        final HttpHeader contentTypeHeader = new HttpHeader();
-        contentTypeHeader.setName(CONTENT_TYPE_HEADER);
-        contentTypeHeader.setValue(APPLICATION_XML);
-
-        final HttpHeader acceptHeader = new HttpHeader();
-        acceptHeader.setName(ACCEPT_HEADER);
-        acceptHeader.setValue(APPLICATION_XML);
-
-        final SoapOperation soapOperation = new SoapOperation();
-        soapOperation.setCurrentResponseSequenceIndex(0);
-        soapOperation.setForwardedEndpoint(FORWARD_ENDPOINT);
-        soapOperation.setHttpMethod(HttpMethod.GET);
-        soapOperation.setId(SOAP_OPERATION_ID);
-        soapOperation.setInvokeAddress("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH +
-                PROJECT + SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
-        soapOperation.setName("SOAP operation name");
-        soapOperation.setNetworkDelay(0L);
-        soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
-        soapOperation.setSimulateNetworkDelay(false);
-        soapOperation.setStatus(SoapOperationStatus.MOCKED);
-        soapOperation.setMockResponses(Collections.emptyList());
-        soapOperation.setMockOnFailure(false);
-
-        return soapOperation;
+        return SoapOperationTestBuilder
+                .builder()
+                .currentResponseSequenceIndex(0)
+                .forwardedEndpoint(FORWARD_ENDPOINT)
+                .httpMethod(HttpMethod.GET)
+                .id(SOAP_OPERATION_ID)
+                .invokeAddress("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH +
+                        PROJECT + SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID)
+                .name("SOAP operation name")
+                .networkDelay(0L)
+                .responseStrategy(SoapResponseStrategy.SEQUENCE)
+                .simulateNetworkDelay(false)
+                .status(SoapOperationStatus.MOCKED)
+                .mockResponses(Collections.emptyList())
+                .build();
     }
 
     private SoapOperation getSoapOperation() {
+        final HttpHeader contentTypeHeader = HttpHeader.builder()
+                .name(CONTENT_TYPE_HEADER)
+                .value(APPLICATION_XML)
+                .build();
 
-        final HttpHeader contentTypeHeader = new HttpHeader();
-        contentTypeHeader.setName(CONTENT_TYPE_HEADER);
-        contentTypeHeader.setValue(APPLICATION_XML);
-
-        final HttpHeader acceptHeader = new HttpHeader();
-        acceptHeader.setName(ACCEPT_HEADER);
-        acceptHeader.setValue(APPLICATION_XML);
+        final HttpHeader acceptHeader = HttpHeader.builder()
+                .name(ACCEPT_HEADER)
+                .value(APPLICATION_XML)
+                .build();
 
         // Mock
-        final SoapMockResponse soapMockResponse = new SoapMockResponse();
-        soapMockResponse.setBody(RESPONSE_BODY);
-        soapMockResponse.setContentEncodings(new ArrayList<>());
-        soapMockResponse.setHttpHeaders(Arrays.asList(contentTypeHeader, acceptHeader));
-        soapMockResponse.setHttpStatusCode(200);
-        soapMockResponse.setId("MockResponseId");
-        soapMockResponse.setName("Mocked response");
-        soapMockResponse.setStatus(SoapMockResponseStatus.ENABLED);
-        soapMockResponse.setUsingExpressions(false);
+        final SoapMockResponse soapMockResponse = SoapMockResponseTestBuilder.builder()
+                .id("MockResponseId")
+                .name("Mocked response")
+                .status(SoapMockResponseStatus.ENABLED)
+                .body(RESPONSE_BODY)
+                .contentEncodings(new ArrayList<>())
+                .httpHeaders(Arrays.asList(contentTypeHeader, acceptHeader))
+                .httpStatusCode(200)
+                .usingExpressions(false)
+                .build();
 
 
-        final SoapOperation soapOperation = new SoapOperation();
-        soapOperation.setCurrentResponseSequenceIndex(0);
-        soapOperation.setForwardedEndpoint(FORWARD_ENDPOINT);
-        soapOperation.setHttpMethod(HttpMethod.GET);
-        soapOperation.setId(SOAP_OPERATION_ID);
-        soapOperation.setInvokeAddress("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH +
-                PROJECT + SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
-        soapOperation.setName("SOAP operation name");
-        soapOperation.setNetworkDelay(0L);
-        soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
-        soapOperation.setSimulateNetworkDelay(false);
-        soapOperation.setStatus(SoapOperationStatus.MOCKED);
-        soapOperation.setMockResponses(Collections.singletonList(soapMockResponse));
-
-        return soapOperation;
+        return SoapOperationTestBuilder
+                .builder()
+                    .currentResponseSequenceIndex(0)
+                    .forwardedEndpoint(FORWARD_ENDPOINT)
+                    .httpMethod(HttpMethod.GET)
+                    .id(SOAP_OPERATION_ID)
+                    .invokeAddress("http://localhost:8080" + CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH +
+                                                            PROJECT + SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID)
+                    .name("SOAP operation name")
+                    .networkDelay(0L)
+                    .responseStrategy(SoapResponseStrategy.SEQUENCE)
+                    .simulateNetworkDelay(false)
+                    .status(SoapOperationStatus.MOCKED)
+                    .mockResponses(Collections.singletonList(soapMockResponse))
+                .build();
     }
 
     private SoapProject getSoapProject() {
-        final SoapProject soapProject = new SoapProject();
-        final SoapResource soapResource = new SoapResource();
-
-        soapResource.setId("Resource id");
-        soapResource.setName("wsdl");
-        soapResource.setType(SoapResourceType.WSDL);
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
+        final SoapResource soapResource = SoapResourceTestBuilder.builder()
+                .id("Resource id")
+                .name("wsdl")
+                .type(SoapResourceType.WSDL)
+                .build();
         soapProject.setResources(Collections.singletonList(soapResource));
         return soapProject;
     }

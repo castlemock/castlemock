@@ -18,6 +18,9 @@ package com.castlemock.model.core.service.event;
 
 import com.castlemock.model.core.ServiceFacade;
 import com.castlemock.model.core.event.Event;
+import com.castlemock.model.core.event.OverviewEvent;
+
+import java.util.List;
 
 /**
  * The Event service facade is used to assembly all the events service layers and interact with them
@@ -30,5 +33,7 @@ import com.castlemock.model.core.event.Event;
 public interface EventServiceFacade extends ServiceFacade<Event, String> {
 
     void clearAll();
+
+    List<OverviewEvent> findAll();
 
 }

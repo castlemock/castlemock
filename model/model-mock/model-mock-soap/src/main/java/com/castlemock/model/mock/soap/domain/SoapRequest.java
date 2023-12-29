@@ -41,7 +41,7 @@ public class SoapRequest {
     private List<HttpHeader> httpHeaders;
     private SoapOperationIdentifier operationIdentifier;
 
-    public SoapRequest(){
+    private SoapRequest(){
 
     }
 

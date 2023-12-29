@@ -16,18 +16,16 @@
 
 package com.castlemock.service.core.event;
 
-import com.castlemock.model.core.TypeIdentifiable;
-import com.castlemock.model.core.TypeIdentifier;
 import com.castlemock.model.core.event.Event;
-import com.castlemock.model.core.event.EventStartDateComparator;
+import com.castlemock.model.core.event.OverviewEvent;
 import com.castlemock.model.core.service.event.EventServiceAdapter;
 import com.castlemock.model.core.service.event.EventServiceFacade;
 import com.castlemock.service.core.ServiceFacadeImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * The Event service component is used to assembly all the events service layers and interact with them
@@ -44,33 +42,27 @@ public class EventServiceFacadeImpl extends ServiceFacadeImpl<Event, String, Eve
      * The initialize method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
      * @see com.castlemock.model.core.Service
-     * @see TypeIdentifier
-     * @see TypeIdentifiable
      */
     @Override
     public void initiate(){
-        initiate(EventServiceAdapter.class);
-    }
-
-    /**
-     * The method is responsible for retrieving all instances of events and its subclasses. The events
-     * will be sorted based on their start date. The newest will be the first object in the list and the
-     * oldest will be in the end of the list.
-     * @return A list containing all the event instances
-     * @since 1.3
-     */
-    @Override
-    public List<Event> findAll(){
-        final List<Event> events = super.findAll();
-        Collections.sort(events, new EventStartDateComparator());
-        return events;
+        super.initiate(EventServiceAdapter.class);
     }
 
     @Override
     public void clearAll(){
-        for(Map.Entry<String, EventServiceAdapter<Event>> entry : services.entrySet()){
-            EventServiceAdapter<Event> eventDtoEventServiceAdapter = entry.getValue();
-            eventDtoEventServiceAdapter.clearAll();
-        }
+        this.services.forEach(EventServiceAdapter::clearAll);
+    }
+
+    @Override
+    public List<OverviewEvent> findAll() {
+        return services.stream()
+                .map(adapter -> adapter.readAll()
+                        .stream()
+                        .map(event -> OverviewEvent.toBuilder(event)
+                                .type(adapter.getType())
+                                .build())
+                        .collect(Collectors.toList()))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 }

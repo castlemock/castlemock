@@ -18,6 +18,7 @@
 package com.castlemock.service.mock.rest.project.converter;
 
 
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 
@@ -34,13 +35,15 @@ public abstract class AbstractRestDefinitionConverter implements RestDefinitionC
      * The method generates a default response.
      * @return The newly generated {@link RestMockResponse}.
      */
-    protected RestMockResponse generateResponse(){
-        RestMockResponse restMockResponse = new RestMockResponse();
-        restMockResponse.setName(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME);
-        restMockResponse.setHttpStatusCode(DEFAULT_RESPONSE_CODE);
-        restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
-        restMockResponse.setUsingExpressions(true);
-        return restMockResponse;
+    protected RestMockResponse generateResponse(final String methodId){
+        return RestMockResponse.builder()
+                .id(IdUtility.generateId())
+                .methodId(methodId)
+                .name(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME)
+                .httpStatusCode(DEFAULT_RESPONSE_CODE)
+                .status(RestMockResponseStatus.ENABLED)
+                .usingExpressions(true)
+                .build();
     }
 
 }

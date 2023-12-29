@@ -26,6 +26,7 @@ import org.springframework.web.servlet.resource.ResourceResolverChain;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PushStateResourceResolver implements ResourceResolver {
 
@@ -36,24 +37,26 @@ public class PushStateResourceResolver implements ResourceResolver {
     @Override
     public Resource resolveResource(final HttpServletRequest request, final String requestPath, List<? extends Resource> locations,
                                     final ResourceResolverChain chain) {
-        return resolve(requestPath, locations);
+        return resolve(requestPath, locations)
+                .orElse(null);
     }
 
     @Override
     public String resolveUrlPath(final String resourcePath, List<? extends Resource> locations,
                                  final ResourceResolverChain chain) {
-        final Resource resolvedResource = resolve(resourcePath, locations);
-        if (resolvedResource == null) {
-            return null;
-        }
-        try {
-            return resolvedResource.getURL().toString();
-        } catch (IOException e) {
-            return resolvedResource.getFilename();
-        }
+        return resolve(resourcePath, locations)
+                .map(resolvedResource -> {
+                    try {
+                        return resolvedResource.getURL().toString();
+                    } catch (IOException e) {
+                        return resolvedResource.getFilename();
+                    }
+                })
+                .orElse(null);
+
     }
 
-    private Resource resolve(String requestPath, List<? extends Resource> locations) {
+    private Optional<Resource> resolve(String requestPath, List<? extends Resource> locations) {
         if(requestPath.startsWith("web/")){
             requestPath = requestPath.replace("web/", "");
         }
@@ -61,24 +64,24 @@ public class PushStateResourceResolver implements ResourceResolver {
         final String fixedRequestPath = requestPath;
 
         if (isIgnored(requestPath)) {
-            return null;
+            return Optional.empty();
         }
         if (isHandled(requestPath)) {
             return locations.stream()
                     .map(loc -> createRelative(loc, fixedRequestPath))
-                    .filter(resource -> resource != null && resource.exists())
-                    .findFirst()
-                    .orElse(null);
+                    .flatMap(Optional::stream)
+                    .filter(Resource::exists)
+                    .findFirst();
         }
-        return INDEX;
+        return Optional.of(INDEX);
     }
 
-    private Resource createRelative(final Resource resource, final String relativePath) {
+    private Optional<Resource> createRelative(final Resource resource, final String relativePath) {
         try {
             final Resource relativtResource = resource.createRelative(relativePath);
-            return relativtResource;
+            return Optional.of(relativtResource);
         } catch (IOException e) {
-            return null;
+            return Optional.empty();
         }
     }
 

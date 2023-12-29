@@ -53,7 +53,7 @@ public class ClearAllSoapEventServiceTest {
     @Test
     public void testProcess(){
         final ClearAllSoapEventInput input = ClearAllSoapEventInput.builder().build();
-        final ServiceTask<ClearAllSoapEventInput> serviceTask = new ServiceTask<ClearAllSoapEventInput>(input);
+        final ServiceTask<ClearAllSoapEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ClearAllSoapEventOutput> serviceResult = service.process(serviceTask);
         final ClearAllSoapEventOutput output = serviceResult.getOutput();
 

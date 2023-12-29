@@ -22,6 +22,7 @@ import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.repository.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RestResourceRepository extends Repository<RestResource, String> {
 
@@ -60,7 +61,7 @@ public interface RestResourceRepository extends Repository<RestResource, String>
      * @see RestApplication
      * @see RestResource
      */
-    RestResource findRestResourceByUri(String applicationId, String resourceUri);
+    Optional<RestResource> findRestResourceByUri(String applicationId, String resourceUri);
 
     /**
      * Retrieve the {@link com.castlemock.model.mock.rest.domain.RestApplication} id
@@ -69,6 +70,6 @@ public interface RestResourceRepository extends Repository<RestResource, String>
      * @return The id of the application.
      * @since 1.20
      */
-    String getApplicationId(String resourceId);
+    Optional<String> getApplicationId(String resourceId);
 
 }

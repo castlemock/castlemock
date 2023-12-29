@@ -77,7 +77,7 @@ public class CreateRestMockResponseServiceTest {
                 .usingExpressions(mockResponse.isUsingExpressions())
                 .xpathExpressions(mockResponse.getXpathExpressions())
                 .build();
-        final ServiceTask<CreateRestMockResponseInput> serviceTask = new ServiceTask<CreateRestMockResponseInput>(input);
+        final ServiceTask<CreateRestMockResponseInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestMockResponseOutput> serviceResult = service.process(serviceTask);
 
         Assert.assertNotNull(serviceResult.getOutput());

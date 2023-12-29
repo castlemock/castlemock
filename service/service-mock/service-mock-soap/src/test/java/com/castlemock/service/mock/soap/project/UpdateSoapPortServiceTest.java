@@ -58,7 +58,7 @@ public class UpdateSoapPortServiceTest {
                 .portId(port.getId())
                 .uri(newUri)
                 .build();
-        final ServiceTask<UpdateSoapPortInput> serviceTask = new ServiceTask<UpdateSoapPortInput>(input);
+        final ServiceTask<UpdateSoapPortInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(soapPortRepository.findOne(port.getId())).thenReturn(port);
         Mockito.when(soapPortRepository.update(Mockito.anyString(), Mockito.any(SoapPort.class))).thenReturn(port);

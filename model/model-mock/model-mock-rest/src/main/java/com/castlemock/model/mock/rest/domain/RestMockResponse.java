@@ -50,18 +50,18 @@ public class RestMockResponse {
     private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpression>();
     private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<RestHeaderQuery>();
 
-    public RestMockResponse(){
+    private RestMockResponse(){
 
     }
 
     private RestMockResponse(final Builder builder){
-        this.id = builder.id;
-        this.name = Objects.requireNonNull(builder.name);
-        this.body = Objects.requireNonNull(builder.body);
-        this.methodId = Objects.requireNonNull(builder.methodId);
-        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
-        this.status = Objects.requireNonNull(builder.status);
-        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.body = builder.body;
+        this.methodId = Objects.requireNonNull(builder.methodId, "methodId");
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
         this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
         this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
         this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(CopyOnWriteArrayList::new);

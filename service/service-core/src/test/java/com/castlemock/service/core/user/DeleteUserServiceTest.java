@@ -55,16 +55,16 @@ public class DeleteUserServiceTest {
 
     @Test
     public void testProcess(){
-        User user = new User();
-        user.setRole(Role.MODIFIER);
+        final User user = UserTestBuilder.builder()
+                .role(Role.MODIFIER)
+                .build();
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
 
         final DeleteUserInput input = DeleteUserInput.builder()
                 .userId("")
                 .build();
-        final ServiceTask<DeleteUserInput> serviceTask = new ServiceTask<DeleteUserInput>();
-        serviceTask.setInput(input);
+        final ServiceTask<DeleteUserInput> serviceTask = ServiceTask.of(input, "user");
         service.process(serviceTask);
         Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
     }
@@ -85,8 +85,7 @@ public class DeleteUserServiceTest {
         final DeleteUserInput input = DeleteUserInput.builder()
                 .userId("")
                 .build();
-        final ServiceTask<DeleteUserInput> serviceTask = new ServiceTask<DeleteUserInput>();
-        serviceTask.setInput(input);
+        final ServiceTask<DeleteUserInput> serviceTask = ServiceTask.of(input, "user");
         service.process(serviceTask);
         Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
     }

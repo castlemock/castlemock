@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,7 +45,7 @@ public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter
      * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplication> convert(final File file, final boolean generateResponse){
+    public List<RestApplication> convert(final File file, final String projectId, final boolean generateResponse){
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(file);
         return convert(ramlModelResult, generateResponse);
     }
@@ -59,7 +58,7 @@ public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter
      * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplication> convert(final String location, final boolean generateResponse){
+    public List<RestApplication> convert(final String location, final String projectId, final boolean generateResponse){
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(location);
         return convert(ramlModelResult, generateResponse);
     }
@@ -91,12 +90,12 @@ public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter
                 new RAML10Parser().getResources(api.resources(), restResources, "", generateResponse);
             }
 
-            RestApplication restApplication = new RestApplication();
-            restApplication.setName(title);
-            restApplication.setResources(restResources);
+            final RestApplication restApplication = RestApplication.builder()
+                    .name(title)
+                    .resources(restResources)
+                    .build();
 
-
-            return Arrays.asList(restApplication);
+            return List.of(restApplication);
         } catch (final Exception exception) {
             LOGGER.error("Unable to convert RAML into a REST application: " + exception.getMessage(), exception);
             throw exception;

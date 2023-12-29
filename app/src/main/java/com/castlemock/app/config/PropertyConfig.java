@@ -6,7 +6,6 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource({
         "classpath:file-repository.properties",
-        "classpath:mongodb-repository.properties",
         "classpath:spring.properties",
         "classpath:swagger.properties",
         "classpath:version.properties",

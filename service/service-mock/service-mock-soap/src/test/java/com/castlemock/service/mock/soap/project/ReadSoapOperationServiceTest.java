@@ -18,7 +18,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class ReadSoapOperationServiceTest {
 
@@ -48,10 +49,10 @@ public class ReadSoapOperationServiceTest {
                 .portId(portId)
                 .operationId(operation.getId())
                 .build();
-        final ServiceTask<ReadSoapOperationInput> serviceTask = new ServiceTask<ReadSoapOperationInput>(input);
+        final ServiceTask<ReadSoapOperationInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(operation);
-        Mockito.when(mockResponseRepository.findWithOperationId(operation.getId())).thenReturn(Arrays.asList(mockResponse));
+        Mockito.when(mockResponseRepository.findWithOperationId(operation.getId())).thenReturn(Collections.singletonList(mockResponse));
         final ServiceResult<ReadSoapOperationOutput> result = service.process(serviceTask);
 
         Mockito.verify(operationRepository, Mockito.times(1)).findOne(operation.getId());
@@ -59,7 +60,7 @@ public class ReadSoapOperationServiceTest {
 
         Assert.assertNotNull(result.getOutput());
         Assert.assertEquals(operation, result.getOutput().getOperation());
-        Assert.assertEquals(operation.getDefaultResponseName(), null);
+        Assert.assertNull(operation.getDefaultResponseName());
     }
 
     @Test
@@ -76,10 +77,10 @@ public class ReadSoapOperationServiceTest {
                 .portId(portId)
                 .operationId(operation.getId())
                 .build();
-        final ServiceTask<ReadSoapOperationInput> serviceTask = new ServiceTask<ReadSoapOperationInput>(input);
+        final ServiceTask<ReadSoapOperationInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(operation);
-        Mockito.when(mockResponseRepository.findWithOperationId(operation.getId())).thenReturn(Arrays.asList(mockResponse));
+        Mockito.when(mockResponseRepository.findWithOperationId(operation.getId())).thenReturn(List.of(mockResponse));
         final ServiceResult<ReadSoapOperationOutput> result = service.process(serviceTask);
 
         Mockito.verify(operationRepository, Mockito.times(1)).findOne(operation.getId());

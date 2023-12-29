@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Profile(Profiles.FILE)
@@ -172,16 +173,14 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      * @see RestResource
      */
     @Override
-    public RestResource findRestResourceByUri(String applicationId, String resourceUri) {
+    public Optional<RestResource> findRestResourceByUri(String applicationId, String resourceUri) {
         for(RestResourceFile resourceFile : this.collection.values()){
             if(resourceFile.getApplicationId().equals(applicationId) &&
                     resourceUri.equalsIgnoreCase(resourceFile.getUri())){
-                RestResource resource = this.mapper.map(resourceFile, RestResource.class);
-                return resource;
-
+                return Optional.ofNullable(this.mapper.map(resourceFile, RestResource.class));
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -193,13 +192,9 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      * @since 1.20
      */
     @Override
-    public String getApplicationId(String resourceId) {
-        final RestResourceFile resourceFile = this.collection.get(resourceId);
-
-        if(resourceFile == null){
-            throw new IllegalArgumentException("Unable to find a resource with the following id: " + resourceId);
-        }
-        return resourceFile.getApplicationId();
+    public Optional<String> getApplicationId(String resourceId) {
+        return Optional.ofNullable(this.collection.get(resourceId))
+                .map(RestResourceFile::getApplicationId);
     }
 
     @XmlRootElement(name = "restResource")

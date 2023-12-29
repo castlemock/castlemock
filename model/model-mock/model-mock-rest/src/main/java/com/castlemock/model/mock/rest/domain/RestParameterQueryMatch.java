@@ -10,7 +10,7 @@ public class RestParameterQueryMatch {
     private RestParameterQuery query;
     private String match;
 
-    public RestParameterQueryMatch(){
+    private RestParameterQueryMatch(){
 
     }
 

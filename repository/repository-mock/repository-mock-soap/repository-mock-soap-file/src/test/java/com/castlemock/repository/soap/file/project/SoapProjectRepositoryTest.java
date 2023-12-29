@@ -59,8 +59,8 @@ public class SoapProjectRepositoryTest {
 
     @Test
     public void testInitialize(){
-        List<SoapProject> soapProjects = new ArrayList<SoapProject>();
-        SoapProject soapProject = SoapProjectTestBuilder.builder().build();;
+        final List<SoapProject> soapProjects = new ArrayList<SoapProject>();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();;
         soapProjects.add(soapProject);
         Mockito.when(fileRepositorySupport.load(SoapProject.class, DIRECTORY, EXTENSION)).thenReturn(soapProjects);
         repository.initialize();
@@ -74,7 +74,6 @@ public class SoapProjectRepositoryTest {
         Assert.assertEquals(returnedSoapEvent.getId(), soapProject.getId());
         Assert.assertEquals(returnedSoapEvent.getName(), soapProject.getName());
         Assert.assertEquals(returnedSoapEvent.getDescription(), soapProject.getDescription());
-        Assert.assertEquals(returnedSoapEvent.getTypeIdentifier(), soapProject.getTypeIdentifier());
     }
 
     @Test
@@ -82,10 +81,9 @@ public class SoapProjectRepositoryTest {
         final SoapProject soapProject = save();
         final List<SoapProject> soapProjects = repository.findAll();
         Assert.assertEquals(soapProjects.size(), 1);
-        Assert.assertEquals(soapProjects.get(0).getId(), soapProject.getId());
-        Assert.assertEquals(soapProjects.get(0).getName(), soapProject.getName());
-        Assert.assertEquals(soapProjects.get(0).getDescription(), soapProject.getDescription());
-        Assert.assertEquals(soapProjects.get(0).getTypeIdentifier(), soapProject.getTypeIdentifier());
+        Assert.assertEquals(soapProjects.getFirst().getId(), soapProject.getId());
+        Assert.assertEquals(soapProjects.getFirst().getName(), soapProject.getName());
+        Assert.assertEquals(soapProjects.getFirst().getDescription(), soapProject.getDescription());
     }
 
     @Test
@@ -109,7 +107,7 @@ public class SoapProjectRepositoryTest {
     }
 
     private SoapProject save(){
-        SoapProject soapProject = SoapProjectTestBuilder.builder().build();;
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();;
         repository.save(soapProject);
         return soapProject;
     }

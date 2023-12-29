@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core.utility.parser.expression.argument;
 
+import java.util.Objects;
+
 /**
  * The {@link ExpressionArgument} represent an argument for an
  * {@link com.castlemock.model.core.utility.parser.expression.Expression} and
@@ -39,7 +41,7 @@ public abstract class ExpressionArgument<V> {
      * @param value The value that the argument will contain.
      */
     public ExpressionArgument(final V value) {
-        this.value = value;
+        this.value = Objects.requireNonNull(value);
     }
 
     /**

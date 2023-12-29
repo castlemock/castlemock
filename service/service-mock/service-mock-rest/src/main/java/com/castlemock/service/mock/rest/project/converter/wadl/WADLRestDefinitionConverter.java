@@ -18,6 +18,7 @@
 package com.castlemock.service.mock.rest.project.converter.wadl;
 
 import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.rest.domain.RestApplication;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodStatus;
@@ -44,6 +45,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * The {@link WADLRestDefinitionConverter} class provides functionality related to WADL.
@@ -67,7 +69,7 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
      * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplication> convert(final File file, final boolean generateResponse){
+    public List<RestApplication> convert(final File file, final String projectId, final boolean generateResponse){
         List<RestApplication> applications = new LinkedList<RestApplication>();
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -80,16 +82,22 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
             for(Element applicationElement : applicationElements){
                 final String applicationName = file.getName().replace(".wadl", "");
                 final Optional<String> baseUri = getResourceBase(applicationElement);
-                final RestApplication restApplication = new RestApplication();
-                restApplication.setName(applicationName);
+                final RestApplication restApplication = RestApplication.builder()
+                        .name(applicationName)
+                        .id(IdUtility.generateId())
+                        .projectId(projectId)
+                        .build();
                 applications.add(restApplication);
 
                 final List<Element> resourceElements = getResources(applicationElement);
                 for(Element resourceElement : resourceElements){
                     final String resourceName = resourceElement.getAttribute("path");
-                    final RestResource restResource = new RestResource();
-                    restResource.setName(resourceName);
-                    restResource.setUri(baseUri.orElse("") + resourceName);
+                    final RestResource restResource = RestResource.builder()
+                            .id(IdUtility.generateId())
+                            .applicationId(restApplication.getId())
+                            .name(resourceName)
+                            .uri(baseUri.orElse("") + resourceName)
+                            .build();
                     restApplication.getResources().add(restResource);
 
                     final List<Element> methodElements = getMethods(resourceElement);
@@ -97,20 +105,23 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
                         final String methodName = methodElement.getAttribute("id");
                         final String methodType = methodElement.getAttribute("name");
 
-                        final RestMethod restMethod = new RestMethod();
-                        restMethod.setName(methodName);
-                        restMethod.setHttpMethod(HttpMethod.valueOf(methodType));
-                        restMethod.setStatus(RestMethodStatus.MOCKED);
-                        restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
-                        restMethod.setMockResponses(new ArrayList<RestMockResponse>());
-
-
+                        final List<RestMockResponse> mockResponses = new ArrayList<>();
+                        final String methodId = UUID.randomUUID().toString();
                         if(generateResponse){
-                            RestMockResponse restMockResponse = generateResponse();
-                            restMethod.getMockResponses().add(restMockResponse);
+                            mockResponses.add(generateResponse(methodId));
                         }
 
-                        restResource.getMethods().add(restMethod);
+                        restResource.getMethods().add(RestMethod.builder()
+                                .id(methodId)
+                                .resourceId(restResource.getId())
+                                .name(methodName)
+                                .httpMethod(HttpMethod.valueOf(methodType))
+                                .status(RestMethodStatus.MOCKED)
+                                .responseStrategy(RestResponseStrategy.RANDOM)
+                                .mockResponses(mockResponses)
+                                .simulateNetworkDelay(false)
+                                .automaticForward(false)
+                                .build());
                     }
                 }
             }
@@ -131,6 +142,7 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
      */
     @Override
     public List<RestApplication> convert(final String location,
+                                         final String projectId,
                                          boolean generateResponse) {
 
         final List<RestApplication> restApplications = new ArrayList<>();
@@ -139,7 +151,7 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
             files = fileManager.uploadFiles(location);
 
             for(File file : files){
-                List<RestApplication> convertedRestApplications = convert(file, generateResponse);
+                List<RestApplication> convertedRestApplications = convert(file, projectId, generateResponse);
                 restApplications.addAll(convertedRestApplications);
             }
         } catch (IOException | URISyntaxException e) {
@@ -196,13 +208,13 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
         return DocumentUtility.getElement(applicationElement, "resources")
                 .map(resourcesElement -> resourcesElement.getAttribute("base"))
                 .filter(resourceBase -> !resourceBase.isEmpty())
-                .map(resourceBase -> {
+                .flatMap(resourceBase -> {
                     try {
                         final URL url = new URI(resourceBase).toURL();
-                        return url.getPath();
+                        return Optional.of(url.getPath());
                     } catch (MalformedURLException | URISyntaxException e) {
                         LOGGER.error("Unable to create an URL for the following URL " + resourceBase);
-                        return null;
+                        return Optional.empty();
                     }
                 });
     }

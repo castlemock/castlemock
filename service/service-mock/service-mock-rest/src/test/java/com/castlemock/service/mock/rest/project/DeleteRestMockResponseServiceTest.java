@@ -66,7 +66,7 @@ public class DeleteRestMockResponseServiceTest {
                         .restMethodId(methodId)
                         .restMockResponseId(mockResponseId)
                         .build();
-        final ServiceTask<DeleteRestMockResponseInput> serviceTask = new ServiceTask<DeleteRestMockResponseInput>(input);
+        final ServiceTask<DeleteRestMockResponseInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<DeleteRestMockResponseOutput> serviceResult = service.process(serviceTask);
 
         Mockito.verify(mockResponseRepository, Mockito.times(1)).delete(mockResponseId);

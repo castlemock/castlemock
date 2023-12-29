@@ -25,7 +25,7 @@ public class RestJsonPathExpression {
 
     private String expression;
 
-    public RestJsonPathExpression(){
+    private RestJsonPathExpression(){
 
     }
 

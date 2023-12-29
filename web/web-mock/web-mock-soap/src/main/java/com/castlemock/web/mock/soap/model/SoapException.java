@@ -33,10 +33,18 @@ public class SoapException extends RuntimeException {
 
     /**
      * The default constructor for the SoapException class
-     * @param message The exception message
+     * @param exception The exception name
      */
-    public SoapException(String message) {
-        super(message);
+    public SoapException(final String exception) {
+        super(exception);
+    }
+
+    /**
+     * The default constructor for the SoapException class
+     * @param exception The exception
+     */
+    public SoapException(final Exception exception) {
+        super(exception);
     }
 
 }

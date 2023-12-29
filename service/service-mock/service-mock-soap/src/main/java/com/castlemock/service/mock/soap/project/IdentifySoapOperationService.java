@@ -45,14 +45,11 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
     @Override
     public ServiceResult<IdentifySoapOperationOutput> process(final ServiceTask<IdentifySoapOperationInput> serviceTask) {
         final IdentifySoapOperationInput input = serviceTask.getInput();
-        final SoapPort port = this.portRepository.findWithUri(input.getProjectId(), input.getUri());
-        final SoapOperation operation =
-                this.operationRepository.findWithMethodAndVersionAndIdentifier(
-                        port.getId(), input.getHttpMethod(),
-                        input.getType(), input.getOperationIdentifier());
-        if(operation == null){
-            throw new IllegalArgumentException("Unable to identify SOAP operation: " + input.getUri());
-        }
+        final SoapPort port = this.portRepository.findWithUri(input.getProjectId(), input.getUri())
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find port with the following URI: " + input.getUri()));
+        final SoapOperation operation = this.operationRepository.findWithMethodAndVersionAndIdentifier(
+                        port.getId(), input.getHttpMethod(), input.getType(), input.getOperationIdentifier())
+                .orElseThrow(() -> new IllegalArgumentException("Unable to identify SOAP operation: " + input.getUri()));
 
         final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(operation.getId());
         operation.setMockResponses(mockResponses);

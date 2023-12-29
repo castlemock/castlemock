@@ -18,6 +18,7 @@ package com.castlemock.service.mock.rest.project.converter.swagger;
 
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.core.utility.file.FileUtility;
 import com.castlemock.model.core.utility.parser.expression.Expression;
 import com.castlemock.model.core.utility.parser.expression.ExpressionInput;
@@ -90,9 +91,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * The {@link SwaggerRestDefinitionConverter} provides Swagger related functionality.
@@ -115,10 +117,10 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplication> convert(final File file, final boolean generateResponse){
+    public List<RestApplication> convert(final File file, final String projectId, final boolean generateResponse){
         final String swaggerContent = FileUtility.getFileContent(file);
         final Swagger swagger = new SwaggerParser().parse(swaggerContent);
-        final RestApplication restApplication = convertSwagger(swagger, generateResponse);
+        final RestApplication restApplication = convertSwagger(swagger, projectId, generateResponse);
         return Arrays.asList(restApplication);
     }
 
@@ -130,9 +132,9 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @return A list of {@link RestApplication} based on the provided file.
      */
     @Override
-    public List<RestApplication> convert(final String location, final boolean generateResponse){
+    public List<RestApplication> convert(final String location, final String projectId, final boolean generateResponse){
         final Swagger swagger = new SwaggerParser().read(location);
-        final RestApplication restApplication = convertSwagger(swagger, generateResponse);
+        final RestApplication restApplication = convertSwagger(swagger, projectId, generateResponse);
         return Arrays.asList(restApplication);
     }
 
@@ -152,61 +154,75 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
      * @return A {@link RestApplication} based on the provided Swagger content.
      */
-    private RestApplication convertSwagger(final Swagger swagger, final boolean generateResponse){
+    private RestApplication convertSwagger(final Swagger swagger, final String projectId, final boolean generateResponse){
 
         if(swagger == null){
             throw new IllegalArgumentException("Unable to parse the Swagger content.");
         }
 
-        final RestApplication restApplication = new RestApplication();
-        restApplication.setName(this.getApplicationName(swagger));
-
         final String forwardAddress = getForwardAddress(swagger);
         final Map<String, Model> definitions = swagger.getDefinitions();
 
+        final List<RestResource> resources = new ArrayList<>();
+        final String applicationId = UUID.randomUUID().toString();
         for(Map.Entry<String, Path> pathEntry : swagger.getPaths().entrySet()){
             final String resourceName = pathEntry.getKey();
             final Path resourcePath = pathEntry.getValue();
-            final RestResource restResource = new RestResource();
+            final String resourceId = UUID.randomUUID().toString();
 
-            restResource.setName(resourceName);
-            restResource.setUri(resourceName);
-
+            final List<RestMethod> methods = new ArrayList<>();
             if(resourcePath.getGet() != null){
                 Operation operation = resourcePath.getGet();
-                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.GET, forwardAddress, generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.GET, forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
             if(resourcePath.getPost() != null){
                 Operation operation = resourcePath.getPost();
-                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.POST, forwardAddress, generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.POST,
+                        forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
             if(resourcePath.getPut() != null){
                 Operation operation = resourcePath.getPut();
-                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.PUT, forwardAddress, generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.PUT,
+                        forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
             if(resourcePath.getDelete() != null){
                 Operation operation = resourcePath.getDelete();
-                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.DELETE, forwardAddress, generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.DELETE,
+                        forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
             if(resourcePath.getHead() != null){
                 Operation operation = resourcePath.getHead();
-                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.HEAD, forwardAddress, generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.HEAD,
+                        forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
             if(resourcePath.getOptions() != null){
                 Operation operation = resourcePath.getOptions();
-                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.OPTIONS, forwardAddress, generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, definitions, HttpMethod.OPTIONS,
+                        forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
 
-            restApplication.getResources().add(restResource);
+            resources.add(RestResource.builder()
+                    .id(resourceId)
+                    .applicationId(applicationId)
+                    .name(resourceName)
+                    .uri(resourceName)
+                    .methods(methods)
+                    .invokeAddress("")
+                    .build());
         }
 
-        return restApplication;
+        return RestApplication.builder()
+                .id(applicationId)
+                .projectId(projectId)
+                .name(this.getApplicationName(swagger))
+                .resources(resources)
+                .build();
     }
 
 
@@ -237,8 +253,8 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      */
     private RestMethod createRestMethod(final Operation operation, final Map<String, Model> definitions,
                                         final HttpMethod httpMethod, final String forwardAddress,
+                                        final String resourceId,
                                         final boolean generateResponse){
-        final RestMethod restMethod = new RestMethod();
 
         String methodName;
         if(operation.getOperationId() != null){
@@ -249,23 +265,31 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             methodName = httpMethod.name();
         }
 
-        restMethod.setHttpMethod(httpMethod);
-        restMethod.setName(methodName);
-        restMethod.setStatus(RestMethodStatus.MOCKED);
-        restMethod.setResponseStrategy(RestResponseStrategy.SEQUENCE);
-        restMethod.setForwardedEndpoint(forwardAddress);
-
+        final String methodId = UUID.randomUUID().toString();
+        List<RestMockResponse> mockResponses = List.of();
         if(generateResponse){
             if(!operation.getResponses().isEmpty()){
-                Collection<RestMockResponse> mockResponses = generateResponse(operation.getResponses(), definitions, operation.getProduces());
-                restMethod.getMockResponses().addAll(mockResponses);
+                mockResponses = new ArrayList<>(generateResponse(operation.getResponses(), definitions, methodId, operation.getProduces()));
             } else {
-                RestMockResponse generatedResponse = generateResponse();
-                restMethod.getMockResponses().add(generatedResponse);
+                RestMockResponse generatedResponse = generateResponse(methodId);
+                mockResponses = List.of(generatedResponse);
             }
         }
 
-        return restMethod;
+        return RestMethod.builder()
+                .id(methodId)
+                .resourceId(resourceId)
+                .name(methodName)
+                .httpMethod(httpMethod)
+                .status(RestMethodStatus.MOCKED)
+                .responseStrategy(RestResponseStrategy.SEQUENCE)
+                .forwardedEndpoint(forwardAddress)
+                .mockResponses(mockResponses)
+                .simulateNetworkDelay(false)
+                .networkDelay(0L)
+                .automaticForward(false)
+                .build();
+
     }
 
     /**
@@ -275,6 +299,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      */
     private Collection<RestMockResponse> generateResponse(final Map<String,Response> responses,
                                                           final Map<String, Model> definitions,
+                                                          final String methodId,
                                                           final List<String> produces){
         if(produces == null){
             return Collections.emptyList();
@@ -287,7 +312,8 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             for(String produce : produces){
                 String body = null;
                 if(APPLICATION_XML.equalsIgnoreCase(produce)){
-                    body = generateXmlBody(response, definitions);
+                    body = generateXmlBody(response, definitions)
+                            .orElse(null);
                 } else if(APPLICATION_JSON.equalsIgnoreCase(produce)){
                     body = generateJsonBody(response, definitions);
                 }
@@ -299,19 +325,20 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             int httpStatusCode = extractHttpStatusCode(responseEntry.getKey());
 
             if(bodies.isEmpty()){
-                RestMockResponse restMockResponse = generateResponse(httpStatusCode, response);
+                RestMockResponse restMockResponse = generateResponse(httpStatusCode, methodId, response);
                 mockResponses.add(restMockResponse);
             } else {
                 for(Map.Entry<String, String> bodyEntry : bodies.entrySet()){
-                    String contentType = bodyEntry.getKey();
-                    String body = bodyEntry.getValue();
-                    RestMockResponse restMockResponse = generateResponse(httpStatusCode, response);
+                    final String contentType = bodyEntry.getKey();
+                    final String body = bodyEntry.getValue();
+                    final RestMockResponse restMockResponse = generateResponse(httpStatusCode,methodId, response);
                     restMockResponse.setName(restMockResponse.getName() + " (" + contentType + ")");
                     restMockResponse.setBody(body);
 
-                    HttpHeader httpHeader = new HttpHeader();
-                    httpHeader.setName(CONTENT_TYPE);
-                    httpHeader.setValue(contentType);
+                    final HttpHeader httpHeader = HttpHeader.builder()
+                            .name(CONTENT_TYPE)
+                            .value(contentType)
+                            .build();
                     restMockResponse.getHttpHeaders().add(httpHeader);
                     mockResponses.add(restMockResponse);
                 }
@@ -329,27 +356,36 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param response The Swagger response that the mocked response will be based on.
      * @return A new {@link RestMockResponse} based on the provided {@link Response}.
      */
-    private RestMockResponse generateResponse(final int httpStatusCode, final Response response){
-        RestMockResponse restMockResponse = new RestMockResponse();
-        restMockResponse.setName(response.getDescription());
-        restMockResponse.setHttpStatusCode(httpStatusCode);
-        restMockResponse.setUsingExpressions(true);
+    private RestMockResponse generateResponse(final int httpStatusCode, final String methodId, final Response response){
+
+        final RestMockResponseStatus status;
         if(httpStatusCode == DEFAULT_RESPONSE_CODE){
-            restMockResponse.setStatus(RestMockResponseStatus.ENABLED);
+            status = RestMockResponseStatus.ENABLED;
         } else {
-            restMockResponse.setStatus(RestMockResponseStatus.DISABLED);
+            status = RestMockResponseStatus.DISABLED;
         }
 
+        final List<HttpHeader> headers = new ArrayList<>();
         if(response.getHeaders() != null){
             for(Map.Entry<String, Property> headerEntry : response.getHeaders().entrySet()){
-                String headerName = headerEntry.getKey();
-                HttpHeader httpHeader = new HttpHeader();
-                httpHeader.setName(headerName);
+                final String headerName = headerEntry.getKey();
+                final HttpHeader httpHeader = HttpHeader.builder()
+                        .name(headerName)
+                        .value("")
+                        .build();
                 // Swagger does not include an example value for the response.
-                restMockResponse.getHttpHeaders().add(httpHeader);
+                headers.add(httpHeader);
             }
         }
-        return restMockResponse;
+        return RestMockResponse.builder()
+                .id(IdUtility.generateId())
+                .methodId(methodId)
+                .name(response.getDescription())
+                .httpStatusCode(httpStatusCode)
+                .usingExpressions(true)
+                .status(status)
+                .httpHeaders(headers)
+                .build();
     }
 
 
@@ -362,11 +398,11 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @since 1.13
      */
     @SuppressWarnings("deprecation")
-    private String generateXmlBody(final Response response, final Map<String, Model> definitions){
+    private Optional<String> generateXmlBody(final Response response, final Map<String, Model> definitions){
         // TODO Investigate deprecated schema
         final Property schema = response.getSchema();
         if(schema == null){
-            return null;
+            return Optional.empty();
         }
 
         final StringWriter stringWriter = new StringWriter();
@@ -374,8 +410,8 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             final DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             final DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             final Document document = docBuilder.newDocument();
-            final Element root = getXmlElement(null, schema, definitions, document);
-            document.appendChild(root);
+            getXmlElement(null, schema, definitions, document)
+                    .ifPresent(document::appendChild);
 
             final TransformerFactory transformerFactory = TransformerFactory.newInstance();
             final Transformer transformer = transformerFactory.newTransformer();
@@ -383,12 +419,12 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
 
             final StreamResult result = new StreamResult(stringWriter);
             transformer.transform(source, result);
-            return stringWriter.toString();
+            return Optional.of(stringWriter.toString());
         } catch (Exception e){
             LOGGER.error("Unable to generate a XML response body", e);
         }
 
-        return stringWriter.toString();
+        return Optional.of(stringWriter.toString());
     }
 
     /**
@@ -400,44 +436,41 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @return An {@link Element}  based on the provided {@link Property}.
      * @since 1.13
      */
-    private Element getXmlElement(String name, final Property property, final Map<String, Model> definitions,
+    private Optional<Element> getXmlElement(String name, final Property property, final Map<String, Model> definitions,
                                   final Document document) {
         Element element = null;
         if(name == null){
             name = property.getType();
         }
 
-        if(property instanceof RefProperty){
-            final RefProperty refProperty = (RefProperty) property;
+        if(property instanceof RefProperty refProperty){
             final String simpleRef = refProperty.getSimpleRef();
             final Model model = definitions.get(simpleRef);
 
             if(model == null){
                 LOGGER.warn("Unable to find the following definition in the Swagger file: " + simpleRef);
-                return null;
+                return Optional.empty();
             }
             element = getXmlElement(model, definitions, document);
-        } else if(property instanceof ArrayProperty){
-            final ArrayProperty arrayProperty = (ArrayProperty) property;
+        } else if(property instanceof ArrayProperty arrayProperty){
             final Property item = arrayProperty.getItems();
             final int maxItems = getMaxItems(arrayProperty.getMaxItems());
             element = document.createElement(name);
             for(int index = 0; index < maxItems; index++){
-                Element child = getXmlElement(name, item, definitions, document);
-                element.appendChild(child);
+                getXmlElement(name, item, definitions, document)
+                        .ifPresent(element::appendChild);
             }
         } else {
-            String expression = getExpressionIdentifier(property);
+            final String expression = getExpressionIdentifier(property)
+                    .orElse(null);
             element = document.createElement(name);
             if(expression != null){
-                Text text = document.createTextNode(expression);
+                final Text text = document.createTextNode(expression);
                 element.appendChild(text);
-            } else {
-
             }
         }
 
-        return element;
+        return Optional.of(element);
     }
 
     /**
@@ -471,8 +504,8 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             final Property item = arrayModel.getItems();
             final int maxItems = getMaxItems(arrayModel.getMaxItems());
             for(int index = 0; index < maxItems; index++){
-                Element child = getXmlElement(arrayModel.getType(), item, definitions, document);
-                element.appendChild(child);
+                getXmlElement(arrayModel.getType(), item, definitions, document)
+                        .ifPresent(element::appendChild);
             }
         } else if(model instanceof RefModel){
             final RefModel refModel = (RefModel) model;
@@ -484,8 +517,8 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
 
         if(model.getProperties() != null){
             for(Map.Entry<String, Property> property : model.getProperties().entrySet()){
-                Element subElement = getXmlElement(property.getKey(), property.getValue(), definitions, document);
-                element.appendChild(subElement);
+                getXmlElement(property.getKey(), property.getValue(), definitions, document)
+                        .ifPresent(element::appendChild);
             }
         }
 
@@ -569,7 +602,8 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             }
             generator.writeEndArray();
         } else {
-            String expression = getExpressionIdentifier(property);
+            String expression = getExpressionIdentifier(property)
+                    .orElse(null);
 
             if(expression != null){
                 generator.writeObject(expression);
@@ -626,24 +660,21 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @see Expression
      * @see 1.13
      */
-    private String getExpressionIdentifier(final Property property){
+    private Optional<String> getExpressionIdentifier(final Property property){
         ExpressionInput expressionInput = null;
         if(property instanceof IntegerProperty){
             expressionInput = new ExpressionInput(RandomIntegerExpression.IDENTIFIER);
         } else if(property instanceof LongProperty) {
             expressionInput = new ExpressionInput(RandomLongExpression.IDENTIFIER);
-        } else if(property instanceof StringProperty){
-            final StringProperty stringProperty = (StringProperty) property;
+        } else if(property instanceof StringProperty stringProperty){
             final List<String> enumValues = stringProperty.getEnum();
 
             if(enumValues == null || enumValues.isEmpty()){
                 expressionInput = new ExpressionInput(RandomStringExpression.IDENTIFIER);
             } else {
                 expressionInput = new ExpressionInput(RandomEnumExpression.IDENTIFIER);
-                ExpressionArgumentArray arrayArgument = new ExpressionArgumentArray();
-                final Iterator<String> enumIterator = enumValues.iterator();
-                while(enumIterator.hasNext()){
-                    String enumValue = enumIterator.next();
+                final ExpressionArgumentArray arrayArgument = new ExpressionArgumentArray();
+                for (String enumValue : enumValues) {
                     ExpressionArgumentString expressionArgumentString = new ExpressionArgumentString(enumValue);
                     arrayArgument.addArgument(expressionArgumentString);
                 }
@@ -668,10 +699,10 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             expressionInput = new ExpressionInput(RandomPasswordExpression.IDENTIFIER);
         } else {
             LOGGER.warn("Unsupported property type: " + property.getClass().getSimpleName());
-            return null;
+            return Optional.empty();
         }
 
-        return ExpressionInputParser.convert(expressionInput);
+        return Optional.of(ExpressionInputParser.convert(expressionInput));
     }
 
 

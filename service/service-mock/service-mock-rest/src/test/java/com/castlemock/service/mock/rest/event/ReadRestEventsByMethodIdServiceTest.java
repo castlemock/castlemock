@@ -73,7 +73,7 @@ public class ReadRestEventsByMethodIdServiceTest {
         final ReadRestEventWithMethodIdInput input = ReadRestEventWithMethodIdInput.builder()
                 .restMethodId("OperationId")
                 .build();
-        final ServiceTask<ReadRestEventWithMethodIdInput> serviceTask = new ServiceTask<ReadRestEventWithMethodIdInput>(input);
+        final ServiceTask<ReadRestEventWithMethodIdInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadRestEventWithMethodIdOutput> serviceResult = service.process(serviceTask);
         final ReadRestEventWithMethodIdOutput output = serviceResult.getOutput();
 

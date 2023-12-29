@@ -23,6 +23,8 @@ import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.service.mock.rest.project.input.ReadRestResourceWithUriInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestResourceWithUriOutput;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,9 +43,9 @@ public class ReadRestResourceWithUriService extends AbstractRestProjectService i
     @Override
     public ServiceResult<ReadRestResourceWithUriOutput> process(final ServiceTask<ReadRestResourceWithUriInput> serviceTask) {
         final ReadRestResourceWithUriInput input = serviceTask.getInput();
-        final RestResource restResource = this.resourceRepository.findRestResourceByUri(input.getRestApplicationId(), input.getRestResourceUri());
+        final Optional<RestResource> restResource = this.resourceRepository.findRestResourceByUri(input.getRestApplicationId(), input.getRestResourceUri());
         return createServiceResult(ReadRestResourceWithUriOutput.builder()
-                .restResource(restResource)
+                .restResource(restResource.orElse(null))
                 .build());
     }
 }

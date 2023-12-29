@@ -17,16 +17,11 @@
 package com.castlemock.service.mock.rest.event.adapter;
 
 import com.castlemock.model.core.ServiceProcessor;
-import com.castlemock.model.core.TypeIdentifier;
-import com.castlemock.model.core.event.Event;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 import com.castlemock.model.mock.rest.domain.RestEventTestBuilder;
-import com.castlemock.service.mock.rest.RestTypeIdentifier;
 import com.castlemock.service.mock.rest.event.input.ClearAllRestEventInput;
 import com.castlemock.service.mock.rest.event.input.ReadAllRestEventInput;
-import com.castlemock.service.mock.rest.event.input.ReadRestEventInput;
 import com.castlemock.service.mock.rest.event.output.ReadAllRestEventOutput;
-import com.castlemock.service.mock.rest.event.output.ReadRestEventOutput;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,24 +50,6 @@ public class RestEventServiceAdapterTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void testCreate(){
-        final RestEvent restEvent = RestEventTestBuilder.builder().build();
-        serviceAdapter.create(restEvent);
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testDelete(){
-        final RestEvent restEvent = RestEventTestBuilder.builder().build();
-        serviceAdapter.delete(restEvent.getProjectId());
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testUpdate(){
-        final RestEvent restEvent = RestEventTestBuilder.builder().build();
-        serviceAdapter.update(restEvent.getProjectId(), restEvent);
-    }
-
     @Test
     public void testReadAll(){
         final List<RestEvent> restEvents = new ArrayList<RestEvent>();
@@ -97,41 +74,6 @@ public class RestEventServiceAdapterTest {
             Assert.assertEquals(restEvent.getProjectId(), returnedRestEvent.getProjectId());
             Assert.assertEquals(restEvent.getApplicationId(), returnedRestEvent.getApplicationId());
         }
-    }
-
-    @Test
-    public void testRead(){
-        final RestEvent restEvent = RestEventTestBuilder.builder().build();
-        final ReadRestEventOutput output = ReadRestEventOutput.builder().restEvent(restEvent).build();
-        Mockito.when(serviceProcessor.process(Mockito.any(ReadRestEventInput.class))).thenReturn(output);
-
-        final RestEvent returnedRestEvent = serviceAdapter.read(restEvent.getId());
-
-        Assert.assertEquals(restEvent.getId(), returnedRestEvent.getId());
-        Assert.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());
-        Assert.assertEquals(restEvent.getMethodId(), returnedRestEvent.getMethodId());
-        Assert.assertEquals(restEvent.getProjectId(), returnedRestEvent.getProjectId());
-        Assert.assertEquals(restEvent.getApplicationId(), returnedRestEvent.getApplicationId());
-    }
-
-    @Test
-    public void testGetTypeIdentifier(){
-        final RestTypeIdentifier restTypeIdentifier = new RestTypeIdentifier();
-        final TypeIdentifier returnedRestTypeIdentifier = serviceAdapter.getTypeIdentifier();
-
-        Assert.assertEquals(restTypeIdentifier.getType(), returnedRestTypeIdentifier.getType());
-        Assert.assertEquals(restTypeIdentifier.getTypeUrl(), returnedRestTypeIdentifier.getTypeUrl());
-    }
-
-    @Test
-    public void testConvertType(){
-        Event event = RestEventTestBuilder.builder().build();
-        RestEvent returnedRestEvent = serviceAdapter.convertType(event);
-        Assert.assertEquals(event.getId(), returnedRestEvent.getId());
-        Assert.assertEquals(event.getEndDate(), returnedRestEvent.getEndDate());
-        Assert.assertEquals(event.getResourceLink(), returnedRestEvent.getResourceLink());
-        Assert.assertEquals(event.getStartDate(), returnedRestEvent.getStartDate());
-        Assert.assertEquals(event.getResourceName(), returnedRestEvent.getResourceName());
     }
 
     @Test

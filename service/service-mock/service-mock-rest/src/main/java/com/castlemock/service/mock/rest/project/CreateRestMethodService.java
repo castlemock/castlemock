@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
@@ -43,17 +44,14 @@ public class CreateRestMethodService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<CreateRestMethodOutput> process(final ServiceTask<CreateRestMethodInput> serviceTask) {
         final CreateRestMethodInput input = serviceTask.getInput();
-        final RestMethod restMethod = new RestMethod();
-        restMethod.setName(input.getName());
-        restMethod.setHttpMethod(input.getHttpMethod());
-        restMethod.setResourceId(input.getResourceId());
-        if(restMethod.getStatus() == null){
-            restMethod.setStatus(RestMethodStatus.MOCKED);
-        }
-        if(restMethod.getResponseStrategy() == null){
-            restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
-        }
-
+        final RestMethod restMethod = RestMethod.builder()
+                .id(IdUtility.generateId())
+                .name(input.getName())
+                .httpMethod(input.getHttpMethod())
+                .resourceId(input.getResourceId())
+                .status(RestMethodStatus.MOCKED)
+                .responseStrategy(RestResponseStrategy.RANDOM)
+                .build();
         final RestMethod createdRestMethod = this.methodRepository.save(restMethod);
         return createServiceResult(CreateRestMethodOutput.builder()
                 .createdRestMethod(createdRestMethod)

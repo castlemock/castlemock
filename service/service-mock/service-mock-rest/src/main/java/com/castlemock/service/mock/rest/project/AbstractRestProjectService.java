@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -105,16 +106,17 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
      * @return The updated version project
      */
     @Override
-    protected RestProject update(final String restProjectId, final RestProject updatedProject){
+    protected Optional<RestProject> update(final String restProjectId, final RestProject updatedProject){
         Preconditions.checkNotNull(restProjectId, "Project id be null");
         Preconditions.checkNotNull(updatedProject, "Project cannot be null");
         Preconditions.checkArgument(!updatedProject.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
-        final RestProject projectWithName = repository.findRestProjectWithName(updatedProject.getName());
+        final RestProject projectWithName = repository.findRestProjectWithName(updatedProject.getName())
+                        .orElse(null);
         Preconditions.checkArgument(projectWithName == null || projectWithName.getId().equals(restProjectId), "Project name is already taken");
         final RestProject project = find(restProjectId);
         project.setName(updatedProject.getName());
         project.setDescription(updatedProject.getDescription());
-        return super.save(project);
+        return Optional.ofNullable(super.save(project));
     }
 
 
@@ -136,7 +138,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         for(String resourceId : resourceIds){
             final List<RestMethod> methods = this.methodRepository.findWithResourceId(resourceId);
             for(RestMethod restMethod : methods){
-                RestMethodStatus restMethodStatus = restMethod.getStatus();
+                final RestMethodStatus restMethodStatus = restMethod.getStatus();
                 statuses.put(restMethodStatus, statuses.get(restMethodStatus)+1);
             }
 

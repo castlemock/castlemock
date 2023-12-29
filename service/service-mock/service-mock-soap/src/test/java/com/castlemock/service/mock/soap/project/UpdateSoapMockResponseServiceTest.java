@@ -68,7 +68,7 @@ public class UpdateSoapMockResponseServiceTest {
                 .usingExpressions(mockResponse.isUsingExpressions())
                 .xpathExpressions(mockResponse.getXpathExpressions())
                 .build();
-        final ServiceTask<UpdateSoapMockResponseInput> serviceTask = new ServiceTask<UpdateSoapMockResponseInput>(input);
+        final ServiceTask<UpdateSoapMockResponseInput> serviceTask = ServiceTask.of(input, "user");
 
 
         Mockito.when(mockResponseRepository.findOne(mockResponse.getId())).thenReturn(mockResponse);

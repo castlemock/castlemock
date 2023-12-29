@@ -19,6 +19,7 @@ package com.castlemock.model.core.http;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -30,13 +31,13 @@ public class HttpHeader {
     private String name;
     private String value;
 
-    public HttpHeader(){
+    private HttpHeader(){
 
     }
 
     private HttpHeader(final Builder builder){
-        this.name = Objects.requireNonNull(builder.name);
-        this.value = Objects.requireNonNull(builder.value);
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.value = Optional.ofNullable(builder.value).orElse("");
     }
 
     @XmlElement
@@ -74,12 +75,12 @@ public class HttpHeader {
         private Builder() {
         }
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder value(String value) {
+        public Builder value(final String value) {
             this.value = value;
             return this;
         }

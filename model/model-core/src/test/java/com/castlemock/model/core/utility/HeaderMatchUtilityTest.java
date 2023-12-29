@@ -19,7 +19,6 @@ package com.castlemock.model.core.utility;
 import com.castlemock.model.core.http.HttpHeader;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
@@ -68,24 +67,22 @@ public class HeaderMatchUtilityTest {
     }
 
     private List<HttpHeader> getHeaders() {
-        HttpHeader httpHeader = new HttpHeader();
-        httpHeader.setName("Content-Type");
-        httpHeader.setValue("text/plain");
+        final HttpHeader httpHeader = HttpHeader.builder()
+                .name("Content-Type")
+                .value("text/plain")
+                .build();
 
-        HttpHeader httpHeader2 = new HttpHeader();
-        httpHeader2.setName("connection");
-        httpHeader2.setValue("keep-alive");
+        final HttpHeader httpHeader2 = HttpHeader.builder()
+                .name("connection")
+                .value("keep-alive")
+                .build();
 
-        HttpHeader httpHeader3 = new HttpHeader();
-        httpHeader3.setName("OperationType");
-        httpHeader3.setValue("Test");
+        final HttpHeader httpHeader3 = HttpHeader.builder()
+                .name("OperationType")
+                .value("Test")
+                .build();
 
-        List<HttpHeader> headers = new ArrayList<>();
-        headers.add(httpHeader);
-        headers.add(httpHeader2);
-        headers.add(httpHeader3);
-
-        return headers;
+        return List.of(httpHeader, httpHeader2, httpHeader3);
     }
 
 }

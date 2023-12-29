@@ -16,12 +16,10 @@
 
 package com.castlemock.model.core.event;
 
-import com.castlemock.model.core.TypeIdentifiable;
-import com.castlemock.model.core.TypeIdentifier;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * The Event DTO is a DTO (Data transfer object) class for the event class
@@ -30,41 +28,24 @@ import java.util.Date;
  * @see Event
  */
 @XmlRootElement
-public class Event implements TypeIdentifiable {
+public abstract class Event {
 
     protected String id;
     protected String resourceName;
     protected Date startDate;
     protected Date endDate;
-    protected TypeIdentifier typeIdentifier;
     protected String resourceLink;
 
-    /**
-     * The default constructor for the event DTO
-     */
-    public Event(){
-        // Empty constructor
+    protected Event() {
+
     }
 
-    /**
-     * The default constructor for the event DTO
-     */
-    public Event(final String resourceName){
-        this.resourceName = resourceName;
-        this.startDate = new Date();
-    }
-
-    /**
-     * The constructor provides the functionality to initialize a new event DTO based on another event DTO
-     * @param eventDto The event DTO that the new event DTO is going to be based on
-     */
-    public Event(final Event eventDto){
-        this.resourceName = eventDto.getResourceName();
-        this.resourceLink = eventDto.getResourceLink();
-        this.id = eventDto.getId();
-        this.startDate = eventDto.getStartDate();
-        this.endDate = eventDto.getEndDate();
-        this.typeIdentifier = eventDto.getTypeIdentifier();
+    protected Event(final Builder<?> builder){
+        this.resourceName = Objects.requireNonNull(builder.resourceName, "resourceName");
+        this.resourceLink = builder.resourceLink;
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.startDate = Objects.requireNonNull(builder.startDate, "startDate");
+        this.endDate = Objects.requireNonNull(builder.endDate, "endDate");
     }
 
     @XmlElement
@@ -103,17 +84,6 @@ public class Event implements TypeIdentifiable {
         this.endDate = endDate;
     }
 
-    @Override
-    @XmlElement
-    public TypeIdentifier getTypeIdentifier() {
-        return typeIdentifier;
-    }
-
-    @Override
-    public void setTypeIdentifier(TypeIdentifier typeIdentifier) {
-        this.typeIdentifier = typeIdentifier;
-    }
-
     @XmlElement
     public String getResourceLink() {
         return resourceLink;
@@ -121,5 +91,44 @@ public class Event implements TypeIdentifiable {
 
     public void setResourceLink(String resourceLink) {
         this.resourceLink = resourceLink;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static class Builder<B extends Builder<B>> {
+
+        private String id;
+        private String resourceName;
+        private Date startDate;
+        private Date endDate;
+        private String resourceLink;
+
+        protected Builder() {
+        }
+
+        public B id(final String id) {
+            this.id = id;
+            return (B) this;
+        }
+
+        public B resourceName(final String resourceName) {
+            this.resourceName = resourceName;
+            return (B) this;
+        }
+
+        public B startDate(final Date startDate) {
+            this.startDate = startDate;
+            return (B) this;
+        }
+
+        public B endDate(final Date endDate) {
+            this.endDate = endDate;
+            return (B) this;
+        }
+
+        public B resourceLink(final String resourceLink) {
+            this.resourceLink = resourceLink;
+            return (B) this;
+        }
+
     }
 }

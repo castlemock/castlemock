@@ -40,7 +40,7 @@ public class RestRequest {
     private List<HttpHeader> httpHeaders;
     private List<HttpParameter> httpParameters;
 
-    public RestRequest(){
+    private RestRequest(){
 
     }
 

@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -130,14 +131,14 @@ public class UrlUtility {
     }
 
     @SuppressWarnings("deprecation")
-    public static String getPath(final String originalPath,
-                                 final String newPath){
+    public static Optional<String> getPath(final String originalPath,
+                                          final String newPath){
 
         try {
             final URL url = new URL(originalPath);
-            return new URL(url, newPath).toString();
+            return Optional.ofNullable(new URL(url, newPath).toString());
         } catch (MalformedURLException e) {
-            return null;
+            return Optional.empty();
         }
     }
 }

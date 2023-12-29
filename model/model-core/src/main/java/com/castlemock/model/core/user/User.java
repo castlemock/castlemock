@@ -39,7 +39,7 @@ public class User {
     private Status status;
     private Role role;
 
-    public User(){
+    private User(){
 
     }
 
@@ -305,12 +305,9 @@ public class User {
             return this;
         }
 
-        public String getFullName() {
-            return fullName;
-        }
-
-        public void setFullName(String fullName) {
+        public Builder fullName(final String email) {
             this.fullName = fullName;
+            return this;
         }
 
 

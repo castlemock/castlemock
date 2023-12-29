@@ -33,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -64,14 +65,14 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
         List<RestApplication> newRestApplications = new ArrayList<>();
 
         if(input.getLocation() != null){
-            List<RestApplication> result = restDefinitionConverter.convert(input.getLocation(), input.isGenerateResponse());
+            List<RestApplication> result = restDefinitionConverter.convert(input.getLocation(), projectId, input.isGenerateResponse());
             newRestApplications.addAll(result);
         }
 
         // Parse all incoming files and convert them to REST applications
         if(input.getFiles() != null){
             for(File file : input.getFiles()){
-                List<RestApplication> result = restDefinitionConverter.convert(file, input.isGenerateResponse());
+                List<RestApplication> result = restDefinitionConverter.convert(file, projectId, input.isGenerateResponse());
                 newRestApplications.addAll(result);
             }
         }
@@ -127,7 +128,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
     private void updateRestApplication(final RestApplication newRestApplication,
                                        final List<RestApplication> existingRestApplications,
                                        final List<RestApplication> resultRestApplication){
-        final RestApplication existingRestApplication = findRestApplication(existingRestApplications, newRestApplication.getName());
+        final RestApplication existingRestApplication = findRestApplication(existingRestApplications, newRestApplication.getName())
+                .orElse(null);
 
 
         if(existingRestApplication == null){
@@ -161,7 +163,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
                                     final List<RestResource> existingRestResources,
                                     final List<RestResource> resultRestResources){
         // Check if the new REST resource already exists
-        final RestResource existingRestResource = findRestResource(existingRestResources, newRestResource.getName());
+        final RestResource existingRestResource = findRestResource(existingRestResources, newRestResource.getName())
+                .orElse(null);
 
         // It doesn't exists. Simply add it to the existing application
         if (existingRestResource == null) {
@@ -191,7 +194,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
     private void updateRestMethod(final RestMethod newRestMethod,
                                   final List<RestMethod> existingRestMethods,
                                   final List<RestMethod> resultRestMethods) {
-        final RestMethod existingRestMethod = findRestMethod(existingRestMethods, newRestMethod.getName());
+        final RestMethod existingRestMethod = findRestMethod(existingRestMethods, newRestMethod.getName())
+                .orElse(null);
 
         // The new REST method does not exists. Add it to the resource
         if (existingRestMethod == null) {
@@ -212,13 +216,13 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
      * @param name The name of the REST application
      * @return A REST application that matches the search criteria. Null otherwise.
      */
-    public RestApplication findRestApplication(List<RestApplication> restApplications, String name){
+    public Optional<RestApplication> findRestApplication(List<RestApplication> restApplications, String name){
         for(RestApplication restApplication : restApplications){
             if(restApplication.getName().equals(name)){
-                return restApplication;
+                return Optional.of(restApplication);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -226,13 +230,13 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
      * @param name The name of the REST resource
      * @return A REST resource that matches the search criteria. Null otherwise.
      */
-    public RestResource findRestResource(List<RestResource> restResources, String name){
+    public Optional<RestResource> findRestResource(List<RestResource> restResources, String name){
         for(RestResource restResource : restResources){
             if(restResource.getName().equals(name)){
-                return restResource;
+                return Optional.of(restResource);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -240,13 +244,13 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
      * @param name The name of the REST method
      * @return A REST method that matches the search criteria. Null otherwise.
      */
-    public RestMethod findRestMethod(List<RestMethod> restMethods, String name){
+    public Optional<RestMethod> findRestMethod(List<RestMethod> restMethods, String name){
         for(RestMethod restMethod : restMethods){
             if(restMethod.getName().equals(name)){
-                return restMethod;
+                return Optional.of(restMethod);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
 

@@ -19,16 +19,13 @@ package com.castlemock.service.core;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceAdapter;
 import com.castlemock.model.core.ServiceFacade;
-import com.castlemock.model.core.TypeIdentifiable;
-import com.castlemock.model.core.TypeIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The facade class is responsible for gather all services for a specific type and collaborate with all services
@@ -39,19 +36,17 @@ import java.util.Map;
  * @see Service
  */
 @org.springframework.stereotype.Service
-public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Serializable, SA extends ServiceAdapter<D,D,I>> implements ServiceFacade<D,I> {
+public abstract class ServiceFacadeImpl<D, I extends Serializable, SA extends ServiceAdapter<D,D,I>> implements ServiceFacade<D,I> {
 
     @Autowired
     private ApplicationContext applicationContext;
-    protected final Map<String, SA> services = new HashMap<String, SA>();
+    protected final Set<SA> services = new HashSet<>();
 
     /**
      * The initialize method is responsible for for locating all the service instances for a specific module
      * and organizing them depending on the type.
      * @param clazz The class of the {@link ServiceAdapter} that the facade is managing
      * @see Service
-     * @see TypeIdentifier
-     * @see TypeIdentifiable
      */
     @SuppressWarnings("unchecked")
     protected void initiate(final Class<?> clazz){
@@ -61,164 +56,9 @@ public abstract class ServiceFacadeImpl<D extends TypeIdentifiable, I extends Se
             final Object value = entry.getValue();
             if(clazz.isInstance(value)){
                 final SA serviceAdapter = (SA) value;
-                final String type = serviceAdapter.getTypeIdentifier().getType().toUpperCase();
-                services.put(type, serviceAdapter);
+                services.add(serviceAdapter);
             }
         }
     }
 
-    /**
-     * The method provides the functionality to create and store a DTO instance to a specific service.
-     * The service is identified with the provided type value.
-     * @param type The type of the instance that will be created
-     * @param dto The instance that will be created
-     * @return The saved instance
-     */
-    @Override
-    public D save(final String type, final D dto){
-        final SA serviceAdapter = findByType(type);
-        final D convertedDto = serviceAdapter.convertType(dto);
-        final D result = serviceAdapter.create(convertedDto);
-        final TypeIdentifier typeIdentifier = serviceAdapter.getTypeIdentifier();
-        result.setTypeIdentifier(typeIdentifier);
-        return result;
-    }
-
-    /**
-     * The method provides the functionality to delete a specific instance. The type is
-     * identified with the provided typeUrl value. When the type has been identified, the instance
-     * itself has to be identified. This is done with the provided id. The instance with the matching type
-     * and id will be deleted.
-     * @param typeUrl The url for the specific type that the instance belongs to
-     * @param id The id of the instance that will be deleted
-     */
-    @Override
-    public D delete(final String typeUrl, final I id){
-        final SA serviceAdapter = findByTypeUrl(typeUrl);
-        final D result = serviceAdapter.delete(id);
-        final TypeIdentifier typeIdentifier = serviceAdapter.getTypeIdentifier();
-        result.setTypeIdentifier(typeIdentifier);
-        return result;
-    }
-
-    /**
-     * The method is used to update an already existing instance. The instance type is
-     * identified with the provided typeUrl value. When the instance type has been identified, the instance
-     * itself has to be identified. This is done with the provided id. The instance with the matching id will be
-     * replaced with the provided dto instance. Please note that not all values will be updated. It depends on the instance
-     * type.
-     * @param typeUrl The url for the specific type that the instance belongs to
-     * @param id The id of the instance that will be updated
-     * @param dto The instance with the new updated values
-     * @return The updated instance
-     */
-    @Override
-    public D update(final String typeUrl, final I id, final D dto){
-        final SA serviceAdapter = findByTypeUrl(typeUrl);
-        final D convertedDto = serviceAdapter.convertType(dto);
-        final D result = serviceAdapter.update(id, convertedDto);
-        final TypeIdentifier typeIdentifier = serviceAdapter.getTypeIdentifier();
-        result.setTypeIdentifier(typeIdentifier);
-        return result;
-    }
-
-    /**
-     * The method is responsible for retrieving all instances from all the various service types.
-     * @return A list containing all the instance independent from type
-     */
-    @Override
-    public List<D> findAll(){
-        final List<D> dtoList = new LinkedList<D>();
-        for(Map.Entry<String, SA> entry : services.entrySet()){
-            SA serviceAdapter = entry.getValue();
-
-            for(D dto : serviceAdapter.readAll()){
-                dto.setTypeIdentifier(serviceAdapter.getTypeIdentifier());
-                dtoList.add(dto);
-            }
-        }
-        return dtoList;
-    }
-
-    /**
-     * The method is used to retrieve a instance with a specific type. The type is
-     * identified with the provided typeUrl value. When the instance type has been identified, the instance
-     * itself has to be identified.
-     * @param typeUrl The url for the specific type that the instance belongs to
-     * @param id The id of the instance that will be retrieved
-     * @return A instance that matches the instance type and the provided id. If no instance matches the provided
-     *         values, null will be returned.
-     */
-    @Override
-    public D findOne(String typeUrl, final I id){
-        final SA serviceAdapter = findByTypeUrl(typeUrl);
-        final D dto = serviceAdapter.read(id);
-        final TypeIdentifier typeIdentifier = serviceAdapter.getTypeIdentifier();
-        dto.setTypeIdentifier(typeIdentifier);
-        return dto;
-    }
-
-    /**
-     * The method retrieves all service types
-     * @return A list with all the service types
-     */
-    @Override
-    public List<String> getTypes(){
-        return new LinkedList<String>(services.keySet());
-    }
-
-    /**
-     * The method is responsible for finding a service class that has the same type url as the
-     * one provided.
-     * @param typeUrl The type url which the service class must match
-     * @return A service that has the same type url as the one provided
-     * @throws IllegalArgumentException A IllegalArgumentException will be thrown
-     * if no service matches the provided type
-     */
-    protected SA findByTypeUrl(final String typeUrl){
-        SA serviceAdapter = null;
-        for(SA tmpService : services.values()){
-            if(tmpService.getTypeIdentifier().getTypeUrl().equalsIgnoreCase(typeUrl)){
-                serviceAdapter = tmpService;
-                break;
-            }
-        }
-
-        if(serviceAdapter == null){
-            throw new IllegalArgumentException("Invalid type: " + typeUrl);
-        }
-
-        return serviceAdapter;
-    }
-
-    /**
-     * The method provides the functionality to find a service class that has the same type
-     * as the one provided.
-     * @param type The type that the service has to match
-     * @return A service that has the same type as the one provided
-     * @throws IllegalArgumentException A IllegalArgumentException will be thrown
-     * If no service matches the provided type
-     */
-    protected SA findByType(final String type){
-        final SA serviceAdapter = services.get(type.toUpperCase());
-
-        if(serviceAdapter == null){
-            throw new IllegalArgumentException("Invalid type");
-        }
-
-        return serviceAdapter;
-    }
-
-    /**
-     * Returns the type URL for a specific type
-     * @param type The type that will be used to retrieve the type URL
-     * @return The matching type URL
-     * @throws IllegalArgumentException A IllegalArgumentException will be thrown
-     * If no service matches the provided type
-     */
-    @Override
-    public String getTypeUrl(final String type){
-        final SA serviceAdapter = findByType(type);
-        return serviceAdapter.getTypeIdentifier().getTypeUrl();
-    }
 }

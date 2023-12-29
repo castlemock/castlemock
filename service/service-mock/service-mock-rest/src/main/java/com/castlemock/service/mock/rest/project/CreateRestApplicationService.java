@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.rest.domain.RestApplication;
 import com.castlemock.service.mock.rest.project.input.CreateRestApplicationInput;
 import com.castlemock.service.mock.rest.project.output.CreateRestApplicationOutput;
@@ -41,9 +42,11 @@ public class CreateRestApplicationService extends AbstractRestProjectService imp
     @Override
     public ServiceResult<CreateRestApplicationOutput> process(final ServiceTask<CreateRestApplicationInput> serviceTask) {
         final CreateRestApplicationInput input = serviceTask.getInput();
-        final RestApplication application = new RestApplication();
-        application.setProjectId(input.getProjectId());
-        application.setName(input.getName());
+        final RestApplication application = RestApplication.builder()
+                .id(IdUtility.generateId())
+                .projectId(input.getProjectId())
+                .name(input.getName())
+                .build();
         final RestApplication createdRestApplication = this.applicationRepository.save(application);
         return createServiceResult(CreateRestApplicationOutput.builder()
                 .savedRestApplication(createdRestApplication)

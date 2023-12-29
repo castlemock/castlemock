@@ -1,69 +1,46 @@
 package com.castlemock.model.core.project;
 
-import com.castlemock.model.core.TypeIdentifier;
-
 import java.util.Date;
 
 public final class ProjectTestBuilder {
 
-    private String id;
-    private String name;
-    private Date updated;
-    private Date created;
-    private String description;
-    private TypeIdentifier typeIdentifier;
-
     private ProjectTestBuilder(){
-        this.id = "SoapProject";
-        this.name = "Project name";
-        this.description = "Project description";
-        this.updated = new Date();
-        this.created = new Date();
     }
 
-    public static ProjectTestBuilder builder(){
-        return new ProjectTestBuilder();
+    public static ProjectTestBuilder.TestProject.Builder builder(){
+        return ProjectTestBuilder.TestProject.builder()
+                .id("SoapProject")
+                .name("Project name")
+                .description("Project description")
+                .created(new Date())
+                .updated(new Date());
     }
 
-    public ProjectTestBuilder id(final String id){
-        this.id = id;
-        return this;
+    public static ProjectTestBuilder.TestProject build() {
+        return builder().build();
     }
 
-    public ProjectTestBuilder name(final String name){
-        this.name = name;
-        return this;
+    public static class TestProject extends Project {
+
+        private TestProject(final ProjectTestBuilder.TestProject.Builder builder) {
+            super(builder);
+        }
+
+        public static ProjectTestBuilder.TestProject.Builder builder() {
+            return new ProjectTestBuilder.TestProject.Builder();
+        }
+
+        public static class Builder extends Project.Builder<ProjectTestBuilder.TestProject.Builder> {
+
+            private Builder() {
+            }
+
+            public ProjectTestBuilder.TestProject build(){
+                return new ProjectTestBuilder.TestProject(this);
+            }
+        }
+
     }
 
-    public ProjectTestBuilder updated(final Date updated){
-        this.updated = updated;
-        return this;
-    }
-
-    public ProjectTestBuilder created(final Date created){
-        this.created = created;
-        return this;
-    }
-
-    public ProjectTestBuilder description(final String description){
-        this.description = description;
-        return this;
-    }
-
-    public ProjectTestBuilder typeIdentifier(final TypeIdentifier typeIdentifier){
-        this.typeIdentifier = typeIdentifier;
-        return this;
-    }
-
-    public Project build(){
-        final Project project = new Project();
-        project.setCreated(created);
-        project.setDescription(description);
-        project.setId(id);
-        project.setName(name);
-        project.setTypeIdentifier(typeIdentifier);
-        project.setUpdated(updated);
-
-        return project;
-    }
+    
 }

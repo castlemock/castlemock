@@ -32,7 +32,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -63,9 +63,9 @@ public class UpdateSoapPortsForwardedEndpointServiceTest {
                 .portIds(Set.of(port.getId()))
                 .forwardedEndpoint("Forward Endpoint")
                 .build();
-        final ServiceTask<UpdateSoapPortsForwardedEndpointInput> serviceTask = new ServiceTask<UpdateSoapPortsForwardedEndpointInput>(input);
+        final ServiceTask<UpdateSoapPortsForwardedEndpointInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(operationRepository.findWithPortId(port.getId())).thenReturn(Arrays.asList(operation));
+        Mockito.when(operationRepository.findWithPortId(port.getId())).thenReturn(List.of(operation));
         Mockito.when(operationRepository.update(Mockito.anyString(), Mockito.any(SoapOperation.class))).thenReturn(operation);
         final ServiceResult<UpdateSoapPortsForwardedEndpointOutput> result = service.process(serviceTask);
 

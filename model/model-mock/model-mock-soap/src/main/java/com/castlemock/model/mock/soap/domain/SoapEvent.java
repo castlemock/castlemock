@@ -16,12 +16,10 @@
 
 package com.castlemock.model.mock.soap.domain;
 
-import com.castlemock.model.core.TypeIdentifier;
 import com.castlemock.model.core.event.Event;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -37,58 +35,17 @@ public class SoapEvent extends Event {
     private String portId;
     private String operationId;
 
-    /**
-     * Default constructor for the SOAP event DTO
-     */
-    public SoapEvent() {
+    private SoapEvent() {
+
     }
 
     private SoapEvent(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
-        this.resourceName = Objects.requireNonNull(builder.resourceName);
-        this.startDate = Objects.requireNonNull(builder.startDate);
-        this.endDate = Objects.requireNonNull(builder.endDate);
-        this.typeIdentifier = Objects.requireNonNull(builder.typeIdentifier);
-        this.resourceLink = Objects.requireNonNull(builder.resourceLink);
-        this.request = Objects.requireNonNull(builder.request);
-        this.response = Objects.requireNonNull(builder.response);
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-    }
-
-
-    /**
-     * Default constructor for the SOAP event DTO
-     */
-    public SoapEvent(final Event eventDto) {
-        super(eventDto);
-    }
-
-    /**
-     * Constructor for the SOAP event DTO
-     * @param request The SOAP request that the event is representing
-     * @param projectId The id of the SOAP project that is affected by the provided SOAP request
-     * @param portId The id of the SOAP port that is affected by the provided SOAP request
-     * @param operationId The id of the SOAP operation that is affected by the provided SOAP request
-     * @see SoapOperation
-     */
-    public SoapEvent(final String resourceName, final SoapRequest request, final String projectId, final String portId, final String operationId) {
-        super(resourceName);
-        this.request = request;
-        this.projectId = projectId;
-        this.portId = portId;
-        this.operationId = operationId;
-    }
-
-    /**
-     * The finish method is used to sent the response that was sent back, but was also
-     * to set the date/time for when the event ended.
-     * @param soapResponse
-     */
-    public void finish(final SoapResponse soapResponse) {
-        this.response = soapResponse;
-        setEndDate(new Date());
+        super(builder);
+        this.request = Objects.requireNonNull(builder.request, "request");
+        this.response = Objects.requireNonNull(builder.response, "response");
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
     }
 
     /**
@@ -174,7 +131,7 @@ public class SoapEvent extends Event {
      * Sets a new value to the SOAP port id
      * @param portId The new SOAP port id
      */
-    public void setPortId(String portId) {
+    public void setPortId(final String portId) {
         this.portId = portId;
     }
 
@@ -182,13 +139,17 @@ public class SoapEvent extends Event {
         return new Builder();
     }
 
-    public static final class Builder {
-        private String id;
-        private String resourceName;
-        private Date startDate;
-        private Date endDate;
-        private TypeIdentifier typeIdentifier;
-        private String resourceLink;
+    public static Builder builder(final Event event) {
+        return builder()
+                .id(event.getId())
+                .startDate(event.getStartDate())
+                .endDate(event.getEndDate())
+                .resourceLink(event.getResourceLink())
+                .resourceName(event.getResourceName());
+    }
+
+    public static final class Builder extends Event.Builder<Builder> {
+
         private SoapRequest request;
         private SoapResponse response;
         private String projectId;
@@ -198,58 +159,28 @@ public class SoapEvent extends Event {
         private Builder() {
         }
 
-        public Builder request(SoapRequest request) {
+        public Builder request(final SoapRequest request) {
             this.request = request;
             return this;
         }
 
-        public Builder response(SoapResponse response) {
+        public Builder response(final SoapResponse response) {
             this.response = response;
             return this;
         }
 
-        public Builder projectId(String projectId) {
+        public Builder projectId(final String projectId) {
             this.projectId = projectId;
             return this;
         }
 
-        public Builder id(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder portId(String portId) {
+        public Builder portId(final String portId) {
             this.portId = portId;
             return this;
         }
 
-        public Builder resourceName(String resourceName) {
-            this.resourceName = resourceName;
-            return this;
-        }
-
-        public Builder operationId(String operationId) {
+        public Builder operationId(final String operationId) {
             this.operationId = operationId;
-            return this;
-        }
-
-        public Builder startDate(Date startDate) {
-            this.startDate = startDate;
-            return this;
-        }
-
-        public Builder endDate(Date endDate) {
-            this.endDate = endDate;
-            return this;
-        }
-
-        public Builder typeIdentifier(TypeIdentifier typeIdentifier) {
-            this.typeIdentifier = typeIdentifier;
-            return this;
-        }
-
-        public Builder resourceLink(String resourceLink) {
-            this.resourceLink = resourceLink;
             return this;
         }
 

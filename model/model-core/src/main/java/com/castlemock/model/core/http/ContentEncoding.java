@@ -28,20 +28,5 @@ import javax.xml.bind.annotation.XmlType;
 public enum ContentEncoding {
 
     GZIP, DEFLATE;
-
-    /**
-     * Parse an input String and convert it to a {@link ContentEncoding}.
-     * @param input The input String which will be converted.
-     * @return A {@link ContentEncoding} based on the input String. Null will be
-     *          return if no match was found.
-     * @since 1.10
-     */
-    public static ContentEncoding getValue(String input){
-        input = input.toUpperCase();
-        try {
-            return ContentEncoding.valueOf(input);
-        } catch (Exception e){}
-        return null;
-    }
-
+    
 }

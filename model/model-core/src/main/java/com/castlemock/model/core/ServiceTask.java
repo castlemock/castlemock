@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core;
 
+import java.util.Objects;
+
 /**
  * The ServiceTask represent a service task that can be processed by a service class.
  * @author Karl Dahlgren
@@ -24,21 +26,20 @@ package com.castlemock.model.core;
  */
 public class ServiceTask<I extends Input> {
 
-    private I input;
-    private String serviceConsumer;
-
-    /**
-     * Default constructor for ServiceTask
-     */
-    public ServiceTask() {
-    }
+    private final I input;
+    private final String serviceConsumer;
 
     /**
      * Constructor for ServiceTask
      * @param input The input that will be processed by the task
      */
-    public ServiceTask(I input) {
-        this.input = input;
+    private ServiceTask(final I input, final String serviceConsumer) {
+        this.input = Objects.requireNonNull(input, "input");
+        this.serviceConsumer = Objects.requireNonNull(serviceConsumer, "serviceConsumer");
+    }
+
+    public static <I extends Input> ServiceTask<I> of(final I input, final String serviceConsumer) {
+        return new ServiceTask<>(input, serviceConsumer);
     }
 
     /**
@@ -51,14 +52,6 @@ public class ServiceTask<I extends Input> {
     }
 
     /**
-     * Sets a new input value
-     * @param input The new input value that will replace the old value.
-     */
-    public void setInput(final I input) {
-        this.input = input;
-    }
-
-    /**
      * The serviceConsumer is used to identify the user that is executing the task
      * @return The service consumer value
      */
@@ -66,11 +59,4 @@ public class ServiceTask<I extends Input> {
         return serviceConsumer;
     }
 
-    /**
-     * Sets a new serviceConsumer value
-     * @param serviceConsumer The new execture value that will replace the old value.
-     */
-    public void setServiceConsumer(final String serviceConsumer) {
-        this.serviceConsumer = serviceConsumer;
-    }
 }

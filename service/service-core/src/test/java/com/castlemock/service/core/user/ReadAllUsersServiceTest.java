@@ -58,8 +58,7 @@ public class ReadAllUsersServiceTest {
 
         Mockito.when(repository.findAll()).thenReturn(users);
         final ReadAllUsersInput input = new ReadAllUsersInput();
-        final ServiceTask<ReadAllUsersInput> serviceTask = new ServiceTask<ReadAllUsersInput>();
-        serviceTask.setInput(input);
+        final ServiceTask<ReadAllUsersInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadAllUsersOutput> serviceResult = service.process(serviceTask);
         final ReadAllUsersOutput output = serviceResult.getOutput();
 

@@ -20,6 +20,8 @@ package com.castlemock.repository.rest.project;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.repository.Repository;
 
+import java.util.Optional;
+
 /**
  * The REST project file repository provides the functionality to interact with the file system.
  * The repository is responsible for loading and REST project to the file system. Each
@@ -40,6 +42,6 @@ public interface RestProjectRepository extends Repository<RestProject, String> {
      * @return A {@link RestProject} that matches the provided name.
      * @see RestProject
      */
-    RestProject findRestProjectWithName(String restProjectName);
+    Optional<RestProject> findRestProjectWithName(String restProjectName);
 
 }

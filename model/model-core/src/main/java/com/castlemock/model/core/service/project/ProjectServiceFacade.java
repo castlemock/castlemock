@@ -19,6 +19,7 @@ package com.castlemock.model.core.service.project;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.ServiceFacade;
+import com.castlemock.model.core.project.OverviewProject;
 import com.castlemock.model.core.project.Project;
 
 import java.util.List;
@@ -36,26 +37,12 @@ import java.util.List;
 public interface ProjectServiceFacade extends ServiceFacade<Project, String> {
 
     /**
-     * The method provides the functionality to export a project and convert it to a String
-     * @param typeUrl The url for the specific type that the instance belongs to
-     * @param id The id of the project that will be converted and exported
-     * @return The project with the provided id as a String
-     */
-    String exportProject(String typeUrl, String id);
-
-    /**
-     * The method provides the functionality to import a project as a String
-     * @param type The type value for the specific type that the instance belongs to
-     * @param rawProject The imported project file
-     * @return The imported project
-     */
-    Project importProject(String type, String rawProject);
-
-    /**
      * Searches for resources that matches the provided query. The matching resources will
      * be returned as a collection of {@link SearchResult}
      * @param searchQuery The search query that will be used to identify the resources
      * @return A list of search results
      */
     List<SearchResult> search(SearchQuery searchQuery);
+
+    List<OverviewProject> findAll();
 }

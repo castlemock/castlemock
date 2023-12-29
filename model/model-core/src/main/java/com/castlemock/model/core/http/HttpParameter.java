@@ -33,15 +33,10 @@ public class HttpParameter {
     public HttpParameter() {
         
     }
-    
-    public HttpParameter(String name, String value) {
-        this.name = name;
-        this.value = value;
-    }
 
     public HttpParameter(final Builder builder) {
-        this.name = Objects.requireNonNull(builder.name);
-        this.value = Objects.requireNonNull(builder.value);
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.value = Objects.requireNonNull(builder.value, "value");
     }
 
     @XmlElement
@@ -49,7 +44,7 @@ public class HttpParameter {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -58,7 +53,7 @@ public class HttpParameter {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(final String value) {
         this.value = value;
     }
 

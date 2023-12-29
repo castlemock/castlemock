@@ -19,6 +19,8 @@ package com.castlemock.repository.soap.project;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.repository.Repository;
 
+import java.util.Optional;
+
 /**
  * The soap project file repository provides the functionality to interact with the file system.
  * The repository is responsible for loading and soap project to the file system. Each
@@ -35,6 +37,6 @@ public interface SoapProjectRepository extends Repository<SoapProject, String> {
      * @param name The name of the project that should be retrieved
      * @return Returns a project with the provided name
      */
-    SoapProject findSoapProjectWithName(String name);
+    Optional<SoapProject> findSoapProjectWithName(String name);
 
 }

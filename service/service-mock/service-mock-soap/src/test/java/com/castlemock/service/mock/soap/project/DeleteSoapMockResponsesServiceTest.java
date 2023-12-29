@@ -19,6 +19,7 @@ package com.castlemock.service.mock.soap.project;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
+import com.castlemock.model.mock.soap.domain.SoapMockResponseTestBuilder;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import com.castlemock.service.mock.soap.project.input.DeleteSoapMockResponsesInput;
 import com.castlemock.service.mock.soap.project.output.DeleteSoapMockResponsesOutput;
@@ -56,10 +57,13 @@ public class DeleteSoapMockResponsesServiceTest {
         final String portId = "portId";
         final String operationId = "operationId";
 
-        final SoapMockResponse response1 = new SoapMockResponse();
-        response1.setId("Response1");
-        final SoapMockResponse response2 = new SoapMockResponse();
-        response2.setId("Response2");
+        final SoapMockResponse response1 = SoapMockResponseTestBuilder.builder()
+                .id("Response1")
+                .build();
+
+        final SoapMockResponse response2 = SoapMockResponseTestBuilder.builder()
+                .id("Response2")
+                .build();
 
         final List<SoapMockResponse> responses = Arrays.asList(response1, response2);
 
@@ -70,7 +74,7 @@ public class DeleteSoapMockResponsesServiceTest {
                 .operationId(operationId)
                 .mockResponses(responses)
                 .build();
-        final ServiceTask<DeleteSoapMockResponsesInput> serviceTask = new ServiceTask<DeleteSoapMockResponsesInput>(input);
+        final ServiceTask<DeleteSoapMockResponsesInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<DeleteSoapMockResponsesOutput> serviceResult = service.process(serviceTask);
 
 

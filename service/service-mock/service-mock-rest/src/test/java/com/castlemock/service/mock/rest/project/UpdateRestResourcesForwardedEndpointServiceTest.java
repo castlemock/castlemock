@@ -65,7 +65,7 @@ public class UpdateRestResourcesForwardedEndpointServiceTest {
                 .resourceIds(Set.of(resource1.getId()))
                 .forwardedEndpoint("new-endpoint")
                 .build();
-        final ServiceTask<UpdateRestResourcesForwardedEndpointInput> serviceTask = new ServiceTask<>(input);
+        final ServiceTask<UpdateRestResourcesForwardedEndpointInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<UpdateRestResourcesForwardedEndpointOutput> result = service.process(serviceTask);
 
         assertNotNull(result);

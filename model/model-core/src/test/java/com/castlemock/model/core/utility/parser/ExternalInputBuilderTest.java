@@ -45,10 +45,22 @@ class ExternalInputBuilderTest {
     	pathParameters.put("param3", Set.of("Z"));
 
     	queryStringParameters = new ArrayList<>();
-    	queryStringParameters.add(new HttpParameter("queryParam1", "Apple"));
-    	queryStringParameters.add(new HttpParameter("queryParam2", "Orange"));
-    	queryStringParameters.add(new HttpParameter("queryParam3", "Banana"));
-    	queryStringParameters.add(new HttpParameter("queryParam4", "Papaya"));
+    	queryStringParameters.add(HttpParameter.builder()
+				.name("queryParam1")
+				.value("Apple")
+				.build());
+		queryStringParameters.add(HttpParameter.builder()
+				.name("queryParam2")
+				.value("Orange")
+				.build());
+		queryStringParameters.add(HttpParameter.builder()
+				.name("queryParam3")
+				.value("Banana")
+				.build());
+		queryStringParameters.add(HttpParameter.builder()
+				.name("queryParam4")
+				.value("Papaya")
+				.build());
 	}
 	
 	@Test
@@ -60,9 +72,9 @@ class ExternalInputBuilderTest {
     	Assertions.assertTrue(externalInput.containsKey(PathParameterExpression.PATH_PARAMETERS));
     	@SuppressWarnings("unchecked")
         Map<String, ExpressionArgumentArray> returnedPathParameter = (Map<String, ExpressionArgumentArray>) externalInput.get(PathParameterExpression.PATH_PARAMETERS).getValue();
-    	Assertions.assertEquals("X", returnedPathParameter.get("param1").getValue().get(0).getValue());
-    	Assertions.assertEquals("Y", returnedPathParameter.get("param2").getValue().get(0).getValue());
-    	Assertions.assertEquals("Z", returnedPathParameter.get("param3").getValue().get(0).getValue());
+    	Assertions.assertEquals("X", returnedPathParameter.get("param1").getValue().getFirst().getValue());
+    	Assertions.assertEquals("Y", returnedPathParameter.get("param2").getValue().getFirst().getValue());
+    	Assertions.assertEquals("Z", returnedPathParameter.get("param3").getValue().getFirst().getValue());
 	}
 	
 	@Test

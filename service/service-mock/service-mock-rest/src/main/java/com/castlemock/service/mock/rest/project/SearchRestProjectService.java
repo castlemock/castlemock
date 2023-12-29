@@ -113,7 +113,8 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
         });
 
         methods.forEach(method -> {
-            final String applicationId = this.resourceRepository.getApplicationId(method.getResourceId());
+            final String applicationId = this.resourceRepository.getApplicationId(method.getResourceId())
+                    .orElseThrow(() -> new IllegalArgumentException("Unable to find a resource with the following id: " + method.getResourceId()));
             final String projectId = this.applicationRepository.getProjectId(applicationId);
             final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(method.getName());
@@ -127,7 +128,8 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
 
         mockResponses.forEach(mockResponse -> {
             final String resourceId = this.methodRepository.getResourceId(mockResponse.getMethodId());
-            final String applicationId = this.resourceRepository.getApplicationId(resourceId);
+            final String applicationId = this.resourceRepository.getApplicationId(resourceId)
+                    .orElseThrow(() -> new IllegalArgumentException("Unable to find a resource with the following id: " + resourceId));
             final String projectId = this.applicationRepository.getProjectId(applicationId);
             final SearchResult searchResult = new SearchResult();
             searchResult.setTitle(mockResponse.getName());

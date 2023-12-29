@@ -58,8 +58,7 @@ public class ReadUserServiceTest {
         final User user = UserTestBuilder.builder().build();
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         final ReadUserInput input = ReadUserInput.builder().userId(user.getId()).build();
-        final ServiceTask<ReadUserInput> serviceTask = new ServiceTask<ReadUserInput>();
-        serviceTask.setInput(input);
+        final ServiceTask<ReadUserInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadUserOutput> serviceResult = service.process(serviceTask);
         final ReadUserOutput output = serviceResult.getOutput();
 

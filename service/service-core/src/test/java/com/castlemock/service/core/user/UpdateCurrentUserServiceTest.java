@@ -21,6 +21,7 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.core.user.Role;
 import com.castlemock.model.core.user.Status;
 import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.token.SessionTokenRepository;
 import com.castlemock.repository.user.UserRepository;
 import com.castlemock.service.core.user.input.UpdateCurrentUserInput;
@@ -62,23 +63,25 @@ public class UpdateCurrentUserServiceTest {
 
     @Test
     public void testProcess(){
-        List<User> users = new ArrayList<User>();
-        User user = new User();
-        user.setId("123");
-        user.setPassword("Password");
-        user.setUsername("Username");
-        user.setStatus(Status.ACTIVE);
-        user.setRole(Role.ADMIN);
-        user.setEmail("email@email.com");
+        final List<User> users = new ArrayList<User>();
+        final User user = UserTestBuilder.builder()
+                .id("123")
+                .username("Username")
+                .password("Password")
+                .status(Status.ACTIVE)
+                .role(Role.ADMIN)
+                .email("email@email.com")
+                .build();
         users.add(user);
 
-        User updatedUser = new User();
-        updatedUser.setId("123");
-        updatedUser.setPassword("UpdatedPassword");
-        updatedUser.setUsername("UpdatedUsername");
-        updatedUser.setStatus(Status.ACTIVE);
-        updatedUser.setRole(Role.ADMIN);
-        updatedUser.setEmail("email@email.com");
+        final User updatedUser = UserTestBuilder.builder()
+                .id("123")
+                .username("UpdatedUsername")
+                .password("UpdatedPassword")
+                .status(Status.ACTIVE)
+                .role(Role.ADMIN)
+                .email("email@email.com")
+                .build();
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         Mockito.when(repository.findAll()).thenReturn(users);
@@ -89,9 +92,7 @@ public class UpdateCurrentUserServiceTest {
                 .email(updatedUser.getEmail())
                 .username(updatedUser.getUsername())
                 .build();
-        final ServiceTask<UpdateCurrentUserInput> serviceTask = new ServiceTask<UpdateCurrentUserInput>();
-        serviceTask.setServiceConsumer("Username");
-        serviceTask.setInput(input);
+        final ServiceTask<UpdateCurrentUserInput> serviceTask = ServiceTask.of(input, "Username");
         final ServiceResult<UpdateCurrentUserOutput> serviceResult = service.process(serviceTask);
         final UpdateCurrentUserOutput output = serviceResult.getOutput();
 

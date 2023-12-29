@@ -31,6 +31,7 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -134,15 +135,15 @@ public class RestProjectFileRepository extends AbstractProjectFileRepository<Res
      * @see RestProject
      */
     @Override
-    public RestProject findRestProjectWithName(final String restProjectName) {
+    public Optional<RestProject> findRestProjectWithName(final String restProjectName) {
         Preconditions.checkNotNull(restProjectName, "Project name cannot be null");
         Preconditions.checkArgument(!restProjectName.isEmpty(), "Project name cannot be empty");
         for(RestProjectFile restProject : collection.values()){
             if(restProject.getName().equalsIgnoreCase(restProjectName)) {
-                return mapper.map(restProject, RestProject.class);
+                return Optional.ofNullable(mapper.map(restProject, RestProject.class));
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @XmlRootElement(name = "restProject")

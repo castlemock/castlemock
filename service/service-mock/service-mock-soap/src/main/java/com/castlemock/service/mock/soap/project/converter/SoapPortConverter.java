@@ -50,12 +50,14 @@ public class SoapPortConverter {
     private FileManager fileManager;
 
     public Set<SoapPortConverterResult> getSoapPorts(final List<File> files,
+                                                     final String projectId,
                                        final boolean generateResponse){
         final Map<String, WSDLDocument> documents = this.getDocuments(files, SoapResourceType.WSDL);
-        return getResults(documents, generateResponse);
+        return getResults(documents, projectId, generateResponse);
     }
 
     public Set<SoapPortConverterResult> getSoapPorts(final String location,
+                                                     final String projectId,
                                                      final boolean generateResponse,
                                                      final boolean loadExternal){
         try {
@@ -68,13 +70,14 @@ public class SoapPortConverter {
                         .forEach(document -> loadExternal(location, document, allDocuments));
             }
 
-            return getResults(allDocuments, generateResponse);
+            return getResults(allDocuments, projectId, generateResponse);
         } catch (Exception e){
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
     private Set<SoapPortConverterResult> getResults(final Map<String, WSDLDocument> documents,
+                                                    final String projectId,
                                                     final boolean generateResponse){
         try {
             return documents.entrySet().stream()
@@ -82,7 +85,7 @@ public class SoapPortConverter {
                         final String name = documentEntry.getKey();
                         final WSDLDocument wsdlDocument = documentEntry.getValue();
                         final Document document = wsdlDocument.getDocument();
-                        final Set<SoapPort> ports = DocumentConverter.toSoapParts(document, generateResponse);
+                        final Set<SoapPort> ports = DocumentConverter.toSoapParts(document, projectId, generateResponse);
 
                         final String content = DocumentUtility.toString(document);
                         return SoapPortConverterResult.builder()
@@ -151,9 +154,9 @@ public class SoapPortConverter {
 
         return importElements.stream()
                 .map(importElement -> DocumentUtility.getAttribute(importElement, LOCATION_NAMESPACE))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .flatMap(Optional::stream)
                 .map(location -> UrlUtility.getPath(url, location))
+                .flatMap(Optional::stream)
                 .collect(Collectors.toSet());
     }
 

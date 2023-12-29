@@ -14,7 +14,7 @@ public class RestParameterQuery {
     private boolean matchRegex;
     private boolean urlEncoded;
 
-    public RestParameterQuery(){
+    private RestParameterQuery(){
 
     }
 

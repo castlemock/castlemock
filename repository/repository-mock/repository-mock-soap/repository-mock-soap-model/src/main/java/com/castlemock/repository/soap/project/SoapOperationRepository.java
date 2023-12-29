@@ -23,6 +23,7 @@ import com.castlemock.model.mock.soap.domain.SoapVersion;
 import com.castlemock.repository.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SoapOperationRepository extends Repository<SoapOperation, String> {
 
@@ -37,7 +38,7 @@ public interface SoapOperationRepository extends Repository<SoapOperation, Strin
      * @return A SOAP operation that matches the search criteria. If no SOAP operation matches the provided
      * name then null will be returned.
      */
-    SoapOperation findWithName(String soapPortId, String soapOperationName);
+    Optional<SoapOperation> findWithName(String soapPortId, String soapOperationName);
 
     /**
      * Find a {@link SoapOperation} with a provided {@link HttpMethod}, {@link SoapVersion}
@@ -48,7 +49,7 @@ public interface SoapOperationRepository extends Repository<SoapOperation, Strin
      * @param operationIdentifier The identifier
      * @return A {@link SoapOperation} that matches the provided search criteria.
      */
-    SoapOperation findWithMethodAndVersionAndIdentifier(String portId, HttpMethod method,
+    Optional<SoapOperation> findWithMethodAndVersionAndIdentifier(String portId, HttpMethod method,
                                                         SoapVersion version,
                                                         SoapOperationIdentifier operationIdentifier);
 

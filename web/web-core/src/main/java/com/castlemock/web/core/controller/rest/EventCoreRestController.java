@@ -17,16 +17,14 @@
 package com.castlemock.web.core.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
-import com.castlemock.model.core.event.Event;
+import com.castlemock.model.core.event.OverviewEvent;
 import com.castlemock.model.core.service.event.EventServiceFacade;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,27 +60,10 @@ public class EventCoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/event")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ResponseEntity<List<Event>> getEvents() {
+    ResponseEntity<List<OverviewEvent>> getEvents() {
         return ResponseEntity.ok(eventServiceFacade.findAll());
     }
 
-    /**
-     * The method retrieves a event with a particular ID.
-     * @param type The type of the event.
-     * @param eventId The event id.
-     * @return The retrieved event.
-     */
-    @Operation(summary =  "Get event", description = "Get event. Required authorization: Reader, Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.GET, value = "/event/{type}/{eventId}")
-    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public @ResponseBody
-    ResponseEntity<Event> getEvent(
-            @Parameter(name = "type", description = "The type of the event", example = "rest,soap")
-            @PathVariable("type") final String type,
-            @Parameter(name = "eventId", description = "The id of the event")
-            @PathVariable("eventId") final String eventId) {
-        return ResponseEntity.ok(eventServiceFacade.findOne(type, eventId));
-    }
 
     @Operation(summary =  "Delete all event", description = "Delete all event. Required authorization: Modifier or Admin.")
     @RequestMapping(method = RequestMethod.DELETE, value = "/event")

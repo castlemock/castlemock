@@ -23,6 +23,8 @@ import com.castlemock.model.core.user.User;
 import com.castlemock.service.core.user.input.ReadUserByUsernameInput;
 import com.castlemock.service.core.user.output.ReadUserByUsernameOutput;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -42,9 +44,9 @@ public class ReadUserByUsernameService extends AbstractUserService implements Se
     public ServiceResult<ReadUserByUsernameOutput> process(final ServiceTask<ReadUserByUsernameInput> serviceTask) {
         final ReadUserByUsernameInput input = serviceTask.getInput();
         final String username = input.getUsername();
-        final User user = findByUsername(username);
+        final Optional<User> user = findByUsername(username);
         return createServiceResult(ReadUserByUsernameOutput.builder()
-                .user(user)
+                .user(user.orElse(null))
                 .build());
     }
 }

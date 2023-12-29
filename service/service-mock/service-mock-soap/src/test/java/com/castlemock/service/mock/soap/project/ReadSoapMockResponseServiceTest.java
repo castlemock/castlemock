@@ -41,7 +41,7 @@ public class ReadSoapMockResponseServiceTest {
                 .operationId(operationId)
                 .mockResponseId(mockResponse.getId())
                 .build();
-        final ServiceTask<ReadSoapMockResponseInput> serviceTask = new ServiceTask<ReadSoapMockResponseInput>(input);
+        final ServiceTask<ReadSoapMockResponseInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(mockResponseRepository.findOne(mockResponse.getId())).thenReturn(mockResponse);
         final ServiceResult<ReadSoapMockResponseOutput> result = service.process(serviceTask);

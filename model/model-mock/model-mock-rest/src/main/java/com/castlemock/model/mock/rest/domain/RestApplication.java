@@ -40,7 +40,7 @@ public class RestApplication {
     private List<RestResource> resources = new CopyOnWriteArrayList<RestResource>();
     private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
 
-    public RestApplication(){
+    private RestApplication(){
 
     }
 

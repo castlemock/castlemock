@@ -54,12 +54,12 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -94,24 +94,27 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     private static final Map<String, Set<String>> PATH_PARAMETERS = Map.of("Path", Set.of("Value"));
     private static final Map<String, Set<String>> NO_MATCHING_PATH_PARAMETERS = Map.of("Path", Set.of("OtherValue"));
 
+    private static final String XML_REQUEST_BODY = """
+            <request>
+            \t<variable>Value 1</variable>
+            </request>""";
 
-    private static final String XML_REQUEST_BODY = "<request>\n" +
-            "\t<variable>Value 1</variable>\n" +
-            "</request>";
+    private static final String XML_RESPONSE_BODY = """
+            <response>
+            \t<variable>Value 1</variable>
+            </response>""";
 
-    private static final String XML_RESPONSE_BODY = "<response>\n" +
-            "\t<variable>Value 1</variable>\n" +
-            "</response>";
+    private static final String QUERY_DEFAULT_RESPONSE_BODY = """
+            <response>
+            \t<variable>Default value 1</variable>
+            </response>""";
 
-    private static final String QUERY_DEFAULT_RESPONSE_BODY = "<response>\n" +
-            "\t<variable>Default value 1</variable>\n" +
-            "</response>";
-
-    private static final String JSON_REQUEST_BODY = "{\n" +
-            "\t\"request\": {\n" +
-            "\t\t\"variable\": \"Value 1\"\n" +
-            "\t}\n" +
-            "}";
+    private static final String JSON_REQUEST_BODY = """
+            {
+            \t"request": {
+            \t\t"variable": "Value 1"
+            \t}
+            }""";
 
     @Test
     public void testMockedSequence() {
@@ -142,8 +145,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).getFirst());
     }
 
 
@@ -171,10 +174,10 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final ResponseEntity<?> responseEntity = restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
         Assert.assertEquals(XML_RESPONSE_BODY, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+        Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).getFirst());
     }
 
     @Test
@@ -233,8 +236,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).getFirst());
     }
 
     @Test
@@ -363,7 +366,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(XML_REQUEST_BODY, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertEquals(APPLICATION_JSON, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_JSON, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
     }
 
     @Test
@@ -398,8 +401,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).getFirst());
     }
 
     @Test
@@ -408,11 +411,12 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(JSON_REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestJsonPathExpression restJsonPathExpression = new RestJsonPathExpression();
-        restJsonPathExpression.setExpression("$.request[?(@.variable == 'Value 1')]");
+        final RestJsonPathExpression restJsonPathExpression = RestJsonPathExpression.builder()
+                .expression("$.request[?(@.variable == 'Value 1')]")
+                .build();
 
         final RestMethod restMethod = getMockedRestMethod();
-        restMethod.getMockResponses().get(0).getJsonPathExpressions().add(restJsonPathExpression);
+        restMethod.getMockResponses().getFirst().getJsonPathExpressions().add(restJsonPathExpression);
 
         restMethod.setResponseStrategy(RestResponseStrategy.JSON_PATH);
 
@@ -434,8 +438,10 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+        Assert.assertNotNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER));
+        Assert.assertNotNull(responseEntity.getHeaders().get(ACCEPT_HEADER));
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).getFirst());
     }
 
     @Override
@@ -446,7 +452,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
     private static class HttpServletRequestTest extends HttpServletRequestWrapper {
 
-        private byte[] bytes;
+        private final byte[] bytes;
 
         /**
          * Constructs a request object wrapping the given request.
@@ -460,7 +466,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         }
 
         @Override
-        public ServletInputStream getInputStream() throws IOException {
+        public ServletInputStream getInputStream() {
 
             final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 
@@ -482,14 +488,14 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 }
 
                 @Override
-                public int read() throws IOException {
+                public int read() {
                     return byteArrayInputStream.read();
                 }
             };
         }
 
         @Override
-        public BufferedReader getReader() throws IOException {
+        public BufferedReader getReader() {
             return new BufferedReader(new InputStreamReader(this.getInputStream()));
         }
     }
@@ -652,7 +658,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .responseStrategy(RestResponseStrategy.SEQUENCE)
                 .simulateNetworkDelay(Boolean.FALSE)
                 .status(RestMethodStatus.MOCKED)
-                .mockResponses(Arrays.asList(restMockResponse1))
+                .mockResponses(List.of(restMockResponse1))
                 .defaultMockResponseId(mockResponseId)
                 .defaultResponseName(mockResponseName)
                 .build();
@@ -693,7 +699,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .responseStrategy(RestResponseStrategy.SEQUENCE)
                 .simulateNetworkDelay(Boolean.FALSE)
                 .status(RestMethodStatus.MOCKED)
-                .mockResponses(Arrays.asList(restMockResponse1))
+                .mockResponses(List.of(restMockResponse1))
                 .build();
     }
 

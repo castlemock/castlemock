@@ -18,6 +18,7 @@ package com.castlemock.model.core.http;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -35,12 +36,10 @@ public enum HttpMethod {
      *          return if no match was found.
      * @since 1.10
      */
-    public static HttpMethod getValue(String input){
-        input = input.toUpperCase();
-        try {
-            return HttpMethod.valueOf(input);
-        } catch (Exception e){}
-        return null;
+    public static Optional<HttpMethod> getValue(final String input){
+        return Optional.ofNullable(input)
+                .map(String::toUpperCase)
+                .map(HttpMethod::valueOf);
     }
 
 }

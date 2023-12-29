@@ -37,7 +37,7 @@ public interface RestDefinitionConverter {
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
      * @return A list of {@link RestApplication} based on the provided file.
      */
-    List<RestApplication> convert(File file, boolean generateResponse);
+    List<RestApplication> convert(File file, String projectId, boolean generateResponse);
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into
@@ -46,7 +46,7 @@ public interface RestDefinitionConverter {
      * @param generateResponse Will generate a default response if true. No response will be generated if false.
      * @return A list of {@link RestApplication} based on the provided file.
      */
-    List<RestApplication> convert(String location, boolean generateResponse);
+    List<RestApplication> convert(String location, String projectId, boolean generateResponse);
 
 
 }

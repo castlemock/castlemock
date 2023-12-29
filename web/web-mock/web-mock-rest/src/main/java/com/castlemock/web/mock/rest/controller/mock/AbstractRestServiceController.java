@@ -20,6 +20,7 @@ import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.core.utility.JsonPathUtility;
 import com.castlemock.model.core.utility.XPathUtility;
 import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
@@ -138,7 +139,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                     httpServletRequest);
         } catch (Exception exception) {
             LOGGER.error("REST service exception: " + exception.getMessage(), exception);
-            throw new RestException(exception.getMessage());
+            throw new RestException(exception);
         }
     }
 
@@ -192,10 +193,9 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                              final Map<String, Set<String>> pathParameters,
                                              final HttpServletRequest httpServletRequest) {
         Preconditions.checkNotNull(restRequest, "Rest request cannot be null");
-        RestEvent event = null;
+        final Date startDate = new Date();
         RestResponse response = null;
         try {
-            event = new RestEvent(restMethod.getName(), restRequest, projectId, applicationId, resourceId, restMethod.getId());
             if (RestMethodStatus.DISABLED.equals(restMethod.getStatus())) {
                 throw new RestException("The requested REST method, " + restMethod.getName() + ", is disabled");
             } else if (RestMethodStatus.FORWARDED.equals(restMethod.getStatus())) {
@@ -232,12 +232,21 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
             return new ResponseEntity<String>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
         } finally {
-            if (event != null) {
-                event.finish(response);
-                serviceProcessor.processAsync(CreateRestEventInput.builder()
-                        .restEvent(event)
-                        .build());
-            }
+            final RestEvent event = RestEvent.builder()
+                    .id(IdUtility.generateId())
+                    .resourceName(restMethod.getName())
+                    .request(restRequest)
+                    .response(response)
+                    .projectId(projectId)
+                    .applicationId(applicationId)
+                    .resourceId(resourceId)
+                    .methodId(restMethod.getId())
+                    .startDate(startDate)
+                    .endDate(new Date())
+                    .build();
+            serviceProcessor.processAsync(CreateRestEventInput.builder()
+                    .restEvent(event)
+                    .build());
         }
     }
 
@@ -490,7 +499,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
             // Parse the text and apply expression functionality if
             // the mock response is configured to use expressions
-            body = new TextParser().parse(body, externalInput);
+            body = new TextParser().parse(body, externalInput)
+                    .orElse("");
         }
         return RestResponse.builder()
                 .body(body)

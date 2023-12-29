@@ -17,8 +17,8 @@
 package com.castlemock.web.core.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
-import com.castlemock.model.core.event.Event;
-import com.castlemock.model.core.event.EventTestBuilder;
+import com.castlemock.model.core.event.OverviewEvent;
+import com.castlemock.model.core.event.OverviewEventTestBuilder;
 import com.castlemock.model.core.service.event.EventServiceFacade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +30,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -51,29 +50,15 @@ class EventCoreRestControllerTest {
     @Test
     @DisplayName("Get events")
     void testGetEvents(){
-        final List<Event> events = List.of(EventTestBuilder.builder().build());
+        final List<OverviewEvent> events = List.of(OverviewEventTestBuilder.builder().build());
         when(eventServiceFacade.findAll()).thenReturn(events);
 
-        final ResponseEntity<List<Event>> responseEntity = eventCoreRestController.getEvents();
+        final ResponseEntity<List<OverviewEvent>> responseEntity = eventCoreRestController.getEvents();
 
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(events, responseEntity.getBody());
         verify(eventServiceFacade, times(1)).findAll();
-    }
-
-    @Test
-    @DisplayName("Get event")
-    void testEvent(){
-        final Event event = EventTestBuilder.builder().build();
-        when(eventServiceFacade.findOne(any(), any())).thenReturn(event);
-
-        final ResponseEntity<Event> responseEntity = eventCoreRestController.getEvent("soap", "eventId");
-
-        assertNotNull(responseEntity);
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(event, responseEntity.getBody());
-        verify(eventServiceFacade, times(1)).findOne("soap", "eventId");
     }
 
     @Test

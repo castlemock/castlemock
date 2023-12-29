@@ -60,7 +60,7 @@ public class CreateRestApplicationServiceTest {
                 .projectId(projectId)
                 .name(application.getName())
                 .build();
-        final ServiceTask<CreateRestApplicationInput> serviceTask = new ServiceTask<CreateRestApplicationInput>(input);
+        final ServiceTask<CreateRestApplicationInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestApplicationOutput> serviceResult = service.process(serviceTask);
 
         Assert.assertNotNull(serviceResult.getOutput());

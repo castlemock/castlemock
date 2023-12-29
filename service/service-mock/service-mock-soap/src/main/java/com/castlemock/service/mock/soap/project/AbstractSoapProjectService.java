@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -89,7 +90,8 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
     public SoapProject save(final SoapProject project){
         Preconditions.checkNotNull(project, "Project cannot be null");
         Preconditions.checkArgument(!project.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
-        final SoapProject projectInDatebase = repository.findSoapProjectWithName(project.getName());
+        final SoapProject projectInDatebase = repository.findSoapProjectWithName(project.getName())
+                        .orElse(null);
         Preconditions.checkArgument(projectInDatebase == null, "Project name is already taken");
         project.setUpdated(new Date());
         project.setCreated(new Date());
@@ -103,16 +105,17 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
      * @return The updated version project
      */
     @Override
-    public SoapProject update(final String soapProjectId, final SoapProject updatedProject){
+    public Optional<SoapProject> update(final String soapProjectId, final SoapProject updatedProject){
         Preconditions.checkNotNull(soapProjectId, "Project id be null");
         Preconditions.checkNotNull(updatedProject, "Project cannot be null");
         Preconditions.checkArgument(!updatedProject.getName().isEmpty(), "Invalid project name. Project name cannot be empty");
-        final SoapProject projectWithName = repository.findSoapProjectWithName(updatedProject.getName());
+        final SoapProject projectWithName = repository.findSoapProjectWithName(updatedProject.getName())
+                .orElse(null);
         Preconditions.checkArgument(projectWithName == null || projectWithName.getId().equals(soapProjectId), "Project name is already taken");
         final SoapProject project = find(soapProjectId);
         project.setName(updatedProject.getName());
         project.setDescription(updatedProject.getDescription());
-        return super.save(project);
+        return Optional.of(super.save(project));
     }
 
 }

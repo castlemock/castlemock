@@ -34,20 +34,6 @@ import java.util.List;
 public interface ProjectServiceAdapter<D extends Project> extends ServiceAdapter<Project, D, String> {
 
     /**
-     * The method provides the functionality to export a project and convert it to a String
-     * @param id The id of the project that will be converted and exported
-     * @return The project with the provided id as a String
-     */
-    String exportProject(String id);
-
-    /**
-     * The method provides the functionality to import a project as a String
-     * @param projectRaw The project as a String
-     * @return The imported project
-     */
-    D importProject(String projectRaw);
-
-    /**
      * Searches for resources that matches the provided query. The matching resources will
      * be returned as a collection of {@link SearchResult}
      * @param searchQuery The search query that will be used to identify the resources
